@@ -238,7 +238,9 @@ function pnConfirmMC(qId) {
   var q = _pnGetQ(qId);
   if (!q || !_pnState.answers[qId]) return;
   _pnState.revealed[qId] = true;
-  if (_pnState.answers[qId] === q.correct) _pnState.score++;
+  var correct = _pnState.answers[qId] === q.correct;
+  if (correct) _pnState.score++;
+  if (typeof _exRecordAnswer === 'function') _exRecordAnswer(_pnState.topic, correct);
   var area = document.getElementById('pn-ans-area');
   if (area) area.innerHTML = _pnMCHTML(q);
 }
@@ -254,6 +256,7 @@ function pnRevealOpen(qId) {
 function pnSelfEval(qId, success) {
   _pnState.answers[qId] = success ? 'yes' : 'no';
   if (success) _pnState.score++;
+  if (typeof _exRecordAnswer === 'function') _exRecordAnswer(_pnState.topic, success);
   var q = _pnGetQ(qId);
   if (!q) return;
   var area = document.getElementById('pn-ans-area');
