@@ -137,13 +137,13 @@ var EXAMES_BANCO = {
       enun: 'Turma de 28 alunos dividida em 5 grupos. Grupo C tem 2 raparigas e 4 rapazes.\n\nSeleciona-se ao acaso um aluno. Qual a probabilidade de ser uma <strong>rapariga do Grupo C</strong>?',
       opts: ['(A) 1/2', '(B) 1/3', '(C) 1/7', '(D) 1/14'],
       correct: 'D',
-      resolucao: 'P(rapariga do Grupo C) = 2/28 = <strong>1/14</strong>'
+      resolucao: 'A turma tem 28 alunos e o Grupo C tem 2 raparigas.\nPela Regra de Laplace: casos possíveis = 28, casos favoráveis = 2.\nP(rapariga do Grupo C) = 2/28 = <strong>1/14</strong>\nResposta: <strong>(D)</strong>'
     },
     {
       id: 'e24f2-1.2', tipo: 'aberta', tema: 'otd', examKey: '2024_f2', page: 4,
       enun: 'Vão ser sorteados dois alunos: um do Grupo A e um do Grupo D. Grupo A: 2 raparigas + 3 rapazes. Grupo D: 2 raparigas + 2 rapazes.\n\nQual a probabilidade de serem sorteados <strong>dois rapazes</strong>, um de cada grupo? Fração irredutível.',
       opts: null, correct: null,
-      resolucao: 'P(rapaz do A) = 3/5\nP(rapaz do D) = 2/4 = 1/2\nP(ambos rapazes) = 3/5 × 1/2 = <strong>3/10</strong>'
+      resolucao: 'Grupo A: 2 raparigas + 3 rapazes. Grupo D: 2 raparigas + 2 rapazes.\nOrganizando todos os pares possíveis (1 de cada grupo): 5 × 4 = 20 pares.\nPares com dois rapazes: 3 (rapazes do A) × 2 (rapazes do D) = 6 pares.\nPela Regra de Laplace:\nP(dois rapazes) = 6/20 = <strong>3/10</strong>'
     },
     {
       id: 'e24f2-2', tipo: 'escolha', tema: 'not_cientifica', examKey: '2024_f2', page: 5,
