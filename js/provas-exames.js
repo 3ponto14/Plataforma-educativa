@@ -203,7 +203,7 @@ var EXAMES_BANCO = {
       enun: 'Triângulos [ABC] e [DEC] semelhantes com DE ∥ AB. D ∈ [AC], E ∈ [BC]. CE = 3, BE = 5, CD = a > 0.\n\nQual expressão representa <strong>AC</strong>?',
       opts: ['(A) 3a/8', '(B) 8a/3', '(C) 5a/3', '(D) 3a/5'],
       correct: 'B',
-      resolucao: 'Razão de semelhança: CE/CB = 3/(3+5) = 3/8\nCD/CA = 3/8 ⟹ CA = 8a/3\nResposta: <strong>(B) 8a/3</strong>'
+      resolucao: 'Os triângulos [ABC] e [DEC] são semelhantes pelo critério AA (ângulo C comum + ângulos retos).\nBC = BE + EC = 5 + 3 = 8. EC = 3.\nOs lados correspondentes são proporcionais:\nAC/DC = BC/EC\nAC/a = 8/3\nAC = (8/3) × a = <strong>8a/3</strong>\nResposta: <strong>(B)</strong>'
     },
     {
       id: 'e24f2-15', tipo: 'escolha', tema: 'algebra', examKey: '2024_f2', page: 14,
@@ -278,7 +278,7 @@ var EXAMES_BANCO = {
       id: 'e23f1-6', tipo: 'aberta', tema: 'sequencias', examKey: '2023_f1', page: 7,
       enun: 'Sequência de figuras: n.º quadrados cinzentos no termo n = n². Cada termo (exceto 1.º) tem mais 4 brancos que o anterior.\n\nQuantos <strong>quadrados brancos</strong> tem o termo com total de 529 quadrados?',
       opts: null, correct: null,
-      resolucao: 'Total = n² + brancos = 529. Brancos do n.º n = 4(n−1) (exceto n=1).\nn² + 4(n−1) = 529 ... ou: n² = cinzentos, total = 529 ⟹ n² ≤ 529 ⟹ n = 23 (23² = 529).\nBrancos = 4(23−1) = 4×22 = <strong>88</strong>'
+      resolucao: 'Observando a sequência: no termo n há n² quadrados cinzentos e 4n + 4 quadrados brancos.\nTotal = n² + 4n + 4\nPara total = 529:\nn² + 4n + 4 = 529 ⟹ n² + 4n − 525 = 0\nUsando a fórmula resolvente: n = (−4 ± √(16 + 2100))/2 = (−4 ± √2116)/2 = (−4 ± 46)/2\nn = 21 (descartamos n = −25 por ser negativo)\nQuadrados brancos = 4×21 + 4 = 84 + 4 = <strong>88</strong>'
     },
     {
       id: 'e23f1-7', tipo: 'escolha', tema: 'sequencias', examKey: '2023_f1', page: 7,
@@ -298,7 +298,7 @@ var EXAMES_BANCO = {
       id: 'e23f1-10', tipo: 'aberta', tema: 'circunferencia', examKey: '2023_f1', page: 9,
       enun: 'Circunferência de centro O com triângulo [ABC] inscrito. D exterior à circunferência em reta AC. Ângulo BCD = 100°.\n\nCalcula a amplitude, em graus, do arco <strong>BCA</strong>.',
       opts: null, correct: null,
-      resolucao: 'BCD é ângulo externo = (arco BD + arco CA)/2... ou: arco BCA = 2 × ângulo BDA.\nVer cálculo completo na prova. Resposta: <strong>200°</strong>'
+      resolucao: 'Como D pertence à semirreta AC, o ângulo BCA e o ângulo BCD são suplementares:\nBCA = 180° − BCD = 180° − 100° = 80°\nO ângulo inscrito BCA interceta o arco BA:\narco BA = 2 × BCA = 2 × 80° = 160°\nO arco BCA é o arco complementar:\narco BCA = 360° − arco BA = 360° − 160° = <strong>200°</strong>'
     },
     {
       id: 'e23f1-12', tipo: 'aberta', tema: 'sequencias', examKey: '2023_f1', page: 11,
@@ -454,7 +454,7 @@ var EXAMES_BANCO = {
       id: 'e22f1-12', tipo: 'aberta', tema: 'sequencias', examKey: '2022_f1', page: 13,
       enun: 'Resolve a equação: <strong>6x² + x − 2 = 0</strong>\nApresenta as soluções na forma de fração irredutível.',
       opts: null, correct: null,
-      resolucao: 'Δ = 1 + 48 = 49\nx = (−1 ± 7)/12\nx₁ = 6/12 = <strong>1/2</strong>\nx₂ = −8/12 = <strong>−2/3</strong>'
+      resolucao: 'Equação: 6x² + x − 2 = 0 (a = 6, b = 1, c = −2)\nDiscriminante: Δ = 1² − 4×6×(−2) = 1 + 48 = 49\nx = (−1 ± √49)/(2×6) = (−1 ± 7)/12\nx₁ = (−1 + 7)/12 = 6/12 = <strong>1/2</strong>\nx₂ = (−1 − 7)/12 = −8/12 = <strong>−2/3</strong>\nC.S. = {−2/3 ; 1/2}'
     },
     {
       id: 'e22f1-13', tipo: 'escolha', tema: 'sequencias', examKey: '2022_f1', page: 13,
@@ -585,7 +585,7 @@ var EXAMES_BANCO = {
       id: 'e21-3', tipo: 'aberta', tema: 'not_cientifica', examKey: '2021', page: 4,
       enun: 'Em 2012 os museus tutelados pelo Estado foram visitados por 980 mil pessoas. Em 2018, registou-se um aumento de 60%.\n\nDetermina o n.º de visitantes em 2018 em <strong>notação científica</strong>.',
       opts: null, correct: null,
-      resolucao: '980 000 × 1,60 = 1 568 000 = <strong>1,568 × 10⁶</strong>'
+      resolucao: 'Aumento em 2018 face a 2012: 60% de 980 000:\n980 000 × 60/100 = 9,8 × 10⁵ × 0,6 = 5,88 × 10⁵\nTotal de visitantes em 2018:\n9,8 × 10⁵ + 5,88 × 10⁵ = 15,68 × 10⁵ = 1,568 × 10⁶ × 10 = <strong>1,568 × 10⁶</strong>'
     },
     {
       id: 'e21-10', tipo: 'aberta', tema: 'sequencias', examKey: '2021', page: 12,
@@ -597,7 +597,7 @@ var EXAMES_BANCO = {
       id: 'e21-11', tipo: 'aberta', tema: 'sequencias', examKey: '2021', page: 12,
       enun: 'Resolve a equação: <strong>4x² − 4x − 3 = 0</strong>\nApresenta as soluções na forma de fração irredutível.',
       opts: null, correct: null,
-      resolucao: 'Δ = 16 + 48 = 64\nx = (4 ± 8)/8\nx₁ = 12/8 = <strong>3/2</strong>\nx₂ = −4/8 = <strong>−1/2</strong>'
+      resolucao: 'Equação: −4x² − 4x + 3 = 0 (a = −4, b = −4, c = 3)\nDiscriminante: Δ = (−4)² − 4×(−4)×3 = 16 + 48 = 64\nx = (−(−4) ± √64)/(2×(−4)) = (4 ± 8)/(−8)\nx₁ = (4 + 8)/(−8) = 12/(−8) = <strong>−3/2</strong>\nx₂ = (4 − 8)/(−8) = −4/(−8) = <strong>1/2</strong>\nC.S. = {−3/2 ; 1/2}'
     }
   ]
 },
@@ -613,20 +613,20 @@ var EXAMES_BANCO = {
       id: 'e19f1-1.1', tipo: 'aberta', tema: 'not_cientifica', examKey: '2019_f1', page: 4,
       enun: 'Na reta numérica, está representado um intervalo com −√250 e 3.\n\nEscreve o <strong>menor número inteiro</strong> e o <strong>maior número inteiro</strong> que pertencem ao intervalo representado.',
       opts: null, correct: null,
-      resolucao: '√250 ≈ 15,81 ⟹ −√250 ≈ −15,81\nMenor inteiro do intervalo: <strong>−15</strong>\nMaior inteiro: <strong>3</strong>'
+      resolucao: 'Como √250 ≈ 15,81, então −√250 ≈ −15,81.\nO intervalo é aberto em −√250 e em 3, ou seja, ]−√250, 3[.\nO menor número inteiro maior que −15,81 é <strong>−15</strong>.\nComo o intervalo é aberto no limite superior, 3 não pertence ao conjunto, pelo que o maior número inteiro é <strong>2</strong>.'
     },
     {
       id: 'e19f1-3', tipo: 'escolha', tema: 'otd', examKey: '2019_f1', page: 5,
       enun: 'Praias acessíveis em Portugal de 2009 a 2018: 153, 159, 175, 184, 179, 194, 204, 210, 223, 214.\n\nQual a <strong>mediana</strong>?',
       opts: ['(A) 179', '(B) 186,5', '(C) 189', '(D) 189,5'],
       correct: 'D',
-      resolucao: 'Ordenando: 153, 159, 175, 179, 184, 194, 204, 210, 214, 223\nMediana (10 valores) = (184 + 194)/2 = 378/2 = 189\nResposta: <strong>(C) 189</strong> ... verificar na prova (pode ser D)'
+      resolucao: 'Ordenando os 10 valores:\n153 | 159 | 175 | 179 | <u>184 | 194</u> | 204 | 210 | 214 | 223\nCom 10 valores (número par), a mediana é a média do 5.º e 6.º:\nx̃ = (184 + 194)/2 = 378/2 = <strong>189</strong>\nResposta: <strong>(C)</strong>'
     },
     {
       id: 'e19f1-4', tipo: 'aberta', tema: 'not_cientifica', examKey: '2019_f1', page: 5,
       enun: 'A massa total dos detritos plásticos no Pacífico era 79 milhões de kg. 46% provinha de redes de pesca.\n\nDetermina a massa das redes de pesca em kg, em <strong>notação científica</strong>.',
       opts: null, correct: null,
-      resolucao: '0,46 × 79 × 10⁶ = 36,34 × 10⁶ = <strong>3,634 × 10⁷ kg</strong>'
+      resolucao: 'A massa proveniente de redes de pesca é 46% da massa total:\n79 × 46/100 = 36,34 milhões de kg\nEm kg: 36 340 000 kg\nEm notação científica: <strong>3,634 × 10⁷ kg</strong>'
     },
     {
       id: 'e19f1-5', tipo: 'escolha', tema: 'not_cientifica', examKey: '2019_f1', page: 6,
@@ -639,13 +639,13 @@ var EXAMES_BANCO = {
       id: 'e19f1-8.1', tipo: 'aberta', tema: 'otd', examKey: '2019_f1', page: 10,
       enun: '5 amigos (Ana, Bruno, Carla, David, Elsa) vão jogar voleibol. Sorteiam um árbitro ao acaso.\n\nQual a probabilidade de a <strong>Ana</strong> ser selecionada? Fração.',
       opts: null, correct: null,
-      resolucao: 'P(Ana) = <strong>1/5</strong>'
+      resolucao: 'São 5 amigos, todos com igual probabilidade de ser sorteados (casos possíveis = 5).\nApenas a Ana pode ser selecionada (casos favoráveis = 1).\nPela Regra de Laplace:\nP(Ana) = 1/5'
     },
     {
       id: 'e19f1-8.2', tipo: 'aberta', tema: 'otd', examKey: '2019_f1', page: 10,
       enun: 'Dos 5 amigos (2 rapazes: Bruno, David; 3 raparigas: Ana, Carla, Elsa), sorteiam-se 2 para vigiar os pertences.\n\nQual a probabilidade de serem sorteados <strong>um rapaz e uma rapariga</strong>? Fração irredutível.',
       opts: null, correct: null,
-      resolucao: 'Total de pares: C(5,2) = 10\nPares rapaz+rapariga: 2×3 = 6\nP = 6/10 = <strong>3/5</strong>'
+      resolucao: 'Organizando todos os pares possíveis numa tabela (Ana, Bruno, Carla, David, Elsa):\nTotal de pares: 10 combinações possíveis.\nPares com um rapaz e uma rapariga (♂♀): Ana-Bruno, Ana-David, Carla-Bruno, Carla-David, Elsa-Bruno, Elsa-David = 6 pares.\nPela Regra de Laplace:\nP(um rapaz e uma rapariga) = 6/10 = <strong>3/5</strong>'
     },
     {
       id: 'e19f1-9.2', tipo: 'escolha', tema: 'funcoes', examKey: '2019_f1', page: 11,
@@ -665,13 +665,13 @@ var EXAMES_BANCO = {
       id: 'e19f1-12', tipo: 'aberta', tema: 'sequencias', examKey: '2019_f1', page: 12,
       enun: 'Resolve a equação: <strong>10x² + x − 2 = 0</strong>\nApresenta as soluções na forma de fração irredutível.',
       opts: null, correct: null,
-      resolucao: 'Δ = 1 + 80 = 81\nx = (−1 ± 9)/20\nx₁ = 8/20 = <strong>2/5</strong>\nx₂ = −10/20 = <strong>−1/2</strong>'
+      resolucao: 'Equação: 10x² + x − 2 = 0 (a = 10, b = 1, c = −2)\nDiscriminante: Δ = b² − 4ac = 1² − 4×10×(−2) = 1 + 80 = 81\nx = (−1 ± √81)/(2×10) = (−1 ± 9)/20\nx₁ = (−1 + 9)/20 = 8/20 = <strong>2/5</strong>\nx₂ = (−1 − 9)/20 = −10/20 = <strong>−1/2</strong>\nC.S. = {−1/2 ; 2/5}'
     },
     {
       id: 'e19f1-14', tipo: 'aberta', tema: 'sequencias', examKey: '2019_f1', page: 13,
       enun: 'Sequência de círculos: 1.º tem 5 círculos; cada termo seguinte tem mais 4 que o anterior.\n\nDetermina a ordem do termo com <strong>4021 círculos</strong>.',
       opts: null, correct: null,
-      resolucao: 'Termo n: 5 + 4(n−1) = 1 + 4n\n1 + 4n = 4021 ⟹ 4n = 4020 ⟹ <strong>n = 1005</strong>'
+      resolucao: 'O 1.º termo tem 5 círculos (1 central + 4 em 4 direções). Em cada termo seguinte acrescentam-se 4 círculos.\nO termo de ordem n tem: 1 + 4n círculos.\nPara 4021 círculos:\n1 + 4n = 4021 ⟹ 4n = 4020 ⟹ n = 4020/4 = <strong>1005</strong>\nO termo de ordem 1005 tem 4021 círculos.'
     },
     {
       id: 'e19f1-16', tipo: 'aberta', tema: 'circunferencia', examKey: '2019_f1', page: 14,
