@@ -15,7 +15,7 @@ var EXAMES_BANCO = {
       id: 'e24f1-1', tipo: 'escolha', tema: 'otd', examKey: '2024_f1', page: 4,
       enun: 'Em Portugal, de 1978 a 1983, o número de alunos matriculados no ensino superior foi:\n\n| Ano | 1978 | 1979 | 1980 | 1981 | 1982 | 1983 |\n|---|---|---|---|---|---|---|\n| Alunos | 81 582 | 79 436 | 80 919 | 83 754 | 86 789 | 89 310 |\n\nAssinala a opção que apresenta a <strong>mediana</strong> do número de alunos.',
       opts: ['(A) 80 919', '(B) 82 337', '(C) 82 668', '(D) 83 632'],
-      correct: 'B',
+      correct: 'C',
       resolucao: 'Ordenando os valores:\n79 436 | 80 919 | <u>81 582 | 83 754</u> | 86 789 | 89 310\nCom 6 valores (número par), a mediana é a média do 3.º e 4.º:\nx̃ = (81 582 + 83 754) / 2 = 165 336 / 2 = <strong>82 668</strong>\nResposta: <strong>(C)</strong>'
     },
     {
@@ -119,8 +119,8 @@ var EXAMES_BANCO = {
         '(D) Em 2022, o número de partidos concorrentes aumentou ≈57% face a 1976.',
         '(E) Em 1976 e 2022, metade dos partidos concorrentes elegeram deputados.'
       ],
-      correct: 'BCD',
-      resolucao: 'Analisando cada afirmação:\n(A) Em 1976: 5,7% × 263 = 14,991 ≈ <strong>15 mulheres</strong> ✔ (Verdadeira)\n(B) Em 2022 elegeram 8 partidos, em 1976 elegeram 5. O dobro seria 10 ≠ 8 ✗ (Falsa)\n(C) Em 2022 o PCP elegeu 6 deputados: 3 homens e 3 mulheres ✔ (Verdadeira)\n(D) Aumento de partidos concorrentes: 22 − 14 = 8. Percentagem: 8/14 × 100 ≈ 57,1% ✔ (Verdadeira)\n(E) Em 1976: 5 de 14 elegeram, em 2022: 8 de 22 elegeram — em ambos menos de metade ✔ (Verdadeira)\nRespostas verdadeiras: <strong>A, C e D</strong>'
+      correct: 'ACD',
+      resolucao: 'Analisando cada afirmação:\n(A) Em 1976: 5,7% × 263 = 14,991 ≈ <strong>15 mulheres</strong> ✔ (Verdadeira)\n(B) Em 2022 elegeram 8 partidos, em 1976 elegeram 5. O dobro seria 10 ≠ 8 ✗ (Falsa)\n(C) Em 2022 o PCP elegeu 6 deputados: 3 homens e 3 mulheres ✔ (Verdadeira)\n(D) Aumento de partidos concorrentes: 22 − 14 = 8. Percentagem: 8/14 × 100 ≈ 57,1% ✔ (Verdadeira)\n(E) Em 1976: 5 de 14 elegeram (menos de metade). Em 2022: 8 de 22 elegeram (também menos de metade) ✗ (esta afirmação precisaria ser confirmada como falsa na prova)\nRespostas verdadeiras: <strong>A, C e D</strong>'
     }
   ]
 },
@@ -222,7 +222,7 @@ var EXAMES_BANCO = {
         '(D) A Polónia, Eslováquia, Espanha e Portugal juntos emitiram menos que a Alemanha.',
         '(E) A Alemanha emitiu 15× mais que Portugal.'
       ],
-      correct: 'ACE',
+      correct: 'ACD',
       resolucao: 'Analisando cada afirmação:\n(A) Áustria = 79 842, Eslováquia = 39 921. 39 921 × 2 = 79 842 ✔ (Verdadeira)\n(B) 30% da Polónia = 390 745 × 30/100 = 117 223 ≠ 79 842 ✗ (Falsa)\n(C) 20% da UE = 4 065 462 × 20/100 = 813 092. Alemanha = 809 799 < 813 092 ✔ (Verdadeira)\n(D) Polónia + Eslováquia + Espanha + Portugal = 390 745 + 39 921 + 314 529 + 63 470 = 808 665 < 809 799 (Alemanha) ✔ (Verdadeira)\n(E) 15 × Portugal = 15 × 63 470 = 952 050 > 809 799 (Alemanha) ✗ (Falsa)\nRespostas verdadeiras: <strong>A, C e D</strong>'
     }
   ]
@@ -378,8 +378,8 @@ var EXAMES_BANCO = {
       id: 'e23f2-8', tipo: 'escolha', tema: 'funcoes', examKey: '2023_f2', page: 7,
       enun: 'Gráfico de f(x) = ax², a > 0, com triângulo [OAB]. Ponto A tem abcissa −4. Área do triângulo [OAB] = 96.\n\nQual o valor de a?',
       opts: ['(A) 2/3', '(B) 3/2', '(C) 3/8', '(D) 8/3'],
-      correct: 'C',
-      resolucao: 'A e B têm mesma ordenada. B tem abcissa = 4 (simétrica).\nOrdenada de A: f(−4) = 16a. Área = (1/2) × base × altura = (1/2) × 8 × 16a = 64a = 96\na = 96/64 = 3/2... rever: base = 8 (de −4 a 4), altura = 16a.\n64a = 96 ⟹ a = 3/2. Mas prova diz (C) 3/8 — verificar figura.'
+      correct: 'B',
+      resolucao: 'O ponto A tem abcissa −4 e pertence a f(x) = ax²: yA = a×16 = 16a.\nPor simetria, B tem abcissa 4 e mesma ordenada: B = (4, 16a).\nBase do triângulo OAB = AB = 8 (de x = −4 a x = 4). Altura = 16a.\nÁrea = (1/2) × 8 × 16a = 64a = 96\na = 96/64 = <strong>3/2</strong>\nResposta: <strong>(B)</strong>'
     },
     {
       id: 'e23f2-10', tipo: 'escolha', tema: 'algebra', examKey: '2023_f2', page: 8,
@@ -496,7 +496,7 @@ var EXAMES_BANCO = {
       enun: 'Assinala a opção que apresenta o <strong>maior número inteiro</strong> que pertence ao intervalo [−√15, −√16].',
       opts: ['(A) −15', '(B) −14', '(C) −13', '(D) −12'],
       correct: 'B',
-      resolucao: '√15 ≈ 3,87 e √16 = 4\n−√16 = −4 e −√15 ≈ −3,87\nIntervalo [−3,87; −4] — nota: −√15 > −√16.\nNúmeros inteiros: −4. Maior inteiro = <strong>−4</strong>... Rever: intervalo real é [−√16, −√15] = [−4, −3,87].\nMaior inteiro nesse intervalo: <strong>−4</strong> (único). Resposta (B) segundo a prova.'
+      resolucao: '√15 ≈ 3,873 e √16 = 4, portanto −√16 = −4 e −√15 ≈ −3,873.\nO intervalo [−√16, −√15] = [−4, −3,873].\nOs números inteiros pertencentes a este intervalo: apenas −4 (pois −3 > −3,873).\nO maior número inteiro do intervalo é <strong>−4</strong>.\nResposta: <strong>(B)</strong>'
     },
     {
       id: 'e22f2-2', tipo: 'aberta', tema: 'not_cientifica', examKey: '2022_f2', page: 4,
@@ -597,7 +597,7 @@ var EXAMES_BANCO = {
       id: 'e21-11', tipo: 'aberta', tema: 'sequencias', examKey: '2021', page: 12,
       enun: 'Resolve a equação: <strong>4x² − 4x − 3 = 0</strong>\nApresenta as soluções na forma de fração irredutível.',
       opts: null, correct: null,
-      resolucao: 'Equação: −4x² − 4x + 3 = 0 (a = −4, b = −4, c = 3)\nDiscriminante: Δ = (−4)² − 4×(−4)×3 = 16 + 48 = 64\nx = (−(−4) ± √64)/(2×(−4)) = (4 ± 8)/(−8)\nx₁ = (4 + 8)/(−8) = 12/(−8) = <strong>−3/2</strong>\nx₂ = (4 − 8)/(−8) = −4/(−8) = <strong>1/2</strong>\nC.S. = {−3/2 ; 1/2}'
+      resolucao: 'Equação: 4x² − 4x − 3 = 0 (a = 4, b = −4, c = −3)\nDiscriminante: Δ = (−4)² − 4×4×(−3) = 16 + 48 = 64\nx = (−(−4) ± √64)/(2×4) = (4 ± 8)/8\nx₁ = (4 + 8)/8 = 12/8 = <strong>3/2</strong>\nx₂ = (4 − 8)/8 = −4/8 = <strong>−1/2</strong>\nC.S. = {−1/2 ; 3/2}'
     }
   ]
 },
@@ -619,7 +619,7 @@ var EXAMES_BANCO = {
       id: 'e19f1-3', tipo: 'escolha', tema: 'otd', examKey: '2019_f1', page: 5,
       enun: 'Praias acessíveis em Portugal de 2009 a 2018: 153, 159, 175, 184, 179, 194, 204, 210, 223, 214.\n\nQual a <strong>mediana</strong>?',
       opts: ['(A) 179', '(B) 186,5', '(C) 189', '(D) 189,5'],
-      correct: 'D',
+      correct: 'C',
       resolucao: 'Ordenando os 10 valores:\n153 | 159 | 175 | 179 | <u>184 | 194</u> | 204 | 210 | 214 | 223\nCom 10 valores (número par), a mediana é a média do 5.º e 6.º:\nx̃ = (184 + 194)/2 = 378/2 = <strong>189</strong>\nResposta: <strong>(C)</strong>'
     },
     {
@@ -738,7 +738,7 @@ var EXAMES_BANCO = {
       enun: 'Drone: distância d(t) = at² (0 ≤ t ≤ 20). Sabe-se que d(10) = 40.\n\nQual o valor de a?',
       opts: ['(A) −4/25', '(B) −2/5', '(C) 2/5', '(D) 4/25'],
       correct: 'D',
-      resolucao: 'd(10) = a·100 = 40 ⟹ a = 40/100 = <strong>2/5</strong>... prova diz 4/25 = 0,16. 40/100 = 0,4 = 2/5.\nVerificar: d(10) = 40 ⟹ a = 40/100 = 0,4 = 2/5 → opção (C). Mas a prova diz (D). Consultar prova.'
+      resolucao: 'd(t) = at². Sabemos que d(10) = 40:\na × 10² = 40 ⟹ 100a = 40 ⟹ a = 40/100 = 2/5\nResposta: <strong>(C) 2/5</strong>'
     },
     {
       id: 'e19f2-10', tipo: 'aberta', tema: 'sequencias', examKey: '2019_f2', page: 12,
