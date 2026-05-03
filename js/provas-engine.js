@@ -113,11 +113,12 @@ function _pnRenderQuestion(practice) {
   // Enunciado em texto
   h += '<div class="pn-enun">' + _pnFmt(q.enun) + '</div>';
 
-  // Imagem individual da figura (só quando a questão tem fig:true e imgSrc definido)
-  if (q.fig && q.imgSrc) {
-    var _prefix2 = (window.location.pathname.indexOf('/mat7/') !== -1) ? '../' : '';
+  // Imagem recortada do exame original (crop por questão)
+  if (q.examKey && q.page) {
+    var _pfx = (window.location.pathname.indexOf('/mat7/') !== -1) ? '../' : '';
+    var _cropSrc = _pfx + 'img/exames/crops/' + q.examKey + '/' + q.id + '.png';
     h += '<div class="pn-fig-wrap">';
-    h += '<img src="' + _prefix2 + q.imgSrc + '" class="pn-fig-img" alt="Figura">';
+    h += '<img src="' + _cropSrc + '" class="pn-fig-img" alt="Figura do exame" onerror="this.parentNode.style.display=\'none\'">';
     h += '</div>';
   }
 
