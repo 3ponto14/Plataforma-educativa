@@ -13,19 +13,52 @@ var _PROVAS_TOPICS = [
 ];
 
 var _PN_FRASES = [
-  { icon: 'ph-rocket-launch',   txt: 'Vamos lá! Cada questão é uma oportunidade de aprender.' },
-  { icon: 'ph-lightbulb',       txt: 'Lê o enunciado com atenção antes de responder.' },
-  { icon: 'ph-brain',           txt: 'Pensa devagar — a pressa é inimiga da perfeição.' },
-  { icon: 'ph-star',            txt: 'Estás a fazer um ótimo trabalho. Continua!' },
-  { icon: 'ph-chart-line-up',   txt: 'Cada exercício que resolves melhora o teu desempenho.' },
-  { icon: 'ph-pencil',          txt: 'Esboça o que sabes antes de calcular.' },
-  { icon: 'ph-check-circle',    txt: 'A meio caminho! Não desistas agora.' },
-  { icon: 'ph-trophy',          txt: 'Quase lá! Estás a ir muito bem.' },
-  { icon: 'ph-fire',            txt: 'Concentra-te — os melhores resultados vêm com foco.' },
-  { icon: 'ph-hand',            txt: 'Se errares, aprende e segue em frente. Isso é progresso!' },
-  { icon: 'ph-books',           txt: 'Revê a matéria do tema se tiveres dúvidas.' },
-  { icon: 'ph-target',          txt: 'Atenção às unidades e às conversões!' }
+  { icon: 'ph-rocket-launch',     txt: 'Vamos lá! Cada questão é uma oportunidade de aprender.' },
+  { icon: 'ph-lightbulb',         txt: 'Lê o enunciado com atenção antes de responder.' },
+  { icon: 'ph-brain',             txt: 'Pensa devagar. A pressa é inimiga da perfeição.' },
+  { icon: 'ph-star',              txt: 'Estás a fazer um ótimo trabalho. Continua!' },
+  { icon: 'ph-chart-line-up',     txt: 'Cada exercício que resolves melhora o teu desempenho.' },
+  { icon: 'ph-pencil',            txt: 'Esboça o que sabes antes de calcular.' },
+  { icon: 'ph-fire',              txt: 'Concentra-te. Os melhores resultados vêm com foco.' },
+  { icon: 'ph-hand',              txt: 'Se errares, aprende e segue em frente. Isso é progresso!' },
+  { icon: 'ph-books',             txt: 'Revê a matéria do tema se tiveres dúvidas.' },
+  { icon: 'ph-target',            txt: 'Atenção às unidades e às conversões!' },
+  { icon: 'ph-clock',             txt: 'Num exame real, não fiques mais de 5 minutos numa questão.' },
+  { icon: 'ph-check-square',      txt: 'Verifica sempre a tua resposta antes de avançar.' },
+  { icon: 'ph-number-square-one', txt: 'Começa pelo que é mais fácil e regressa ao difícil depois.' },
+  { icon: 'ph-notepad',           txt: 'Mostra todos os cálculos. No exame valem pontos parciais!' },
+  { icon: 'ph-magnifying-glass',  txt: 'Relê o enunciado depois de resolveres para confirmar.' },
+  { icon: 'ph-calculator',        txt: 'Usa a calculadora para confirmar, não para substituir o raciocínio.' },
+  { icon: 'ph-graduation-cap',    txt: 'Cada minuto de prática agora vale no dia do exame.' },
+  { icon: 'ph-arrows-clockwise',  txt: 'Errar faz parte. O que importa é perceber porquê.' },
+  { icon: 'ph-sun',               txt: 'Mantém a calma. Sabes mais do que pensas.' },
+  { icon: 'ph-trophy',            txt: 'Estás a treinar como um campeão. Isso nota-se nos resultados.' },
+  { icon: 'ph-path',              txt: 'Quando não sabes por onde começar, identifica os dados do problema.' },
+  { icon: 'ph-ruler',             txt: 'Em geometria, desenha sempre uma figura antes de calcular.' },
+  { icon: 'ph-percent',           txt: 'Nas percentagens e proporções, confirma sempre as unidades.' },
+  { icon: 'ph-graph',             txt: 'Num gráfico, analisa sempre os eixos antes de responder.' },
+  { icon: 'ph-question',          txt: 'Tens dúvidas? Tenta eliminar as opções erradas primeiro.' },
+  { icon: 'ph-leaf',              txt: 'Uma questão de cada vez. Mantém o foco.' },
+  { icon: 'ph-spiral',            txt: 'A matemática é como um puzzle. Cada peça no sítio certo.' },
+  { icon: 'ph-flag-checkered',    txt: 'Mais perto do fim. Não relaxes agora!' },
+  { icon: 'ph-heart',             txt: 'Acredita em ti. Chegaste até aqui por algum motivo.' },
+  { icon: 'ph-lightning',         txt: 'Energia total para esta questão. Consegues!' }
 ];
+
+var _pnFrasesShuffled = null;
+var _pnFrasesUsed = 0;
+
+function _pnGetFrase(idx) {
+  if (!_pnFrasesShuffled || _pnFrasesUsed >= _PN_FRASES.length) {
+    _pnFrasesShuffled = _PN_FRASES.slice();
+    for (var i = _pnFrasesShuffled.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = _pnFrasesShuffled[i]; _pnFrasesShuffled[i] = _pnFrasesShuffled[j]; _pnFrasesShuffled[j] = tmp;
+    }
+    _pnFrasesUsed = 0;
+  }
+  return _pnFrasesShuffled[_pnFrasesUsed++];
+}
 
 var _pnState = {
   topic:    null,
@@ -74,8 +107,11 @@ function pnStartTopic(key) {
   _pnState.idx      = 0;
   _pnState.answers  = {};
   _pnState.revealed = {};
+  _pnState.frases   = {};
   _pnState.score    = 0;
   _pnState.total    = banco.length;
+  _pnFrasesShuffled = null;
+  _pnFrasesUsed     = 0;
 
   // Highlight selected topic button
   var btns = document.querySelectorAll('.pn-topic-btns .mat7-cap-btn');
@@ -109,9 +145,10 @@ function _pnRenderQuestion(practice) {
   h += '<span class="pn-prog-label">' + (idx + 1) + '\u202f/\u202f' + total + '</span>';
   h += '</div>';
 
-  // ── Motivational phrase ──
-  var _fraseIdx = idx % _PN_FRASES.length;
-  var _frase = _PN_FRASES[_fraseIdx];
+  // ── Motivational phrase (uma por questão, sem repetir até esgotar todas) ──
+  if (!_pnState.frases) _pnState.frases = {};
+  if (!_pnState.frases[idx]) _pnState.frases[idx] = _pnGetFrase(idx);
+  var _frase = _pnState.frases[idx];
   h += '<div class="pn-tip"><i class="ph ' + _frase.icon + '"></i> ' + _frase.txt + '</div>';
 
   // ── Card ──
