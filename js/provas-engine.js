@@ -113,18 +113,20 @@ function _pnRenderQuestion(practice) {
   }
   h += '</div>';
 
-  // Enunciado
+  // Enunciado em texto
   h += '<div class="pn-enun">' + _pnFmt(q.enun) + '</div>';
 
-  // Imagem da página do exame original — aparece automaticamente se tiver página definida
+  // Imagem da página do exame original (suporte visual para figuras/gráficos)
   if (q.examKey && q.page) {
     var _prefix = (window.location.pathname.indexOf('/mat7/') !== -1) ? '../' : '';
     var _imgBase = _prefix + 'img/exames/' + q.examKey + '/';
     var _pageStr = (q.page < 10 ? '0' : '') + q.page;
+    h += '<details class="pn-exam-img-details">';
+    h += '<summary class="pn-exam-img-label"><i class="ph ph-image-square"></i> Ver figura do exame original</summary>';
     h += '<div class="pn-exam-img-wrap">';
-    h += '<div class="pn-exam-img-label"><i class="ph ph-image-square"></i> Prova original — ' + (q.fonte || q.examKey) + ', pág. ' + q.page + '</div>';
-    h += '<img src="' + _imgBase + 'p-' + _pageStr + '.png" class="pn-exam-img" alt="Página do exame" onerror="this.parentNode.style.display=\'none\'">';
+    h += '<img src="' + _imgBase + 'p-' + _pageStr + '.png" class="pn-exam-img" alt="Página do exame" onerror="this.closest(\'details\').style.display=\'none\'">';
     h += '</div>';
+    h += '</details>';
   }
 
   // Área de resposta
