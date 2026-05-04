@@ -168,13 +168,14 @@ function _pnRenderQuestion(practice) {
   h += '</div>';
 
   // Enunciado em texto
-  // Imagem recortada do exame — substitui o enunciado em texto
+  // Imagem recortada do exame — substitui o enunciado em texto, com fallback para texto se a imagem não carregar
   if (q.examKey && q.page) {
     var _pfx = (window.location.pathname.indexOf('/mat7/') !== -1) ? '../' : '';
     var _cropSrc = _pfx + 'img/exames/crops/' + q.examKey + '/' + q.id + '.png';
-    h += '<div class="pn-fig-wrap">';
-    h += '<img src="' + _cropSrc + '" class="pn-fig-img" alt="Figura do exame" onerror="this.parentNode.style.display=\'none\';this.parentNode.insertAdjacentHTML(\'afterend\',\'<div class=pn-enun>' + _pnFmt(q.enun).replace(/'/g, "\\'") + '</div>\')">';
+    h += '<div class="pn-fig-wrap" data-fallback-id="pn-fb-' + q.id + '">';
+    h += '<img src="' + _cropSrc + '" class="pn-fig-img" alt="Figura do exame" onerror="_pnFigFallback(this,\'pn-fb-' + q.id + '\')">';
     h += '</div>';
+    h += '<div class="pn-enun" id="pn-fb-' + q.id + '" style="display:none">' + _pnFmt(q.enun) + '</div>';
   } else {
     h += '<div class="pn-enun">' + _pnFmt(q.enun) + '</div>';
   }
@@ -480,6 +481,12 @@ function _pnRenderResult() {
   h += '</div>'; // /pn-practice-wrap
 
   practice.innerHTML = h;
+}
+
+function _pnFigFallback(img, fbId) {
+  if (img && img.parentNode) img.parentNode.style.display = 'none';
+  var fb = document.getElementById(fbId);
+  if (fb) fb.style.display = '';
 }
 
 function pnVerProvaImg(btn, examKey, page) {
