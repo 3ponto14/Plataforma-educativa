@@ -310,9 +310,10 @@ function _pnMath(t) {
     s = s.replace(/_([A-Za-z0-9])/g, '<sub>$1</sub>');
 
     // Inline fractions: num/den where both are simple tokens (no spaces)
-    // e.g. 9/x, 1/3, k/2, 36/x
-    s = s.replace(/([0-9a-zA-Zπ]+)\s*\/\s*([0-9a-zA-Zπ]+)/g, function(_, num, den) {
-      return '<span class="pn-frac"><span class="pn-frac-n">' + num + '</span><span class="pn-frac-d">' + den + '</span></span>';
+    // Only match when not preceded or followed by another '/' (avoid dates like 24/02/2024
+    // and unit chains like km/h being misparsed). Also require boundary (start, space, punct).
+    s = s.replace(/(^|[\s(\[{,;:=+\-−])([0-9a-zA-Zπ]+)\s*\/\s*([0-9a-zA-Zπ]+)(?![\/\w])/g, function(_, pre, num, den) {
+      return pre + '<span class="pn-frac"><span class="pn-frac-n">' + num + '</span><span class="pn-frac-d">' + den + '</span></span>';
     });
 
     parts[i] = s;
@@ -349,6 +350,7 @@ function pnRevealOpen(qId) {
 }
 
 function pnSelfEval(qId, success) {
+  if (_pnState.answers[qId] === 'yes' || _pnState.answers[qId] === 'no') return;
   _pnState.answers[qId] = success ? 'yes' : 'no';
   if (success) _pnState.score++;
   if (typeof _exRecordAnswer === 'function') _exRecordAnswer(_pnState.topic, success);
@@ -364,14 +366,14 @@ function _pnPrev() {
 
 function _pnNextBtn() {
   var q = _pnState.queue[_pnState.idx];
-  // If MC not yet confirmed, require confirmation
+  // If MC not yet confirmed, require confirmation first (don't auto-advance)
   if (q && q.tipo === 'escolha' && !_pnState.revealed[q.id]) {
     if (!_pnState.answers[q.id]) {
       if (typeof eduToast === 'function') eduToast('Seleciona uma opção antes de avançar.', 'info');
       return;
     }
     pnConfirmMC(q.id);
-    setTimeout(function() { _pnAdvance(); }, 600);
+    if (typeof eduToast === 'function') eduToast('Resposta confirmada. Lê a resolução e clica em "Próxima" para continuar.', 'info');
     return;
   }
   _pnAdvance();
@@ -482,7 +484,14 @@ function _pnRenderResult() {
 
 function pnVerProvaImg(btn, examKey, page) {
   var area = document.getElementById('pn-prova-img-area');
-  if (!area) return;
+  if (!area) {
+    area = document.createElement('div');
+    area.id = 'pn-prova-img-area';
+    area.style.marginTop = '1rem';
+    area.style.display = 'none';
+    if (btn && btn.parentNode) btn.parentNode.appendChild(area);
+    else return;
+  }
   if (area.style.display !== 'none') {
     area.style.display = 'none';
     btn.innerHTML = '<i class="ph ph-images"></i> Ver prova';
@@ -494,7 +503,8 @@ function pnVerProvaImg(btn, examKey, page) {
   var h = '<div style="background:#111;border-radius:10px;padding:.75rem">';
   h += '<div style="color:#fff;font-size:.75rem;font-weight:700;margin-bottom:.5rem;opacity:.7">Prova original — ' + examKey + '</div>';
   if (page) {
-    var p = page.length < 2 ? '0' + page : page;
+    var pStr = String(page);
+    var p = pStr.length < 2 ? '0' + pStr : pStr;
     h += '<img src="' + imgBase + 'p-' + p + '.png" style="width:100%;border-radius:6px" onerror="this.style.display=\'none\'">';
   } else {
     var pages = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16'];

@@ -73,7 +73,7 @@ var EXAMES_BANCO = {
     {
       id: 'e24f1-12', tipo: 'escolha', tema: 'algebra', examKey: '2024_f1', page: 11,
       enun: 'Quadrado [ABCD] e retângulo [AEFG] com AB = x (x > 3) e BE = DG = 3.\n\nQual expressão representa a <strong>área do retângulo [AEFG]</strong>?',
-      opts: ['(A) x² + 6x + 9', '(B) x² + 6x + 9', '(C) x² − 9', '(D) x² − 6'],
+      opts: ['(A) x² + 6x + 9', '(B) x² + 9', '(C) x² − 9', '(D) x² − 6x − 9'],
       correct: 'C',
       resolucao: 'AE = x + 3, AG = x − 3\nÁrea = AE × AG = (x+3)(x−3) = <strong>x² − 9</strong>'
     },
@@ -460,7 +460,7 @@ var EXAMES_BANCO = {
       id: 'e22f1-13', tipo: 'escolha', tema: 'sequencias', examKey: '2022_f1', page: 13,
       enun: 'Alunos na palestra: n.º do 9.º ano excede em 156 o do 8.º. N.º do 8.º é 1/3 do 9.º. Seja x o 8.º e y o 9.º.\n\nQual o sistema correto?',
       opts: [
-        '(A) y − x = 156 e y = x/3',
+        '(A) x − y = 156 e y = x/3',
         '(B) y − x = 156 e y = x/3',
         '(C) y − x = 156 e x = y/3',
         '(D) x − y = 156 e x = y/3'
