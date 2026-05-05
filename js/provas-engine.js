@@ -121,6 +121,7 @@ function pnStartTopic(key) {
   _pnState.frases   = {};
   _pnState.score    = 0;
   _pnState.total    = banco.length;
+  _pnState.backFn   = '_pnClearInline()';
   _pnFrasesShuffled = null;
   _pnFrasesUsed     = 0;
 
@@ -151,7 +152,7 @@ function _pnRenderQuestion(practice) {
 
   // ── Top bar ──
   h += '<div class="pn-topbar">';
-  h += '<button class="pn-back-btn" onclick="_pnClearInline()"><i class="ph ph-arrow-left"></i> Temas</button>';
+  h += '<button class="pn-back-btn" onclick="' + (_pnState.backFn || '_pnClearInline()') + '"><i class="ph ph-arrow-left"></i> Temas</button>';
   h += '<div class="pn-prog-wrap"><div class="pn-prog-fill" style="width:' + pct + '%"></div></div>';
   h += '<span class="pn-prog-label">' + (idx + 1) + '\u202f/\u202f' + total + '</span>';
   h += '</div>';
@@ -231,8 +232,8 @@ function _pnMCHTML(q) {
     var cls = 'pn-opt';
     var icon = '';
     if (revealed) {
-      if (letter === q.correct)           { cls += ' pn-opt--correct'; icon = '<i class="ph ph-check-circle pn-opt-icon"></i>'; }
-      else if (given === letter)          { cls += ' pn-opt--wrong';   icon = '<i class="ph ph-x-circle pn-opt-icon"></i>'; }
+      if (q.correct && q.correct.indexOf(letter) !== -1) { cls += ' pn-opt--correct'; icon = '<i class="ph ph-check-circle pn-opt-icon"></i>'; }
+      else if (given === letter)                         { cls += ' pn-opt--wrong';   icon = '<i class="ph ph-x-circle pn-opt-icon"></i>'; }
     } else if (given === letter) {
       cls += ' pn-opt--selected';
     }
@@ -346,7 +347,7 @@ function pnConfirmMC(qId) {
   var q = _pnGetQ(qId);
   if (!q || !_pnState.answers[qId]) return;
   _pnState.revealed[qId] = true;
-  var correct = _pnState.answers[qId] === q.correct;
+  var correct = q.correct && q.correct.indexOf(_pnState.answers[qId]) !== -1;
   if (correct) _pnState.score++;
   if (typeof _exRecordAnswer === 'function') _exRecordAnswer(_pnState.topic, correct);
   var area = document.getElementById('pn-ans-area');

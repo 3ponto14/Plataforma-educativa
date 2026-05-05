@@ -518,6 +518,7 @@ function exSimStart() {
   _pnState.revealed = {};
   _pnState.score = 0;
   _pnState.total = pool.length;
+  _pnState.backFn = '_pnClearInline()';
 
   var cfg = document.getElementById('ex-sim-config');
   var running = document.getElementById('ex-sim-running');
@@ -717,6 +718,7 @@ function exStartYear(key) {
   _pnState.revealed= {};
   _pnState.score   = 0;
   _pnState.total   = pool.length;
+  _pnState.backFn  = '_pnYearBack()';
   var list = document.getElementById('ex-year-list');
   if (list) list.style.display = 'none';
   var inline = document.getElementById('ex-year-inline');
