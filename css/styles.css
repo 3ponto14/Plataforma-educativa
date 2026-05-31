@@ -2313,3 +2313,124 @@ body.dark-mode .pom-mode-btn.active{background:#2e2e2e!important;}
 .pn-rev-enun{font-family:'Montserrat',sans-serif;font-size:.85rem;color:var(--ink);line-height:1.55;margin-bottom:.4rem}
 .pn-rev-ans{font-family:'Montserrat',sans-serif;font-size:.82rem;color:var(--ink3)}
 .pn-ans-wrong{color:#c62828}
+
+/* ══════════════════════════════════════════════════════
+   UX IMPROVEMENTS — Melhorias globais de UX
+   Adicionado para melhor experiência em todas as páginas
+══════════════════════════════════════════════════════ */
+
+/* Scroll-to-top button melhorado */
+.scroll-top-btn{position:fixed;bottom:1.5rem;right:1.5rem;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#516860,#77998E);color:#fff;border:none;font-size:1.1rem;cursor:pointer;z-index:9000;opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .3s,transform .3s,box-shadow .2s;box-shadow:0 4px 16px rgba(81,104,96,.35);display:flex;align-items:center;justify-content:center}
+.scroll-top-btn:hover{box-shadow:0 6px 24px rgba(81,104,96,.5);transform:translateY(-2px)!important}
+
+/* Topbar UX controls */
+#ux-topbar-controls .ux-btn-lbl{display:none}
+@media(min-width:480px){#ux-topbar-controls .ux-btn-lbl{display:inline}}
+#ux-dark-btn.active{background:rgba(74,63,122,.12)!important;border-color:#8b7cc0!important;color:#5c4e8a!important}
+
+/* Tab scroll fade indicator */
+.ex-tabs-wrap{overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.ex-tabs-wrap::-webkit-scrollbar{display:none}
+
+/* Card entrance animations */
+.ux-anim-ready{opacity:0;transform:translateY(16px);transition:opacity .4s ease,transform .4s ease}
+.ux-anim-in{opacity:1!important;transform:none!important}
+
+/* Quiz option hover melhorado */
+.pn-opt:hover:not(:disabled){border-color:#8b7cc0!important;background:#faf9ff!important;transform:translateX(3px)}
+.pn-opt{transition:all .15s!important}
+
+/* Feedback de resposta com animação */
+@keyframes uxFeedbackIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+#pt-gram-feedback,#pt-fig-feedback,#pt-disc-feedback,#pt-con-feedback,#pt-lus-feedback,#pt-feedback,#pt-sim-feedback{animation:uxFeedbackIn .25s ease}
+
+/* Streak badge animação */
+@keyframes uxStreak{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+#ux-toast{animation:none}
+
+/* Progress bar animação */
+.ex-progress-fill,.ex-sim-timer-bar{transition:width .6s cubic-bezier(.4,0,.2,1)!important}
+
+/* Dark mode — ex-topbar */
+body.dark-mode .ex-topbar{background:rgba(18,16,32,.97)!important;border-bottom-color:#2a2840!important}
+body.dark-mode .ex-topbar-back{border-color:#3a3060!important;color:#9080c0!important}
+body.dark-mode .ex-topbar-back:hover{background:rgba(107,95,160,.15)!important}
+
+/* Dark mode — hero das páginas de exames */
+body.dark-mode .ex-hero{background:linear-gradient(150deg,#050310 0%,#0e0b20 35%,#1a1540 70%,#2a2058 100%)!important}
+body.dark-mode .ex-hstat{background:rgba(255,255,255,.05)!important;border-color:rgba(255,255,255,.08)!important}
+body.dark-mode .ex-hstat-n{color:#e0d8ff!important}
+body.dark-mode .ex-hstat-l{color:rgba(255,255,255,.4)!important}
+
+/* Dark mode — tabs */
+body.dark-mode .ex-tabs-wrap{background:rgba(20,18,36,.9)!important;border-color:#2a2840!important}
+body.dark-mode .ex-tab{color:#908890!important}
+body.dark-mode .ex-tab:hover:not(.active){background:rgba(107,95,160,.12)!important;color:#c0b8e0!important}
+body.dark-mode .ex-tab.active{color:#fff!important}
+
+/* Dark mode — cards de tema */
+body.dark-mode .ex-topic-card,body.dark-mode .pt-topic-card{background:#1e1c2e!important;border-color:#2a2840!important}
+body.dark-mode .ex-topic-label,body.dark-mode .pt-topic-label,.dark-mode .ex-topic-card *{color:#e0daf0!important}
+body.dark-mode .ex-topic-sub,body.dark-mode .pt-topic-sub{color:#8080a0!important}
+body.dark-mode .ex-topic-icon,body.dark-mode .pt-topic-icon{filter:brightness(.85)}
+
+/* Dark mode — year rows */
+body.dark-mode .pt-year-row,body.dark-mode .ex-year-row{background:#1e1c2e!important;border-color:#2a2840!important}
+body.dark-mode .pt-year-label,body.dark-mode .ex-year-label{color:#e0daf0!important}
+body.dark-mode .pt-year-sub,body.dark-mode .ex-year-sub{color:#7070a0!important}
+body.dark-mode .pt-year-btn-view{background:#252340!important;border-color:#3a3860!important;color:#a0a0c0!important}
+
+/* Dark mode — progress section */
+body.dark-mode .ex-progress-bar-section{background:#1e1c2e!important;border-color:#2a2840!important}
+body.dark-mode .ex-progress-bar{background:#2a2840!important}
+body.dark-mode .ex-progress-topic-label{color:#c0b8e0!important}
+
+/* Dark mode — simulador */
+body.dark-mode .pt-sim-card,body.dark-mode .ex-sim-card{background:#1e1c2e!important;border-color:#2a2840!important}
+body.dark-mode .pt-sim-opt,body.dark-mode .ex-sim-opt{background:#252340!important;border-color:#3a3860!important;color:#e0daf0!important}
+body.dark-mode .pt-sim-opt:hover,body.dark-mode .ex-sim-opt:hover{border-color:#6b5fa0!important;background:#2d2a50!important}
+body.dark-mode .pt-sim-opt.active,body.dark-mode .ex-sim-opt.active{border-color:#8b7cc0!important;background:#2d2a50!important}
+body.dark-mode .ex-sim-tema-pill{background:#1e1c2e!important;border-color:#3a3860!important;color:#a090d0!important}
+body.dark-mode .ex-sim-tema-pill.active{background:#5c4e8a!important;border-color:#5c4e8a!important;color:#fff!important}
+
+/* Dark mode — question cards */
+body.dark-mode #pt-inline-engine .pn-question-card,
+body.dark-mode #pt-gram-engine>div>div,
+body.dark-mode #pt-fig-engine>div>div{background:#1e1c2e!important;border-color:#2a2840!important}
+body.dark-mode .pn-opt{background:#252340!important;border-color:#3a3860!important;color:#e0daf0!important}
+body.dark-mode .pn-opt:hover:not(:disabled){background:#2d2a50!important;border-color:#6b5fa0!important}
+
+/* Dark mode — texto boxes */
+body.dark-mode .pt-texto-box{background:#151325!important;border-color:#2a2840!important}
+body.dark-mode .pt-texto-box-content{color:#e0daf0!important}
+body.dark-mode .pt-toggle-texto{background:#1e1c2e!important;border-color:#3a3860!important;color:#9080c0!important}
+
+/* Dark mode — composição */
+body.dark-mode .pt-composicao-card{background:linear-gradient(135deg,#080618,#150f30)!important}
+body.dark-mode textarea{background:#1a1830!important;border-color:#3a3860!important;color:#e0daf0!important}
+
+/* Dark mode — result hero */
+body.dark-mode .ex-result-hero{background:linear-gradient(135deg,#0a0618,#1a1440)!important}
+
+/* Dark mode — overlay */
+body.dark-mode .pt-overlay,body.dark-mode .ex-overlay{background:rgba(4,3,12,.96)!important}
+body.dark-mode .pt-overlay-bar,body.dark-mode .ex-overlay-bar{background:rgba(4,3,12,.98)!important;border-bottom-color:#1a1840!important}
+
+/* Melhorias de acessibilidade — foco visível */
+button:focus-visible,a:focus-visible{outline:2px solid #6b5fa0!important;outline-offset:2px}
+
+/* Touch — botões maiores em mobile */
+@media(max-width:480px){
+  .pt-year-btn,.ex-year-btn{padding:8px 14px!important;font-size:.75rem!important}
+  .ex-tab{padding:.65rem .35rem!important;font-size:.72rem!important}
+  .pn-opt{padding:.85rem 1rem!important}
+}
+
+/* Animação suave para painéis */
+.ex-panel.active{animation:uxPanelIn .2s ease}
+@keyframes uxPanelIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* Indicador de progresso no hero */
+.ex-hstat{cursor:default}
+.ex-hstat[style*="cursor:pointer"]{cursor:pointer}
+.ex-hstat[style*="cursor:pointer"]:hover{background:rgba(255,255,255,.16)!important;transform:translateY(-3px)}
