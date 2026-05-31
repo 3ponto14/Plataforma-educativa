@@ -1189,25 +1189,47 @@ function ptRenderProgresso() {
   var prog = ptGetProgress();
   var all = ptAllQuestions();
   var total = all.length;
-  var done = 0;
-  var certas = 0;
+  var done = 0, certas = 0;
   all.forEach(function(q) {
     var p = prog[q.id];
-    if (p && p.attempts > 0) {
-      done++;
-      if (p.correct > 0) certas++;
-    }
+    if (p && p.attempts > 0) { done++; if (p.correct > 0) certas++; }
   });
   var pct = done ? Math.round(certas / done * 100) : 0;
 
-  var h = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem;margin-bottom:1.5rem">';
-  h += '<div class="ex-hstat" style="background:var(--white);border:1.5px solid var(--border)"><div class="ex-hstat-n" style="color:#5c4e8a">' + done + '</div><div class="ex-hstat-l" style="color:var(--ink4)">Respondidas</div></div>';
-  h += '<div class="ex-hstat" style="background:var(--white);border:1.5px solid var(--border)"><div class="ex-hstat-n" style="color:#2e7d52">' + certas + '</div><div class="ex-hstat-l" style="color:var(--ink4)">Corretas</div></div>';
-  h += '<div class="ex-hstat" style="background:var(--white);border:1.5px solid var(--border)"><div class="ex-hstat-n" style="color:#e67e22">' + pct + '%</div><div class="ex-hstat-l" style="color:var(--ink4)">Taxa de acerto</div></div>';
-  h += '<div class="ex-hstat" style="background:var(--white);border:1.5px solid var(--border)"><div class="ex-hstat-n" style="color:var(--ink2)">' + (total - done) + '</div><div class="ex-hstat-l" style="color:var(--ink4)">Por fazer</div></div>';
+  var h = '';
+
+  // Empty state — se nunca fez nada
+  if (done === 0) {
+    h += '<div style="text-align:center;padding:3rem 1.5rem;background:var(--white);border:1.5px dashed var(--border);border-radius:20px">';
+    h += '<div style="font-size:3rem;margin-bottom:1rem">📚</div>';
+    h += '<div style="font-family:Cormorant Garamond,serif;font-size:1.4rem;font-weight:700;color:var(--ink1);margin-bottom:.5rem">Ainda não fizeste nenhum exercício</div>';
+    h += '<div style="font-size:.85rem;color:var(--ink3);line-height:1.7;max-width:380px;margin:0 auto 1.5rem">Começa pelos <strong>Exames</strong> para treinar questões reais, ou experimenta a <strong>Gramática</strong> para preparar este tema específico.</div>';
+    h += '<div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">';
+    h += '<button onclick="ptSwitchMode(\'temas\',document.querySelector(\'.ex-tab\'))" style="background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:12px;padding:.75rem 1.5rem;font-weight:800;font-size:.85rem;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-play"></i> Começar agora</button>';
+    h += '<button onclick="ptSwitchMode(\'gramatica\',null)" style="background:var(--white);color:#4a3f7a;border:1.5px solid #d4cdf0;border-radius:12px;padding:.75rem 1.5rem;font-weight:700;font-size:.85rem;cursor:pointer;font-family:Montserrat,sans-serif">Ir para Gramática</button>';
+    h += '</div></div>';
+    wrap.innerHTML = h;
+    return;
+  }
+
+  // Stats cards
+  var emoji = pct >= 80 ? '🏆' : pct >= 60 ? '🎯' : pct >= 40 ? '📈' : '💪';
+  var msg = pct >= 80 ? 'Excelente domínio!' : pct >= 60 ? 'Boa prestação — continua!' : pct >= 40 ? 'Estás no caminho certo!' : 'Continua a praticar!';
+
+  h += '<div style="background:linear-gradient(135deg,#2d2450,#4a3f7a);border-radius:20px;padding:1.5rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap">';
+  h += '<div style="font-size:2.5rem">' + emoji + '</div>';
+  h += '<div><div style="font-family:JetBrains Mono,monospace;font-size:2rem;font-weight:700;color:#fff;line-height:1">' + pct + '%</div>';
+  h += '<div style="font-size:.8rem;color:rgba(255,255,255,.7);margin-top:.25rem">' + msg + ' · ' + done + '/' + total + ' questões feitas</div></div>';
   h += '</div>';
 
-  // Por tema
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.6rem;margin-bottom:1.25rem">';
+  h += '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:.85rem;text-align:center"><div style="font-family:JetBrains Mono,monospace;font-size:1.6rem;font-weight:700;color:#5c4e8a">' + done + '</div><div style="font-size:.65rem;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:.2rem">Respondidas</div></div>';
+  h += '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:.85rem;text-align:center"><div style="font-family:JetBrains Mono,monospace;font-size:1.6rem;font-weight:700;color:#2e7d52">' + certas + '</div><div style="font-size:.65rem;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:.2rem">Corretas</div></div>';
+  h += '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:.85rem;text-align:center"><div style="font-family:JetBrains Mono,monospace;font-size:1.6rem;font-weight:700;color:#c0392b">' + (done - certas) + '</div><div style="font-size:.65rem;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:.2rem">Erradas</div></div>';
+  h += '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:.85rem;text-align:center"><div style="font-family:JetBrains Mono,monospace;font-size:1.6rem;font-weight:700;color:var(--ink2)">' + (total - done) + '</div><div style="font-size:.65rem;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:.2rem">Por fazer</div></div>';
+  h += '</div>';
+
+  // Barras por tema
   h += '<div class="ex-progress-bar-section">';
   h += '<div class="ex-progress-bar-title"><span>Progresso por Tema</span></div>';
   PT_TEMAS.forEach(function(t) {
@@ -1215,6 +1237,7 @@ function ptRenderProgresso() {
     var tDone = tQs.filter(function(q){ var p=prog[q.id]; return p&&p.attempts>0; }).length;
     var tCert = tQs.filter(function(q){ var p=prog[q.id]; return p&&p.correct>0; }).length;
     var tPct = tQs.length ? Math.round(tDone / tQs.length * 100) : 0;
+    var acerto = tDone ? Math.round(tCert / tDone * 100) : 0;
     h += '<div class="ex-progress-topic-row">';
     h += '<div class="ex-progress-topic-label">' + t.label + '</div>';
     h += '<div class="ex-progress-bar"><div class="ex-progress-fill" style="width:' + tPct + '%"></div></div>';
@@ -1223,9 +1246,26 @@ function ptRenderProgresso() {
   });
   h += '</div>';
 
-  if (done > 0) {
-    h += '<button onclick="ptResetProgress()" style="font-size:.75rem;font-weight:700;color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;padding:7px 18px;cursor:pointer;margin-top:.5rem">Limpar progresso</button>';
+  // Sugestão baseada no desempenho
+  var piorTema = null, piorAcerto = 101;
+  PT_TEMAS.forEach(function(t) {
+    var tQs = all.filter(function(q){ return q.tema === t.id; });
+    var tDone = tQs.filter(function(q){ var p=prog[q.id]; return p&&p.attempts>0; }).length;
+    var tCert = tQs.filter(function(q){ var p=prog[q.id]; return p&&p.correct>0; }).length;
+    if (tDone > 0) {
+      var ac = Math.round(tCert / tDone * 100);
+      if (ac < piorAcerto) { piorAcerto = ac; piorTema = t; }
+    }
+  });
+  if (piorTema && piorAcerto < 70) {
+    h += '<div style="background:#fef3e2;border:1.5px solid #f4d99a;border-radius:14px;padding:1rem 1.25rem;margin-top:.75rem;display:flex;align-items:center;gap:.75rem">';
+    h += '<span style="font-size:1.3rem">💡</span>';
+    h += '<div><div style="font-size:.85rem;font-weight:700;color:#7a4a10">Reforça: ' + piorTema.label + '</div>';
+    h += '<div style="font-size:.75rem;color:#9a6020;margin-top:.2rem">Taxa de acerto de ' + piorAcerto + '% — pratica mais este tema para melhorar.</div></div>';
+    h += '</div>';
   }
+
+  h += '<button onclick="ptResetProgress()" style="font-size:.75rem;font-weight:700;color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;padding:7px 18px;cursor:pointer;margin-top:1rem;font-family:Montserrat,sans-serif">Limpar progresso</button>';
   wrap.innerHTML = h;
 }
 
