@@ -495,7 +495,7 @@ function ptConRender() {
   h += '<div id="pt-con-opts">';
   var opts = q.opts.slice().sort(function(){ return Math.random()-.5; });
   opts.forEach(function(opt) {
-    h += '<button onclick="ptConSelect(this,\'' + opt.replace(/'/g,"\\'") + '\')" data-opt="' + opt.replace(/"/g,'&quot;') + '" style="display:block;width:100%;text-align:left;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:.8rem 1.1rem;margin-bottom:.5rem;font-family:Montserrat,sans-serif;font-size:.86rem;font-weight:600;color:var(--ink1);cursor:pointer;transition:all .15s">' + opt + '</button>';
+    h += '<button onclick="ptConSelect(this)" data-opt="' + opt.replace(/"/g,'&quot;').replace(/'/g,'&#39;') + '" style="display:block;width:100%;text-align:left;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:.8rem 1.1rem;margin-bottom:.5rem;font-family:Montserrat,sans-serif;font-size:.86rem;font-weight:600;color:var(--ink1);cursor:pointer;transition:all .15s">' + opt + '</button>';
   });
   h += '</div>';
   h += '<div id="pt-con-feedback" style="display:none;margin-top:.75rem"></div>';
@@ -505,8 +505,9 @@ function ptConRender() {
   _ptCon.answered = false;
 }
 
-function ptConSelect(btn, chosen) {
+function ptConSelect(btn) {
   if (_ptCon.answered) return;
+  var chosen = btn.getAttribute('data-opt');
   _ptCon.answered = true;
   _ptCon.total++;
   var q = _ptCon.banco[_ptCon.idx];
