@@ -35,7 +35,7 @@ function uxInjectTopbarControls() {
 
   var wrap = document.createElement('div');
   wrap.id = 'ux-topbar-controls';
-  wrap.style.cssText = 'display:flex;align-items:center;gap:.4rem;margin-left:.5rem;flex-shrink:0';
+  wrap.style.cssText = 'display:flex;align-items:center;gap:.4rem;flex-shrink:0;margin-left:auto';
 
   // Dark mode button
   var darkBtn = document.createElement('button');
@@ -49,10 +49,15 @@ function uxInjectTopbarControls() {
 
   wrap.appendChild(darkBtn);
 
-  // Inserir antes do botão "Início" (back)
+  // Inserir o wrap — coloca-o antes do back button e remove o margin-left:auto do back button
   var backBtn = topbar.querySelector('.ex-topbar-back, .topbar-right');
-  if (backBtn) topbar.insertBefore(wrap, backBtn);
-  else topbar.appendChild(wrap);
+  if (backBtn) {
+    // Remover o margin-left:auto do back button (agora o wrap tem esse papel)
+    backBtn.style.marginLeft = '0';
+    topbar.insertBefore(wrap, backBtn);
+  } else {
+    topbar.appendChild(wrap);
+  }
 
   // Aplicar estado guardado
   var saved = '0';

@@ -388,6 +388,8 @@ function ptDiscRender() {
 
 function ptDiscSelect(btn, chosen) {
   if (_ptDisc.answered) return;
+  // Aceitar chosen como argumento ou lê-lo do data-idx
+  if (chosen === undefined) chosen = parseInt(btn.getAttribute('data-idx'));
   _ptDisc.answered = true;
   _ptDisc.total++;
   var q = _ptDisc.banco[_ptDisc.idx];
