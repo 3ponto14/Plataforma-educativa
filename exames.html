@@ -415,14 +415,24 @@ function exSubMode(sub) {
   var temaBtn = document.getElementById('ex-sub-tema');
   var provaBtn = document.getElementById('ex-sub-prova');
   if (!temaPnl || !provaPnl) return;
+  // Clear any inline exercise content when switching modes
+  var inlineProvas = document.getElementById('mat7-inline-provas');
+  var inlineYear = document.getElementById('ex-year-inline');
+  var topicGrid = document.getElementById('ex-topic-grid');
+  if (inlineProvas) inlineProvas.innerHTML = '';
+  if (inlineYear) inlineYear.innerHTML = '';
+  if (topicGrid) topicGrid.style.display = 'grid';
+  if (typeof _pnClearInline === 'function') _pnClearInline();
   if (sub === 'tema') {
     temaPnl.style.display = 'block'; provaPnl.style.display = 'none';
     if (temaBtn) { temaBtn.style.background='linear-gradient(135deg,#4a3f7a,#6b5fa0)'; temaBtn.style.color='#fff'; temaBtn.style.border='none'; }
     if (provaBtn) { provaBtn.style.background='transparent'; provaBtn.style.color='var(--ink3)'; provaBtn.style.border='1.5px solid var(--border)'; }
+    exRenderTopicGrid();
   } else {
     temaPnl.style.display = 'none'; provaPnl.style.display = 'block';
     if (provaBtn) { provaBtn.style.background='linear-gradient(135deg,#4a3f7a,#6b5fa0)'; provaBtn.style.color='#fff'; provaBtn.style.border='none'; }
     if (temaBtn) { temaBtn.style.background='transparent'; temaBtn.style.color='var(--ink3)'; temaBtn.style.border='1.5px solid var(--border)'; }
+    exRenderYearList();
   }
 }
 

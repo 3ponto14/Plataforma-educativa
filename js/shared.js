@@ -1633,7 +1633,9 @@ function _buildChapterNav(activeCap) {
     {n:3, label:'Geometria'},
     {n:4, label:'Equações'},
     {n:5, label:'Sequências'},
-    {n:6, label:'Estatística', locked:true}
+    {n:6, label:'Funções'},
+    {n:7, label:'Figuras Semelhantes'},
+    {n:8, label:'Dados e Prob.'}
   ];
   var h = '<button class="ch-back-link" onclick="showMat7View()">← Capítulos</button><div class="ch-nav-divider"></div>';
   caps.forEach(function(c) {
