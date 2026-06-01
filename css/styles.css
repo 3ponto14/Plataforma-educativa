@@ -697,6 +697,7 @@ body::before{content:'';position:fixed;inset:0;background:
   radial-gradient(ellipse 50% 40% at 70% 10%,rgba(215,189,178,.10) 0%,transparent 45%),
   radial-gradient(ellipse 40% 50% at 15% 85%,rgba(81,104,96,.08) 0%,transparent 45%);
   pointer-events:none;z-index:0;animation:bgPulse 14s ease-in-out infinite alternate}
+@keyframes bgPulse{0%{opacity:.8}50%{opacity:1}100%{opacity:.8}}
 @keyframes bgPulse2{0%{opacity:.7}50%{opacity:1}100%{opacity:.7}}
 
 body::after{content:'';position:fixed;inset:0;
