@@ -44,6 +44,7 @@
 
 <div id="view-portal">
 
+<!-- Topbar simples -->
 <nav class="site-topbar">
   <a href="#" class="site-topbar-logo">
     <div class="mark">3π</div>
@@ -52,56 +53,76 @@
   <div class="site-topbar-actions"></div>
 </nav>
 
-<header class="page-header">
-  <div class="page-header-inner" style="max-width:860px">
-    <h1 style="font-size:1.8rem">3ponto<em>14</em></h1>
-    <p class="page-header-sub">Exercícios, fichas, jogos e exames nacionais — Matemática e Português, ao teu ritmo.</p>
+<!-- Hero do portal -->
+<section class="portal-hero">
+  <div class="portal-hero-inner">
+    <div class="portal-hero-brand">3ponto<em>14</em></div>
+    <h1 class="portal-hero-title">Estuda melhor.<br>Vai mais longe.</h1>
+    <p class="portal-hero-sub">Exercícios interativos, fichas, jogos e preparação para os exames nacionais — Matemática e Português, tudo num só lugar.</p>
   </div>
-</header>
+</section>
 
-<div class="portal-cards">
-  <button class="portal-card" onclick="showMat7View()">
-    <div class="portal-card-icon portal-card-icon--mat">
-      <i class="ph ph-calculator"></i>
+<!-- Cards de acesso -->
+<div class="portal-section">
+
+  <!-- Matemática 7.º -->
+  <div class="portal-section-label">Matemática 7.º Ano</div>
+  <button class="portal-main-card portal-main-card--mat" onclick="showMat7View()">
+    <div class="portal-main-card-left">
+      <div class="portal-main-card-icon"><i class="ph ph-calculator"></i></div>
+      <div>
+        <div class="portal-main-card-title">Conteúdo Completo</div>
+        <div class="portal-main-card-sub">Teoria, exercícios interativos, minitestes, jogos, flashcards e fichas para todos os 8 capítulos do programa.</div>
+      </div>
     </div>
-    <div class="portal-card-body">
-      <div class="portal-card-title">Matemática · 7.º Ano</div>
-      <div class="portal-card-sub">Teoria, exercícios, jogos e fichas — todos os 8 capítulos</div>
+    <div class="portal-main-card-chips">
+      <span>8 capítulos</span>
+      <span>Exercícios gerados</span>
+      <span>Jogos</span>
+      <span>Fichas PDF</span>
     </div>
-    <i class="ph ph-arrow-right portal-card-arrow"></i>
+    <div class="portal-main-card-cta">Começar <i class="ph ph-arrow-right"></i></div>
   </button>
 
-  <button class="portal-card" onclick="window.location.href='exames.html'">
-    <div class="portal-card-icon portal-card-icon--exmat">
-      <i class="ph ph-exam"></i>
-    </div>
-    <div class="portal-card-body">
-      <div class="portal-card-title">Matemática · 9.º Ano</div>
-      <div class="portal-card-sub">Exames nacionais 2019–2024 com resolução</div>
-    </div>
-    <i class="ph ph-arrow-right portal-card-arrow"></i>
-  </button>
+  <!-- Exames Nacionais 9.º -->
+  <div class="portal-section-label" style="margin-top:1.5rem">Exames Nacionais · 9.º Ano</div>
+  <div class="portal-exam-grid">
 
-  <button class="portal-card" onclick="window.location.href='exames-pt.html'">
-    <div class="portal-card-icon portal-card-icon--expt">
-      <i class="ph ph-book-open-text"></i>
-    </div>
-    <div class="portal-card-body">
-      <div class="portal-card-title">Português · 9.º Ano</div>
-      <div class="portal-card-sub">Gramática, figuras, Lusíadas e exames</div>
-    </div>
-    <i class="ph ph-arrow-right portal-card-arrow"></i>
-  </button>
+    <button class="portal-exam-card portal-exam-card--mat" onclick="window.location.href='exames.html'">
+      <div class="portal-exam-card-icon"><i class="ph ph-exam"></i></div>
+      <div class="portal-exam-card-subject">Matemática</div>
+      <div class="portal-exam-card-title">Provas Finais Nacionais</div>
+      <div class="portal-exam-card-desc">Questões reais de 2019 a 2024 com resolução detalhada. Treina por tema ou simula o exame.</div>
+      <div class="portal-exam-card-tags">
+        <span>147+ questões</span>
+        <span>9 provas</span>
+        <span>Simulador</span>
+      </div>
+      <div class="portal-exam-card-cta">Praticar <i class="ph ph-arrow-right"></i></div>
+    </button>
+
+    <button class="portal-exam-card portal-exam-card--pt" onclick="window.location.href='exames-pt.html'">
+      <div class="portal-exam-card-icon"><i class="ph ph-book-open-text"></i></div>
+      <div class="portal-exam-card-subject">Português</div>
+      <div class="portal-exam-card-title">Provas Finais Nacionais</div>
+      <div class="portal-exam-card-desc">Compreensão, gramática, figuras de estilo, Os Lusíadas, discurso e composição.</div>
+      <div class="portal-exam-card-tags">
+        <span>200+ exercícios</span>
+        <span>8 provas</span>
+        <span>Os Lusíadas</span>
+      </div>
+      <div class="portal-exam-card-cta">Praticar <i class="ph ph-arrow-right"></i></div>
+    </button>
+
+  </div>
 </div>
 
-<!-- ── Progresso rápido (injectado por portal.js) ── -->
+<!-- Progresso rápido -->
 <div id="portal-progress-widget" style="display:none;max-width:760px;margin:.5rem auto 0;padding:0 1rem"></div>
-
-<!-- Placeholder para compatibilidade com portal.js -->
 <main id="portal-main" style="display:none"></main>
 
-<footer>
-  <strong>3ponto14</strong> · Centro de Estudos · Construído com <i class="ph ph-heart" aria-hidden="true"></i> para alunos e professores de Portugal
+<footer class="portal-footer">
+  <strong>3ponto14</strong> · Feito com <i class="ph ph-heart"></i> para alunos e professores de Portugal
 </footer>
 </div>
 

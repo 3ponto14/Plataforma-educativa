@@ -2909,3 +2909,230 @@ body.dark-mode .portal-card:hover {
   border-color: var(--c2-mid) !important;
 }
 
+
+/* ══════════════════════════════════════════════════════════════
+   PORTAL — Redesign
+══════════════════════════════════════════════════════════════ */
+
+/* ── Hero ── */
+.portal-hero {
+  background: var(--cream);
+  padding: 3.5rem 1.5rem 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.portal-hero-inner {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+.portal-hero-brand {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--c2-mid);
+  margin-bottom: .75rem;
+}
+.portal-hero-brand em { font-style: normal; }
+.portal-hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--ink1);
+  line-height: 1.15;
+  margin-bottom: .75rem;
+}
+@media(max-width:480px){ .portal-hero-title { font-size: 2rem; } }
+.portal-hero-sub {
+  font-size: .88rem;
+  color: var(--ink3);
+  line-height: 1.7;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+/* ── Section wrapper ── */
+.portal-section {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+}
+.portal-section-label {
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  margin-bottom: .75rem;
+}
+
+/* ── Card grande: Matemática 7.º ── */
+.portal-main-card {
+  display: block;
+  width: 100%;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+  font-family: 'Montserrat', sans-serif;
+  border-left: 4px solid var(--c2-mid);
+}
+.portal-main-card:hover {
+  border-color: var(--c2-mid);
+  box-shadow: 0 6px 24px rgba(81,104,96,.12);
+  transform: translateY(-2px);
+}
+.portal-main-card-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.portal-main-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--c2-base);
+  color: var(--c2-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.portal-main-card--mat .portal-main-card-icon { background: var(--c2-base); color: var(--c2-deep); }
+.portal-main-card-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--ink1);
+  margin-bottom: .25rem;
+}
+.portal-main-card-sub {
+  font-size: .82rem;
+  color: var(--ink3);
+  line-height: 1.55;
+}
+.portal-main-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-bottom: .9rem;
+}
+.portal-main-card-chips span {
+  font-size: .68rem;
+  font-weight: 700;
+  color: var(--c2-deep);
+  background: var(--c2-base);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.portal-main-card-cta {
+  font-size: .8rem;
+  font-weight: 800;
+  color: var(--c2-mid);
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+}
+
+/* ── Grid de exames ── */
+.portal-exam-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+}
+@media(max-width:520px){ .portal-exam-grid { grid-template-columns: 1fr; } }
+
+.portal-exam-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 1.4rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+.portal-exam-card:hover {
+  box-shadow: 0 6px 24px rgba(0,0,0,.09);
+  transform: translateY(-2px);
+}
+.portal-exam-card--mat { border-top: 3px solid #5c4e8a; }
+.portal-exam-card--mat:hover { border-color: #5c4e8a; }
+.portal-exam-card--pt  { border-top: 3px solid #4a3f7a; }
+.portal-exam-card--pt:hover  { border-color: #4a3f7a; }
+
+.portal-exam-card-icon {
+  font-size: 1.5rem;
+  margin-bottom: .25rem;
+}
+.portal-exam-card--mat .portal-exam-card-icon { color: #5c4e8a; }
+.portal-exam-card--pt  .portal-exam-card-icon { color: #4a3f7a; }
+
+.portal-exam-card-subject {
+  font-size: .65rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink4);
+}
+.portal-exam-card-title {
+  font-size: .9rem;
+  font-weight: 800;
+  color: var(--ink1);
+  line-height: 1.2;
+}
+.portal-exam-card-desc {
+  font-size: .78rem;
+  color: var(--ink3);
+  line-height: 1.55;
+  flex: 1;
+}
+.portal-exam-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem;
+  margin-top: .25rem;
+}
+.portal-exam-card-tags span {
+  font-size: .63rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+.portal-exam-card--mat .portal-exam-card-tags span { background: #f0edf7; color: #5c4e8a; }
+.portal-exam-card--pt  .portal-exam-card-tags span { background: #ede8f5; color: #4a3f7a; }
+
+.portal-exam-card-cta {
+  font-size: .76rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  margin-top: .4rem;
+}
+.portal-exam-card--mat .portal-exam-card-cta { color: #5c4e8a; }
+.portal-exam-card--pt  .portal-exam-card-cta { color: #4a3f7a; }
+
+/* ── Footer ── */
+.portal-footer {
+  text-align: center;
+  font-size: .75rem;
+  color: var(--ink4);
+  padding: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Dark mode ── */
+body.dark-mode .portal-hero { background: #1a1a1a !important; border-bottom-color: #2a2a2a !important; }
+body.dark-mode .portal-main-card,
+body.dark-mode .portal-exam-card { background: #1e1e1e !important; border-color: #2a2a2a !important; }
+body.dark-mode .portal-main-card:hover { border-color: var(--c2-mid) !important; }
+
