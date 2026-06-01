@@ -22,16 +22,6 @@ var EXAMES_PT_BANCO = {
       paginas: [6, 7]
     },
     'D': {
-      titulo: 'Texto D — Os Lusíadas, Canto X, estância 154',
-      autor: 'Luís de Camões',
-      paginas: [12]
-    },
-    'C': {
-      titulo: 'Texto C — Erros Meus, Má Fortuna, Amor Ardente (excerto)',
-      autor: 'Natália Correia',
-      paginas: [6, 7]
-    },,
-    'D': {
       titulo: 'Texto D — Os Lusíadas, Canto X, est. 154',
       autor: 'Luís de Camões',
       paginas: [12]
@@ -156,7 +146,6 @@ var EXAMES_PT_BANCO = {
   ano: 2024,
   textos: {
     'B': { titulo: 'Texto B — A Arte Faz-nos Bem (excerto)', autor: 'Cláudia Câmara; Ana Lima', paginas: [4, 5] },
-    'C': { titulo: 'Texto C — Odisseia (excerto)', autor: 'Homero / trad. Frederico Lourenço', paginas: [6, 7, 8] },
     'C': {
       titulo: 'Texto C — Odisseia (excerto)',
       autor: 'Homero / trad. Frederico Lourenço',
@@ -256,12 +245,11 @@ var EXAMES_PT_BANCO = {
   ano: 2023,
   textos: {
     'B': { titulo: 'Texto B — Sobre ouvir histórias', autor: 'Autor não identificado', paginas: [4, 5] },
-    'C': { titulo: 'Texto C — Raul contador de histórias (excerto)', autor: 'Aquilino Ribeiro', paginas: [6, 7, 8, 9, 10] },
     'C': {
       titulo: 'Texto C — Raul contador de histórias (excerto)',
       autor: 'Aquilino Ribeiro',
       paginas: [6, 7, 8, 9, 10]
-    },,
+    },
     'D': {
       titulo: 'Texto D — Gramática e expressão escrita',
       autor: null,
@@ -377,7 +365,6 @@ var EXAMES_PT_BANCO = {
   ano: 2023,
   textos: {
     'B': { titulo: 'Texto B — Sobre a imaginação', autor: 'Autor não identificado', paginas: [4, 5] },
-    'C': { titulo: 'Texto C — O Inferno (excerto de peça teatral)', autor: 'Autor contemporâneo', paginas: [6, 7, 8, 9, 10] },
     'C': {
       titulo: 'Texto C — O Inferno (excerto de peça teatral)',
       autor: null,
@@ -485,12 +472,11 @@ var EXAMES_PT_BANCO = {
   ano: 2022,
   textos: {
     'B': { titulo: 'Texto B — Roteiros náuticos medievais', autor: 'Autor não identificado', paginas: [4, 5] },
-    'C': { titulo: 'Texto C — «Jesus» (excerto)', autor: 'Miguel Torga', paginas: [6, 7, 8, 9, 10] },
     'C': {
       titulo: 'Texto C — «Jesus» (excerto)',
       autor: 'Miguel Torga',
       paginas: [6, 7, 8, 9, 10]
-    },,
+    },
     'D': {
       titulo: 'Texto D — Análise literária',
       autor: null,
@@ -582,7 +568,6 @@ var EXAMES_PT_BANCO = {
   ano: 2022,
   textos: {
     'B': { titulo: 'Texto B — O cérebro e os movimentos', autor: 'Autor não identificado', paginas: [4, 5] },
-    'C': { titulo: 'Texto C — «A Estrela» (excerto)', autor: 'Autor não identificado', paginas: [6, 7, 8, 9, 10] },
     'C': {
       titulo: 'Texto C — «A Estrela» (excerto)',
       autor: null,
@@ -682,7 +667,6 @@ var EXAMES_PT_BANCO = {
   ano: 2021,
   textos: {
     'B': { titulo: 'Texto B — Os Poemas Homéricos', autor: 'Autor não identificado', paginas: [4, 5, 6] },
-    'C': { titulo: 'Texto C — A Odisseia para Jovens (excerto)', autor: 'Frederico Lourenço', paginas: [7, 8, 9, 10, 11] },
     'C': {
       titulo: 'Texto C — A Odisseia para Jovens (excerto)',
       autor: 'Frederico Lourenço',
@@ -774,13 +758,11 @@ var EXAMES_PT_BANCO = {
   ano: 2019,
   textos: {
     'B': { titulo: 'Texto B — A escrita e a imprensa', autor: 'Autor não identificado', paginas: [4, 5] },
-    'C': { titulo: 'Texto C — Que Farei com Este Livro? (excerto)', autor: 'José Saramago', paginas: [6, 7, 8, 9] },
-    'D': { titulo: 'Grupo III — Gramática', paginas: [11, 12] },
     'C': {
       titulo: 'Texto C — Que Farei com Este Livro? (excerto)',
       autor: 'José Saramago',
       paginas: [6, 7, 8, 9]
-    },,
+    },
     'D': {
       titulo: 'Grupo III — Gramática',
       autor: null,
