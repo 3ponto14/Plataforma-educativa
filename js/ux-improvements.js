@@ -29,8 +29,8 @@ window.uxToggleDark = function() {
    2. INJECTAR BOTÕES NA TOPBAR DOS EXAMES
 ══════════════════════════════════════════════════════ */
 function uxInjectTopbarControls() {
-  // Funciona com .ex-topbar (exames) e .topbar (mat7)
-  var topbar = document.querySelector('.ex-topbar, .topbar');
+  // Funciona com .site-topbar (novo), .ex-topbar e .topbar (legacy)
+  var topbar = document.querySelector('.site-topbar, .ex-topbar, .topbar');
   if (!topbar || document.getElementById('ux-dark-btn')) return;
 
   var wrap = document.createElement('div');
@@ -49,14 +49,20 @@ function uxInjectTopbarControls() {
 
   wrap.appendChild(darkBtn);
 
-  // Inserir o wrap — coloca-o antes do back button e remove o margin-left:auto do back button
-  var backBtn = topbar.querySelector('.ex-topbar-back, .topbar-right');
-  if (backBtn) {
-    // Remover o margin-left:auto do back button (agora o wrap tem esse papel)
-    backBtn.style.marginLeft = '0';
-    topbar.insertBefore(wrap, backBtn);
+  // Inserir — antes do back button ou dentro de .site-topbar-actions se existir
+  var actionsSlot = topbar.querySelector('.site-topbar-actions');
+  if (actionsSlot) {
+    actionsSlot.appendChild(darkBtn);
+    // Não precisamos do wrap separado neste caso
+    wrap.remove();
   } else {
-    topbar.appendChild(wrap);
+    var backBtn = topbar.querySelector('.ex-topbar-back, .topbar-right, .site-topbar-back');
+    if (backBtn) {
+      backBtn.style.marginLeft = '0';
+      topbar.insertBefore(wrap, backBtn);
+    } else {
+      topbar.appendChild(wrap);
+    }
   }
 
   // Aplicar estado guardado

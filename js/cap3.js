@@ -791,7 +791,7 @@ _capRegisterWrappers(3, {
 /* Visual effects loaded from fx.js */
 
 // ── Topic grid data ──
-var _c3Teoria = "showSection3('teoria3',document.querySelector('#tabs3 .tab-btn:nth-child(2)'))";
+var _c3Teoria = "showSection3('teoria3',null)";
 var _cap3Topics = [
   {id:'tr3-1', num:'01', title:'Ângulos internos de polígonos', open:true, subs:[
     {onclick:_c3Teoria, label:'Fórmula (n\u22122)\xd7180\xb0', icon:'ph-book-open-text'},

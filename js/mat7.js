@@ -847,6 +847,7 @@ function mat7TabReload(tab) {
 function mat7TabCapClick(tab, cap, btn) {
   var container = document.getElementById('mat7-caps-' + tab);
   if (!container) return;
+  if (!btn) return;
 
   if (tab === 'resumo') {
     // Single-select para o resumo

@@ -777,7 +777,7 @@ function resetProg4(){
 }
 
 // ── Topic grid data ──
-var _c4Teoria = "showSection4('teoria4',document.querySelector('#tabs4 .tab-btn:nth-child(2)'))";
+var _c4Teoria = "showSection4('teoria4',null)";
 var _cap4Topics = [
   {id:'tr4-1', num:'01', title:'Expressões Algébricas', open:true, subs:[
     {onclick:_c4Teoria, label:'Monómios e polinómios', icon:'ph-book-open-text'},

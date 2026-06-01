@@ -73,12 +73,14 @@ if (_isMat7Hub) {
       return;
     }
     // 2. Fallback: localStorage (used by showGeradorFichas)
-    var tab = localStorage.getItem('mat7OpenTab');
-    if (tab) {
-      localStorage.removeItem('mat7OpenTab');
-      var btn2 = document.querySelector('.mat7-hub-tab[data-tab="' + tab + '"]');
-      if (btn2 && typeof mat7SwitchTab === 'function') mat7SwitchTab(tab, btn2);
-    }
+    try {
+      var tab = localStorage.getItem('mat7OpenTab');
+      if (tab) {
+        localStorage.removeItem('mat7OpenTab');
+        var btn2 = document.querySelector('.mat7-hub-tab[data-tab="' + tab + '"]');
+        if (btn2 && typeof mat7SwitchTab === 'function') mat7SwitchTab(tab, btn2);
+      }
+    } catch(e) {}
   });
 }
 

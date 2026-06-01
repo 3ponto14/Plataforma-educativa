@@ -456,7 +456,7 @@ function resetProg5(){
 }
 
 // ── Topic grid data ──
-var _c5Teoria = "showSection5('teoria5',document.querySelector('#tabs5 .tab-btn:nth-child(2)'))";
+var _c5Teoria = "showSection5('teoria5',null)";
 // ── Subtema support ─────────────────────────────────────────────────────────
 var _cap5SubtemaTitulos = {
   '1': 'Termo Geral e Razão',
