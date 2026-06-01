@@ -627,8 +627,8 @@ function _exRenderSimResult() {
   h += '<div class="ex-result-detail">' + score + ' de ' + total + ' questões corretas &mdash; ' + pct + '%</div>';
   h += '<div class="ex-result-msg">' + msg + '</div>';
   h += '<div class="ex-result-btns">';
-  h += '<button class="btn btn-ghost" onclick="exSimReset()" style="color:#fff;border-color:rgba(255,255,255,.3)"><i class="ph ph-arrow-left"></i> Novo simulador</button>';
-  h += '<button class="btn btn-primary" onclick="exSimStart()" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3)"><i class="ph ph-arrow-clockwise"></i> Repetir</button>';
+  h += '<button class="btn btn-ghost" onclick="exSwitchMode(\'temas\',null)" style="color:#fff;border-color:rgba(255,255,255,.3)"><i class="ph ph-books"></i> Praticar por Tema</button>';
+  h += '<button class="btn btn-primary" onclick="exSimReset()" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3)"><i class="ph ph-arrow-clockwise"></i> Novo simulador</button>';
   h += '</div></div>';
 
   /* Revisão */

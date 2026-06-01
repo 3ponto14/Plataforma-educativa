@@ -872,6 +872,7 @@ function ptRenderYearGridMini() {
     h += '<div class="pt-year-label" style="font-size:.82rem">' + exam.label + '</div>';
     h += '<div class="pt-year-actions">';
     h += '<button class="pt-year-btn pt-year-btn-practice" onclick="ptStartYear(\'' + key + '\')" style="padding:5px 11px;font-size:.68rem"><i class="ph ph-play"></i> Praticar</button>';
+    h += '<button class="pt-year-btn pt-year-btn-view" onclick="ptViewProva(\'' + key + '\')" style="padding:5px 11px;font-size:.68rem"><i class="ph ph-eye"></i> Ver</button>';
     h += '</div>';
     h += '</div>';
   });
@@ -908,9 +909,9 @@ function ptStartYear(examKey) {
 
 function _ptYearBack() {
   var eng = document.getElementById('pt-inline-engine');
-  var panel = document.getElementById('pt-panel-provas');
   if (eng) { eng.innerHTML = ''; eng.style.display = 'none'; }
-  if (panel) panel.style.display = '';
+  // Voltar à tab 'Questões' (temas) com o mini grid de provas visível
+  ptSwitchMode('temas', null);
 }
 
 function ptViewProva(examKey) {
