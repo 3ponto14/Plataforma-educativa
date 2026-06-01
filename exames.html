@@ -438,22 +438,33 @@ function exRenderTopicGrid() {
     var prog = d[t.key] || { feitas:0, certas:0 };
     var pct = prog.feitas > 0 ? Math.round(prog.certas / prog.feitas * 100) : 0;
     var banco = (window.PROVAS_BANCO && PROVAS_BANCO[t.key]) ? PROVAS_BANCO[t.key].length : 0;
-    var isNew = prog.feitas === 0;
-    h += '<button class="ex-topic-card" onclick="exStartTopic(\'' + t.key + '\')">';
-    if (isNew) h += '<span class="ex-topic-new-badge">NOVO</span>';
+    var isEmpty = banco === 0;
+    var isNew = prog.feitas === 0 && !isEmpty;
+    // Topics with 0 questions: show as "Em breve" (not clickable)
+    if (isEmpty) {
+      h += '<div class="ex-topic-card" style="opacity:.5;cursor:default;pointer-events:none">';
+      h += '<span class="ex-topic-new-badge" style="background:var(--ink4)">Em breve</span>';
+    } else {
+      h += '<button class="ex-topic-card" onclick="exStartTopic(\'' + t.key + '\')">';
+      if (isNew) h += '<span class="ex-topic-new-badge">NOVO</span>';
+    }
     h += '<div class="ex-topic-icon" style="background:' + t.bg + ';color:' + t.color + '"><i class="ph ' + t.icon + '"></i></div>';
     h += '<div class="ex-topic-label">' + t.label + '</div>';
     h += '<div class="ex-topic-sub">' + t.sub + '</div>';
     h += '<div class="ex-topic-footer">';
-    h += '<span class="ex-topic-count"><i class="ph ph-question"></i> ' + (banco || '—') + ' questões</span>';
-    if (prog.feitas > 0) {
-      h += '<div class="ex-topic-bar-wrap"><div class="ex-topic-bar-fill" style="width:' + pct + '%"></div></div>';
-      h += '<span class="ex-topic-pct">' + pct + '%</span>';
+    if (isEmpty) {
+      h += '<span class="ex-topic-count" style="color:var(--ink4)">Sem questões ainda</span>';
     } else {
-      h += '<span style="font-size:.7rem;color:var(--ink4);margin-left:auto">Começar →</span>';
+      h += '<span class="ex-topic-count"><i class="ph ph-question"></i> ' + banco + ' questões</span>';
+      if (prog.feitas > 0) {
+        h += '<div class="ex-topic-bar-wrap"><div class="ex-topic-bar-fill" style="width:' + pct + '%"></div></div>';
+        h += '<span class="ex-topic-pct">' + pct + '%</span>';
+      } else {
+        h += '<span style="font-size:.7rem;color:var(--ink4);margin-left:auto">Começar →</span>';
+      }
     }
     h += '</div>';
-    h += '</button>';
+    h += isEmpty ? '</div>' : '</button>';
   });
   grid.innerHTML = h;
 }
