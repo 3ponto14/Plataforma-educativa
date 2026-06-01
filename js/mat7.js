@@ -633,7 +633,7 @@ function mat7SwitchTab(tab, btn) {
     jogos:'Jogos', exame:'Teste', progresso:'Progresso', quiz:'Quiz', fichas:'Fichas', praticar:'Praticar' };
   if (_tabTitles[tab]) document.title = 'Mat. 7.º — ' + _tabTitles[tab] + ' · 3ponto14';
   // Auto-render content
-  if (tab === 'resumo') mat7RenderResumoInline();
+  if (tab === 'resumo') mat7BuildResumoNav();
   else if (tab === 'quiz') { if (typeof qgHubInit === 'function') qgHubInit(); }
   else if (tab === 'progresso') { if (typeof renderProgressoUnificado === 'function') renderProgressoUnificado(); }
   else if (tab === 'exercicios') { mat7LoadInline('exercicios'); }
@@ -664,7 +664,7 @@ function mat7StSelect(btn, tab) {
   row.querySelectorAll('.mat7-st-chip').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
   // Auto-render inline content for resumo tab
-  if (tab === 'resumo') mat7RenderResumoInline();
+  if (tab === 'resumo') mat7BuildResumoNav();
 }
 
 // ═══ TESTES — novo sistema cap+subtema igual ao gerador de fichas ═══
@@ -735,6 +735,94 @@ function testeReloadFromGf() {
 }
 
 // ── Render compact study cards in the resumo panel ──
+
+// ══ NOVO SELETOR DE TEORIA ══════════════════════════════════════
+
+function mat7BuildResumoNav() {
+  var capRow = document.getElementById('resumo-cap-row');
+  if (!capRow) return;
+
+  var capColors = {
+    1:'#4f8ef7', 2:'#e06c75', 3:'#98c379', 4:'#e5c07b',
+    5:'#c678dd', 6:'#56b6c2', 7:'#d19a66', 8:'#61afef'
+  };
+
+  var activeCap = _mat7Sel['resumo'] || 1;
+  var h = '';
+  _capMeta.forEach(function(m) {
+    var color = capColors[m.n] || '#516860';
+    var isActive = activeCap === m.n;
+    var activeStyle = isActive ? 'background:' + color + ';border-color:' + color + ';color:#fff' : '';
+    var hoverCode = isActive ? '' : ' onmouseover="this.style.borderColor='' + color + '';this.style.color='' + color + ''" onmouseout="this.style.borderColor='';this.style.color=''"';
+    h += '<button class="resumo-cap-btn' + (isActive ? ' active' : '') + '" data-cap="' + m.n + '" onclick="mat7ResumoSelectCap(' + m.n + ',this)" style="' + activeStyle + '"' + hoverCode + '>'
+       + '<span class="resumo-cap-icon">' + m.icon + '</span>' + m.label + '</button>';
+  });
+  capRow.innerHTML = h;
+
+  mat7ResumoShowSts(activeCap);
+  mat7RenderResumoInline();
+}
+
+function mat7ResumoSelectCap(cap, btn) {
+  _mat7Sel['resumo'] = cap;
+  delete _mat7Sel['resumo-st'];
+
+  var capColors = {
+    1:'#4f8ef7', 2:'#e06c75', 3:'#98c379', 4:'#e5c07b',
+    5:'#c678dd', 6:'#56b6c2', 7:'#d19a66', 8:'#61afef'
+  };
+  var color = capColors[cap] || '#516860';
+
+  var capRow = document.getElementById('resumo-cap-row');
+  if (capRow) {
+    capRow.querySelectorAll('.resumo-cap-btn').forEach(function(b) {
+      b.classList.remove('active');
+      b.style.background = '';
+      b.style.borderColor = '';
+      b.style.color = '';
+    });
+  }
+  if (btn) {
+    btn.classList.add('active');
+    btn.style.background = color;
+    btn.style.borderColor = color;
+    btn.style.color = '#fff';
+  }
+
+  mat7ResumoShowSts(cap);
+  mat7RenderResumoInline();
+}
+
+function mat7ResumoShowSts(cap) {
+  var stRow = document.getElementById('resumo-st-row');
+  if (!stRow) return;
+
+  var sts = _mat7Subtemas[cap] || [];
+  if (!sts.length) { stRow.style.display = 'none'; return; }
+
+  var h = '<div class="resumo-st-label">Subtema</div>';
+  sts.forEach(function(st, i) {
+    var isActive = (_mat7Sel['resumo-st'] || 1) === (i+1);
+    h += '<button class="resumo-st-btn' + (isActive ? ' active' : '') + '" data-st="' + (i+1) + '" onclick="mat7ResumoSelectSt(this,' + cap + ',' + (i+1) + ')">' + st + '</button>';
+  });
+
+  stRow.innerHTML = h;
+  stRow.style.display = 'flex';
+}
+
+function mat7ResumoSelectSt(btn, cap, stIdx) {
+  var stRow = document.getElementById('resumo-st-row');
+  if (stRow) {
+    stRow.querySelectorAll('.resumo-st-btn').forEach(function(b) { b.classList.remove('active'); });
+  }
+  if (btn) btn.classList.add('active');
+  _mat7Sel['resumo'] = cap;
+  _mat7Sel['resumo-st'] = stIdx;
+  mat7RenderResumoInline();
+}
+
+// ════════════════════════════════════════════════════════════════
+
 function mat7RenderResumoInline() {
   var cap = _mat7Sel['resumo'] || 1;
   var dest = document.getElementById('mat7-resumo-content');
@@ -766,7 +854,22 @@ function mat7RenderResumoInline() {
     'Desafio':'ph-lightning', 'Conceito':'ph-cube', 'Teorema':'ph-intersect'
   };
 
-  var cards = capCardSources[cap] || [];
+  var allCards = capCardSources[cap] || [];
+
+  // Filter by subtema if one is selected
+  var stIdx = _mat7Sel['resumo-st'] || 0;
+  var cards = allCards;
+  if (stIdx > 0 && _mat7Subtemas[cap]) {
+    var stLabel = _mat7Subtemas[cap][stIdx - 1] || '';
+    // Filter cards whose tag contains words from the subtema label
+    var stWords = stLabel.toLowerCase().replace(/[^a-záéíóúâêîôûãõç ]/g, '').split(' ').filter(function(w){ return w.length > 2; });
+    var filtered = allCards.filter(function(card) {
+      var cardTag = (card.tag || '').toLowerCase();
+      return stWords.some(function(w){ return cardTag.indexOf(w) !== -1; });
+    });
+    // Only use filter if it gives results (prevents showing 0 cards)
+    if (filtered.length > 0) cards = filtered;
+  }
 
   if (!cards.length) {
     dest.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Conteúdo em preparação para este capítulo.</p>';
@@ -837,7 +940,7 @@ function mat7TabReload(tab) {
       var activeBtn = row.querySelector('.gf-cap-btn.active');
       if (activeBtn) _mat7Sel['resumo'] = parseInt(activeBtn.dataset.cap) || 1;
     }
-    mat7RenderResumoInline();
+    mat7BuildResumoNav();
   } else if (_mat7SecMap[tab]) {
     mat7LoadInline(tab);
   }
