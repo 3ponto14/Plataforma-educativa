@@ -80,7 +80,9 @@ function _capShowFeedback(qid, correct, expl, val, btn) {
 // ── 1. Section navigation ──
 function capShowSection(n, id, btn) {
   var cfg = _getCfg(n); if (!cfg) return;
-  var pfx = _capPfx(n), viewId = cfg.viewId || ('view-math' + (n===1?'':n)), tabsId = cfg.tabsId || ('tabs-cap'+n);
+  var pfx = _capPfx(n), viewId = cfg.viewId || ('view-math' + (n===1?'':n));
+  // tabsId: prefer explicit cfg, then old format (tabs1/tabs2/...) used by cap JS, then tabs-capN
+  var tabsId = cfg.tabsId || ('tabs' + (n===1?'-cap1':n));
   document.querySelectorAll('#'+viewId+' .section').forEach(function(s){s.classList.remove('active');});
   var sec = _capEl('sec-'+id); if (sec) sec.classList.add('active');
   document.querySelectorAll('#'+tabsId+' .tab-btn').forEach(function(b){b.classList.remove('active');});
@@ -101,8 +103,9 @@ function capShowSection(n, id, btn) {
 // ── 2. Navigate to theory topic ──
 function capGoToTopic(n, topicNum) {
   var cfg = _getCfg(n); if (!cfg) return;
-  var pfx = _capPfx(n), tabsId = cfg.tabsId||('tabs-cap'+n);
-  capShowSection(n, 'teoria'+pfx, document.querySelector('#'+tabsId+' .tab-btn:nth-child(2)'));
+  var pfx = _capPfx(n);
+  // Pass null as btn — tab active state handled by capShowSection internals
+  capShowSection(n, 'teoria'+pfx, null);
   setTimeout(function(){ var el = _capEl('topic'+(pfx?pfx+'-':'-')+topicNum) || _capEl('topic-'+topicNum); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
 }
 

@@ -337,7 +337,7 @@ window.CAP_DATA=window.CAP_DATA||{};
 window.CAP_DATA[8]={
   prefix:'8',
   viewId:'view-math8',
-  tabsId:'tabs-cap8',
+  tabsId:'tabs8',
   storageKey:'edupt_cap8',
   temas:['1','2','3','4','5'],
   buildExercicio:buildEx8,

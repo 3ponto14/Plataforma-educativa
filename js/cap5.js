@@ -492,7 +492,7 @@ window.CAP_DATA = window.CAP_DATA || {};
 window.CAP_DATA[5] = {
   prefix: '5',
   viewId: 'view-math5',
-  tabsId: 'tabs-cap5',
+  tabsId: 'tabs5',
   storageKey: 'edupt_cap5',
   temas: ['1','2'],
   buildExercicio: buildEx5,
