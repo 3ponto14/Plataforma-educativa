@@ -393,18 +393,23 @@ function ex12BuildProvaGrid() {
   var anos = [2025, 2024, 2023, 2022, 2021, 2020];
   var html = '';
   anos.forEach(function(ano) {
+    var cardsHtml = '';
     ['f1','f2','esp'].forEach(function(fase) {
       var key = String(ano).slice(2) + '_' + fase;
       var prova = MAT12_BANCO[key];
       if (!prova) return;
       var faseLabel = fase === 'f1' ? '1.a Fase' : fase === 'f2' ? '2.a Fase' : 'Ep. Especial';
       var n = prova.questoes.length;
-      html += '<div class="ex12-prova-card" onclick="ex12StartProva(\'' + key + '\')">'
-        + '<div class="ex12-prova-year">' + ano + '</div>'
-        + '<div class="ex12-prova-fase">' + faseLabel + '</div>'
-        + '<div class="ex12-prova-count">' + n + ' questoes de escolha multipla</div>'
+      cardsHtml += '<div class="ex12-prova-card" onclick="ex12StartProva(\'' + key + '\')">'
+        + '<div class="ex12-prova-fase" style="font-size:.82rem;font-weight:800;color:var(--ex12-mid)">' + faseLabel + '</div>'
+        + '<div class="ex12-prova-count">' + n + ' questoes</div>'
         + '</div>';
     });
+    if (!cardsHtml) return;
+    html += '<div style="margin-bottom:1.5rem">'
+      + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.4rem;font-weight:700;color:var(--ink1);margin-bottom:.6rem;padding-bottom:.4rem;border-bottom:2px solid var(--ex12-border)">' + ano + '</div>'
+      + '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.6rem">' + cardsHtml + '</div>'
+      + '</div>';
   });
   grid.innerHTML = html;
 }
