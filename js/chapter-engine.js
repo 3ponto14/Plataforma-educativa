@@ -278,6 +278,10 @@ function capFcFlip(n) {
 function capFcNext(n){var fc=_getState(n).fcState;fc.idx=(fc.idx+1)%(fc.cards.length||1);capFcRender(n);}
 function capFcPrev(n){var fc=_getState(n).fcState;fc.idx=(fc.idx-1+(fc.cards.length||1))%(fc.cards.length||1);capFcRender(n);}
 function capFcGoTo(n,i){_getState(n).fcState.idx=i;capFcRender(n);}
+function capFcStartSession(n){var fc=_getState(n).fcState,cfg=_getCfg(n);if(!cfg||!cfg.flashcards)return;fc.cards=cfg.flashcards.map(function(c,i){return Object.assign({},c,{_idx:i});});fc.idx=0;fc.flipped=false;capFcRender(n);}
+function capFcSetMode(n,mode){var fc=_getState(n).fcState,cfg=_getCfg(n);if(!cfg||!cfg.flashcards)return;var all=cfg.flashcards.map(function(c,i){return Object.assign({},c,{_idx:i});});if(mode==='all'){fc.cards=all;}else if(mode==='weak'){fc.cards=all.filter(function(c){var s=fc.stats&&fc.stats[c._idx];return !s||s<2;});}else{fc.cards=all;}fc.idx=0;fc.flipped=false;capFcRender(n);}
+function capFcRate(n,r){var fc=_getState(n).fcState;if(!fc.cards.length)return;if(!fc.stats)fc.stats={};var card=fc.cards[fc.idx];fc.stats[card._idx]=(fc.stats[card._idx]||0)+r;capFcNext(n);}
+function capFcResetStats(n){var st=_getState(n);st.fcState.stats={};st.fcState.idx=0;capFcStartSession(n);}
 
 // ── 12. Timed exam ──
 function capExameSetLevel(n,btn){
@@ -392,6 +396,15 @@ function _capRegisterWrappers(n, extra) {
   w['fcNext'+s] = function(){capFcNext(n)};
   w['fcPrev'+s] = function(){capFcPrev(n)};
   w['fcGoTo'+s] = function(i){capFcGoTo(n,i)};
+  w['fcStartSession'+s] = function(){capFcStartSession(n)};
+  w['fcSetMode'+s] = function(mode){capFcSetMode(n,mode)};
+  w['fcRate'+s] = function(r){capFcRate(n,r)};
+  w['fcResetStats'+s] = function(){capFcResetStats(n)};
+  w['gerarTeste'+s] = function(){capGerarTeste(n)};
+  w['setGenLevel'+s] = function(btn){capSetGenLevel(n,btn)};
+  w['gerarLocal'+s] = function(){capGerarExercicios(n)};
+  if (n === 1) { w['setLevel'] = function(btn){capSetGenLevel(1,btn)}; }
+  w['setTeste'+s+'Subtema'] = function(i,btn){capSetTesteSubtema(n,i,btn)};
   w['exame'+s+'SetLevel'] = function(btn){capExameSetLevel(n,btn)};
   w['exame'+s+'Start'] = function(){capExameStart(n)};
   w['exame'+s+'Stop'] = function(){capExameStop(n)};
