@@ -607,6 +607,8 @@ function _mat7GetActiveCaps(tab) {
 }
 
 function mat7SwitchTab(tab, btn) {
+  // Devolver todas as secções movidas de volta ao stubs antes de trocar painel
+  ['exercicios','jogos','flashcards','exame','quiz','testes'].forEach(function(t){ mat7ReturnSections(t); });
   document.querySelectorAll('.mat7-hub-tab').forEach(function(b){ b.classList.remove('active'); });
   // Activar a tab correcta na barra se btn é null, encontrar pela correspondência
   if (btn) {
