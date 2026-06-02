@@ -123,13 +123,6 @@ function _mat7BuildSelectors() {
 // Auto-run when DOM is ready
 function _mat7Init() {
   _mat7BuildSelectors();
-  // Renderizar Progresso se for o painel activo por omissão
-  var activePanel = document.querySelector('.mat7-panel.active');
-  if (activePanel && activePanel.id === 'mat7p-progresso') {
-    setTimeout(function() {
-      if (typeof renderProgressoUnificado === 'function') renderProgressoUnificado();
-    }, 100);
-  }
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _mat7Init);
 else _mat7Init();

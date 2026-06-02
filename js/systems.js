@@ -1910,3 +1910,18 @@ function renderProgressoUnificado() {
   });
 })();
 
+// Auto-render progresso se for o painel activo ao carregar a página
+(function() {
+  function _tryRenderProgresso() {
+    var panel = document.getElementById('mat7p-progresso');
+    if (panel && panel.classList.contains('active')) {
+      renderProgressoUnificado();
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', _tryRenderProgresso);
+  } else {
+    _tryRenderProgresso();
+  }
+})();
+
