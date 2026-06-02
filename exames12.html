@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Exames Nacionais de Matematica A 12.o Ano simulador cronometrado, pratica por tema e provas de 2020 a 2025.">
+<meta name="theme-color" content="#2d5a3d">
+<title>Exames Nacionais · Matematica 12.o Ano · 3ponto14</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+<style>
+:root { --ex12-dark:#1a3d2b; --ex12-mid:#2d6b45; --ex12-light:#4a9e6b; --ex12-pale:#e8f4ed; --ex12-border:#b8d9c4; }
+
+.ex12-topbar{background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.07);position:sticky;top:0;z-index:200;padding:.7rem 1.5rem;display:flex;align-items:center;gap:.75rem}
+.ex12-logo{font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--ex12-dark);font-size:1.1rem;text-decoration:none;display:flex;align-items:center;gap:.5rem}
+.ex12-logo .mark{width:30px;height:30px;background:var(--ex12-mid);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.75rem;font-weight:900}
+.ex12-topbar-title{font-size:.82rem;font-weight:700;color:var(--ink2);flex:1}
+.ex12-topbar-back{font-size:.75rem;font-weight:600;color:var(--ex12-mid);text-decoration:none;display:flex;align-items:center;gap:.3rem;padding:5px 12px;border:1.5px solid var(--ex12-border);border-radius:999px;transition:all .15s;white-space:nowrap}
+.ex12-topbar-back:hover{background:var(--ex12-pale);border-color:var(--ex12-mid)}
+
+.ex12-hero{position:relative;overflow:hidden;background:linear-gradient(150deg,#0d2b1a 0%,#1a4a2d 35%,#2d6b45 70%,#4a9e6b 100%);padding:3.5rem 1.5rem 2.5rem;text-align:center}
+.ex12-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+.ex12-hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);font-size:.68rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:6px 16px;border-radius:999px;margin-bottom:1.2rem}
+.ex12-hero h1{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;color:#fff;margin-bottom:.5rem;line-height:1.1}
+.ex12-hero h1 em{font-style:italic;font-weight:400;color:rgba(255,255,255,.75)}
+.ex12-hero-sub{color:rgba(255,255,255,.65);font-size:.9rem;max-width:500px;margin:0 auto 2rem;line-height:1.7}
+.ex12-hero-stats{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.ex12-hstat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:.85rem 1.6rem;text-align:center}
+.ex12-hstat-n{font-family:'JetBrains Mono',monospace;font-size:1.9rem;font-weight:700;color:#fff;line-height:1}
+.ex12-hstat-l{font-size:.63rem;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.1em;margin-top:.3rem}
+
+.ex12-page{max-width:860px;margin:0 auto;padding:2rem 1.25rem 5rem}
+
+.ex12-tabs-wrap{display:flex;gap:0;background:var(--surface,#f8f6f1);border:1.5px solid var(--border,#e0dcd5);border-radius:16px;padding:.35rem;margin-bottom:2rem;position:sticky;top:57px;z-index:100}
+.ex12-tab{flex:1;padding:.7rem .5rem;border:none;background:transparent;border-radius:12px;font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:700;color:var(--ink3,#888);cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:.4rem;white-space:nowrap}
+.ex12-tab.active{background:linear-gradient(135deg,var(--ex12-dark),var(--ex12-mid));color:#fff;box-shadow:0 4px 12px rgba(29,91,58,.4)}
+.ex12-tab:hover:not(.active){background:rgba(45,107,69,.08);color:var(--ink1,#1a1a1a)}
+
+.ex12-panel{display:none}
+.ex12-panel.active{display:block;animation:fadeUp12 .25s ease}
+@keyframes fadeUp12{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.ex12-sec-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--ink1,#1a1a1a);margin-bottom:.2rem}
+.ex12-sec-sub{font-size:.83rem;color:var(--ink3,#888);line-height:1.5;margin-bottom:1.5rem}
+
+/* Tema grid */
+.ex12-tema-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.75rem;margin-bottom:2rem}
+.ex12-tema-card{background:#fff;border:1.5px solid var(--border,#e0dcd5);border-radius:14px;padding:1.1rem 1rem;cursor:pointer;transition:all .18s;border-top:3px solid var(--ex12-mid);text-align:left}
+.ex12-tema-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.08);border-color:var(--ex12-mid)}
+.ex12-tema-card.active{border-color:var(--ex12-mid);background:var(--ex12-pale)}
+.ex12-tema-icon{font-size:1.4rem;color:var(--ex12-mid);margin-bottom:.5rem}
+.ex12-tema-name{font-size:.88rem;font-weight:700;color:var(--ink1,#1a1a1a);margin-bottom:.2rem}
+.ex12-tema-count{font-size:.72rem;color:var(--ink4,#aaa)}
+
+/* Prova grid */
+.ex12-prova-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.75rem;margin-bottom:2rem}
+.ex12-prova-card{background:#fff;border:1.5px solid var(--border,#e0dcd5);border-radius:14px;padding:1.1rem;cursor:pointer;transition:all .18s;display:flex;flex-direction:column;gap:.5rem}
+.ex12-prova-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.08);border-color:var(--ex12-mid)}
+.ex12-prova-year{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:700;color:var(--ex12-mid);line-height:1}
+.ex12-prova-fase{font-size:.75rem;font-weight:700;color:var(--ink3,#888)}
+.ex12-prova-count{font-size:.7rem;color:var(--ink4,#aaa);margin-top:auto}
+
+/* Questao */
+.ex12-q-wrap{background:#fff;border:1.5px solid var(--border,#e0dcd5);border-radius:16px;padding:1.5rem;margin-bottom:1rem}
+.ex12-q-num{font-size:.72rem;font-weight:800;color:var(--ex12-mid);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.5rem}
+.ex12-q-tema{display:inline-block;background:var(--ex12-pale);color:var(--ex12-dark);font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-bottom:.75rem}
+.ex12-q-enun{font-size:.92rem;color:var(--ink1,#1a1a1a);line-height:1.6;margin-bottom:1rem}
+.ex12-q-opts{display:flex;flex-direction:column;gap:.5rem}
+.ex12-opt-btn{text-align:left;padding:.65rem 1rem;border:1.5px solid var(--border,#e0dcd5);border-radius:10px;background:#fff;font-family:'Montserrat',sans-serif;font-size:.85rem;color:var(--ink1,#1a1a1a);cursor:pointer;transition:all .15s;width:100%}
+.ex12-opt-btn:hover:not(:disabled){border-color:var(--ex12-mid);background:var(--ex12-pale)}
+.ex12-opt-btn.selected{border-color:var(--ex12-mid);background:var(--ex12-pale);font-weight:700}
+.ex12-opt-btn.correct{border-color:#4caf50;background:#e8f5e9;color:#2e7d32;font-weight:700}
+.ex12-opt-btn.wrong{border-color:#f44336;background:#ffebee;color:#c62828}
+.ex12-opt-btn:disabled{cursor:default;opacity:.9}
+.ex12-feedback{margin-top:.75rem;padding:.65rem 1rem;border-radius:10px;font-size:.83rem;font-weight:600;display:none}
+.ex12-feedback.show{display:block}
+.ex12-feedback.ok{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7}
+.ex12-feedback.err{background:#ffebee;color:#c62828;border:1px solid #ef9a9a}
+.ex12-q-nav{display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;flex-wrap:wrap;gap:.5rem}
+
+/* Progresso */
+.ex12-prog-summary{background:var(--ex12-pale);border:1.5px solid var(--ex12-border);border-radius:16px;padding:1.25rem;margin-bottom:1.5rem}
+.ex12-prog-big{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:900;color:var(--ex12-dark);line-height:1}
+.ex12-prog-chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem;margin-bottom:1.5rem}
+.ex12-prog-chip{background:#fff;border:1.5px solid var(--border,#e0dcd5);border-radius:12px;padding:.85rem;text-align:center}
+.ex12-prog-chip-n{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:700;color:var(--ex12-mid);line-height:1}
+.ex12-prog-chip-l{font-size:.65rem;font-weight:700;color:var(--ink4,#aaa);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<nav class="ex12-topbar">
+  <a href="index.html" class="ex12-logo">
+    <div class="mark">3π</div>
+    <span>3ponto<em>14</em></span>
+  </a>
+  <span class="ex12-topbar-title">Matematica A · 12.o Ano</span>
+  <a href="index.html" class="ex12-topbar-back"><i class="ph ph-arrow-left"></i> Inicio</a>
+</nav>
+
+<!-- Hero -->
+<div class="ex12-hero">
+  <div class="ex12-hero-grid"></div>
+  <div style="position:relative">
+    <div class="ex12-hero-eyebrow"><i class="ph ph-exam"></i> Prova 635</div>
+    <h1>Exames Nacionais<br><em>Matematica A</em></h1>
+    <p class="ex12-hero-sub">Questoes reais com resposta correta · 2020 a 2025 · pratica por tema ou por prova</p>
+    <div class="ex12-hero-stats">
+      <div class="ex12-hstat"><div class="ex12-hstat-n" id="stat-total-q">86</div><div class="ex12-hstat-l">Questoes</div></div>
+      <div class="ex12-hstat"><div class="ex12-hstat-n">17</div><div class="ex12-hstat-l">Provas</div></div>
+      <div class="ex12-hstat"><div class="ex12-hstat-n">6</div><div class="ex12-hstat-l">Anos</div></div>
+      <div class="ex12-hstat"><div class="ex12-hstat-n">11</div><div class="ex12-hstat-l">Temas</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="ex12-page">
+
+  <!-- Tabs -->
+  <div class="ex12-tabs-wrap">
+    <button class="ex12-tab active" onclick="ex12SwitchTab('temas',this)"><i class="ph ph-tag"></i> <span>Por Tema</span></button>
+    <button class="ex12-tab" onclick="ex12SwitchTab('provas',this)"><i class="ph ph-file-text"></i> <span>Por Prova</span></button>
+    <button class="ex12-tab" onclick="ex12SwitchTab('progresso',this)"><i class="ph ph-chart-bar"></i> <span>Progresso</span></button>
+  </div>
+
+  <!-- PANEL: TEMAS -->
+  <div class="ex12-panel active" id="ex12-panel-temas">
+    <div class="ex12-sec-title">Praticar por Tema</div>
+    <div class="ex12-sec-sub">Escolhe um tema para treinar questoes de todas as provas.</div>
+
+    <div class="ex12-tema-grid" id="ex12-tema-grid"></div>
+
+    <!-- Questao inline -->
+    <div id="ex12-tema-content" style="display:none">
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem">
+        <button onclick="ex12VolverTemas()" style="background:none;border:none;color:var(--ex12-mid);font-size:.82rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.3rem;padding:0">
+          <i class="ph ph-arrow-left"></i> Todos os temas
+        </button>
+        <div style="font-size:.82rem;font-weight:700;color:var(--ink2)" id="ex12-tema-active-label"></div>
+      </div>
+      <div id="ex12-tema-questoes"></div>
+      <div id="ex12-tema-result" style="display:none;background:var(--ex12-pale);border:1.5px solid var(--ex12-border);border-radius:16px;padding:1.5rem;text-align:center;margin-top:1rem">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:900;color:var(--ex12-dark)" id="ex12-result-pct"></div>
+        <div style="font-size:.85rem;color:var(--ink2);margin:.5rem 0 1rem" id="ex12-result-msg"></div>
+        <button onclick="ex12VolverTemas()" class="btn btn-primary" style="background:var(--ex12-mid);border-color:var(--ex12-mid)">Escolher outro tema</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL: PROVAS -->
+  <div class="ex12-panel" id="ex12-panel-provas">
+    <div class="ex12-sec-title">Praticar por Prova</div>
+    <div class="ex12-sec-sub">Escolhe uma prova completa para praticar as suas questoes de escolha multipla.</div>
+
+    <div class="ex12-prova-grid" id="ex12-prova-grid"></div>
+
+    <div id="ex12-prova-content" style="display:none">
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem">
+        <button onclick="ex12VolverProvas()" style="background:none;border:none;color:var(--ex12-mid);font-size:.82rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.3rem;padding:0">
+          <i class="ph ph-arrow-left"></i> Todas as provas
+        </button>
+        <div style="font-size:.82rem;font-weight:700;color:var(--ink2)" id="ex12-prova-active-label"></div>
+      </div>
+      <div id="ex12-prova-questoes"></div>
+      <div id="ex12-prova-result" style="display:none;background:var(--ex12-pale);border:1.5px solid var(--ex12-border);border-radius:16px;padding:1.5rem;text-align:center;margin-top:1rem">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:900;color:var(--ex12-dark)" id="ex12-prova-result-pct"></div>
+        <div style="font-size:.85rem;color:var(--ink2);margin:.5rem 0 1rem" id="ex12-prova-result-msg"></div>
+        <button onclick="ex12VolverProvas()" class="btn btn-primary" style="background:var(--ex12-mid);border-color:var(--ex12-mid)">Escolher outra prova</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL: PROGRESSO -->
+  <div class="ex12-panel" id="ex12-panel-progresso">
+    <div class="ex12-sec-title">O Teu Progresso</div>
+    <div class="ex12-sec-sub">Historico de respostas guardado neste browser.</div>
+    <div id="ex12-prog-content"></div>
+  </div>
+
+</div><!-- /ex12-page -->
+
+<script src="js/shared.js"></script>
+<script src="js/mat12-exames.js"></script>
+<script>
+/* ═══════════════════════════════════════════════
+   EXAMES 12 — Logica
+═══════════════════════════════════════════════ */
+
+var _ex12Progress = {};
+var _ex12ActiveTema = null;
+var _ex12ActiveProva = null;
+var _ex12TemaState = { questoes: [], idx: 0, answers: {}, done: false };
+var _ex12ProvaState = { questoes: [], idx: 0, answers: {}, done: false };
+var EX12_STORAGE = 'ex12_progress';
+
+/* ── Storage ── */
+function ex12LoadProgress() {
+  try { _ex12Progress = JSON.parse(localStorage.getItem(EX12_STORAGE) || '{}'); } catch(e) { _ex12Progress = {}; }
+}
+function ex12SaveProgress() {
+  try { localStorage.setItem(EX12_STORAGE, JSON.stringify(_ex12Progress)); } catch(e) {}
+}
+function ex12RecordAnswer(qid, correct) {
+  if (!_ex12Progress[qid]) _ex12Progress[qid] = { correct: 0, total: 0 };
+  _ex12Progress[qid].total++;
+  if (correct) _ex12Progress[qid].correct++;
+  ex12SaveProgress();
+}
+
+/* ── Tab switching ── */
+function ex12SwitchTab(tab, btn) {
+  document.querySelectorAll('.ex12-tab').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  document.querySelectorAll('.ex12-panel').forEach(function(p){ p.classList.remove('active'); });
+  var panel = document.getElementById('ex12-panel-' + tab);
+  if (panel) panel.classList.add('active');
+  if (tab === 'progresso') ex12RenderProgress();
+}
+
+/* ── Tema grid ── */
+function ex12BuildTemaGrid() {
+  var grid = document.getElementById('ex12-tema-grid');
+  if (!grid) return;
+
+  // Count questions per tema
+  var counts = {};
+  Object.keys(MAT12_BANCO).forEach(function(key) {
+    MAT12_BANCO[key].questoes.forEach(function(q) {
+      counts[q.tema] = (counts[q.tema] || 0) + 1;
+    });
+  });
+
+  var html = '';
+  MAT12_TEMAS.forEach(function(t) {
+    var n = counts[t.id] || 0;
+    if (n === 0) return;
+    html += '<div class="ex12-tema-card" onclick="ex12StartTema(\'' + t.id + '\')">'
+      + '<div class="ex12-tema-icon"><i class="ph ' + t.icon + '"></i></div>'
+      + '<div class="ex12-tema-name">' + t.label + '</div>'
+      + '<div class="ex12-tema-count">' + n + ' questoes de ' + _ex12TemaProvas(t.id) + ' provas</div>'
+      + '</div>';
+  });
+  grid.innerHTML = html;
+}
+
+function _ex12TemaProvas(tema) {
+  var provas = new Set();
+  Object.keys(MAT12_BANCO).forEach(function(key) {
+    MAT12_BANCO[key].questoes.forEach(function(q) {
+      if (q.tema === tema) provas.add(key);
+    });
+  });
+  return provas.size;
+}
+
+/* ── Start tema ── */
+function ex12StartTema(tema) {
+  _ex12ActiveTema = tema;
+  var questoes = [];
+  Object.keys(MAT12_BANCO).forEach(function(key) {
+    MAT12_BANCO[key].questoes.forEach(function(q) {
+      if (q.tema === tema) questoes.push(Object.assign({}, q, {_provaLabel: MAT12_BANCO[key].label}));
+    });
+  });
+  // Shuffle
+  for (var i = questoes.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = questoes[i]; questoes[i] = questoes[j]; questoes[j] = tmp;
+  }
+  _ex12TemaState = { questoes: questoes, idx: 0, answers: {}, done: false };
+
+  var temaLabel = '';
+  MAT12_TEMAS.forEach(function(t){ if(t.id === tema) temaLabel = t.label; });
+  var lbl = document.getElementById('ex12-tema-active-label');
+  if (lbl) lbl.textContent = temaLabel;
+
+  document.getElementById('ex12-tema-grid').style.display = 'none';
+  document.getElementById('ex12-tema-content').style.display = 'block';
+  document.getElementById('ex12-tema-result').style.display = 'none';
+  ex12RenderTemaQ();
+}
+
+function ex12VolverTemas() {
+  _ex12ActiveTema = null;
+  document.getElementById('ex12-tema-grid').style.display = '';
+  document.getElementById('ex12-tema-content').style.display = 'none';
+}
+
+function ex12RenderTemaQ() {
+  var st = _ex12TemaState;
+  var container = document.getElementById('ex12-tema-questoes');
+  if (!container) return;
+  if (st.idx >= st.questoes.length) {
+    ex12ShowTemaResult();
+    return;
+  }
+  var q = st.questoes[st.idx];
+  container.innerHTML = ex12BuildQHTML(q, st.idx, st.questoes.length, 'tema');
+}
+
+function ex12BuildQHTML(q, idx, total, mode) {
+  var answered = (mode === 'tema' ? _ex12TemaState : _ex12ProvaState).answers[q.id];
+  var html = '<div class="ex12-q-wrap">'
+    + '<div class="ex12-q-num">Questao ' + (idx+1) + ' de ' + total + '</div>'
+    + '<div class="ex12-q-tema">' + _ex12TemaLabel(q.tema) + '</div>';
+  if (q._provaLabel) html += '<div style="font-size:.72rem;color:var(--ink4);margin-bottom:.5rem">' + q._provaLabel + '</div>';
+  html += '<div class="ex12-q-enun">' + q.enun + '</div>'
+    + '<div class="ex12-q-opts" id="opts-' + mode + '-' + idx + '">';
+  q.opts.forEach(function(opt, i) {
+    var letter = ['A','B','C','D'][i];
+    var cls = 'ex12-opt-btn';
+    var disabled = '';
+    if (answered) {
+      disabled = 'disabled';
+      if (letter === q.correct) cls += ' correct';
+      else if (letter === answered) cls += ' wrong';
+    }
+    html += '<button class="' + cls + '" ' + disabled + ' onclick="ex12SelectOpt(\'' + mode + '\',' + idx + ',\'' + letter + '\',\'' + q.id + '\',\'' + q.correct + '\')">' + opt + '</button>';
+  });
+  html += '</div>';
+  // Feedback
+  if (answered) {
+    var ok = answered === q.correct;
+    html += '<div class="ex12-feedback show ' + (ok ? 'ok' : 'err') + '">'
+      + (ok ? '<i class="ph ph-check-circle"></i> Correto!' : '<i class="ph ph-x-circle"></i> Resposta correta: (' + q.correct + ')')
+      + '</div>';
+  }
+  html += '<div class="ex12-q-nav">';
+  if (answered) {
+    if (idx + 1 < total) {
+      html += '<button class="btn btn-primary" style="background:var(--ex12-mid);border-color:var(--ex12-mid);margin-left:auto" onclick="ex12Next(\'' + mode + '\')">'
+        + 'Seguinte <i class="ph ph-arrow-right"></i></button>';
+    } else {
+      html += '<button class="btn btn-primary" style="background:var(--ex12-mid);border-color:var(--ex12-mid);margin-left:auto" onclick="ex12ShowResult(\'' + mode + '\')">'
+        + 'Ver resultado <i class="ph ph-flag-checkered"></i></button>';
+    }
+  }
+  html += '</div></div>';
+  return html;
+}
+
+function ex12SelectOpt(mode, idx, letter, qid, correct) {
+  var st = mode === 'tema' ? _ex12TemaState : _ex12ProvaState;
+  if (st.answers[qid]) return;
+  st.answers[qid] = letter;
+  var isCorrect = letter === correct;
+  ex12RecordAnswer(qid, isCorrect);
+  // Re-render
+  if (mode === 'tema') ex12RenderTemaQ();
+  else ex12RenderProvaQ();
+}
+
+function ex12Next(mode) {
+  var st = mode === 'tema' ? _ex12TemaState : _ex12ProvaState;
+  st.idx++;
+  if (mode === 'tema') ex12RenderTemaQ();
+  else ex12RenderProvaQ();
+}
+
+function ex12ShowResult(mode) {
+  if (mode === 'tema') ex12ShowTemaResult();
+  else ex12ShowProvaResult();
+}
+
+function ex12ShowTemaResult() {
+  var st = _ex12TemaState;
+  var correct = 0;
+  st.questoes.forEach(function(q) {
+    if (st.answers[q.id] === q.correct) correct++;
+  });
+  var pct = st.questoes.length > 0 ? Math.round(correct / st.questoes.length * 100) : 0;
+  document.getElementById('ex12-tema-questoes').innerHTML = '';
+  var result = document.getElementById('ex12-tema-result');
+  result.style.display = 'block';
+  document.getElementById('ex12-result-pct').textContent = pct + '%';
+  document.getElementById('ex12-result-msg').textContent = correct + ' certas em ' + st.questoes.length + ' questoes. ' + (pct >= 80 ? 'Excelente!' : pct >= 60 ? 'Bom trabalho!' : 'Continua a praticar!');
+}
+
+function _ex12TemaLabel(tema) {
+  var label = tema;
+  MAT12_TEMAS.forEach(function(t){ if(t.id === tema) label = t.label; });
+  return label;
+}
+
+/* ── Prova grid ── */
+function ex12BuildProvaGrid() {
+  var grid = document.getElementById('ex12-prova-grid');
+  if (!grid) return;
+  var anos = [2025, 2024, 2023, 2022, 2021, 2020];
+  var html = '';
+  anos.forEach(function(ano) {
+    ['f1','f2','esp'].forEach(function(fase) {
+      var key = String(ano).slice(2) + '_' + fase;
+      var prova = MAT12_BANCO[key];
+      if (!prova) return;
+      var faseLabel = fase === 'f1' ? '1.a Fase' : fase === 'f2' ? '2.a Fase' : 'Ep. Especial';
+      var n = prova.questoes.length;
+      html += '<div class="ex12-prova-card" onclick="ex12StartProva(\'' + key + '\')">'
+        + '<div class="ex12-prova-year">' + ano + '</div>'
+        + '<div class="ex12-prova-fase">' + faseLabel + '</div>'
+        + '<div class="ex12-prova-count">' + n + ' questoes de escolha multipla</div>'
+        + '</div>';
+    });
+  });
+  grid.innerHTML = html;
+}
+
+/* ── Start prova ── */
+function ex12StartProva(key) {
+  _ex12ActiveProva = key;
+  var prova = MAT12_BANCO[key];
+  if (!prova) return;
+  _ex12ProvaState = { questoes: prova.questoes.slice(), idx: 0, answers: {}, done: false };
+
+  var lbl = document.getElementById('ex12-prova-active-label');
+  if (lbl) lbl.textContent = prova.label;
+
+  document.getElementById('ex12-prova-grid').style.display = 'none';
+  document.getElementById('ex12-prova-content').style.display = 'block';
+  document.getElementById('ex12-prova-result').style.display = 'none';
+  ex12RenderProvaQ();
+}
+
+function ex12VolverProvas() {
+  _ex12ActiveProva = null;
+  document.getElementById('ex12-prova-grid').style.display = '';
+  document.getElementById('ex12-prova-content').style.display = 'none';
+}
+
+function ex12RenderProvaQ() {
+  var st = _ex12ProvaState;
+  var container = document.getElementById('ex12-prova-questoes');
+  if (!container) return;
+  if (st.idx >= st.questoes.length) {
+    ex12ShowProvaResult();
+    return;
+  }
+  var q = st.questoes[st.idx];
+  container.innerHTML = ex12BuildQHTML(q, st.idx, st.questoes.length, 'prova');
+}
+
+function ex12ShowProvaResult() {
+  var st = _ex12ProvaState;
+  var correct = 0;
+  st.questoes.forEach(function(q) {
+    if (st.answers[q.id] === q.correct) correct++;
+  });
+  var pct = st.questoes.length > 0 ? Math.round(correct / st.questoes.length * 100) : 0;
+  document.getElementById('ex12-prova-questoes').innerHTML = '';
+  var result = document.getElementById('ex12-prova-result');
+  result.style.display = 'block';
+  document.getElementById('ex12-prova-result-pct').textContent = pct + '%';
+  document.getElementById('ex12-prova-result-msg').textContent = correct + ' certas em ' + st.questoes.length + ' questoes. ' + (pct >= 80 ? 'Excelente!' : pct >= 60 ? 'Bom trabalho!' : 'Continua a praticar!');
+}
+
+/* ── Progresso ── */
+function ex12RenderProgress() {
+  var container = document.getElementById('ex12-prog-content');
+  if (!container) return;
+
+  var totalQ = 0, totalC = 0;
+  Object.keys(MAT12_BANCO).forEach(function(key) {
+    MAT12_BANCO[key].questoes.forEach(function(q) {
+      var p = _ex12Progress[q.id];
+      if (p) { totalQ += p.total; totalC += p.correct; }
+    });
+  });
+  var pct = totalQ > 0 ? Math.round(totalC / totalQ * 100) : 0;
+  var msg = totalQ === 0 ? 'Ainda nao comecaste. Escolhe um tema ou prova!' : pct >= 80 ? 'Excelente dominio!' : pct >= 60 ? 'Bom progresso!' : 'Continua a praticar!';
+
+  var html = '<div class="ex12-prog-summary">'
+    + '<div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">'
+    + '<div><div class="ex12-prog-big">' + (totalQ > 0 ? pct + '%' : '--') + '</div><div style="font-size:.82rem;color:var(--ink2);margin-top:.25rem">' + msg + '</div></div>'
+    + '</div></div>';
+
+  html += '<div class="ex12-prog-chips">';
+  [{v: totalQ, l:'Respondidas'},{v: totalC, l:'Certas'},{v: totalQ > 0 ? pct+'%' : '--', l:'Taxa global'}].forEach(function(s) {
+    html += '<div class="ex12-prog-chip"><div class="ex12-prog-chip-n">' + s.v + '</div><div class="ex12-prog-chip-l">' + s.l + '</div></div>';
+  });
+  html += '</div>';
+
+  if (totalQ === 0) {
+    html += '<p style="color:var(--ink4);font-size:.88rem;font-style:italic;text-align:center;padding:2rem">Responde a questoes para o progresso aparecer aqui.</p>';
+  } else {
+    html += '<button onclick="ex12ClearProgress()" class="btn btn-ghost" style="color:#c62828;border-color:#ef9a9a;font-size:.78rem">Limpar tudo</button>';
+  }
+
+  container.innerHTML = html;
+}
+
+function ex12ClearProgress() {
+  _ex12Progress = {};
+  ex12SaveProgress();
+  ex12RenderProgress();
+}
+
+/* ── Init ── */
+document.addEventListener('DOMContentLoaded', function() {
+  ex12LoadProgress();
+  ex12BuildTemaGrid();
+  ex12BuildProvaGrid();
+  // Update total count
+  var total = 0;
+  Object.keys(MAT12_BANCO).forEach(function(k){ total += MAT12_BANCO[k].questoes.length; });
+  var el = document.getElementById('stat-total-q');
+  if (el) el.textContent = total;
+});
+</script>
+<script src="js/ux-improvements.js"></script>
+<script src="js/nav.js"></script>
+</body>
+</html>
