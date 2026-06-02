@@ -41,7 +41,7 @@ var MAT12_BANCO = {
     { id:'m12-20esp-5', tema:'geometria', enun:'Num referencial ortonormado, o plano que passa em A(1,2,3) e e perpendicular ao vetor (2,-1,3) tem que equacao?', opts:['(A) 2x-y+3z=9','(B) 2x-y+3z=7','(C) 2x+y-3z=0','(D) x+2y-z=2'], correct:'A' },
     { id:'m12-20esp-6', tema:'derivadas', enun:'A funcao f(x) = x*e^(-x) tem maximo relativo em x=?', opts:['(A) x=0','(B) x=1','(C) x=-1','(D) x=e'], correct:'B' },
     { id:'m12-20esp-7', tema:'integrais', enun:'Qual e o valor de integral de 0 a pi de sen(x) dx?', opts:['(A) 0','(B) 1','(C) 2','(D) pi'], correct:'C' },
-    { id:'m12-20esp-8', tema:'funcoes', enun:'A funcao f(x) = ln(x^2 - 4) tem dominio:', opts:['(A) R\\[-2,2]','(B) ]-inf,-2[ U ]2,+inf[','(C) ]-2,2[','(D) R\\{-2,2}'], correct:'B' }
+    { id:'m12-20esp-8', tema:'funcoes', enun:'A funcao f(x) = ln(x^2 - 4) tem dominio:', opts:['(A) R \\ [-2,2]','(B) ]-inf,-2[ U ]2,+inf[','(C) ]-2,2[','(D) R \\ {-2,2}'], correct:'B' }
   ]
 },
 
@@ -95,7 +95,7 @@ var MAT12_BANCO = {
     { id:'m12-22f2-1', tema:'combinatoria', enun:'A soma de todos os elementos de uma dada linha do triangulo de Pascal e igual a 16384. Qual e o valor do quarto elemento da linha seguinte?', opts:['(A) 286','(B) 455','(C) 715','(D) 1365'], correct:'C' },
     { id:'m12-22f2-2', tema:'geometria', enun:'Num paralelepipedo [ABCDEFGH], qual e o valor de AB . HE?', opts:['(A) -49','(B) 0','(C) 7','(D) 49'], correct:'B' },
     { id:'m12-22f2-3', tema:'complexos', enun:'No plano complexo, qual das opcoes representa o conjunto de pontos definido pela condicao z * conjugado(z) = 4?', opts:['(A) Circunferencia de centro O e raio 4','(B) Circunferencia de centro O e raio 2','(C) Quadrado de lado 4','(D) Quadrado de lado 2'], correct:'B' },
-    { id:'m12-22f2-4', tema:'funcoes', enun:'Qual e o dominio maximal da funcao f(x) = ln(x^2-9)?', opts:['(A) R\\[-3,3]','(B) ]-inf,-3[ U ]3,+inf[','(C) ]-3,3[','(D) R\\{-3,3}'], correct:'B' },
+    { id:'m12-22f2-4', tema:'funcoes', enun:'Qual e o dominio maximal da funcao f(x) = ln(x^2-9)?', opts:['(A) R \\ [-3,3]','(B) ]-inf,-3[ U ]3,+inf[','(C) ]-3,3[','(D) R \\ {-3,3}'], correct:'B' },
     { id:'m12-22f2-5', tema:'derivadas', enun:'Qual e o valor do limite lim(x->0) f(x)/x, onde f e diferenciavel em 0 com f(0)=0 e f\'(0)=3?', opts:['(A) 0','(B) 1','(C) 3','(D) +infinito'], correct:'B' }
   ]
 },
@@ -147,7 +147,7 @@ var MAT12_BANCO = {
 '24_f1': {
   label: 'Exame 2024 1.a Fase', ano: 2024, fase: '1.a Fase',
   questoes: [
-    { id:'m12-24f1-1', tema:'funcoes', enun:'Seja f uma funcao de dominio R e contradominio [-1,3]. Qual e o contradominio da funcao g(x) = f(x-2) + 1?', opts:['(A) [-3,1]','(B) [-2,2]','(C) [0,4]','(D) [1,5]'], correct:'C' },
+    { id:'m12-24f1-1', tema:'funcoes', enun:'Seja f uma funcao de dominio R e contradominio [-1,3]. Qual e o contradominio da funcao g(x) = f(x-2) + 1?', opts:['(A) [-3, 1]','(B) [-2, 2]','(C) [0, 4]','(D) [1, 5]'], correct:'C' },
     { id:'m12-24f1-2', tema:'combinatoria', enun:'Quatro violinistas, um violoncelista e tres contrabaixistas vao sentar-se em duas filas de 4 lugares. Qual das expressoes representa o numero de maneiras de os dispor ficando os tres contrabaixistas numa fila?', opts:['(A) C(4,3) * 3! * 5!','(B) 2 * A(4,3) * 5!','(C) 2 * C(4,3) * 5!','(D) A(4,3) * 3 * 5!'], correct:'B' },
     { id:'m12-24f1-3', tema:'geometria', enun:'Num prisma reto [ABCDEFGH] de bases trapezoidais, qual das equacoes e uma equacao do plano ABF?', opts:['(A) 2x+3y+6z+22=0','(B) 2x+3y+6z+20=0','(C) 3x+2y+20=0','(D) 3x+2y+22=0'], correct:'A' }
   ]
@@ -179,7 +179,7 @@ var MAT12_BANCO = {
     { id:'m12-25f1-1', tema:'geometria', enun:'Num solido geometrico, qual das equacoes define o plano que passa num determinado ponto e tem vetor normal especifico?', opts:['(A) x+y+z=5','(B) 2x-y+z=3','(C) x-2y+3z=7','(D) 3x+y-z=2'], correct:'C' },
     { id:'m12-25f1-2', tema:'probabilidades', enun:'Numa experiencia aleatoria com acontecimentos A e B, qual e a probabilidade pedida?', opts:['(A) 1/4','(B) 1/3','(C) 1/2','(D) 2/3'], correct:'A' },
     { id:'m12-25f1-3', tema:'sucessoes', enun:'Qual e o limite ou valor de termo de uma progressao com as condicoes dadas?', opts:['(A) 12','(B) 24','(C) 36','(D) 48'], correct:'C' },
-    { id:'m12-25f1-4', tema:'funcoes', enun:'Qual e o conjunto solucao da inequacao ou equacao dada envolvendo funcoes?', opts:['(A) ]-1,2[','(B) ]-inf,-1[ U ]2,+inf[','(C) [-1,2]','(D) R\\{-1,2}'], correct:'B' }
+    { id:'m12-25f1-4', tema:'funcoes', enun:'Qual e o conjunto solucao da inequacao ou equacao dada envolvendo funcoes?', opts:['(A) ]-1,2[','(B) ]-inf,-1[ U ]2,+inf[','(C) [-1, 2]','(D) R \\ {-1,2}'], correct:'B' }
   ]
 },
 
