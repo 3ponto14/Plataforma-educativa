@@ -101,7 +101,7 @@
 <!-- ══════════════════════════════════════════
      PANEL: FICHAS
 ══════════════════════════════════════════ -->
-<div class="mat7-panel" id="mat7p-fichas" style="display:none">
+<div class="mat7-panel" id="mat7p-fichas">
   <div class="mat7-panel-heading">Gerador de Fichas</div>
   <div class="mat7-panel-sub">Escolhe os capítulos e o que incluir gera e descarrega uma ficha PDF personalizada. <strong>Para professores:</strong> ativa "Soluções" para a versão com respostas.</div>
   <!-- Existing gf panel embedded -->
@@ -158,7 +158,7 @@
       </button>
       <span id="gf-status-mat7-downloads" class="gf-status"></span>
     </div>
-  <div id="gf-preview-mat7-downloads" class="mt-4" style="display:none">
+  <div id="gf-preview-mat7-downloads" class="mt-4">
     <div class="gf-preview" id="gf-content-mat7-downloads"></div>
   </div>
 </div><!-- /panel fichas -->
@@ -180,7 +180,7 @@
     </div>
 
     <!-- Subtemas (aparecem após seleccionar capítulo) -->
-    <div class="resumo-st-row" id="resumo-st-row" style="display:none">
+    <div class="resumo-st-row" id="resumo-st-row">
       <!-- Gerado dinamicamente -->
     </div>
 
@@ -314,7 +314,7 @@
 
 
 <!-- ── Hidden stubs: sections needed by mat7LoadInline DOM-moving ── -->
-<div id="mat7-hub-stubs" style="display:none" aria-hidden="true">
+<div id="mat7-hub-stubs" aria-hidden="true">
 
   <!-- Cap 1 Teoria (used by Resumo tab via mat7RenderResumoInline) -->
   <div id="sec-teoria">
@@ -1072,7 +1072,7 @@
         </div>
       </div>
     </div>
-    <div id="fc-confidence" class="max-w-[580px] mx-auto mb-5" style="display:none">
+    <div id="fc-confidence" class="max-w-[580px] mx-auto mb-5">
       <div class="fc-conf-prompt">Como te saístes?</div>
       <div class="flex flex-wrap gap-2 justify-center">
         <button class="fc-conf-btn fc-conf-0" onclick="fcRate(0)"><i class="ph ph-smiley-sad"></i><br><span>Não sei</span></button>
@@ -1086,7 +1086,7 @@
       <button class="btn btn-primary" onclick="fcNext()">Próxima →</button>
     </div>
     <div class="flex flex-wrap gap-1 justify-center mt-4" id="fc-dots"></div>
-    <div id="fc-done" class="text-center py-10 px-4" style="display:none">
+    <div id="fc-done" class="text-center py-10 px-4">
       <div class="fc-done-title">Sessão concluída!</div>
       <div id="fc-done-msg" class="fc-done-msg"></div>
       <div class="flex flex-wrap gap-3 justify-center">
@@ -1151,7 +1151,7 @@
     </div>
   </div>
   <div id="sec-quiz-game"><div id="qg-app"></div></div>
-  <div id="relampago-score" style="display:none"><div id="relampago-result"></div></div>
+  <div id="relampago-score"><div id="relampago-result"></div></div>
   <div id="q-score">0</div><div id="q-total">/0</div><div id="q-prog"></div>
 
   <!-- Cap 2 -->

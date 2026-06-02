@@ -618,9 +618,9 @@ function mat7SwitchTab(tab, btn) {
     var tabBtn = document.querySelector('.mat7-hub-tab[data-tab="' + targetTab + '"]');
     if (tabBtn) tabBtn.classList.add('active');
   }
-  document.querySelectorAll('.mat7-panel').forEach(function(p){ p.classList.remove('active'); p.style.display = 'none'; });
+  document.querySelectorAll('.mat7-panel').forEach(function(p){ p.classList.remove('active'); p.style.display = ''; });
   var panel = document.getElementById('mat7p-' + tab);
-  if (panel) { panel.classList.add('active'); panel.style.display = 'block'; }
+  if (panel) { panel.classList.add('active'); panel.style.display = ''; }
   // Update document title
   var _tabTitles = { resumo:'Teoria', exercicios:'Exercícios', flashcards:'Flashcards',
     jogos:'Jogos', exame:'Teste', progresso:'Progresso', quiz:'Quiz', fichas:'Fichas', praticar:'Praticar' };
