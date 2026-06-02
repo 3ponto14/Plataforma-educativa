@@ -804,7 +804,12 @@ var MAT12_BANCO = {
     { id:'m12-20f2-101', num:'10.1', page:5, tipo:'mc', tema:'derivadas',
       enun:'Qual é o declive da reta tangente ao gráfico de f∘g no ponto de abcissa π/4?',
       opts:['(A) -2','(B) -1','(C) 1','(D) 2'], correct:'B',
-      resolucao:'(f\'g)\'(pi/4) = f\'(g(pi/4)) x g\'(pi/4). Com os valores de f e g da prova, o resultado é -1. Clica em \'Ver página da prova\' para ver a resolução completa.'g)\'(pi/4) = f\'(g(pi/4)) × g\'(pi/4). Calculando com f e g definidas na prova: resultado = -1.'(π/4) = f'(g(π/4))×g'(π/4). [Depende de f e g definidas na prova.] Resposta oficial: B=-1.' },      { id:'m12-20f2-122', num:'12.2', page:6, tipo:'mc', tema:'derivadas',       enun:'Qual é o valor de lim(x→1) [f(x)-f(1)]/(1-x²)?',       opts:['(A) -2','(B) -1','(C) 0','(D) 2'], correct:'B',       resolucao:'lim(x→1) [f(x)-f(1)]/(1-x²) = lim(x→1) [f(x)-f(1)]/[(1-x)(1+x)] = lim [f(x)-f(1)]/(x-1) × 1/[-(1+x)] = f\'(1) × 1/(-2) = f\'(1)/(-2). Se f\'(1)=2: resultado = -1. Resposta: B' }
+      resolucao:'Regra da cadeia: derivada de f composta com g em pi/4 = f derivada de g(pi/4) vezes g derivada de pi/4. Com f e g da prova, resultado = -1.' },
+
+    { id:'m12-20f2-122', num:'12.2', page:6, tipo:'mc', tema:'derivadas',
+      enun:'Qual e o valor de lim(x→1) [f(x)-f(1)]/(1-x^2)?',
+      opts:['(A) -2','(B) -1','(C) 0','(D) 2'], correct:'B',
+      resolucao:'lim(x→1) [f(x)-f(1)]/(1-x^2) = lim [f(x)-f(1)]/(x-1) vezes 1/(-(1+x)) = f derivada(1) / (-2). Se f derivada(1)=2: resultado = -1.' }
   ]
 },
 
