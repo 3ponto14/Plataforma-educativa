@@ -1792,39 +1792,6 @@ function renderProgressoUnificado() {
   caps.forEach(function(c){ totalC += c.data.correct; totalT += c.data.total; });
   var globalPct = totalT>0 ? Math.round(totalC/totalT*100) : 0;
 
-  var _capColors = ['c1','c2','c3','c4','c5','c6','c7','c8'];
-
-  var cardsHtml = caps.map(function(cap) {
-    var ci = _capColors[cap.num - 1] || 'c1';
-    var sem = cap.data.total === 0;
-    var pct = sem ? 0 : Math.round(cap.data.correct/cap.data.total*100);
-    var barCol = sem ? 'var(--cream3)' : pct>=80 ? 'var(--'+ci+'-mid)' : pct>=50 ? 'var(--'+ci+'-mid)' : 'var(--cs-mid)';
-    var badgeLabel = sem ? 'Sem dados' : pct>=80 ? 'Bom domínio' : pct>=50 ? 'A melhorar' : 'Precisa de treino';
-    var badgeBg = sem ? 'var(--cream3)' : pct>=80 ? 'var(--'+ci+'-base)' : pct>=50 ? 'var(--'+ci+'-pale)' : 'var(--cs-base)';
-    var badgeCol = sem ? 'var(--ink4)' : pct>=80 ? 'var(--'+ci+'-deep)' : pct>=50 ? 'var(--'+ci+'-deep)' : 'var(--cs-deep)';
-    return '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.1rem 1.1rem .9rem;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:.7rem;border-top:4px solid var(--'+ci+'-mid)">'
-      + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem">'
-      +   '<div>'
-      +     '<div style="font-size:.68rem;font-weight:700;color:var(--'+ci+'-mid);text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px">Cap. '+cap.num+'</div>'
-      +     '<div style="font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.2">'+cap.name+'</div>'
-      +   '</div>'
-      +   '<span style="flex-shrink:0;font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:999px;background:'+badgeBg+';color:'+badgeCol+'">'+badgeLabel+'</span>'
-      + '</div>'
-      + '<div>'
-      +   '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">'
-      +     '<span style="font-family:\'JetBrains Mono\',monospace;font-size:.78rem;color:var(--ink3)">'+(sem ? '— / —' : cap.data.correct+'/'+cap.data.total+' certas')+'</span>'
-      +     '<span style="font-family:\'JetBrains Mono\',monospace;font-size:.82rem;font-weight:700;color:var(--'+ci+'-mid)">'+(sem ? '' : pct+'%')+'</span>'
-      +   '</div>'
-      +   '<div style="height:8px;background:var(--cream3);border-radius:999px;overflow:hidden">'
-      +     '<div style="height:100%;width:'+pct+'%;background:'+barCol+';border-radius:999px;transition:width .6s cubic-bezier(.4,0,.2,1)"></div>'
-      +   '</div>'
-      + '</div>'
-      + '<button onclick="goToChapter('+cap.num+')" style="margin-top:auto;width:100%;padding:7px 0;background:var(--'+ci+'-base);border:1.5px solid var(--'+ci+'-mid);color:var(--'+ci+'-deep);border-radius:10px;font-family:\'Montserrat\',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;justify-content:center;gap:5px" onmouseover="this.style.background=\'var(--'+ci+'-mid)\';this.style.color=\'#fff\'" onmouseout="this.style.background=\'var(--'+ci+'-base)\';this.style.color=\'var(--'+ci+'-deep)\'">'
-      +   '<i class="ph ph-arrow-right"></i> Ir estudar'
-      + '</button>'
-      + '</div>';
-  }).join('');
-
   var grupos = _treinoGetGrupos();
   var pm = typeof ProgressManager !== 'undefined' ? ProgressManager.getSummary() : {totalXp:0,streak:0};
 
@@ -1872,12 +1839,6 @@ function renderProgressoUnificado() {
           + '</div>';
   });
   html += '</div>';
-
-  // ── Chapter cards grid ──
-  html += '<div style="margin-bottom:1.5rem">'
-        + '<div style="font-size:.78rem;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">Progresso por capítulo</div>'
-        + '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.85rem">'+cardsHtml+'</div>'
-        + '</div>';
 
   // ── Atualização timestamp ──
   html += '<div style="font-size:.72rem;color:var(--ink4);margin-bottom:1.25rem">Última atualização: '+new Date().toLocaleString('pt-PT',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit'})+'</div>';
