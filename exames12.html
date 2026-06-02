@@ -263,7 +263,7 @@ function ex12StartTema(tema) {
   var questoes = [];
   Object.keys(MAT12_BANCO).forEach(function(key) {
     MAT12_BANCO[key].questoes.forEach(function(q) {
-      if (q.tema === tema) questoes.push(Object.assign({}, q, {_provaLabel: MAT12_BANCO[key].label}));
+      if (q.tema === tema) questoes.push(Object.assign({}, q, {_provaLabel: MAT12_BANCO[key].label, _examKey: key}));
     });
   });
   // Shuffle
@@ -318,6 +318,23 @@ function ex12BuildQHTML(q, idx, total, mode) {
   if (q._provaLabel) html += '<div style="font-size:.72rem;color:var(--ink4);margin-bottom:.5rem">' + q._provaLabel + '</div>';
   if (q.num) html += '<div style="font-size:.72rem;font-weight:800;color:var(--ink3);margin-bottom:.4rem">Item ' + q.num + '</div>';
   html += '<div class="ex12-q-enun">' + q.enun + '</div>';
+
+  // Imagem da prova
+  var examKey = q._examKey || q.examKey || '';
+  if (!examKey) {
+    var km = q.id ? q.id.match(/m12-(\d{2}[_-](?:f1|f2|esp))/) : null;
+    if (km) examKey = km[1].replace('-','_');
+  }
+  if (examKey && q.page) {
+    var pg = String(q.page).length < 2 ? '0' + q.page : String(q.page);
+    var imgPath = 'img/exames12/' + examKey + '/p-' + pg + '.png';
+    html += '<div style="margin-bottom:1rem">'
+      + '<button onclick="ex12ToggleImg(this)" style="font-size:.72rem;font-weight:700;color:var(--ex12-mid);background:none;border:1px solid var(--ex12-border);border-radius:999px;padding:3px 10px;cursor:pointer;display:inline-flex;align-items:center;gap:4px">'
+      + '<i class="ph ph-image"></i> Ver página da prova</button>'
+      + '<div style="display:none;margin-top:.5rem">'
+      + '<img src="' + imgPath + '" style="width:100%;border-radius:8px;border:1px solid var(--border)" loading="lazy" onerror="this.parentElement.innerHTML=\'<p style=\\\"color:var(--ink4);font-size:.8rem\\\">Imagem nao disponivel</p>\'">'
+      + '</div></div>';
+  }
 
   if (isMC) {
     // Escolha multipla
@@ -575,6 +592,15 @@ function ex12ClearProgress() {
 }
 
 /* ── Init ── */
+function ex12ToggleImg(btn) {
+  var container = btn.nextElementSibling;
+  var visible = container.style.display !== 'none';
+  container.style.display = visible ? 'none' : 'block';
+  btn.innerHTML = visible
+    ? '<i class="ph ph-image"></i> Ver pagina da prova'
+    : '<i class="ph ph-eye-slash"></i> Ocultar pagina';
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   ex12LoadProgress();
   ex12BuildTemaGrid();
