@@ -80,6 +80,21 @@
 .ex12-feedback.err{background:#ffebee;color:#c62828;border:1px solid #ef9a9a}
 .ex12-q-nav{display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;flex-wrap:wrap;gap:.5rem}
 
+/* Simulador */
+.ex12-sim-dur-btn{padding:.55rem 1rem;border:1.5px solid var(--border);border-radius:999px;background:#fff;font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:700;color:var(--ink3);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:.4rem}
+.ex12-sim-dur-btn.active{border-color:var(--ex12-mid);background:var(--ex12-pale);color:var(--ex12-dark)}
+.ex12-sim-timer{background:linear-gradient(135deg,var(--ex12-dark),var(--ex12-mid));border-radius:16px;padding:1rem 1.25rem;display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap;position:sticky;top:110px;z-index:50}
+.ex12-sim-timer-clock{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:700;color:#fff;line-height:1}
+.ex12-sim-timer-label{font-size:.65rem;font-weight:700;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.2rem}
+.ex12-sim-timer-bar-wrap{height:6px;background:rgba(255,255,255,.2);border-radius:999px;flex:1;min-width:80px;overflow:hidden}
+.ex12-sim-timer-bar{height:100%;background:#fff;border-radius:999px;transition:width 1s linear}
+.ex12-sim-stop{padding:6px 14px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:999px;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.ex12-result-hero{background:linear-gradient(135deg,var(--ex12-dark),var(--ex12-mid));border-radius:20px;padding:2rem;text-align:center;color:#fff;margin-bottom:1.5rem}
+.ex12-result-nota{font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:900;line-height:1}
+.ex12-result-nota span{font-size:1.5rem;opacity:.7}
+.ex12-result-pct{font-size:1rem;opacity:.8;margin:.25rem 0 .5rem}
+.ex12-result-msg{font-size:.9rem;opacity:.85;margin-bottom:1rem}
+
 /* Progresso */
 .ex12-prog-summary{background:var(--ex12-pale);border:1.5px solid var(--ex12-border);border-radius:16px;padding:1.25rem;margin-bottom:1.5rem}
 .ex12-prog-big{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:900;color:var(--ex12-dark);line-height:1}
@@ -124,6 +139,7 @@
   <div class="ex12-tabs-wrap">
     <button class="ex12-tab active" onclick="ex12SwitchTab('temas',this)"><i class="ph ph-tag"></i> <span>Por Tema</span></button>
     <button class="ex12-tab" onclick="ex12SwitchTab('provas',this)"><i class="ph ph-file-text"></i> <span>Por Prova</span></button>
+    <button class="ex12-tab" onclick="ex12SwitchTab('simulador',this)"><i class="ph ph-timer"></i> <span>Simulador</span></button>
     <button class="ex12-tab" onclick="ex12SwitchTab('progresso',this)"><i class="ph ph-chart-bar"></i> <span>Progresso</span></button>
   </div>
 
@@ -172,6 +188,35 @@
         <button onclick="ex12VolverProvas()" class="btn btn-primary" style="background:var(--ex12-mid);border-color:var(--ex12-mid)">Escolher outra prova</button>
       </div>
     </div>
+  </div>
+
+  <!-- PANEL: SIMULADOR -->
+  <div class="ex12-panel" id="ex12-panel-simulador">
+    <div class="ex12-sec-title">Simulador de Exame</div>
+    <div class="ex12-sec-sub">Condições reais: 150 minutos, questoes de escolha multipla e desenvolvimento. No final ves a nota e a revisao completa.</div>
+
+    <!-- Config -->
+    <div id="ex12-sim-config">
+      <div style="background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1rem">
+        <div style="font-size:.78rem;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:1rem">Escolhe a prova</div>
+        <div id="ex12-sim-prova-sel" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.6rem;margin-bottom:1.5rem"></div>
+
+        <div style="font-size:.78rem;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">Duracao</div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem">
+          <button class="ex12-sim-dur-btn active" data-min="150" onclick="ex12SimSelDur(this)"><i class="ph ph-clock"></i> 150 min (real)</button>
+          <button class="ex12-sim-dur-btn" data-min="90" onclick="ex12SimSelDur(this)">90 min</button>
+          <button class="ex12-sim-dur-btn" data-min="60" onclick="ex12SimSelDur(this)">60 min</button>
+          <button class="ex12-sim-dur-btn" data-min="30" onclick="ex12SimSelDur(this)">30 min</button>
+        </div>
+
+        <button onclick="ex12SimStart()" style="width:100%;padding:.9rem;background:linear-gradient(135deg,var(--ex12-dark),var(--ex12-mid));color:#fff;border:none;border-radius:12px;font-family:'Montserrat',sans-serif;font-size:.92rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem">
+          <i class="ph ph-play"></i> Iniciar Simulador
+        </button>
+      </div>
+    </div>
+
+    <!-- Running -->
+    <div id="ex12-sim-running" style="display:none"></div>
   </div>
 
   <!-- PANEL: PROGRESSO -->
@@ -303,7 +348,7 @@ function ex12RenderTemaQ() {
 }
 
 function ex12BuildQHTML(q, idx, total, mode) {
-  var st = mode === 'tema' ? _ex12TemaState : _ex12ProvaState;
+  var st = mode === 'tema' ? _ex12TemaState : (mode === 'sim' ? _ex12SimState : _ex12ProvaState);
   var answered = st.answers[q.id];
   var isMC = q.tipo === 'mc';
   var qid = mode + '-' + idx;
@@ -408,43 +453,45 @@ function ex12BuildQHTML(q, idx, total, mode) {
   return html;
 }
 
+function ex12ReRender(mode) {
+  if (mode === 'tema') ex12RenderTemaQ();
+  else if (mode === 'sim') ex12SimRenderQ();
+  else ex12RenderProvaQ();
+}
+
 function ex12VerResolucao(mode, idx, qid) {
-  var st = mode === 'tema' ? _ex12TemaState : _ex12ProvaState;
+  var st = mode === 'tema' ? _ex12TemaState : (mode === 'sim' ? _ex12SimState : _ex12ProvaState);
   st.answers[qid] = 'visto';
   if (!st.avaliacao) st.avaliacao = {};
-  if (mode === 'tema') ex12RenderTemaQ();
-  else ex12RenderProvaQ();
+  ex12ReRender(mode);
 }
 
 function ex12AutoAvaliar(mode, idx, qid, isCorrect) {
-  var st = mode === 'tema' ? _ex12TemaState : _ex12ProvaState;
+  var st = mode === 'tema' ? _ex12TemaState : (mode === 'sim' ? _ex12SimState : _ex12ProvaState);
   if (!st.avaliacao) st.avaliacao = {};
   st.avaliacao[qid] = isCorrect ? 'ok' : 'err';
   ex12RecordAnswer(qid, isCorrect);
-  if (mode === 'tema') ex12RenderTemaQ();
-  else ex12RenderProvaQ();
+  ex12ReRender(mode);
 }
 
 function ex12SelectOpt(mode, idx, letter, qid, correct) {
-  var st = mode === 'tema' ? _ex12TemaState : _ex12ProvaState;
+  var st = mode === 'tema' ? _ex12TemaState : (mode === 'sim' ? _ex12SimState : _ex12ProvaState);
   if (st.answers[qid]) return;
   st.answers[qid] = letter;
   var isCorrect = letter === correct;
   ex12RecordAnswer(qid, isCorrect);
-  // Re-render
-  if (mode === 'tema') ex12RenderTemaQ();
-  else ex12RenderProvaQ();
+  ex12ReRender(mode);
 }
 
 function ex12Next(mode) {
-  var st = mode === 'tema' ? _ex12TemaState : _ex12ProvaState;
+  var st = mode === 'tema' ? _ex12TemaState : (mode === 'sim' ? _ex12SimState : _ex12ProvaState);
   st.idx++;
-  if (mode === 'tema') ex12RenderTemaQ();
-  else ex12RenderProvaQ();
+  ex12ReRender(mode);
 }
 
 function ex12ShowResult(mode) {
   if (mode === 'tema') ex12ShowTemaResult();
+  else if (mode === 'sim') ex12SimShowResult();
   else ex12ShowProvaResult();
 }
 
@@ -592,6 +639,211 @@ function ex12ClearProgress() {
 }
 
 /* ── Init ── */
+/* ══ SIMULADOR ══════════════════════════════════════════ */
+var _ex12SimTimer = null;
+var _ex12SimTimeLeft = 0;
+var _ex12SimTotalTime = 0;
+var _ex12SimProva = null;
+var _ex12SimDurMin = 150;
+var _ex12SimState = { questoes: [], idx: 0, answers: {}, avaliacao: {}, done: false };
+
+function ex12SimSelDur(btn) {
+  document.querySelectorAll('.ex12-sim-dur-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  _ex12SimDurMin = parseInt(btn.dataset.min) || 150;
+}
+
+function ex12BuildSimProvaGrid() {
+  var grid = document.getElementById('ex12-sim-prova-sel');
+  if (!grid) return;
+  var anos = [2025,2024,2023,2022,2021,2020];
+  var html = '';
+  anos.forEach(function(ano) {
+    ['f1','f2','esp'].forEach(function(fase) {
+      var key = String(ano).slice(2) + '_' + fase;
+      if (!MAT12_BANCO[key]) return;
+      var faseLabel = fase==='f1'?'1.ª Fase':fase==='f2'?'2.ª Fase':'Ep. Especial';
+      var n = MAT12_BANCO[key].questoes.length;
+      html += '<button class="ex12-prova-card" style="padding:.85rem;font-size:.78rem" onclick="ex12SimSelProva(this,\'' + key + '\')">'
+        + '<div style="font-family:\'JetBrains Mono\',monospace;font-size:1.1rem;font-weight:700;color:var(--ex12-mid)">' + ano + '</div>'
+        + '<div style="font-size:.7rem;color:var(--ink3);font-weight:700">' + faseLabel + '</div>'
+        + '<div style="font-size:.65rem;color:var(--ink4);margin-top:.25rem">' + n + ' questoes</div>'
+        + '</button>';
+    });
+  });
+  grid.innerHTML = html;
+}
+
+function ex12SimSelProva(btn, key) {
+  document.querySelectorAll('#ex12-sim-prova-sel .ex12-prova-card').forEach(function(b){
+    b.style.borderColor = ''; b.style.background = '';
+  });
+  btn.style.borderColor = 'var(--ex12-mid)';
+  btn.style.background = 'var(--ex12-pale)';
+  _ex12SimProva = key;
+}
+
+function ex12SimStart() {
+  if (!_ex12SimProva) {
+    alert('Escolhe uma prova primeiro.');
+    return;
+  }
+  var prova = MAT12_BANCO[_ex12SimProva];
+  if (!prova) return;
+
+  _ex12SimState = { questoes: prova.questoes.slice(), idx: 0, answers: {}, avaliacao: {}, done: false };
+  _ex12SimTotalTime = _ex12SimDurMin * 60;
+  _ex12SimTimeLeft = _ex12SimTotalTime;
+
+  var cfg = document.getElementById('ex12-sim-config');
+  var running = document.getElementById('ex12-sim-running');
+  cfg.style.display = 'none';
+  running.style.display = 'block';
+
+  ex12SimRenderTimer();
+  ex12SimRenderQ();
+
+  _ex12SimTimer = setInterval(function() {
+    _ex12SimTimeLeft--;
+    var timeEl = document.getElementById('ex12-sim-clock');
+    var barEl = document.getElementById('ex12-sim-bar');
+    if (timeEl) timeEl.textContent = ex12FmtTime(_ex12SimTimeLeft);
+    if (barEl) {
+      var pct = Math.max(0, Math.round(_ex12SimTimeLeft / _ex12SimTotalTime * 100));
+      barEl.style.width = pct + '%';
+      if (_ex12SimTimeLeft <= 300) barEl.style.background = 'linear-gradient(90deg,#f0a010,#ffcc44)';
+      if (_ex12SimTimeLeft <= 60)  barEl.style.background = 'linear-gradient(90deg,#f55,#ff8080)';
+    }
+    if (_ex12SimTimeLeft <= 0) ex12SimStop();
+  }, 1000);
+}
+
+function ex12FmtTime(s) {
+  var m = Math.floor(s/60);
+  var ss = s % 60;
+  return (m < 10 ? '0' : '') + m + ':' + (ss < 10 ? '0' : '') + ss;
+}
+
+function ex12SimRenderTimer() {
+  var running = document.getElementById('ex12-sim-running');
+  var timer = document.getElementById('ex12-sim-timer');
+  if (!timer) {
+    var t = document.createElement('div');
+    t.id = 'ex12-sim-timer';
+    t.className = 'ex12-sim-timer';
+    running.insertBefore(t, running.firstChild);
+    timer = t;
+  }
+  var st = _ex12SimState;
+  var total = st.questoes.length;
+  timer.innerHTML = '<i class="ph ph-timer" style="color:rgba(255,255,255,.7);font-size:1.3rem;flex-shrink:0"></i>'
+    + '<div style="flex:1">'
+    + '<div class="ex12-sim-timer-label">Tempo restante</div>'
+    + '<div class="ex12-sim-timer-clock" id="ex12-sim-clock">' + ex12FmtTime(_ex12SimTimeLeft) + '</div>'
+    + '<div class="ex12-sim-timer-bar-wrap"><div class="ex12-sim-timer-bar" id="ex12-sim-bar" style="width:100%"></div></div>'
+    + '</div>'
+    + '<div style="text-align:right;color:rgba(255,255,255,.7);font-size:.72rem;font-weight:700">'
+    + '<div style="font-size:1.1rem;font-family:\'JetBrains Mono\',monospace;color:#fff" id="ex12-sim-qcount">' + (st.idx+1) + '/' + total + '</div>'
+    + '<div>questoes</div></div>'
+    + '<button class="ex12-sim-stop" onclick="ex12SimStop()"><i class="ph ph-stop-circle"></i> Terminar</button>';
+}
+
+function ex12SimRenderQ() {
+  var st = _ex12SimState;
+  var container = document.getElementById('ex12-sim-questoes');
+  if (!container) {
+    var c = document.createElement('div');
+    c.id = 'ex12-sim-questoes';
+    document.getElementById('ex12-sim-running').appendChild(c);
+    container = c;
+  }
+  var qcount = document.getElementById('ex12-sim-qcount');
+  if (qcount) qcount.textContent = (st.idx+1) + '/' + st.questoes.length;
+
+  if (st.idx >= st.questoes.length) {
+    ex12SimShowResult();
+    return;
+  }
+  var q = st.questoes[st.idx];
+  container.innerHTML = ex12BuildQHTML(q, st.idx, st.questoes.length, 'sim');
+}
+
+function ex12SimStop() {
+  clearInterval(_ex12SimTimer);
+  _ex12SimTimer = null;
+  _ex12SimState.done = true;
+  ex12SimShowResult();
+}
+
+function ex12SimShowResult() {
+  clearInterval(_ex12SimTimer);
+  var st = _ex12SimState;
+  var timer = document.getElementById('ex12-sim-timer');
+  if (timer) timer.style.display = 'none';
+
+  var correct = ex12CountCorrect(st);
+  var total = st.questoes.length;
+  var pct = total > 0 ? Math.round(correct / total * 100) : 0;
+  var nota = Math.round(correct / total * 20 * 10) / 10;
+
+  var emoji = pct>=90?'🏆':pct>=75?'⭐':pct>=55?'💪':pct>=35?'📚':'🔄';
+  var msg = pct>=90?'Excelente! Estás preparado!':pct>=75?'Muito bom! Continua assim.':pct>=55?'Bom esforço! Treina mais.':pct>=35?'Revê os temas com mais erros.':'Estuda a matéria e tenta de novo!';
+
+  var container = document.getElementById('ex12-sim-questoes');
+  if (!container) return;
+
+  var h = '<div class="ex12-result-hero">'
+    + '<div style="font-size:2.5rem;margin-bottom:.5rem">' + emoji + '</div>'
+    + '<div class="ex12-result-nota">' + nota.toFixed(1).replace('.',',') + '<span> / 20</span></div>'
+    + '<div class="ex12-result-pct">' + correct + ' de ' + total + ' questoes certas (' + pct + '%)</div>'
+    + '<div class="ex12-result-msg">' + msg + '</div>'
+    + '<div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:1rem">'
+    + '<button onclick="ex12SimReset()" style="padding:8px 18px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:999px;font-family:\'Montserrat\',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer"><i class="ph ph-arrow-clockwise"></i> Novo simulador</button>'
+    + '<button onclick="ex12SwitchTab(\'temas\',null)" style="padding:8px 18px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:999px;font-family:\'Montserrat\',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer"><i class="ph ph-books"></i> Praticar por Tema</button>'
+    + '</div></div>';
+
+  // Revisão
+  h += '<div style="margin-top:1.5rem"><div style="font-size:.78rem;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">Revisao das questoes</div>';
+  st.questoes.forEach(function(q, qi) {
+    var ans = st.answers[q.id];
+    var aval = st.avaliacao && st.avaliacao[q.id];
+    var isOk = q.tipo === 'mc' ? ans === q.correct : aval === 'ok';
+    var skipped = q.tipo === 'mc' ? !ans : !aval;
+    var color = skipped ? '#888' : isOk ? '#2e7d32' : '#c62828';
+    var bg = skipped ? '#f5f5f5' : isOk ? '#e8f5e9' : '#ffebee';
+    h += '<div style="background:' + bg + ';border-radius:12px;padding:1rem;margin-bottom:.6rem;border-left:4px solid ' + color + '">'
+      + '<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem">'
+      + '<span style="font-size:.7rem;font-weight:800;color:var(--ink4)">Item ' + (q.num||qi+1) + '</span>'
+      + '<span style="font-size:.65rem;padding:1px 7px;border-radius:999px;background:' + color + ';color:#fff;font-weight:700">'
+      + (skipped ? 'Sem resposta' : isOk ? 'Certo' : 'Errado') + '</span>'
+      + '<span style="font-size:.65rem;color:var(--ink4);margin-left:auto">' + (q.tipo==='mc'?'Escolha multipla':'Desenvolvimento') + '</span>'
+      + '</div>'
+      + '<div style="font-size:.82rem;color:var(--ink2);line-height:1.5;margin-bottom:.5rem">' + q.enun.slice(0,120) + (q.enun.length>120?'...':'') + '</div>';
+    if (q.tipo === 'mc' && q.correct) {
+      h += '<div style="font-size:.78rem;color:' + color + ';font-weight:700">Resposta certa: (' + q.correct + ')';
+      if (ans && ans !== q.correct) h += ' &nbsp; A tua: (' + ans + ')';
+      h += '</div>';
+    }
+    h += '</div>';
+  });
+  h += '</div>';
+  container.innerHTML = h;
+}
+
+function ex12SimReset() {
+  clearInterval(_ex12SimTimer);
+  _ex12SimTimer = null;
+  _ex12SimProva = null;
+  var cfg = document.getElementById('ex12-sim-config');
+  var running = document.getElementById('ex12-sim-running');
+  if (cfg) cfg.style.display = 'block';
+  if (running) { running.style.display = 'none'; running.innerHTML = ''; }
+  // Reset prova selection
+  document.querySelectorAll('#ex12-sim-prova-sel .ex12-prova-card').forEach(function(b){
+    b.style.borderColor = ''; b.style.background = '';
+  });
+}
+
 function ex12ToggleImg(btn) {
   var container = btn.nextElementSibling;
   var visible = container.style.display !== 'none';
@@ -605,6 +857,7 @@ document.addEventListener('DOMContentLoaded', function() {
   ex12LoadProgress();
   ex12BuildTemaGrid();
   ex12BuildProvaGrid();
+  ex12BuildSimProvaGrid();
   // Update total count
   var total = 0;
   Object.keys(MAT12_BANCO).forEach(function(k){ total += MAT12_BANCO[k].questoes.length; });
