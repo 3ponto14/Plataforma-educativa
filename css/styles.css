@@ -1355,6 +1355,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
   max-width: 880px; margin: 0 auto;
   padding: 1.75rem 1.75rem 6rem;
 }
+#mat7-hub-stubs { display: none !important; }
 .mat7-panel { display: none; }
 .mat7-panel.active { display: block; animation: pfadeUp .2s ease; }
 
