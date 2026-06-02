@@ -1,4 +1,4 @@
-// CHAPTER ENGINE — Generic parameterized logic for cap1–cap4
+// CHAPTER ENGINE Generic parameterized logic for cap1–cap4
 // Each chapter registers its data in window.CAP_DATA[n].
 
 window.CAP_DATA = window.CAP_DATA || {};
@@ -104,7 +104,7 @@ function capShowSection(n, id, btn) {
 function capGoToTopic(n, topicNum) {
   var cfg = _getCfg(n); if (!cfg) return;
   var pfx = _capPfx(n);
-  // Pass null as btn — tab active state handled by capShowSection internals
+  // Pass null as btn tab active state handled by capShowSection internals
   capShowSection(n, 'teoria'+pfx, null);
   setTimeout(function(){ var el = _capEl('topic'+(pfx?pfx+'-':'-')+topicNum) || _capEl('topic-'+topicNum); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
 }

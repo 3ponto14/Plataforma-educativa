@@ -114,7 +114,7 @@ function _maybeShowNextStep(sec, correct, total) {
   showNextStep(container, map.msg, map.btn, map.act);
 }
 
-// JOGO DO 24 — Mecânica passo-a-passo (calculadora progressiva)
+// JOGO DO 24 Mecânica passo-a-passo (calculadora progressiva)
 
 var _j24Levels = {
   facil:   { label:'<span style="display:inline-block;width:.6em;height:.6em;border-radius:50%;background:#4caf50;vertical-align:middle;flex-shrink:0;margin-right:1px"></span> Fácil',   nums: function(){ return _j24Pick4([1,2,3,4,5,6,7,8,9,1,2,3,4,6,8]); }, time: 90 },
@@ -436,7 +436,7 @@ function j24Hint(cid) {
   if (!s) return;
   var hint = _j24Hint(s.origNums);
   if (hint) _j24ShowResult(cid, 'hint', '<i class="ph ph-lightbulb"></i> Uma solução: ' + hint.replace(/\*/g,'×').replace(/\//g,'÷'));
-  else _j24ShowResult(cid, 'hint', '<i class="ph ph-lightbulb"></i> Este puzzle não tem solução — gera um novo!');
+  else _j24ShowResult(cid, 'hint', '<i class="ph ph-lightbulb"></i> Este puzzle não tem solução gera um novo!');
 }
 
 function j24New(cid) {
@@ -484,7 +484,7 @@ function _j24BuildHTML(cid, defaultLevel) {
     '      <button class="btn btn-ghost" style="padding:6px 14px;font-size:.78rem" onclick="j24New(\''+cid+'\')">↺ Novo puzzle</button>',
     '    </div>',
     '  </div>',
-    '  <p style="font-size:.85rem;color:var(--ink3);margin-bottom:1rem">Usa os <strong>4 números</strong> exactamente uma vez — combina dois de cada vez com +, −, ×, ÷. O resultado substitui os dois números. Chega ao <strong>24</strong>!</p>',
+    '  <p style="font-size:.85rem;color:var(--ink3);margin-bottom:1rem">Usa os <strong>4 números</strong> exactamente uma vez combina dois de cada vez com +, −, ×, ÷. O resultado substitui os dois números. Chega ao <strong>24</strong>!</p>',
     '  <div class="level-bar" style="margin-bottom:1.25rem">',
     '    <div class="gen-level-group">',
     '      <span class="gen-level-label">Nível:</span>',
@@ -524,7 +524,7 @@ function _j24BuildHTML(cid, defaultLevel) {
 
 var _j24Inited = {}; // legacy tracker (superseded by _gInited in the new game system)
 
-// JOGOS — SISTEMA DE TABS + 4 JOGOS
+// JOGOS SISTEMA DE TABS + 4 JOGOS
 
 // ── Tab switcher ──
 function gTabSwitch(wrapId, tabName) {
@@ -729,7 +729,7 @@ function _gQuestionPool(cap, level) {
 }
 
 // Game constructors (Game4Linha, GameMine, GameSudoku, GameHanoi)
-// moved to systems-games.js — loaded on demand via lazyLoad()
+// moved to systems-games.js loaded on demand via lazyLoad()
 
 // ── Updated _j24AutoInit to use new system ──
 var _gInited = {};
@@ -808,7 +808,7 @@ Object.keys(professorMode).forEach(function(k){
 // ── Professor Mode: Answer Keys ──
 var profAnswers = {
   1: { // Cap 1 - Números Inteiros
-    titulo: 'Números Inteiros (ℤ) — 7.º Ano',
+    titulo: 'Números Inteiros (ℤ) 7.º Ano',
     respostas: [
       {q:'1', r:'−8, +500, −200, −4, +10000, −75', expl:'Abaixo de zero / perda / profundidade → negativo. Lucro / ganho / altitude → positivo.'},
       {q:'2', r:'a) F  b) V  c) V  d) F  e) V', expl:'a) 0 não pertence a ℤ⁺ (apenas ℤ₀⁺). d) O menor inteiro positivo é 1, não existe "menor" em ℤ⁻.'},
@@ -833,7 +833,7 @@ var profAnswers = {
     ]
   },
   2: { // Cap 2 - Números Racionais
-    titulo: 'Números Racionais (ℚ) — 7.º Ano',
+    titulo: 'Números Racionais (ℚ) 7.º Ano',
     respostas: [
       {q:'Frações equivalentes', r:'Multiplica ou divide numerador e denominador pelo mesmo número ≠ 0', expl:'Ex: 2/3 = 4/6 = 6/9. Para simplificar: divide pelo MDC.'},
       {q:'Comparação de frações', r:'Reduzir ao mesmo denominador (MMC) e comparar numeradores', expl:'Ex: 2/3 vs 3/5 → 10/15 vs 9/15 → 2/3 > 3/5.'},
@@ -847,7 +847,7 @@ var profAnswers = {
     ]
   },
   3: { // Cap 3 - Geometria
-    titulo: 'Geometria — 7.º Ano',
+    titulo: 'Geometria 7.º Ano',
     respostas: [
       {q:'Soma ângulos internos', r:'S = (n−2) × 180°', expl:'Triângulo: 180° | Quadrilátero: 360° | Pentágono: 540° | Hexágono: 720°. Cada ângulo regular = S ÷ n.'},
       {q:'Ângulos externos', r:'Soma sempre = 360°', expl:'Qualquer polígono convexo. Cada ângulo externo regular = 360° ÷ n. Interno + Externo = 180°.'},
@@ -867,7 +867,7 @@ var profAnswers = {
     ]
   },
   4: { // Cap 4 - Equações
-    titulo: 'Expressões Algébricas e Equações — 7.º Ano',
+    titulo: 'Expressões Algébricas e Equações 7.º Ano',
     respostas: [
       {q:'Expressões algébricas', r:'Simplificar juntando termos semelhantes', expl:'Ex: 3x + 2y − x + 5y = 2x + 7y. Só se juntam termos com a mesma parte literal.'},
       {q:'Equações 1.º grau', r:'Isolar a incógnita: passar termos, dividir pelo coeficiente', expl:'Ex: 2x + 3 = 11 → 2x = 8 → x = 4. Verificação: 2(4)+3 = 11 ✓.'},
@@ -878,7 +878,7 @@ var profAnswers = {
     ]
   },
   5: { // Cap 5 - Sequências
-    titulo: 'Sequências e Termo Geral — 7.º Ano',
+    titulo: 'Sequências e Termo Geral 7.º Ano',
     respostas: [
       {q:'Termo geral', r:'Encontrar a regra que dá o n-ésimo termo', expl:'Ex: 2, 5, 8, 11… → aₙ = 3n − 1. Verificar: a₁ = 3(1)−1 = 2 ✓'},
       {q:'Sequências aritméticas', r:'Diferença constante entre termos consecutivos', expl:'aₙ = a₁ + (n−1)×r. Verificar sempre com n=1,2,3.'},
@@ -889,7 +889,7 @@ var profAnswers = {
     ]
   },
   6: { // Cap 6 - Funções
-    titulo: 'Funções — 7.º Ano',
+    titulo: 'Funções 7.º Ano',
     respostas: [
       {q:'Referencial cartesiano', r:'Par ordenado (x, y): abcissa x, ordenada y', expl:'Mover x na horizontal, y na vertical a partir da origem.'},
       {q:'Função', r:'A cada x do domínio corresponde exatamente um y', expl:'Verificar: um x não pode ter duas imagens diferentes.'},
@@ -905,7 +905,7 @@ var profAnswers = {
 function injectProfSolutions(html, cap) {
   if (!cap || !professorMode[cap]) return html;
   
-  var profBar = '<div style="background:#c62828;color:white;padding:14px 24px;font-family:sans-serif;font-weight:700;font-size:15px;text-align:center;margin-bottom:24px;border-radius:8px;letter-spacing:.5px">VERSÃO PROFESSOR — COM SOLUÇÕES DETALHADAS</div>';
+  var profBar = '<div style="background:#c62828;color:white;padding:14px 24px;font-family:sans-serif;font-weight:700;font-size:15px;text-align:center;margin-bottom:24px;border-radius:8px;letter-spacing:.5px">VERSÃO PROFESSOR COM SOLUÇÕES DETALHADAS</div>';
   html = html.replace('<body>', '<body>' + profBar);
   
   var answers = profAnswers[cap];
@@ -914,7 +914,7 @@ function injectProfSolutions(html, cap) {
     html = html.replace('</head>', solStyle + '</head>');
     
     // Build detailed answer key
-    var keyHTML = '<div class="prof-key"><h2>Resolução Completa — ' + (answers.titulo || 'Capítulo ' + cap) + '</h2>';
+    var keyHTML = '<div class="prof-key"><h2>Resolução Completa ' + (answers.titulo || 'Capítulo ' + cap) + '</h2>';
     
     if (answers.respostas && answers.respostas.length) {
       keyHTML += '<h3 style="color:#c62828;margin:20px 0 12px;font-size:1.05rem">Ficha de Trabalho</h3>';
@@ -954,17 +954,17 @@ htmlToPdfDownload=function(html,filename){
 
 // UX 6: FUNCTIONAL SEARCH
 var searchIdx=[
-  {t:'Números Inteiros — Conjunto ℤ',k:'inteiros conjuntos Z ordenação',c:1,a:'math'},
+  {t:'Números Inteiros Conjunto ℤ',k:'inteiros conjuntos Z ordenação',c:1,a:'math'},
   {t:'Valor Absoluto e Simétrico',k:'valor absoluto simétrico módulo',c:1,a:'math'},
   {t:'Adição e Subtração de Inteiros',k:'adição subtração inteiros soma',c:1,a:'math'},
   {t:'Questões-aula Inteiros',k:'questões exercícios quiz inteiros',c:1,a:'math'},
   {t:'Minitestes Inteiros',k:'miniteste teste rápido',c:1,a:'math'},
   {t:'Jogos Inteiros',k:'jogos interativo',c:1,a:'math'},
-  {t:'Números Racionais — Frações',k:'racionais frações Q comparar',c:2,a:'math2'},
+  {t:'Números Racionais Frações',k:'racionais frações Q comparar',c:2,a:'math2'},
   {t:'Percentagens',k:'percentagem desconto aumento',c:2,a:'math2'},
   {t:'Potências e Notação Científica',k:'potências notação científica expoente',c:2,a:'math2'},
   {t:'Questões-aula Racionais',k:'questões exercícios racionais',c:2,a:'math2'},
-  {t:'Geometria — Ângulos',k:'geometria ângulos graus triângulo',c:3,a:'math3'},
+  {t:'Geometria Ângulos',k:'geometria ângulos graus triângulo',c:3,a:'math3'},
   {t:'Quadriláteros e Áreas',k:'quadriláteros área perímetro retângulo',c:3,a:'math3'},
   {t:'Questões-aula Geometria',k:'questões geometria',c:3,a:'math3'},
   {t:'Sequências e Termo Geral',k:'sequência termo geral sucessão aritmética',c:5,a:'math5'},
@@ -977,13 +977,13 @@ var searchIdx=[
   {t:'Downloads Geometria',k:'download ficha PDF geometria',c:3,a:'math3'},
   {t:'Downloads Equações',k:'download ficha PDF equações',c:4,a:'math4'},
   {t:'Flashcards Equações',k:'flashcards cartões revisão equações',c:4,a:'math4'},
-  {t:'Sequências — Teoria',k:'sequência termo geral aritmética geométrica razão',c:5,a:'math5'},
+  {t:'Sequências Teoria',k:'sequência termo geral aritmética geométrica razão',c:5,a:'math5'},
   {t:'Questões Sequências',k:'questões exercícios sequências termo',c:5,a:'math5'},
   {t:'Downloads Sequências',k:'download ficha PDF sequências',c:5,a:'math5'},
   {t:'Flashcards Sequências',k:'flashcards cartões revisão sequências',c:5,a:'math5'},
-  {t:'Funções — Referencial Cartesiano',k:'funções referencial cartesiano eixos abcissa ordenada ponto',c:6,a:'math6'},
-  {t:'Funções — Conceito',k:'função domínio contradomínio imagem f(x) relação',c:6,a:'math6'},
-  {t:'Funções — Gráficos',k:'gráfico função reta linear proporcionalidade',c:6,a:'math6'},
+  {t:'Funções Referencial Cartesiano',k:'funções referencial cartesiano eixos abcissa ordenada ponto',c:6,a:'math6'},
+  {t:'Funções Conceito',k:'função domínio contradomínio imagem f(x) relação',c:6,a:'math6'},
+  {t:'Funções Gráficos',k:'gráfico função reta linear proporcionalidade',c:6,a:'math6'},
   {t:'Proporcionalidade Direta',k:'proporcionalidade direta y=kx constante razão',c:6,a:'math6'},
   {t:'Questões Funções',k:'questões exercícios funções gráficos',c:6,a:'math6'},
   {t:'Downloads Funções',k:'download ficha PDF funções',c:6,a:'math6'},
@@ -1048,7 +1048,7 @@ var examActive=false;
   if(typeof window[fn]==='function'){var o=window[fn];window[fn]=function(){examActive=false;o.apply(this,arguments);};}
 });
 window.addEventListener('beforeunload',function(e){
-  if(examActive){e.preventDefault();e.returnValue='Exame em curso — perdes o progresso se saíres.';return e.returnValue;}
+  if(examActive){e.preventDefault();e.returnValue='Exame em curso perdes o progresso se saíres.';return e.returnValue;}
 });
 // Protect tab switching during exam
 ['showSection','showSection2','showSection3','showSection4'].forEach(function(fn){
@@ -1357,7 +1357,7 @@ function toggleTeacher(btn) {
 }
 
 
-// DOWNLOAD PROGRESSO — JSON e PDF
+// DOWNLOAD PROGRESSO JSON e PDF
 function _progRecolherTudo() {
   // Junta dados dos 4 caps + ProgressManager XP
   var cap4raw = {};
@@ -1456,11 +1456,11 @@ function progDownloadPDF() {
   setTimeout(function(){ win.print(); }, 400);
 }
 
-// PROGRESSO UNIFICADO — hub tab "Progresso" (todos os capítulos)
+// PROGRESSO UNIFICADO hub tab "Progresso" (todos os capítulos)
 
 var _treinoState = {};
 
-// ── Builders para cada cap — output formato padrão ──
+// ── Builders para cada cap output formato padrão ──
 var _TREINO_BUILDERS = {
   cap1: function(temaNum, dif) {
     try {
@@ -1652,7 +1652,7 @@ function gerarFichaTreino() {
 
   // Nota de contexto
   body += '<div class="nota" style="margin-bottom:24px">Esta ficha foi gerada automaticamente com base nos temas onde registaste mais erros. '
-        + 'Os exercícios são semelhantes mas diferentes dos que erraste — treina com atenção!</div>';
+        + 'Os exercícios são semelhantes mas diferentes dos que erraste treina com atenção!</div>';
 
   // Temas em foco
   body += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px">';
@@ -1711,9 +1711,9 @@ function gerarFichaTreino() {
     body += '</ul>';
   }
 
-  body += '<div class="doc-footer"><span>3ponto14.pt</span><span>Ficha de Treino Direcionado — Matemática 7.º Ano</span><span>'+now+'</span></div>';
+  body += '<div class="doc-footer"><span>3ponto14.pt</span><span>Ficha de Treino Direcionado Matemática 7.º Ano</span><span>'+now+'</span></div>';
 
-  var html = wrapPrintDoc('Ficha de Treino — 3ponto14', '<div class="page">'+body+'</div>');
+  var html = wrapPrintDoc('Ficha de Treino 3ponto14', '<div class="page">'+body+'</div>');
   var win = window.open('','_blank','width=820,height=1000');
   if (!win) { alert('Permite popups para gerar a ficha.'); return; }
   win.document.write(html);
@@ -1726,11 +1726,11 @@ function gerarFichaTreino() {
 // ── Reset all progress atomically.
 // Clears ErrorTracker first (in-memory), then the per-cap localStorage keys
 // (via progReset* which also re-render their widgets), then the shared
-// progress_v2 key, and only then re-renders the unified dashboard — avoiding
+// progress_v2 key, and only then re-renders the unified dashboard avoiding
 // a race where renderProgressoUnificado runs while resets are still in flight.
 function _limparTudoProgresso() {
   if (!confirm('Apagar todo o progresso e erros?')) return;
-  // 1. Clear ErrorTracker (in-memory only — no re-render triggered here)
+  // 1. Clear ErrorTracker (in-memory only no re-render triggered here)
   ['cap1','cap2','cap3','cap4'].forEach(function(c){ ErrorTracker.clearCap(c); });
   // 2. Reset per-cap progress stores + their localStorage keys.
   //    Each progReset* clears its own localStorage key and re-renders its own widget.
@@ -1800,7 +1800,7 @@ function renderProgressoUnificado() {
     : globalPct >= 80 ? 'Excelente trabalho! Estás a dominar a matéria.'
     : globalPct >= 60 ? 'Bom progresso! Continua a praticar para consolidar.'
     : globalPct >= 40 ? 'A progredir! Há capítulos que pedem mais atenção.'
-    : 'Começaste! Pratica com regularidade — cada questão conta.';
+    : 'Começaste! Pratica com regularidade cada questão conta.';
   var _motivIcon = totalT === 0 ? 'ph-rocket-launch' : globalPct >= 80 ? 'ph-trophy' : globalPct >= 60 ? 'ph-star' : globalPct >= 40 ? 'ph-trend-up' : 'ph-book-open';
 
   var html = '';
@@ -1843,7 +1843,7 @@ function renderProgressoUnificado() {
   // ── Atualização timestamp ──
   html += '<div style="font-size:.72rem;color:var(--ink4);margin-bottom:1.25rem">Última atualização: '+new Date().toLocaleString('pt-PT',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit'})+'</div>';
 
-  // ── Treino direcionado + erros — card único ──
+  // ── Treino direcionado + erros card único ──
   html += '<div class="card" style="margin-bottom:1.25rem;border-color:var(--cs-mid)">';
   html += '<div class="card-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;color:var(--cs-deep)">'
         + '<span>🎯 Treino Direcionado</span>'
@@ -1859,7 +1859,7 @@ function renderProgressoUnificado() {
   html += '</div></div>';
 
   if (grupos.length === 0) {
-    html += '<p style="color:var(--ink4);font-size:.88rem;font-style:italic">Ainda sem erros registados — responde a questões para o treino aparecer aqui.</p>';
+    html += '<p style="color:var(--ink4);font-size:.88rem;font-style:italic">Ainda sem erros registados responde a questões para o treino aparecer aqui.</p>';
   } else {
     html += '<div id="treino-exercicios-container"></div>';
   }
@@ -1878,7 +1878,7 @@ function renderProgressoUnificado() {
   }
 }
 
-// ═══ KEYBOARD NAVIGATION — Tabs de todos os capítulos ═══
+// ═══ KEYBOARD NAVIGATION Tabs de todos os capítulos ═══
 (function(){
   // Map: tab container selector → click handler pattern
   var tabSets = [

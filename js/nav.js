@@ -51,7 +51,7 @@ function handleSubj(e, action) {
   if (map[action]) window.location.href = map[action];
 }
 
-// showGeradorFichas — go to mat7 fichas tab
+// showGeradorFichas go to mat7 fichas tab
 function showGeradorFichas(capNum) {
   try { localStorage.setItem('mat7OpenTab', 'fichas'); } catch(e) {}
   try { if (capNum) localStorage.setItem('mat7GeradorCap', capNum); } catch(e) {}
@@ -84,7 +84,7 @@ if (_isMat7Hub) {
   });
 }
 
-// Deep link helper — usado em comunicações aos alunos/professores
+// Deep link helper usado em comunicações aos alunos/professores
 // Exemplos: navToTab('fichas'), navToTab('exercicios')
 function navToTab(tab) {
   if (_isMat7Hub) {

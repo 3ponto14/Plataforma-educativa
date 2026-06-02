@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Exames Nacionais de Matemática 9.º Ano — simulador cronometrado, prática por tema e provas completas com resolução passo a passo.">
+<meta name="description" content="Exames Nacionais de Matemática 9.º Ano simulador cronometrado, prática por tema e provas completas com resolução passo a passo.">
 <meta name="theme-color" content="#4a3f7a">
 <title>Exames Nacionais · Matemática 9.º Ano · 3ponto14</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
 <style>
 /* ═══════════════════════════════════════════════════════════
-   EXAMES NACIONAIS — Estilos
+   EXAMES NACIONAIS Estilos
 ═══════════════════════════════════════════════════════════ */
 
 /* ── Topbar ── */
@@ -197,14 +197,14 @@
   <div class="page-header-inner">
     <div class="page-header-eyebrow"><i class="ph ph-exam"></i> Provas Finais Nacionais 2019–2024</div>
     <h1>Matemática <em>9.º Ano</em></h1>
-    <p class="page-header-sub">Questões reais com resolução detalhada — treina por tema ou simula o exame.</p>
+    <p class="page-header-sub">Questões reais com resolução detalhada treina por tema ou simula o exame.</p>
   </div>
 </header>
 
 <!-- Conteúdo -->
 <div class="ex-page">
 
-  <!-- TABS — 3 tabs -->
+  <!-- TABS 3 tabs -->
   <div class="ex-tabs-wrap" role="tablist">
     <button class="ex-tab active" onclick="exSwitchMode('temas',this)" role="tab">
       <i class="ph ph-pencil-simple"></i> <span class="tab-lbl">Praticar</span>
@@ -230,7 +230,7 @@
     <div id="ex-sub-panel-tema">
       <div class="ex-sec-head">
         <div class="ex-sec-title">Prática por Tema</div>
-        <div class="ex-sec-sub">Escolhe um tema e treina questões reais de várias provas — o motor seleciona e baralha automaticamente.</div>
+        <div class="ex-sec-sub">Escolhe um tema e treina questões reais de várias provas o motor seleciona e baralha automaticamente.</div>
       </div>
       <div class="ex-topic-grid" id="ex-topic-grid"></div>
       <div id="mat7-caps-provas" style="display:none"></div>
@@ -241,7 +241,7 @@
     <div id="ex-sub-panel-prova" style="display:none">
       <div class="ex-sec-head">
         <div class="ex-sec-title">Provas Nacionais</div>
-        <div class="ex-sec-sub">Navega por cada prova — pratica as suas questões ou consulta a prova original completa.</div>
+        <div class="ex-sec-sub">Navega por cada prova pratica as suas questões ou consulta a prova original completa.</div>
       </div>
       <div class="ex-year-grid" id="ex-year-list"></div>
       <div id="ex-year-inline" class="mat7-inline-content" style="margin-top:1.5rem"></div>
@@ -252,7 +252,7 @@
   <div id="ex-panel-simulador" class="ex-panel">
     <div class="ex-sec-head">
       <div class="ex-sec-title">Simulador de Exame</div>
-      <div class="ex-sec-sub">Condições reais — temporizador, questões mistas, cotação em 20 valores.</div>
+      <div class="ex-sec-sub">Condições reais temporizador, questões mistas, cotação em 20 valores.</div>
     </div>
     <div class="ex-sim-wrap" id="ex-sim-config">
       <!-- Duração -->
@@ -308,7 +308,7 @@
     <div id="ex-sim-running" style="display:none"></div>
   </div>
 
-  <!-- ex-panel-anos: mantido por compatibilidade mas escondido — conteúdo foi movido para dentro de ex-panel-temas -->
+  <!-- ex-panel-anos: mantido por compatibilidade mas escondido conteúdo foi movido para dentro de ex-panel-temas -->
   <div id="ex-panel-anos" class="ex-panel" style="display:none!important"></div>
 
   <!-- ── PAINEL: PROGRESSO ── -->
@@ -333,7 +333,7 @@
 <script src="js/nav.js"></script>
 <script>
 /* ══════════════════════════════════════════════════════════
-   EXAMES NACIONAIS — Lógica da página
+   EXAMES NACIONAIS Lógica da página
 ══════════════════════════════════════════════════════════ */
 
 var _exMode = 'temas';
@@ -392,7 +392,7 @@ function _exUpdateStats() {
    NAVEGAÇÃO ENTRE PAINÉIS
 ────────────────────────────────────────────────────────── */
 function exSwitchMode(mode, btn) {
-  // 'anos' é agora um sub-modo de 'temas' — redirecionar
+  // 'anos' é agora um sub-modo de 'temas' redirecionar
   if (mode === 'anos') { exSwitchMode('temas', null); exSubMode('prova'); return; }
   _exMode = mode;
   document.querySelectorAll('.ex-tab').forEach(function(b){ b.classList.remove('active'); });
@@ -616,7 +616,7 @@ function _exRenderSimResult() {
   var nota  = total > 0 ? Math.round(score / total * 20 * 10) / 10 : 0;
   var emoji, msg;
   if (pct >= 90)      { emoji = '🏆'; msg = 'Excelente! Estás no topo da turma.'; }
-  else if (pct >= 75) { emoji = '⭐'; msg = 'Muito bom! Quase lá — continua assim.'; }
+  else if (pct >= 75) { emoji = '⭐'; msg = 'Muito bom! Quase lá continua assim.'; }
   else if (pct >= 55) { emoji = '💪'; msg = 'Bom esforço! Continua a treinar.'; }
   else if (pct >= 35) { emoji = '📚'; msg = 'Revê os temas com mais erros.'; }
   else                { emoji = '🔄'; msg = 'Estuda a matéria e tenta de novo!'; }
@@ -702,7 +702,7 @@ function exRenderYearList() {
 
 function exVerProva(key) {
   if (window.EXAMES_BANCO && !EXAMES_BANCO[key]) {
-    /* chave pode ser examKey — tenta mapear pelo label */
+    /* chave pode ser examKey tenta mapear pelo label */
     var found = null;
     Object.keys(EXAMES_BANCO).forEach(function(k){ if(k===key) found=k; });
     if (!found) { if(typeof eduToast==='function') eduToast('Prova não encontrada.','error'); return; }

@@ -1,4 +1,4 @@
-// CAP. 2 — NÚMEROS RACIONAIS · JavaScript
+// CAP. 2 NÚMEROS RACIONAIS · JavaScript
 // Uses chapter-engine.js for generic quiz/exam/flashcard/progress logic
 
 // ── Utilitários (aliases for backward compat) ──
@@ -7,7 +7,7 @@ function reduceFrac(p,q){if(q===0)return[0,1];var g=gcd2(Math.abs(p),Math.abs(q)
 function fmtFrac(p,q){var r=reduceFrac(p,q);if(r[1]===1)return String(r[0]);return r[0]+'/'+r[1];}
 function fmtFracHTML(p,q){var r=reduceFrac(p,q);if(r[1]===1)return String(r[0]);var neg=r[0]<0;var absP=Math.abs(r[0]);return(neg?'−':'')+'<span class="mfrac"><span class="mfrac-n">'+absP+'</span><span class="mfrac-d">'+r[1]+'</span></span>';}
 
-// ── CONSTRUTOR DE EXERCÍCIOS — Cap 2 (Números Racionais) ──
+// ── CONSTRUTOR DE EXERCÍCIOS Cap 2 (Números Racionais) ──
 function buildEx2(tema,tipo,dif){
   tema=String(tema);
   var easy=(dif==='facil'), hard=(dif==='dificil');
@@ -16,12 +16,12 @@ function buildEx2(tema,tipo,dif){
   function randFracNZ(){var q=randDen();var p=rndNZ2(-(q*2),q*2);return[p,q];}
   function randFrac(){var q=randDen();var p=rnd2(-(q*2),q*2);return[p,q];}
 
-  // TEMA 1 — Conjuntos de números racionais
+  // TEMA 1 Conjuntos de números racionais
   if(tema==='1'){
     var vals=[
-      {n:0,  sets:['ℕ','ℤ','ℚ₀⁺','ℤ₀⁺'],  desc:'zero — pertence a ℕ, ℤ, ℚ₀⁺ e ℤ₀⁺, mas NÃO a ℚ⁺ nem ℤ⁺.'},
+      {n:0,  sets:['ℕ','ℤ','ℚ₀⁺','ℤ₀⁺'],  desc:'zero pertence a ℕ, ℤ, ℚ₀⁺ e ℤ₀⁺, mas NÃO a ℚ⁺ nem ℤ⁺.'},
       {n:1,  sets:['ℕ','ℤ','ℚ⁺','ℤ₀⁺','ℚ₀⁺'],  desc:'inteiro positivo e natural.'},
-      {n:-3, sets:['ℤ⁻','ℤ','ℚ⁻','ℚ'],         desc:'inteiro negativo — pertence a ℤ⁻ e ℚ⁻.'},
+      {n:-3, sets:['ℤ⁻','ℤ','ℚ⁻','ℚ'],         desc:'inteiro negativo pertence a ℤ⁻ e ℚ⁻.'},
       {n:5,  sets:['ℕ','ℤ','ℚ⁺','ℤ₀⁺','ℚ₀⁺'],  desc:'inteiro positivo e natural.'},
       {n:-7, sets:['ℤ⁻','ℤ','ℚ⁻','ℚ'],         desc:'inteiro negativo.'},
       {n:12, sets:['ℕ','ℤ','ℚ⁺','ℤ₀⁺','ℚ₀⁺'],  desc:'inteiro positivo e natural.'},
@@ -37,7 +37,7 @@ function buildEx2(tema,tipo,dif){
       expl:'O número '+v.n+' é '+v.desc+'\nPertence a: '+v.sets.join(', ')+'.\nA afirmação "'+v.n+' ∈ '+testSet+'" é '+(correct?'VERDADEIRA':'FALSA')+'.'};
   }
 
-  // TEMA 2 — Comparação de racionais
+  // TEMA 2 Comparação de racionais
   if(tema==='2'){
     var variant=rnd2(0,3);
     if(variant===0){
@@ -89,7 +89,7 @@ function buildEx2(tema,tipo,dif){
       expl:fmtFrac(g1[0],g1[1])+' = '+gv1.toFixed(3)+' e '+fmtFrac(g2[0],g2[1])+' = '+gv2.toFixed(3)+'.\n'+fmtFrac(g1[0],g1[1])+' '+(gv1>gv2?'>':'<')+' '+fmtFrac(g2[0],g2[1])+' → afirmação '+(gv1>gv2?'VERDADEIRA':'FALSA')+'.'};
   }
 
-  // TEMA 3 — Adição e subtração de racionais
+  // TEMA 3 Adição e subtração de racionais
   if(tema==='3'){
     // FÁCIL: frações com mesmo denominador OU simplificação/frações equivalentes
     if(easy){
@@ -204,7 +204,7 @@ function buildEx2(tema,tipo,dif){
       expl:'mmc('+t3a[1]+','+t3b[1]+') = '+t3lcm+'.\nSoma os numeradores após converter.\nResultado: '+fmtFrac(t3res2[0],t3res2[1])+'.'};
   }
 
-  // TEMA 4 — Multiplicação e Divisão de Racionais
+  // TEMA 4 Multiplicação e Divisão de Racionais
   if(tema==='4'){
     var t4a=randFracNZ(), t4b=randFracNZ();
     var t4v=rnd2(0,2);
@@ -259,7 +259,7 @@ function buildEx2(tema,tipo,dif){
       expl:'Divisão = multiplicar pelo inverso: ÷'+fmtFrac(t4dc[0],t4dc[1])+' = ×'+fmtFrac(t4dc[1],t4dc[0])+'.\nResultado: '+fmtFrac(t4dr[0],t4dr[1])+'.'};
   }
 
-  // TEMA 5 — Percentagens
+  // TEMA 5 Percentagens
   if(tema==='5'){
     // FÁCIL: calcular p% de N (percentagens simples: 10, 25, 50)
     if(easy){
@@ -354,7 +354,7 @@ function buildEx2(tema,tipo,dif){
       expl:'('+r5m+' ÷ '+b5m+') × 100 = '+(r5m/b5m).toFixed(2)+' × 100 = '+p5m+'%.'};
   }
 
-  // TEMA 7 — Potências
+  // TEMA 7 Potências
   if(tema==='7'){
     var base7e=[2,3,5,10];
     var base7m=[2,3,5,7,10];
@@ -450,7 +450,7 @@ function buildEx2(tema,tipo,dif){
       expl:b7m+'^'+e7p+' × '+b7m+'^'+e7q+' = '+b7m+'^'+(e7p+e7q)+' = '+val7p+'.'};
   }
 
-  // TEMA 8 — Notação científica
+  // TEMA 8 Notação científica
   if(tema==='8'){
     var mantissas=easy?[1.5,2.3,4.5,1.8,3.7,2.0,5.1]:[1.23,2.56,3.14,4.87,6.02,9.1,7.5,1.08];
     var exps=easy?[3,4,5,6]:[2,3,4,5,6,7,8];
@@ -485,7 +485,7 @@ function buildEx2(tema,tipo,dif){
       expl:'Compara primeiro os expoentes.\n'+exp8+' '+(exp8>exp82?'>':exp8<exp82?'<':'=')+' '+exp82+(exp8===exp82?' → compara mantissas: '+mant+' '+(mant>mant2?'>':'<')+' '+mant2:'')+'.\nPortanto '+mant+'×10^'+exp8+' '+correctOp+' '+mant2+'×10^'+exp82+'.'};
   }
 
-  // TEMA 9 — Operações em notação científica
+  // TEMA 9 Operações em notação científica
   if(tema==='9'){
     var v9=rnd2(0,2);
     if(v9===0){
@@ -608,7 +608,7 @@ window.CAP_DATA[2] = {
   })()
 };
 
-// DELEGATION WRAPPERS — auto-generated + cap2-specific extras
+// DELEGATION WRAPPERS auto-generated + cap2-specific extras
 _capRegisterWrappers(2, {
   setTeste2Subtema: function(n,btn){capSetTesteSubtema(2,n,btn)},
   gerarTeste2: function(){capGerarTeste(2)},
@@ -630,7 +630,7 @@ var TRIANGULO_LINES=[
 ];
 var _trianguloRevealed=false;
 
-// SUBTEMA — PRÁTICA FOCADA (Cap2)
+// SUBTEMA PRÁTICA FOCADA (Cap2)
 var _cap2SubtemaTitulos = {
   '1:conjuntos':'Conjuntos ℕ, ℤ, ℚ', '1:arredondamento':'Arredondamento', '1:aprox':'Valores Aproximados',
   '2:comparar':'Comparar Frações', '2:ordenar':'Ordenar Racionais', '2:absoluto':'Valor Absoluto em ℚ',

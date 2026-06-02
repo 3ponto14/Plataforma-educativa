@@ -1,4 +1,4 @@
-/* ── widgets.js — Shared widgets injected into every chapter page ──
+/* ── widgets.js Shared widgets injected into every chapter page ──
    Print header, Pomodoro timer, Scientific calculator, Unified flashcard stub
    ─────────────────────────────────────────────────────────────────── */
 (function(){

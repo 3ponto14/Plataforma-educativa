@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Hub de estudo de Matemática 7.º ano — fichas, exercícios, jogos, quizzes e acompanhamento de progresso para todos os 8 capítulos.">
+<meta name="description" content="Hub de estudo de Matemática 7.º ano fichas, exercícios, jogos, quizzes e acompanhamento de progresso para todos os 8 capítulos.">
 <meta name="theme-color" content="#516860">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta property="og:title" content="3ponto14 · Centro de Estudos">
-<meta property="og:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano — fichas, jogos, quizzes e preparação para exames.">
+<meta property="og:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano fichas, jogos, quizzes e preparação para exames.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_PT">
 <meta property="og:url" content="https://3ponto14.pt/mat7">
@@ -17,7 +17,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="3ponto14 · Centro de Estudos">
-<meta name="twitter:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano — fichas, jogos, quizzes e preparação para exames.">
+<meta name="twitter:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano fichas, jogos, quizzes e preparação para exames.">
 <meta name="twitter:image" content="https://3ponto14.pt/og-mat7.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23516860'/><text x='50' y='68' font-size='48' font-weight='900' text-anchor='middle' fill='white' font-family='serif'>eP</text></svg>">
 <title>Matemática 7.º Ano · Hub de Estudo · 3ponto14</title>
@@ -52,7 +52,7 @@
   <button class="site-topbar-back" onclick="showPortalFromMat7()"><i class="ph ph-arrow-left"></i> Início</button>
 </nav>
 
-<!-- ── Tab bar — 4 tabs ── -->
+<!-- ── Tab bar 4 tabs ── -->
 <div class="mat7-hub-tabbar" id="mat7-hub-tabbar">
   <button class="mat7-hub-tab"         data-tab="resumo"    onclick="mat7SwitchTab('resumo',this)">   <span class="mat7-hub-tab-icon"><i class="ph ph-book-open-text"></i></span> Teoria</button>
   <button class="mat7-hub-tab"         data-tab="praticar"  onclick="mat7SwitchHub('praticar',this)"> <span class="mat7-hub-tab-icon"><i class="ph ph-pencil-simple"></i></span> Praticar</button>
@@ -68,7 +68,7 @@
 ══════════════════════════════════════════ -->
 <div class="mat7-panel" id="mat7p-praticar">
   <div class="mat7-panel-heading">Praticar</div>
-  <div class="mat7-panel-sub">Escolhe o modo de prática — todas as ferramentas de treino num só lugar.</div>
+  <div class="mat7-panel-sub">Escolhe o modo de prática todas as ferramentas de treino num só lugar.</div>
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.75rem;margin-top:1rem">
     <button onclick="mat7SwitchTab('exercicios',null)" style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem;text-align:left;cursor:pointer;transition:all .2s;border-top:3px solid var(--c2-mid)" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(0,0,0,.08)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
       <div style="font-size:1.4rem;margin-bottom:.5rem"><i class="ph ph-pencil-simple" style="color:var(--c2-mid)"></i></div>
@@ -103,7 +103,7 @@
 ══════════════════════════════════════════ -->
 <div class="mat7-panel" id="mat7p-fichas" style="display:none">
   <div class="mat7-panel-heading">Gerador de Fichas</div>
-  <div class="mat7-panel-sub">Escolhe os capítulos e o que incluir — gera e descarrega uma ficha PDF personalizada. <strong>Para professores:</strong> ativa "Soluções" para a versão com respostas.</div>
+  <div class="mat7-panel-sub">Escolhe os capítulos e o que incluir gera e descarrega uma ficha PDF personalizada. <strong>Para professores:</strong> ativa "Soluções" para a versão com respostas.</div>
   <!-- Existing gf panel embedded -->
   <div id="mat7-downloads" class="mat7-dl-panel">
     <div class="gf-row mb-4">
@@ -123,7 +123,7 @@
           <button class="gf-type-btn active" data-type="exercicios" onclick="gfToggleType(this)"><span class="gf-tick">✓</span> Exercícios</button>
           <button class="gf-type-btn active" data-type="teste" onclick="gfToggleType(this)"><span class="gf-tick">✓</span> Teste de avaliação</button>
           <button class="gf-type-btn" data-type="minitestes" onclick="gfToggleType(this)"><span class="gf-tick"></span> Minitestes</button>
-          <button class="gf-type-btn active" data-type="solucoes" onclick="gfToggleType(this)" title="Incluir respostas no final da ficha — útil para a versão do professor" style="border-color:var(--c2-mid);color:var(--c2-deep)"><span class="gf-tick">✓</span> Soluções <span style="font-size:.65rem;background:var(--c2-mid);color:#fff;border-radius:999px;padding:1px 6px;margin-left:3px">Professor</span></button>
+          <button class="gf-type-btn active" data-type="solucoes" onclick="gfToggleType(this)" title="Incluir respostas no final da ficha útil para a versão do professor" style="border-color:var(--c2-mid);color:var(--c2-deep)"><span class="gf-tick">✓</span> Soluções <span style="font-size:.65rem;background:var(--c2-mid);color:#fff;border-radius:999px;padding:1px 6px;margin-left:3px">Professor</span></button>
         </div>
       </div>
     </div>
@@ -227,7 +227,7 @@
 ══════════════════════════════════════════ -->
 <div class="mat7-panel" id="mat7p-jogos">
   <div class="mat7-panel-heading">Jogos Matemáticos</div>
-  <div class="mat7-panel-sub">Escolhe o capítulo — os jogos interativos aparecem abaixo</div>
+  <div class="mat7-panel-sub">Escolhe o capítulo os jogos interativos aparecem abaixo</div>
 
   <div class="mb-4">
     <div class="gf-label">Capítulos e subtemas</div>
@@ -245,7 +245,7 @@
 ══════════════════════════════════════════ -->
 <div class="mat7-panel" id="mat7p-flashcards">
   <div class="mat7-panel-heading">Flashcards</div>
-  <div class="mat7-panel-sub">Repetição espaçada — escolhe o capítulo e os cartões aparecem abaixo</div>
+  <div class="mat7-panel-sub">Repetição espaçada escolhe o capítulo e os cartões aparecem abaixo</div>
 
   <div class="mb-4">
     <div class="gf-label">Capítulos e subtemas</div>
@@ -263,7 +263,7 @@
 ══════════════════════════════════════════ -->
 <div class="mat7-panel" id="mat7p-exame">
   <div class="mat7-panel-heading">Teste</div>
-  <div class="mat7-panel-sub">Teste cronometrado — escolhe o capítulo e inicia abaixo</div>
+  <div class="mat7-panel-sub">Teste cronometrado escolhe o capítulo e inicia abaixo</div>
 
   <div class="mb-4">
     <div class="gf-label">Capítulos e subtemas</div>
@@ -285,7 +285,7 @@
 ══════════════════════════════════════════ -->
 <div class="mat7-panel active" id="mat7p-progresso">
   <div class="mat7-panel-heading">O Teu Progresso</div>
-  <div class="mat7-panel-sub">Visão global de todos os capítulos — desempenho, erros e treino direcionado</div>
+  <div class="mat7-panel-sub">Visão global de todos os capítulos desempenho, erros e treino direcionado</div>
   <div id="mat7-progresso-unified"></div>
 </div>
 
@@ -294,7 +294,7 @@
 ══════════════════════════════════════════ -->
 <div class="mat7-panel" id="mat7p-quiz">
   <div class="mat7-panel-heading">⚡ Modo Quiz</div>
-  <div class="mat7-panel-sub">Questões de escolha múltipla geradas em tempo real — 3 vidas, streak e game over · Podes selecionar vários capítulos para misturar</div>
+  <div class="mat7-panel-sub">Questões de escolha múltipla geradas em tempo real 3 vidas, streak e game over · Podes selecionar vários capítulos para misturar</div>
 
   <div class="mb-4">
     <div class="gf-label">Capítulo</div>
@@ -316,7 +316,7 @@
 <!-- ── Hidden stubs: sections needed by mat7LoadInline DOM-moving ── -->
 <div id="mat7-hub-stubs" style="display:none" aria-hidden="true">
 
-  <!-- Cap 1 — Teoria (used by Resumo tab via mat7RenderResumoInline) -->
+  <!-- Cap 1 Teoria (used by Resumo tab via mat7RenderResumoInline) -->
   <div id="sec-teoria">
   <div class="sec-header mt-6">
     <h2><span class="num"><i class="ph ph-book-open-text"></i></span> Teoria</h2>
@@ -328,15 +328,15 @@
     <h3>1. Conjunto dos Números Inteiros (ℤ)</h3>
     <p>O conjunto dos números inteiros é composto por todos os números sem parte decimal, estendendo os números naturais para incluir negativos:</p>
     <ul>
-      <li><strong>Inteiros positivos</strong> (ℤ⁺): 1, 2, 3, 4, … — representam quantidades acima do zero (altitude, ganho, temperatura positiva)</li>
-      <li><strong>Zero</strong>: 0 — elemento neutro da adição; não é positivo nem negativo</li>
-      <li><strong>Inteiros negativos</strong> (ℤ⁻): …, −4, −3, −2, −1 — representam quantidades abaixo do zero (dívida, profundidade, temperatura negativa)</li>
+      <li><strong>Inteiros positivos</strong> (ℤ⁺): 1, 2, 3, 4, … representam quantidades acima do zero (altitude, ganho, temperatura positiva)</li>
+      <li><strong>Zero</strong>: 0 elemento neutro da adição; não é positivo nem negativo</li>
+      <li><strong>Inteiros negativos</strong> (ℤ⁻): …, −4, −3, −2, −1 representam quantidades abaixo do zero (dívida, profundidade, temperatura negativa)</li>
     </ul>
     <div class="formula">ℤ = {…, −3, −2, −1, 0, 1, 2, 3, …}</div>
     <div class="def-row mt-3"><span class="def-tag prop">Subconjuntos</span><div class="def-text">
       <strong>ℤ₀⁺</strong> (inteiros não negativos) = {0, 1, 2, 3, …} = ℕ &nbsp;|&nbsp;
       <strong>ℤ₀⁻</strong> (inteiros não positivos) = {…, −3, −2, −1, 0}<br>
-      <strong>ℕ ⊂ ℤ</strong> — todos os números naturais são inteiros, mas nem todos os inteiros são naturais (os negativos não o são)
+      <strong>ℕ ⊂ ℤ</strong> todos os números naturais são inteiros, mas nem todos os inteiros são naturais (os negativos não o são)
     </div></div>
   </div>
   <div class="def-block">
@@ -367,7 +367,7 @@
       |5| = 5 (positivo, fica igual) &nbsp;·&nbsp; |−5| = 5 (negativo, tira o sinal) &nbsp;·&nbsp; |0| = 0<br>
       |−12| = 12 &nbsp;·&nbsp; |+7| = 7 &nbsp;·&nbsp; |−100| = 100
     </div></div>
-    <div class="highlight-box green mt-3"><i class="ph ph-flask"></i> <strong>Regra prática:</strong> O valor absoluto «ignora o sinal» — responde sempre à pergunta «a que distância está do zero?»</div>
+    <div class="highlight-box green mt-3"><i class="ph ph-flask"></i> <strong>Regra prática:</strong> O valor absoluto «ignora o sinal» responde sempre à pergunta «a que distância está do zero?»</div>
     <div class="highlight-box orange"><i class="ph ph-warning"></i> <strong>Atenção:</strong> |−5| = 5, mas −|5| = −5. O sinal fora das barras não é afetado pelo que está dentro!</div>
   </div>
   <div class="def-block">
@@ -460,8 +460,8 @@
     <h3>5. Expressões com Parênteses</h3>
     <p>Para remover parênteses, aplica-se a regra dos sinais. A ordem de remoção é sempre de dentro para fora: primeiro os parênteses curvos <strong>( )</strong>, depois os retos <strong>[ ]</strong> e por fim as chavetas <strong>{ }</strong>.</p>
     <ul>
-      <li><strong>Precedido de +:</strong> mantêm-se todos os sinais interiores — +(+a) = +a e +(−a) = −a</li>
-      <li><strong>Precedido de −:</strong> invertem-se todos os sinais interiores — −(+a) = −a e −(−a) = +a</li>
+      <li><strong>Precedido de +:</strong> mantêm-se todos os sinais interiores +(+a) = +a e +(−a) = −a</li>
+      <li><strong>Precedido de −:</strong> invertem-se todos os sinais interiores −(+a) = −a e −(−a) = +a</li>
     </ul>
     <div class="highlight-box">+(+3 − 5 + 2) = +3 − 5 + 2 = 0 &nbsp;&nbsp; (sinais mantêm-se)</div>
     <div class="highlight-box green">−(+3 − 5 + 2) = −3 + 5 − 2 = 0 &nbsp;&nbsp; (sinais invertem-se)</div>
@@ -473,7 +473,7 @@
     <div class="def-row"><span class="def-tag ex">Ex. 2</span><div class="def-text">10 − {4 − [−2 + (6 − 9)]} = 10 − {4 − [−5]} = 10 − {9} = <strong>1</strong></div></div>
   </div>
   <div class="def-block">
-    <span class="def-tag prop">Síntese — Regra dos Sinais</span>
+    <span class="def-tag prop">Síntese Regra dos Sinais</span>
     <table class="data-table">
       <tr class="dt-head-row"><th>Expressão</th><th>Resultado</th><th>Exemplo</th></tr>
       <tr><td>+(+a)</td><td>+a</td><td>+(+5) = +5</td></tr>
@@ -485,7 +485,7 @@
   </div>
   </div><!-- /sec-teoria -->
 
-  <!-- Cap 2 — Teoria (used by Resumo tab) -->
+  <!-- Cap 2 Teoria (used by Resumo tab) -->
   <div class="section" id="sec-teoria2">
   <div class="sec-header">
     <h2><span class="num"><i class="ph ph-book-open-text"></i></span> Teoria</h2>
@@ -688,13 +688,13 @@
 
   </div><!-- /sec-teoria2 -->
 
-  <!-- Cap 3 — Teoria (used by Resumo tab) -->
+  <!-- Cap 3 Teoria (used by Resumo tab) -->
   <div class="section" id="sec-teoria3">
   <div class="sec-header"><h2><span class="num"><i class="ph ph-book-open-text"></i></span> Teoria</h2><p>5 temas · Polígonos · Retas paralelas · Quadriláteros · Áreas</p></div>
 
   <div id="topic3-1">
   <div class="def-block">
-    <span class="def-tag def">Tema 1 — Ângulos internos de um polígono convexo</span>
+    <span class="def-tag def">Tema 1 Ângulos internos de um polígono convexo</span>
     <h3>Soma das amplitudes dos ângulos internos</h3>
     <ul>
       <li>Um polígono convexo com <strong>n lados</strong> divide-se em <strong>(n − 2) triângulos</strong>.</li>
@@ -719,7 +719,7 @@
 
   <div id="topic3-2">
   <div class="def-block mt-6">
-    <span class="def-tag def">Tema 2 — Ângulos externos de um polígono convexo</span>
+    <span class="def-tag def">Tema 2 Ângulos externos de um polígono convexo</span>
     <h3>Soma dos ângulos externos</h3>
     <ul>
       <li>â<sub>ext</sub> = 180° − â<sub>int</sub> (suplemento do interno)</li>
@@ -731,21 +731,21 @@
 
   <div id="topic3-3">
   <div class="def-block mt-6">
-    <span class="def-tag def">Tema 3 — Retas paralelas e ângulos</span>
+    <span class="def-tag def">Tema 3 Retas paralelas e ângulos</span>
     <h3>Ângulos alternos internos e verticalmente opostos</h3>
     <ul>
-      <li><strong>Verticalmente opostos:</strong> formados na interseção de 2 retas — são iguais</li>
+      <li><strong>Verticalmente opostos:</strong> formados na interseção de 2 retas são iguais</li>
       <li><strong>Suplementares:</strong> soma = 180° (ângulos adjacentes na interseção)</li>
-      <li><strong>Alternos internos:</strong> entre retas paralelas, em lados opostos da secante — são iguais</li>
-      <li><strong>Correspondentes:</strong> mesma posição em cada interseção — são iguais</li>
-      <li><strong>Co-internos (colaterais):</strong> mesmo lado, entre as paralelas — somam 180°</li>
+      <li><strong>Alternos internos:</strong> entre retas paralelas, em lados opostos da secante são iguais</li>
+      <li><strong>Correspondentes:</strong> mesma posição em cada interseção são iguais</li>
+      <li><strong>Co-internos (colaterais):</strong> mesmo lado, entre as paralelas somam 180°</li>
     </ul>
   </div>
   </div>
 
   <div id="topic3-4">
   <div class="def-block mt-6">
-    <span class="def-tag def">Tema 4 — Quadriláteros</span>
+    <span class="def-tag def">Tema 4 Quadriláteros</span>
     <h3>Classificação e propriedades</h3>
     <ul>
       <li><strong>Trapézio:</strong> ≥ 1 par de lados paralelos. Isósceles: pernas iguais, ângulos da base iguais.</li>
@@ -760,7 +760,7 @@
 
   <div id="topic3-5">
   <div class="def-block mt-6">
-    <span class="def-tag def">Tema 5 — Áreas de figuras planas</span>
+    <span class="def-tag def">Tema 5 Áreas de figuras planas</span>
     <h3>Fórmulas essenciais</h3>
     <table class="data-table"><thead><tr><th>Figura</th><th>Fórmula</th></tr></thead>
     <tbody>
@@ -775,11 +775,11 @@
   </div>
   </div><!-- /sec-teoria3 -->
 
-  <!-- Cap 4 — Teoria (used by Resumo tab) -->
+  <!-- Cap 4 Teoria (used by Resumo tab) -->
   <div class="section4" id="sec-teoria4">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-book-open-text"></i></span> Teoria</h2>
-      <p>6 subtemas — das expressões algébricas à resolução de problemas com equações</p>
+      <p>6 subtemas das expressões algébricas à resolução de problemas com equações</p>
     </div>
     <!-- SUBTEMA 1 -->
     <div class="subtema-header"><div class="subtema-num">1</div><div class="subtema-title">Expressões Algébricas</div></div>
@@ -791,17 +791,17 @@
     <!-- SUBTEMA 2 -->
     <div class="subtema-header"><div class="subtema-num">2</div><div class="subtema-title">Simplificação de Expressões Algébricas</div></div>
     <div class="def-block">
-      <div class="def-row"><span class="def-tag def">Definição</span><div class="def-text"><strong>Termos semelhantes</strong> são termos que têm a mesma parte literal. Só é possível somar ou subtrair termos semelhantes — soma-se/subtrai-se os coeficientes mantendo a parte literal.</div></div>
+      <div class="def-row"><span class="def-tag def">Definição</span><div class="def-text"><strong>Termos semelhantes</strong> são termos que têm a mesma parte literal. Só é possível somar ou subtrair termos semelhantes soma-se/subtrai-se os coeficientes mantendo a parte literal.</div></div>
       <div class="def-row"><span class="def-tag ex">Exemplo</span><div class="def-text">5x + 3y − 2x + y = (5−2)x + (3+1)y = <strong>3x + 4y</strong></div></div>
     </div>
     <!-- SUBTEMA 3 -->
-    <div class="subtema-header"><div class="subtema-num">3</div><div class="subtema-title">Equações — Conceitos Fundamentais</div></div>
+    <div class="subtema-header"><div class="subtema-num">3</div><div class="subtema-title">Equações Conceitos Fundamentais</div></div>
     <div class="def-block">
       <div class="def-row"><span class="def-tag def">Definição</span><div class="def-text">Uma <strong>equação</strong> é uma igualdade com uma ou mais <strong>incógnitas</strong>. A <strong>solução</strong> é o valor da incógnita que torna a igualdade verdadeira.</div></div>
       <div class="def-row"><span class="def-tag ex">Exemplo</span><div class="def-text">Verificar que x=5 é solução de 3x−1=2x+4: 3(5)−1 = 14 = 2(5)+4 ✓</div></div>
     </div>
     <!-- SUBTEMA 4 -->
-    <div class="subtema-header"><div class="subtema-num">4</div><div class="subtema-title">Equações Equivalentes — Princípios de Equivalência</div></div>
+    <div class="subtema-header"><div class="subtema-num">4</div><div class="subtema-title">Equações Equivalentes Princípios de Equivalência</div></div>
     <div class="def-block">
       <div class="def-row"><span class="def-tag prop">Princípio Aditivo</span><div class="def-text">Se adicionarmos o mesmo número a ambos os membros, obtemos uma equação equivalente.</div></div>
       <div class="def-row"><span class="def-tag prop">Princípio Multiplicativo</span><div class="def-text">Se multiplicarmos ambos os membros pelo mesmo número ≠ 0, obtemos uma equação equivalente.</div></div>
@@ -818,18 +818,18 @@
     <div class="subtema-header"><div class="subtema-num">6</div><div class="subtema-title">Resolução de Problemas com Equações</div></div>
     <div class="def-block">
       <div class="def-row"><span class="def-tag prop">Estratégia</span><div class="def-text">Define a variável, traduz as condições numa equação, resolve e verifica.</div></div>
-      <div class="def-row"><span class="def-tag ex">Exemplo</span><div class="def-text">«A Rute multiplicou um número por 4 e subtraiu 10 — obteve 30.»<br>4x − 10 = 30 → 4x = 40 → <strong>x = 10</strong>.</div></div>
+      <div class="def-row"><span class="def-tag ex">Exemplo</span><div class="def-text">«A Rute multiplicou um número por 4 e subtraiu 10 obteve 30.»<br>4x − 10 = 30 → 4x = 40 → <strong>x = 10</strong>.</div></div>
     </div>
   </div><!-- /sec-teoria4 -->
 
-  <!-- Cap 5 — Teoria (used by Resumo tab) -->
+  <!-- Cap 5 Teoria (used by Resumo tab) -->
   <div class="section4" id="sec-teoria5">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-book-open-text"></i></span> Teoria</h2>
-      <p>2 subtemas — do termo geral à resolução de problemas com sequências</p>
+      <p>2 subtemas do termo geral à resolução de problemas com sequências</p>
     </div>
     <!-- SUBTEMA 1 -->
-    <div class="subtema-header"><div class="subtema-num">1</div><div class="subtema-title">Sequências — Termo Geral</div></div>
+    <div class="subtema-header"><div class="subtema-num">1</div><div class="subtema-title">Sequências Termo Geral</div></div>
     <div class="def-block">
       <div class="def-row"><span class="def-tag def">Definição</span><div class="def-text">Uma <strong>sequência numérica</strong> é uma lista ordenada de números chamados <strong>termos</strong>. O <strong>termo geral</strong> (a<sub>n</sub>) é uma expressão que permite calcular qualquer termo a partir da sua ordem n.</div></div>
       <div class="formula">a<sub>n</sub> = 2n &nbsp; → &nbsp; a<sub>1</sub> = 2, &nbsp; a<sub>2</sub> = 4, &nbsp; a<sub>3</sub> = 6</div>
@@ -846,11 +846,11 @@
     </div>
   </div><!-- /sec-teoria5 -->
 
-  <!-- Cap 6 — Teoria (used by Resumo tab) -->
+  <!-- Cap 6 Teoria (used by Resumo tab) -->
   <div class="section4" id="sec-teoria6">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-book-open-text"></i></span> Teoria</h2>
-      <p>6 subtemas — do referencial cartesiano aos gráficos em contexto real</p>
+      <p>6 subtemas do referencial cartesiano aos gráficos em contexto real</p>
     </div>
     <!-- SUBTEMA 1 -->
     <div class="subtema-header"><div class="subtema-num">1</div><div class="subtema-title">Referencial Cartesiano</div></div>
@@ -869,7 +869,7 @@
       <div class="def-row"><span class="def-tag def">Objeto e imagem</span><div class="def-text">x é o <strong>objeto</strong> (valor de entrada) e f(x) é a sua <strong>imagem</strong> (valor de saída). O conjunto de todas as imagens efetivamente obtidas é a <strong>imagem da função</strong> (Im f), que pode ser menor que o contradomínio.</div></div>
       <div class="def-row"><span class="def-tag nota">Atenção</span><div class="def-text">Uma relação <strong>não é função</strong> se um objeto tiver mais de uma imagem. Num gráfico: uma reta vertical corta o gráfico em mais de um ponto → não é função (teste da reta vertical).</div></div>
       <div class="def-row"><span class="def-tag ex">Exemplo</span><div class="def-text">f(x) = 3x − 2. Calcular: f(0) = −2 · f(2) = 4 · f(−1) = −5. Para que valor de x é f(x) = 7? → 3x − 2 = 7 → x = 3.</div></div>
-      <div class="highlight-box pink"><i class="ph ph-flask"></i> Um termómetro é uma função: a cada temperatura (objeto) corresponde exatamente uma leitura (imagem). Uma máquina de venda automática associa a cada código um produto — isso também é uma função!</div>
+      <div class="highlight-box pink"><i class="ph ph-flask"></i> Um termómetro é uma função: a cada temperatura (objeto) corresponde exatamente uma leitura (imagem). Uma máquina de venda automática associa a cada código um produto isso também é uma função!</div>
     </div>
     <!-- SUBTEMA 3 -->
     <div class="subtema-header"><div class="subtema-num">3</div><div class="subtema-title">Representação Gráfica</div></div>
@@ -884,7 +884,7 @@
     <div class="def-block">
       <div class="def-row"><span class="def-tag prop">5 formas</span><div class="def-text"><strong>1. Por extensão:</strong> lista de pares ordenados {(1,3),(2,5),(3,7)}.<br><strong>2. Diagrama de setas:</strong> setas do domínio para o contradomínio.<br><strong>3. Expressão analítica:</strong> y = 2x + 1 (a mais usada).<br><strong>4. Tabela de valores:</strong> tabela com colunas x e y.<br><strong>5. Graficamente:</strong> representação no referencial cartesiano.</div></div>
       <div class="def-row"><span class="def-tag ex">Exemplo</span><div class="def-text">A função «dobro mais um» pode ser escrita como y = 2x + 1, ou como tabela {x: 0,1,2 | y: 1,3,5}, ou como pares {(0,1),(1,3),(2,5)}, ou num gráfico como reta com declive 2 e ordenada na origem 1.</div></div>
-      <div class="highlight-box green"><i class="ph ph-lightbulb"></i> A expressão analítica é a forma mais compacta e poderosa — permite calcular qualquer imagem sem listar todos os pares.</div>
+      <div class="highlight-box green"><i class="ph ph-lightbulb"></i> A expressão analítica é a forma mais compacta e poderosa permite calcular qualquer imagem sem listar todos os pares.</div>
     </div>
     <!-- SUBTEMA 5 -->
     <div class="subtema-header"><div class="subtema-num">5</div><div class="subtema-title">Proporcionalidade Direta</div></div>
@@ -906,11 +906,11 @@
     </div>
   </div><!-- /sec-teoria6 -->
 
-  <!-- Cap 7 — Teoria (used by Resumo tab) -->
+  <!-- Cap 7 Teoria (used by Resumo tab) -->
   <div class="section4" id="sec-teoria7">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-book-open-text"></i></span> Teoria</h2>
-      <p>6 subtemas — de figuras semelhantes aos poliedros regulares</p>
+      <p>6 subtemas de figuras semelhantes aos poliedros regulares</p>
     </div>
     <!-- SUBTEMA 1 -->
     <div class="subtema-header"><div class="subtema-num">1</div><div class="subtema-title">Figuras Semelhantes e Razão de Semelhança</div></div>
@@ -925,9 +925,9 @@
     <div class="subtema-header"><div class="subtema-num">2</div><div class="subtema-title">Polígonos Semelhantes</div></div>
     <div class="def-block">
       <div class="def-row"><span class="def-tag def">Definição</span><div class="def-text">Dois polígonos são <strong>semelhantes</strong> se e só se se verificam <strong>as duas condições simultaneamente</strong>: (1) os ângulos correspondentes são iguais E (2) os lados correspondentes são proporcionais com a mesma razão k.</div></div>
-      <div class="def-row"><span class="def-tag nota">Atenção</span><div class="def-text">Para quadriláteros, <strong>não basta</strong> verificar ângulos iguais ou lados proporcionais — é preciso verificar <strong>ambas</strong>. Exemplo: um quadrado e um retângulo têm todos os ângulos iguais a 90° mas não são semelhantes (lados não proporcionais).</div></div>
+      <div class="def-row"><span class="def-tag nota">Atenção</span><div class="def-text">Para quadriláteros, <strong>não basta</strong> verificar ângulos iguais ou lados proporcionais é preciso verificar <strong>ambas</strong>. Exemplo: um quadrado e um retângulo têm todos os ângulos iguais a 90° mas não são semelhantes (lados não proporcionais).</div></div>
       <div class="def-row"><span class="def-tag ex">Exemplo</span><div class="def-text">Retângulos 3×5 e 6×10: 6/3 = 2 e 10/5 = 2 e todos os ângulos são retos → semelhantes com k = 2 ✓.<br>Retângulos 3×5 e 6×9: 6/3 = 2 mas 9/5 = 1,8 ≠ 2 → <strong>não são semelhantes</strong> ✗.</div></div>
-      <div class="highlight-box pink"><i class="ph ph-flask"></i> Exceção: para <strong>triângulos</strong>, basta verificar os ângulos (condição AA) — se dois ângulos forem iguais, a proporcionalidade dos lados fica garantida automaticamente.</div>
+      <div class="highlight-box pink"><i class="ph ph-flask"></i> Exceção: para <strong>triângulos</strong>, basta verificar os ângulos (condição AA) se dois ângulos forem iguais, a proporcionalidade dos lados fica garantida automaticamente.</div>
     </div>
     <!-- SUBTEMA 3 -->
     <div class="subtema-header"><div class="subtema-num">3</div><div class="subtema-title">Homotetia</div></div>
@@ -945,7 +945,7 @@
       <div class="def-row"><span class="def-tag prop">Critério LAL (Lado-Ângulo-Lado)</span><div class="def-text">Se <strong>dois pares de lados</strong> correspondentes são proporcionais E o <strong>ângulo compreendido entre eles</strong> é igual, os triângulos são semelhantes.</div></div>
       <div class="def-row"><span class="def-tag ex">Exemplo AA</span><div class="def-text">△ com ângulos 50° e 70° e △ com ângulos 50° e 70° → semelhantes por AA (o 3.º ângulo é 60° em ambos).</div></div>
       <div class="def-row"><span class="def-tag ex">Exemplo LLL</span><div class="def-text">Lados {3, 4, 5} e {6, 8, 10}: 6/3 = 8/4 = 10/5 = 2. Semelhantes por LLL com k = 2.</div></div>
-      <div class="highlight-box green"><i class="ph ph-lightbulb"></i> Quando duas retas paralelas são cortadas por duas secantes, os triângulos formados são semelhantes pelo critério AA — os ângulos correspondentes são iguais (ângulos alternos internos).</div>
+      <div class="highlight-box green"><i class="ph ph-lightbulb"></i> Quando duas retas paralelas são cortadas por duas secantes, os triângulos formados são semelhantes pelo critério AA os ângulos correspondentes são iguais (ângulos alternos internos).</div>
     </div>
     <!-- SUBTEMA 5 -->
     <div class="subtema-header"><div class="subtema-num">5</div><div class="subtema-title">Relações entre Perímetros, Áreas e Escala</div></div>
@@ -969,11 +969,11 @@
     </div>
   </div><!-- /sec-teoria7 -->
 
-  <!-- Cap 8 — Teoria (used by Resumo tab) -->
+  <!-- Cap 8 Teoria (used by Resumo tab) -->
   <div class="section4" id="sec-teoria8">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-book-open-text"></i></span> Teoria</h2>
-      <p>5 subtemas — de população e amostra à probabilidade composta</p>
+      <p>5 subtemas de população e amostra à probabilidade composta</p>
     </div>
     <!-- SUBTEMA 1 -->
     <div class="subtema-header"><div class="subtema-num">1</div><div class="subtema-title">População, Amostra e Variáveis Estatísticas</div></div>
@@ -1042,8 +1042,8 @@
   <div id="sec-jogos"><div id="j24-wrap-cap1"></div></div>
   <div id="sec-flashcards">
     <div class="sec-header">
-      <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards — Repetição Espaçada</h2>
-      <p>Avalia a tua confiança após ver a resposta — o sistema prioriza automaticamente os cartões que precisas de rever</p>
+      <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards Repetição Espaçada</h2>
+      <p>Avalia a tua confiança após ver a resposta o sistema prioriza automaticamente os cartões que precisas de rever</p>
     </div>
     <div class="flex-tabs" id="fc-mode-bar">
       <button class="fc-mode-btn active" id="fc-mode-srs" onclick="fcSetMode('srs')"><i class="ph ph-brain"></i> Estudo Inteligente</button>
@@ -1097,7 +1097,7 @@
   <div id="sec-exame">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame</h2>
-      <p>Teste cronometrado com todos os temas — sem pausas, nota final em percentagem</p>
+      <p>Teste cronometrado com todos os temas sem pausas, nota final em percentagem</p>
     </div>
     <div id="exame-config" class="card">
       <div class="card-title">Configurar Exame</div>
@@ -1160,7 +1160,7 @@
   <div id="sec-jogos2"><div id="j24-wrap-cap2"></div></div>
   <div id="sec-flashcards2">
     <div class="sec-header">
-      <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards — Números Racionais</h2>
+      <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards Números Racionais</h2>
       <p>Clica para virar os cartões</p>
     </div>
     <div class="fc-stats-bar">
@@ -1201,8 +1201,8 @@
   </div>
   <div id="sec-exame2">
     <div class="sec-header">
-      <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame — Números Racionais</h2>
-      <p>Teste cronometrado com todos os temas — sem pausas, nota final em percentagem</p>
+      <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame Números Racionais</h2>
+      <p>Teste cronometrado com todos os temas sem pausas, nota final em percentagem</p>
     </div>
     <div id="exame2-config" class="card">
       <div class="card-title">Configurar Exame</div>
@@ -1262,7 +1262,7 @@
   <div id="sec-jogos3"><div id="j24-wrap-cap3"></div></div>
   <div id="sec-flashcards3">
     <div class="sec-header">
-      <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards — Geometria</h2>
+      <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards Geometria</h2>
       <p>Clica para virar os cartões</p>
     </div>
     <div class="fc-stats-bar">
@@ -1303,8 +1303,8 @@
   </div>
   <div id="sec-exame3">
     <div class="sec-header">
-      <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame — Geometria</h2>
-      <p>Teste cronometrado com todos os temas — sem pausas, nota final em percentagem</p>
+      <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame Geometria</h2>
+      <p>Teste cronometrado com todos os temas sem pausas, nota final em percentagem</p>
     </div>
     <div id="exame3-config" class="card">
       <div class="card-title">Configurar Exame</div>
@@ -1364,7 +1364,7 @@
   <div id="sec-jogos4"><div id="j24-wrap-cap4"></div></div>
   <div id="sec-flashcards4">
     <div class="sec-header">
-      <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards — Equações</h2>
+      <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards Equações</h2>
       <p>Clica para virar os cartões</p>
     </div>
     <div class="fc-stats-bar">
@@ -1392,8 +1392,8 @@
   </div>
   <div id="sec-exame4">
     <div class="sec-header">
-      <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame — Equações</h2>
-      <p>Teste cronometrado com todos os temas — sem pausas, nota final em percentagem</p>
+      <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame Equações</h2>
+      <p>Teste cronometrado com todos os temas sem pausas, nota final em percentagem</p>
     </div>
     <div id="exame4-config" class="card">
       <div class="card-title">Configurar Exame</div>
@@ -1445,7 +1445,7 @@
   <div id="sec-jogos5"><div id="j24-wrap-cap5"></div></div>
   <div id="sec-flashcards5">
     <div class="sec-header">
-      <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards — Sequências</h2>
+      <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards Sequências</h2>
       <p>Clica para virar os cartões</p>
     </div>
     <div class="fc-stats-bar">
@@ -1473,8 +1473,8 @@
   </div>
   <div id="sec-exame5">
     <div class="sec-header">
-      <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame — Sequências</h2>
-      <p>Teste cronometrado com todos os temas — sem pausas, nota final em percentagem</p>
+      <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame Sequências</h2>
+      <p>Teste cronometrado com todos os temas sem pausas, nota final em percentagem</p>
     </div>
     <div id="exame5-config" class="card">
       <div class="card-title">Configurar Exame</div>
@@ -1526,7 +1526,7 @@
   <div id="sec-jogos6"><div id="j24-wrap-cap6"></div></div>
   <div id="sec-flashcards6">
     <div class="sec-header">
-      <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards — Funções</h2>
+      <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards Funções</h2>
       <p>Clica para virar os cartões</p>
     </div>
     <div class="fc-stats-bar">
@@ -1554,8 +1554,8 @@
   </div>
   <div id="sec-exame6">
     <div class="sec-header">
-      <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame — Funções</h2>
-      <p>Teste cronometrado com todos os temas — sem pausas, nota final em percentagem</p>
+      <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame Funções</h2>
+      <p>Teste cronometrado com todos os temas sem pausas, nota final em percentagem</p>
     </div>
     <div id="exame6-config" class="card">
       <div class="card-title">Configurar Exame</div>
@@ -1607,7 +1607,7 @@
   <div id="sec-jogos7"><div id="j24-wrap-cap7"></div></div>
   <div id="sec-flashcards7">
     <div class="sec-header">
-      <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards — Figuras Semelhantes</h2>
+      <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards Figuras Semelhantes</h2>
       <p>Clica para virar os cartões</p>
     </div>
     <div class="fc-stats-bar">
@@ -1635,8 +1635,8 @@
   </div>
   <div id="sec-exame7">
     <div class="sec-header">
-      <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame — Figuras Semelhantes</h2>
-      <p>Teste cronometrado com todos os temas — sem pausas, nota final em percentagem</p>
+      <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame Figuras Semelhantes</h2>
+      <p>Teste cronometrado com todos os temas sem pausas, nota final em percentagem</p>
     </div>
     <div id="exame7-config" class="card">
       <div class="card-title">Configurar Exame</div>
@@ -1688,7 +1688,7 @@
   <div id="sec-jogos8"><div id="j24-wrap-cap8"></div></div>
   <div id="sec-flashcards8">
     <div class="sec-header">
-      <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards — Dados e Probabilidades</h2>
+      <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards Dados e Probabilidades</h2>
       <p>Clica para virar os cartões</p>
     </div>
     <div class="fc-stats-bar">
@@ -1716,8 +1716,8 @@
   </div>
   <div id="sec-exame8">
     <div class="sec-header">
-      <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame — Dados e Probabilidades</h2>
-      <p>Teste cronometrado com todos os temas — sem pausas, nota final em percentagem</p>
+      <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame Dados e Probabilidades</h2>
+      <p>Teste cronometrado com todos os temas sem pausas, nota final em percentagem</p>
     </div>
     <div id="exame8-config" class="card">
       <div class="card-title">Configurar Exame</div>
@@ -1783,7 +1783,7 @@
 <div id="inject-pomodoro"></div>
 
 
-<!-- INJECT BUTTONS INTO TOPBAR — done after DOM ready -->
+<!-- INJECT BUTTONS INTO TOPBAR done after DOM ready -->
 
 <!-- ═══════════════════════════════════════════════════════════
      v33 FEATURES: Modo Escuro · Tamanho Texto ·
@@ -1795,7 +1795,7 @@
 
 
 <!-- ═══════════════════════════════════════════════════════════
-     ESCAPE ROOM v2 — SALA VISUAL ÚNICA
+     ESCAPE ROOM v2 SALA VISUAL ÚNICA
 ════════════════════════════════════════════════════════════ -->
 
 

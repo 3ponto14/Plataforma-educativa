@@ -1,5 +1,5 @@
 /* ── Block 1 (from line 807) ── */
-// ═══ MAT7 HUB — subtema data ═══
+// ═══ MAT7 HUB subtema data ═══
 var _mat7Subtemas = {
   1: ['Conjunto ℤ', 'Valor absoluto e simétrico', 'Adição de inteiros', 'Subtração de inteiros', 'Expressões com parênteses'],
   2: ['Comparação e ordenação', 'Adição e subtração de frações', 'Percentagens', 'Potências', 'Notação científica'],
@@ -11,7 +11,7 @@ var _mat7Subtemas = {
   8: ['População e Amostra', 'Mediana, Média e Moda', 'Representações Gráficas', 'Probabilidade', 'Probabilidade Composta']
 };
 
-// ═══ CAP SELECTOR BUILDER — generates chapter/subtema selector HTML ═══
+// ═══ CAP SELECTOR BUILDER generates chapter/subtema selector HTML ═══
 var _capMeta = [
   {n:1, icon:'±', label:'Números Inteiros'},
   {n:2, icon:'½', label:'Números Racionais'},
@@ -164,7 +164,7 @@ var _mat7SecMap = {
   jogos:      { 1:'sec-jogos',       2:'sec-jogos2',      3:'sec-jogos3',      4:'sec-jogos4',     5:'sec-jogos5',     6:'sec-jogos6',     7:'sec-jogos7',     8:'sec-jogos8' },
   flashcards: { 1:'sec-flashcards',  2:'sec-flashcards2', 3:'sec-flashcards3', 4:'sec-flashcards4', 5:'sec-flashcards5', 6:'sec-flashcards6', 7:'sec-flashcards7', 8:'sec-flashcards8' },
   exame:      { 1:'sec-exame',       2:'sec-exame2',      3:'sec-exame3',      4:'sec-exame4',     5:'sec-exame5',     6:'sec-exame6',     7:'sec-exame7',     8:'sec-exame8' },
-  // progresso: handled by renderProgressoUnificado — not in secMap
+  // progresso: handled by renderProgressoUnificado not in secMap
   quiz:       { 1:'sec-quiz-game',   2:'sec-quiz-game2',  3:'sec-quiz-game3',  4:'sec-quiz-game4', 5:'sec-quiz-game5', 6:'sec-quiz-game6', 7:'sec-quiz-game7', 8:'sec-quiz-game8' }
 };
 
@@ -278,9 +278,9 @@ function mat7RenderUnifiedFlashcards(caps, inlineEl) {
   var secFC = document.getElementById('sec-flashcards');
   if (secFC) {
     var h2 = secFC.querySelector('.sec-header h2');
-    if (h2) h2.innerHTML = '<span class="num"><i class="ph ph-stack"></i></span> Flashcards — ' + caps.length + ' Capítulos';
+    if (h2) h2.innerHTML = '<span class="num"><i class="ph ph-stack"></i></span> Flashcards ' + caps.length + ' Capítulos';
     var p = secFC.querySelector('.sec-header p');
-    if (p) p.textContent = merged.length + ' cartões misturados de ' + caps.length + ' capítulos — com repetição espaçada';
+    if (p) p.textContent = merged.length + ' cartões misturados de ' + caps.length + ' capítulos com repetição espaçada';
   }
 
   // Move sec-flashcards into the inline panel (same as single-cap flow)
@@ -340,7 +340,7 @@ function _uniFC_shuffle() {
   _uniFC_render();
 }
 
-// ── Safe top-level stubs — overwritten by mat7RenderUnifiedExercicios when the panel loads.
+// ── Safe top-level stubs overwritten by mat7RenderUnifiedExercicios when the panel loads.
 // Without these, clicking the level/refresh buttons before the panel has ever initialised
 // throws "mat7UnifiedQuizLevel is not a function".
 window.mat7UnifiedQuizLevel = window.mat7UnifiedQuizLevel || function(level, btn) {
@@ -360,7 +360,7 @@ function mat7RenderUnifiedJogos(caps, inlineEl) {
   if (typeof _gActiveCaps !== 'undefined') _gActiveCaps = caps;
 
   inlineEl.innerHTML = [
-    '<div class="sec-header"><h2><i class="ph ph-game-controller"></i> Jogos — ' + capStr + '</h2>',
+    '<div class="sec-header"><h2><i class="ph ph-game-controller"></i> Jogos ' + capStr + '</h2>',
     '<p>Todos os jogos com perguntas dos capítulos selecionados: ' + capStr + '</p></div>',
     '<div id="j24-wrap-unified"></div>'
   ].join('\n');
@@ -471,7 +471,7 @@ function mat7RenderUnifiedExercicios(caps, inlineEl) {
     var levelLabel = level === 'facil' ? 'Fácil' : level === 'dificil' ? 'Difícil' : 'Médio';
 
     var html = [
-      '<div class="sec-header"><h2><i class="ph ph-pencil-simple"></i> Exercícios — ' + capLabels + '</h2>',
+      '<div class="sec-header"><h2><i class="ph ph-pencil-simple"></i> Exercícios ' + capLabels + '</h2>',
       '<p>' + exercicios.length + ' questões · nível ' + levelLabel + ' · mistura de todos os tipos</p></div>',
       '<div class="level-bar" style="margin-bottom:1.25rem">',
       '  <div class="gen-level-group">',
@@ -608,11 +608,11 @@ function _mat7GetActiveCaps(tab) {
 
 function mat7SwitchTab(tab, btn) {
   document.querySelectorAll('.mat7-hub-tab').forEach(function(b){ b.classList.remove('active'); });
-  // Activar a tab correcta na barra — se btn é null, encontrar pela correspondência
+  // Activar a tab correcta na barra se btn é null, encontrar pela correspondência
   if (btn) {
     btn.classList.add('active');
   } else {
-    // Tabs de prática não têm botão próprio — activar o botão "Praticar"
+    // Tabs de prática não têm botão próprio activar o botão "Praticar"
     var pratTabs = ['exercicios','jogos','quiz','flashcards','exame'];
     var targetTab = pratTabs.indexOf(tab) !== -1 ? 'praticar' : tab;
     var tabBtn = document.querySelector('.mat7-hub-tab[data-tab="' + targetTab + '"]');
@@ -624,7 +624,7 @@ function mat7SwitchTab(tab, btn) {
   // Update document title
   var _tabTitles = { resumo:'Teoria', exercicios:'Exercícios', flashcards:'Flashcards',
     jogos:'Jogos', exame:'Teste', progresso:'Progresso', quiz:'Quiz', fichas:'Fichas', praticar:'Praticar' };
-  if (_tabTitles[tab]) document.title = 'Mat. 7.º — ' + _tabTitles[tab] + ' · 3ponto14';
+  if (_tabTitles[tab]) document.title = 'Mat. 7.º ' + _tabTitles[tab] + ' · 3ponto14';
   // Auto-render content
   if (tab === 'resumo') mat7BuildResumoNav();
   else if (tab === 'quiz') { if (typeof qgHubInit === 'function') qgHubInit(); }
@@ -633,7 +633,7 @@ function mat7SwitchTab(tab, btn) {
   else if (_mat7SecMap[tab]) mat7LoadInline(tab);
 }
 
-// mat7SwitchHub — activa uma tab de "hub" (como Praticar) sem despacho adicional
+// mat7SwitchHub activa uma tab de "hub" (como Praticar) sem despacho adicional
 function mat7SwitchHub(tab, btn) {
   mat7SwitchTab(tab, btn);
 }
@@ -660,7 +660,7 @@ function mat7StSelect(btn, tab) {
   if (tab === 'resumo') mat7BuildResumoNav();
 }
 
-// ═══ TESTES — novo sistema cap+subtema igual ao gerador de fichas ═══
+// ═══ TESTES novo sistema cap+subtema igual ao gerador de fichas ═══
 var _testeDif = 'facil';
 
 
@@ -919,10 +919,10 @@ function mat7ReturnSections(tab) {
   _mat7MovedSections[tab] = [];
 }
 
-// Init subtema rows on load — content is rendered lazily when tab is first opened
+// Init subtema rows on load content is rendered lazily when tab is first opened
 // mat7RenderResumoInline() is called from mat7SwitchTab when 'resumo' tab is activated
 
-// ═══ MAT7 TAB SUBTEMA SELECTOR — nova UI estilo gerador ═══
+// ═══ MAT7 TAB SUBTEMA SELECTOR nova UI estilo gerador ═══
 
 // Reload de conteúdo por tab
 function mat7TabReload(tab) {
@@ -1014,7 +1014,7 @@ function mat7TabStAll(tab, cap, selectAll) {
 }
 
 // ══════════════════════════════════════════════════════════════
-// ⚡ MODO QUIZ — Hub quiz game (3 vidas, streak, game over)
+// ⚡ MODO QUIZ Hub quiz game (3 vidas, streak, game over)
 // ══════════════════════════════════════════════════════════════
 
 var _qgHub = {

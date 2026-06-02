@@ -85,7 +85,7 @@ function htmlToPdfDownload(htmlContent, filename) {
   setTimeout(function() { URL.revokeObjectURL(url); }, 120000);
 }
 
-// SHARED UTILITIES — used across chapter files
+// SHARED UTILITIES used across chapter files
 function rnd(min,max){return Math.floor(Math.random()*(max-min+1))+min}
 function rndNZ(min,max){var v;do{v=rnd(min,max)}while(v===0);return v}
 function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
@@ -96,17 +96,17 @@ function lcm(a,b){return Math.abs(a*b)/gcd(a,b)}
 // localStorage abstraction
 var store = {
   get: function(key, fallback) { try { return JSON.parse(localStorage.getItem('edupt_'+key)); } catch(e) { return fallback !== undefined ? fallback : null; } },
-  set: function(key, val) { try { localStorage.setItem('edupt_'+key, JSON.stringify(val)); } catch(e) { /* quota exceeded — falha silenciosa */ } },
+  set: function(key, val) { try { localStorage.setItem('edupt_'+key, JSON.stringify(val)); } catch(e) { /* quota exceeded falha silenciosa */ } },
   remove: function(key) { try { localStorage.removeItem('edupt_'+key); } catch(e) {} }
 };
 
-// QUIZ ENGINE — Uma questão de cada vez, com barra de progresso
+// QUIZ ENGINE Uma questão de cada vez, com barra de progresso
 // Usa os mesmos exercícios gerados por buildExercicio / BANCO4
 var _qzState = {};
 
 // Helper: parse fill-input value tolerating PT decimal comma
 function _parseFillVal(v) { return parseFloat(String(v).replace(',', '.')); }
-// EDUPT — PROGRESS MANAGER v2  (localStorage persistente)
+// EDUPT PROGRESS MANAGER v2  (localStorage persistente)
 var ProgressManager = (function () {
   var KEY = 'edupt_progress_v2';
   var XP = { teoria:10, quiz:20, quiz_bonus:15, jogo:15, flashcard:8, ficha:5 };
@@ -203,12 +203,12 @@ var ProgressManager = (function () {
   return { record:record, getCap:getCap, getCapPct:getCapPct, getSummary:getSummary, exportJSON:exportJSON, reset:reset, CAP_NAMES:CAP_NAMES };
 })();
 
-// _pmRecord — convenience wrapper
+// _pmRecord convenience wrapper
 function _pmRecord() {
   ProgressManager.record.apply(ProgressManager, arguments);
 }
 
-// ── Safe ErrorTracker proxy — queues calls until ErrorTracker is defined ──
+// ── Safe ErrorTracker proxy queues calls until ErrorTracker is defined ──
 var _etQueue = [];
 function _etRecord() {
   var args = Array.prototype.slice.call(arguments);
@@ -385,7 +385,7 @@ function _qzShowFeedback(cid, correct, correctVal) {
   } else if (capNum === '3' && typeof progLog3 === 'function') {
     progLog3(secLabel, correct);
   } else if (capNum === '4' && typeof saveProgData4 === 'function') {
-    // Cap4 uses a different system — save score object
+    // Cap4 uses a different system save score object
     var p4key = sec || 'q4';
     saveProgData4(p4key, st.score);
   }
@@ -682,8 +682,8 @@ function _qzRestart(cid) {
 })();
 
 /* ── Block 9 (from line 16882) ── */
-// MELHORIA 1 — Enter para verificar em qualquer fill-input
-// MELHORIA 2 — Vírgula → ponto (padrão PT) em fill-inputs
+// MELHORIA 1 Enter para verificar em qualquer fill-input
+// MELHORIA 2 Vírgula → ponto (padrão PT) em fill-inputs
 (function() {
   // Delegate: Enter on any .fill-input triggers adjacent verify button
   document.addEventListener('keydown', function(e) {
@@ -1075,10 +1075,10 @@ window._mathEval = function(expr) {
 (function(){
   // Map of keyword → dica
   var TIPS = {
-    'A = b × h': '💡 Base vezes altura — só funciona em retângulos e paralelogramos!',
+    'A = b × h': '💡 Base vezes altura só funciona em retângulos e paralelogramos!',
     'A = (b × h) / 2': '💡 Triângulo: metade do paralelogramo equivalente.',
     '(b₁ + b₂)': '💡 Trapézio: soma das bases paralelas, dividida por 2, vezes a altura.',
-    'π': '💡 π ≈ 3,14159… — número irracional, constante para todos os círculos.',
+    'π': '💡 π ≈ 3,14159… número irracional, constante para todos os círculos.',
     'A = π × r²': '💡 Área do círculo. Raio ao quadrado, multiplicado por π.',
     'C = 2 × π × r': '💡 Comprimento da circunferência. Também: C = π × d.',
     'mmc': '💡 Mínimo múltiplo comum: o menor número divisível pelos dois.',
@@ -1115,7 +1115,7 @@ window._mathEval = function(expr) {
 
   document.addEventListener('DOMContentLoaded', function() {
     wrapFormulas();
-    // Also wrap on navigation (dynamic sections) — debounced to avoid thrashing
+    // Also wrap on navigation (dynamic sections) debounced to avoid thrashing
     var _wrapTimer = null;
     var obs = new MutationObserver(function(muts) {
       var hasAdded = muts.some(function(m) { return m.addedNodes.length > 0; });
@@ -1171,7 +1171,7 @@ window._mathEval = function(expr) {
   else inject();
 })();
 
-// ═══ wrapPrintDoc — HTML document wrapper for printable sheets ═══
+// ═══ wrapPrintDoc HTML document wrapper for printable sheets ═══
 function wrapPrintDoc(title, content) {
   return '<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><title>' + title + '</title><style>'
     + 'body{font-family:Georgia,serif;max-width:800px;margin:0 auto;padding:2rem;color:#2a2724}'
@@ -1270,7 +1270,7 @@ function makeFeedbackHTML(isCorrect, expl, val, fbId) {
   var status = isCorrect
     ? '✓ Correto!'
     : (val !== undefined && val !== null && val !== ''
-        ? '✗ Incorreto — a resposta certa é: <strong style="font-size:1.05em">' + val + '</strong>'
+        ? '✗ Incorreto a resposta certa é: <strong style="font-size:1.05em">' + val + '</strong>'
         : '✗ Incorreto.');
 
   var explHtml = '';
@@ -1319,13 +1319,13 @@ function makeFeedbackHTML(isCorrect, expl, val, fbId) {
     '</div></div>';
 }
 
-// ═══ toggleTemaRow — used by topic rows across all chapters ═══
+// ═══ toggleTemaRow used by topic rows across all chapters ═══
 function toggleTemaRow(id) {
   var row = document.getElementById(id);
   if (row) row.classList.toggle('open');
 }
 
-// ═══ _buildStQuizHTML — shared quiz HTML builder for subtema modals ═══
+// ═══ _buildStQuizHTML shared quiz HTML builder for subtema modals ═══
 function _buildStQuizHTML(exercicios) {
   var labels = ['A','B','C','D'], qhtml = '';
   exercicios.forEach(function(ex, i) {
@@ -1350,7 +1350,7 @@ function _buildStQuizHTML(exercicios) {
   return qhtml;
 }
 
-// ═══ _bancoToSubtemaExs — convert BANCO to subtema exercise list ═══
+// ═══ _bancoToSubtemaExs convert BANCO to subtema exercise list ═══
 function _bancoToSubtemaExs(banco, temaNum) {
   var pool = (banco.questoes || []).filter(function(q){ return String(q.tema) === String(temaNum); });
   if (banco.minitestes && banco.minitestes[parseInt(temaNum)]) {
@@ -1373,7 +1373,7 @@ function _bancoToSubtemaExs(banco, temaNum) {
   });
 }
 
-// ═══ criarModalSubtema — subtema practice modal (shared across chapters) ═══
+// ═══ criarModalSubtema subtema practice modal (shared across chapters) ═══
 function criarModalSubtema(titulo, exercicios) {
   var old = document.getElementById('subtema-modal');
   if (old) old.remove();
@@ -1400,7 +1400,7 @@ function criarModalSubtema(titulo, exercicios) {
   window._stContext = { titulo: titulo, gerador: null };
 }
 
-// ═══ stCheck / stNovas — subtema modal interaction (shared) ═══
+// ═══ stCheck / stNovas subtema modal interaction (shared) ═══
 var _stAnswered = {};
 var _stScore = { correct: 0, total: 0 };
 
@@ -1453,7 +1453,7 @@ function stNovas() {
   }
 }
 
-// ═══ calcExpression — safe math expression evaluator UI ═══
+// ═══ calcExpression safe math expression evaluator UI ═══
 function calcExpression() {
   var inp = document.getElementById('calc-expr');
   var res = document.getElementById('calc-expr-result');
@@ -1473,7 +1473,7 @@ function calcExpression() {
   }
 }
 
-// ═══ QUIZ GAME (qgStartForCap) — arcade quiz for chapter pages ═══
+// ═══ QUIZ GAME (qgStartForCap) arcade quiz for chapter pages ═══
 // State for the per-chapter arcade quiz
 var _qgCap = { cap: 0, lives: 3, streak: 0, maxStreak: 0, score: 0, total: 0, current: null, answered: false, pool: [] };
 
@@ -1490,7 +1490,7 @@ function _qgBuildPool(cap) {
         // relampago format
         return { q: q.q || '', opts: q.opts, ans: q.opts[q.c], fb: q.fb || '' };
       }
-      // questoes format — c is a letter like 'B'; find the full option text starting with 'B)'
+      // questoes format c is a letter like 'B'; find the full option text starting with 'B)'
       var letter = q.correct || q.c || '';
       var opts = q.opts || [];
       var ans = letter;
@@ -1625,7 +1625,7 @@ function qgStartForCap(cap) {
   _qgRenderQuestion(appEl);
 }
 
-// ═══ CHAPTER NAV BAR — generated from data ═══
+// ═══ CHAPTER NAV BAR generated from data ═══
 function _buildChapterNav(activeCap) {
   var caps = [
     {n:1, label:'Números Inteiros'},
@@ -1974,7 +1974,7 @@ function _capGerarFichaInline(cap, nivelSelId, outputId, dlBtnId, capNome) {
 function _capDownloadFicha(cap, capNome) {
   var content = window['_fichaContent' + cap] || '';
   var fullHtml = '<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8">'
-    + '<title>Ficha — ' + capNome + ' · Mat. 7.º Ano</title>'
+    + '<title>Ficha ' + capNome + ' · Mat. 7.º Ano</title>'
     + '<style>body{font-family:Montserrat,sans-serif;max-width:720px;margin:2rem auto;padding:1rem;color:#2a2724}'
     + '.ex{margin-bottom:1.5rem;padding:1rem;border:1px solid #e0dbd4;border-radius:6px}'
     + '.ex-num{font-weight:700;color:#516860;font-size:.85rem;margin-bottom:.5rem}'

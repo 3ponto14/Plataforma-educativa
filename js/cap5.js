@@ -28,7 +28,7 @@ function showSection5(id,btn){
 // DATA BANK
 var BANCO5={
   questoes:[
-    // TEMA 1: Sequências — Termo Geral de uma Sequência
+    // TEMA 1: Sequências Termo Geral de uma Sequência
     {id:'q5-1',tema:1,enunciado:'A Ana construiu uma sequência de figuras com segmentos de reta com termo geral a<sub>n</sub> = 5n. Quantos segmentos tem a figura 5?',opts:['A) 20','B) 25','C) 30','D) 15'],correct:'B',fb:'a<sub>5</sub> = 5×5 = 25 segmentos.'},
     {id:'q5-2',tema:1,enunciado:'O termo geral de uma sequência é a<sub>n</sub> = 4n − 3. Quantos balões tem o 10.º termo?',opts:['A) 33','B) 37','C) 40','D) 43'],correct:'B',fb:'a<sub>10</sub> = 4×10 − 3 = 37.'},
     {id:'q5-5',tema:1,enunciado:'A Ana desenhou figuras com casinhas de cão (segmentos). Se a<sub>n</sub> = 5n, qual é o termo geral da sequência?',opts:['A) a<sub>n</sub> = 5n','B) a<sub>n</sub> = n + 5','C) a<sub>n</sub> = 5n − 1','D) a<sub>n</sub> = 5(n + 1)'],correct:'A',fb:'Cada figura tem 5 segmentos a mais que a anterior, com a<sub>1</sub> = 5. Logo a<sub>n</sub> = 5n.'},
@@ -44,18 +44,18 @@ var BANCO5={
     {id:'q5-4',tema:2,enunciado:'A Sara usa 2h45min e a Inês 3h10min de telemóvel por dia. A Sara reduz 15 min/dia e a Inês 20 min/dia. Após quantos dias usam o mesmo tempo?',opts:['A) 3','B) 4','C) 5','D) 6'],correct:'C',fb:'165 − 15n = 190 − 20n → 5n = 25 → n = 5 dias.'},
     // Desafio Tema 2
     {id:'q5-d3',tema:2,enunciado:'<span class="badge-desafio">★ Desafio</span> Empresa A: 15€ fixos + 0,30€/km. Empresa B: 8€ fixos + 0,50€/km. A partir de quantos km a A é mais barata?',opts:['A) 30 km','B) 35 km','C) 36 km','D) 40 km'],correct:'C',fb:'15+0,30k < 8+0,50k → 7 < 0,20k → k > 35. Logo a partir de 36 km.'},
-    // QA 29 — Sequências
+    // QA 29 Sequências
     {id:'q5-10',tema:1,enunciado:'O termo geral da sequência cujos primeiros termos são 9, 14, 19, 24, … é:',opts:['A) 9 + 5n','B) 5 + 4n','C) 4 + 5n','D) 9n + 5'],correct:'C',fb:'r = 5, a<sub>1</sub> = 9. a<sub>n</sub> = 9 + (n−1)×5 = 4 + 5n. Verifica: a<sub>1</sub> = 4+5 = 9 ✓ a<sub>2</sub> = 4+10 = 14 ✓'},
-    // QA 30 — Sequências de frações
+    // QA 30 Sequências de frações
     {id:'q5-11',tema:1,enunciado:'Qual é o termo de ordem n da sequência 1/2, 2/3, 3/4, 4/5, …?',opts:['A) n/(n+1)','B) (n+1)/n','C) n/(n+2)','D) 1/(n+1)'],correct:'A',fb:'Numerador = n, denominador = n+1. Logo u<sub>n</sub> = n/(n+1). Verifica: u<sub>1</sub> = 1/2 ✓ u<sub>2</sub> = 2/3 ✓'},
-    // QA 33 — Termo geral a partir da sequência
+    // QA 33 Termo geral a partir da sequência
     {id:'q5-12',tema:1,enunciado:'Os primeiros termos de uma sequência aritmética são 7, 10, 13, 16, … Qual é o termo geral?',opts:['A) 3n + 7','B) 3n + 1','C) 3n + 4','D) 4n + 3'],correct:'C',fb:'r = 3, a<sub>1</sub> = 7. a<sub>n</sub> = 7 + (n−1)×3 = 3n + 4. Verifica: a<sub>1</sub> = 3+4 = 7 ✓ a<sub>2</sub> = 6+4 = 10 ✓'},
-    // QA 34 — Problema com quadrilátero
+    // QA 34 Problema com quadrilátero
     {id:'q5-13',tema:2,enunciado:'Os três primeiros ângulos internos de um quadrilátero são dados por a<sub>n</sub> = 10n + 80 (para n = 1, 2, 3). Qual é o valor do 4.º ângulo?',opts:['A) 50°','B) 60°','C) 70°','D) 80°'],correct:'B',fb:'a<sub>1</sub> = 90°, a<sub>2</sub> = 100°, a<sub>3</sub> = 110°. Soma dos três = 300°. A soma dos ângulos internos de um quadrilátero é 360°. 4.º ângulo = 360° − 300° = 60°.'}
   ],
   minitestes:[
     [], // index 0 = todos (gerado dinamicamente)
-    // Mini 1 — Sequências (7 questions)
+    // Mini 1 Sequências (7 questions)
     [{en:'O António registou a altitude de um drone ao longo do tempo: 0, 3, 6, 9, 12, … Qual é o termo geral da sequência?',opts:['A) 3n','B) 3n − 2','C) 3n − 3','D) 3n − 4'],c:'C',fb:'a₁ = 3(1)−3 = 0 ✓ ; a₂ = 3(2)−3 = 3 ✓'},
      {en:'Numa sequência de 5 termos, o 1.º é 2 e o 5.º é 18. Qual pode ser o termo geral?',opts:['A) aₙ = 4n − 2','B) aₙ = 2n','C) aₙ = 2n + 8','D) aₙ = 2n + 1'],c:'A',fb:'a₁ = 4(1)−2 = 2 ✓ ; a₅ = 4(5)−2 = 18 ✓'},
      {en:'Os primeiros quatro termos de uma sequência são: 1/2, 1/4, 1/8, 1/16. O sexto termo é:',opts:['A) 1/64','B) 1/36','C) 1/30','D) 1/32'],c:'A',fb:'Cada termo é metade do anterior: 1/32 → 1/64.'},
@@ -63,7 +63,7 @@ var BANCO5={
      {en:'Uma bactéria divide-se ao meio a cada hora. Quantas bactérias existem ao fim de 6 horas (começando com 1)?',opts:['A) 32','B) 64','C) 100','D) 128'],c:'B',fb:'aₙ = 2ⁿ. a₆ = 2⁶ = 64 bactérias.'},
      {en:'★ A soma dos 5 primeiros termos de uma PA é 35. Se a₁=3, qual é a razão?',opts:['A) 2','B) 3','C) 4','D) 5'],c:'A',fb:'S₅=5(a₁+a₅)/2=35 → a₅=11. r=(11−3)/4=2.'},
      {en:'★ Erro: "aₙ=3n+1 → a₁=3, a₂=6, a₃=9". O erro está em:',opts:['A) a₁','B) a₂','C) a₃','D) Todos errados'],c:'D',fb:'a₁=4, a₂=7, a₃=10. Todos estão errados!'}],
-    // Mini 2 — Problemas com sequências (5 questions)
+    // Mini 2 Problemas com sequências (5 questions)
     [{en:'Numa sequência de figuras, o número de segmentos é aₙ = 4n + 1. Quantos segmentos são necessários para a figura com ordem 100?',opts:['A) 401','B) 402','C) 500','D) 501'],c:'A',fb:'a₁₀₀ = 4(100) + 1 = 401 segmentos.'},
      {en:'Considera a sequência: 5, 11, 17, 23, 29, … O termo geral pode ser:',opts:['A) aₙ = 5n','B) aₙ = 6n + 1','C) aₙ = 6n − 1','D) aₙ = −6n + 11'],c:'C',fb:'a₁ = 6(1)−1 = 5 ✓ ; a₃ = 6(3)−1 = 17 ✓'},
      {en:'Considera a sequência: −3, 0, 3, 6, 9, … O termo de ordem 30 é:',opts:['A) 90','B) 86','C) 87','D) 84'],c:'D',fb:'aₙ = 3n − 6 → a₃₀ = 3(30)−6 = 84.'},
@@ -214,7 +214,7 @@ function buildEx5(tema,dif){
     return arr;
   }
 
-  // TEMA 1 — Sequências: Termo Geral
+  // TEMA 1 Sequências: Termo Geral
   if(tema==='1'){
     var r=r4(0,4);
     if(r===0){
@@ -270,7 +270,7 @@ function buildEx5(tema,dif){
       c:'A) '+val,fb:'a<sub>'+n+'</sub> = '+n+'² = '+val+'.'};
   }
 
-  // TEMA 2 — Resolução de Problemas com o Termo Geral
+  // TEMA 2 Resolução de Problemas com o Termo Geral
   if(tema==='2'){
     var r=r4(0,3);
     if(r===0){
@@ -438,7 +438,7 @@ function exame5Submit(){
   var pct=s.total>0?Math.round(s.correct/s.total*100):0;
   var res=document.getElementById('exame5-result');
   res.style.display='block';
-  res.innerHTML='<div class="card"><div class="card-title">Resultado do Exame</div><div style="font-family:\'Cormorant Garamond\',serif;font-size:2.5rem;font-weight:900;color:'+(pct>=70?'var(--correct)':'var(--wrong)')+'">'+pct+'%</div><p style="margin:.5rem 0;color:var(--ink3)">'+s.correct+' corretas de '+s.total+' questões</p><div class="highlight-box '+(pct>=70?'green':'orange')+'" style="margin-top:1rem">'+(pct>=80?'<i class="ph ph-star"></i> Excelente preparação!':pct>=60?'<i class="ph ph-thumbs-up"></i> Bom resultado — continua a praticar!':'<i class="ph ph-wrench"></i> Revê a teoria e volta a tentar!')+'</div><div style="margin-top:1rem;display:flex;gap:.75rem"><button class="btn btn-primary" onclick="document.getElementById(\'exame5-config\').style.display=\'block\';document.getElementById(\'exame5-result\').style.display=\'none\'">↺ Novo Exame</button><button class="btn btn-ghost" onclick="showSection5(\'teoria5\',document.querySelector(\'#tabs5 .tab-btn\'))"><i class="ph ph-book-open-text"></i> Rever Teoria</button></div></div>';
+  res.innerHTML='<div class="card"><div class="card-title">Resultado do Exame</div><div style="font-family:\'Cormorant Garamond\',serif;font-size:2.5rem;font-weight:900;color:'+(pct>=70?'var(--correct)':'var(--wrong)')+'">'+pct+'%</div><p style="margin:.5rem 0;color:var(--ink3)">'+s.correct+' corretas de '+s.total+' questões</p><div class="highlight-box '+(pct>=70?'green':'orange')+'" style="margin-top:1rem">'+(pct>=80?'<i class="ph ph-star"></i> Excelente preparação!':pct>=60?'<i class="ph ph-thumbs-up"></i> Bom resultado continua a praticar!':'<i class="ph ph-wrench"></i> Revê a teoria e volta a tentar!')+'</div><div style="margin-top:1rem;display:flex;gap:.75rem"><button class="btn btn-primary" onclick="document.getElementById(\'exame5-config\').style.display=\'block\';document.getElementById(\'exame5-result\').style.display=\'none\'">↺ Novo Exame</button><button class="btn btn-ghost" onclick="showSection5(\'teoria5\',document.querySelector(\'#tabs5 .tab-btn\'))"><i class="ph ph-book-open-text"></i> Rever Teoria</button></div></div>';
 }
 
 // PROGRESSO
@@ -473,7 +473,7 @@ function abrirSubtema5(tema) {
 }
 
 var _cap5Topics = [
-  {id:'tr5-1', num:'01', title:'Sequências — Termo Geral', open:true, subs:[
+  {id:'tr5-1', num:'01', title:'Sequências Termo Geral', open:true, subs:[
     {onclick:_c5Teoria, label:'Teoria: Definição e Termo Geral', icon:'ph-book-open-text'},
     {onclick:"abrirSubtema5('1')", label:'Praticar: Termo Geral e Razão', icon:'ph-pencil'}
   ]},

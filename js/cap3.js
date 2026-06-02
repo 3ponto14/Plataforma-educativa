@@ -1,11 +1,11 @@
-// CAP. 3 — GEOMETRIA · JavaScript
+// CAP. 3 GEOMETRIA · JavaScript
 // Uses chapter-engine.js for generic quiz/exam/flashcard/progress logic
 
 // ── Utilitários (aliases for backward compat) ──
 var rnd3=rnd, sh3=shuffle;
 function deg(n){return n+'°';}
 
-// ── SVG HELPERS (Geometria — cap3 specific) ──────────────────────────────────
+// ── SVG HELPERS (Geometria cap3 specific) ──────────────────────────────────
 // These are also exported to window so shared.js can call them if needed.
 
 // svgAngulo: simple angle arc diagram for polygon interior angle illustrations
@@ -223,7 +223,7 @@ function buildEx3(tema,tipo,dif){
   tema=String(tema);
   var hard=dif==='dificil', easy=dif==='facil';
 
-  // TEMA 1 — Ângulos internos de polígonos
+  // TEMA 1 Ângulos internos de polígonos
   // facil:   aplicação direta da fórmula (dado n, calcular S)
   // medio:   inverso (dada S, encontrar n) ou ângulo de polígono regular
   // dificil: multi-passo (dado ângulo interno de polígono regular, encontrar n e depois ângulo externo)
@@ -317,7 +317,7 @@ function buildEx3(tema,tipo,dif){
       expl:'Passo 1: encontrar n.\n(n\u22122)\xd7180 = '+siH2+' \u2192 n\u22122 = '+(siH2/180)+' \u2192 n = '+nH2+'.\nPasso 2: ângulo externo = 360\xb0 \xf7 '+nH2+' = '+extH2+'\xb0.'};
   }
 
-  // TEMA 2 — Ângulos externos
+  // TEMA 2 Ângulos externos
   if(tema==='2'){
     var nRange=easy?[3,4,5,6,8]:[5,6,7,8,9,10,12,15];
     var n=nRange[rnd3(0,nRange.length-1)];
@@ -350,7 +350,7 @@ function buildEx3(tema,tipo,dif){
       resposta:'V',expl:'Afirmação VERDADEIRA.\nIndependentemente do número de lados, a soma dos ângulos externos de qualquer polígono convexo é sempre 360\xb0.\nEx: triângulo \u2014 3 \xd7 120\xb0 = 360\xb0; quadrado \u2014 4 \xd7 90\xb0 = 360\xb0.'};
   }
 
-  // TEMA 3 — Retas paralelas e ângulos
+  // TEMA 3 Retas paralelas e ângulos
   // facil:   identificar UMA relação nomeada (qual é o alterno interno?)
   // medio:   calcular o valor com UM passo (suplementares + alternos)
   // dificil: calcular com DOIS passos (co-internos → suplementares → correspondentes)
@@ -452,7 +452,7 @@ function buildEx3(tema,tipo,dif){
       expl:'Passo 1: \u03b2\u2083 e \u03b1\u2081 são alternos internos (entre as paralelas, em lados opostos da transversal) \u2192 \u03b1\u2081 = \u03b2\u2083 = '+ang+'\xb0.\nVerificação: \u03b1\u2081 e \u03b2\u2081 são co-internos \u2192 '+ang+'\xb0 + \u03b2\u2081 = 180\xb0 \u2192 \u03b2\u2081 = '+supl+'\xb0.'};
   }
 
-  // TEMA 4 — Quadriláteros
+  // TEMA 4 Quadriláteros
   if(tema==='4'){
     var facts=[
       {q:'Num paralelogramo, dois ângulos opostos medem 70\xb0. Os outros dois medem:',ops:['110\xb0','70\xb0','90\xb0','140\xb0'],c:'110\xb0',e:'Ângulos adjacentes num paralelogramo são suplementares: somam 180\xb0.\n180\xb0\u221270\xb0=110\xb0.'},
@@ -472,7 +472,7 @@ function buildEx3(tema,tipo,dif){
     return{tema:'Tema 4',tipo:'mc',enun:f.q,opcoes:sh3(f.ops),resposta:f.c,expl:f.e};
   }
 
-  // TEMA 5 — Áreas
+  // TEMA 5 Áreas
   if(tema==='5'){
     var fig=rnd3(0,easy?3:5);
     if(fig===0){
@@ -712,7 +712,7 @@ var FC3_CARDS=[
   {tag:'Exemplo',q:'Um ângulo mede 65\xb0. Qual é o ângulo co-interno (paralelas cortadas por secante)?',a:'Co-internos são suplementares: 180\xb0 \u2212 65\xb0 = 115\xb0'},
 ];
 
-// CAP_DATA[3] REGISTRATION — chapter-engine.js integration
+// CAP_DATA[3] REGISTRATION chapter-engine.js integration
 window.CAP_DATA[3] = {
   prefix: '3',
   storageKey: 'edupt_cap3',
@@ -772,7 +772,7 @@ window.CAP_DATA[3] = {
   }
 };
 
-// DELEGATION WRAPPERS — auto-generated + cap3-specific extras
+// DELEGATION WRAPPERS auto-generated + cap3-specific extras
 _capRegisterWrappers(3, {
   setTeste3Subtema: function(n,btn){capSetTesteSubtema(3,n,btn)},
   gerarTeste3: function(){capGerarTeste(3)},

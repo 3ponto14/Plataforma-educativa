@@ -30,7 +30,7 @@ function toggleChP(e,el){
   }
 }
 
-// ═══ SEARCH (stubs — only used on index.html, full impl in systems.js) ═══
+// ═══ SEARCH (stubs only used on index.html, full impl in systems.js) ═══
 function doSearch(val){
   var cards=document.querySelectorAll('.y-card');
   var noRes=document.getElementById('no-results');

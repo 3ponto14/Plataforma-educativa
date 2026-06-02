@@ -1,4 +1,4 @@
-// CAP. 1 — NÚMEROS INTEIROS · JavaScript
+// CAP. 1 NÚMEROS INTEIROS · JavaScript
 // Uses chapter-engine.js for generic quiz/exam/flashcard/progress logic
 
 // ── Utilitários ──
@@ -16,13 +16,13 @@ var dynState = {
   t:  { level: 'medio', score: { correct: 0, total: 0 }, answered: {} },
 };
 
-// ── CONSTRUTOR DE EXERCÍCIOS — Cap 1 (Números Inteiros) ──
+// ── CONSTRUTOR DE EXERCÍCIOS Cap 1 (Números Inteiros) ──
 function buildExercicio(tema, tipo, min, max, n, dif) {
   tema = String(tema);
   var easy = (dif === 'facil'), hard = (dif === 'dificil');
   if (min === undefined || min === null) { var lv = lim(dif||'medio'); min = lv.min; max = lv.max; }
 
-  // TEMA 1 — Conjunto dos Inteiros
+  // TEMA 1 Conjunto dos Inteiros
   if (tema === '1') {
     var sets = [
       { n: -7, pos: false, neg: true,  zero: false, nat: false, label: 'ℤ⁻' },
@@ -48,7 +48,7 @@ function buildExercicio(tema, tipo, min, max, n, dif) {
       var wrongs = nums.filter(function(x) { return x !== resp; }).slice(0, 3);
       var opts = shuffle([resp].concat(wrongs)).map(String);
       return { enun: 'Qual destes números pertence a ℤ⁺?', tipo: 'mc', opcoes: opts, resposta: String(resp),
-        expl: 'ℤ⁺ = {1, 2, 3, …} — os inteiros positivos.', tema: 'T1 · Inteiros' };
+        expl: 'ℤ⁺ = {1, 2, 3, …} os inteiros positivos.', tema: 'T1 · Inteiros' };
     }
     if (tipo === 'fill') {
       var a = rnd(1, 6), b = -rnd(1, 6);
@@ -71,7 +71,7 @@ function buildExercicio(tema, tipo, min, max, n, dif) {
     }
   }
 
-  // TEMA 2 — Valor Absoluto e Simétrico
+  // TEMA 2 Valor Absoluto e Simétrico
   if (tema === '2') {
     var a2 = rndNZ(Math.abs(min) || 1, Math.abs(max) || 8);
     var n2 = Math.random() < 0.5 ? a2 : -a2;
@@ -126,7 +126,7 @@ function buildExercicio(tema, tipo, min, max, n, dif) {
     }
   }
 
-  // TEMA 3 — Adição de Inteiros
+  // TEMA 3 Adição de Inteiros
   if (tema === '3') {
     var x3 = rndNZ(1, Math.abs(max) || 10), y3 = rndNZ(1, Math.abs(max) || 10);
     var sameSign = Math.random() < 0.5;
@@ -158,7 +158,7 @@ function buildExercicio(tema, tipo, min, max, n, dif) {
     }
   }
 
-  // TEMA 4 — Subtração e Adição Algébrica
+  // TEMA 4 Subtração e Adição Algébrica
   if (tema === '4') {
     var a4 = rnd(min, max), b4 = rnd(min, max);
     var res4 = a4 - b4;
@@ -203,7 +203,7 @@ function buildExercicio(tema, tipo, min, max, n, dif) {
     }
   }
 
-  // TEMA 5 — Expressões com Parênteses
+  // TEMA 5 Expressões com Parênteses
   if (tema === '5') {
     var a5 = rndNZ(1, hard ? 15 : 8), b5 = rndNZ(1, hard ? 15 : 8), c5 = rndNZ(1, 6);
     var sign5 = Math.random() < 0.5 ? 1 : -1;
@@ -238,7 +238,7 @@ function buildExercicio(tema, tipo, min, max, n, dif) {
     }
   }
 
-  // TEMA 6 — Propriedades da Adição
+  // TEMA 6 Propriedades da Adição
   if (tema === '6') {
     var a6 = rndNZ(1, 10), b6 = rndNZ(1, 8), c6 = rndNZ(1, 6);
     var sA = Math.random() < 0.5 ? a6 : -a6;
@@ -323,9 +323,9 @@ function buildExercicio(tema, tipo, min, max, n, dif) {
 
 // ── FLASHCARDS DATA ──
 var FC1_CARDS = [
-  {tag:'Definição', q:'O que são os números inteiros (ℤ)?', a:'ℤ = {…, −3, −2, −1, 0, 1, 2, 3, …} — todos os números inteiros positivos, negativos e o zero.'},
+  {tag:'Definição', q:'O que são os números inteiros (ℤ)?', a:'ℤ = {…, −3, −2, −1, 0, 1, 2, 3, …} todos os números inteiros positivos, negativos e o zero.'},
   {tag:'Hierarquia', q:'Qual a relação entre ℕ e ℤ?', a:'ℕ ⊂ ℤ. Todos os naturais são inteiros, mas nem todos os inteiros são naturais (ex: −5 ∈ ℤ mas −5 ∉ ℕ).'},
-  {tag:'Definição', q:'O que é ℤ⁺ e ℤ⁻?', a:'ℤ⁺ = {1, 2, 3, …} — inteiros positivos. ℤ⁻ = {…, −3, −2, −1} — inteiros negativos. O 0 não pertence a nenhum deles.'},
+  {tag:'Definição', q:'O que é ℤ⁺ e ℤ⁻?', a:'ℤ⁺ = {1, 2, 3, …} inteiros positivos. ℤ⁻ = {…, −3, −2, −1} inteiros negativos. O 0 não pertence a nenhum deles.'},
   {tag:'Definição', q:'O que é o valor absoluto |a|?', a:'|a| é a distância de a ao zero na reta numérica. |a| ≥ 0 sempre. Exemplo: |−5| = 5, |3| = 3.'},
   {tag:'Regra', q:'Como calcular |a| para a < 0?', a:'Se a < 0, então |a| = −a (inverte o sinal). Exemplo: |−7| = −(−7) = 7.'},
   {tag:'Definição', q:'O que é o simétrico de a?', a:'O simétrico de a é −a (sinal oposto). a + (−a) = 0. Exemplo: simétrico de 5 é −5; simétrico de −3 é 3.'},
@@ -534,7 +534,7 @@ document.addEventListener('DOMContentLoaded', function() {
   fcStartSession();
 });
 
-// ═══ Subtema launchers — Cap 1 ═══
+// ═══ Subtema launchers Cap 1 ═══
 function buildT1(tipo,min,max,n){return buildExercicio("1",tipo,min,max,n,dynState&&dynState.q?dynState.q.level:"medio");}
 function buildT3(tipo,min,max,n){return buildExercicio("3",tipo,min,max,n,dynState&&dynState.q?dynState.q.level:"medio");}
 function buildT4(tipo,min,max,n){return buildExercicio("4",tipo,min,max,n,dynState&&dynState.q?dynState.q.level:"medio");}
@@ -543,7 +543,7 @@ function buildT5(tipo,min,max,n,dif){return buildExercicio("5",tipo,min,max,n,di
 var _cap1SubtemaTitulos = {
   '1:inteiros': 'Conjunto dos Números Inteiros', '1:representacao': 'Representar Situações com Inteiros', '1:ordenacao': 'Ordenar Inteiros na Reta',
   '2:absoluto': 'Valor Absoluto |a|', '2:simetrico': 'Simétrico de um Número', '2:comparar': 'Comparar usando Valor Absoluto',
-  '3:mesmo_sinal': 'Adição — Mesmo Sinal', '3:sinais_dif': 'Adição — Sinais Diferentes', '3:contexto': 'Adição — Problemas de Contexto',
+  '3:mesmo_sinal': 'Adição Mesmo Sinal', '3:sinais_dif': 'Adição Sinais Diferentes', '3:contexto': 'Adição Problemas de Contexto',
   '4:subtracao': 'Subtração de Inteiros', '4:adicao_alg': 'Adição Algébrica', '4:simplificar': 'Simplificar Expressões',
   '5:retirar_par': 'Retirar Parênteses', '5:valor_num': 'Valor Numérico', '5:colchetes': 'Colchetes e Chavetas',
   '6:comutativa': 'Propriedade Comutativa', '6:associativa': 'Propriedade Associativa', '6:elementos': 'Elemento Neutro e Simétrico',
@@ -573,7 +573,7 @@ function _cap1SubtemaGerador(tema, sub) {
     }
     else if (tema==='2' && sub==='simetrico') {
       var vs = rndNZ(min, max);
-      ex = { num:i+1, tema:'Tema 2', tipo:'fill', enun:'Qual é o simétrico de '+vs+'?', resposta: -vs, expl:'O simétrico de '+vs+' é '+(-vs)+' — inverte o sinal.' };
+      ex = { num:i+1, tema:'Tema 2', tipo:'fill', enun:'Qual é o simétrico de '+vs+'?', resposta: -vs, expl:'O simétrico de '+vs+' é '+(-vs)+' inverte o sinal.' };
     }
     else if (tema==='2' && sub==='comparar') {
       var vc1 = rndNZ(min, max), vc2 = rndNZ(min, max);
