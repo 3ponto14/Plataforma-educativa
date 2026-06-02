@@ -123,11 +123,11 @@ var MAT12_BANCO = {
 
     { id:'m12-24f2-6', num:'6', page:5, tipo:'dev', tema:'derivadas',
       enun:'Seja f uma função contínua e diferenciável. Estude-a quanto à monotonia, extremos e concavidades num dado intervalo (questão com gráfico).',
-      resolucao:'[Questão com gráfico — ver prova original para a figura completa]' },
+      resolucao:'Esta questão envolve o estudo de uma função a partir do seu gráfico. Clica em \'Ver página da prova\' para ver a figura e a resolução completa.' },
 
     { id:'m12-24f2-7', num:'7', page:6, tipo:'dev', tema:'integrais',
       enun:'Determine o valor exato de um integral definido relacionado com a área de uma região plana (questão com figura).',
-      resolucao:'[Questão com figura — ver prova original]' },
+      resolucao:'Esta questão pede o cálculo de um integral com base numa figura. Clica em \'Ver página da prova\' para ver a figura e a resolução completa.' },
 
     { id:'m12-24f2-8', num:'8', page:6, tipo:'dev', tema:'limites',
       enun:'Estude os limites de uma função racional definida por ramos e as suas assíntotas.',
@@ -484,7 +484,7 @@ e −1
 
     { id:'m12-23f1-7', num:'7', page:4, tipo:'dev', tema:'geometria',
       enun:'Determine o volume ou área de um sólido geométrico com as condições apresentadas na figura.',
-      resolucao:'[Questão com figura — ver prova original]' },
+      resolucao:'Esta questão envolve cálculo de volume ou área de um sólido geométrico com figura. Clica em \'Ver página da prova\' para ver a figura e a resolução completa.' },
 
     { id:'m12-23f1-8', num:'8', page:5, tipo:'dev', tema:'probabilidades',
       enun:'Problema de probabilidade com as condições apresentadas.',
@@ -1022,7 +1022,7 @@ P (B)
 
     { id:'m12-23f2-5', num:'5', page:3, tipo:'dev', tema:'trigonometria',
       enun:'Determine o valor de α (amplitude do ângulo) nas condições do triângulo e circunferência da figura.',
-      resolucao:'[Questão com figura — ver prova original]' },
+      resolucao:'Esta questão pede a determinação de um ângulo num triângulo inscrito numa circunferência. Clica em \'Ver página da prova\' para ver a figura.' },
 
     { id:'m12-23f2-6', num:'6', page:3, tipo:'dev', tema:'funcoes',
       enun:'Seja f uma função contínua. Prove ou determine uma propriedade da função com as condições dadas.',
@@ -2744,7 +2744,7 @@ Ou seja sen θ = 0 ∧ cos θ = −1, pelo que θ = π' }
 
     { id:'m12-21f1-12', num:'1.2', page:2, tipo:'dev', tema:'geometria',
       enun:'Mostre que a área do triângulo [ABC] inscrito na circunferência de raio 3 é dada pela expressão -9 sen(α)cos(α), onde α é a inclinação da reta AB.',
-      resolucao:'[Questão com figura — ver prova original para demonstração completa]' },
+      resolucao:'Esta questão pede a demonstração de que a área do triângulo [ABC] é -9sen(α)cos(α). Clica em \'Ver página da prova\' para ver a figura e a resolução.' },
 
     { id:'m12-21f1-2', num:'2', page:2, tipo:'dev', tema:'probabilidades',
       enun:'Problema de probabilidade com distribuição condicional ou total.',
@@ -4238,7 +4238,7 @@ Ou seja, a ordem do termo 500 é 997, isto é, u997 = 500
     { id:'m12-20f2-101', num:'10.1', page:5, tipo:'mc', tema:'derivadas',
       enun:'Qual é o declive da reta tangente ao gráfico de f∘g no ponto de abcissa π/4?',
       opts:['(A) -2','(B) -1','(C) 1','(D) 2'], correct:'B',
-      resolucao:'(f∘g)'(π/4) = f'(g(π/4))×g'(π/4). [Depende de f e g definidas na prova.] Resposta oficial: B=-1.' },
+      resolucao:'(f\'g)\'(pi/4) = f\'(g(pi/4)) x g\'(pi/4). Com os valores de f e g da prova, o resultado é -1. Clica em \'Ver página da prova\' para ver a resolução completa.'g)\'(pi/4) = f\'(g(pi/4)) × g\'(pi/4). Calculando com f e g definidas na prova: resultado = -1.'(π/4) = f'(g(π/4))×g'(π/4). [Depende de f e g definidas na prova.] Resposta oficial: B=-1.' },
 
     { id:'m12-20f2-122', num:'12.2', page:6, tipo:'mc', tema:'derivadas',
       enun:'Qual é o valor de lim(x→1) [f(x)-f(1)]/(1-x²)?',
