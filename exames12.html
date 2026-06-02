@@ -258,8 +258,17 @@ function ex12RecordAnswer(qid, correct) {
 
 /* ── Tab switching ── */
 function ex12SwitchTab(tab, btn) {
+  // Se sair do simulador enquanto corre, parar o timer
+  if (tab !== 'simulador' && _ex12SimTimer) {
+    clearInterval(_ex12SimTimer);
+    _ex12SimTimer = null;
+  }
   document.querySelectorAll('.ex12-tab').forEach(function(b){ b.classList.remove('active'); });
   if (btn) btn.classList.add('active');
+  else {
+    var tabBtn = document.querySelector('.ex12-tab[onclick*="' + tab + '"]');
+    if (tabBtn) tabBtn.classList.add('active');
+  }
   document.querySelectorAll('.ex12-panel').forEach(function(p){ p.classList.remove('active'); });
   var panel = document.getElementById('ex12-panel-' + tab);
   if (panel) panel.classList.add('active');
