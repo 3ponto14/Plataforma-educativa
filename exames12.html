@@ -271,7 +271,7 @@ function ex12StartTema(tema) {
     var j = Math.floor(Math.random() * (i + 1));
     var tmp = questoes[i]; questoes[i] = questoes[j]; questoes[j] = tmp;
   }
-  _ex12TemaState = { questoes: questoes, idx: 0, answers: {}, done: false };
+  _ex12TemaState = { questoes: questoes, idx: 0, answers: {}, avaliacao: {}, done: false };
 
   var temaLabel = '';
   MAT12_TEMAS.forEach(function(t){ if(t.id === tema) temaLabel = t.label; });
@@ -303,34 +303,78 @@ function ex12RenderTemaQ() {
 }
 
 function ex12BuildQHTML(q, idx, total, mode) {
-  var answered = (mode === 'tema' ? _ex12TemaState : _ex12ProvaState).answers[q.id];
+  var st = mode === 'tema' ? _ex12TemaState : _ex12ProvaState;
+  var answered = st.answers[q.id];
+  var isMC = q.tipo === 'mc';
+  var qid = mode + '-' + idx;
+
   var html = '<div class="ex12-q-wrap">'
-    + '<div class="ex12-q-num">Questao ' + (idx+1) + ' de ' + total + '</div>'
+    + '<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">'
+    + '<div class="ex12-q-num">Questao ' + (idx+1) + ' / ' + total + '</div>'
+    + '<div style="font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:999px;background:' + (isMC ? 'var(--ex12-pale)' : '#f0f4ff') + ';color:' + (isMC ? 'var(--ex12-dark)' : '#3a4a8a') + '">'
+    + (isMC ? 'Escolha multipla' : 'Desenvolvimento') + '</div>'
+    + '</div>'
     + '<div class="ex12-q-tema">' + _ex12TemaLabel(q.tema) + '</div>';
   if (q._provaLabel) html += '<div style="font-size:.72rem;color:var(--ink4);margin-bottom:.5rem">' + q._provaLabel + '</div>';
-  html += '<div class="ex12-q-enun">' + q.enun + '</div>'
-    + '<div class="ex12-q-opts" id="opts-' + mode + '-' + idx + '">';
-  q.opts.forEach(function(opt, i) {
-    var letter = ['A','B','C','D'][i];
-    var cls = 'ex12-opt-btn';
-    var disabled = '';
+  if (q.num) html += '<div style="font-size:.72rem;font-weight:800;color:var(--ink3);margin-bottom:.4rem">Item ' + q.num + '</div>';
+  html += '<div class="ex12-q-enun">' + q.enun + '</div>';
+
+  if (isMC) {
+    // Escolha multipla
+    html += '<div class="ex12-q-opts">';
+    (q.opts || []).forEach(function(opt, i) {
+      var letter = ['A','B','C','D'][i];
+      var cls = 'ex12-opt-btn';
+      var disabled = '';
+      if (answered) {
+        disabled = 'disabled';
+        if (letter === q.correct) cls += ' correct';
+        else if (letter === answered) cls += ' wrong';
+      }
+      html += '<button class="' + cls + '" ' + disabled + ' onclick="ex12SelectOpt(\'' + mode + '\',' + idx + ',\'' + letter + '\',\'' + q.id + '\',\'' + q.correct + '\')">' + opt + '</button>';
+    });
+    html += '</div>';
     if (answered) {
-      disabled = 'disabled';
-      if (letter === q.correct) cls += ' correct';
-      else if (letter === answered) cls += ' wrong';
+      var ok = answered === q.correct;
+      html += '<div class="ex12-feedback show ' + (ok ? 'ok' : 'err') + '">'
+        + (ok ? '<i class="ph ph-check-circle"></i> Correto!' : '<i class="ph ph-x-circle"></i> Resposta correta: (' + q.correct + ')')
+        + '</div>';
+      if (q.resolucao && q.resolucao.indexOf('[Ver') === -1) {
+        html += '<div style="margin-top:.75rem;padding:.75rem 1rem;background:#f8f9fa;border-radius:10px;border-left:3px solid var(--ex12-mid)">'
+          + '<div style="font-size:.72rem;font-weight:800;color:var(--ex12-mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem">Resolucao</div>'
+          + '<div style="font-size:.82rem;color:var(--ink2);line-height:1.6">' + q.resolucao + '</div>'
+          + '</div>';
+      }
     }
-    html += '<button class="' + cls + '" ' + disabled + ' onclick="ex12SelectOpt(\'' + mode + '\',' + idx + ',\'' + letter + '\',\'' + q.id + '\',\'' + q.correct + '\')">' + opt + '</button>';
-  });
-  html += '</div>';
-  // Feedback
-  if (answered) {
-    var ok = answered === q.correct;
-    html += '<div class="ex12-feedback show ' + (ok ? 'ok' : 'err') + '">'
-      + (ok ? '<i class="ph ph-check-circle"></i> Correto!' : '<i class="ph ph-x-circle"></i> Resposta correta: (' + q.correct + ')')
-      + '</div>';
+  } else {
+    // Desenvolvimento
+    html += '<div style="margin-top:.75rem">';
+    if (!answered) {
+      html += '<div style="background:#f8f9fa;border:1.5px dashed var(--border);border-radius:10px;padding:1rem;min-height:80px;font-size:.82rem;color:var(--ink4);font-style:italic;margin-bottom:.75rem">Resolve aqui no caderno ou folha de rascunho...</div>'
+        + '<button class="ex12-opt-btn" style="border-color:var(--ex12-mid);color:var(--ex12-mid);font-weight:700" onclick="ex12VerResolucao(\'' + mode + '\',' + idx + ',\'' + q.id + '\')">'
+        + '<i class="ph ph-eye"></i> Ver resolucao</button>';
+    } else {
+      html += '<div style="padding:.75rem 1rem;background:#f8f9fa;border-radius:10px;border-left:3px solid var(--ex12-mid)">'
+        + '<div style="font-size:.72rem;font-weight:800;color:var(--ex12-mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem">Resolucao</div>'
+        + '<div style="font-size:.85rem;color:var(--ink1);line-height:1.7;white-space:pre-wrap">' + (q.resolucao || 'Ver proposta de resolucao oficial.') + '</div>'
+        + '</div>'
+        + '<div style="margin-top:.75rem;display:flex;gap:.5rem;flex-wrap:wrap">'
+        + '<button class="ex12-opt-btn" style="border-color:#4caf50;color:#2e7d32;font-weight:700;flex:1" onclick="ex12AutoAvaliar(\'' + mode + '\',' + idx + ',\'' + q.id + '\',true)"><i class="ph ph-check-circle"></i> Acertei</button>'
+        + '<button class="ex12-opt-btn" style="border-color:#f44336;color:#c62828;font-weight:700;flex:1" onclick="ex12AutoAvaliar(\'' + mode + '\',' + idx + ',\'' + q.id + '\',false)"><i class="ph ph-x-circle"></i> Errei</button>'
+        + '</div>';
+      var avaliado = st.avaliacao && st.avaliacao[q.id];
+      if (avaliado) {
+        html += '<div class="ex12-feedback show ' + (avaliado === 'ok' ? 'ok' : 'err') + '" style="margin-top:.5rem">'
+          + (avaliado === 'ok' ? '<i class="ph ph-check-circle"></i> Marcado como correto' : '<i class="ph ph-x-circle"></i> Marcado como errado')
+          + '</div>';
+      }
+    }
+    html += '</div>';
   }
+
   html += '<div class="ex12-q-nav">';
-  if (answered) {
+  var canAdvance = isMC ? !!answered : (answered && st.avaliacao && st.avaliacao[q.id]);
+  if (canAdvance) {
     if (idx + 1 < total) {
       html += '<button class="btn btn-primary" style="background:var(--ex12-mid);border-color:var(--ex12-mid);margin-left:auto" onclick="ex12Next(\'' + mode + '\')">'
         + 'Seguinte <i class="ph ph-arrow-right"></i></button>';
@@ -338,9 +382,30 @@ function ex12BuildQHTML(q, idx, total, mode) {
       html += '<button class="btn btn-primary" style="background:var(--ex12-mid);border-color:var(--ex12-mid);margin-left:auto" onclick="ex12ShowResult(\'' + mode + '\')">'
         + 'Ver resultado <i class="ph ph-flag-checkered"></i></button>';
     }
+  } else if (!isMC && answered && !(st.avaliacao && st.avaliacao[q.id])) {
+    // Mostrou resolucao mas ainda nao avaliou
+  } else if (!answered && !isMC) {
+    // Ainda nao viu resolucao — nao mostra botao seguinte
   }
   html += '</div></div>';
   return html;
+}
+
+function ex12VerResolucao(mode, idx, qid) {
+  var st = mode === 'tema' ? _ex12TemaState : _ex12ProvaState;
+  st.answers[qid] = 'visto';
+  if (!st.avaliacao) st.avaliacao = {};
+  if (mode === 'tema') ex12RenderTemaQ();
+  else ex12RenderProvaQ();
+}
+
+function ex12AutoAvaliar(mode, idx, qid, isCorrect) {
+  var st = mode === 'tema' ? _ex12TemaState : _ex12ProvaState;
+  if (!st.avaliacao) st.avaliacao = {};
+  st.avaliacao[qid] = isCorrect ? 'ok' : 'err';
+  ex12RecordAnswer(qid, isCorrect);
+  if (mode === 'tema') ex12RenderTemaQ();
+  else ex12RenderProvaQ();
 }
 
 function ex12SelectOpt(mode, idx, letter, qid, correct) {
@@ -366,12 +431,21 @@ function ex12ShowResult(mode) {
   else ex12ShowProvaResult();
 }
 
-function ex12ShowTemaResult() {
-  var st = _ex12TemaState;
+function ex12CountCorrect(st) {
   var correct = 0;
   st.questoes.forEach(function(q) {
-    if (st.answers[q.id] === q.correct) correct++;
+    if (q.tipo === 'mc') {
+      if (st.answers[q.id] === q.correct) correct++;
+    } else {
+      if (st.avaliacao && st.avaliacao[q.id] === 'ok') correct++;
+    }
   });
+  return correct;
+}
+
+function ex12ShowTemaResult() {
+  var st = _ex12TemaState;
+  var correct = ex12CountCorrect(st);
   var pct = st.questoes.length > 0 ? Math.round(correct / st.questoes.length * 100) : 0;
   document.getElementById('ex12-tema-questoes').innerHTML = '';
   var result = document.getElementById('ex12-tema-result');
@@ -419,7 +493,7 @@ function ex12StartProva(key) {
   _ex12ActiveProva = key;
   var prova = MAT12_BANCO[key];
   if (!prova) return;
-  _ex12ProvaState = { questoes: prova.questoes.slice(), idx: 0, answers: {}, done: false };
+  _ex12ProvaState = { questoes: prova.questoes.slice(), idx: 0, answers: {}, avaliacao: {}, done: false };
 
   var lbl = document.getElementById('ex12-prova-active-label');
   if (lbl) lbl.textContent = prova.label;
@@ -450,10 +524,7 @@ function ex12RenderProvaQ() {
 
 function ex12ShowProvaResult() {
   var st = _ex12ProvaState;
-  var correct = 0;
-  st.questoes.forEach(function(q) {
-    if (st.answers[q.id] === q.correct) correct++;
-  });
+  var correct = ex12CountCorrect(st);
   var pct = st.questoes.length > 0 ? Math.round(correct / st.questoes.length * 100) : 0;
   document.getElementById('ex12-prova-questoes').innerHTML = '';
   var result = document.getElementById('ex12-prova-result');
