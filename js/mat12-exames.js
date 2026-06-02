@@ -131,7 +131,25 @@ var MAT12_BANCO = {
 
     { id:'m12-24f2-8', num:'8', page:6, tipo:'dev', tema:'limites',
       enun:'Estude os limites de uma função racional definida por ramos e as suas assíntotas.',
-      resolucao:'[Ver resolução completa na proposta de resolução oficial]' },
+      resolucao:'Temos que:
+• Pelas leis de De Morgan
+ e pela teorema do acontecimento contrário, temos que
+P A ∩ B = P A ∪ B = 1 − P (A ∪ B), e assim, vem que:
+
+P A ∩ B = 9P (A ∩ B) ⇔ 1 − P (A ∪ B) = 9P (A ∩ B) ⇔ 1 − 9 (A ∩ B) = P (A ∪ B)
+• Pelo teorema do acontecimento contrário, vem que:
+
+P A = 3P (B) ⇔ 1 − P (A) = 3P (B)
+• Pelo teorema da união de acontecimentos não disjuntos, temos que:
+P (A ∪ B) = P (A) + P (B) − P (A ∩ B) ⇔ 1 − 9P (A ∩ B) = P (A) + P (B) − P (A ∩ B) ⇔
+⇔ 1 − P (A) = P (B) − P (A ∩ B) + 9P (A ∩ B) ⇔ 3P (B) = P (B) + 8P (A ∩ B) ⇔
+⇔ 3P (B)−P (B) = 8P (A∩B) ⇔ 2P (B) = 8P (A∩B) ⇔ P (B) =
+
+8P (A ∩ B)
+⇔ P (B) = 4P (A∩B)
+2
+
+Assim, pela definição de probabilidade condicionada, temos q' },
 
     { id:'m12-24f2-9', num:'9', page:7, tipo:'dev', tema:'probabilidades',
       enun:'Problema de probabilidade com distribuição binomial ou condicional (ver prova original).',
@@ -233,7 +251,14 @@ seja, f ′′ , é positiva no mesmo i' }
 
     { id:'m12-23f1-2', num:'2', page:2, tipo:'dev', tema:'limites',
       enun:'Seja f uma função definida por ramos. Estude a continuidade de f num dado ponto e calcule os limites laterais.',
-      resolucao:'[Ver resolução completa na proposta oficial]' },
+      resolucao:'Como cada segmento de reta tem mais 2 cm que o anterior, a sucessão dos comprimentos dos segmentos,
+em centı́metros, é uma progressão aritmética de razão 2 (r = 2).
+Como o comprimento total da linha poligonal, construı́da até ao 100.º segmento, é 104 metros, ou seja,
+10 400 centı́metros, temos que a soma dos 100 primeiros termos é 10 400 (S100 = 10 400).
+Designando por u1 o primeiro termo, temos que o termo de ordem 100 da sequência é:
+u100 = u1 + (100 − 1) × r = u1 + 99 × 2 = u1 + 198
+Assim, recorrendo à fórmula da soma dos 100 primeiros termos de uma progressão aritmética, podemos
+calcular o valor do primeiro termo, u1 , ou seja, o comprimento do segmento de reta [AB], em cen' },
 
     { id:'m12-23f1-3', num:'3', page:2, tipo:'dev', tema:'logaritmos',
       enun:'Resolva, sem recorrer à calculadora, a equação logarítmica ou exponencial apresentada.',
@@ -1328,7 +1353,7 @@ S25 = π ×
 
     { id:'m12-23esp-4', num:'4', page:3, tipo:'dev', tema:'combinatoria',
       enun:'O Rui tem nove bombons com recheio de frutos secos (4 amêndoa, 2 avelã, 3 noz). Determine o número de formas de distribuí-los.',
-      resolucao:'[Ver resolução na proposta oficial — combinatória com restrições]' },
+      resolucao:'O número de formas de distribuir 9 bombons (4 amêndoa, 2 avelã, 3 noz) é 9!/(4!×2!×3!) = 1260.' },
 
     { id:'m12-23esp-51', num:'5.1', page:3, tipo:'mc', tema:'geometria',
       enun:'Num referencial ortonormado, qual das equações define o plano que passa no ponto A e é perpendicular ao eixo Ox?',
@@ -2137,7 +2162,30 @@ y' },
 
     { id:'m12-22f1-92', num:'9.2', page:5, tipo:'dev', tema:'trigonometria',
       enun:'Para um ponto do cabo a d metros do poste da esquerda, diminuindo 50% a distância, a altura diminui 30 cm. Determine d, arredondado às décimas de metro.',
-      resolucao:'[Ver resolução na proposta oficial com calculadora]' },
+      resolucao:'Como o ponto do cabo em causa está situado a d metros do poste da esquerda, a sua altura é h(d).
+Desta forma uma redução de 50% da distância, ou seja, a redução da distância para metade é
+1
+expressa por d, e a redução da altura em em 30 centı́metros (0,3 metros) é expressa por h(d) − 0,3.
+2
+ 
+1
+Logo, o valor da distância d é a solução da equação h
+d = h(d) − 0,3
+2
+x−5
+5−x 
+Assim, inserindo na calculadora a função h(x) = 6,3 e 12,6 + e 12,6 − 7,6 , determinamos o valor
+de d como a abcissa do ponto de interseção das funções:
+ 
+1
+x
+• f (x) = h
+y
+2
+• g(x) = h(x) − 0,3
+Representando na calculadora as funções f e
+g, numa janela compatı́vel com o domı́nio da
+função' },
 
     { id:'m12-22f1-10', num:'10', page:5, tipo:'dev', tema:'complexos',
       enun:'Problema com números complexos: determine o afixo, módulo, argumento ou resolva equação em C.',
