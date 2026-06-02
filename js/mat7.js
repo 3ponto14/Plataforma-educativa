@@ -746,7 +746,7 @@ function mat7BuildResumoNav() {
     var color = capColors[m.n] || '#516860';
     var isActive = activeCap === m.n;
     var activeStyle = isActive ? 'background:' + color + ';border-color:' + color + ';color:#fff' : '';
-    var hoverCode = isActive ? '' : ' onmouseover="this.style.borderColor='' + color + '';this.style.color='' + color + ''" onmouseout="this.style.borderColor='';this.style.color=''"';
+    var hoverCode = isActive ? '' : ' onmouseover="this.style.borderColor=\'' + color + '\';this.style.color=\'' + color + '\'" onmouseout="this.style.borderColor=\'\';this.style.color=\'\'"';
     h += '<button class="resumo-cap-btn' + (isActive ? ' active' : '') + '" data-cap="' + m.n + '" onclick="mat7ResumoSelectCap(' + m.n + ',this)" style="' + activeStyle + '"' + hoverCode + '>'
        + '<span class="resumo-cap-icon">' + m.icon + '</span>' + m.label + '</button>';
   });
