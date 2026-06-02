@@ -3144,13 +3144,17 @@ body.dark-mode .portal-main-card:hover { border-color: var(--c2-mid) !important;
   margin-bottom: 1.5rem;
 }
 
-/* Linha de capítulos — scroll horizontal em mobile */
+/* Linha de capítulos — scroll horizontal */
 .resumo-cap-row {
   display: flex;
   gap: .4rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
   margin-bottom: .75rem;
+  padding-bottom: .25rem;
 }
+.resumo-cap-row::-webkit-scrollbar { display: none; }
 
 .resumo-cap-btn {
   display: inline-flex;
