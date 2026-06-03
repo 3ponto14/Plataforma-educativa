@@ -1329,8 +1329,57 @@ function ptRenderProgresso() {
     h += '</div>';
   }
 
-  h += '<button onclick="ptResetProgress()" style="font-size:.75rem;font-weight:700;color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;padding:7px 18px;cursor:pointer;margin-top:1rem;font-family:Montserrat,sans-serif">Limpar progresso</button>';
+  h += '<div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem">'
+    + '<button onclick="ptDownloadPDF()" class="btn btn-ghost" style="font-size:.78rem;padding:7px 14px;display:inline-flex;align-items:center;gap:5px"><i class="ph ph-file-text"></i> Relatório PDF</button>'
+    + '<button onclick="ptResetProgress()" style="font-size:.72rem;color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;padding:5px 14px;cursor:pointer;font-family:Montserrat,sans-serif;font-weight:600;margin-left:auto">Limpar progresso</button>'
+    + '</div>';
   wrap.innerHTML = h;
+}
+
+function ptDownloadPDF() {
+  var prog = ptGetProgress();
+  var all = ptAllQuestions();
+  var done = 0, certas = 0;
+  all.forEach(function(q) { var p=prog[q.id]; if(p&&p.attempts>0){done++;if(p.correct>0)certas++;} });
+  var taxaGlobal = done ? Math.round(certas/done*100)+'%' : 'Sem dados';
+  var data = new Date().toLocaleDateString('pt-PT');
+
+  var temasRows = '';
+  PT_TEMAS.forEach(function(t) {
+    var tQs = all.filter(function(q){return q.tema===t.id;});
+    var tDone = tQs.filter(function(q){var p=prog[q.id];return p&&p.attempts>0;}).length;
+    var tCert = tQs.filter(function(q){var p=prog[q.id];return p&&p.correct>0;}).length;
+    var pct = tDone ? Math.round(tCert/tDone*100) : 0;
+    var cor = tDone ? (pct>=80?'#4a3f7a':pct>=60?'#c4a030':'#c4796e') : '#9e9e9e';
+    var pctStr = tDone ? pct+'%' : 'Nao iniciado';
+    temasRows += '<tr><td style="padding:10px 14px;font-weight:600">' + t.label + '</td>'
+      + '<td style="padding:10px 14px;text-align:center;font-family:monospace">' + tCert + '/' + tDone + '</td>'
+      + '<td style="padding:10px 14px;text-align:center;font-weight:700;color:' + cor + '">' + pctStr + '</td>'
+      + '<td style="padding:10px 24px 10px 14px;min-width:120px"><div style="width:100%;height:8px;background:#eee;border-radius:4px;overflow:hidden"><div style="height:100%;width:' + (tDone?pct:0) + '%;background:' + cor + ';border-radius:4px"></div></div></td></tr>';
+  });
+
+  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Progresso 3ponto14 PT9</title>'
+    + '<style>body{font-family:Montserrat,sans-serif;max-width:800px;margin:2rem auto;color:#1a1a1a;padding:0 1rem}'
+    + 'h1{font-family:Georgia,serif;color:#4a3f7a}table{width:100%;border-collapse:collapse;margin-top:1rem}'
+    + 'th{background:#4a3f7a;color:#fff;padding:10px 14px;text-align:left;font-size:.8rem}'
+    + 'tr:nth-child(even){background:#f8f6ff}.stat-grid{display:flex;gap:1rem;margin:1rem 0}'
+    + '.stat{background:#f0edf7;border-radius:10px;padding:1rem;flex:1;text-align:center}'
+    + '.stat .n{font-size:2rem;font-weight:700;color:#4a3f7a}.stat .l{font-size:.75rem;color:#555}'
+    + '@media print{button{display:none}}</style></head><body>'
+    + '<h1>3ponto14 · Português · 9.º Ano</h1>'
+    + '<p style="color:#555">Relatório de progresso exportado em ' + data + '</p>'
+    + '<div class="stat-grid">'
+    + '<div class="stat"><div class="n">' + certas + '</div><div class="l">Respostas certas</div></div>'
+    + '<div class="stat"><div class="n">' + taxaGlobal + '</div><div class="l">Taxa global</div></div>'
+    + '<div class="stat"><div class="n">' + done + '</div><div class="l">Questoes feitas</div></div>'
+    + '</div>'
+    + '<h2>Desempenho por Tema</h2>'
+    + '<table><thead><tr><th>Tema</th><th>Certas/Feitas</th><th>Taxa</th><th>Barra</th></tr></thead><tbody>'
+    + temasRows + '</tbody></table>'
+    + '<p style="margin-top:2rem;font-size:.75rem;color:#aaa">3ponto14 · Exames Nacionais Português 9º Ano</p>'
+    + '</body></html>';
+
+  if (typeof htmlToPdfDownload === 'function') htmlToPdfDownload(html, 'progresso_pt9.pdf');
 }
 
 function ptResetProgress() {
