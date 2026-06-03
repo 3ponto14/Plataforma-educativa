@@ -720,10 +720,64 @@ function ex12RenderProgress() {
   });
   html += '</div>';
 
-  // Botao limpar
-  html += '<button onclick="ex12ClearProgress()" style="font-size:.72rem;color:#c62828;background:none;border:1px solid #ef9a9a;border-radius:999px;padding:5px 14px;cursor:pointer;font-family:\'Montserrat\',sans-serif;font-weight:600">Limpar progresso</button>';
+  // Botoes de accao
+  html += '<div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.5rem">'
+    + '<button onclick="ex12DownloadPDF()" class="btn btn-ghost" style="font-size:.78rem;padding:7px 14px;display:inline-flex;align-items:center;gap:5px"><i class="ph ph-file-text"></i> Relatório PDF</button>'
+    + '<button onclick="ex12ClearProgress()" style="font-size:.72rem;color:#c62828;background:none;border:1px solid #ef9a9a;border-radius:999px;padding:5px 14px;cursor:pointer;font-family:\'Montserrat\',sans-serif;font-weight:600;margin-left:auto">Limpar progresso</button>'
+    + '</div>';
 
   container.innerHTML = html;
+}
+
+function ex12DownloadPDF() {
+  var totalQ = 0, totalC = 0;
+  var temasRows = '';
+  MAT12_TEMAS.forEach(function(t) {
+    var bancoTotal = 0, feitas = 0, certas = 0;
+    Object.keys(MAT12_BANCO).forEach(function(key) {
+      MAT12_BANCO[key].questoes.forEach(function(q) {
+        if (q.tema !== t.id) return;
+        bancoTotal++;
+        var p = _ex12Progress[q.id];
+        if (p) { feitas += p.total; certas += p.correct; }
+      });
+    });
+    if (bancoTotal === 0) return;
+    totalQ += feitas; totalC += certas;
+    var pct = feitas > 0 ? Math.round(certas / feitas * 100) + '%' : 'Nao iniciado';
+    var cor = feitas > 0 ? (parseInt(pct) >= 80 ? '#2d6b45' : parseInt(pct) >= 60 ? '#c4a030' : '#c4796e') : '#9e9e9e';
+    temasRows += '<tr><td style="padding:10px 14px;font-weight:600;color:#1a3d2b">' + t.label + '</td>'
+      + '<td style="padding:10px 14px;text-align:center;font-family:monospace">' + certas + '/' + feitas + '</td>'
+      + '<td style="padding:10px 14px;text-align:center;font-weight:700;color:' + cor + '">' + pct + '</td>'
+      + '<td style="padding:10px 24px 10px 14px;min-width:120px"><div style="width:100%;height:8px;background:#eee;border-radius:4px;overflow:hidden"><div style="height:100%;width:' + (feitas > 0 ? parseInt(pct) : 0) + '%;background:' + cor + ';border-radius:4px"></div></div></td></tr>';
+  });
+  var taxaGlobal = totalQ > 0 ? Math.round(totalC / totalQ * 100) + '%' : 'Sem dados';
+  var data = new Date().toLocaleDateString('pt-PT');
+
+  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Progresso 3ponto14 Mat12</title>'
+    + '<style>body{font-family:Montserrat,sans-serif;max-width:800px;margin:2rem auto;color:#1a1a1a;padding:0 1rem}'
+    + 'h1{font-family:Georgia,serif;color:#1a3d2b}table{width:100%;border-collapse:collapse;margin-top:1rem}'
+    + 'th{background:#1a3d2b;color:#fff;padding:10px 14px;text-align:left;font-size:.8rem}'
+    + 'tr:nth-child(even){background:#f5faf7}.stat-grid{display:flex;gap:1rem;margin:1rem 0}'
+    + '.stat{background:#e8f4ed;border-radius:10px;padding:1rem;flex:1;text-align:center}'
+    + '.stat .n{font-size:2rem;font-weight:700;color:#1a3d2b}.stat .l{font-size:.75rem;color:#555}'
+    + '@media print{button{display:none}}</style></head><body>'
+    + '<h1>3ponto14 · Matemática A · 12.º Ano</h1>'
+    + '<p style="color:#555">Relatório de progresso exportado em ' + data + '</p>'
+    + '<div class="stat-grid">'
+    + '<div class="stat"><div class="n">' + totalC + '</div><div class="l">Respostas certas</div></div>'
+    + '<div class="stat"><div class="n">' + taxaGlobal + '</div><div class="l">Taxa global</div></div>'
+    + '<div class="stat"><div class="n">' + totalQ + '</div><div class="l">Questoes respondidas</div></div>'
+    + '</div>'
+    + '<h2>Desempenho por Tema</h2>'
+    + '<table><thead><tr><th>Tema</th><th>Certas/Feitas</th><th>Taxa</th><th>Barra</th></tr></thead><tbody>'
+    + temasRows + '</tbody></table>'
+    + '<p style="margin-top:2rem;font-size:.75rem;color:#aaa">3ponto14 · Exames Nacionais Mat A 12º Ano</p>'
+    + '</body></html>';
+
+  if (typeof htmlToPdfDownload === 'function') {
+    htmlToPdfDownload(html, 'progresso_mat12.pdf');
+  }
 }
 
 function ex12ClearProgress() {

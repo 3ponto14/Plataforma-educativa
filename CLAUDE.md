@@ -220,6 +220,38 @@ To add an entirely new course (e.g., "Matemática 8.º Ano"):
 
 The `CAP_DATA` registration is global, so use a namespace strategy: chapters 1–10 for mat7, 11–20 for mat8, or string keys (`'m8c1'`).
 
+## Cross-Page Consistency Rules (OBRIGATÓRIO)
+
+Every page on 3ponto14 must be visually and functionally coherent. When creating a new page or section, ALWAYS check these rules:
+
+### Topbar
+- Use `<nav class="site-topbar">` with `.site-topbar-logo`, `.site-topbar-sep`, `.site-topbar-title`, `.site-topbar-actions`, `.site-topbar-back`
+- Never create page-specific topbar CSS (no `.ex12-topbar`, `.ex-topbar` etc.)
+
+### Exam/Practice Pages Structure
+Every exam/practice page (exames.html, exames-pt.html, exames12.html, future pages) MUST have:
+1. **Hero** — dark gradient background, eyebrow badge, h1, sub-text, stat chips (questões / provas / temas)
+2. **Tab bar** — sticky, pill style — tabs: Praticar | Simulador | Progresso (or equivalent)
+3. **Por Tema** — topic cards with: coloured icon box, bold name, description text, footer with count + progress bar + % score
+4. **Por Prova** — grouped by year with year heading, cards per fase
+5. **Simulador** — timer (150min default), question sequence, result with nota /20 + revisão
+6. **Progresso** — global score card (dark gradient), per-topic progress bars, **Relatório PDF button**, Limpar button
+
+### Topic Cards (Por Tema)
+Must match `.ex-topic-card` / `.ex12-tema-card` pattern:
+- Icon in a coloured square (44×44px, border-radius 12px)
+- Bold label (`.95rem`, weight 800)
+- Description text (`.74rem`, muted)
+- Footer: count + progress bar + % (only shows % if user has answered questions)
+
+### Progress Download PDF
+Every section with progress tracking MUST have a "Relatório PDF" button that calls `htmlToPdfDownload()` from `shared.js`. The PDF must include: global stats, per-topic table with bars.
+
+### Progress Storage Pattern
+- Use `localStorage` with a unique key per section (e.g. `ex12_progress`, `edupt_exames`)
+- Store `{ [questionId]: { total: N, correct: N } }`
+- Always provide: Load, Save, Record, Render, Download PDF, Clear functions
+
 ## Critical Conventions
 
 - **Language**: All UI text and content in **Portuguese (PT)**. Use decimal comma (`0,5` not `0.5`).

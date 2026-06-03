@@ -837,9 +837,55 @@ function exRenderProgress() {
     h += '<p style="font-size:.85rem">Ainda não fizeste nenhuma questão.<br>Começa pela <strong>Prática por Tema</strong>!</p>';
     h += '<button class="ex-sim-launch" style="margin-top:1rem;max-width:260px" onclick="exSwitchMode(\'temas\',null)"><i class="ph ph-play-circle"></i> Começar agora</button>';
     h += '</div>';
+  } else {
+    h += '<div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem">'
+      + '<button onclick="exDownloadPDF()" class="btn btn-ghost" style="font-size:.78rem;padding:7px 14px;display:inline-flex;align-items:center;gap:5px"><i class="ph ph-file-text"></i> Relatório PDF</button>'
+      + '<button onclick="exResetProgress()" style="font-size:.72rem;color:#c62828;background:none;border:1px solid #ef9a9a;border-radius:999px;padding:5px 14px;cursor:pointer;font-family:\'Montserrat\',sans-serif;font-weight:600;margin-left:auto">Limpar progresso</button>'
+      + '</div>';
   }
 
   el.innerHTML = h;
+}
+
+function exDownloadPDF() {
+  var d = _exGetProgress();
+  var totalFeitas = 0, totalCertas = 0;
+  var temasRows = '';
+  _TOPICS_META.forEach(function(t) {
+    var p = d[t.key] || { feitas:0, certas:0 };
+    totalFeitas += p.feitas; totalCertas += p.certas;
+    var pct = p.feitas > 0 ? Math.round(p.certas / p.feitas * 100) + '%' : 'Nao iniciado';
+    var cor = p.feitas > 0 ? (parseInt(pct) >= 80 ? '#4a3f7a' : parseInt(pct) >= 60 ? '#c4a030' : '#c4796e') : '#9e9e9e';
+    temasRows += '<tr><td style="padding:10px 14px;font-weight:600">' + t.label + '</td>'
+      + '<td style="padding:10px 14px;text-align:center;font-family:monospace">' + p.certas + '/' + p.feitas + '</td>'
+      + '<td style="padding:10px 14px;text-align:center;font-weight:700;color:' + cor + '">' + pct + '</td>'
+      + '<td style="padding:10px 24px 10px 14px;min-width:120px"><div style="width:100%;height:8px;background:#eee;border-radius:4px;overflow:hidden"><div style="height:100%;width:' + (p.feitas > 0 ? parseInt(pct) : 0) + '%;background:' + cor + ';border-radius:4px"></div></div></td></tr>';
+  });
+  var taxaGlobal = totalFeitas > 0 ? Math.round(totalCertas / totalFeitas * 100) + '%' : 'Sem dados';
+  var data = new Date().toLocaleDateString('pt-PT');
+
+  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Progresso 3ponto14 Mat9</title>'
+    + '<style>body{font-family:Montserrat,sans-serif;max-width:800px;margin:2rem auto;color:#1a1a1a;padding:0 1rem}'
+    + 'h1{font-family:Georgia,serif;color:#4a3f7a}table{width:100%;border-collapse:collapse;margin-top:1rem}'
+    + 'th{background:#4a3f7a;color:#fff;padding:10px 14px;text-align:left;font-size:.8rem}'
+    + 'tr:nth-child(even){background:#f8f6ff}.stat-grid{display:flex;gap:1rem;margin:1rem 0}'
+    + '.stat{background:#f0edf7;border-radius:10px;padding:1rem;flex:1;text-align:center}'
+    + '.stat .n{font-size:2rem;font-weight:700;color:#4a3f7a}.stat .l{font-size:.75rem;color:#555}'
+    + '@media print{button{display:none}}</style></head><body>'
+    + '<h1>3ponto14 · Matemática · 9.º Ano</h1>'
+    + '<p style="color:#555">Relatório de progresso exportado em ' + data + '</p>'
+    + '<div class="stat-grid">'
+    + '<div class="stat"><div class="n">' + totalCertas + '</div><div class="l">Respostas certas</div></div>'
+    + '<div class="stat"><div class="n">' + taxaGlobal + '</div><div class="l">Taxa global</div></div>'
+    + '<div class="stat"><div class="n">' + totalFeitas + '</div><div class="l">Questoes respondidas</div></div>'
+    + '</div>'
+    + '<h2>Desempenho por Tema</h2>'
+    + '<table><thead><tr><th>Tema</th><th>Certas/Feitas</th><th>Taxa</th><th>Barra</th></tr></thead><tbody>'
+    + temasRows + '</tbody></table>'
+    + '<p style="margin-top:2rem;font-size:.75rem;color:#aaa">3ponto14 · Exames Nacionais Mat 9º Ano</p>'
+    + '</body></html>';
+
+  if (typeof htmlToPdfDownload === 'function') htmlToPdfDownload(html, 'progresso_mat9.pdf');
 }
 
 function exResetProgress() {
