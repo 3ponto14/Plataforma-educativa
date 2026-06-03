@@ -46,13 +46,17 @@
 .ex12-sec-sub{font-size:.83rem;color:var(--ink3,#888);line-height:1.5;margin-bottom:1.5rem}
 
 /* Tema grid */
-.ex12-tema-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.75rem;margin-bottom:2rem}
-.ex12-tema-card{background:#fff;border:1.5px solid var(--border,#e0dcd5);border-radius:14px;padding:1.1rem 1rem;cursor:pointer;transition:all .18s;border-top:3px solid var(--ex12-mid);text-align:left}
-.ex12-tema-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.08);border-color:var(--ex12-mid)}
-.ex12-tema-card.active{border-color:var(--ex12-mid);background:var(--ex12-pale)}
-.ex12-tema-icon{font-size:1.4rem;color:var(--ex12-mid);margin-bottom:.5rem}
-.ex12-tema-name{font-size:.88rem;font-weight:700;color:var(--ink1,#1a1a1a);margin-bottom:.2rem}
-.ex12-tema-count{font-size:.72rem;color:var(--ink4,#aaa)}
+.ex12-tema-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-bottom:1.5rem}
+.ex12-tema-card{background:#fff;border:1.5px solid var(--border,#e0dcd5);border-radius:18px;padding:1.4rem 1.5rem;cursor:pointer;transition:all .22s;text-align:left;width:100%;position:relative;overflow:hidden}
+.ex12-tema-card:hover{border-color:var(--ex12-mid);transform:translateY(-3px);box-shadow:0 12px 32px rgba(29,91,58,.12)}
+.ex12-tema-icon{width:44px;height:44px;border-radius:12px;background:var(--ex12-pale);display:flex;align-items:center;justify-content:center;margin-bottom:.9rem;font-size:1.2rem;color:var(--ex12-mid);flex-shrink:0}
+.ex12-tema-name{font-size:.95rem;font-weight:800;color:var(--ink1,#1a1a1a);margin-bottom:.25rem;line-height:1.2}
+.ex12-tema-sub{font-size:.74rem;color:var(--ink4,#aaa);line-height:1.45;margin-bottom:.9rem}
+.ex12-tema-footer{display:flex;align-items:center;gap:.5rem}
+.ex12-tema-count{font-size:.7rem;font-weight:700;color:var(--ink4,#aaa);white-space:nowrap}
+.ex12-tema-bar-wrap{flex:1;height:5px;background:var(--border,#e0dcd5);border-radius:99px;overflow:hidden}
+.ex12-tema-bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--ex12-light),var(--ex12-mid));transition:width .4s ease}
+.ex12-tema-pct{font-size:.72rem;font-weight:800;color:var(--ex12-mid);min-width:30px;text-align:right}
 
 /* Prova grid */
 .ex12-prova-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.75rem;margin-bottom:2rem}
@@ -107,13 +111,15 @@
 <body>
 
 <!-- Topbar -->
-<nav class="ex12-topbar">
-  <a href="index.html" class="ex12-logo">
+<nav class="site-topbar">
+  <a href="index.html" class="site-topbar-logo">
     <div class="mark">3π</div>
-    <span>3ponto<em>14</em></span>
+    <span class="wordmark">3ponto<em>14</em></span>
   </a>
-  <span class="ex12-topbar-title">Matematica A · 12.o Ano</span>
-  <a href="index.html" class="ex12-topbar-back"><i class="ph ph-arrow-left"></i> Inicio</a>
+  <div class="site-topbar-sep"></div>
+  <span class="site-topbar-title">Matematica A · 12.º Ano</span>
+  <div class="site-topbar-actions"></div>
+  <a href="index.html" class="site-topbar-back"><i class="ph ph-arrow-left"></i> Inicio</a>
 </nav>
 
 <!-- Hero -->
@@ -276,15 +282,36 @@ function ex12SwitchTab(tab, btn) {
 }
 
 /* ── Tema grid ── */
+var _ex12TemaDesc = {
+  geometria:      'Planos, retas, superficies, volumes e angulos no espaco',
+  funcoes:        'Dominio, continuidade, limites e assimptotas',
+  derivadas:      'Monotonia, extremos, concavidades e otimizacao',
+  integrais:      'Primitivas, calculo integral e areas de regioes',
+  probabilidades: 'Probabilidade condicionada, total e independencia',
+  combinatoria:   'Arranjos, combinacoes, permutacoes e triangulo de Pascal',
+  complexos:      'Forma trigonometrica, operacoes e raizes em C',
+  sucessoes:      'Progressoes aritmeticas, geometricas e limites',
+  logaritmos:     'Equacoes e inequacoes logaritmicas e exponenciais',
+  trigonometria:  'Funcoes circulares, equacoes e transformacoes',
+  estatistica:    'Medidas de tendencia central, dispersao e correlacao',
+  continuidade:   'Continuidade, descontinuidades e teoremas',
+  limites:        'Limites laterais, assimptotas e limites notaveis'
+};
+
 function ex12BuildTemaGrid() {
   var grid = document.getElementById('ex12-tema-grid');
   if (!grid) return;
 
-  // Count questions per tema
-  var counts = {};
+  // Contar questoes e progresso por tema
+  var counts = {}, feitas = {}, certas = {};
   Object.keys(MAT12_BANCO).forEach(function(key) {
     MAT12_BANCO[key].questoes.forEach(function(q) {
       counts[q.tema] = (counts[q.tema] || 0) + 1;
+      var p = _ex12Progress[q.id];
+      if (p) {
+        feitas[q.tema] = (feitas[q.tema] || 0) + p.total;
+        certas[q.tema] = (certas[q.tema] || 0) + p.correct;
+      }
     });
   });
 
@@ -292,10 +319,21 @@ function ex12BuildTemaGrid() {
   MAT12_TEMAS.forEach(function(t) {
     var n = counts[t.id] || 0;
     if (n === 0) return;
+    var f = feitas[t.id] || 0;
+    var c = certas[t.id] || 0;
+    var pct = f > 0 ? Math.round(c / f * 100) : 0;
+    var nProvas = _ex12TemaProvas(t.id);
+    var desc = _ex12TemaDesc[t.id] || '';
+
     html += '<div class="ex12-tema-card" onclick="ex12StartTema(\'' + t.id + '\')">'
       + '<div class="ex12-tema-icon"><i class="ph ' + t.icon + '"></i></div>'
       + '<div class="ex12-tema-name">' + t.label + '</div>'
-      + '<div class="ex12-tema-count">' + n + ' questoes de ' + _ex12TemaProvas(t.id) + ' provas</div>'
+      + (desc ? '<div class="ex12-tema-sub">' + desc + '</div>' : '')
+      + '<div class="ex12-tema-footer">'
+      + '<span class="ex12-tema-count">' + n + ' questoes</span>'
+      + '<div class="ex12-tema-bar-wrap"><div class="ex12-tema-bar-fill" style="width:' + pct + '%"></div></div>'
+      + '<span class="ex12-tema-pct">' + (f > 0 ? pct + '%' : '') + '</span>'
+      + '</div>'
       + '</div>';
   });
   grid.innerHTML = html;
