@@ -444,7 +444,8 @@ function ex12BuildQHTML(q, idx, total, mode) {
   }
 
   html += '<div class="ex12-q-nav">';
-  var canAdvance = isMC ? !!answered : (answered && st.avaliacao && st.avaliacao[q.id]);
+  // No simulador, dev avanca logo apos ver resolucao (sem obrigar a avaliar)
+  var canAdvance = isMC ? !!answered : (mode === 'sim' ? !!answered : (answered && st.avaliacao && st.avaliacao[q.id]));
   if (canAdvance) {
     if (idx + 1 < total) {
       html += '<button class="btn btn-primary" style="background:var(--ex12-mid);border-color:var(--ex12-mid);margin-left:auto" onclick="ex12Next(\'' + mode + '\')">'
