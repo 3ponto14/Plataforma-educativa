@@ -610,6 +610,7 @@ function ex12RenderProgress() {
   var container = document.getElementById('ex12-prog-content');
   if (!container) return;
 
+  // Totais globais
   var totalQ = 0, totalC = 0;
   Object.keys(MAT12_BANCO).forEach(function(key) {
     MAT12_BANCO[key].questoes.forEach(function(q) {
@@ -617,25 +618,72 @@ function ex12RenderProgress() {
       if (p) { totalQ += p.total; totalC += p.correct; }
     });
   });
-  var pct = totalQ > 0 ? Math.round(totalC / totalQ * 100) : 0;
-  var msg = totalQ === 0 ? 'Ainda nao comecaste. Escolhe um tema ou prova!' : pct >= 80 ? 'Excelente dominio!' : pct >= 60 ? 'Bom progresso!' : 'Continua a praticar!';
+  var globalPct = totalQ > 0 ? Math.round(totalC / totalQ * 100) : 0;
 
-  var html = '<div class="ex12-prog-summary">'
-    + '<div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">'
-    + '<div><div class="ex12-prog-big">' + (totalQ > 0 ? pct + '%' : '--') + '</div><div style="font-size:.82rem;color:var(--ink2);margin-top:.25rem">' + msg + '</div></div>'
-    + '</div></div>';
+  var html = '';
 
-  html += '<div class="ex12-prog-chips">';
-  [{v: totalQ, l:'Respondidas'},{v: totalC, l:'Certas'},{v: totalQ > 0 ? pct+'%' : '--', l:'Taxa global'}].forEach(function(s) {
-    html += '<div class="ex12-prog-chip"><div class="ex12-prog-chip-n">' + s.v + '</div><div class="ex12-prog-chip-l">' + s.l + '</div></div>';
+  // Cartao global
+  html += '<div style="background:linear-gradient(135deg,var(--ex12-dark),var(--ex12-mid));border-radius:18px;padding:1.75rem 2rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap">';
+  html += '<div style="flex:1;min-width:160px">';
+  html += '<div style="color:rgba(255,255,255,.55);font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem">Taxa de acerto global</div>';
+  html += '<div style="font-family:\'JetBrains Mono\',monospace;font-size:2.8rem;font-weight:700;color:#fff;line-height:1">' + (totalQ > 0 ? globalPct : '--') + (totalQ > 0 ? '<span style="font-size:1.2rem;opacity:.55">%</span>' : '') + '</div>';
+  html += '<div style="color:rgba(255,255,255,.45);font-size:.75rem;margin-top:.3rem">' + totalQ + ' questoes respondidas &middot; ' + totalC + ' corretas</div>';
+  html += '</div>';
+  html += '<div style="background:rgba(255,255,255,.08);border-radius:10px;padding:.6rem 1rem;text-align:center">';
+  html += '<div style="font-family:\'JetBrains Mono\',monospace;font-size:1.5rem;font-weight:700;color:#fff">' + totalQ + '</div>';
+  html += '<div style="font-size:.63rem;color:rgba(255,255,255,.5);font-weight:700;text-transform:uppercase;letter-spacing:.08em">Respondidas</div>';
+  html += '</div></div>';
+
+  if (totalQ === 0) {
+    html += '<div style="text-align:center;padding:2rem;color:var(--ink4)">';
+    html += '<i class="ph ph-chart-bar" style="font-size:2.5rem;opacity:.3;display:block;margin-bottom:.75rem"></i>';
+    html += '<p style="font-size:.85rem">Ainda nao respondeste a nenhuma questao.<br>Comeca pela <strong>pratica por Tema</strong>!</p>';
+    html += '<button onclick="ex12SwitchTab(\'temas\',null)" style="margin-top:1rem;padding:.75rem 1.5rem;background:linear-gradient(135deg,var(--ex12-dark),var(--ex12-mid));color:#fff;border:none;border-radius:12px;font-family:\'Montserrat\',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer"><i class="ph ph-play-circle"></i> Comecar agora</button>';
+    html += '</div>';
+    container.innerHTML = html;
+    return;
+  }
+
+  // Por tema
+  html += '<div style="margin-bottom:1.5rem">';
+  html += '<div style="font-size:.78rem;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">Progresso por tema</div>';
+
+  MAT12_TEMAS.forEach(function(t) {
+    // Contar questoes deste tema no banco e no progresso
+    var bancoTotal = 0, feitas = 0, certas = 0;
+    Object.keys(MAT12_BANCO).forEach(function(key) {
+      MAT12_BANCO[key].questoes.forEach(function(q) {
+        if (q.tema !== t.id) return;
+        bancoTotal++;
+        var p = _ex12Progress[q.id];
+        if (p) { feitas += p.total; certas += p.correct; }
+      });
+    });
+    if (bancoTotal === 0) return;
+    var pct = feitas > 0 ? Math.round(certas / feitas * 100) : 0;
+    var cobertura = Math.min(100, Math.round(feitas / bancoTotal * 100));
+    var cor = pct >= 80 ? '#4caf50' : pct >= 60 ? 'var(--ex12-mid)' : pct >= 40 ? '#f0a010' : '#f44336';
+
+    html += '<div style="margin-bottom:1rem">';
+    html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.3rem">';
+    html += '<span style="font-size:.78rem;font-weight:700;color:var(--ink1);display:flex;align-items:center;gap:.4rem"><i class="ph ' + t.icon + '" style="color:var(--ex12-mid)"></i> ' + t.label + '</span>';
+    html += '<span style="font-size:.72rem;font-weight:800;color:' + (feitas > 0 ? cor : 'var(--ink4)') + '">' + (feitas > 0 ? pct + '% acerto' : 'Nao iniciado') + '</span>';
+    html += '</div>';
+    html += '<div style="height:8px;background:var(--cream3,#ede9e2);border-radius:999px;overflow:hidden">';
+    html += '<div style="height:100%;width:' + (feitas > 0 ? pct : 0) + '%;background:' + cor + ';border-radius:999px;transition:width .5s ease"></div>';
+    html += '</div>';
+    if (feitas > 0) {
+      html += '<div style="display:flex;justify-content:space-between;margin-top:.25rem">';
+      html += '<span style="font-size:.65rem;color:var(--ink4)">' + feitas + ' feitas · ' + certas + ' certas</span>';
+      html += '<span style="font-size:.65rem;color:var(--ink4)">' + cobertura + '% do banco (' + bancoTotal + ' questoes)</span>';
+      html += '</div>';
+    }
+    html += '</div>';
   });
   html += '</div>';
 
-  if (totalQ === 0) {
-    html += '<p style="color:var(--ink4);font-size:.88rem;font-style:italic;text-align:center;padding:2rem">Responde a questoes para o progresso aparecer aqui.</p>';
-  } else {
-    html += '<button onclick="ex12ClearProgress()" class="btn btn-ghost" style="color:#c62828;border-color:#ef9a9a;font-size:.78rem">Limpar tudo</button>';
-  }
+  // Botao limpar
+  html += '<button onclick="ex12ClearProgress()" style="font-size:.72rem;color:#c62828;background:none;border:1px solid #ef9a9a;border-radius:999px;padding:5px 14px;cursor:pointer;font-family:\'Montserrat\',sans-serif;font-weight:600">Limpar progresso</button>';
 
   container.innerHTML = html;
 }
