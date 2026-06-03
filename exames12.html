@@ -383,11 +383,9 @@ function ex12BuildQHTML(q, idx, total, mode) {
     var pg = String(q.page).length < 2 ? '0' + q.page : String(q.page);
     var imgPath = 'img/exames12/' + examKey + '/p-' + pg + '.png';
     html += '<div style="margin-bottom:1rem">'
-      + '<button onclick="ex12ToggleImg(this)" style="font-size:.72rem;font-weight:700;color:var(--ex12-mid);background:none;border:1px solid var(--ex12-border);border-radius:999px;padding:3px 10px;cursor:pointer;display:inline-flex;align-items:center;gap:4px">'
-      + '<i class="ph ph-image"></i> Ver página da prova</button>'
-      + '<div style="display:none;margin-top:.5rem">'
-      + '<img src="' + imgPath + '" style="width:100%;border-radius:8px;border:1px solid var(--border)" loading="lazy" onerror="this.parentElement.innerHTML=\'<p style=\\\"color:var(--ink4);font-size:.8rem\\\">Imagem nao disponivel</p>\'">'
-      + '</div></div>';
+      + '<div style="font-size:.68rem;font-weight:700;color:var(--ink4);margin-bottom:.35rem;display:flex;align-items:center;gap:.3rem"><i class="ph ph-file-text"></i> Prova original</div>'
+      + '<img src="' + imgPath + '" style="width:100%;border-radius:8px;border:1px solid var(--border)" loading="lazy" onerror="this.style.display=\'none\'">'
+      + '</div>';
   }
 
   if (isMC) {
