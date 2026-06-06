@@ -82,7 +82,19 @@ var _mat8Cards = {
     { tag: 'Exemplo', q: 'Resolve x/3 = 5', a: 'Multiplica ambos os membros por 3: x = 3 × 5 = 15.' },
     { tag: 'Exemplo', q: 'Resolve 5(3x + 7)', a: 'Distributiva: 5 × 3x + 5 × 7 = 15x + 35.' }
   ],
-  4: [], 5: [], 6: [], 7: [], 8: []
+  4: [
+    { tag: 'Teorema', q: 'Enuncia o Teorema de Pitágoras', a: 'Num triângulo retângulo, o quadrado da hipotenusa é igual à soma dos quadrados dos catetos: a² + b² = c² (c = hipotenusa).' },
+    { tag: 'Definição', q: 'O que é a hipotenusa?', a: 'É o lado maior de um triângulo retângulo, oposto ao ângulo reto. Os outros dois lados são os catetos.' },
+    { tag: 'Regra', q: 'Como calcular a hipotenusa?', a: 'c = √(a² + b²). Ex: catetos 3 e 4 → c = √(9+16) = √25 = 5.' },
+    { tag: 'Regra', q: 'Como calcular um cateto?', a: 'Cateto = √(hipotenusa² − outro cateto²). Ex: hip 13, cateto 5 → √(169−25) = √144 = 12.' },
+    { tag: 'Propriedade', q: 'Recíproco do Teorema de Pitágoras', a: 'Se num triângulo o quadrado do maior lado for igual à soma dos quadrados dos outros dois, então o triângulo é retângulo.' },
+    { tag: 'Exemplo', q: '3, 4, 5 formam triângulo retângulo?', a: 'Sim: 3² + 4² = 9 + 16 = 25 = 5². É um terno pitagórico.' },
+    { tag: 'Exemplo', q: 'Ternos pitagóricos comuns', a: '(3,4,5), (5,12,13), (8,15,17), (7,24,25) e os seus múltiplos, como (6,8,10).' },
+    { tag: 'Estratégia', q: 'Diagonal de um retângulo', a: 'A diagonal é a hipotenusa do triângulo formado por dois lados: d = √(comprimento² + largura²).' },
+    { tag: 'Estratégia', q: 'Diagonal de um quadrado de lado L', a: 'd = √(L² + L²) = √(2L²) = L√2 ≈ 1,41 × L.' },
+    { tag: 'Definição', q: 'O que é o apótema de um polígono regular?', a: 'É a distância do centro ao ponto médio de um lado. Usa-se na área: A = (Perímetro × apótema) / 2.' }
+  ],
+  5: [], 6: [], 7: [], 8: []
 };
 
 // Seleção atual por tab
@@ -262,9 +274,10 @@ function mat8RenderResumoInline() {
 function _mat8Gerador(cap) {
   if (cap === 1 && typeof buildEx_m81 === 'function') return buildEx_m81;
   if (cap === 3 && typeof buildEx_m83 === 'function') return buildEx_m83;
+  if (cap === 4 && typeof buildEx_m84 === 'function') return buildEx_m84;
   return null;
 }
-var _mat8TemasCount = { 1: 11, 3: 6 };
+var _mat8TemasCount = { 1: 11, 3: 6, 4: 4 };
 
 // Estado da prática
 var _mat8Prat = { cap: 1, st: 0, nivel: 'medio', score: { correct: 0, total: 0 }, answered: {}, exs: [] };
@@ -344,6 +357,9 @@ var _mat8SubtemaTemas = {
   },
   3: { // Cap 3 Polinómios e Equações (1:1 com os 6 temas)
     1: ['1'], 2: ['2'], 3: ['3'], 4: ['4'], 5: ['5'], 6: ['6']
+  },
+  4: { // Cap 4 Pitágoras: 1 Pitágoras(hip+cateto), 2 Recíproco, 3 Aplicações
+    1: ['1', '2'], 2: ['3'], 3: ['4']
   }
 };
 
@@ -1533,4 +1549,120 @@ function buildEx_m83(tema, tipo, dif) {
 
   // fallback
   return { enun: 'Resolve: 2x = 6', tipo: 'fill', resposta: '3', expl: 'x = 6 ÷ 2 = 3.', tema: 'Equações' };
+}
+
+/* ════════════════════════════════════════════════════════════════
+   GERADOR — Cap 4 Teorema de Pitágoras e Áreas (Prisma 8)
+   Temas:
+    1 Pitágoras — calcular a hipotenusa
+    2 Pitágoras — calcular um cateto
+    3 Recíproco — verificar se é triângulo retângulo
+    4 Aplicações — diagonal de quadrado/retângulo, áreas
+   Usa ternos pitagóricos para respostas exatas.
+   ════════════════════════════════════════════════════════════════ */
+var _TERNOS_m84 = [[3,4,5],[6,8,10],[5,12,13],[8,15,17],[9,12,15],[7,24,25],[20,21,29],[10,24,26]];
+
+function buildEx_m84(tema, tipo, dif) {
+  tema = String(tema);
+  var hard = (dif === 'dificil'), easy = (dif === 'facil');
+
+  // ── TEMA 1 · Pitágoras: calcular a hipotenusa ──
+  if (tema === '1') {
+    var t = _TERNOS_m84[rnd_m81(0, easy ? 3 : _TERNOS_m84.length - 1)];
+    var a = t[0], b = t[1], c = t[2]; // c = hipotenusa
+    if (tipo === 'mc') {
+      var opts = shuffle_m81([c, c + 1, c - 1, a + b].filter(function (v, i, ar) { return ar.indexOf(v) === i; })).slice(0, 4).map(String);
+      if (opts.indexOf(String(c)) === -1) opts[0] = String(c);
+      return {
+        enun: 'Um triângulo retângulo tem catetos ' + a + ' e ' + b + '. Qual é a hipotenusa?',
+        tipo: 'mc', opcoes: opts, resposta: String(c),
+        expl: 'Pitágoras: h² = ' + a + '² + ' + b + '² = ' + (a*a) + ' + ' + (b*b) + ' = ' + (a*a+b*b) + '. h = √' + (a*a+b*b) + ' = ' + c + '.',
+        tema: 'T1 · Hipotenusa'
+      };
+    }
+    return {
+      enun: 'Triângulo retângulo de catetos ' + a + ' e ' + b + '. Calcula a hipotenusa.', tipo: 'fill',
+      resposta: String(c), expl: 'h = √(' + a + '² + ' + b + '²) = √' + (a*a+b*b) + ' = ' + c + '.',
+      tema: 'T1 · Hipotenusa'
+    };
+  }
+
+  // ── TEMA 2 · Pitágoras: calcular um cateto ──
+  if (tema === '2') {
+    var t2 = _TERNOS_m84[rnd_m81(0, easy ? 3 : _TERNOS_m84.length - 1)];
+    var cat = t2[0], hip = t2[2], outro = t2[1]; // dado hip e um cateto, achar 'outro'
+    if (tipo === 'mc') {
+      var opts2 = shuffle_m81([outro, outro + 1, outro - 1, hip - cat].filter(function (v, i, ar) { return ar.indexOf(v) === i; })).slice(0, 4).map(String);
+      if (opts2.indexOf(String(outro)) === -1) opts2[0] = String(outro);
+      return {
+        enun: 'Num triângulo retângulo a hipotenusa mede ' + hip + ' e um cateto mede ' + cat + '. Quanto mede o outro cateto?',
+        tipo: 'mc', opcoes: opts2, resposta: String(outro),
+        expl: 'Cateto = √(hip² − cateto²) = √(' + hip + '² − ' + cat + '²) = √(' + (hip*hip) + ' − ' + (cat*cat) + ') = √' + (hip*hip-cat*cat) + ' = ' + outro + '.',
+        tema: 'T2 · Cateto'
+      };
+    }
+    return {
+      enun: 'Hipotenusa ' + hip + ', um cateto ' + cat + '. Calcula o outro cateto.', tipo: 'fill',
+      resposta: String(outro), expl: '√(' + hip + '² − ' + cat + '²) = √' + (hip*hip-cat*cat) + ' = ' + outro + '.',
+      tema: 'T2 · Cateto'
+    };
+  }
+
+  // ── TEMA 3 · Recíproco: é triângulo retângulo? ──
+  if (tema === '3') {
+    var isRight = Math.random() < 0.5;
+    var a3, b3, c3;
+    if (isRight) {
+      var tr = _TERNOS_m84[rnd_m81(0, _TERNOS_m84.length - 1)];
+      a3 = tr[0]; b3 = tr[1]; c3 = tr[2];
+    } else {
+      // não pitagórico
+      a3 = rnd_m81(3, 9); b3 = rnd_m81(4, 10); c3 = a3 + b3 - rnd_m81(1, 2);
+      if (a3*a3 + b3*b3 === c3*c3) c3 += 1; // garante que NÃO é
+    }
+    var lados = [a3, b3, c3].sort(function (x, y) { return x - y; });
+    var maior = lados[2], cat1 = lados[0], cat2 = lados[1];
+    var ok = (cat1*cat1 + cat2*cat2 === maior*maior);
+    return {
+      enun: 'As medidas ' + a3 + ', ' + b3 + ' e ' + c3 + ' formam um triângulo retângulo?',
+      tipo: 'mc', opcoes: ['Sim', 'Não'], resposta: ok ? 'Sim' : 'Não',
+      expl: 'Pelo recíproco: comparar o maior² com a soma dos quadrados dos outros. ' + maior + '² = ' + (maior*maior) + '; ' + cat1 + '² + ' + cat2 + '² = ' + (cat1*cat1 + cat2*cat2) + '. ' + (ok ? 'São iguais → é retângulo.' : 'São diferentes → não é retângulo.'),
+      tema: 'T3 · Recíproco'
+    };
+  }
+
+  // ── TEMA 4 · Aplicações: diagonal de retângulo ──
+  if (tema === '4') {
+    var t4 = _TERNOS_m84[rnd_m81(0, easy ? 3 : _TERNOS_m84.length - 1)];
+    var l1 = t4[0], l2 = t4[1], diag = t4[2];
+    var kind = rnd_m81(0, 1);
+    if (kind === 0) {
+      // diagonal de retângulo
+      if (tipo === 'mc') {
+        var opts4 = shuffle_m81([diag, diag + 1, diag - 1, l1 + l2].filter(function (v, i, ar) { return ar.indexOf(v) === i; })).slice(0, 4).map(String);
+        if (opts4.indexOf(String(diag)) === -1) opts4[0] = String(diag);
+        return {
+          enun: 'Um retângulo tem lados ' + l1 + ' e ' + l2 + '. Qual é o comprimento da diagonal?',
+          tipo: 'mc', opcoes: opts4, resposta: String(diag),
+          expl: 'A diagonal é a hipotenusa: d = √(' + l1 + '² + ' + l2 + '²) = √' + (l1*l1+l2*l2) + ' = ' + diag + '.',
+          tema: 'T4 · Aplicações'
+        };
+      }
+      return {
+        enun: 'Retângulo de lados ' + l1 + ' e ' + l2 + '. Calcula a diagonal.', tipo: 'fill',
+        resposta: String(diag), expl: 'd = √(' + l1 + '² + ' + l2 + '²) = √' + (l1*l1+l2*l2) + ' = ' + diag + '.',
+        tema: 'T4 · Aplicações'
+      };
+    }
+    // área de retângulo
+    var area = l1 * l2;
+    return {
+      enun: 'Calcula a área de um retângulo de lados ' + l1 + ' e ' + l2 + '.', tipo: 'fill',
+      resposta: String(area), expl: 'Área = comprimento × largura = ' + l1 + ' × ' + l2 + ' = ' + area + '.',
+      tema: 'T4 · Aplicações'
+    };
+  }
+
+  // fallback
+  return { enun: 'Catetos 3 e 4: hipotenusa?', tipo: 'fill', resposta: '5', expl: '√(9+16)=√25=5.', tema: 'Pitágoras' };
 }
