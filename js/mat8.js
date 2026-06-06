@@ -30,7 +30,7 @@ var _mat8Subtemas = {
   3: ['Monómios', 'Operações com monómios', 'Polinómios', 'Operações com polinómios', 'Equações do 1.º grau', 'Equações com denominadores'],
   4: ['Teorema de Pitágoras', 'Recíproco', 'Aplicações a áreas'],
   5: ['Equações literais', 'Imagem de uma função', 'Função afim', 'Declive de uma reta'],
-  6: ['Sistemas do 1.º grau', 'Método de substituição', 'Interpretação gráfica', 'Problemas'],
+  6: ['Equação com 2 incógnitas', 'Resolver sistema (valor de x)', 'Resolver sistema (valor de y)', 'Solução do sistema'],
   7: ['Prismas e pirâmides', 'Cilindros e cones', 'Esfera', 'Volumes'],
   8: ['Organização de dados', 'Medidas (média, moda, mediana)', 'Probabilidade']
 };
@@ -107,7 +107,18 @@ var _mat8Cards = {
     { tag: 'Exemplo', q: 'Calcula o declive entre A(1, 2) e B(3, 8)', a: 'm = (8 − 2) / (3 − 1) = 6 / 2 = 3.' },
     { tag: 'Exemplo', q: 'Em y = −4x + 5, qual o declive e a ordenada na origem?', a: 'Declive m = −4; ordenada na origem b = 5.' }
   ],
-  6: [], 7: [], 8: []
+  6: [
+    { tag: 'Definição', q: 'O que é uma equação com duas incógnitas?', a: 'Uma equação com duas letras, como 4x − 2y = 12. Tem infinitas soluções (pares ordenados) — o seu gráfico é uma reta.' },
+    { tag: 'Definição', q: 'O que é um sistema de equações?', a: 'Um conjunto de duas (ou mais) equações que se consideram em simultâneo. Escreve-se com uma chaveta { ... ; ... }.' },
+    { tag: 'Definição', q: 'O que é a solução de um sistema?', a: 'É o par (x, y) que satisfaz TODAS as equações ao mesmo tempo. Graficamente, é o ponto de interseção das retas.' },
+    { tag: 'Estratégia', q: 'Método de substituição', a: '1) Isola uma incógnita numa equação. 2) Substitui essa expressão na outra equação. 3) Resolve. 4) Substitui de volta para achar a outra incógnita.' },
+    { tag: 'Definição', q: 'Forma canónica de um sistema', a: 'Cada equação escrita como ax + by = c (termos com incógnitas de um lado, constante do outro), depois de desembaraçar parênteses e denominadores.' },
+    { tag: 'Definição', q: 'Sistemas equivalentes', a: 'Sistemas com a mesma solução. Obtêm-se aplicando os princípios de equivalência (somar/multiplicar o mesmo nos dois membros de uma equação).' },
+    { tag: 'Estratégia', q: 'Interpretação gráfica de um sistema', a: 'Cada equação é uma reta. A solução é o ponto onde as retas se cruzam. Retas paralelas → sem solução; coincidentes → infinitas soluções.' },
+    { tag: 'Exemplo', q: 'Como verificar se um par é solução do sistema?', a: 'Substitui o par nas duas equações. Só é solução se AMBAS se verificarem. Ex: (6, 2) em { x + 2y = 10 ; 3x − y = 16 } → 6+4=10 ✓ e 18−2=16 ✓ → é solução.' },
+    { tag: 'Exemplo', q: 'Resolve { x + y = 3 ; 4x − 3y = 33 }', a: 'Da 1.ª: x = 3 − y. Substitui: 4(3−y) − 3y = 33 → 12 − 7y = 33 → y = −3, x = 6. Solução (6, −3).' }
+  ],
+  7: [], 8: []
 };
 
 // Seleção atual por tab
@@ -289,9 +300,10 @@ function _mat8Gerador(cap) {
   if (cap === 3 && typeof buildEx_m83 === 'function') return buildEx_m83;
   if (cap === 4 && typeof buildEx_m84 === 'function') return buildEx_m84;
   if (cap === 5 && typeof buildEx_m85 === 'function') return buildEx_m85;
+  if (cap === 6 && typeof buildEx_m86 === 'function') return buildEx_m86;
   return null;
 }
-var _mat8TemasCount = { 1: 11, 3: 6, 4: 4, 5: 4 };
+var _mat8TemasCount = { 1: 11, 3: 6, 4: 4, 5: 4, 6: 4 };
 
 // Estado da prática
 var _mat8Prat = { cap: 1, st: 0, nivel: 'medio', score: { correct: 0, total: 0 }, answered: {}, exs: [] };
@@ -376,6 +388,9 @@ var _mat8SubtemaTemas = {
     1: ['1', '2'], 2: ['3'], 3: ['4']
   },
   5: { // Cap 5 Equações Literais e Funções (1:1 com os 4 temas)
+    1: ['1'], 2: ['2'], 3: ['3'], 4: ['4']
+  },
+  6: { // Cap 6 Sistemas (1:1 com os 4 temas)
     1: ['1'], 2: ['2'], 3: ['3'], 4: ['4']
   }
 };
@@ -1798,4 +1813,100 @@ function buildEx_m85(tema, tipo, dif) {
 
   // fallback
   return { enun: 'f(x)=2x+1, calcula f(3)', tipo: 'fill', resposta: '7', expl: '2×3+1=7.', tema: 'Funções' };
+}
+
+/* ════════════════════════════════════════════════════════════════
+   GERADOR — Cap 6 Sistemas de Equações (Prisma 8)
+   Temas:
+    1 Equação com duas incógnitas (verificar par solução)
+    2 Resolver sistema — valor de x
+    3 Resolver sistema — valor de y
+    4 Verificar se um par é solução do sistema
+   Soluções inteiras controladas (constrói o sistema a partir de (x,y)).
+   ════════════════════════════════════════════════════════════════ */
+function _sgn_m86(n) { return n < 0 ? ' − ' + Math.abs(n) : ' + ' + n; }
+// Termo " + by" / " − by" bem formatado (trata b=±1: "y"/"−y", sem "1y").
+function _byTerm_m86(b) {
+  var abs = Math.abs(b);
+  var coef = (abs === 1) ? 'y' : abs + 'y';
+  return (b < 0 ? ' − ' : ' + ') + coef;
+}
+function _eq_m86(a, b, c) {
+  var ax = (a === 1) ? 'x' : (a === -1) ? '−x' : (a + 'x');
+  return ax + _byTerm_m86(b) + ' = ' + c;
+}
+
+function buildEx_m86(tema, tipo, dif) {
+  tema = String(tema);
+  var easy = (dif === 'facil'), hard = (dif === 'dificil');
+
+  // solução inteira do sistema
+  var x = rnd_m81(-5, 6), y = rnd_m81(-5, 6);
+
+  // ── TEMA 1 · Equação com duas incógnitas: par solução? ──
+  if (tema === '1') {
+    var a = rndNZ_m81(1, 4), b = rndNZ_m81(1, 4);
+    var c = a * x + b * y;
+    var eq = _eq_m86(a, b, c);
+    var isSol = Math.random() < 0.5;
+    var px = x, py = y;
+    if (!isSol) { px = x + rnd_m81(1, 2); } // par que não satisfaz
+    var ok = (a * px + b * py === c);
+    return {
+      enun: 'O par (' + px + ', ' + py + ') é solução da equação <strong>' + eq + '</strong>?',
+      tipo: 'mc', opcoes: ['Sim', 'Não'], resposta: ok ? 'Sim' : 'Não',
+      expl: 'Substitui: ' + a + '×(' + px + ') + ' + b + '×(' + py + ') = ' + (a*px) + ' + ' + (b*py) + ' = ' + (a*px+b*py) + '. ' + (ok ? 'Igual a ' + c + ' → é solução.' : 'Diferente de ' + c + ' → não é solução.'),
+      tema: 'T1 · Eq. 2 incógnitas'
+    };
+  }
+
+  // ── TEMAS 2 e 3 · Resolver sistema (substituição) ──
+  if (tema === '2' || tema === '3') {
+    // Equação 1: x + b1·y = c1 ; Equação 2: a2·x + b2·y = c2
+    var b1 = rndNZ_m81(1, 3);
+    var c1 = x + b1 * y;
+    var a2 = rndNZ_m81(2, 4), b2 = rndNZ_m81(-3, 3); if (b2 === 0) b2 = 1;
+    var c2 = a2 * x + b2 * y;
+    var eq1 = 'x' + _byTerm_m86(b1) + ' = ' + c1;
+    var eq2 = a2 + 'x' + _byTerm_m86(b2) + ' = ' + c2;
+    var pede = (tema === '2') ? 'x' : 'y';
+    var resp = (tema === '2') ? x : y;
+    var sistema = '{ ' + eq1 + ' ; ' + eq2 + ' }';
+    if (tipo === 'mc') {
+      var opts = shuffle_m81([resp, resp + 1, resp - 1, (tema === '2' ? y : x)].filter(function (v, i, ar) { return ar.indexOf(v) === i; })).slice(0, 4).map(String);
+      if (opts.indexOf(String(resp)) === -1) opts[0] = String(resp);
+      return {
+        enun: 'Resolve o sistema <strong>' + sistema + '</strong> e indica o valor de <strong>' + pede + '</strong>.',
+        tipo: 'mc', opcoes: opts, resposta: String(resp),
+        expl: 'A solução do sistema é (x, y) = (' + x + ', ' + y + '). Logo ' + pede + ' = ' + resp + '. (Isola x na 1.ª equação: x = ' + c1 + (b1 < 0 ? ' + ' + Math.abs(b1) + 'y' : ' − ' + b1 + 'y') + ', substitui na 2.ª.)',
+        tema: (tema === '2' ? 'T2 · Sistema (x)' : 'T3 · Sistema (y)')
+      };
+    }
+    return {
+      enun: 'Resolve o sistema ' + sistema + ' e indica ' + pede + '.', tipo: 'fill', resposta: String(resp),
+      expl: 'Solução do sistema: (x, y) = (' + x + ', ' + y + '). ' + pede + ' = ' + resp + '.',
+      tema: (tema === '2' ? 'T2 · Sistema (x)' : 'T3 · Sistema (y)')
+    };
+  }
+
+  // ── TEMA 4 · Verificar par solução do sistema ──
+  if (tema === '4') {
+    var ba = rndNZ_m81(1, 3), bb = rndNZ_m81(1, 3);
+    var ca = x + ba * y, cb = 2 * x + bb * y;
+    var e1 = 'x' + _byTerm_m86(ba) + ' = ' + ca;
+    var e2 = '2x' + _byTerm_m86(bb) + ' = ' + cb;
+    var isSol = Math.random() < 0.5;
+    var px = x, py = y;
+    if (!isSol) { py = y + rnd_m81(1, 2); }
+    var ok = (px + ba * py === ca) && (2 * px + bb * py === cb);
+    return {
+      enun: 'O par (' + px + ', ' + py + ') é solução do sistema { ' + e1 + ' ; ' + e2 + ' }?',
+      tipo: 'mc', opcoes: ['Sim', 'Não'], resposta: ok ? 'Sim' : 'Não',
+      expl: 'Um par é solução do sistema se satisfaz as DUAS equações. ' + (ok ? 'Substituindo, ambas se verificam → é solução.' : 'Pelo menos uma equação não se verifica → não é solução.'),
+      tema: 'T4 · Solução do sistema'
+    };
+  }
+
+  // fallback
+  return { enun: '(2,1) é solução de x + y = 3?', tipo: 'mc', opcoes: ['Sim', 'Não'], resposta: 'Sim', expl: '2+1=3 → sim.', tema: 'Sistemas' };
 }
