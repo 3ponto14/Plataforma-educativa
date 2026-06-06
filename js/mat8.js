@@ -86,7 +86,15 @@ var _mat8Cards = {
     { tag: 'Definição', q: 'O que é uma reflexão?', a: 'A isometria que produz a imagem "ao espelho" em relação a uma reta (o eixo de reflexão).' },
     { tag: 'Definição', q: 'O que é uma rotação?', a: 'A isometria que faz girar a figura em torno de um ponto (centro) segundo um determinado ângulo e sentido.' },
     { tag: 'Definição', q: 'O que é uma reflexão deslizante?', a: 'A composição de uma reflexão num eixo com uma translação segundo a direção desse eixo.' },
-    { tag: 'Conceito', q: 'Que tipos de simetria pode ter uma figura?', a: 'Simetria de translação, de reflexão (axial), de rotação e de reflexão deslizante. Os frisos e padrões (como os de Escher) combinam-nas.' }
+    { tag: 'Conceito', q: 'Que tipos de simetria pode ter uma figura?', a: 'Simetria de translação, de reflexão (axial), de rotação e de reflexão deslizante. Os frisos e padrões (como os de Escher) combinam-nas.' },
+    { tag: 'Definição', q: 'O que é a norma (comprimento) de um vetor?', a: 'É o comprimento do segmento orientado. Em coordenadas, ‖v(a, b)‖ = √(a² + b²) (Teorema de Pitágoras).' },
+    { tag: 'Regra', q: 'Como subtrair vetores?', a: 'u − v = u + (−v): soma o primeiro com o simétrico do segundo. Em coordenadas: (a−c, b−d).' },
+    { tag: 'Definição', q: 'O que é o vetor nulo?', a: 'O vetor de comprimento zero, com componentes (0, 0). Somar o vetor nulo a outro não o altera.' },
+    { tag: 'Regra', q: 'Composição de duas translações', a: 'Aplicar a translação de u seguida da de v é o mesmo que uma única translação do vetor soma u + v.' },
+    { tag: 'Propriedade', q: 'As isometrias preservam o quê?', a: 'Preservam comprimentos, amplitudes de ângulos e áreas. A figura transformada é geometricamente igual à original (congruente).' },
+    { tag: 'Estratégia', q: 'Como identificar a simetria de um friso/padrão?', a: 'Procura: desliza e repete (translação); dobra num eixo (reflexão); roda em torno de um ponto (rotação); reflete e desliza (reflexão deslizante).' },
+    { tag: 'Exemplo', q: 'Contexto: um robô em (2, 1) move-se segundo v(4, −3)', a: 'A nova posição é (2+4, 1−3) = (6, −2). Cada movimento "soma" o vetor à posição atual.' },
+    { tag: 'Exemplo', q: 'Norma do vetor v(3, 4)?', a: '‖v‖ = √(3² + 4²) = √(9+16) = √25 = 5.' }
   ],
   3: [
     { tag: 'Definição', q: 'O que é um monómio?', a: 'É o produto de um número (coeficiente) por uma parte literal com expoentes naturais. Ex: 5x⁴ tem coeficiente 5 e parte literal x⁴.' },
@@ -102,7 +110,15 @@ var _mat8Cards = {
     { tag: 'Estratégia', q: 'Como desembaraçar de denominadores?', a: 'Multiplica todos os termos pelo m.m.c. dos denominadores. Atenção: o sinal "−" antes de uma fração troca o sinal de todo o numerador.' },
     { tag: 'Definição', q: 'O que são equações equivalentes?', a: 'Equações com a mesma solução. Obtêm-se aplicando os princípios de equivalência (somar/multiplicar o mesmo nos dois membros).' },
     { tag: 'Exemplo', q: 'Resolve x/3 = 5', a: 'Multiplica ambos os membros por 3: x = 3 × 5 = 15.' },
-    { tag: 'Exemplo', q: 'Resolve 5(3x + 7)', a: 'Distributiva: 5 × 3x + 5 × 7 = 15x + 35.' }
+    { tag: 'Exemplo', q: 'Resolve 5(3x + 7)', a: 'Distributiva: 5 × 3x + 5 × 7 = 15x + 35.' },
+    { tag: 'Definição', q: 'O que é o coeficiente de um monómio?', a: 'É a parte numérica que multiplica a parte literal. Em −7x³, o coeficiente é −7. Um monómio sem letra (ex: 5) é um termo independente.' },
+    { tag: 'Definição', q: 'O que é um binómio e um trinómio?', a: 'Polinómios com 2 termos (binómio, ex: 3x + 1) ou 3 termos (trinómio, ex: x² + 2x + 1).' },
+    { tag: 'Regra', q: 'Princípios de equivalência das equações', a: '1) Somar/subtrair o mesmo nos dois membros. 2) Multiplicar/dividir os dois membros pelo mesmo número (≠0). A solução não muda.' },
+    { tag: 'Estratégia', q: 'Passos para resolver uma equação com parênteses e frações', a: '1.º desembaraça parênteses (distributiva); 2.º desembaraça denominadores (×m.m.c.); 3.º agrupa termos com x num membro; 4.º isola x.' },
+    { tag: 'Estratégia', q: 'Como traduzir um problema numa equação?', a: 'Chama x à quantidade desconhecida, escreve as relações do enunciado como uma igualdade, resolve e interpreta a solução no contexto.' },
+    { tag: 'Exemplo', q: 'Problema: o triplo de um número mais 4 é 19. Que número?', a: '3x + 4 = 19 → 3x = 15 → x = 5.' },
+    { tag: 'Exemplo', q: 'Simplifica 3x² × 2x³', a: 'Coeficientes: 3×2 = 6. Expoentes: 2+3 = 5. Resultado: 6x⁵.' },
+    { tag: 'Exemplo', q: 'Grau de 4x³ + 5x² + 10?', a: 'É o maior grau dos monómios: grau 3.' }
   ],
   4: [
     { tag: 'Teorema', q: 'Enuncia o Teorema de Pitágoras', a: 'Num triângulo retângulo, o quadrado da hipotenusa é igual à soma dos quadrados dos catetos: a² + b² = c² (c = hipotenusa).' },
@@ -114,7 +130,13 @@ var _mat8Cards = {
     { tag: 'Exemplo', q: 'Ternos pitagóricos comuns', a: '(3,4,5), (5,12,13), (8,15,17), (7,24,25) e os seus múltiplos, como (6,8,10).' },
     { tag: 'Estratégia', q: 'Diagonal de um retângulo', a: 'A diagonal é a hipotenusa do triângulo formado por dois lados: d = √(comprimento² + largura²).' },
     { tag: 'Estratégia', q: 'Diagonal de um quadrado de lado L', a: 'd = √(L² + L²) = √(2L²) = L√2 ≈ 1,41 × L.' },
-    { tag: 'Definição', q: 'O que é o apótema de um polígono regular?', a: 'É a distância do centro ao ponto médio de um lado. Usa-se na área: A = (Perímetro × apótema) / 2.' }
+    { tag: 'Definição', q: 'O que é o apótema de um polígono regular?', a: 'É a distância do centro ao ponto médio de um lado. Usa-se na área: A = (Perímetro × apótema) / 2.' },
+    { tag: 'Estratégia', q: 'Quando se usa o Teorema de Pitágoras em problemas?', a: 'Sempre que houver um ângulo reto: escadas encostadas a paredes, distâncias na diagonal, alturas, diagonais de retângulos e ecrãs.' },
+    { tag: 'Exemplo', q: 'Uma escada de 5 m encostada a uma parede, com a base a 3 m. A que altura chega?', a: 'altura = √(5² − 3²) = √(25−9) = √16 = 4 m.' },
+    { tag: 'Exemplo', q: 'Qual a diagonal de um ecrã 16 cm × 12 cm?', a: 'd = √(16² + 12²) = √(256+144) = √400 = 20 cm.' },
+    { tag: 'Regra', q: 'Como classificar um triângulo pelos lados (com o recíproco)?', a: 'Compara o maior lado² com a soma dos quadrados dos outros: igual → retângulo; maior² menor → acutângulo; maior² maior → obtusângulo.' },
+    { tag: 'Definição', q: 'O que é um terno pitagórico?', a: 'Um trio de números inteiros (a, b, c) com a² + b² = c². Ex: (3,4,5). Servem para encontrar triângulos retângulos com lados inteiros.' },
+    { tag: 'Estratégia', q: 'A raiz quadrada não é exata — o que fazer?', a: 'Deixa o resultado na forma de raiz (ex: √20) ou apresenta um valor aproximado às décimas com a calculadora (√20 ≈ 4,5).' }
   ],
   5: [
     { tag: 'Definição', q: 'O que é uma equação literal?', a: 'Uma equação com mais do que uma letra (variáveis/parâmetros). Pode resolver-se "em ordem a" uma delas, isolando-a. Ex: P = 2(c + l) → c = P/2 − l.' },
@@ -127,7 +149,14 @@ var _mat8Cards = {
     { tag: 'Definição', q: 'O que é a ordenada na origem?', a: 'É o valor de y quando x = 0 (o b em y = mx + b). É o ponto onde a reta corta o eixo das ordenadas (Oy).' },
     { tag: 'Regra', q: 'Retas paralelas — que relação têm?', a: 'Duas retas são paralelas se tiverem o mesmo declive (m igual). Ex: y = 2x + 1 e y = 2x − 3 são paralelas.' },
     { tag: 'Exemplo', q: 'Calcula o declive entre A(1, 2) e B(3, 8)', a: 'm = (8 − 2) / (3 − 1) = 6 / 2 = 3.' },
-    { tag: 'Exemplo', q: 'Em y = −4x + 5, qual o declive e a ordenada na origem?', a: 'Declive m = −4; ordenada na origem b = 5.' }
+    { tag: 'Exemplo', q: 'Em y = −4x + 5, qual o declive e a ordenada na origem?', a: 'Declive m = −4; ordenada na origem b = 5.' },
+    { tag: 'Definição', q: 'O que é uma função constante?', a: 'Uma função do tipo y = b (declive 0). O gráfico é uma reta horizontal: o valor de y é sempre o mesmo, qualquer que seja x.' },
+    { tag: 'Estratégia', q: 'Como saber se um gráfico representa uma função?', a: 'Teste da reta vertical: se qualquer reta vertical corta o gráfico no máximo uma vez, é função (cada x tem uma só imagem).' },
+    { tag: 'Estratégia', q: 'Como descobrir a expressão de uma reta a partir do gráfico?', a: 'Lê a ordenada na origem (b, onde corta o eixo Oy) e calcula o declive (m) com dois pontos. A expressão é y = mx + b.' },
+    { tag: 'Definição', q: 'O que significa o declive ser positivo, negativo ou zero?', a: 'Positivo → reta cresce; negativo → reta decresce; zero → reta horizontal (função constante).' },
+    { tag: 'Exemplo', q: 'Tarifário: 5 € fixos + 2 € por GB. Expressão do custo?', a: 'C(x) = 2x + 5, onde x é o nº de GB. É uma função afim: declive 2 (€/GB), ordenada na origem 5 (€ fixos).' },
+    { tag: 'Exemplo', q: 'Um táxi cobra 3 € de partida + 1,5 €/km. Custo de 10 km?', a: 'C(x) = 1,5x + 3 → C(10) = 1,5×10 + 3 = 18 €.' },
+    { tag: 'Estratégia', q: 'Como traduzir uma situação real numa função afim?', a: 'A parte fixa é a ordenada na origem (b); o valor por unidade é o declive (m). Escreve y = mx + b.' }
   ],
   6: [
     { tag: 'Definição', q: 'O que é uma equação com duas incógnitas?', a: 'Uma equação com duas letras, como 4x − 2y = 12. Tem infinitas soluções (pares ordenados) — o seu gráfico é uma reta.' },
@@ -138,7 +167,12 @@ var _mat8Cards = {
     { tag: 'Definição', q: 'Sistemas equivalentes', a: 'Sistemas com a mesma solução. Obtêm-se aplicando os princípios de equivalência (somar/multiplicar o mesmo nos dois membros de uma equação).' },
     { tag: 'Estratégia', q: 'Interpretação gráfica de um sistema', a: 'Cada equação é uma reta. A solução é o ponto onde as retas se cruzam. Retas paralelas → sem solução; coincidentes → infinitas soluções.' },
     { tag: 'Exemplo', q: 'Como verificar se um par é solução do sistema?', a: 'Substitui o par nas duas equações. Só é solução se AMBAS se verificarem. Ex: (6, 2) em { x + 2y = 10 ; 3x − y = 16 } → 6+4=10 ✓ e 18−2=16 ✓ → é solução.' },
-    { tag: 'Exemplo', q: 'Resolve { x + y = 3 ; 4x − 3y = 33 }', a: 'Da 1.ª: x = 3 − y. Substitui: 4(3−y) − 3y = 33 → 12 − 7y = 33 → y = −3, x = 6. Solução (6, −3).' }
+    { tag: 'Exemplo', q: 'Resolve { x + y = 3 ; 4x − 3y = 33 }', a: 'Da 1.ª: x = 3 − y. Substitui: 4(3−y) − 3y = 33 → 12 − 7y = 33 → y = −3, x = 6. Solução (6, −3).' },
+    { tag: 'Estratégia', q: 'Como traduzir um problema num sistema?', a: 'Escolhe duas incógnitas (x e y) e escreve duas equações a partir das duas condições do enunciado. Resolve o sistema e interpreta.' },
+    { tag: 'Exemplo', q: 'Problema: 2 cadernos + 1 caneta custam 7 €; 1 caderno + 1 caneta custam 5 €. Preços?', a: 'Sistema { 2x + y = 7 ; x + y = 5 }. Subtraindo: x = 2 (caderno). Logo y = 3 (caneta).' },
+    { tag: 'Exemplo', q: 'Problema: a soma de dois números é 10 e a diferença é 4. Que números?', a: 'Sistema { x + y = 10 ; x − y = 4 }. Somando: 2x = 14 → x = 7, y = 3.' },
+    { tag: 'Definição', q: 'Quantas soluções pode ter um sistema do 1.º grau?', a: 'Uma só (retas concorrentes), nenhuma (retas paralelas) ou infinitas (retas coincidentes).' },
+    { tag: 'Estratégia', q: 'Método de redução (alternativa à substituição)', a: 'Multiplica as equações para igualar os coeficientes de uma incógnita e soma/subtrai as equações para a eliminar.' }
   ],
   7: [
     { tag: 'Fórmula', q: 'Volume de um prisma', a: 'V = área da base × altura. Aplica-se a qualquer prisma (e ao cilindro). Ex: base 12 cm², altura 5 cm → V = 60 cm³.' },
@@ -150,7 +184,13 @@ var _mat8Cards = {
     { tag: 'Definição', q: 'O que é a área lateral de um cilindro?', a: 'A superfície lateral planificada é um retângulo: A_lateral = 2πr × h (perímetro da base × altura).' },
     { tag: 'Definição', q: 'O que é o apótema de uma pirâmide?', a: 'É a altura de uma face lateral (triângulo). Usa-se para calcular a área lateral da pirâmide.' },
     { tag: 'Estratégia', q: 'Área total de um sólido', a: 'Soma das áreas de todas as faces/superfícies: A_total = A_base(s) + A_lateral. Usa a planificação para identificar todas as partes.' },
-    { tag: 'Definição', q: 'O que é um setor circular?', a: 'É uma "fatia" do círculo, limitada por dois raios e um arco. A sua área é proporcional à amplitude do ângulo ao centro.' }
+    { tag: 'Definição', q: 'O que é um setor circular?', a: 'É uma "fatia" do círculo, limitada por dois raios e um arco. A sua área é proporcional à amplitude do ângulo ao centro.' },
+    { tag: 'Regra', q: 'O que é 1 litro em cm³ e dm³?', a: '1 litro = 1 dm³ = 1000 cm³. Útil para passar volumes de sólidos para capacidades (água, depósitos).' },
+    { tag: 'Estratégia', q: 'Como calcular o volume de um sólido composto?', a: 'Divide o sólido em partes simples (prisma, cilindro, cone…), calcula cada volume e soma-os (ou subtrai, se houver "buracos").' },
+    { tag: 'Exemplo', q: 'Volume de um depósito cilíndrico (r = 2 m, h = 5 m)?', a: 'V = π·r²·h = π·4·5 = 20π m³ ≈ 62,8 m³.' },
+    { tag: 'Exemplo', q: 'Volume de uma caixa (prisma) 10 × 4 × 3 cm?', a: 'V = área da base × altura = (10×4) × 3 = 120 cm³.' },
+    { tag: 'Definição', q: 'O que é a capacidade de um recipiente?', a: 'É o volume de líquido que ele pode conter, normalmente em litros. Calcula-se o volume e converte-se (1 L = 1000 cm³).' },
+    { tag: 'Estratégia', q: 'Quando se deixa o resultado em função de π?', a: 'Quando se quer o valor exato (ex: 20π cm³). Para um valor prático, multiplica-se por π ≈ 3,14 e arredonda-se.' }
   ],
   8: [
     { tag: 'Definição', q: 'O que é a média?', a: 'A soma de todos os valores dividida pelo número de valores. Ex: média de 2, 4, 6 = (2+4+6)/3 = 4.' },
@@ -163,7 +203,14 @@ var _mat8Cards = {
     { tag: 'Definição', q: 'O que é a frequência relativa?', a: 'A frequência absoluta dividida pelo total. Costuma exprimir-se em % : (fa ÷ total) × 100.' },
     { tag: 'Regra', q: 'Como calcular uma probabilidade?', a: 'Em casos equiprováveis: P = casos favoráveis ÷ casos possíveis. O resultado está sempre entre 0 e 1.' },
     { tag: 'Exemplo', q: 'P de sair par num dado?', a: 'Casos favoráveis (2,4,6) = 3; possíveis = 6. P = 3/6 = 1/2.' },
-    { tag: 'Exemplo', q: 'Probabilidade de um acontecimento certo / impossível', a: 'Acontecimento certo: P = 1. Acontecimento impossível: P = 0.' }
+    { tag: 'Exemplo', q: 'Probabilidade de um acontecimento certo / impossível', a: 'Acontecimento certo: P = 1. Acontecimento impossível: P = 0.' },
+    { tag: 'Definição', q: 'O que é população e amostra?', a: 'População é o conjunto total que se estuda; amostra é uma parte da população, escolhida para a representar.' },
+    { tag: 'Estratégia', q: 'Qual medida central usar?', a: 'Média: dados sem valores extremos. Mediana: resistente a extremos (ex: salários). Moda: dados qualitativos ou para o valor mais comum.' },
+    { tag: 'Exemplo', q: 'Notas de um aluno: 12, 14, 14, 16, 19. Média?', a: '(12+14+14+16+19)/5 = 75/5 = 15 valores.' },
+    { tag: 'Exemplo', q: 'P de tirar uma bola vermelha (5 em 20)?', a: 'P = 5/20 = 1/4 = 0,25 = 25%.' },
+    { tag: 'Regra', q: 'Como se exprime uma probabilidade?', a: 'Como fração (1/4), decimal (0,25) ou percentagem (25%) — formas equivalentes. Está sempre entre 0 e 1 (ou 0% e 100%).' },
+    { tag: 'Definição', q: 'O que é o diagrama de extremos e quartis?', a: 'Um gráfico (caixa de bigodes) que mostra o mínimo, Q1, mediana, Q3 e o máximo. Resume a distribuição e mostra a dispersão.' },
+    { tag: 'Estratégia', q: 'Como construir uma tabela de frequências?', a: 'Conta cada valor/classe (frequência absoluta), divide pelo total (frequência relativa) e acumula (frequência acumulada).' }
   ]
 };
 
@@ -1785,6 +1832,22 @@ function buildEx_m83(tema, tipo, dif) {
 
   // ── TEMA 5 · Equações do 1.º grau ──
   if (tema === '5') {
+    // Variante de contexto (problema → equação)
+    if (!easy && Math.random() < 0.4) {
+      var solC = rnd_m81(2, 12);
+      var mult = rnd_m81(2, 5), add = rnd_m81(1, 15);
+      var tot = mult * solC + add;
+      var cenas = [
+        { e: 'O ' + (mult === 2 ? 'dobro' : mult === 3 ? 'triplo' : mult + ' vezes') + ' de um número, mais ' + add + ', é igual a ' + tot + '. Qual é o número?', r: solC },
+        { e: 'A Rita tem ' + add + ' € e poupa ' + mult + ' € por semana. Ao fim de quantas semanas terá ' + tot + ' €?', r: solC }
+      ];
+      var pc = cenas[rnd_m81(0, cenas.length - 1)];
+      return {
+        enun: pc.e, tipo: 'fill', resposta: String(pc.r),
+        expl: 'Traduz por uma equação: ' + mult + 'x + ' + add + ' = ' + tot + '. Resolve: ' + mult + 'x = ' + (tot - add) + ', x = ' + solC + '.',
+        tema: 'T5 · Equações'
+      };
+    }
     // ax + b = c  → x = (c-b)/a, garante solução inteira
     var a5 = rndNZ_m81(2, easy ? 5 : 9);
     var sol = rnd_m81(-6, 6);
@@ -1922,6 +1985,16 @@ function buildEx_m84(tema, tipo, dif) {
   if (tema === '4') {
     var t4 = _TERNOS_m84[rnd_m81(0, easy ? 3 : _TERNOS_m84.length - 1)];
     var l1 = t4[0], l2 = t4[1], diag = t4[2];
+    // Variante de contexto (escada / rampa)
+    if (!easy && Math.random() < 0.4) {
+      // escada de comprimento = diag (hipotenusa), base = l1 (cateto), altura = l2
+      return {
+        enun: 'Uma escada de ' + diag + ' m está encostada a uma parede, com a base a ' + l1 + ' m da parede. A que altura chega a escada? (em m)',
+        tipo: 'fill', resposta: String(l2),
+        expl: 'A escada é a hipotenusa: altura = √(' + diag + '² − ' + l1 + '²) = √(' + (diag*diag) + ' − ' + (l1*l1) + ') = √' + (diag*diag - l1*l1) + ' = ' + l2 + ' m.',
+        tema: 'T4 · Aplicações'
+      };
+    }
     var kind = rnd_m81(0, 1);
     if (kind === 0) {
       // diagonal de retângulo
@@ -1999,6 +2072,21 @@ function buildEx_m85(tema, tipo, dif) {
 
   // ── TEMA 2 · Calcular imagem f(x) ──
   if (tema === '2') {
+    // Variante de contexto (tarifário / táxi)
+    if (!easy && Math.random() < 0.4) {
+      var fixo = rnd_m81(2, 8), porU = rnd_m81(1, 4), unid = rnd_m81(3, 12);
+      var custo = porU * unid + fixo;
+      var cen = [
+        { e: 'Um tarifário cobra ' + fixo + ' € fixos e ' + porU + ' € por GB. Quanto custam ' + unid + ' GB? (em €)', },
+        { e: 'Um táxi cobra ' + fixo + ' € de partida e ' + porU + ' € por km. Quanto custa uma viagem de ' + unid + ' km? (em €)' }
+      ];
+      var pc5 = cen[rnd_m81(0, cen.length - 1)];
+      return {
+        enun: pc5.e, tipo: 'fill', resposta: String(custo),
+        expl: 'Modela com C(x) = ' + porU + 'x + ' + fixo + '. Para x = ' + unid + ': ' + porU + '×' + unid + ' + ' + fixo + ' = ' + custo + ' €.',
+        tema: 'T2 · Imagem f(x)'
+      };
+    }
     var m = rndNZ_m81(-mx, mx), bb = rnd_m81(-mx, mx);
     var x0 = rnd_m81(-5, 6);
     var fx = m * x0 + bb;
@@ -2117,6 +2205,19 @@ function buildEx_m86(tema, tipo, dif) {
 
   // ── TEMAS 2 e 3 · Resolver sistema (substituição) ──
   if (tema === '2' || tema === '3') {
+    // Variante de contexto (problema da soma e diferença → sistema)
+    if (!easy && Math.random() < 0.35) {
+      var n1 = rnd_m81(4, 15), n2 = rnd_m81(1, n1 - 1); // n1 > n2 > 0
+      var soma = n1 + n2, dif = n1 - n2;
+      var pedeMaior = (tema === '2'); // x = maior
+      var respC = pedeMaior ? n1 : n2;
+      return {
+        enun: 'A soma de dois números é ' + soma + ' e a diferença é ' + dif + '. Qual é o número ' + (pedeMaior ? 'maior' : 'menor') + '?',
+        tipo: 'fill', resposta: String(respC),
+        expl: 'Sistema { x + y = ' + soma + ' ; x − y = ' + dif + ' }. Somando as equações: 2x = ' + (soma + dif) + ' → x = ' + n1 + ' (maior), y = ' + n2 + ' (menor).',
+        tema: (tema === '2' ? 'T2 · Sistema (x)' : 'T3 · Sistema (y)')
+      };
+    }
     // Equação 1: x + b1·y = c1 ; Equação 2: a2·x + b2·y = c2
     var b1 = rndNZ_m81(1, 3);
     var c1 = x + b1 * y;
@@ -2193,6 +2294,18 @@ function buildEx_m88(tema, tipo, dif) {
 
   // ── TEMA 1 · Média (garante média inteira) ──
   if (tema === '1') {
+    // Variante de contexto (notas de um aluno), média inteira
+    if (!easy && Math.random() < 0.4) {
+      var notas;
+      do { notas = dados(5, 8, 20); } while (_media_m88(notas) % 1 !== 0);
+      var mediaN = _media_m88(notas);
+      return {
+        enun: 'Um aluno teve as notas ' + notas.join(', ') + '. Qual é a média (em valores)?',
+        tipo: 'fill', resposta: String(mediaN),
+        expl: 'Média = (' + notas.join(' + ') + ') ÷ 5 = ' + notas.reduce(function (s, v) { return s + v; }, 0) + ' ÷ 5 = ' + mediaN + ' valores.',
+        tema: 'T1 · Média'
+      };
+    }
     var arr;
     do { arr = dados(n, 1, easy ? 10 : 20); } while (_media_m88(arr) % 1 !== 0);
     var media = _media_m88(arr);
@@ -2350,6 +2463,18 @@ function buildEx_m87(tema, tipo, dif) {
 
   // ── TEMA 1 · Volume de prisma ──
   if (tema === '1') {
+    // Variante de contexto (caixa / aquário) — paralelepípedo c × l × a
+    if (!easy && Math.random() < 0.4) {
+      var c1 = rnd_m81(4, 12), l1 = rnd_m81(3, 8), a1 = rnd_m81(2, 6);
+      var Vcx = c1 * l1 * a1;
+      var obj = ['Uma caixa', 'Um aquário', 'Um depósito'][rnd_m81(0, 2)];
+      return {
+        enun: obj + ' tem a forma de um paralelepípedo de ' + c1 + ' cm de comprimento, ' + l1 + ' cm de largura e ' + a1 + ' cm de altura. Qual é o volume? (em cm³)',
+        tipo: 'fill', resposta: String(Vcx),
+        expl: 'V = comprimento × largura × altura = ' + c1 + ' × ' + l1 + ' × ' + a1 + ' = ' + Vcx + ' cm³.',
+        tema: 'T1 · Volume Prisma'
+      };
+    }
     var Ab = rnd_m81(easy ? 4 : 6, hard ? 30 : 20), h = rnd_m81(2, hard ? 12 : 8);
     var V = Ab * h;
     if (tipo === 'mc') {
@@ -2496,6 +2621,16 @@ function buildEx_m82(tema, tipo, dif) {
     var vx = rndNZ_m81(-lim, lim), vy = rndNZ_m81(-lim, lim);
     var rx = px + vx, ry = py + vy;
     var resp = '(' + rx + ', ' + ry + ')';
+    // Variante de contexto (movimento de um objeto)
+    if (!easy && Math.random() < 0.4) {
+      var ator = ['Um robô', 'Uma peça do jogo', 'Um drone'][rnd_m81(0, 2)];
+      return {
+        enun: ator + ' está na posição (' + px + ', ' + py + ') e desloca-se segundo o vetor (' + vx + ', ' + vy + '). Qual é a nova posição? (forma (x, y))',
+        tipo: 'fill_frac', resposta: resp,
+        expl: 'Soma o vetor à posição: (' + px + '+' + vx + ', ' + py + '+' + vy + ') = ' + resp + '.',
+        tema: 'T1 · Translação'
+      };
+    }
     if (tipo === 'mc') {
       var opts = shuffle_m81([resp, '(' + (px - vx) + ', ' + (py - vy) + ')', '(' + rx + ', ' + (py - vy) + ')', '(' + (px * vx) + ', ' + (py * vy) + ')'].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4);
       if (opts.indexOf(resp) === -1) opts[0] = resp;
