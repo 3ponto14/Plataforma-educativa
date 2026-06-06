@@ -63,144 +63,76 @@
 </section>
 
 <!-- Cards de acesso -->
-<div class="portal-section">
+<div class="portal-section" id="portal-catalogo">
 
-  <!-- Matemática 5.º ao 9.º ano -->
-  <div class="portal-section-label">Matemática</div>
-  <div class="portal-main-grid">
-    <button class="portal-main-card portal-main-card--mat5" onclick="showMat5View()">
-      <div class="portal-main-card-left">
-        <div class="portal-main-card-icon"><i class="ph ph-plus-minus"></i></div>
-        <div>
-          <div class="portal-main-card-title">5.º Ano</div>
-          <div class="portal-main-card-sub">Números naturais, frações, decimais e percentagens, figuras e sólidos, sequências e tratamento de dados.</div>
-        </div>
-      </div>
-      <div class="portal-main-card-chips">
-        <span>7 capítulos</span>
-        <span>Exercícios gerados</span>
-        <span>Jogos</span>
-        <span>Fichas PDF</span>
-      </div>
-      <div class="portal-main-card-cta">Começar <i class="ph ph-arrow-right"></i></div>
-    </button>
-
-    <button class="portal-main-card portal-main-card--mat6" onclick="showMat6View()">
-      <div class="portal-main-card-left">
-        <div class="portal-main-card-icon"><i class="ph ph-divide"></i></div>
-        <div>
-          <div class="portal-main-card-title">6.º Ano</div>
-          <div class="portal-main-card-sub">Números primos, frações e potências, números racionais, perímetros e áreas, volumes, proporcionalidade e dados.</div>
-        </div>
-      </div>
-      <div class="portal-main-card-chips">
-        <span>7 capítulos</span>
-        <span>Exercícios gerados</span>
-        <span>Jogos</span>
-        <span>Fichas PDF</span>
-      </div>
-      <div class="portal-main-card-cta">Começar <i class="ph ph-arrow-right"></i></div>
-    </button>
-
-    <button class="portal-main-card portal-main-card--mat" onclick="showMat7View()">
-      <div class="portal-main-card-left">
-        <div class="portal-main-card-icon"><i class="ph ph-calculator"></i></div>
-        <div>
-          <div class="portal-main-card-title">7.º Ano</div>
-          <div class="portal-main-card-sub">Teoria, exercícios interativos, minitestes, jogos, flashcards e fichas para todos os 8 capítulos do programa.</div>
-        </div>
-      </div>
-      <div class="portal-main-card-chips">
-        <span>8 capítulos</span>
-        <span>Exercícios gerados</span>
-        <span>Jogos</span>
-        <span>Fichas PDF</span>
-      </div>
-      <div class="portal-main-card-cta">Começar <i class="ph ph-arrow-right"></i></div>
-    </button>
-
-    <button class="portal-main-card portal-main-card--mat8" onclick="showMat8View()">
-      <div class="portal-main-card-left">
-        <div class="portal-main-card-icon"><i class="ph ph-function"></i></div>
-        <div>
-          <div class="portal-main-card-title">8.º Ano</div>
-          <div class="portal-main-card-sub">Números, vetores, polinómios, Teorema de Pitágoras, funções, sistemas, volumes e probabilidades nos 8 capítulos do programa.</div>
-        </div>
-      </div>
-      <div class="portal-main-card-chips">
-        <span>8 capítulos</span>
-        <span>Exercícios gerados</span>
-        <span>Jogos</span>
-        <span>Fichas PDF</span>
-      </div>
-      <div class="portal-main-card-cta">Começar <i class="ph ph-arrow-right"></i></div>
-    </button>
-
-    <button class="portal-main-card portal-main-card--mat9" onclick="showMat9View()">
-      <div class="portal-main-card-left">
-        <div class="portal-main-card-icon"><i class="ph ph-chart-line-up"></i></div>
-        <div>
-          <div class="portal-main-card-title">9.º Ano</div>
-          <div class="portal-main-card-sub">Números reais e inequações, equações do 2.º grau, funções, trigonometria, probabilidades e estatística nos 6 capítulos do programa.</div>
-        </div>
-      </div>
-      <div class="portal-main-card-chips">
-        <span>6 capítulos</span>
-        <span>Exercícios gerados</span>
-        <span>Jogos</span>
-        <span>Fichas PDF</span>
-      </div>
-      <div class="portal-main-card-cta">Começar <i class="ph ph-arrow-right"></i></div>
-    </button>
+  <!-- Barra de pesquisa -->
+  <div class="portal-search">
+    <i class="ph ph-magnifying-glass portal-search-icon"></i>
+    <input type="text" id="portal-search-input" placeholder="Pesquisar ano ou disciplina… (ex: 8.º, frações, Português)" autocomplete="off" oninput="portalSearch(this.value)">
   </div>
 
-  <!-- Exames Nacionais 9.º -->
-  <div class="portal-section-label" style="margin-top:1.5rem">Exames Nacionais · 9.º Ano</div>
-  <div class="portal-exam-grid">
-
-    <button class="portal-exam-card portal-exam-card--mat" onclick="window.location.href='exames.html'">
-      <div class="portal-exam-card-icon"><i class="ph ph-exam"></i></div>
-      <div class="portal-exam-card-subject">Matemática</div>
-      <div class="portal-exam-card-title">Provas Finais Nacionais</div>
-      <div class="portal-exam-card-desc">Questões reais de 2019 a 2024 com resolução detalhada. Treina por tema ou simula o exame.</div>
-      <div class="portal-exam-card-tags">
-        <span>147+ questões</span>
-        <span>9 provas</span>
-        <span>Simulador</span>
-      </div>
-      <div class="portal-exam-card-cta">Praticar <i class="ph ph-arrow-right"></i></div>
-    </button>
-
-    <button class="portal-exam-card portal-exam-card--pt" onclick="window.location.href='exames-pt.html'">
-      <div class="portal-exam-card-icon"><i class="ph ph-book-open-text"></i></div>
-      <div class="portal-exam-card-subject">Português</div>
-      <div class="portal-exam-card-title">Provas Finais Nacionais</div>
-      <div class="portal-exam-card-desc">Compreensão, gramática, figuras de estilo, Os Lusíadas, discurso e composição.</div>
-      <div class="portal-exam-card-tags">
-        <span>200+ exercícios</span>
-        <span>8 provas</span>
-        <span>Os Lusíadas</span>
-      </div>
-      <div class="portal-exam-card-cta">Praticar <i class="ph ph-arrow-right"></i></div>
-    </button>
-
+  <!-- 2.º Ciclo -->
+  <div class="portal-cycle" data-cycle="2.º Ciclo">
+    <div class="portal-cycle-head"><span class="portal-cycle-title">2.º Ciclo</span><span class="portal-cycle-sub">Matemática</span></div>
+    <div class="portal-year-grid">
+      <button class="portal-year-card y5" onclick="showMat5View()" data-search="5.º ano matemática números naturais frações decimais percentagens figuras sólidos sequências dados">
+        <div class="portal-year-icon"><i class="ph ph-plus-minus"></i></div>
+        <div class="portal-year-body"><div class="portal-year-title">5.º Ano</div><div class="portal-year-meta">Matemática · 7 capítulos</div></div>
+        <i class="ph ph-arrow-right portal-year-arrow"></i>
+      </button>
+      <button class="portal-year-card y6" onclick="showMat6View()" data-search="6.º ano matemática primos divisibilidade frações potências racionais perímetros áreas volumes proporcionalidade dados">
+        <div class="portal-year-icon"><i class="ph ph-divide"></i></div>
+        <div class="portal-year-body"><div class="portal-year-title">6.º Ano</div><div class="portal-year-meta">Matemática · 7 capítulos</div></div>
+        <i class="ph ph-arrow-right portal-year-arrow"></i>
+      </button>
+    </div>
   </div>
 
-  <div class="portal-section-label" style="margin-top:1.5rem">Exames Nacionais · 12.º Ano</div>
-  <div class="portal-exam-grid">
-    <button class="portal-exam-card portal-exam-card--mat" onclick="window.location.href='exames12.html'">
-      <div class="portal-exam-card-icon"><i class="ph ph-exam"></i></div>
-      <div class="portal-exam-card-subject">Matemática A</div>
-      <div class="portal-exam-card-title">Exames Nacionais 12.º Ano</div>
-      <div class="portal-exam-card-desc">Questões reais de 2020 a 2025 organizadas por tema. Treina geometria, derivadas, probabilidades e mais.</div>
-      <div class="portal-exam-card-tags">
-        <span>195+ questões</span>
-        <span>17 provas</span>
-        <span>13 temas</span>
-      </div>
-      <div class="portal-exam-card-cta">Praticar <i class="ph ph-arrow-right"></i></div>
-    </button>
+  <!-- 3.º Ciclo -->
+  <div class="portal-cycle" data-cycle="3.º Ciclo">
+    <div class="portal-cycle-head"><span class="portal-cycle-title">3.º Ciclo</span><span class="portal-cycle-sub">Matemática</span></div>
+    <div class="portal-year-grid">
+      <button class="portal-year-card y7" onclick="showMat7View()" data-search="7.º ano matemática números inteiros racionais geometria equações sequências funções figuras semelhantes dados">
+        <div class="portal-year-icon"><i class="ph ph-calculator"></i></div>
+        <div class="portal-year-body"><div class="portal-year-title">7.º Ano</div><div class="portal-year-meta">Matemática · 8 capítulos</div></div>
+        <i class="ph ph-arrow-right portal-year-arrow"></i>
+      </button>
+      <button class="portal-year-card y8" onclick="showMat8View()" data-search="8.º ano matemática números vetores polinómios pitágoras funções sistemas volumes probabilidades">
+        <div class="portal-year-icon"><i class="ph ph-function"></i></div>
+        <div class="portal-year-body"><div class="portal-year-title">8.º Ano</div><div class="portal-year-meta">Matemática · 8 capítulos</div></div>
+        <i class="ph ph-arrow-right portal-year-arrow"></i>
+      </button>
+      <button class="portal-year-card y9" onclick="showMat9View()" data-search="9.º ano matemática reais inequações equações 2.º grau funções trigonometria circunferência probabilidades estatística">
+        <div class="portal-year-icon"><i class="ph ph-chart-line-up"></i></div>
+        <div class="portal-year-body"><div class="portal-year-title">9.º Ano</div><div class="portal-year-meta">Matemática · 6 capítulos</div></div>
+        <i class="ph ph-arrow-right portal-year-arrow"></i>
+      </button>
+    </div>
   </div>
+
+  <!-- Exames Nacionais -->
+  <div class="portal-cycle" data-cycle="Exames Nacionais">
+    <div class="portal-cycle-head"><span class="portal-cycle-title">Exames Nacionais</span><span class="portal-cycle-sub">Provas reais · simulador</span></div>
+    <div class="portal-year-grid">
+      <button class="portal-year-card yex" onclick="window.location.href='exames.html'" data-search="exames nacionais 9.º ano matemática provas finais questões reais simulador">
+        <div class="portal-year-icon"><i class="ph ph-exam"></i></div>
+        <div class="portal-year-body"><div class="portal-year-title">Matemática · 9.º</div><div class="portal-year-meta">Provas 2019–2024 · 147+ questões</div></div>
+        <i class="ph ph-arrow-right portal-year-arrow"></i>
+      </button>
+      <button class="portal-year-card ypt" onclick="window.location.href='exames-pt.html'" data-search="exames nacionais 9.º ano português provas finais compreensão gramática lusíadas figuras de estilo composição">
+        <div class="portal-year-icon"><i class="ph ph-book-open-text"></i></div>
+        <div class="portal-year-body"><div class="portal-year-title">Português · 9.º</div><div class="portal-year-meta">Provas finais · Os Lusíadas</div></div>
+        <i class="ph ph-arrow-right portal-year-arrow"></i>
+      </button>
+      <button class="portal-year-card yex" onclick="window.location.href='exames12.html'" data-search="exames nacionais 12.º ano matemática a derivadas geometria probabilidades funções sucessões trigonometria">
+        <div class="portal-year-icon"><i class="ph ph-exam"></i></div>
+        <div class="portal-year-body"><div class="portal-year-title">Matemática A · 12.º</div><div class="portal-year-meta">Provas 2020–2025 · 13 temas</div></div>
+        <i class="ph ph-arrow-right portal-year-arrow"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="portal-no-results" id="portal-no-results">Nenhum resultado para a pesquisa. Tenta outro termo.</div>
 
 </div>
 

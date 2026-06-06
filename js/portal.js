@@ -183,6 +183,29 @@ function portalRenderProgress() {
     + '</div>';
 }
 
+// ═══ Pesquisa do portal ═══
+// Filtra os cards de ano/exame pelo texto e esconde os grupos (ciclos) vazios.
+function portalSearch(q) {
+  var termo = (q || '').toLowerCase().trim();
+  var cards = document.querySelectorAll('.portal-year-card');
+  var totalVisiveis = 0;
+  cards.forEach(function(card) {
+    var hay = (card.getAttribute('data-search') || '') + ' ' + card.textContent;
+    var match = termo === '' || hay.toLowerCase().indexOf(termo) !== -1;
+    card.style.display = match ? '' : 'none';
+    if (match) totalVisiveis++;
+  });
+  // esconde cabeçalhos de ciclo sem cards visíveis
+  document.querySelectorAll('.portal-cycle').forEach(function(cycle) {
+    var visiveis = cycle.querySelectorAll('.portal-year-card');
+    var algum = false;
+    visiveis.forEach(function(c) { if (c.style.display !== 'none') algum = true; });
+    cycle.style.display = algum ? '' : 'none';
+  });
+  var noRes = document.getElementById('portal-no-results');
+  if (noRes) noRes.style.display = (totalVisiveis === 0 && termo !== '') ? 'block' : 'none';
+}
+
 // ═══ AUTO-INIT ═══
 document.addEventListener('DOMContentLoaded', function(){
   if(document.getElementById('portal-main')) portalRender();

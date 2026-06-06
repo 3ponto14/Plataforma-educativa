@@ -3243,6 +3243,116 @@ body.dark-mode .portal-card:hover {
 .m8-cap-card.m8c7 { border-left-color: var(--m8c7-mid); } .m8-cap-card.m8c7:hover { border-color: var(--m8c7-mid); } .m8c7 .m8-cap-icon { background: var(--m8c7-base); color: var(--m8c7-deep); } .m8c7 .m8-cap-num { color: var(--m8c7-mid); }
 .m8-cap-card.m8c8 { border-left-color: var(--m8c8-mid); } .m8-cap-card.m8c8:hover { border-color: var(--m8c8-mid); } .m8c8 .m8-cap-icon { background: var(--m8c8-base); color: var(--m8c8-deep); } .m8c8 .m8-cap-num { color: var(--m8c8-mid); }
 
+/* ── Portal: barra de pesquisa ── */
+.portal-search {
+  position: relative;
+  max-width: 520px;
+  margin: 0 auto 1.75rem;
+}
+.portal-search input {
+  width: 100%;
+  padding: .8rem 1rem .8rem 2.6rem;
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .9rem;
+  color: var(--ink1);
+  background: var(--white);
+  transition: border-color .2s, box-shadow .2s;
+}
+.portal-search input:focus {
+  outline: none;
+  border-color: var(--c2-mid);
+  box-shadow: 0 0 0 3px rgba(81,104,96,.1);
+}
+.portal-search .portal-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink4);
+  font-size: 1.1rem;
+  pointer-events: none;
+}
+
+/* ── Portal: cabeçalho de ciclo ── */
+.portal-cycle {
+  margin-top: 1.75rem;
+}
+.portal-cycle:first-of-type { margin-top: 0; }
+.portal-cycle-head {
+  display: flex;
+  align-items: baseline;
+  gap: .6rem;
+  margin-bottom: .85rem;
+  padding-bottom: .4rem;
+  border-bottom: 1px solid var(--border);
+}
+.portal-cycle-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--ink1);
+  letter-spacing: -.01em;
+}
+.portal-cycle-sub {
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--ink4);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+/* ── Portal: cards de ano compactos ── */
+.portal-year-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: .75rem;
+}
+.portal-year-card {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-left: 4px solid var(--ink4);
+  border-radius: 14px;
+  padding: .9rem 1rem;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.portal-year-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.portal-year-icon {
+  width: 40px; height: 40px;
+  border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.portal-year-body { flex: 1; min-width: 0; }
+.portal-year-title { font-size: .95rem; font-weight: 800; color: var(--ink1); line-height: 1.1; }
+.portal-year-meta { font-size: .7rem; color: var(--ink4); margin-top: .15rem; }
+.portal-year-arrow { color: var(--ink4); font-size: 1rem; flex-shrink: 0; transition: transform .2s; }
+.portal-year-card:hover .portal-year-arrow { transform: translateX(3px); }
+/* cores por ano (reutilizam os tons de cada curso) */
+.portal-year-card.y5 { border-left-color: var(--m5c1-mid); } .y5 .portal-year-icon { background: var(--m5c1-base); color: var(--m5c1-deep); } .portal-year-card.y5:hover { border-color: var(--m5c1-mid); }
+.portal-year-card.y6 { border-left-color: var(--m6c1-mid); } .y6 .portal-year-icon { background: var(--m6c1-base); color: var(--m6c1-deep); } .portal-year-card.y6:hover { border-color: var(--m6c1-mid); }
+.portal-year-card.y7 { border-left-color: var(--c2-mid); } .y7 .portal-year-icon { background: var(--c2-base); color: var(--c2-deep); } .portal-year-card.y7:hover { border-color: var(--c2-mid); }
+.portal-year-card.y8 { border-left-color: var(--m8c1-mid); } .y8 .portal-year-icon { background: var(--m8c1-base); color: var(--m8c1-deep); } .portal-year-card.y8:hover { border-color: var(--m8c1-mid); }
+.portal-year-card.y9 { border-left-color: var(--m9c1-mid); } .y9 .portal-year-icon { background: var(--m9c1-base); color: var(--m9c1-deep); } .portal-year-card.y9:hover { border-color: var(--m9c1-mid); }
+.portal-year-card.yex { border-left-color: #5c4e8a; } .yex .portal-year-icon { background: #f0edf7; color: #5c4e8a; } .portal-year-card.yex:hover { border-color: #5c4e8a; }
+.portal-year-card.ypt { border-left-color: #4a3f7a; } .ypt .portal-year-icon { background: #ede8f5; color: #4a3f7a; } .portal-year-card.ypt:hover { border-color: #4a3f7a; }
+/* estado "sem resultados" da pesquisa */
+.portal-no-results {
+  display: none;
+  text-align: center;
+  color: var(--ink4);
+  font-size: .9rem;
+  padding: 2rem 1rem;
+}
+
 /* ── Footer ── */
 .portal-footer {
   text-align: center;
