@@ -31,7 +31,7 @@ var _mat8Subtemas = {
   4: ['Teorema de Pitágoras', 'Recíproco', 'Aplicações a áreas'],
   5: ['Equações literais', 'Imagem de uma função', 'Função afim', 'Declive de uma reta'],
   6: ['Equação com 2 incógnitas', 'Resolver sistema (valor de x)', 'Resolver sistema (valor de y)', 'Solução do sistema'],
-  7: ['Prismas e pirâmides', 'Cilindros e cones', 'Esfera', 'Volumes'],
+  7: ['Volume do prisma', 'Volume do cilindro', 'Volume da pirâmide', 'Volume do cone', 'Volume da esfera', 'Área do círculo'],
   8: ['Média', 'Moda', 'Mediana', 'Amplitude', 'Probabilidade', 'Frequência relativa']
 };
 
@@ -118,7 +118,18 @@ var _mat8Cards = {
     { tag: 'Exemplo', q: 'Como verificar se um par é solução do sistema?', a: 'Substitui o par nas duas equações. Só é solução se AMBAS se verificarem. Ex: (6, 2) em { x + 2y = 10 ; 3x − y = 16 } → 6+4=10 ✓ e 18−2=16 ✓ → é solução.' },
     { tag: 'Exemplo', q: 'Resolve { x + y = 3 ; 4x − 3y = 33 }', a: 'Da 1.ª: x = 3 − y. Substitui: 4(3−y) − 3y = 33 → 12 − 7y = 33 → y = −3, x = 6. Solução (6, −3).' }
   ],
-  7: [],
+  7: [
+    { tag: 'Fórmula', q: 'Volume de um prisma', a: 'V = área da base × altura. Aplica-se a qualquer prisma (e ao cilindro). Ex: base 12 cm², altura 5 cm → V = 60 cm³.' },
+    { tag: 'Fórmula', q: 'Volume de um cilindro', a: 'V = π × r² × h (a base é um círculo de área πr²). Ex: r = 4, h = 4 → V = π·16·4 = 64π cm³.' },
+    { tag: 'Fórmula', q: 'Volume de uma pirâmide', a: 'V = (área da base × altura) ÷ 3. É um terço do prisma com a mesma base e altura.' },
+    { tag: 'Fórmula', q: 'Volume de um cone', a: 'V = (π × r² × h) ÷ 3. É um terço do cilindro com a mesma base e altura.' },
+    { tag: 'Fórmula', q: 'Volume de uma esfera', a: 'V = (4 × π × r³) ÷ 3. Ex: r = 3 → V = (4·π·27)/3 = 36π cm³.' },
+    { tag: 'Fórmula', q: 'Área de um círculo', a: 'A = π × r². Perímetro (comprimento) da circunferência: P = 2 × π × r.' },
+    { tag: 'Definição', q: 'O que é a área lateral de um cilindro?', a: 'A superfície lateral planificada é um retângulo: A_lateral = 2πr × h (perímetro da base × altura).' },
+    { tag: 'Definição', q: 'O que é o apótema de uma pirâmide?', a: 'É a altura de uma face lateral (triângulo). Usa-se para calcular a área lateral da pirâmide.' },
+    { tag: 'Estratégia', q: 'Área total de um sólido', a: 'Soma das áreas de todas as faces/superfícies: A_total = A_base(s) + A_lateral. Usa a planificação para identificar todas as partes.' },
+    { tag: 'Definição', q: 'O que é um setor circular?', a: 'É uma "fatia" do círculo, limitada por dois raios e um arco. A sua área é proporcional à amplitude do ângulo ao centro.' }
+  ],
   8: [
     { tag: 'Definição', q: 'O que é a média?', a: 'A soma de todos os valores dividida pelo número de valores. Ex: média de 2, 4, 6 = (2+4+6)/3 = 4.' },
     { tag: 'Definição', q: 'O que é a moda?', a: 'O valor (ou valores) que aparece mais vezes num conjunto de dados. Ex: em 3, 6, 6, 6, 7 a moda é 6.' },
@@ -314,10 +325,11 @@ function _mat8Gerador(cap) {
   if (cap === 4 && typeof buildEx_m84 === 'function') return buildEx_m84;
   if (cap === 5 && typeof buildEx_m85 === 'function') return buildEx_m85;
   if (cap === 6 && typeof buildEx_m86 === 'function') return buildEx_m86;
+  if (cap === 7 && typeof buildEx_m87 === 'function') return buildEx_m87;
   if (cap === 8 && typeof buildEx_m88 === 'function') return buildEx_m88;
   return null;
 }
-var _mat8TemasCount = { 1: 11, 3: 6, 4: 4, 5: 4, 6: 4, 8: 6 };
+var _mat8TemasCount = { 1: 11, 3: 6, 4: 4, 5: 4, 6: 4, 7: 6, 8: 6 };
 
 // Estado da prática
 var _mat8Prat = { cap: 1, st: 0, nivel: 'medio', score: { correct: 0, total: 0 }, answered: {}, exs: [] };
@@ -406,6 +418,9 @@ var _mat8SubtemaTemas = {
   },
   6: { // Cap 6 Sistemas (1:1 com os 4 temas)
     1: ['1'], 2: ['2'], 3: ['3'], 4: ['4']
+  },
+  7: { // Cap 7 Volumes (1:1 com os 6 temas)
+    1: ['1'], 2: ['2'], 3: ['3'], 4: ['4'], 5: ['5'], 6: ['6']
   },
   8: { // Cap 8 Dados e Probabilidades (1:1 com os 6 temas)
     1: ['1'], 2: ['2'], 3: ['3'], 4: ['4'], 5: ['5'], 6: ['6']
@@ -2090,4 +2105,151 @@ function buildEx_m88(tema, tipo, dif) {
 
   // fallback
   return { enun: 'Média de 2, 4, 6?', tipo: 'fill', resposta: '4', expl: '(2+4+6)/3 = 4.', tema: 'Dados' };
+}
+
+/* ════════════════════════════════════════════════════════════════
+   GERADOR — Cap 7 Figuras no Espaço e Volumes (Prisma 8)
+   Temas:
+    1 Volume de prisma (Abase × altura)
+    2 Volume de cilindro (π r² h) — resposta "kπ"
+    3 Volume de pirâmide (1/3 Abase × altura)
+    4 Volume de cone (1/3 π r² h) — resposta "kπ"
+    5 Volume de esfera (4/3 π r³) — resposta "kπ"
+    6 Área do círculo (π r²) — resposta "kπ"
+   Respostas com π usam tipo 'fill_frac' (comparação textual).
+   ════════════════════════════════════════════════════════════════ */
+function buildEx_m87(tema, tipo, dif) {
+  tema = String(tema);
+  var easy = (dif === 'facil'), hard = (dif === 'dificil');
+  function piStr(k) { return k === 1 ? 'π' : k + 'π'; }
+  // tipo "fill" pedido mas com π → usa fill_frac (texto)
+  function fillTipoPi(t) { return (t === 'fill') ? 'fill_frac' : t; }
+
+  // ── TEMA 1 · Volume de prisma ──
+  if (tema === '1') {
+    var Ab = rnd_m81(easy ? 4 : 6, hard ? 30 : 20), h = rnd_m81(2, hard ? 12 : 8);
+    var V = Ab * h;
+    if (tipo === 'mc') {
+      var opts = shuffle_m81([V, V + Ab, V - h, Ab + h].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4).map(String);
+      if (opts.indexOf(String(V)) === -1) opts[0] = String(V);
+      return {
+        enun: 'Um prisma tem área da base ' + Ab + ' cm² e altura ' + h + ' cm. Qual é o volume?',
+        tipo: 'mc', opcoes: opts.map(function (v) { return v + ' cm³'; }), resposta: V + ' cm³',
+        expl: 'V = área da base × altura = ' + Ab + ' × ' + h + ' = ' + V + ' cm³.',
+        tema: 'T1 · Volume Prisma'
+      };
+    }
+    return {
+      enun: 'Volume de um prisma de área da base ' + Ab + ' cm² e altura ' + h + ' cm (em cm³)?', tipo: 'fill',
+      resposta: String(V), expl: 'V = ' + Ab + ' × ' + h + ' = ' + V + ' cm³.', tema: 'T1 · Volume Prisma'
+    };
+  }
+
+  // ── TEMA 2 · Volume de cilindro (π r² h) ──
+  if (tema === '2') {
+    var r = rnd_m81(1, easy ? 4 : 6), hc = rnd_m81(2, hard ? 10 : 7);
+    var k = r * r * hc;
+    if (tipo === 'mc') {
+      var opts2 = shuffle_m81([k, r * hc, r * r + hc, 2 * r * hc].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4);
+      if (opts2.indexOf(k) === -1) opts2[0] = k;
+      return {
+        enun: 'Um cilindro tem raio da base ' + r + ' cm e altura ' + hc + ' cm. Qual é o volume?',
+        tipo: 'mc', opcoes: opts2.map(piStr).map(function (s) { return s + ' cm³'; }), resposta: piStr(k) + ' cm³',
+        expl: 'V = π × r² × h = π × ' + (r * r) + ' × ' + hc + ' = ' + piStr(k) + ' cm³.',
+        tema: 'T2 · Volume Cilindro'
+      };
+    }
+    return {
+      enun: 'Volume de um cilindro de raio ' + r + ' cm e altura ' + hc + ' cm? (escreve na forma kπ)',
+      tipo: fillTipoPi(tipo), resposta: piStr(k),
+      expl: 'V = π·r²·h = π·' + (r * r) + '·' + hc + ' = ' + piStr(k) + ' cm³.', tema: 'T2 · Volume Cilindro'
+    };
+  }
+
+  // ── TEMA 3 · Volume de pirâmide ──
+  if (tema === '3') {
+    var Ab3 = rnd_m81(2, 12) * 3, h3 = rnd_m81(2, hard ? 12 : 8);
+    var V3 = Ab3 * h3 / 3;
+    if (tipo === 'mc') {
+      var opts3 = shuffle_m81([V3, Ab3 * h3, V3 + h3, V3 - 1].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4).map(String);
+      if (opts3.indexOf(String(V3)) === -1) opts3[0] = String(V3);
+      return {
+        enun: 'Uma pirâmide tem área da base ' + Ab3 + ' cm² e altura ' + h3 + ' cm. Qual é o volume?',
+        tipo: 'mc', opcoes: opts3.map(function (v) { return v + ' cm³'; }), resposta: V3 + ' cm³',
+        expl: 'V = (área da base × altura) ÷ 3 = (' + Ab3 + ' × ' + h3 + ') ÷ 3 = ' + V3 + ' cm³.',
+        tema: 'T3 · Volume Pirâmide'
+      };
+    }
+    return {
+      enun: 'Volume de uma pirâmide de área da base ' + Ab3 + ' cm² e altura ' + h3 + ' cm (em cm³)?', tipo: 'fill',
+      resposta: String(V3), expl: 'V = (' + Ab3 + ' × ' + h3 + ') ÷ 3 = ' + V3 + ' cm³.', tema: 'T3 · Volume Pirâmide'
+    };
+  }
+
+  // ── TEMA 4 · Volume de cone ──
+  if (tema === '4') {
+    var r4, h4, k4;
+    do { r4 = rnd_m81(1, 6); h4 = rnd_m81(2, 9); k4 = r4 * r4 * h4; } while (k4 % 3 !== 0);
+    var Vk = k4 / 3;
+    if (tipo === 'mc') {
+      var opts4 = shuffle_m81([Vk, k4, Vk + r4, r4 * h4].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4);
+      if (opts4.indexOf(Vk) === -1) opts4[0] = Vk;
+      return {
+        enun: 'Um cone tem raio da base ' + r4 + ' cm e altura ' + h4 + ' cm. Qual é o volume?',
+        tipo: 'mc', opcoes: opts4.map(piStr).map(function (s) { return s + ' cm³'; }), resposta: piStr(Vk) + ' cm³',
+        expl: 'V = (π × r² × h) ÷ 3 = (π × ' + (r4 * r4) + ' × ' + h4 + ') ÷ 3 = ' + piStr(Vk) + ' cm³.',
+        tema: 'T4 · Volume Cone'
+      };
+    }
+    return {
+      enun: 'Volume de um cone de raio ' + r4 + ' cm e altura ' + h4 + ' cm? (forma kπ)',
+      tipo: fillTipoPi(tipo), resposta: piStr(Vk),
+      expl: 'V = (π·' + (r4 * r4) + '·' + h4 + ')÷3 = ' + piStr(Vk) + ' cm³.', tema: 'T4 · Volume Cone'
+    };
+  }
+
+  // ── TEMA 5 · Volume de esfera ──
+  if (tema === '5') {
+    var r5 = [3, 6][rnd_m81(0, 1)];
+    var k5 = 4 * r5 * r5 * r5 / 3;
+    if (tipo === 'mc') {
+      var opts5 = shuffle_m81([k5, k5 / 2, k5 + r5, r5 * r5 * r5].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4);
+      if (opts5.indexOf(k5) === -1) opts5[0] = k5;
+      return {
+        enun: 'Uma esfera tem raio ' + r5 + ' cm. Qual é o volume?',
+        tipo: 'mc', opcoes: opts5.map(piStr).map(function (s) { return s + ' cm³'; }), resposta: piStr(k5) + ' cm³',
+        expl: 'V = (4 × π × r³) ÷ 3 = (4 × π × ' + (r5 * r5 * r5) + ') ÷ 3 = ' + piStr(k5) + ' cm³.',
+        tema: 'T5 · Volume Esfera'
+      };
+    }
+    return {
+      enun: 'Volume de uma esfera de raio ' + r5 + ' cm? (forma kπ)',
+      tipo: fillTipoPi(tipo), resposta: piStr(k5),
+      expl: 'V = (4·π·' + (r5 * r5 * r5) + ')÷3 = ' + piStr(k5) + ' cm³.', tema: 'T5 · Volume Esfera'
+    };
+  }
+
+  // ── TEMA 6 · Área do círculo ──
+  if (tema === '6') {
+    var r6 = rnd_m81(1, easy ? 5 : 9);
+    var k6 = r6 * r6;
+    if (tipo === 'mc') {
+      var opts6 = shuffle_m81([k6, 2 * r6, k6 + r6, 4 * r6].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4);
+      if (opts6.indexOf(k6) === -1) opts6[0] = k6;
+      return {
+        enun: 'Qual é a área de um círculo de raio ' + r6 + ' cm?',
+        tipo: 'mc', opcoes: opts6.map(piStr).map(function (s) { return s + ' cm²'; }), resposta: piStr(k6) + ' cm²',
+        expl: 'A = π × r² = π × ' + (r6 * r6) + ' = ' + piStr(k6) + ' cm².',
+        tema: 'T6 · Área Círculo'
+      };
+    }
+    return {
+      enun: 'Área de um círculo de raio ' + r6 + ' cm? (forma kπ)',
+      tipo: fillTipoPi(tipo), resposta: piStr(k6),
+      expl: 'A = π·r² = π·' + (r6 * r6) + ' = ' + piStr(k6) + ' cm².', tema: 'T6 · Área Círculo'
+    };
+  }
+
+  // fallback
+  return { enun: 'Volume de prisma: Abase 5, altura 4?', tipo: 'fill', resposta: '20', expl: '5×4=20.', tema: 'Volumes' };
 }
