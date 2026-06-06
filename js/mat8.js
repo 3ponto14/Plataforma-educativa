@@ -27,7 +27,7 @@ var _mat8CapColors = {
 var _mat8Subtemas = {
   1: ['Dízimas', 'Multiplicação e divisão', 'Propriedades e expressões', 'Potências', 'Raízes', 'Notação científica'],
   2: ['Vetores', 'Translações', 'Simetrias e reflexões', 'Reflexão deslizante'],
-  3: ['Monómios e polinómios', 'Operações com polinómios', 'Casos notáveis', 'Equações do 1.º grau'],
+  3: ['Monómios', 'Operações com monómios', 'Polinómios', 'Operações com polinómios', 'Equações do 1.º grau', 'Equações com denominadores'],
   4: ['Teorema de Pitágoras', 'Recíproco', 'Aplicações a áreas'],
   5: ['Equações literais', 'Função afim', 'Função linear e constante', 'Gráficos'],
   6: ['Sistemas do 1.º grau', 'Método de substituição', 'Interpretação gráfica', 'Problemas'],
@@ -65,7 +65,24 @@ var _mat8Cards = {
     { tag: 'Exemplo', q: 'Calcula (3 × 10⁴) × (6 × 10²)', a: '(3×6) × 10⁴⁺² = 18 × 10⁶ = 1,8 × 10⁷.' },
     { tag: 'Exemplo', q: 'Calcula √64 − √36', a: '√64 − √36 = 8 − 6 = 2.' }
   ],
-  2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: []
+  2: [],
+  3: [
+    { tag: 'Definição', q: 'O que é um monómio?', a: 'É o produto de um número (coeficiente) por uma parte literal com expoentes naturais. Ex: 5x⁴ tem coeficiente 5 e parte literal x⁴.' },
+    { tag: 'Definição', q: 'Qual é o grau de um monómio?', a: 'É a soma dos expoentes da parte literal. 5x⁴ tem grau 4; 4x²y² tem grau 4 (2+2).' },
+    { tag: 'Definição', q: 'O que são monómios semelhantes?', a: 'São monómios com a mesma parte literal. Ex: 3x²y e −7x²y são semelhantes. Só estes se podem somar/subtrair.' },
+    { tag: 'Regra', q: 'Como multiplicar monómios?', a: 'Multiplicam-se os coeficientes e somam-se os expoentes das mesmas variáveis. Ex: 3x² × 4x³ = 12x⁵.' },
+    { tag: 'Regra', q: 'Como somar monómios semelhantes?', a: 'Somam-se os coeficientes e mantém-se a parte literal. Ex: 5x³ + 9x³ = 14x³. (Não semelhantes não se somam.)' },
+    { tag: 'Definição', q: 'O que é um polinómio?', a: 'É uma soma de monómios. Ex: x² + 3x + 1. O grau do polinómio é o maior grau dos seus monómios.' },
+    { tag: 'Regra', q: 'Como simplificar um polinómio?', a: 'Juntam-se os termos semelhantes (mesma parte literal). Ex: 4xy + 3x − 2xy − 7x = 2xy − 4x.' },
+    { tag: 'Propriedade', q: 'Propriedade distributiva em polinómios', a: 'a(b + c) = ab + ac. Ex: 5(3x + 7) = 15x + 35. Usa-se para multiplicar um monómio por um polinómio.' },
+    { tag: 'Definição', q: 'O que é uma equação do 1.º grau?', a: 'Uma equação em que a incógnita aparece com expoente 1. Ex: 3x + 5 = 11. Tem (no máximo) uma solução.' },
+    { tag: 'Estratégia', q: 'Como resolver ax + b = c?', a: 'Isola o termo com x: ax = c − b. Depois divide: x = (c − b) / a. Ex: 3x + 5 = 11 → 3x = 6 → x = 2.' },
+    { tag: 'Estratégia', q: 'Como desembaraçar de denominadores?', a: 'Multiplica todos os termos pelo m.m.c. dos denominadores. Atenção: o sinal "−" antes de uma fração troca o sinal de todo o numerador.' },
+    { tag: 'Definição', q: 'O que são equações equivalentes?', a: 'Equações com a mesma solução. Obtêm-se aplicando os princípios de equivalência (somar/multiplicar o mesmo nos dois membros).' },
+    { tag: 'Exemplo', q: 'Resolve x/3 = 5', a: 'Multiplica ambos os membros por 3: x = 3 × 5 = 15.' },
+    { tag: 'Exemplo', q: 'Resolve 5(3x + 7)', a: 'Distributiva: 5 × 3x + 5 × 7 = 15x + 35.' }
+  ],
+  4: [], 5: [], 6: [], 7: [], 8: []
 };
 
 // Seleção atual por tab
@@ -244,9 +261,10 @@ function mat8RenderResumoInline() {
 // Só os caps com gerador são "praticáveis".
 function _mat8Gerador(cap) {
   if (cap === 1 && typeof buildEx_m81 === 'function') return buildEx_m81;
+  if (cap === 3 && typeof buildEx_m83 === 'function') return buildEx_m83;
   return null;
 }
-var _mat8TemasCount = { 1: 11 };
+var _mat8TemasCount = { 1: 11, 3: 6 };
 
 // Estado da prática
 var _mat8Prat = { cap: 1, st: 0, nivel: 'medio', score: { correct: 0, total: 0 }, answered: {}, exs: [] };
@@ -316,13 +334,16 @@ function mat8PraticarSetNivel(nivel, btn) {
 
 // Mapa subtema → temas a usar no gerador (Cap 1 Números)
 var _mat8SubtemaTemas = {
-  1: { // Cap 1
+  1: { // Cap 1 Números
     1: ['1'],            // Dízimas
     2: ['2', '3'],       // Multiplicação e divisão
     3: ['4', '5'],       // Propriedades e expressões
     4: ['6', '7', '8'],  // Potências
     5: ['9'],            // Raízes
     6: ['10', '11']      // Notação científica
+  },
+  3: { // Cap 3 Polinómios e Equações (1:1 com os 6 temas)
+    1: ['1'], 2: ['2'], 3: ['3'], 4: ['4'], 5: ['5'], 6: ['6']
   }
 };
 
@@ -1308,4 +1329,208 @@ function buildEx_m81(tema, tipo, dif) {
 
   // fallback
   return { enun: 'Calcula: 1/2 + 1/2', tipo: 'fill', resposta: '1', expl: '1/2 + 1/2 = 1.', tema: 'Números' };
+}
+
+/* ════════════════════════════════════════════════════════════════
+   GERADOR — Cap 3 Polinómios e Equações do 1.º grau (Prisma 8)
+   Temas:
+    1 Monómios (coeficiente, grau, semelhantes)
+    2 Operações com monómios (produto, soma de semelhantes)
+    3 Polinómios (grau, simplificação)
+    4 Operações com polinómios (soma, produto)
+    5 Equações do 1.º grau (com parênteses)
+    6 Equações com denominadores
+   Reutiliza helpers _m81 (rnd_m81, etc.) já definidos no mat8.js.
+   ════════════════════════════════════════════════════════════════ */
+// expoente unicode para x^n
+function _expX_m83(n) { return n === 1 ? 'x' : ('x' + sup_m81(n)); }
+
+function buildEx_m83(tema, tipo, dif) {
+  tema = String(tema);
+  var hard = (dif === 'dificil'), easy = (dif === 'facil');
+  var maxC = easy ? 6 : hard ? 12 : 9;
+
+  // ── TEMA 1 · Monómios ──
+  if (tema === '1') {
+    if (tipo === 'mc') {
+      var c1 = rndNZ_m81(2, maxC), g1 = rnd_m81(1, 4);
+      var correct1 = String(g1);
+      var opts1 = shuffle_m81([g1, g1 + 1, g1 - 1 || g1 + 2, g1 + 2].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4).map(String);
+      if (opts1.indexOf(correct1) === -1) opts1[0] = correct1;
+      return {
+        enun: 'Qual é o grau do monómio <strong>' + c1 + _expX_m83(g1) + '</strong>?',
+        tipo: 'mc', opcoes: opts1, resposta: correct1,
+        expl: 'O grau de um monómio é o expoente da parte literal: ' + c1 + _expX_m83(g1) + ' tem grau ' + g1 + '.',
+        tema: 'T1 · Monómios'
+      };
+    }
+    if (tipo === 'vf') {
+      var c2 = rndNZ_m81(2, maxC), g2 = rnd_m81(2, 4);
+      var claimC = Math.random() < 0.5;
+      var stmt = 'o coeficiente do monómio ' + c2 + _expX_m83(g2) + ' é ' + (claimC ? c2 : g2);
+      return {
+        enun: 'Verdadeiro ou Falso: ' + stmt + '.', tipo: 'vf', resposta: claimC ? 'V' : 'F',
+        expl: 'No monómio ' + c2 + _expX_m83(g2) + ', o coeficiente é ' + c2 + ' e a parte literal é ' + _expX_m83(g2) + '.',
+        tema: 'T1 · Monómios'
+      };
+    }
+    var cf = rndNZ_m81(2, maxC), gf = rnd_m81(1, 4);
+    return {
+      enun: 'Indica o coeficiente do monómio ' + cf + _expX_m83(gf) + '.', tipo: 'fill',
+      resposta: String(cf), expl: 'O coeficiente é o número que multiplica a parte literal: ' + cf + '.',
+      tema: 'T1 · Monómios'
+    };
+  }
+
+  // ── TEMA 2 · Operações com monómios ──
+  if (tema === '2') {
+    var op = Math.random() < 0.5 ? 'prod' : 'soma';
+    if (op === 'prod') {
+      // a·x^m × b·x^n = ab·x^(m+n)
+      var a = rndNZ_m81(2, maxC), m = rnd_m81(1, 3);
+      var b = rndNZ_m81(2, maxC), n = rnd_m81(1, 3);
+      var coef = a * b, exp = m + n;
+      var res = coef + _expX_m83(exp);
+      if (tipo === 'mc') {
+        var w = [(a + b) + _expX_m83(exp), coef + _expX_m83(m * n), (a * b) + _expX_m83(Math.abs(m - n) || 1)];
+        var opts = shuffle_m81([res].concat(w).filter(function (v, i, ar) { return ar.indexOf(v) === i; })).slice(0, 4);
+        if (opts.indexOf(res) === -1) opts[0] = res;
+        return {
+          enun: 'Simplifica: ' + a + _expX_m83(m) + ' × ' + b + _expX_m83(n),
+          tipo: 'mc', opcoes: opts, resposta: res,
+          expl: 'Multiplica os coeficientes (' + a + '×' + b + '=' + coef + ') e soma os expoentes (' + m + '+' + n + '=' + exp + ') → ' + res + '.',
+          tema: 'T2 · Op. Monómios'
+        };
+      }
+      return {
+        enun: 'Simplifica: ' + a + _expX_m83(m) + ' × ' + b + _expX_m83(n), tipo: 'fill', resposta: res,
+        expl: 'Coeficientes: ' + a + '×' + b + '=' + coef + '. Expoentes: ' + m + '+' + n + '=' + exp + '. Resultado: ' + res + '.',
+        tema: 'T2 · Op. Monómios'
+      };
+    }
+    // soma de semelhantes: a·x^m + b·x^m = (a+b)·x^m
+    var aa = rndNZ_m81(2, maxC), bb = rndNZ_m81(2, maxC), mm = rnd_m81(1, 3);
+    var soma = aa + bb;
+    var rsoma = soma + _expX_m83(mm);
+    if (tipo === 'mc') {
+      var ws = [soma + _expX_m83(mm * 2), (aa * bb) + _expX_m83(mm), soma + _expX_m83(mm + 1)];
+      var optsS = shuffle_m81([rsoma].concat(ws).filter(function (v, i, ar) { return ar.indexOf(v) === i; })).slice(0, 4);
+      if (optsS.indexOf(rsoma) === -1) optsS[0] = rsoma;
+      return {
+        enun: 'Simplifica: ' + aa + _expX_m83(mm) + ' + ' + bb + _expX_m83(mm),
+        tipo: 'mc', opcoes: optsS, resposta: rsoma,
+        expl: 'Monómios semelhantes: somam-se os coeficientes (' + aa + '+' + bb + '=' + soma + ') e mantém-se a parte literal → ' + rsoma + '.',
+        tema: 'T2 · Op. Monómios'
+      };
+    }
+    return {
+      enun: 'Simplifica: ' + aa + _expX_m83(mm) + ' + ' + bb + _expX_m83(mm), tipo: 'fill', resposta: rsoma,
+      expl: 'Soma dos coeficientes (mesma parte literal): ' + aa + '+' + bb + '=' + soma + ' → ' + rsoma + '.',
+      tema: 'T2 · Op. Monómios'
+    };
+  }
+
+  // ── TEMA 3 · Polinómios (grau e simplificação) ──
+  if (tema === '3') {
+    if (tipo === 'mc') {
+      // grau de um polinómio
+      var g = rnd_m81(2, 4);
+      var poly = rnd_m81(2, maxC) + _expX_m83(g) + ' + ' + rnd_m81(2, maxC) + _expX_m83(g - 1) + ' + ' + rnd_m81(2, maxC);
+      var optsG = shuffle_m81([g, g + 1, g - 1, g + 2].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4).map(String);
+      if (optsG.indexOf(String(g)) === -1) optsG[0] = String(g);
+      return {
+        enun: 'Qual é o grau do polinómio <strong>' + poly + '</strong>?',
+        tipo: 'mc', opcoes: optsG, resposta: String(g),
+        expl: 'O grau de um polinómio é o maior dos graus dos seus monómios: ' + g + '.',
+        tema: 'T3 · Polinómios'
+      };
+    }
+    // simplificação: ax + bx = (a+b)x  (termos semelhantes)
+    var p1 = rndNZ_m81(2, maxC), p2 = rndNZ_m81(2, maxC), k = rndNZ_m81(1, maxC);
+    var resS = (p1 + p2) + 'x' + (k >= 0 ? ' + ' + k : ' − ' + Math.abs(k));
+    return {
+      enun: 'Simplifica: ' + p1 + 'x + ' + k + ' + ' + p2 + 'x', tipo: 'fill',
+      resposta: (p1 + p2) + 'x+' + k,
+      expl: 'Junta os termos semelhantes em x: ' + p1 + 'x + ' + p2 + 'x = ' + (p1 + p2) + 'x. Resultado: ' + (p1 + p2) + 'x + ' + k + '.',
+      tema: 'T3 · Polinómios'
+    };
+  }
+
+  // ── TEMA 4 · Operações com polinómios ──
+  if (tema === '4') {
+    // produto monómio × binómio: a(bx + c) = abx + ac
+    var a4 = rndNZ_m81(2, easy ? 5 : 8), b4 = rndNZ_m81(1, 6), c4 = rndNZ_m81(1, 8);
+    var t1 = a4 * b4, t2 = a4 * c4;
+    var res4 = t1 + 'x' + (t2 >= 0 ? ' + ' + t2 : ' − ' + Math.abs(t2));
+    if (tipo === 'mc') {
+      var w4 = [(a4 + b4) + 'x + ' + t2, t1 + 'x + ' + (a4 + c4), (a4 * b4) + 'x + ' + c4];
+      var opts4 = shuffle_m81([t1 + 'x + ' + t2].concat(w4).filter(function (v, i, ar) { return ar.indexOf(v) === i; })).slice(0, 4);
+      if (opts4.indexOf(t1 + 'x + ' + t2) === -1) opts4[0] = t1 + 'x + ' + t2;
+      return {
+        enun: 'Aplica a propriedade distributiva: ' + a4 + '(' + b4 + 'x + ' + c4 + ')',
+        tipo: 'mc', opcoes: opts4, resposta: t1 + 'x + ' + t2,
+        expl: a4 + ' × ' + b4 + 'x = ' + t1 + 'x e ' + a4 + ' × ' + c4 + ' = ' + t2 + ' → ' + t1 + 'x + ' + t2 + '.',
+        tema: 'T4 · Op. Polinómios'
+      };
+    }
+    return {
+      enun: 'Desenvolve: ' + a4 + '(' + b4 + 'x + ' + c4 + ')', tipo: 'fill', resposta: t1 + 'x+' + t2,
+      expl: 'Distributiva: ' + a4 + '×' + b4 + 'x + ' + a4 + '×' + c4 + ' = ' + t1 + 'x + ' + t2 + '.',
+      tema: 'T4 · Op. Polinómios'
+    };
+  }
+
+  // ── TEMA 5 · Equações do 1.º grau ──
+  if (tema === '5') {
+    // ax + b = c  → x = (c-b)/a, garante solução inteira
+    var a5 = rndNZ_m81(2, easy ? 5 : 9);
+    var sol = rnd_m81(-6, 6);
+    var b5 = rndNZ_m81(-10, 10);
+    var c5 = a5 * sol + b5;
+    var eqn = a5 + 'x ' + (b5 >= 0 ? '+ ' + b5 : '− ' + Math.abs(b5)) + ' = ' + c5;
+    if (tipo === 'mc') {
+      var opts5 = shuffle_m81([sol, sol + 1, sol - 1, -sol || sol + 2].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4).map(String);
+      if (opts5.indexOf(String(sol)) === -1) opts5[0] = String(sol);
+      return {
+        enun: 'Resolve em ordem a x: <strong>' + eqn + '</strong>',
+        tipo: 'mc', opcoes: opts5, resposta: String(sol),
+        expl: a5 + 'x = ' + c5 + ' ' + (b5 >= 0 ? '− ' + b5 : '+ ' + Math.abs(b5)) + ' = ' + (c5 - b5) + ', logo x = ' + (c5 - b5) + ' ÷ ' + a5 + ' = ' + sol + '.',
+        tema: 'T5 · Equações'
+      };
+    }
+    return {
+      enun: 'Resolve em ordem a x: ' + eqn, tipo: 'fill', resposta: String(sol),
+      expl: a5 + 'x = ' + (c5 - b5) + ', logo x = ' + sol + '.',
+      tema: 'T5 · Equações'
+    };
+  }
+
+  // ── TEMA 6 · Equações com denominadores ──
+  if (tema === '6') {
+    // x/a = b → x = ab  (solução inteira)
+    var a6 = rnd_m81(2, 6);
+    var sol6 = rnd_m81(-6, 8);
+    var b6 = sol6; // x/a + 0 = ... mantemos simples
+    var rhs = sol6; // x/a = (sol6)/a ... usamos forma x/a = k
+    var k6 = rnd_m81(1, 6);
+    var solK = a6 * k6;
+    if (tipo === 'mc') {
+      var opts6 = shuffle_m81([solK, solK + a6, solK - a6, a6 + k6].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4).map(String);
+      if (opts6.indexOf(String(solK)) === -1) opts6[0] = String(solK);
+      return {
+        enun: 'Resolve em ordem a x: <strong>x/' + a6 + ' = ' + k6 + '</strong>',
+        tipo: 'mc', opcoes: opts6, resposta: String(solK),
+        expl: 'Multiplica ambos os membros por ' + a6 + ': x = ' + a6 + ' × ' + k6 + ' = ' + solK + '.',
+        tema: 'T6 · Eq. Denominadores'
+      };
+    }
+    return {
+      enun: 'Resolve em ordem a x: x/' + a6 + ' = ' + k6, tipo: 'fill', resposta: String(solK),
+      expl: 'Multiplica por ' + a6 + ': x = ' + a6 + ' × ' + k6 + ' = ' + solK + '.',
+      tema: 'T6 · Eq. Denominadores'
+    };
+  }
+
+  // fallback
+  return { enun: 'Resolve: 2x = 6', tipo: 'fill', resposta: '3', expl: 'x = 6 ÷ 2 = 3.', tema: 'Equações' };
 }
