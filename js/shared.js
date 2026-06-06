@@ -1625,6 +1625,52 @@ function qgStartForCap(cap) {
   _qgRenderQuestion(appEl);
 }
 
+// ═══ TEORIA: acordeão de cards (partilhado por todos os cursos) ═══
+// Recebe os cards [{tag,q,a}], a cor do capítulo e o mapa de ícones por tag.
+// Devolve HTML: grupos colapsáveis (1.º aberto); cada pergunta abre a resposta.
+function _teoriaAccordionHTML(cards, color, tagIcons) {
+  tagIcons = tagIcons || {};
+  var groups = {}, order = [];
+  cards.forEach(function(card) {
+    var t = card.tag || 'Geral';
+    if (!groups[t]) { groups[t] = []; order.push(t); }
+    groups[t].push(card);
+  });
+  var h = '<div class="teoria-acc">';
+  order.forEach(function(tag, gi) {
+    var icon = tagIcons[tag] || 'ph-note';
+    var open = (gi === 0); // primeiro grupo aberto, restantes fechados
+    var gid = 'teoria-g-' + gi;
+    h += '<div class="teoria-group' + (open ? ' open' : '') + '" id="' + gid + '">'
+      + '<button class="teoria-group-head" onclick="_teoriaToggleGroup(\'' + gid + '\')" style="--acc:' + color + '">'
+      + '<i class="ph ' + icon + ' teoria-group-icon"></i>'
+      + '<span class="teoria-group-title">' + tag + '</span>'
+      + '<span class="teoria-group-count">' + groups[tag].length + '</span>'
+      + '<i class="ph ph-caret-down teoria-group-caret"></i>'
+      + '</button>'
+      + '<div class="teoria-group-body">';
+    groups[tag].forEach(function(card) {
+      var answer = (card.a || '').replace(/\n/g, '<br>');
+      h += '<div class="teoria-item">'
+        + '<button class="teoria-q" onclick="_teoriaToggleItem(this)" style="--acc:' + color + '">'
+        + '<span>' + (card.q || '') + '</span><i class="ph ph-plus teoria-q-icon"></i></button>'
+        + '<div class="teoria-a">' + answer + '</div>'
+        + '</div>';
+    });
+    h += '</div></div>';
+  });
+  h += '</div>';
+  return h;
+}
+function _teoriaToggleGroup(gid) {
+  var g = document.getElementById(gid);
+  if (g) g.classList.toggle('open');
+}
+function _teoriaToggleItem(btn) {
+  var item = btn.parentNode;
+  if (item) item.classList.toggle('open');
+}
+
 // ═══ CHAPTER NAV BAR generated from data ═══
 function _buildChapterNav(activeCap) {
   var caps = [

@@ -283,33 +283,8 @@ function mat9RenderResumoInline() {
 
   _mat9PM(cap, 'teoria'); // estudou a teoria deste capítulo
 
-  // Agrupar por tag
-  var groups = {}, order = [];
-  cards.forEach(function(card) {
-    var t = card.tag || 'Geral';
-    if (!groups[t]) { groups[t] = []; order.push(t); }
-    groups[t].push(card);
-  });
-
-  var html = '<div style="padding:.5rem 0 1.5rem">';
-  order.forEach(function(tag) {
-    var icon = tagIcons[tag] || 'ph-note';
-    html += '<div style="margin-bottom:1.5rem">'
-      + '<div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.6rem;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:' + color + '">'
-      + '<i class="ph ' + icon + '"></i>' + tag + '</div>'
-      + '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.6rem">';
-    groups[tag].forEach(function(card) {
-      var answer = (card.a || '').replace(/\n/g, '<br>');
-      html += '<div class="resumo-card" style="background:var(--surface,#fff);border:1px solid var(--border,#e5e7eb);border-radius:.75rem;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)">'
-        + '<div style="padding:.75rem .9rem 0;border-top:3px solid ' + color + '">'
-        + '<div style="font-size:.82rem;font-weight:600;color:var(--ink1,#1a1a2e);margin-bottom:.35rem;line-height:1.35">' + (card.q || '') + '</div>'
-        + '<div style="font-size:.78rem;color:var(--ink3,#555);line-height:1.5;padding-bottom:.7rem;border-top:1px dashed var(--border,#e5e7eb);padding-top:.4rem;margin-top:.35rem">' + answer + '</div>'
-        + '</div></div>';
-    });
-    html += '</div></div>';
-  });
-  html += '</div>';
-  dest.innerHTML = html;
+  // Acordeão partilhado: grupos colapsáveis + perguntas que abrem a resposta.
+  dest.innerHTML = _teoriaAccordionHTML(cards, color, tagIcons);
 }
 
 /* ════════════════════════════════════════════════════════════════

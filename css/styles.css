@@ -1531,6 +1531,75 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
   transform: translateY(-2px);
 }
 
+/* ── Teoria: acordeão (grupos colapsáveis + perguntas que abrem a resposta) ── */
+.teoria-acc { display: flex; flex-direction: column; gap: .6rem; padding: .25rem 0 1.5rem; }
+.teoria-group {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--white);
+}
+.teoria-group-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .8rem 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  text-align: left;
+  transition: background .15s;
+}
+.teoria-group-head:hover { background: var(--surface); }
+.teoria-group-icon { font-size: 1.05rem; color: var(--acc, var(--ink3)); flex-shrink: 0; }
+.teoria-group-title {
+  font-size: .8rem; font-weight: 800; text-transform: uppercase; letter-spacing: .07em;
+  color: var(--ink2); flex: 1;
+}
+.teoria-group-count {
+  font-size: .68rem; font-weight: 700; color: var(--ink4);
+  background: var(--surface); border-radius: 999px; padding: 2px 9px;
+}
+.teoria-group-caret { font-size: .9rem; color: var(--ink4); transition: transform .2s; }
+.teoria-group.open .teoria-group-caret { transform: rotate(180deg); }
+/* corpo do grupo: colapsado por defeito */
+.teoria-group-body { display: none; padding: 0 .65rem .65rem; flex-direction: column; gap: .35rem; }
+.teoria-group.open .teoria-group-body { display: flex; }
+
+.teoria-item { border-top: 1px solid var(--border); }
+.teoria-item:first-child { border-top: none; }
+.teoria-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .6rem .55rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--ink1);
+  text-align: left;
+  line-height: 1.35;
+  transition: color .15s;
+}
+.teoria-q:hover { color: var(--acc, var(--ink1)); }
+.teoria-q-icon { font-size: .9rem; color: var(--acc, var(--ink4)); flex-shrink: 0; transition: transform .2s; }
+.teoria-item.open .teoria-q-icon { transform: rotate(45deg); } /* + vira × */
+.teoria-a {
+  display: none;
+  font-size: .82rem;
+  color: var(--ink3);
+  line-height: 1.55;
+  padding: 0 .55rem .7rem 1.6rem;
+}
+.teoria-item.open .teoria-a { display: block; }
+
 #view-math:not([style*="display: none"]):not([style*="display:none"]) #sec-questoes.active,
 #view-math:not([style*="display: none"]):not([style*="display:none"]) #sec-minitestes.active,
 #view-math:not([style*="display: none"]):not([style*="display:none"]) #sec-teste.active,
