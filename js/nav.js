@@ -9,16 +9,15 @@
    navigation functions resolve paths correctly regardless of the
    current page location.
 ─────────────────────────────────────────────────────────────────── */
-var _inMat7 = window.location.pathname.indexOf('/mat7/') !== -1 ||
-              window.location.pathname.endsWith('/mat7');
-var _inMat8 = window.location.pathname.indexOf('/mat8/') !== -1 ||
-              window.location.pathname.endsWith('/mat8');
-var _inMat9 = window.location.pathname.indexOf('/mat9/') !== -1 ||
-              window.location.pathname.endsWith('/mat9');
-var _inSub  = _inMat7 || _inMat8 || _inMat9;
+// Deteção genérica: estamos dentro de um diretório de curso matN/?
+var _inSub = /\/mat\d+(\/|$)/.test(window.location.pathname);
+function _inMat(n) { return window.location.pathname.indexOf('/mat' + n + '/') !== -1 || window.location.pathname.endsWith('/mat' + n); }
+var _inMat7 = _inMat(7), _inMat8 = _inMat(8), _inMat9 = _inMat(9);
 var _rootPath = _inSub ? '../' : '';
 // Caminho para cada curso, relativo à página atual (raiz ou dentro de matN/).
 function _coursePath(name) { return _inSub ? '../' + name + '/' : name + '/'; }
+var _mat5Path = _inMat(5) ? '' : _coursePath('mat5');
+var _mat6Path = _inMat(6) ? '' : _coursePath('mat6');
 var _mat7Path = _inMat7 ? '' : _coursePath('mat7');
 var _mat8Path = _inMat8 ? '' : _coursePath('mat8');
 var _mat9Path = _inMat9 ? '' : _coursePath('mat9');
@@ -39,6 +38,12 @@ function showPortalFromMat8() { showPortalView(); }
 /* ── Mat9 hub (único, sem páginas por capítulo) ── */
 function showMat9View()  { window.location.href = _mat9Path + 'index.html'; }
 function showPortalFromMat9() { showPortalView(); }
+
+/* ── Mat5 e Mat6 hubs (2.º ciclo) ── */
+function showMat5View()  { window.location.href = _mat5Path + 'index.html'; }
+function showPortalFromMat5() { showPortalView(); }
+function showMat6View()  { window.location.href = _mat6Path + 'index.html'; }
+function showPortalFromMat6() { showPortalView(); }
 
 /* ── Chapter pages ── */
 function showMathView()  { window.location.href = _mat7Path + 'cap1.html'; }
