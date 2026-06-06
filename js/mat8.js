@@ -29,7 +29,7 @@ var _mat8Subtemas = {
   2: ['Vetores', 'Translações', 'Simetrias e reflexões', 'Reflexão deslizante'],
   3: ['Monómios', 'Operações com monómios', 'Polinómios', 'Operações com polinómios', 'Equações do 1.º grau', 'Equações com denominadores'],
   4: ['Teorema de Pitágoras', 'Recíproco', 'Aplicações a áreas'],
-  5: ['Equações literais', 'Função afim', 'Função linear e constante', 'Gráficos'],
+  5: ['Equações literais', 'Imagem de uma função', 'Função afim', 'Declive de uma reta'],
   6: ['Sistemas do 1.º grau', 'Método de substituição', 'Interpretação gráfica', 'Problemas'],
   7: ['Prismas e pirâmides', 'Cilindros e cones', 'Esfera', 'Volumes'],
   8: ['Organização de dados', 'Medidas (média, moda, mediana)', 'Probabilidade']
@@ -94,7 +94,20 @@ var _mat8Cards = {
     { tag: 'Estratégia', q: 'Diagonal de um quadrado de lado L', a: 'd = √(L² + L²) = √(2L²) = L√2 ≈ 1,41 × L.' },
     { tag: 'Definição', q: 'O que é o apótema de um polígono regular?', a: 'É a distância do centro ao ponto médio de um lado. Usa-se na área: A = (Perímetro × apótema) / 2.' }
   ],
-  5: [], 6: [], 7: [], 8: []
+  5: [
+    { tag: 'Definição', q: 'O que é uma equação literal?', a: 'Uma equação com mais do que uma letra (variáveis/parâmetros). Pode resolver-se "em ordem a" uma delas, isolando-a. Ex: P = 2(c + l) → c = P/2 − l.' },
+    { tag: 'Estratégia', q: 'Como resolver em ordem a uma variável?', a: 'Trata as outras letras como números: isola a variável pretendida usando as operações inversas, como numa equação normal.' },
+    { tag: 'Definição', q: 'O que é uma função?', a: 'Uma correspondência que associa a cada objeto (x) uma e uma só imagem (y). Escreve-se y = f(x).' },
+    { tag: 'Definição', q: 'O que é a imagem de um objeto?', a: 'É o valor f(x) que a função associa a x. Ex: se f(x) = 2x + 1, a imagem de 3 é f(3) = 2×3 + 1 = 7.' },
+    { tag: 'Definição', q: 'O que é uma função afim?', a: 'Uma função da forma y = mx + b. m é o declive e b é a ordenada na origem. O gráfico é uma reta.' },
+    { tag: 'Definição', q: 'O que é uma função linear?', a: 'Uma função afim com b = 0, ou seja y = mx. O gráfico é uma reta que passa na origem. Traduz proporcionalidade direta.' },
+    { tag: 'Definição', q: 'O que é o declive?', a: 'O declive m mede a inclinação da reta: quanto y varia quando x aumenta 1 unidade. m = (y₂ − y₁) / (x₂ − x₁).' },
+    { tag: 'Definição', q: 'O que é a ordenada na origem?', a: 'É o valor de y quando x = 0 (o b em y = mx + b). É o ponto onde a reta corta o eixo das ordenadas (Oy).' },
+    { tag: 'Regra', q: 'Retas paralelas — que relação têm?', a: 'Duas retas são paralelas se tiverem o mesmo declive (m igual). Ex: y = 2x + 1 e y = 2x − 3 são paralelas.' },
+    { tag: 'Exemplo', q: 'Calcula o declive entre A(1, 2) e B(3, 8)', a: 'm = (8 − 2) / (3 − 1) = 6 / 2 = 3.' },
+    { tag: 'Exemplo', q: 'Em y = −4x + 5, qual o declive e a ordenada na origem?', a: 'Declive m = −4; ordenada na origem b = 5.' }
+  ],
+  6: [], 7: [], 8: []
 };
 
 // Seleção atual por tab
@@ -275,9 +288,10 @@ function _mat8Gerador(cap) {
   if (cap === 1 && typeof buildEx_m81 === 'function') return buildEx_m81;
   if (cap === 3 && typeof buildEx_m83 === 'function') return buildEx_m83;
   if (cap === 4 && typeof buildEx_m84 === 'function') return buildEx_m84;
+  if (cap === 5 && typeof buildEx_m85 === 'function') return buildEx_m85;
   return null;
 }
-var _mat8TemasCount = { 1: 11, 3: 6, 4: 4 };
+var _mat8TemasCount = { 1: 11, 3: 6, 4: 4, 5: 4 };
 
 // Estado da prática
 var _mat8Prat = { cap: 1, st: 0, nivel: 'medio', score: { correct: 0, total: 0 }, answered: {}, exs: [] };
@@ -360,6 +374,9 @@ var _mat8SubtemaTemas = {
   },
   4: { // Cap 4 Pitágoras: 1 Pitágoras(hip+cateto), 2 Recíproco, 3 Aplicações
     1: ['1', '2'], 2: ['3'], 3: ['4']
+  },
+  5: { // Cap 5 Equações Literais e Funções (1:1 com os 4 temas)
+    1: ['1'], 2: ['2'], 3: ['3'], 4: ['4']
   }
 };
 
@@ -1665,4 +1682,120 @@ function buildEx_m84(tema, tipo, dif) {
 
   // fallback
   return { enun: 'Catetos 3 e 4: hipotenusa?', tipo: 'fill', resposta: '5', expl: '√(9+16)=√25=5.', tema: 'Pitágoras' };
+}
+
+/* ════════════════════════════════════════════════════════════════
+   GERADOR — Cap 5 Equações Literais e Funções (Prisma 8)
+   Temas:
+    1 Equações literais (resolver em ordem a uma variável)
+    2 Calcular imagem de uma função f(x)
+    3 Função afim (declive e ordenada na origem)
+    4 Equação da reta (declive entre dois pontos)
+   ════════════════════════════════════════════════════════════════ */
+// "mx + b" bem formatado: trata m=±1 e o sinal de b (com "−" tipográfico).
+function _afim_m85(m, b) {
+  var mp = (m === 1) ? 'x' : (m === -1) ? '−x' : (m + 'x').replace('-', '−');
+  if (b === 0) return mp;
+  return mp + (b > 0 ? ' + ' + b : ' − ' + Math.abs(b));
+}
+function buildEx_m85(tema, tipo, dif) {
+  tema = String(tema);
+  var hard = (dif === 'dificil'), easy = (dif === 'facil');
+  var mx = easy ? 6 : hard ? 12 : 9;
+
+  // ── TEMA 1 · Equações literais ──
+  if (tema === '1') {
+    // ax + b = y  → x = (y - b)/a  (apresentar resolução em ordem a x)
+    var a = rndNZ_m81(2, 5);
+    var sol = rnd_m81(-5, 6);
+    var b = rndNZ_m81(-8, 8);
+    var yval = a * sol + b;
+    if (tipo === 'mc') {
+      var correct = 'x = (' + yval + ' − ' + b + ') ÷ ' + a;
+      var opts = shuffle_m81([correct, 'x = (' + yval + ' + ' + b + ') ÷ ' + a, 'x = ' + yval + ' ÷ ' + a + ' − ' + b, 'x = (' + yval + ' − ' + b + ') × ' + a]).slice(0, 4);
+      return {
+        enun: 'Resolve em ordem a x: <strong>' + a + 'x + ' + b + ' = ' + yval + '</strong>',
+        tipo: 'mc', opcoes: opts, resposta: correct,
+        expl: 'Isola x: ' + a + 'x = ' + yval + ' − ' + b + ', logo x = (' + yval + ' − ' + b + ') ÷ ' + a + ' = ' + sol + '.',
+        tema: 'T1 · Eq. Literais'
+      };
+    }
+    return {
+      enun: 'Resolve em ordem a x e indica o valor: ' + _afim_m85(a, b) + ' = ' + yval, tipo: 'fill',
+      resposta: String(sol), expl: a + 'x = ' + (yval - b) + ', x = ' + sol + '.',
+      tema: 'T1 · Eq. Literais'
+    };
+  }
+
+  // ── TEMA 2 · Calcular imagem f(x) ──
+  if (tema === '2') {
+    var m = rndNZ_m81(-mx, mx), bb = rnd_m81(-mx, mx);
+    var x0 = rnd_m81(-5, 6);
+    var fx = m * x0 + bb;
+    var fnStr = 'f(x) = ' + _afim_m85(m, bb);
+    if (tipo === 'mc') {
+      var opts2 = shuffle_m81([fx, fx + m, fx - 1, m + bb].filter(function (v, i, ar) { return ar.indexOf(v) === i; })).slice(0, 4).map(String);
+      if (opts2.indexOf(String(fx)) === -1) opts2[0] = String(fx);
+      return {
+        enun: 'Considera ' + fnStr + '. Calcula f(' + x0 + ').',
+        tipo: 'mc', opcoes: opts2, resposta: String(fx),
+        expl: 'f(' + x0 + ') = ' + m + '×(' + x0 + ') ' + (bb >= 0 ? '+ ' + bb : '− ' + Math.abs(bb)) + ' = ' + (m*x0) + ' ' + (bb >= 0 ? '+ ' + bb : '− ' + Math.abs(bb)) + ' = ' + fx + '.',
+        tema: 'T2 · Imagem f(x)'
+      };
+    }
+    return {
+      enun: 'Sendo ' + fnStr + ', calcula f(' + x0 + ').', tipo: 'fill', resposta: String(fx),
+      expl: 'f(' + x0 + ') = ' + m + '×' + x0 + ' ' + (bb >= 0 ? '+ ' + bb : '− ' + Math.abs(bb)) + ' = ' + fx + '.',
+      tema: 'T2 · Imagem f(x)'
+    };
+  }
+
+  // ── TEMA 3 · Função afim (declive e ordenada na origem) ──
+  if (tema === '3') {
+    var m3 = rndNZ_m81(-mx, mx), b3 = rnd_m81(-mx, mx);
+    var fnStr3 = 'y = ' + _afim_m85(m3, b3);
+    var pedeDeclive = Math.random() < 0.5;
+    var resposta = pedeDeclive ? m3 : b3;
+    if (tipo === 'mc') {
+      var opts3 = shuffle_m81([resposta, m3 + b3, -resposta, (pedeDeclive ? b3 : m3)].filter(function (v, i, ar) { return ar.indexOf(v) === i; })).slice(0, 4).map(String);
+      if (opts3.indexOf(String(resposta)) === -1) opts3[0] = String(resposta);
+      return {
+        enun: 'Na função afim <strong>' + fnStr3 + '</strong>, qual é ' + (pedeDeclive ? 'o declive' : 'a ordenada na origem') + '?',
+        tipo: 'mc', opcoes: opts3, resposta: String(resposta),
+        expl: 'Na forma y = mx + b, o declive é m = ' + m3 + ' e a ordenada na origem é b = ' + b3 + '. Pedido: ' + resposta + '.',
+        tema: 'T3 · Função Afim'
+      };
+    }
+    return {
+      enun: 'Na função ' + fnStr3 + ', indica ' + (pedeDeclive ? 'o declive' : 'a ordenada na origem') + '.', tipo: 'fill',
+      resposta: String(resposta), expl: 'Declive m = ' + m3 + ', ordenada na origem b = ' + b3 + '.',
+      tema: 'T3 · Função Afim'
+    };
+  }
+
+  // ── TEMA 4 · Declive entre dois pontos ──
+  if (tema === '4') {
+    // escolhe declive inteiro: dados dois pontos com diferença divisível
+    var m4 = rndNZ_m81(-4, 4);
+    var x1 = rnd_m81(-4, 2), x2 = x1 + rnd_m81(1, 4);
+    var y1 = rnd_m81(-5, 5), y2 = y1 + m4 * (x2 - x1);
+    if (tipo === 'mc') {
+      var opts4 = shuffle_m81([m4, m4 + 1, m4 - 1, -m4 || m4 + 2].filter(function (v, i, ar) { return ar.indexOf(v) === i; })).slice(0, 4).map(String);
+      if (opts4.indexOf(String(m4)) === -1) opts4[0] = String(m4);
+      return {
+        enun: 'Qual é o declive da reta que passa em A(' + x1 + ', ' + y1 + ') e B(' + x2 + ', ' + y2 + ')?',
+        tipo: 'mc', opcoes: opts4, resposta: String(m4),
+        expl: 'm = (y₂ − y₁) / (x₂ − x₁) = (' + y2 + ' − ' + y1 + ') / (' + x2 + ' − ' + x1 + ') = ' + (y2-y1) + ' / ' + (x2-x1) + ' = ' + m4 + '.',
+        tema: 'T4 · Declive'
+      };
+    }
+    return {
+      enun: 'Calcula o declive da reta por A(' + x1 + ', ' + y1 + ') e B(' + x2 + ', ' + y2 + ').', tipo: 'fill',
+      resposta: String(m4), expl: 'm = (' + y2 + ' − ' + y1 + ')/(' + x2 + ' − ' + x1 + ') = ' + (y2-y1) + '/' + (x2-x1) + ' = ' + m4 + '.',
+      tema: 'T4 · Declive'
+    };
+  }
+
+  // fallback
+  return { enun: 'f(x)=2x+1, calcula f(3)', tipo: 'fill', resposta: '7', expl: '2×3+1=7.', tema: 'Funções' };
 }
