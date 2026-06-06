@@ -125,7 +125,15 @@ var BANCO7={
     {tag:'Critério',q:'Quais são os critérios de semelhança de triângulos?',a:'• AA: dois ângulos iguais\n• LLL: três pares de lados proporcionais (mesma razão k)\n• LAL: dois pares de lados proporcionais e ângulo entre eles igual'},
     {tag:'Fórmula',q:'Qual é a Relação de Euler para poliedros convexos?',a:'V − A + F = 2\nonde:\nV = número de vértices\nA = número de arestas\nF = número de faces\nExemplo: cubo → 8 − 12 + 6 = 2 ✓'},
     {tag:'Definição',q:'Quais são os cinco poliedros regulares (sólidos de Platão)?',a:'1. Tetraedro: 4 faces triangulares\n2. Cubo (hexaedro): 6 faces quadradas\n3. Octaedro: 8 faces triangulares\n4. Dodecaedro: 12 faces pentagonais\n5. Icosaedro: 20 faces triangulares'},
-    {tag:'Propriedade',q:'Como verificar se dois polígonos são semelhantes?',a:'É necessário verificar AS DUAS condições:\n1. Ângulos correspondentes iguais\n2. Lados correspondentes proporcionais (mesma razão k)\nAtenção: para triângulos basta verificar uma das condições (AA, LLL ou LAL).'}
+    {tag:'Propriedade',q:'Como verificar se dois polígonos são semelhantes?',a:'É necessário verificar AS DUAS condições:\n1. Ângulos correspondentes iguais\n2. Lados correspondentes proporcionais (mesma razão k)\nAtenção: para triângulos basta verificar uma das condições (AA, LLL ou LAL).'},
+    {tag:'Definição',q:'O que é a razão de semelhança k?',a:'É o quociente entre lados correspondentes de duas figuras semelhantes. Ex: se um lado mede 6 e o correspondente mede 3, então k = 6/3 = 2.'},
+    {tag:'Estratégia',q:'Como calcular um lado desconhecido em figuras semelhantes?',a:'Usa a proporção entre lados correspondentes. Ex: se k = 2 e um lado original mede 5, o lado correspondente mede 5 × 2 = 10.'},
+    {tag:'Exemplo',q:'Dois quadrados semelhantes com k = 3. Se a área do menor é 4 cm², qual a do maior?',a:'Área₂ = k² × Área₁ = 3² × 4 = 9 × 4 = 36 cm².'},
+    {tag:'Exemplo',q:'Perímetro de um triângulo é 12 cm. Um semelhante com k = 2,5?',a:'Perímetro₂ = k × Perímetro₁ = 2,5 × 12 = 30 cm.'},
+    {tag:'Definição',q:'Ampliação ou redução?',a:'Se k > 1, a figura imagem é maior (ampliação). Se 0 < k < 1, é menor (redução). Se k = 1, as figuras são congruentes (iguais).'},
+    {tag:'Definição',q:'O que é um poliedro?',a:'Um sólido geométrico limitado por faces planas (polígonos). Tem vértices, arestas e faces. Ex: cubo, pirâmide, prisma.'},
+    {tag:'Exemplo',q:'Um poliedro tem 6 faces e 12 arestas. Quantos vértices (Euler)?',a:'V − A + F = 2 → V = 2 + A − F = 2 + 12 − 6 = 8 vértices.'},
+    {tag:'Estratégia',q:'Como identificar lados correspondentes?',a:'São os lados que ocupam a mesma posição relativa nas duas figuras (entre ângulos iguais). Em triângulos semelhantes, o maior lado de um corresponde ao maior do outro.'}
   ]
 };
 

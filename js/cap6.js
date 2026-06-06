@@ -139,7 +139,15 @@ var BANCO6={
     {tag:'Fórmula',q:'Como se define uma função de proporcionalidade direta?',a:'f(x) = kx, onde k é a constante de proporcionalidade (k ≠ 0).\nO gráfico é uma reta que PASSA PELA ORIGEM O(0,0).\nComo calcular k: k = f(x)/x = y/x.'},
     {tag:'Propriedade',q:'Como se identificam os quadrantes no referencial cartesiano?',a:'1.º Q: x > 0, y > 0 (direita/cima)\n2.º Q: x < 0, y > 0 (esquerda/cima)\n3.º Q: x < 0, y < 0 (esquerda/baixo)\n4.º Q: x > 0, y < 0 (direita/baixo)'},
     {tag:'Definição',q:'O que é o teste da reta vertical?',a:'Um gráfico representa uma função se qualquer reta vertical intersecta o gráfico em NO MÁXIMO um ponto.\nSe cortar em 2+ pontos → não é função.'},
-    {tag:'Fórmula',q:'Reflexão axial: como ficam as coordenadas?',a:'Reflexão em relação ao eixo Ox: (x, y) → (x, −y)\nA ordenada muda de sinal, abcissa mantém-se.\n\nReflexão em relação ao eixo Oy: (x, y) → (−x, y)\nA abcissa muda de sinal, ordenada mantém-se.'}
+    {tag:'Fórmula',q:'Reflexão axial: como ficam as coordenadas?',a:'Reflexão em relação ao eixo Ox: (x, y) → (x, −y)\nA ordenada muda de sinal, abcissa mantém-se.\n\nReflexão em relação ao eixo Oy: (x, y) → (−x, y)\nA abcissa muda de sinal, ordenada mantém-se.'},
+    {tag:'Definição',q:'O que é a imagem de um objeto por uma função?',a:'É o valor f(x) que a função associa ao objeto x. Ex: se f(x) = 3x, a imagem de 2 é f(2) = 3×2 = 6.'},
+    {tag:'Estratégia',q:'Como calcular f(x) para um valor dado?',a:'Substitui x pelo valor pretendido na expressão da função. Ex: f(x) = 2x + 1 → f(4) = 2×4 + 1 = 9.'},
+    {tag:'Estratégia',q:'Formas de representar uma função',a:'Por: tabela (objetos e imagens), gráfico (pontos no referencial), expressão algébrica (y = f(x)) ou diagrama de setas.'},
+    {tag:'Definição',q:'O que é a constante de proporcionalidade k?',a:'Numa função de proporcionalidade direta f(x) = kx, k é o valor constante de y/x. Ex: se f(3) = 12, então k = 12/3 = 4.'},
+    {tag:'Propriedade',q:'Como reconhecer uma proporcionalidade direta numa tabela?',a:'O quociente y/x é constante em todas as colunas. Esse quociente é k. Se variar, NÃO é proporcionalidade direta.'},
+    {tag:'Exemplo',q:'1 kg de maçãs custa 2 €. Qual a função do custo?',a:'f(x) = 2x (proporcionalidade direta, k = 2). Custo de 5 kg: f(5) = 10 €.'},
+    {tag:'Estratégia',q:'Como ler coordenadas de um ponto no gráfico?',a:'Projeta o ponto no eixo Ox (lê a abcissa x) e no eixo Oy (lê a ordenada y). O ponto é P(x, y).'},
+    {tag:'Exemplo',q:'O ponto A(0, 5) está em que eixo?',a:'Como a abcissa é 0, está no eixo das ordenadas (Oy), à altura 5.'}
   ]
 };
 

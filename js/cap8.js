@@ -134,7 +134,15 @@ var BANCO8={
     {tag:'Definição',q:'Quais as principais representações gráficas em estatística?',a:'• Gráfico de barras: frequências por categorias (qualitativas ou discretas)\n• Histograma: dados agrupados em classes (contínuas ou grande amplitude)\n• Gráfico circular (pizza): proporções do total (ângulo = fri × 360°)\n• Diagrama caule-e-folhas: mostra a distribuição preservando os dados originais\n• Diagrama de Venn: conjuntos e intersecções'},
     {tag:'Fórmula',q:'O que é a probabilidade e como se calcula?',a:'Probabilidade de um acontecimento A:\nP(A) = número de casos favoráveis / número de casos possíveis\nPropriedades: 0 ≤ P(A) ≤ 1\nP(impossível) = 0 · P(certo) = 1\nP(A) + P(Ā) = 1 (acontecimento contrário)'},
     {tag:'Definição',q:'O que são acontecimentos equiprováveis?',a:'Dois ou mais acontecimentos são equiprováveis quando têm a mesma probabilidade de ocorrer.\nExemplo: lançar um dado cada face tem P = 1/6; sair "par" e sair "ímpar" são equiprováveis (P = 1/2 cada).'},
-    {tag:'Fórmula',q:'Como se calcula a probabilidade em experiências compostas?',a:'Usa-se uma tabela de dupla entrada ou diagrama de árvore para listar todos os casos possíveis.\nSe A e B são independentes: P(A e B) = P(A) × P(B)\nSe sem reposição: P(B|A) muda após A ocorrer.\nContam-se os casos favoráveis sobre o total de casos possíveis.'}
+    {tag:'Fórmula',q:'Como se calcula a probabilidade em experiências compostas?',a:'Usa-se uma tabela de dupla entrada ou diagrama de árvore para listar todos os casos possíveis.\nSe A e B são independentes: P(A e B) = P(A) × P(B)\nSe sem reposição: P(B|A) muda após A ocorrer.\nContam-se os casos favoráveis sobre o total de casos possíveis.'},
+    {tag:'Exemplo',q:'Notas: 12, 14, 14, 16, 19. Qual a média?',a:'(12+14+14+16+19) ÷ 5 = 75 ÷ 5 = 15 valores.'},
+    {tag:'Exemplo',q:'Qual a moda de 3, 5, 5, 5, 8, 9?',a:'O valor que aparece mais vezes é 5 (três vezes). Moda = 5.'},
+    {tag:'Exemplo',q:'Qual a mediana de 7, 3, 9, 4, 6?',a:'Ordena: 3, 4, 6, 7, 9. Com 5 valores (ímpar), a mediana é o do meio → 6.'},
+    {tag:'Estratégia',q:'Mediana com número par de dados?',a:'Ordena e calcula a média dos DOIS valores centrais. Ex: 4, 6, 8, 10 → mediana = (6+8)/2 = 7.'},
+    {tag:'Exemplo',q:'P de tirar uma bola azul (3 azuis em 12)?',a:'P = 3/12 = 1/4 = 0,25 = 25%.'},
+    {tag:'Definição',q:'O que é a amplitude de um conjunto de dados?',a:'É a diferença entre o maior e o menor valor (máximo − mínimo). Mede o quanto os dados se espalham.'},
+    {tag:'Estratégia',q:'Como construir um gráfico circular (pizza)?',a:'O ângulo de cada setor é a frequência relativa × 360°. Ex: 25% dos dados → 0,25 × 360° = 90°.'},
+    {tag:'Exemplo',q:'Num dado, P de sair número maior que 4?',a:'Favoráveis: 5 e 6 → 2 casos; possíveis: 6. P = 2/6 = 1/3.'}
   ]
 };
 

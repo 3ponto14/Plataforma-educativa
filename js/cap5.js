@@ -88,7 +88,15 @@ var BANCO5={
     {tag:'Definição',q:'O que é uma sequência geométrica?',a:'Uma sequência em que o quociente entre termos consecutivos é constante. Esse quociente chama-se razão.\nEx: 2, 6, 18, 54, … (r = 3)'},
     {tag:'Estratégia',q:'Como encontrar o termo geral de uma sequência aritmética?',a:'1) Calcula a razão: r = a₂ − a₁\n2) Usa: aₙ = a₁ + (n−1)×r\nOu: aₙ = r·n + (a₁ − r)'},
     {tag:'Desafio',q:'Se Sₙ = n²+2n, como encontrar aₙ?',a:'aₙ = Sₙ − Sₙ₋₁ para n≥2, e a₁=S₁.\nExemplo: aₙ = 2n+1'},
-    {tag:'Estratégia',q:'Como verificar se um número pertence a uma sequência?',a:'Substitui aₙ = valor no termo geral e resolve para n.\nSe n é inteiro positivo → pertence.\nEx: aₙ=2n−1, pertence 15? 2n−1=15 → n=8 ✓'}
+    {tag:'Estratégia',q:'Como verificar se um número pertence a uma sequência?',a:'Substitui aₙ = valor no termo geral e resolve para n.\nSe n é inteiro positivo → pertence.\nEx: aₙ=2n−1, pertence 15? 2n−1=15 → n=8 ✓'},
+    {tag:'Definição',q:'O que é o termo de ordem n?',a:'É o termo que ocupa a posição n na sequência. O 1.º termo tem ordem 1 (a₁), o 2.º tem ordem 2 (a₂), e assim por diante.'},
+    {tag:'Estratégia',q:'Como calcular um termo conhecendo o termo geral?',a:'Substitui n pela ordem pretendida. Ex: se aₙ = 2n + 3, o 5.º termo é a₅ = 2×5 + 3 = 13.'},
+    {tag:'Exemplo',q:'Termo geral da sequência 5, 8, 11, 14, …?',a:'A razão é r = 3 e a₁ = 5. Então aₙ = 5 + (n−1)×3 = 3n + 2. (Confirma: a₁ = 3×1+2 = 5 ✓)'},
+    {tag:'Exemplo',q:'Termo geral da sequência 5, 7, 9, 11, …?',a:'Razão r = 2, a₁ = 5 → aₙ = 2n + 3.'},
+    {tag:'Estratégia',q:'Como descobrir a razão de uma sequência aritmética?',a:'Subtrai dois termos consecutivos: r = a₂ − a₁ = a₃ − a₂. Se for sempre o mesmo valor, a sequência é aritmética.'},
+    {tag:'Definição',q:'Sequência crescente, decrescente ou constante?',a:'Numa aritmética: razão positiva → crescente; razão negativa → decrescente; razão nula → constante (todos os termos iguais).'},
+    {tag:'Estratégia',q:'Como completar termos em falta numa sequência?',a:'Descobre a razão a partir de dois termos conhecidos e soma-a (ou subtrai) sucessivamente para encontrar os termos vizinhos.'},
+    {tag:'Exemplo',q:'Qual o 10.º termo de aₙ = 3n − 2?',a:'a₁₀ = 3×10 − 2 = 28.'}
   ],
   relampago:[
     {q:'Qual é a₅ se aₙ = 3n − 1?',opts:['12','14','16','18'],c:1,fb:'3×5−1=14'},
