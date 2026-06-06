@@ -69,12 +69,24 @@
 <!-- ══════════ PANEL: PRATICAR ══════════ -->
 <div class="mat7-panel" id="mat8p-praticar">
   <div class="mat7-panel-heading">Praticar</div>
-  <div class="mat7-panel-sub">Exercícios gerados, quiz, flashcards, teste cronometrado e jogos.</div>
-  <div class="resumo-empty" style="margin-top:1.5rem">
-    <i class="ph ph-pencil-simple resumo-empty-icon"></i>
-    <div class="resumo-empty-title">Em construção</div>
-    <div class="resumo-empty-sub">O treino do 8.º ano está a ser preparado, capítulo a capítulo.</div>
+  <div class="mat7-panel-sub">Escolhe o capítulo e o subtema. As questões são geradas com correção imediata. Capítulos marcados com · ainda estão em preparação.</div>
+
+  <div class="resumo-nav" style="margin-top:.5rem">
+    <div class="resumo-cap-row" id="mat8-praticar-cap-row"><!-- gerado por mat8BuildPraticarNav() --></div>
+    <div class="resumo-st-row" id="mat8-praticar-st-row"><!-- gerado dinamicamente --></div>
   </div>
+
+  <div class="level-bar" style="margin:.75rem 0 1rem">
+    <div class="gen-level-group" id="mat8-praticar-nivel">
+      <span class="gen-level-label">Nível:</span>
+      <button class="gen-level-btn" data-level="facil" onclick="mat8PraticarSetNivel('facil',this)"><span class="status-dot status-dot--easy"></span> Fácil</button>
+      <button class="gen-level-btn active" data-level="medio" onclick="mat8PraticarSetNivel('medio',this)"><span class="status-dot status-dot--medium"></span> Médio</button>
+      <button class="gen-level-btn" data-level="dificil" onclick="mat8PraticarSetNivel('dificil',this)"><span class="status-dot status-dot--hard"></span> Difícil</button>
+    </div>
+    <button class="btn btn-primary ml-auto" onclick="mat8GerarExercicios()"><i class="ph ph-dice-five"></i> Gerar exercícios</button>
+  </div>
+
+  <div id="mat8-praticar-content"></div>
 </div>
 
 <!-- ══════════ PANEL: FICHAS ══════════ -->
@@ -103,6 +115,7 @@
 </div>
 
 <script src="../js/shared.js"></script>
+<script src="../js/chapter-engine.js"></script>
 <script src="../js/mat8.js"></script>
 <script src="../js/fx.js"></script>
 <script src="../js/nav.js"></script>
