@@ -66,16 +66,48 @@
   </div>
 </div>
 
-<!-- ══════════ PANEL: PRATICAR ══════════ -->
+<!-- ══════════ PANEL: PRATICAR (menu de modos) ══════════ -->
 <div class="mat7-panel" id="mat8p-praticar">
   <div class="mat7-panel-heading">Praticar</div>
-  <div class="mat7-panel-sub">Escolhe o capítulo e o subtema. As questões são geradas com correção imediata. Capítulos marcados com · ainda estão em preparação.</div>
-
-  <div class="resumo-nav" style="margin-top:.5rem">
-    <div class="resumo-cap-row" id="mat8-praticar-cap-row"><!-- gerado por mat8BuildPraticarNav() --></div>
-    <div class="resumo-st-row" id="mat8-praticar-st-row"><!-- gerado dinamicamente --></div>
+  <div class="mat7-panel-sub">Escolhe o modo de prática — todas as ferramentas de treino num só lugar.</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.75rem;margin-top:1rem">
+    <button onclick="mat8OpenPraticar('exercicios')" style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem;text-align:left;cursor:pointer;transition:all .2s;border-top:3px solid var(--m8c1-mid)" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(0,0,0,.08)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+      <div style="font-size:1.4rem;margin-bottom:.5rem"><i class="ph ph-pencil-simple" style="color:var(--m8c1-mid)"></i></div>
+      <div style="font-size:.9rem;font-weight:800;color:var(--ink1);margin-bottom:.2rem">Exercícios</div>
+      <div style="font-size:.75rem;color:var(--ink4)">Questões geradas com correção imediata</div>
+    </button>
+    <button onclick="mat8OpenPraticar('quiz')" style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem;text-align:left;cursor:pointer;transition:all .2s;border-top:3px solid #a8854d" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(0,0,0,.08)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+      <div style="font-size:1.4rem;margin-bottom:.5rem">⚡</div>
+      <div style="font-size:.9rem;font-weight:800;color:var(--ink1);margin-bottom:.2rem">Quiz Relâmpago</div>
+      <div style="font-size:.75rem;color:var(--ink4)">Escolha múltipla · 3 vidas · streak</div>
+    </button>
+    <button onclick="mat8OpenPraticar('flashcards')" style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem;text-align:left;cursor:pointer;transition:all .2s;border-top:3px solid #4d978f" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(0,0,0,.08)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+      <div style="font-size:1.4rem;margin-bottom:.5rem"><i class="ph ph-cards" style="color:#4d978f"></i></div>
+      <div style="font-size:.9rem;font-weight:800;color:var(--ink1);margin-bottom:.2rem">Flashcards</div>
+      <div style="font-size:.75rem;color:var(--ink4)">Repetição espaçada para memorizar</div>
+    </button>
+    <button onclick="mat8OpenPraticar('teste')" style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem;text-align:left;cursor:pointer;transition:all .2s;border-top:3px solid #9a5e96" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(0,0,0,.08)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+      <div style="font-size:1.4rem;margin-bottom:.5rem">⏱</div>
+      <div style="font-size:.9rem;font-weight:800;color:var(--ink1);margin-bottom:.2rem">Teste Cronometrado</div>
+      <div style="font-size:.75rem;color:var(--ink4)">Simula condições reais de teste</div>
+    </button>
+    <button onclick="mat8OpenPraticar('jogos')" style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem;text-align:left;cursor:pointer;transition:all .2s;border-top:3px solid #5e9676" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(0,0,0,.08)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+      <div style="font-size:1.4rem;margin-bottom:.5rem"><i class="ph ph-game-controller" style="color:#5e9676"></i></div>
+      <div style="font-size:.9rem;font-weight:800;color:var(--ink1);margin-bottom:.2rem">Jogos</div>
+      <div style="font-size:.75rem;color:var(--ink4)">Jogo do 24, Minesweeper e mais</div>
+    </button>
   </div>
+</div>
 
+<!-- ── Sub-painel comum: cabeçalho com voltar + seletor cap/subtema ── -->
+<div class="mat7-panel" id="mat8p-exercicios">
+  <button class="btn btn-ghost mb-3" onclick="mat8SwitchTab('praticar')"><i class="ph ph-arrow-left"></i> Praticar</button>
+  <div class="mat7-panel-heading">Exercícios</div>
+  <div class="mat7-panel-sub">Questões geradas com correção imediata. Capítulos com · ainda estão em preparação.</div>
+  <div class="resumo-nav" style="margin-top:.5rem">
+    <div class="resumo-cap-row" id="mat8-praticar-cap-row"></div>
+    <div class="resumo-st-row" id="mat8-praticar-st-row"></div>
+  </div>
   <div class="level-bar" style="margin:.75rem 0 1rem">
     <div class="gen-level-group" id="mat8-praticar-nivel">
       <span class="gen-level-label">Nível:</span>
@@ -85,8 +117,48 @@
     </div>
     <button class="btn btn-primary ml-auto" onclick="mat8GerarExercicios()"><i class="ph ph-dice-five"></i> Gerar exercícios</button>
   </div>
-
   <div id="mat8-praticar-content"></div>
+</div>
+
+<!-- ── Sub-painel: Quiz Relâmpago ── -->
+<div class="mat7-panel" id="mat8p-quiz">
+  <button class="btn btn-ghost mb-3" onclick="mat8SwitchTab('praticar')"><i class="ph ph-arrow-left"></i> Praticar</button>
+  <div class="mat7-panel-heading">⚡ Quiz Relâmpago</div>
+  <div class="mat7-panel-sub">Escolha múltipla · 3 vidas · streak. Escolhe o capítulo para começar.</div>
+  <div class="resumo-nav" style="margin-top:.5rem">
+    <div class="resumo-cap-row" id="mat8-quiz-cap-row"></div>
+  </div>
+  <div id="mat8-quiz-app" style="margin-top:1rem"></div>
+</div>
+
+<!-- ── Sub-painel: Flashcards ── -->
+<div class="mat7-panel" id="mat8p-flashcards">
+  <button class="btn btn-ghost mb-3" onclick="mat8SwitchTab('praticar')"><i class="ph ph-arrow-left"></i> Praticar</button>
+  <div class="mat7-panel-heading">Flashcards</div>
+  <div class="mat7-panel-sub">Revê as definições e fórmulas principais — carrega para virar o cartão.</div>
+  <div class="resumo-nav" style="margin-top:.5rem">
+    <div class="resumo-cap-row" id="mat8-fc-cap-row"></div>
+  </div>
+  <div id="mat8-fc-app" style="margin-top:1rem"></div>
+</div>
+
+<!-- ── Sub-painel: Teste Cronometrado ── -->
+<div class="mat7-panel" id="mat8p-teste">
+  <button class="btn btn-ghost mb-3" onclick="mat8SwitchTab('praticar')"><i class="ph ph-arrow-left"></i> Praticar</button>
+  <div class="mat7-panel-heading">⏱ Teste Cronometrado</div>
+  <div class="mat7-panel-sub">Simula condições reais de teste. Escolhe o capítulo, nível e tempo.</div>
+  <div class="resumo-nav" style="margin-top:.5rem">
+    <div class="resumo-cap-row" id="mat8-teste-cap-row"></div>
+  </div>
+  <div id="mat8-teste-app" style="margin-top:1rem"></div>
+</div>
+
+<!-- ── Sub-painel: Jogos ── -->
+<div class="mat7-panel" id="mat8p-jogos">
+  <button class="btn btn-ghost mb-3" onclick="mat8SwitchTab('praticar')"><i class="ph ph-arrow-left"></i> Praticar</button>
+  <div class="mat7-panel-heading">Jogos Matemáticos</div>
+  <div class="mat7-panel-sub">Jogo do 24, Minesweeper, Sudoku, Torres de Hanói e mais.</div>
+  <div id="mat8-jogos-app" style="margin-top:1rem"></div>
 </div>
 
 <!-- ══════════ PANEL: FICHAS ══════════ -->
@@ -117,6 +189,7 @@
 <script src="../js/shared.js"></script>
 <script src="../js/chapter-engine.js"></script>
 <script src="../js/mat8.js"></script>
+<script src="../js/systems.js"></script>
 <script src="../js/fx.js"></script>
 <script src="../js/nav.js"></script>
 </body>

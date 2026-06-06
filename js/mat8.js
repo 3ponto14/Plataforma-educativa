@@ -73,24 +73,35 @@ var _mat8Sel = { resumo: 1, 'resumo-st': 0 };
 
 // ═══ NAVEGAÇÃO DE TABS ═══
 function mat8SwitchTab(tab, btn) {
+  var pratModos = ['exercicios', 'quiz', 'flashcards', 'teste', 'jogos'];
   document.querySelectorAll('.mat7-hub-tab').forEach(function(b){ b.classList.remove('active'); });
   if (btn) {
     btn.classList.add('active');
   } else {
-    var tabBtn = document.querySelector('.mat7-hub-tab[data-tab="' + tab + '"]');
+    // sub-modos de prática ativam o botão "Praticar"
+    var targetTab = pratModos.indexOf(tab) !== -1 ? 'praticar' : tab;
+    var tabBtn = document.querySelector('.mat7-hub-tab[data-tab="' + targetTab + '"]');
     if (tabBtn) tabBtn.classList.add('active');
   }
   document.querySelectorAll('.mat7-panel').forEach(function(p){ p.classList.remove('active'); p.style.setProperty('display','none','important'); });
   var panel = document.getElementById('mat8p-' + tab);
   if (panel) { panel.classList.add('active'); panel.style.setProperty('display','block','important'); }
 
-  var titles = { resumo:'Teoria', praticar:'Praticar', fichas:'Fichas', progresso:'Progresso' };
+  var titles = { resumo:'Teoria', praticar:'Praticar', fichas:'Fichas', progresso:'Progresso',
+                 exercicios:'Exercícios', quiz:'Quiz', flashcards:'Flashcards', teste:'Teste', jogos:'Jogos' };
   if (titles[tab]) document.title = 'Mat. 8.º ' + titles[tab] + ' · 3ponto14';
 
   if (tab === 'resumo') mat8BuildResumoNav();
-  else if (tab === 'praticar') mat8BuildPraticarNav();
+  else if (tab === 'exercicios') mat8BuildPraticarNav();
+  else if (tab === 'quiz') mat8QuizBuildNav();
+  else if (tab === 'flashcards') mat8FcBuildNav();
+  else if (tab === 'teste') mat8TesteBuildNav();
+  else if (tab === 'jogos') mat8JogosInit();
   else if (tab === 'progresso' && typeof mat8RenderProgresso === 'function') mat8RenderProgresso();
 }
+
+// Abre um sub-modo de prática a partir dos cartões do menu Praticar.
+function mat8OpenPraticar(modo) { mat8SwitchTab(modo, null); }
 
 // ═══ TAB TEORIA ═══
 function mat8BuildResumoNav() {
@@ -381,6 +392,341 @@ function mat8SaveProgress(cap, correct) {
     d.lastActivity = Date.now();
     localStorage.setItem(key, JSON.stringify(d));
   } catch (e) {}
+}
+
+/* ════════════════════════════════════════════════════════════════
+   HELPER: linha de capítulos para sub-modos (quiz, flashcards, teste)
+   Só capítulos com gerador ficam ativos.
+   ════════════════════════════════════════════════════════════════ */
+function _mat8BuildCapRow(rowId, activeCap, onclickName) {
+  var row = document.getElementById(rowId);
+  if (!row) return;
+  var h = '';
+  _mat8CapMeta.forEach(function(m) {
+    var hasGen = !!_mat8Gerador(m.n);
+    var color = _mat8CapColors[m.n] || '#516860';
+    var isActive = activeCap === m.n;
+    var activeStyle = isActive ? 'background:' + color + ';border-color:' + color + ';color:#fff' : '';
+    var disabledStyle = hasGen ? '' : 'opacity:.45;cursor:not-allowed';
+    var onclick = hasGen ? (onclickName + '(' + m.n + ',this)') : '';
+    var title = hasGen ? '' : ' title="Em preparação"';
+    h += '<button class="resumo-cap-btn' + (isActive ? ' active' : '') + '" data-cap="' + m.n + '" onclick="' + onclick + '" style="' + activeStyle + ';' + disabledStyle + '"' + title + '>'
+       + '<span class="resumo-cap-icon">' + m.icon + '</span>' + m.label + (hasGen ? '' : ' ·') + '</button>';
+  });
+  row.innerHTML = h;
+}
+
+function _mat8SetActiveCapBtn(rowId, btn, cap) {
+  var row = document.getElementById(rowId);
+  if (row) row.querySelectorAll('.resumo-cap-btn').forEach(function(b){ b.classList.remove('active'); b.style.background=''; b.style.borderColor=''; b.style.color=''; });
+  if (btn) { var color = _mat8CapColors[cap] || '#516860'; btn.classList.add('active'); btn.style.background=color; btn.style.borderColor=color; btn.style.color='#fff'; }
+}
+
+// Gera uma questão de escolha múltipla para um capítulo (usada por quiz).
+function _mat8BuildMcQuestion(cap) {
+  var gen = _mat8Gerador(cap);
+  if (!gen) return null;
+  var nTemas = _mat8TemasCount[cap] || 1;
+  var ex = null;
+  for (var i = 0; i < 10; i++) {
+    var tema = String(rnd_m81(1, nTemas));
+    ex = gen(tema, 'mc', 'medio');
+    if (ex && ex.tipo === 'mc' && ex.opcoes && ex.opcoes.length >= 2) break;
+  }
+  return (ex && ex.tipo === 'mc' && ex.opcoes && ex.opcoes.length >= 2) ? ex : null;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SUB-MODO: QUIZ RELÂMPAGO (3 vidas, streak)
+   ════════════════════════════════════════════════════════════════ */
+var _mat8Quiz = { cap: 1, lives: 3, streak: 0, maxStreak: 0, score: 0, total: 0, answered: false, current: null };
+
+function mat8QuizBuildNav() {
+  if (!_mat8Gerador(_mat8Quiz.cap)) _mat8Quiz.cap = 1;
+  _mat8BuildCapRow('mat8-quiz-cap-row', _mat8Quiz.cap, 'mat8QuizSelectCap');
+  mat8QuizStart();
+}
+
+function mat8QuizSelectCap(cap, btn) {
+  if (!_mat8Gerador(cap)) return;
+  _mat8SetActiveCapBtn('mat8-quiz-cap-row', btn, cap);
+  _mat8Quiz.cap = cap;
+  mat8QuizStart();
+}
+
+function mat8QuizStart() {
+  _mat8Quiz.lives = 3; _mat8Quiz.streak = 0; _mat8Quiz.maxStreak = 0;
+  _mat8Quiz.score = 0; _mat8Quiz.total = 0; _mat8Quiz.answered = false;
+  mat8QuizNext();
+}
+
+function mat8QuizNext() {
+  var app = document.getElementById('mat8-quiz-app');
+  if (!app) return;
+  if (_mat8Quiz.lives <= 0) { mat8QuizGameOver(app); return; }
+  var ex = _mat8BuildMcQuestion(_mat8Quiz.cap);
+  if (!ex) { app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Sem questões disponíveis para este capítulo.</p>'; return; }
+  _mat8Quiz.current = ex; _mat8Quiz.answered = false;
+  var lives = '';
+  for (var i = 0; i < 3; i++) lives += (i < _mat8Quiz.lives ? '❤️' : '🖤') + ' ';
+  var opts = '';
+  ex.opcoes.forEach(function(opt, idx) {
+    opts += '<button class="qg-opt-btn" id="mat8qopt-' + idx + '" onclick="mat8QuizAnswer(' + idx + ')">' + opt + '</button>';
+  });
+  app.innerHTML =
+    '<div class="qg-hub-bar">' +
+      '<div class="qg-hub-lives">' + lives + '</div>' +
+      '<div class="qg-hub-streak">' + (_mat8Quiz.streak > 1 ? '🔥 ' + _mat8Quiz.streak + ' seguidas' : '') + '</div>' +
+      '<div class="qg-hub-score">✓ ' + _mat8Quiz.score + ' / ' + _mat8Quiz.total + '</div>' +
+    '</div>' +
+    '<div class="qg-hub-question">' + ex.enun + '</div>' +
+    '<div class="qg-hub-opts">' + opts + '</div>' +
+    '<div class="qg-hub-feedback" id="mat8-quiz-fb" style="min-height:2.5rem"></div>';
+}
+
+function mat8QuizAnswer(idx) {
+  if (_mat8Quiz.answered) return;
+  _mat8Quiz.answered = true;
+  var ex = _mat8Quiz.current; if (!ex) return;
+  var correct = String(ex.opcoes[idx]) === String(ex.resposta);
+  _mat8Quiz.total++;
+  document.querySelectorAll('.qg-opt-btn').forEach(function(b, i) {
+    b.disabled = true;
+    if (String(ex.opcoes[i]) === String(ex.resposta)) { b.style.background = '#4caf50'; b.style.color = '#fff'; }
+  });
+  var clicked = document.getElementById('mat8qopt-' + idx);
+  if (clicked && !correct) { clicked.style.background = '#f44336'; clicked.style.color = '#fff'; }
+  var fb = document.getElementById('mat8-quiz-fb');
+  if (correct) {
+    _mat8Quiz.score++; _mat8Quiz.streak++;
+    if (_mat8Quiz.streak > _mat8Quiz.maxStreak) _mat8Quiz.maxStreak = _mat8Quiz.streak;
+    if (fb) fb.innerHTML = '<span style="color:var(--correct,#3ecf8e);font-weight:700">✓ Certo!</span> ' + (ex.expl || '');
+  } else {
+    _mat8Quiz.lives--; _mat8Quiz.streak = 0;
+    if (fb) fb.innerHTML = '<span style="color:var(--wrong,#ff6b6b);font-weight:700">✗ Errado.</span> ' + (ex.expl || '');
+  }
+  mat8SaveProgress(_mat8Quiz.cap, correct);
+  setTimeout(function(){ mat8QuizNext(); }, 1400);
+}
+
+function mat8QuizGameOver(app) {
+  var pct = _mat8Quiz.total > 0 ? Math.round(_mat8Quiz.score / _mat8Quiz.total * 100) : 0;
+  var emoji = pct >= 90 ? '🏆' : pct >= 70 ? '⭐' : pct >= 50 ? '👍' : '📚';
+  app.innerHTML =
+    '<div style="text-align:center;padding:2.5rem 1rem">' +
+      '<div style="font-size:3.5rem;margin-bottom:.75rem">' + emoji + '</div>' +
+      '<div style="font-family:\'Cormorant Garamond\',serif;font-size:2rem;font-weight:900;color:var(--ink)">' + pct + '%</div>' +
+      '<div style="color:var(--ink3);margin:.5rem 0 1.5rem">' + _mat8Quiz.score + ' certas em ' + _mat8Quiz.total + ' questões</div>' +
+      '<div style="font-size:1.5rem;margin-bottom:1.5rem">Melhor sequência: ' + (_mat8Quiz.maxStreak || 0) + ' 🔥</div>' +
+      '<button class="btn btn-primary" onclick="mat8QuizStart()">↺ Jogar novamente</button>' +
+    '</div>';
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SUB-MODO: FLASHCARDS
+   ════════════════════════════════════════════════════════════════ */
+var _mat8Fc = { cap: 1, idx: 0, flipped: false, cards: [] };
+
+function mat8FcBuildNav() {
+  // primeiro capítulo com cartões
+  if (!(_mat8Cards[_mat8Fc.cap] && _mat8Cards[_mat8Fc.cap].length)) {
+    for (var c = 1; c <= 8; c++) { if (_mat8Cards[c] && _mat8Cards[c].length) { _mat8Fc.cap = c; break; } }
+  }
+  // linha de capítulos: só os que têm cartões
+  var row = document.getElementById('mat8-fc-cap-row');
+  if (row) {
+    var h = '';
+    _mat8CapMeta.forEach(function(m) {
+      var has = !!(_mat8Cards[m.n] && _mat8Cards[m.n].length);
+      var color = _mat8CapColors[m.n] || '#516860';
+      var isActive = _mat8Fc.cap === m.n;
+      var activeStyle = isActive ? 'background:' + color + ';border-color:' + color + ';color:#fff' : '';
+      var disabled = has ? '' : 'opacity:.45;cursor:not-allowed';
+      var onclick = has ? ('mat8FcSelectCap(' + m.n + ',this)') : '';
+      var title = has ? '' : ' title="Em preparação"';
+      h += '<button class="resumo-cap-btn' + (isActive ? ' active' : '') + '" onclick="' + onclick + '" style="' + activeStyle + ';' + disabled + '"' + title + '>'
+         + '<span class="resumo-cap-icon">' + m.icon + '</span>' + m.label + (has ? '' : ' ·') + '</button>';
+    });
+    row.innerHTML = h;
+  }
+  mat8FcSelectCap(_mat8Fc.cap, null);
+}
+
+function mat8FcSelectCap(cap, btn) {
+  if (!(_mat8Cards[cap] && _mat8Cards[cap].length)) return;
+  if (btn) _mat8SetActiveCapBtn('mat8-fc-cap-row', btn, cap);
+  _mat8Fc.cap = cap;
+  _mat8Fc.cards = _mat8Cards[cap].slice();
+  _mat8Fc.idx = 0; _mat8Fc.flipped = false;
+  mat8FcRender();
+}
+
+function mat8FcRender() {
+  var app = document.getElementById('mat8-fc-app');
+  if (!app) return;
+  var cards = _mat8Fc.cards;
+  if (!cards.length) { app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Sem flashcards para este capítulo.</p>'; return; }
+  var card = cards[_mat8Fc.idx];
+  var color = _mat8CapColors[_mat8Fc.cap] || '#516860';
+  var pct = Math.round((_mat8Fc.idx + 1) / cards.length * 100);
+  app.innerHTML =
+    '<div class="card card-narrow">' +
+      '<div class="flex items-center justify-between mb-3">' +
+        '<span class="fc2-tag-pill" style="background:' + color + ';color:#fff">' + (card.tag || '') + '</span>' +
+        '<span class="fc-counter">' + (_mat8Fc.idx + 1) + ' / ' + cards.length + '</span>' +
+      '</div>' +
+      '<div class="fc2-prog-track"><div class="fc2-prog-fill" style="width:' + pct + '%;background:' + color + '"></div></div>' +
+      '<div onclick="mat8FcFlip()" class="fc2-card-inner" style="cursor:pointer;min-height:140px">' +
+        '<div>' +
+          '<p style="font-size:1.05rem;font-weight:600;color:var(--ink);line-height:1.4">' + (card.q || '') + '</p>' +
+          '<p style="font-size:.9rem;color:' + color + ';margin-top:.75rem;line-height:1.5;display:' + (_mat8Fc.flipped ? 'block' : 'none') + '">' + (card.a || '') + '</p>' +
+          '<p style="font-size:.75rem;color:var(--ink4);margin-top:.5rem">' + (_mat8Fc.flipped ? '' : 'Carrega para ver a resposta') + '</p>' +
+        '</div>' +
+      '</div>' +
+      '<div class="flex flex-wrap gap-3 justify-center mt-5">' +
+        '<button class="btn btn-ghost" onclick="mat8FcPrev()">← Anterior</button>' +
+        '<button class="btn btn-primary" onclick="mat8FcFlip()">↕ Virar</button>' +
+        '<button class="btn btn-ghost" onclick="mat8FcNext()">Seguinte →</button>' +
+      '</div>' +
+    '</div>';
+}
+
+function mat8FcFlip() { _mat8Fc.flipped = !_mat8Fc.flipped; mat8FcRender(); }
+function mat8FcNext() { _mat8Fc.idx = (_mat8Fc.idx + 1) % (_mat8Fc.cards.length || 1); _mat8Fc.flipped = false; mat8FcRender(); }
+function mat8FcPrev() { _mat8Fc.idx = (_mat8Fc.idx - 1 + (_mat8Fc.cards.length || 1)) % (_mat8Fc.cards.length || 1); _mat8Fc.flipped = false; mat8FcRender(); }
+
+/* ════════════════════════════════════════════════════════════════
+   SUB-MODO: TESTE CRONOMETRADO
+   ════════════════════════════════════════════════════════════════ */
+var _mat8Teste = { cap: 1, nivel: 'medio', qtd: 10, tempo: 600, exs: [], answered: {}, score: { correct: 0, total: 0 }, timer: null, restante: 0 };
+
+function mat8TesteBuildNav() {
+  if (!_mat8Gerador(_mat8Teste.cap)) _mat8Teste.cap = 1;
+  _mat8BuildCapRow('mat8-teste-cap-row', _mat8Teste.cap, 'mat8TesteSelectCap');
+  mat8TesteRenderConfig();
+}
+
+function mat8TesteSelectCap(cap, btn) {
+  if (!_mat8Gerador(cap)) return;
+  _mat8SetActiveCapBtn('mat8-teste-cap-row', btn, cap);
+  _mat8Teste.cap = cap;
+  mat8TesteRenderConfig();
+}
+
+function mat8TesteRenderConfig() {
+  var app = document.getElementById('mat8-teste-app');
+  if (!app) return;
+  if (_mat8Teste.timer) { clearInterval(_mat8Teste.timer); _mat8Teste.timer = null; }
+  app.innerHTML =
+    '<div class="card">' +
+      '<div class="card-title">Configurar teste</div>' +
+      '<div class="flex flex-wrap gap-6 items-end">' +
+        '<div><div class="label-small">Nível</div>' +
+          '<div class="gen-level-group" id="mat8-teste-nivel">' +
+            '<button class="gen-level-btn' + (_mat8Teste.nivel==='facil'?' active':'') + '" onclick="mat8TesteSetNivel(\'facil\',this)"><span class="status-dot status-dot--easy"></span> Fácil</button>' +
+            '<button class="gen-level-btn' + (_mat8Teste.nivel==='medio'?' active':'') + '" onclick="mat8TesteSetNivel(\'medio\',this)"><span class="status-dot status-dot--medium"></span> Médio</button>' +
+            '<button class="gen-level-btn' + (_mat8Teste.nivel==='dificil'?' active':'') + '" onclick="mat8TesteSetNivel(\'dificil\',this)"><span class="status-dot status-dot--hard"></span> Difícil</button>' +
+          '</div></div>' +
+        '<div><div class="label-small">N.º questões</div>' +
+          '<select class="ai-select" id="mat8-teste-qtd"><option value="10">10</option><option value="15">15</option><option value="20">20</option></select></div>' +
+        '<div><div class="label-small">Tempo</div>' +
+          '<select class="ai-select" id="mat8-teste-tempo"><option value="600">10 min</option><option value="900">15 min</option><option value="1800">30 min</option></select></div>' +
+        '<button class="btn btn-primary" onclick="mat8TesteStart()">▶ Iniciar teste</button>' +
+      '</div>' +
+    '</div>';
+}
+
+function mat8TesteSetNivel(nivel, btn) {
+  _mat8Teste.nivel = nivel;
+  var grp = document.getElementById('mat8-teste-nivel');
+  if (grp) grp.querySelectorAll('.gen-level-btn').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+}
+
+function mat8TesteStart() {
+  var gen = _mat8Gerador(_mat8Teste.cap); if (!gen) return;
+  var qtdEl = document.getElementById('mat8-teste-qtd'), tempoEl = document.getElementById('mat8-teste-tempo');
+  _mat8Teste.qtd = qtdEl ? parseInt(qtdEl.value) : 10;
+  _mat8Teste.tempo = tempoEl ? parseInt(tempoEl.value) : 600;
+  var nTemas = _mat8TemasCount[_mat8Teste.cap] || 1;
+  var tipos = ['mc', 'fill', 'mc', 'vf', 'fill'];
+  var exs = [];
+  for (var i = 0; i < _mat8Teste.qtd; i++) {
+    var ex = gen(String((i % nTemas) + 1), tipos[i % tipos.length], _mat8Teste.nivel);
+    if (ex) exs.push(Object.assign({}, ex, { num: i + 1 }));
+  }
+  _mat8Teste.exs = exs; _mat8Teste.answered = {}; _mat8Teste.score = { correct: 0, total: 0 };
+  _mat8Teste.restante = _mat8Teste.tempo;
+
+  var app = document.getElementById('mat8-teste-app');
+  var quizHTML = (typeof _capBuildQuizHTML === 'function') ? _capBuildQuizHTML(exs, 'm8teste', 'mat8TesteCheck') : '';
+  app.innerHTML =
+    '<div class="exam-progress-bar" style="position:sticky;top:0;z-index:5;background:var(--surface);padding:.75rem;border-radius:12px;display:flex;align-items:center;gap:1rem;flex-wrap:wrap">' +
+      '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.8rem;font-weight:900" id="mat8-teste-timer">' + _mat8FmtTime(_mat8Teste.restante) + '</div>' +
+      '<div style="font-size:.78rem;color:var(--ink3)">Respondidas: <span id="mat8-teste-answered">0 / ' + _mat8Teste.qtd + '</span></div>' +
+      '<button class="btn btn-ghost ml-auto" onclick="mat8TesteFinish()">⏹ Terminar</button>' +
+    '</div>' +
+    '<div id="mat8-teste-questions" style="margin-top:1rem">' + quizHTML + '</div>';
+
+  _mat8Teste.timer = setInterval(function() {
+    _mat8Teste.restante--;
+    var t = document.getElementById('mat8-teste-timer');
+    if (t) t.textContent = _mat8FmtTime(_mat8Teste.restante);
+    if (_mat8Teste.restante <= 0) mat8TesteFinish();
+  }, 1000);
+}
+
+function _mat8FmtTime(s) {
+  var m = Math.floor(s / 60), sec = s % 60;
+  return (m < 10 ? '0' : '') + m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+function mat8TesteCheck(qid, tipo, val, btn) {
+  if (_mat8Teste.answered[qid]) return;
+  if (typeof _capCheckAnswer !== 'function') return;
+  var r = _capCheckAnswer(qid, tipo, val);
+  if (!r) return;
+  _mat8Teste.answered[qid] = true;
+  if (r.correct) _mat8Teste.score.correct++;
+  _mat8Teste.score.total++;
+  if (typeof _capShowFeedback === 'function') _capShowFeedback(qid, r.correct, r.expl, val, btn);
+  var a = document.getElementById('mat8-teste-answered');
+  if (a) a.textContent = _mat8Teste.score.total + ' / ' + _mat8Teste.qtd;
+  mat8SaveProgress(_mat8Teste.cap, r.correct);
+  if (_mat8Teste.score.total >= _mat8Teste.qtd) setTimeout(mat8TesteFinish, 600);
+}
+
+function mat8TesteFinish() {
+  if (_mat8Teste.timer) { clearInterval(_mat8Teste.timer); _mat8Teste.timer = null; }
+  var app = document.getElementById('mat8-teste-app');
+  if (!app) return;
+  var total = _mat8Teste.qtd;
+  var correct = _mat8Teste.score.correct;
+  var pct = total > 0 ? Math.round(correct / total * 100) : 0;
+  var nota = Math.round(correct / total * 20 * 10) / 10;
+  var emoji = pct >= 90 ? '🏆' : pct >= 70 ? '⭐' : pct >= 50 ? '👍' : '📚';
+  app.innerHTML =
+    '<div style="text-align:center;padding:2.5rem 1rem">' +
+      '<div style="font-size:3.5rem;margin-bottom:.75rem">' + emoji + '</div>' +
+      '<div style="font-family:\'Cormorant Garamond\',serif;font-size:2.2rem;font-weight:900;color:var(--ink)">' + nota + ' / 20</div>' +
+      '<div style="color:var(--ink3);margin:.5rem 0 1.5rem">' + correct + ' certas em ' + total + ' questões (' + pct + '%)</div>' +
+      '<button class="btn btn-primary" onclick="mat8TesteRenderConfig()">↺ Novo teste</button>' +
+    '</div>';
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SUB-MODO: JOGOS (reutiliza o motor genérico _j24AutoInit)
+   ════════════════════════════════════════════════════════════════ */
+var _mat8JogosInited = false;
+function mat8JogosInit() {
+  if (_mat8JogosInited) return;
+  if (typeof _j24AutoInit === 'function') {
+    _j24AutoInit('mat8-jogos-app', 'medio');
+    _mat8JogosInited = true;
+  } else {
+    var app = document.getElementById('mat8-jogos-app');
+    if (app) app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Jogos indisponíveis (motor não carregado).</p>';
+  }
 }
 
 // ═══ INIT ═══
