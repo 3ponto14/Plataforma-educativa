@@ -58,7 +58,14 @@ function buildEx2(tema,tipo,dif){
         expl:'Reduz ao mesmo denominador (mmc='+lcm+').\n'+fmtFrac(f1[0],f1[1])+' = '+fmtFrac(f1[0]*(lcm/f1[1]),lcm)+' e '+fmtFrac(f2[0],f2[1])+' = '+fmtFrac(f2[0]*(lcm/f2[1]),lcm)+'.\n'+fmtFrac(f1[0],f1[1])+' '+(v1<v2?'<':'>')+' '+fmtFrac(f2[0],f2[1])+' → afirmação '+(v1<v2?'VERDADEIRA':'FALSA')+'.'};
     }
     if(variant===1){
-      var fs=[randFracNZ(),randFracNZ(),randFracNZ()];
+      // garante 3 frações com valores DISTINTOS (evita "−1 < −1 < −1")
+      var fs=[],_vals={},_guard=0;
+      while(fs.length<3 && _guard<50){
+        var _f=randFracNZ(), _v=(_f[0]/_f[1]).toFixed(4);
+        if(!_vals[_v]){_vals[_v]=1;fs.push(_f);}
+        _guard++;
+      }
+      while(fs.length<3){fs.push([fs.length+1,1]);} // fallback defensivo
       var sorted=fs.slice().sort(function(a,b){return a[0]/a[1]-b[0]/b[1];});
       var correctStr=sorted.map(function(f){return fmtFrac(f[0],f[1]);}).join(' < ');
       var opts2=shuffle2([

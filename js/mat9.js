@@ -166,7 +166,7 @@ function mat9SwitchTab(tab, btn) {
 
   var titles = { resumo:'Teoria', praticar:'Praticar', fichas:'Fichas', progresso:'Progresso',
                  exercicios:'Exercícios', quiz:'Quiz', flashcards:'Flashcards', teste:'Teste', jogos:'Jogos' };
-  if (titles[tab]) document.title = 'Mat. 8.º ' + titles[tab] + ' · 3ponto14';
+  if (titles[tab]) document.title = 'Mat. 9.º ' + titles[tab] + ' · 3ponto14';
 
   if (tab === 'resumo') mat9BuildResumoNav();
   else if (tab === 'exercicios') mat9BuildPraticarNav();
@@ -505,7 +505,7 @@ function mat9SaveProgress(cap, correct) {
   } catch (e) {}
 }
 
-// Regista atividade no ProgressManager (XP + streak), com capId próprio do 8.º ano
+// Regista atividade no ProgressManager (XP + streak), com capId próprio do 9.º ano
 // ('m9capN') para não misturar com o progresso do 7.º ano.
 function _mat9PM(cap, tipo, opts) {
   if (typeof ProgressManager === 'undefined') return;
@@ -649,7 +649,7 @@ var _mat9Fc = { cap: 1, idx: 0, flipped: false, cards: [] };
 function mat9FcBuildNav() {
   // primeiro capítulo com cartões
   if (!(_mat9Cards[_mat9Fc.cap] && _mat9Cards[_mat9Fc.cap].length)) {
-    for (var c = 1; c <= 8; c++) { if (_mat9Cards[c] && _mat9Cards[c].length) { _mat9Fc.cap = c; break; } }
+    for (var c = 1; c <= _mat9CapMeta.length; c++) { if (_mat9Cards[c] && _mat9Cards[c].length) { _mat9Fc.cap = c; break; } }
   }
   // linha de capítulos: só os que têm cartões
   var row = document.getElementById('mat9-fc-cap-row');
@@ -858,7 +858,8 @@ function mat9JogosInit() {
    ════════════════════════════════════════════════════════════════ */
 function _mat9ProgGetCaps() {
   var out = [];
-  for (var cap = 1; cap <= 8; cap++) {
+  var nCaps = _mat9CapMeta.length;
+  for (var cap = 1; cap <= nCaps; cap++) {
     var correct = 0, total = 0;
     try {
       var d = JSON.parse(localStorage.getItem('edupt_mat9_cap' + cap) || '{}');
@@ -895,7 +896,7 @@ function mat9RenderProgresso() {
      + '<button onclick="mat9ProgDownloadPDF()" style="font-family:inherit;font-size:.82rem;font-weight:700;color:#8b3a35;background:none;border:none;cursor:pointer;text-decoration:underline;padding:0">Guarda o relatório PDF</button> para o manteres.</span>'
      + '</div>';
 
-  // Resumo global (gradiente índigo do 8.º ano)
+  // Resumo global (gradiente terracota do 9.º ano)
   h += '<div style="background:var(--m9c1-base);border:1.5px solid var(--m9c1-mid);border-radius:16px;padding:1.1rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap">'
      +   '<div style="width:52px;height:52px;border-radius:50%;background:var(--m9c1-mid);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ph ' + icon + '" style="font-size:1.4rem;color:#fff"></i></div>'
      +   '<div style="flex:1;min-width:180px">'
@@ -905,7 +906,7 @@ function mat9RenderProgresso() {
      +   '<button class="btn btn-ghost" onclick="mat9ProgDownloadPDF()" style="font-size:.78rem;padding:7px 14px;display:inline-flex;align-items:center;gap:5px"><i class="ph ph-file-text"></i>Relatório PDF</button>'
      + '</div>';
 
-  // XP + streak do ProgressManager (apenas dos capítulos do 8.º ano)
+  // XP + streak do ProgressManager (apenas dos capítulos do 9.º ano)
   var pmXp = 0, pmStreak = 0;
   if (typeof ProgressManager !== 'undefined') {
     try {
@@ -971,9 +972,9 @@ function mat9TreinarCap(cap) {
 }
 
 function mat9ProgReset() {
-  if (typeof window !== 'undefined' && window.confirm && !window.confirm('Limpar todo o progresso do 8.º ano? Esta ação não pode ser desfeita.')) return;
-  for (var cap = 1; cap <= 8; cap++) { try { localStorage.removeItem('edupt_mat9_cap' + cap); } catch (e) {} }
-  // Remove só os capítulos do 8.º ano (m9cap*) do ProgressManager, preservando o 7.º.
+  if (typeof window !== 'undefined' && window.confirm && !window.confirm('Limpar todo o progresso do 9.º ano? Esta ação não pode ser desfeita.')) return;
+  for (var cap = 1; cap <= _mat9CapMeta.length; cap++) { try { localStorage.removeItem('edupt_mat9_cap' + cap); } catch (e) {} }
+  // Remove só os capítulos do 9.º ano (m9cap*) do ProgressManager, preservando os outros anos.
   try {
     var raw = localStorage.getItem('edupt_progress_v2');
     if (raw) {
@@ -983,7 +984,7 @@ function mat9ProgReset() {
     }
   } catch (e) {}
   mat9RenderProgresso();
-  if (typeof eduToast === 'function') eduToast('Progresso do 8.º ano limpo.', 'ok');
+  if (typeof eduToast === 'function') eduToast('Progresso do 9.º ano limpo.', 'ok');
 }
 
 function mat9ProgDownloadPDF() {
@@ -998,7 +999,7 @@ function mat9ProgDownloadPDF() {
       + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.total > 0 ? c.pct + '%' : '—') + '</td></tr>';
   }).join('');
   var html = '<div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;padding:24px">'
-    + '<h1 style="font-size:20px;margin:0 0 4px">Relatório de Progresso · Matemática 8.º Ano</h1>'
+    + '<h1 style="font-size:20px;margin:0 0 4px">Relatório de Progresso · Matemática 9.º Ano</h1>'
     + '<div style="color:#666;font-size:13px;margin-bottom:16px">3ponto14 · ' + new Date().toLocaleString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' }) + '</div>'
     + '<div style="background:#eef3f9;border:1px solid #5a7fa8;border-radius:8px;padding:12px 16px;margin-bottom:16px">'
     + '<strong>Taxa global:</strong> ' + (totalT > 0 ? globalPct + '%' : '—') + ' &nbsp;·&nbsp; ' + totalC + ' certas em ' + totalT + ' questões.</div>'
@@ -1183,7 +1184,7 @@ function mat9gfGerar(formato) {
   var nomesCaps = capsSel.map(function(c) { return _mat9CapMeta[c - 1].label; }).join(', ');
   var html = '<div style="font-family:Arial,sans-serif;max-width:740px;margin:0 auto;padding:24px;color:#222">'
     + '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #36527a;padding-bottom:8px;margin-bottom:14px">'
-    + '<div><h1 style="font-size:18px;margin:0">Ficha de Trabalho · Matemática 8.º Ano</h1>'
+    + '<div><h1 style="font-size:18px;margin:0">Ficha de Trabalho · Matemática 9.º Ano</h1>'
     + '<div style="font-size:11.5px;color:#666">' + nomesCaps + ' · Nível ' + difLabel + '</div></div>'
     + '<div style="font-size:11.5px;color:#888">3ponto14</div></div>'
     + '<div style="font-size:11.5px;color:#666;margin-bottom:12px">Nome: ____________________________  Data: ____ / ____ / ______</div>'

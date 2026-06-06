@@ -380,7 +380,6 @@ function buildEx4(tema,dif){
         // Fácil: ax = b (1 passo)
         var sol=r4(2,8),a=r4(2,4),rhs=a*sol;
         return{en:'Resolve a equação: '+a+'x = '+rhs,
-          visual: svgBalanca(a+'x', String(rhs)),
           opts:sh4(['A) x = '+sol,'B) x = '+(sol+1),'C) x = '+(a+rhs),'D) x = '+(sol-1)]),
           c:'A) x = '+sol,fb:a+'x = '+rhs+'\nx = '+rhs+' ÷ '+a+' = '+sol+'.\nVerificação: '+a+'×'+sol+' = '+rhs+' ✓'};
       }
@@ -403,7 +402,6 @@ function buildEx4(tema,dif){
         // Médio: ax + b = c (2 passos)
         var sol=r4(2,8),a=r4(2,4),b=r4(1,8),rhs=a*sol+b;
         return{en:'Resolve: '+a+'x + '+b+' = '+rhs,
-          visual: svgBalanca(a+'x + '+b, String(rhs)),
           opts:sh4(['A) x = '+sol,'B) x = '+(sol+1),'C) x = '+Math.round((rhs+b)/a),'D) x = '+(sol-1)]),
           c:'A) x = '+sol,fb:a+'x + '+b+' = '+rhs+'\n'+a+'x = '+rhs+' − '+b+' = '+(rhs-b)+'\nx = '+(rhs-b)+' ÷ '+a+' = '+sol+'.\nVerificação: '+a+'×'+sol+'+'+b+'='+rhs+' ✓'};
       }
