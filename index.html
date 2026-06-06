@@ -65,74 +65,77 @@
 <!-- Cards de acesso -->
 <div class="portal-section" id="portal-catalogo">
 
-  <!-- Barra de pesquisa -->
+  <!-- Pesquisa -->
   <div class="portal-search">
     <i class="ph ph-magnifying-glass portal-search-icon"></i>
-    <input type="text" id="portal-search-input" placeholder="Pesquisar ano ou disciplina… (ex: 8.º, frações, Português)" autocomplete="off" oninput="portalSearch(this.value)">
+    <input type="text" id="portal-search-input" placeholder="Pesquisar… (ex: 8.º, frações, Os Lusíadas, derivadas)" autocomplete="off" oninput="portalSearch()">
   </div>
 
-  <!-- 2.º Ciclo -->
-  <div class="portal-cycle" data-cycle="2.º Ciclo">
-    <div class="portal-cycle-head"><span class="portal-cycle-title">2.º Ciclo</span><span class="portal-cycle-sub">Matemática</span></div>
-    <div class="portal-year-grid">
-      <button class="portal-year-card y5" onclick="showMat5View()" data-search="5.º ano matemática números naturais frações decimais percentagens figuras sólidos sequências dados">
-        <div class="portal-year-icon"><i class="ph ph-plus-minus"></i></div>
-        <div class="portal-year-body"><div class="portal-year-title">5.º Ano</div><div class="portal-year-meta">Matemática · 7 capítulos</div></div>
-        <i class="ph ph-arrow-right portal-year-arrow"></i>
-      </button>
-      <button class="portal-year-card y6" onclick="showMat6View()" data-search="6.º ano matemática primos divisibilidade frações potências racionais perímetros áreas volumes proporcionalidade dados">
-        <div class="portal-year-icon"><i class="ph ph-divide"></i></div>
-        <div class="portal-year-body"><div class="portal-year-title">6.º Ano</div><div class="portal-year-meta">Matemática · 7 capítulos</div></div>
-        <i class="ph ph-arrow-right portal-year-arrow"></i>
-      </button>
+  <!-- Filtros: disciplina + ano -->
+  <div class="portal-filters">
+    <div class="portal-filter-row" id="portal-filter-disc">
+      <span class="portal-filter-label">Disciplina</span>
+      <button class="portal-chip active" data-disc="" onclick="portalSetFilter('disc','',this)">Todas</button>
+      <button class="portal-chip" data-disc="matematica" onclick="portalSetFilter('disc','matematica',this)">Matemática</button>
+      <button class="portal-chip" data-disc="portugues" onclick="portalSetFilter('disc','portugues',this)">Português</button>
+    </div>
+    <div class="portal-filter-row" id="portal-filter-ano">
+      <span class="portal-filter-label">Ano</span>
+      <button class="portal-chip active" data-ano="" onclick="portalSetFilter('ano','',this)">Todos</button>
+      <button class="portal-chip" data-ano="5" onclick="portalSetFilter('ano','5',this)">5.º</button>
+      <button class="portal-chip" data-ano="6" onclick="portalSetFilter('ano','6',this)">6.º</button>
+      <button class="portal-chip" data-ano="7" onclick="portalSetFilter('ano','7',this)">7.º</button>
+      <button class="portal-chip" data-ano="8" onclick="portalSetFilter('ano','8',this)">8.º</button>
+      <button class="portal-chip" data-ano="9" onclick="portalSetFilter('ano','9',this)">9.º</button>
+      <button class="portal-chip" data-ano="12" onclick="portalSetFilter('ano','12',this)">12.º</button>
     </div>
   </div>
 
-  <!-- 3.º Ciclo -->
-  <div class="portal-cycle" data-cycle="3.º Ciclo">
-    <div class="portal-cycle-head"><span class="portal-cycle-title">3.º Ciclo</span><span class="portal-cycle-sub">Matemática</span></div>
-    <div class="portal-year-grid">
-      <button class="portal-year-card y7" onclick="showMat7View()" data-search="7.º ano matemática números inteiros racionais geometria equações sequências funções figuras semelhantes dados">
-        <div class="portal-year-icon"><i class="ph ph-calculator"></i></div>
-        <div class="portal-year-body"><div class="portal-year-title">7.º Ano</div><div class="portal-year-meta">Matemática · 8 capítulos</div></div>
-        <i class="ph ph-arrow-right portal-year-arrow"></i>
-      </button>
-      <button class="portal-year-card y8" onclick="showMat8View()" data-search="8.º ano matemática números vetores polinómios pitágoras funções sistemas volumes probabilidades">
-        <div class="portal-year-icon"><i class="ph ph-function"></i></div>
-        <div class="portal-year-body"><div class="portal-year-title">8.º Ano</div><div class="portal-year-meta">Matemática · 8 capítulos</div></div>
-        <i class="ph ph-arrow-right portal-year-arrow"></i>
-      </button>
-      <button class="portal-year-card y9" onclick="showMat9View()" data-search="9.º ano matemática reais inequações equações 2.º grau funções trigonometria circunferência probabilidades estatística">
-        <div class="portal-year-icon"><i class="ph ph-chart-line-up"></i></div>
-        <div class="portal-year-body"><div class="portal-year-title">9.º Ano</div><div class="portal-year-meta">Matemática · 6 capítulos</div></div>
-        <i class="ph ph-arrow-right portal-year-arrow"></i>
-      </button>
-    </div>
+  <!-- Grelha única de cards (filtrável por disciplina, ano e pesquisa) -->
+  <div class="portal-year-grid" id="portal-grid">
+    <button class="portal-year-card y5" onclick="showMat5View()" data-disc="matematica" data-ano="5" data-search="5.º ano matemática números naturais frações decimais percentagens figuras sólidos sequências dados 2.º ciclo">
+      <div class="portal-year-icon"><i class="ph ph-plus-minus"></i></div>
+      <div class="portal-year-body"><div class="portal-year-title">5.º Ano</div><div class="portal-year-meta">Matemática · 7 capítulos</div></div>
+      <i class="ph ph-arrow-right portal-year-arrow"></i>
+    </button>
+    <button class="portal-year-card y6" onclick="showMat6View()" data-disc="matematica" data-ano="6" data-search="6.º ano matemática primos divisibilidade frações potências racionais perímetros áreas volumes proporcionalidade dados 2.º ciclo">
+      <div class="portal-year-icon"><i class="ph ph-divide"></i></div>
+      <div class="portal-year-body"><div class="portal-year-title">6.º Ano</div><div class="portal-year-meta">Matemática · 7 capítulos</div></div>
+      <i class="ph ph-arrow-right portal-year-arrow"></i>
+    </button>
+    <button class="portal-year-card y7" onclick="showMat7View()" data-disc="matematica" data-ano="7" data-search="7.º ano matemática números inteiros racionais geometria equações sequências funções figuras semelhantes dados 3.º ciclo">
+      <div class="portal-year-icon"><i class="ph ph-calculator"></i></div>
+      <div class="portal-year-body"><div class="portal-year-title">7.º Ano</div><div class="portal-year-meta">Matemática · 8 capítulos</div></div>
+      <i class="ph ph-arrow-right portal-year-arrow"></i>
+    </button>
+    <button class="portal-year-card y8" onclick="showMat8View()" data-disc="matematica" data-ano="8" data-search="8.º ano matemática números vetores polinómios pitágoras funções sistemas volumes probabilidades 3.º ciclo">
+      <div class="portal-year-icon"><i class="ph ph-function"></i></div>
+      <div class="portal-year-body"><div class="portal-year-title">8.º Ano</div><div class="portal-year-meta">Matemática · 8 capítulos</div></div>
+      <i class="ph ph-arrow-right portal-year-arrow"></i>
+    </button>
+    <button class="portal-year-card y9" onclick="showMat9View()" data-disc="matematica" data-ano="9" data-search="9.º ano matemática reais inequações equações 2.º grau funções trigonometria circunferência probabilidades estatística 3.º ciclo">
+      <div class="portal-year-icon"><i class="ph ph-chart-line-up"></i></div>
+      <div class="portal-year-body"><div class="portal-year-title">9.º Ano</div><div class="portal-year-meta">Matemática · 6 capítulos</div></div>
+      <i class="ph ph-arrow-right portal-year-arrow"></i>
+    </button>
+    <button class="portal-year-card yex" onclick="window.location.href='exames.html'" data-disc="matematica" data-ano="9" data-search="exames nacionais 9.º ano matemática provas finais questões reais simulador">
+      <div class="portal-year-icon"><i class="ph ph-exam"></i></div>
+      <div class="portal-year-body"><div class="portal-year-title">Exames · Mat. 9.º</div><div class="portal-year-meta">Provas 2019–2024 · 147+ questões</div></div>
+      <i class="ph ph-arrow-right portal-year-arrow"></i>
+    </button>
+    <button class="portal-year-card ypt" onclick="window.location.href='exames-pt.html'" data-disc="portugues" data-ano="9" data-search="exames nacionais 9.º ano português provas finais compreensão gramática lusíadas figuras de estilo composição">
+      <div class="portal-year-icon"><i class="ph ph-book-open-text"></i></div>
+      <div class="portal-year-body"><div class="portal-year-title">Exames · Port. 9.º</div><div class="portal-year-meta">Provas finais · Os Lusíadas</div></div>
+      <i class="ph ph-arrow-right portal-year-arrow"></i>
+    </button>
+    <button class="portal-year-card yex" onclick="window.location.href='exames12.html'" data-disc="matematica" data-ano="12" data-search="exames nacionais 12.º ano matemática a derivadas geometria probabilidades funções sucessões trigonometria secundário">
+      <div class="portal-year-icon"><i class="ph ph-exam"></i></div>
+      <div class="portal-year-body"><div class="portal-year-title">Exames · Mat. A 12.º</div><div class="portal-year-meta">Provas 2020–2025 · 13 temas</div></div>
+      <i class="ph ph-arrow-right portal-year-arrow"></i>
+    </button>
   </div>
 
-  <!-- Exames Nacionais -->
-  <div class="portal-cycle" data-cycle="Exames Nacionais">
-    <div class="portal-cycle-head"><span class="portal-cycle-title">Exames Nacionais</span><span class="portal-cycle-sub">Provas reais · simulador</span></div>
-    <div class="portal-year-grid">
-      <button class="portal-year-card yex" onclick="window.location.href='exames.html'" data-search="exames nacionais 9.º ano matemática provas finais questões reais simulador">
-        <div class="portal-year-icon"><i class="ph ph-exam"></i></div>
-        <div class="portal-year-body"><div class="portal-year-title">Matemática · 9.º</div><div class="portal-year-meta">Provas 2019–2024 · 147+ questões</div></div>
-        <i class="ph ph-arrow-right portal-year-arrow"></i>
-      </button>
-      <button class="portal-year-card ypt" onclick="window.location.href='exames-pt.html'" data-search="exames nacionais 9.º ano português provas finais compreensão gramática lusíadas figuras de estilo composição">
-        <div class="portal-year-icon"><i class="ph ph-book-open-text"></i></div>
-        <div class="portal-year-body"><div class="portal-year-title">Português · 9.º</div><div class="portal-year-meta">Provas finais · Os Lusíadas</div></div>
-        <i class="ph ph-arrow-right portal-year-arrow"></i>
-      </button>
-      <button class="portal-year-card yex" onclick="window.location.href='exames12.html'" data-search="exames nacionais 12.º ano matemática a derivadas geometria probabilidades funções sucessões trigonometria">
-        <div class="portal-year-icon"><i class="ph ph-exam"></i></div>
-        <div class="portal-year-body"><div class="portal-year-title">Matemática A · 12.º</div><div class="portal-year-meta">Provas 2020–2025 · 13 temas</div></div>
-        <i class="ph ph-arrow-right portal-year-arrow"></i>
-      </button>
-    </div>
-  </div>
-
-  <div class="portal-no-results" id="portal-no-results">Nenhum resultado para a pesquisa. Tenta outro termo.</div>
+  <div class="portal-no-results" id="portal-no-results">Nenhum resultado. Tenta outro termo ou limpa os filtros.</div>
 
 </div>
 

@@ -183,27 +183,40 @@ function portalRenderProgress() {
     + '</div>';
 }
 
-// ═══ Pesquisa do portal ═══
-// Filtra os cards de ano/exame pelo texto e esconde os grupos (ciclos) vazios.
-function portalSearch(q) {
-  var termo = (q || '').toLowerCase().trim();
+// ═══ Catálogo do portal: pesquisa + filtros (disciplina, ano) ═══
+var _portalFilters = { disc: '', ano: '', q: '' };
+
+// Define um filtro (disc ou ano) e atualiza o chip ativo, depois re-filtra.
+function portalSetFilter(tipo, valor, btn) {
+  _portalFilters[tipo] = valor;
+  // ativa só o chip clicado dentro da sua linha
+  var rowId = tipo === 'disc' ? 'portal-filter-disc' : 'portal-filter-ano';
+  var row = document.getElementById(rowId);
+  if (row) row.querySelectorAll('.portal-chip').forEach(function(c) { c.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  portalSearch();
+}
+
+// Aplica pesquisa + filtros aos cards. Chamada pelo input e pelos chips.
+function portalSearch() {
+  var input = document.getElementById('portal-search-input');
+  _portalFilters.q = input ? input.value.toLowerCase().trim() : '';
+  var f = _portalFilters;
   var cards = document.querySelectorAll('.portal-year-card');
-  var totalVisiveis = 0;
+  var visiveis = 0;
   cards.forEach(function(card) {
-    var hay = (card.getAttribute('data-search') || '') + ' ' + card.textContent;
-    var match = termo === '' || hay.toLowerCase().indexOf(termo) !== -1;
+    var disc = card.getAttribute('data-disc') || '';
+    var ano = card.getAttribute('data-ano') || '';
+    var hay = ((card.getAttribute('data-search') || '') + ' ' + card.textContent).toLowerCase();
+    var okDisc = f.disc === '' || disc === f.disc;
+    var okAno = f.ano === '' || ano === f.ano;
+    var okQ = f.q === '' || hay.indexOf(f.q) !== -1;
+    var match = okDisc && okAno && okQ;
     card.style.display = match ? '' : 'none';
-    if (match) totalVisiveis++;
-  });
-  // esconde cabeçalhos de ciclo sem cards visíveis
-  document.querySelectorAll('.portal-cycle').forEach(function(cycle) {
-    var visiveis = cycle.querySelectorAll('.portal-year-card');
-    var algum = false;
-    visiveis.forEach(function(c) { if (c.style.display !== 'none') algum = true; });
-    cycle.style.display = algum ? '' : 'none';
+    if (match) visiveis++;
   });
   var noRes = document.getElementById('portal-no-results');
-  if (noRes) noRes.style.display = (totalVisiveis === 0 && termo !== '') ? 'block' : 'none';
+  if (noRes) noRes.style.display = (visiveis === 0) ? 'block' : 'none';
 }
 
 // ═══ AUTO-INIT ═══
