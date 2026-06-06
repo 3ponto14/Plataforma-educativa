@@ -2988,10 +2988,13 @@ body.dark-mode .portal-card:hover {
 /* ── Grid de cards de curso (7.º + 8.º lado a lado) ── */
 .portal-main-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
-@media (max-width: 640px) {
+@media (max-width: 900px) {
+  .portal-main-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
   .portal-main-grid { grid-template-columns: 1fr; }
 }
 

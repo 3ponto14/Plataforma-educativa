@@ -1391,11 +1391,20 @@ function buildEx_m9c2(tema, tipo, dif) {
     var r1 = rnd_m81(-5, 6), r2 = rnd_m81(-5, 6);
     var bC = -(r1 + r2), cC = r1 * r2;
     var eqn = 'x' + sup_m81(2) + ' ' + (bC >= 0 ? '+ ' + bC : '− ' + Math.abs(bC)) + 'x ' + (cC >= 0 ? '+ ' + cC : '− ' + Math.abs(cC)) + ' = 0';
-    var sols = (r1 === r2) ? ('x = ' + r1) : ('x = ' + Math.min(r1, r2) + ' ou x = ' + Math.max(r1, r2));
+    var lo = Math.min(r1, r2), hi = Math.max(r1, r2);
+    var sols = (r1 === r2) ? ('x = ' + r1) : ('x = ' + lo + ' ou x = ' + hi);
     if (tipo === 'mc') {
-      var distract = ['x = ' + (r1 + 1) + ' ou x = ' + r2, 'x = ' + (-r1) + ' ou x = ' + (-r2), 'x = ' + r1 + ' ou x = ' + (r2 + 1)];
-      var opts = shuffle_m81([sols].concat(distract)).slice(0, 4);
-      if (opts.indexOf(sols) === -1) opts[0] = sols;
+      // distratores garantidamente únicos e diferentes da resposta
+      function _pair(a, b) { var x = Math.min(a, b), y = Math.max(a, b); return (x === y) ? ('x = ' + x) : ('x = ' + x + ' ou x = ' + y); }
+      var cand = [_pair(lo + 1, hi), _pair(lo, hi + 1), _pair(-lo, -hi), _pair(lo - 1, hi), _pair(lo, hi - 1)];
+      var opts = [sols];
+      for (var di = 0; di < cand.length && opts.length < 4; di++) {
+        if (opts.indexOf(cand[di]) === -1) opts.push(cand[di]);
+      }
+      // se ainda faltarem (caso raro), preenche com pares afastados
+      var bump = 2;
+      while (opts.length < 4) { var c2 = _pair(lo + bump, hi + bump); if (opts.indexOf(c2) === -1) opts.push(c2); bump++; }
+      opts = shuffle_m81(opts);
       return {
         enun: 'Resolve a equação <strong>' + eqn + '</strong>',
         tipo: 'mc', opcoes: opts, resposta: sols,

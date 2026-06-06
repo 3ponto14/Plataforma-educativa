@@ -2339,8 +2339,17 @@ function buildEx_m88(tema, tipo, dif) {
     Object.keys(freq).forEach(function (k) { if (freq[k] === maxF) ties++; });
     if (ties > 1) { arr2.push(moda); } // reforça
     if (tipo === 'mc') {
-      var distintos = Object.keys(freq).map(Number);
-      var opts2 = shuffle_m81([moda].concat(distintos.filter(function (v) { return v !== moda; }))).slice(0, 4).map(String);
+      var distintos = Object.keys(freq).map(Number).filter(function (v) { return v !== moda; });
+      var opts2arr = [moda].concat(shuffle_m81(distintos));
+      // garante 4 opções únicas, preenchendo com valores próximos da moda
+      var extra = 1;
+      while (opts2arr.length < 4) {
+        var cand = moda + extra; if (opts2arr.indexOf(cand) === -1 && cand > 0) opts2arr.push(cand);
+        var cand2 = moda - extra; if (opts2arr.length < 4 && opts2arr.indexOf(cand2) === -1 && cand2 > 0) opts2arr.push(cand2);
+        extra++;
+        if (extra > 20) break;
+      }
+      var opts2 = shuffle_m81(opts2arr.slice(0, 4)).map(String);
       if (opts2.indexOf(String(moda)) === -1) opts2[0] = String(moda);
       return {
         enun: 'Qual é a moda do conjunto: <strong>' + arr2.join(', ') + '</strong>?',
