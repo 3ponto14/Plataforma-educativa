@@ -160,6 +160,21 @@ There are no tests, no linter, and no CI/CD pipeline. **Always verify changes vi
 5. **Duplicating logic** that already exists in a shared helper — check the Shared Helpers table
 6. **Loading scripts in wrong order** — `shared.js` first, `nav.js` last, always
 
+## ⛔ REGRA DE OURO — Organização por HUB, NUNCA por páginas-capítulo (OBRIGATÓRIO)
+
+**Cada curso (mat7, mat8, futuros anos) é UM ÚNICO HUB (`matN/index.html`). NUNCA criar páginas separadas por capítulo (`capN.html`) para o aluno navegar.**
+
+O modelo correto e único é o do 7.º ano (`mat7/index.html` + `mat7.js`):
+
+- **Um hub** com uma **tab bar fixa no topo**: **Teoria · Praticar · Fichas · Progresso** (a tab "Praticar" abre Exercícios, Quiz, Flashcards, Teste, Jogos).
+- Dentro de cada tab, os **capítulos são apenas BOTÕES DE SELEÇÃO** (chips/pills: "Números Inteiros", "Racionais"…). O aluno escolhe o capítulo, depois o **subtema**, e o conteúdo aparece **no mesmo painel** (renderizado por JS).
+- A tab **Teoria** mostra cards (Definição, Regra, Hierarquia…) agrupados por tag, vindos das flashcards de cada capítulo (`mat7RenderResumoInline()`).
+- **NÃO** há, e NÃO se cria, nada do tipo `mat7/cap2.html`, `mat8/cap1.html`, `view-mathN`, `chapter-nav-bar`, tabs por-capítulo (`tabs2`, `showSection2`), nem `goToChapter()` que salte entre páginas de capítulo. Esse era o modelo ANTIGO e está PROIBIDO para conteúdo novo.
+
+**Se encontrares código/páginas organizados por capítulo separado para um curso novo: ELIMINA e refaz como hub.** As páginas `mat7/cap1.html`–`cap8.html` legadas existem por razões históricas, mas o hub `mat7/index.html` é o que o aluno usa — espelha SEMPRE o hub.
+
+**Ao adicionar um novo curso (ex: mat8):** copia o par `mat7/index.html` + `js/mat7.js`, adapta os capítulos/subtemas/flashcards ao novo ano, num `mat8.js` próprio. NÃO refatorar o mat7 (risco). Ver "How to Add a New Course".
+
 ## How to Add a New Chapter
 
 Adding a new chapter (e.g., cap5) requires 3 files: one HTML page, one JS file, and CSS color variables.

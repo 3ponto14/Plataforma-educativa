@@ -27,17 +27,9 @@ var showPortalFromMat7 = showPortalView;
 /* ── Mat7 hub ── */
 function showMat7View() { window.location.href = _mat7Path + 'index.html'; }
 
-/* ── Mat8 hub + chapters ── */
+/* ── Mat8 hub (único, sem páginas por capítulo) ── */
 function showMat8View()  { window.location.href = _mat8Path + 'index.html'; }
-function showMath8View1(){ window.location.href = _mat8Path + 'cap1.html'; }
-function showMath8View2(){ window.location.href = _mat8Path + 'cap2.html'; }
-function showMath8View3(){ window.location.href = _mat8Path + 'cap3.html'; }
-function showMath8View4(){ window.location.href = _mat8Path + 'cap4.html'; }
-function showMath8View5(){ window.location.href = _mat8Path + 'cap5.html'; }
-function showMath8View6(){ window.location.href = _mat8Path + 'cap6.html'; }
-function showMath8View7(){ window.location.href = _mat8Path + 'cap7.html'; }
-function showMath8View8(){ window.location.href = _mat8Path + 'cap8.html'; }
-function goToChapter8(n){ window.location.href = _mat8Path + 'cap' + n + '.html'; }
+function showPortalFromMat8() { showPortalView(); }
 
 /* ── Chapter pages ── */
 function showMathView()  { window.location.href = _mat7Path + 'cap1.html'; }

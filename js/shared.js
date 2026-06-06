@@ -1514,17 +1514,13 @@ function _qgBuildQuestion(cap) {
     var idx = Math.floor(Math.random() * pool.length);
     return pool[idx];
   }
-  // Capítulos do mat8 (cap >= 11): usa o gerador registado em CAP_DATA[cap].
-  var cfg8 = (cap >= 11 && window.CAP_DATA && window.CAP_DATA[cap]) ? window.CAP_DATA[cap] : null;
-  var temas = cfg8 && cfg8.temas && cfg8.temas.length
-    ? cfg8.temas.map(function(_, i){ return String(i + 1); })
-    : ['1','2','3','4','5'];
+  // Procedural for caps 1–4
+  var temas = ['1','2','3','4','5'];
   var tema = temas[Math.floor(Math.random() * temas.length)];
   var ex = null;
-  for (var i = 0; i < 12; i++) {
+  for (var i = 0; i < 10; i++) {
     tema = temas[Math.floor(Math.random() * temas.length)];
-    if (cfg8 && typeof cfg8.buildExercicio === 'function') ex = cfg8.buildExercicio(tema, 'mc', 'medio');
-    else if (cap === 4 && typeof buildEx4 === 'function') ex = buildEx4(tema, 'medio');
+    if (cap === 4 && typeof buildEx4 === 'function') ex = buildEx4(tema, 'medio');
     else if (cap === 3 && typeof buildEx3 === 'function') ex = buildEx3(tema, 'mc', 'medio');
     else if (cap === 2 && typeof buildEx2 === 'function') ex = buildEx2(tema, 'mc', 'medio');
     else if (typeof buildExercicio === 'function') ex = buildExercicio(tema, 'mc', -12, 12, 1, 'medio');
@@ -1630,44 +1626,23 @@ function qgStartForCap(cap) {
 }
 
 // ═══ CHAPTER NAV BAR generated from data ═══
-// Capítulos do 8.º ano usam data-cap 11..18 (CAP_DATA namespace mat8).
 function _buildChapterNav(activeCap) {
-  var isMat8 = activeCap >= 11;
-  var caps, backFn, goFn, offset;
-  if (isMat8) {
-    caps = [
-      {n:11, label:'Números'},
-      {n:12, label:'Vetores e Isometrias'},
-      {n:13, label:'Polinómios e Equações'},
-      {n:14, label:'Teorema de Pitágoras'},
-      {n:15, label:'Equações Literais e Funções'},
-      {n:16, label:'Sistemas de Equações'},
-      {n:17, label:'Figuras no Espaço e Volumes'},
-      {n:18, label:'Dados e Probabilidades'}
-    ];
-    backFn = 'showMat8View()';
-    offset = 10; // capítulo real = n - 10
-  } else {
-    caps = [
-      {n:1, label:'Números Inteiros'},
-      {n:2, label:'Números Racionais'},
-      {n:3, label:'Geometria'},
-      {n:4, label:'Equações'},
-      {n:5, label:'Sequências'},
-      {n:6, label:'Funções'},
-      {n:7, label:'Figuras Semelhantes'},
-      {n:8, label:'Dados e Prob.'}
-    ];
-    backFn = 'showMat7View()';
-    offset = 0;
-  }
-  var h = '<button class="ch-back-link" onclick="'+backFn+'">← Capítulos</button><div class="ch-nav-divider"></div>';
+  var caps = [
+    {n:1, label:'Números Inteiros'},
+    {n:2, label:'Números Racionais'},
+    {n:3, label:'Geometria'},
+    {n:4, label:'Equações'},
+    {n:5, label:'Sequências'},
+    {n:6, label:'Funções'},
+    {n:7, label:'Figuras Semelhantes'},
+    {n:8, label:'Dados e Prob.'}
+  ];
+  var h = '<button class="ch-back-link" onclick="showMat7View()">← Capítulos</button><div class="ch-nav-divider"></div>';
   caps.forEach(function(c) {
-    var onclick = isMat8 ? ('goToChapter8('+(c.n-offset)+')') : ('goToChapter('+c.n+')');
     if (c.locked) {
       h += '<button class="ch-nav-btn locked" data-target-ch="'+c.n+'" title="Em breve"><span class="ch-progress">○</span> '+c.label+'</button>';
     } else {
-      h += '<button class="ch-nav-btn'+(c.n===activeCap?' active':'')+'" data-target-ch="'+c.n+'" onclick="'+onclick+'"><span class="ch-progress" id="progress-indicator-'+c.n+'">'+(c.n===activeCap?'●':'○')+'</span> '+c.label+'</button>';
+      h += '<button class="ch-nav-btn'+(c.n===activeCap?' active':'')+'" data-target-ch="'+c.n+'" onclick="goToChapter('+c.n+')"><span class="ch-progress" id="progress-indicator-'+c.n+'">'+(c.n===activeCap?'●':'○')+'</span> '+c.label+'</button>';
     }
   });
   return h;

@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Hub de estudo de Matemática 8.º ano: teoria, exercícios interativos, jogos, quizzes e progresso para todos os 8 capítulos do programa.">
+<meta name="description" content="Hub de estudo de Matemática 8.º ano: teoria, exercícios, fichas e progresso para todos os 8 capítulos do programa.">
 <meta name="theme-color" content="#36527a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta property="og:title" content="3ponto14 · Matemática 8.º Ano">
-<meta property="og:description" content="Recursos interativos com exercícios práticos de Matemática 8.º ano: fichas, jogos, quizzes e preparação.">
+<meta property="og:description" content="Recursos interativos com exercícios práticos de Matemática 8.º ano.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_PT">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2336527a'/><text x='50' y='68' font-size='48' font-weight='900' text-anchor='middle' fill='white' font-family='serif'>eP</text></svg>">
@@ -23,7 +23,9 @@
 <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">↑</button>
 <div class="section-indicator" id="sectionIndicator"></div>
 
-<!-- ══════════ TOPBAR ══════════ -->
+<div id="view-mat8" class="math-view active">
+
+<!-- ── Topbar unificada ── -->
 <nav class="site-topbar">
   <a href="../index.html" class="site-topbar-logo">
     <div class="mark">3π</div>
@@ -32,107 +34,76 @@
   <div class="site-topbar-sep"></div>
   <span class="site-topbar-title">Matemática 8.º Ano</span>
   <div class="site-topbar-actions"></div>
-  <button class="site-topbar-back" onclick="showPortalView()"><i class="ph ph-arrow-left"></i> Início</button>
+  <button class="site-topbar-back" onclick="showPortalFromMat8()"><i class="ph ph-arrow-left"></i> Início</button>
 </nav>
 
-<!-- ══════════ HERO ══════════ -->
-<section class="portal-hero">
-  <div class="portal-hero-inner">
-    <div class="portal-hero-brand"><em>3</em>ponto<em>14</em></div>
-    <h1 class="portal-hero-title">Matemática 8.º Ano</h1>
-    <p class="portal-hero-sub">Escolhe um capítulo para estudar. Cada um tem teoria, exercícios interativos com níveis, minitestes, jogos, flashcards e acompanhamento de progresso.</p>
+<!-- ── Tab bar 4 tabs ── -->
+<div class="mat7-hub-tabbar" id="mat8-hub-tabbar">
+  <button class="mat7-hub-tab active" data-tab="resumo"    onclick="mat8SwitchTab('resumo',this)">   <span class="mat7-hub-tab-icon"><i class="ph ph-book-open-text"></i></span> Teoria</button>
+  <button class="mat7-hub-tab"        data-tab="praticar"  onclick="mat8SwitchTab('praticar',this)"> <span class="mat7-hub-tab-icon"><i class="ph ph-pencil-simple"></i></span> Praticar</button>
+  <button class="mat7-hub-tab"        data-tab="fichas"    onclick="mat8SwitchTab('fichas',this)">   <span class="mat7-hub-tab-icon"><i class="ph ph-file-pdf"></i></span> Fichas</button>
+  <button class="mat7-hub-tab"        data-tab="progresso" onclick="mat8SwitchTab('progresso',this)"><span class="mat7-hub-tab-icon"><i class="ph ph-chart-bar"></i></span> Progresso</button>
+</div>
+
+<main class="mat7-hub-main">
+
+<!-- ══════════ PANEL: TEORIA ══════════ -->
+<div class="mat7-panel active" id="mat8p-resumo">
+  <div class="mat7-panel-heading">Teoria</div>
+  <div class="mat7-panel-sub">Seleciona um capítulo e depois o subtema que queres rever.</div>
+
+  <div class="resumo-nav" id="mat8-resumo-nav">
+    <div class="resumo-cap-row" id="mat8-resumo-cap-row"><!-- gerado por mat8BuildResumoNav() --></div>
+    <div class="resumo-st-row" id="mat8-resumo-st-row"><!-- gerado dinamicamente --></div>
   </div>
-</section>
 
-<!-- ══════════ CAPÍTULOS ══════════ -->
-<div class="portal-section">
-  <div class="portal-section-label">8 Capítulos · Programa do 8.º Ano</div>
-  <div class="m8-cap-grid">
-
-    <button class="m8-cap-card m8c1" onclick="goToChapter8(1)">
-      <div class="m8-cap-num">01</div>
-      <div class="m8-cap-icon"><i class="ph ph-list-numbers"></i></div>
-      <div class="m8-cap-body">
-        <div class="m8-cap-title">Números</div>
-        <div class="m8-cap-desc">Dízimas, racionais, potências, raízes e notação científica.</div>
-      </div>
-      <i class="ph ph-arrow-right m8-cap-arrow"></i>
-    </button>
-
-    <button class="m8-cap-card m8c2" onclick="goToChapter8(2)">
-      <div class="m8-cap-num">02</div>
-      <div class="m8-cap-icon"><i class="ph ph-arrows-out-cardinal"></i></div>
-      <div class="m8-cap-body">
-        <div class="m8-cap-title">Vetores e Isometrias</div>
-        <div class="m8-cap-desc">Translações, vetores, simetrias e reflexões deslizantes.</div>
-      </div>
-      <i class="ph ph-arrow-right m8-cap-arrow"></i>
-    </button>
-
-    <button class="m8-cap-card m8c3" onclick="goToChapter8(3)">
-      <div class="m8-cap-num">03</div>
-      <div class="m8-cap-icon"><i class="ph ph-function"></i></div>
-      <div class="m8-cap-body">
-        <div class="m8-cap-title">Polinómios e Equações do 1.º Grau</div>
-        <div class="m8-cap-desc">Monómios, polinómios, casos notáveis e equações.</div>
-      </div>
-      <i class="ph ph-arrow-right m8-cap-arrow"></i>
-    </button>
-
-    <button class="m8-cap-card m8c4" onclick="goToChapter8(4)">
-      <div class="m8-cap-num">04</div>
-      <div class="m8-cap-icon"><i class="ph ph-triangle"></i></div>
-      <div class="m8-cap-body">
-        <div class="m8-cap-title">Teorema de Pitágoras e Áreas</div>
-        <div class="m8-cap-desc">Teorema de Pitágoras, recíproco e aplicações a áreas.</div>
-      </div>
-      <i class="ph ph-arrow-right m8-cap-arrow"></i>
-    </button>
-
-    <button class="m8-cap-card m8c5" onclick="goToChapter8(5)">
-      <div class="m8-cap-num">05</div>
-      <div class="m8-cap-icon"><i class="ph ph-chart-line"></i></div>
-      <div class="m8-cap-body">
-        <div class="m8-cap-title">Equações Literais e Funções</div>
-        <div class="m8-cap-desc">Equações literais e funções afim, linear e constante.</div>
-      </div>
-      <i class="ph ph-arrow-right m8-cap-arrow"></i>
-    </button>
-
-    <button class="m8-cap-card m8c6" onclick="goToChapter8(6)">
-      <div class="m8-cap-num">06</div>
-      <div class="m8-cap-icon"><i class="ph ph-equals"></i></div>
-      <div class="m8-cap-body">
-        <div class="m8-cap-title">Sistemas de Equações</div>
-        <div class="m8-cap-desc">Sistemas do 1.º grau: substituição e interpretação gráfica.</div>
-      </div>
-      <i class="ph ph-arrow-right m8-cap-arrow"></i>
-    </button>
-
-    <button class="m8-cap-card m8c7" onclick="goToChapter8(7)">
-      <div class="m8-cap-num">07</div>
-      <div class="m8-cap-icon"><i class="ph ph-cube"></i></div>
-      <div class="m8-cap-body">
-        <div class="m8-cap-title">Figuras no Espaço e Volumes</div>
-        <div class="m8-cap-desc">Prismas, pirâmides, cilindros, cones e esferas.</div>
-      </div>
-      <i class="ph ph-arrow-right m8-cap-arrow"></i>
-    </button>
-
-    <button class="m8-cap-card m8c8" onclick="goToChapter8(8)">
-      <div class="m8-cap-num">08</div>
-      <div class="m8-cap-icon"><i class="ph ph-chart-pie-slice"></i></div>
-      <div class="m8-cap-body">
-        <div class="m8-cap-title">Dados e Probabilidades</div>
-        <div class="m8-cap-desc">Organização de dados, medidas e probabilidades.</div>
-      </div>
-      <i class="ph ph-arrow-right m8-cap-arrow"></i>
-    </button>
-
+  <div id="mat8-resumo-content">
+    <div class="resumo-empty">
+      <i class="ph ph-book-open-text resumo-empty-icon"></i>
+      <div class="resumo-empty-title">Escolhe um capítulo para começar</div>
+      <div class="resumo-empty-sub">Definições, exemplos, fórmulas e propriedades</div>
+    </div>
   </div>
 </div>
 
+<!-- ══════════ PANEL: PRATICAR ══════════ -->
+<div class="mat7-panel" id="mat8p-praticar">
+  <div class="mat7-panel-heading">Praticar</div>
+  <div class="mat7-panel-sub">Exercícios gerados, quiz, flashcards, teste cronometrado e jogos.</div>
+  <div class="resumo-empty" style="margin-top:1.5rem">
+    <i class="ph ph-pencil-simple resumo-empty-icon"></i>
+    <div class="resumo-empty-title">Em construção</div>
+    <div class="resumo-empty-sub">O treino do 8.º ano está a ser preparado, capítulo a capítulo.</div>
+  </div>
+</div>
+
+<!-- ══════════ PANEL: FICHAS ══════════ -->
+<div class="mat7-panel" id="mat8p-fichas">
+  <div class="mat7-panel-heading">Gerador de Fichas</div>
+  <div class="mat7-panel-sub">Escolhe os capítulos e gera uma ficha PDF personalizada.</div>
+  <div class="resumo-empty" style="margin-top:1.5rem">
+    <i class="ph ph-file-pdf resumo-empty-icon"></i>
+    <div class="resumo-empty-title">Em construção</div>
+    <div class="resumo-empty-sub">O gerador de fichas do 8.º ano está a ser preparado.</div>
+  </div>
+</div>
+
+<!-- ══════════ PANEL: PROGRESSO ══════════ -->
+<div class="mat7-panel" id="mat8p-progresso">
+  <div class="mat7-panel-heading">O Teu Progresso</div>
+  <div class="mat7-panel-sub">Resumo das tuas atividades no 8.º ano.</div>
+  <div class="resumo-empty" style="margin-top:1.5rem">
+    <i class="ph ph-chart-bar resumo-empty-icon"></i>
+    <div class="resumo-empty-title">Em construção</div>
+    <div class="resumo-empty-sub">O acompanhamento de progresso fica disponível quando o treino estiver pronto.</div>
+  </div>
+</div>
+
+</main>
+</div>
+
 <script src="../js/shared.js"></script>
+<script src="../js/mat8.js"></script>
 <script src="../js/fx.js"></script>
 <script src="../js/nav.js"></script>
 </body>

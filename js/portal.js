@@ -146,10 +146,11 @@ function portalRenderProgress() {
           total   += (d.sections[k].total   || 0);
         });
       }
-      if (d.log && d.log.length) total = total || 1; // has activity even without sections
-      if (total > 0 || (d.log && d.log.length)) {
+      // Só conta como progresso se o aluno respondeu mesmo a questões.
+      // Abrir uma secção (entrada no log sem respostas) NÃO conta.
+      if (total > 0) {
         caps.push({ cap: cap, correct: correct, total: total,
-                    pct: total > 0 ? Math.round(correct / total * 100) : 0 });
+                    pct: Math.round(correct / total * 100) });
       }
     } catch(e) {}
   }
