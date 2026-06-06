@@ -32,6 +32,13 @@
   --m8c6-base:#f4eee6;--m8c6-mid:#a8854d;--m8c6-deep:#7a5e30;--m8c6-pale:#fbf6ef;
   --m8c7-base:#e6eef4;--m8c7-mid:#4f86b0;--m8c7-deep:#305a7a;--m8c7-pale:#eff6fb;
   --m8c8-base:#f2eaf2;--m8c8-mid:#9a5e96;--m8c8-deep:#6a3c66;--m8c8-pale:#faf2f9;
+  /* Matemática 9.º Ano — paleta própria (tons terracota/verde/borgonha), 6 capítulos */
+  --m9c1-base:#f6ece6;--m9c1-mid:#b06a3a;--m9c1-deep:#7a4420;--m9c1-pale:#fbf4ef;
+  --m9c2-base:#eef0e6;--m9c2-mid:#7f8a4d;--m9c2-deep:#545c30;--m9c2-pale:#f6f8ef;
+  --m9c3-base:#e6f0ee;--m9c3-mid:#4d8f87;--m9c3-deep:#2e5e58;--m9c3-pale:#eff8f6;
+  --m9c4-base:#f3e9ef;--m9c4-mid:#9c5e80;--m9c4-deep:#6a3c54;--m9c4-pale:#faf2f7;
+  --m9c5-base:#e8edf4;--m9c5-mid:#5a72a0;--m9c5-deep:#384a72;--m9c5-pale:#eff3fb;
+  --m9c6-base:#f4ece6;--m9c6-mid:#a87a4d;--m9c6-deep:#785230;--m9c6-pale:#fbf5ef;
   --available:#516860;--avail-bg:#edf4f1;
   --progress:#AB9790;--prog-bg:#f5f0ee;--soon:#9e9e9e;
   --p-radius:16px;--radius-sm:10px;
@@ -3032,6 +3039,12 @@ body.dark-mode .portal-card:hover {
 .portal-main-card--mat8 .portal-main-card-icon { background: var(--m8c1-base); color: var(--m8c1-deep); }
 .portal-main-card--mat8 .portal-main-card-chips span { color: var(--m8c1-deep); background: var(--m8c1-base); }
 .portal-main-card--mat8 .portal-main-card-cta { color: var(--m8c1-mid); }
+/* Card 9.º ano — cor própria (terracota) */
+.portal-main-card--mat9 { border-left-color: var(--m9c1-mid); }
+.portal-main-card--mat9:hover { border-color: var(--m9c1-mid); box-shadow: 0 6px 24px rgba(176,106,58,.14); }
+.portal-main-card--mat9 .portal-main-card-icon { background: var(--m9c1-base); color: var(--m9c1-deep); }
+.portal-main-card--mat9 .portal-main-card-chips span { color: var(--m9c1-deep); background: var(--m9c1-base); }
+.portal-main-card--mat9 .portal-main-card-cta { color: var(--m9c1-mid); }
 .portal-main-card-title {
   font-size: 1rem;
   font-weight: 800;

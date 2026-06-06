@@ -13,10 +13,15 @@ var _inMat7 = window.location.pathname.indexOf('/mat7/') !== -1 ||
               window.location.pathname.endsWith('/mat7');
 var _inMat8 = window.location.pathname.indexOf('/mat8/') !== -1 ||
               window.location.pathname.endsWith('/mat8');
-var _inSub  = _inMat7 || _inMat8;
+var _inMat9 = window.location.pathname.indexOf('/mat9/') !== -1 ||
+              window.location.pathname.endsWith('/mat9');
+var _inSub  = _inMat7 || _inMat8 || _inMat9;
 var _rootPath = _inSub ? '../' : '';
-var _mat7Path = _inMat7 ? '' : (_inMat8 ? '../mat7/' : 'mat7/');
-var _mat8Path = _inMat8 ? '' : (_inMat7 ? '../mat8/' : 'mat8/');
+// Caminho para cada curso, relativo à página atual (raiz ou dentro de matN/).
+function _coursePath(name) { return _inSub ? '../' + name + '/' : name + '/'; }
+var _mat7Path = _inMat7 ? '' : _coursePath('mat7');
+var _mat8Path = _inMat8 ? '' : _coursePath('mat8');
+var _mat9Path = _inMat9 ? '' : _coursePath('mat9');
 
 /* ── Portal (index.html at root) ── */
 function showPortalView() { window.location.href = _rootPath + 'index.html'; }
@@ -30,6 +35,10 @@ function showMat7View() { window.location.href = _mat7Path + 'index.html'; }
 /* ── Mat8 hub (único, sem páginas por capítulo) ── */
 function showMat8View()  { window.location.href = _mat8Path + 'index.html'; }
 function showPortalFromMat8() { showPortalView(); }
+
+/* ── Mat9 hub (único, sem páginas por capítulo) ── */
+function showMat9View()  { window.location.href = _mat9Path + 'index.html'; }
+function showPortalFromMat9() { showPortalView(); }
 
 /* ── Chapter pages ── */
 function showMathView()  { window.location.href = _mat7Path + 'cap1.html'; }
