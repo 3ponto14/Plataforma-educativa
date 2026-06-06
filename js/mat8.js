@@ -26,7 +26,7 @@ var _mat8CapColors = {
 // Subtemas por capítulo
 var _mat8Subtemas = {
   1: ['Dízimas', 'Multiplicação e divisão', 'Propriedades e expressões', 'Potências', 'Raízes', 'Notação científica'],
-  2: ['Vetores', 'Translações', 'Simetrias e reflexões', 'Reflexão deslizante'],
+  2: ['Translação de pontos', 'Soma de vetores', 'Tipos de simetria', 'Vetor simétrico'],
   3: ['Monómios', 'Operações com monómios', 'Polinómios', 'Operações com polinómios', 'Equações do 1.º grau', 'Equações com denominadores'],
   4: ['Teorema de Pitágoras', 'Recíproco', 'Aplicações a áreas'],
   5: ['Equações literais', 'Imagem de uma função', 'Função afim', 'Declive de uma reta'],
@@ -65,7 +65,19 @@ var _mat8Cards = {
     { tag: 'Exemplo', q: 'Calcula (3 × 10⁴) × (6 × 10²)', a: '(3×6) × 10⁴⁺² = 18 × 10⁶ = 1,8 × 10⁷.' },
     { tag: 'Exemplo', q: 'Calcula √64 − √36', a: '√64 − √36 = 8 − 6 = 2.' }
   ],
-  2: [],
+  2: [
+    { tag: 'Definição', q: 'O que é um vetor?', a: 'Um segmento orientado caracterizado por direção, sentido e comprimento (norma). Em coordenadas: v(x, y). Representa-se por uma seta.' },
+    { tag: 'Definição', q: 'O que são vetores equipolentes?', a: 'Vetores com a mesma direção, o mesmo sentido e o mesmo comprimento. São representações do mesmo vetor.' },
+    { tag: 'Definição', q: 'O que é o vetor simétrico?', a: 'O vetor com a mesma direção e comprimento mas sentido oposto. As componentes têm o sinal trocado: −v de (3, −2) é (−3, 2).' },
+    { tag: 'Regra', q: 'Como somar vetores em coordenadas?', a: 'Somam-se as componentes: u(a, b) + v(c, d) = (a+c, b+d).' },
+    { tag: 'Definição', q: 'O que é uma translação?', a: 'A isometria que desloca todos os pontos a mesma distância, na mesma direção e sentido — segundo um vetor. P(x, y) → (x + vₓ, y + v_y).' },
+    { tag: 'Regra', q: 'Como aplicar uma translação a um ponto?', a: 'Soma as componentes do vetor às coordenadas do ponto. Ex: P(2, −5) pela translação de v(3, 7) → (5, 2).' },
+    { tag: 'Definição', q: 'O que é uma isometria?', a: 'Uma transformação que preserva as distâncias (e a forma). As quatro isometrias: translação, reflexão, rotação e reflexão deslizante.' },
+    { tag: 'Definição', q: 'O que é uma reflexão?', a: 'A isometria que produz a imagem "ao espelho" em relação a uma reta (o eixo de reflexão).' },
+    { tag: 'Definição', q: 'O que é uma rotação?', a: 'A isometria que faz girar a figura em torno de um ponto (centro) segundo um determinado ângulo e sentido.' },
+    { tag: 'Definição', q: 'O que é uma reflexão deslizante?', a: 'A composição de uma reflexão num eixo com uma translação segundo a direção desse eixo.' },
+    { tag: 'Conceito', q: 'Que tipos de simetria pode ter uma figura?', a: 'Simetria de translação, de reflexão (axial), de rotação e de reflexão deslizante. Os frisos e padrões (como os de Escher) combinam-nas.' }
+  ],
   3: [
     { tag: 'Definição', q: 'O que é um monómio?', a: 'É o produto de um número (coeficiente) por uma parte literal com expoentes naturais. Ex: 5x⁴ tem coeficiente 5 e parte literal x⁴.' },
     { tag: 'Definição', q: 'Qual é o grau de um monómio?', a: 'É a soma dos expoentes da parte literal. 5x⁴ tem grau 4; 4x²y² tem grau 4 (2+2).' },
@@ -321,6 +333,7 @@ function mat8RenderResumoInline() {
 // Só os caps com gerador são "praticáveis".
 function _mat8Gerador(cap) {
   if (cap === 1 && typeof buildEx_m81 === 'function') return buildEx_m81;
+  if (cap === 2 && typeof buildEx_m82 === 'function') return buildEx_m82;
   if (cap === 3 && typeof buildEx_m83 === 'function') return buildEx_m83;
   if (cap === 4 && typeof buildEx_m84 === 'function') return buildEx_m84;
   if (cap === 5 && typeof buildEx_m85 === 'function') return buildEx_m85;
@@ -329,7 +342,7 @@ function _mat8Gerador(cap) {
   if (cap === 8 && typeof buildEx_m88 === 'function') return buildEx_m88;
   return null;
 }
-var _mat8TemasCount = { 1: 11, 3: 6, 4: 4, 5: 4, 6: 4, 7: 6, 8: 6 };
+var _mat8TemasCount = { 1: 11, 2: 4, 3: 6, 4: 4, 5: 4, 6: 4, 7: 6, 8: 6 };
 
 // Estado da prática
 var _mat8Prat = { cap: 1, st: 0, nivel: 'medio', score: { correct: 0, total: 0 }, answered: {}, exs: [] };
@@ -406,6 +419,9 @@ var _mat8SubtemaTemas = {
     4: ['6', '7', '8'],  // Potências
     5: ['9'],            // Raízes
     6: ['10', '11']      // Notação científica
+  },
+  2: { // Cap 2 Vetores e Isometrias (1:1 com os 4 temas)
+    1: ['1'], 2: ['2'], 3: ['3'], 4: ['4']
   },
   3: { // Cap 3 Polinómios e Equações (1:1 com os 6 temas)
     1: ['1'], 2: ['2'], 3: ['3'], 4: ['4'], 5: ['5'], 6: ['6']
@@ -2252,4 +2268,106 @@ function buildEx_m87(tema, tipo, dif) {
 
   // fallback
   return { enun: 'Volume de prisma: Abase 5, altura 4?', tipo: 'fill', resposta: '20', expl: '5×4=20.', tema: 'Volumes' };
+}
+
+/* ════════════════════════════════════════════════════════════════
+   GERADOR — Cap 2 Vetores e Isometrias (Prisma 8)
+   Capítulo muito visual; o gerador cobre o que é viável sem figura:
+    1 Translação em coordenadas (somar vetor a ponto)
+    2 Componentes da soma de vetores
+    3 Tipos de simetria (conceptual)
+    4 Vetor simétrico (componentes)
+   ════════════════════════════════════════════════════════════════ */
+function buildEx_m82(tema, tipo, dif) {
+  tema = String(tema);
+  var easy = (dif === 'facil'), hard = (dif === 'dificil');
+  var lim = easy ? 5 : hard ? 10 : 7;
+
+  // ── TEMA 1 · Translação de um ponto por um vetor ──
+  if (tema === '1') {
+    var px = rnd_m81(-lim, lim), py = rnd_m81(-lim, lim);
+    var vx = rndNZ_m81(-lim, lim), vy = rndNZ_m81(-lim, lim);
+    var rx = px + vx, ry = py + vy;
+    var resp = '(' + rx + ', ' + ry + ')';
+    if (tipo === 'mc') {
+      var opts = shuffle_m81([resp, '(' + (px - vx) + ', ' + (py - vy) + ')', '(' + rx + ', ' + (py - vy) + ')', '(' + (px * vx) + ', ' + (py * vy) + ')'].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4);
+      if (opts.indexOf(resp) === -1) opts[0] = resp;
+      return {
+        enun: 'Aplica ao ponto P(' + px + ', ' + py + ') a translação associada ao vetor v(' + vx + ', ' + vy + '). Qual é a imagem?',
+        tipo: 'mc', opcoes: opts, resposta: resp,
+        expl: 'A translação soma as componentes do vetor às coordenadas: (' + px + ' + ' + vx + ', ' + py + ' + ' + vy + ') = ' + resp + '.',
+        tema: 'T1 · Translação'
+      };
+    }
+    return {
+      enun: 'Imagem de P(' + px + ', ' + py + ') pela translação do vetor v(' + vx + ', ' + vy + ')? (forma (x, y))',
+      tipo: 'fill_frac', resposta: resp,
+      expl: '(' + px + '+' + vx + ', ' + py + '+' + vy + ') = ' + resp + '.', tema: 'T1 · Translação'
+    };
+  }
+
+  // ── TEMA 2 · Soma de vetores (componentes) ──
+  if (tema === '2') {
+    var ax = rndNZ_m81(-lim, lim), ay = rndNZ_m81(-lim, lim);
+    var bx = rndNZ_m81(-lim, lim), by = rndNZ_m81(-lim, lim);
+    var sx = ax + bx, sy = ay + by;
+    var resp2 = '(' + sx + ', ' + sy + ')';
+    if (tipo === 'mc') {
+      var opts2 = shuffle_m81([resp2, '(' + (ax - bx) + ', ' + (ay - by) + ')', '(' + sx + ', ' + (ay - by) + ')', '(' + (ax * bx) + ', ' + (ay * by) + ')'].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4);
+      if (opts2.indexOf(resp2) === -1) opts2[0] = resp2;
+      return {
+        enun: 'Sendo u(' + ax + ', ' + ay + ') e v(' + bx + ', ' + by + '), quais são as componentes de u + v?',
+        tipo: 'mc', opcoes: opts2, resposta: resp2,
+        expl: 'Somam-se as componentes: (' + ax + ' + ' + bx + ', ' + ay + ' + ' + by + ') = ' + resp2 + '.',
+        tema: 'T2 · Soma de Vetores'
+      };
+    }
+    return {
+      enun: 'u(' + ax + ', ' + ay + ') + v(' + bx + ', ' + by + ') = ? (componentes, forma (x, y))',
+      tipo: 'fill_frac', resposta: resp2,
+      expl: '(' + ax + '+' + bx + ', ' + ay + '+' + by + ') = ' + resp2 + '.', tema: 'T2 · Soma de Vetores'
+    };
+  }
+
+  // ── TEMA 3 · Tipos de simetria (conceptual) ──
+  if (tema === '3') {
+    var perguntas = [
+      { q: 'Que isometria desliza todos os pontos a mesma distância e direção, sem rodar nem refletir?', r: 'Translação', w: ['Reflexão', 'Rotação', 'Reflexão deslizante'] },
+      { q: 'Que isometria corresponde a uma "imagem ao espelho" em relação a uma reta (eixo)?', r: 'Reflexão', w: ['Translação', 'Rotação', 'Reflexão deslizante'] },
+      { q: 'Que isometria faz girar a figura em torno de um ponto (centro), segundo um ângulo?', r: 'Rotação', w: ['Translação', 'Reflexão', 'Reflexão deslizante'] },
+      { q: 'Que isometria combina uma reflexão num eixo com uma translação segundo esse eixo?', r: 'Reflexão deslizante', w: ['Translação', 'Reflexão', 'Rotação'] }
+    ];
+    var p = perguntas[rnd_m81(0, perguntas.length - 1)];
+    var opts3 = shuffle_m81([p.r].concat(p.w)).slice(0, 4);
+    if (opts3.indexOf(p.r) === -1) opts3[0] = p.r;
+    return {
+      enun: p.q, tipo: 'mc', opcoes: opts3, resposta: p.r,
+      expl: 'A resposta é: ' + p.r + '. As quatro isometrias são translação, reflexão, rotação e reflexão deslizante.',
+      tema: 'T3 · Simetrias'
+    };
+  }
+
+  // ── TEMA 4 · Vetor simétrico ──
+  if (tema === '4') {
+    var vx4 = rndNZ_m81(-lim, lim), vy4 = rndNZ_m81(-lim, lim);
+    var resp4 = '(' + (-vx4) + ', ' + (-vy4) + ')';
+    if (tipo === 'mc') {
+      var opts4 = shuffle_m81([resp4, '(' + vx4 + ', ' + vy4 + ')', '(' + (-vx4) + ', ' + vy4 + ')', '(' + vy4 + ', ' + vx4 + ')'].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4);
+      if (opts4.indexOf(resp4) === -1) opts4[0] = resp4;
+      return {
+        enun: 'Qual é o vetor simétrico de v(' + vx4 + ', ' + vy4 + ')?',
+        tipo: 'mc', opcoes: opts4, resposta: resp4,
+        expl: 'O simétrico de um vetor tem as componentes com sinal trocado: −v = ' + resp4 + '.',
+        tema: 'T4 · Vetor Simétrico'
+      };
+    }
+    return {
+      enun: 'Componentes do simétrico de v(' + vx4 + ', ' + vy4 + ')? (forma (x, y))',
+      tipo: 'fill_frac', resposta: resp4,
+      expl: 'Troca o sinal das componentes: ' + resp4 + '.', tema: 'T4 · Vetor Simétrico'
+    };
+  }
+
+  // fallback
+  return { enun: 'Simétrico de v(2, −3)?', tipo: 'mc', opcoes: ['(−2, 3)', '(2, 3)', '(−2, −3)', '(3, 2)'], resposta: '(−2, 3)', expl: 'Troca os sinais.', tema: 'Vetores' };
 }
