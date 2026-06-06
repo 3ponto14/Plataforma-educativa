@@ -97,7 +97,8 @@ function mat8SwitchTab(tab, btn) {
   else if (tab === 'flashcards') mat8FcBuildNav();
   else if (tab === 'teste') mat8TesteBuildNav();
   else if (tab === 'jogos') mat8JogosInit();
-  else if (tab === 'progresso' && typeof mat8RenderProgresso === 'function') mat8RenderProgresso();
+  else if (tab === 'fichas') mat8FichasBuildNav();
+  else if (tab === 'progresso') mat8RenderProgresso();
 }
 
 // Abre um sub-modo de prática a partir dos cartões do menu Praticar.
@@ -727,6 +728,200 @@ function mat8JogosInit() {
     var app = document.getElementById('mat8-jogos-app');
     if (app) app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Jogos indisponíveis (motor não carregado).</p>';
   }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   TAB PROGRESSO
+   Lê edupt_mat8_capN (gravado por mat8SaveProgress). Mostra resumo
+   global, stats, barras por capítulo, Relatório PDF e Limpar.
+   ════════════════════════════════════════════════════════════════ */
+function _mat8ProgGetCaps() {
+  var out = [];
+  for (var cap = 1; cap <= 8; cap++) {
+    var correct = 0, total = 0;
+    try {
+      var d = JSON.parse(localStorage.getItem('edupt_mat8_cap' + cap) || '{}');
+      if (d.sections) Object.keys(d.sections).forEach(function(k) {
+        correct += (d.sections[k].correct || 0);
+        total += (d.sections[k].total || 0);
+      });
+    } catch (e) {}
+    out.push({ cap: cap, correct: correct, total: total, pct: total > 0 ? Math.round(correct / total * 100) : 0 });
+  }
+  return out;
+}
+
+function mat8RenderProgresso() {
+  var el = document.getElementById('mat8-progresso-content');
+  if (!el) return;
+  var caps = _mat8ProgGetCaps();
+  var totalC = 0, totalT = 0;
+  caps.forEach(function(c) { totalC += c.correct; totalT += c.total; });
+  var globalPct = totalT > 0 ? Math.round(totalC / totalT * 100) : 0;
+
+  var msg = totalT === 0 ? 'Ainda não começaste. Vai a Praticar e responde a umas questões!'
+    : globalPct >= 80 ? 'Excelente trabalho! Estás a dominar a matéria.'
+    : globalPct >= 60 ? 'Bom progresso! Continua a praticar para consolidar.'
+    : globalPct >= 40 ? 'A progredir! Há capítulos que pedem mais atenção.'
+    : 'Começaste! Pratica com regularidade — cada questão conta.';
+  var icon = totalT === 0 ? 'ph-rocket-launch' : globalPct >= 80 ? 'ph-trophy' : globalPct >= 60 ? 'ph-star' : globalPct >= 40 ? 'ph-trend-up' : 'ph-book-open';
+
+  var h = '';
+  // Aviso localStorage
+  h += '<div style="display:flex;align-items:center;gap:.75rem;background:#fdf0ef;border:1px solid #e8b4b0;border-radius:10px;padding:.65rem 1rem;margin-bottom:1.25rem;font-size:.82rem;color:#8b3a35;flex-wrap:wrap">'
+     + '<i class="ph ph-info" style="flex-shrink:0"></i>'
+     + '<span style="flex:1">O progresso é guardado <strong>apenas neste browser e neste dispositivo</strong>. '
+     + '<button onclick="mat8ProgDownloadPDF()" style="font-family:inherit;font-size:.82rem;font-weight:700;color:#8b3a35;background:none;border:none;cursor:pointer;text-decoration:underline;padding:0">Guarda o relatório PDF</button> para o manteres.</span>'
+     + '</div>';
+
+  // Resumo global (gradiente índigo do 8.º ano)
+  h += '<div style="background:var(--m8c1-base);border:1.5px solid var(--m8c1-mid);border-radius:16px;padding:1.1rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap">'
+     +   '<div style="width:52px;height:52px;border-radius:50%;background:var(--m8c1-mid);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ph ' + icon + '" style="font-size:1.4rem;color:#fff"></i></div>'
+     +   '<div style="flex:1;min-width:180px">'
+     +     '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.6rem;font-weight:900;color:var(--ink);line-height:1">' + (totalT > 0 ? globalPct + '<span style="font-size:1rem">%</span>' : '—') + '</div>'
+     +     '<div style="font-size:.82rem;color:var(--ink2);margin-top:3px">' + msg + '</div>'
+     +   '</div>'
+     +   '<button class="btn btn-ghost" onclick="mat8ProgDownloadPDF()" style="font-size:.78rem;padding:7px 14px;display:inline-flex;align-items:center;gap:5px"><i class="ph ph-file-text"></i>Relatório PDF</button>'
+     + '</div>';
+
+  // Stat chips
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem;margin-bottom:1.5rem">';
+  [{ v: totalT, l: 'Questões respondidas' }, { v: totalC, l: 'Respostas certas' }, { v: totalT > 0 ? globalPct + '%' : '—', l: 'Taxa global' }].forEach(function(s) {
+    h += '<div class="card" style="text-align:center;padding:1rem .75rem">'
+       + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.75rem;font-weight:900;color:var(--ink);line-height:1">' + s.v + '</div>'
+       + '<div style="font-size:.68rem;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-top:4px">' + s.l + '</div>'
+       + '</div>';
+  });
+  h += '</div>';
+
+  // Barras por capítulo
+  h += '<div class="card"><div class="card-title">Desempenho por capítulo</div><div style="display:flex;flex-direction:column;gap:.75rem;margin-top:.5rem">';
+  caps.forEach(function(c) {
+    var m = _mat8CapMeta[c.cap - 1];
+    var color = _mat8CapColors[c.cap] || '#516860';
+    var label = c.total > 0 ? (c.pct + '% · ' + c.correct + '/' + c.total) : 'sem atividade';
+    h += '<div>'
+       + '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.25rem"><span style="font-weight:700;color:var(--ink2)">' + m.label + '</span><span style="color:var(--ink4)">' + label + '</span></div>'
+       + '<div style="height:8px;background:var(--border);border-radius:99px;overflow:hidden"><div style="height:100%;width:' + c.pct + '%;background:' + color + ';border-radius:99px;transition:width .4s"></div></div>'
+       + '</div>';
+  });
+  h += '</div></div>';
+
+  // Limpar
+  h += '<div class="mt-4 flex flex-wrap gap-3"><button class="btn btn-ghost" onclick="mat8ProgReset()"><i class="ph ph-trash"></i> Limpar progresso</button></div>';
+
+  el.innerHTML = h;
+}
+
+function mat8ProgReset() {
+  if (typeof window !== 'undefined' && window.confirm && !window.confirm('Limpar todo o progresso do 8.º ano? Esta ação não pode ser desfeita.')) return;
+  for (var cap = 1; cap <= 8; cap++) { try { localStorage.removeItem('edupt_mat8_cap' + cap); } catch (e) {} }
+  mat8RenderProgresso();
+  if (typeof eduToast === 'function') eduToast('Progresso do 8.º ano limpo.', 'ok');
+}
+
+function mat8ProgDownloadPDF() {
+  var caps = _mat8ProgGetCaps();
+  var totalC = 0, totalT = 0;
+  caps.forEach(function(c) { totalC += c.correct; totalT += c.total; });
+  var globalPct = totalT > 0 ? Math.round(totalC / totalT * 100) : 0;
+  var rows = caps.map(function(c) {
+    var m = _mat8CapMeta[c.cap - 1];
+    return '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">' + m.label + '</td>'
+      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.total > 0 ? c.correct + ' / ' + c.total : '—') + '</td>'
+      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.total > 0 ? c.pct + '%' : '—') + '</td></tr>';
+  }).join('');
+  var html = '<div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;padding:24px">'
+    + '<h1 style="font-size:20px;margin:0 0 4px">Relatório de Progresso · Matemática 8.º Ano</h1>'
+    + '<div style="color:#666;font-size:13px;margin-bottom:16px">3ponto14 · ' + new Date().toLocaleString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' }) + '</div>'
+    + '<div style="background:#eef3f9;border:1px solid #5a7fa8;border-radius:8px;padding:12px 16px;margin-bottom:16px">'
+    + '<strong>Taxa global:</strong> ' + (totalT > 0 ? globalPct + '%' : '—') + ' &nbsp;·&nbsp; ' + totalC + ' certas em ' + totalT + ' questões.</div>'
+    + '<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr style="background:#36527a;color:#fff">'
+    + '<th style="padding:8px 10px;text-align:left">Capítulo</th><th style="padding:8px 10px">Certas</th><th style="padding:8px 10px">%</th></tr></thead>'
+    + '<tbody>' + rows + '</tbody></table></div>';
+  if (typeof htmlToPdfDownload === 'function') htmlToPdfDownload(html, 'progresso-mat8.pdf');
+  else if (typeof eduToast === 'function') eduToast('Geração de PDF indisponível.', 'warn');
+}
+
+/* ════════════════════════════════════════════════════════════════
+   TAB FICHAS — gerador de ficha PDF (auto-contido)
+   Escolhe capítulo + nível + nº de exercícios; gera ficha imprimível
+   com os exercícios do gerador, com opção de soluções.
+   ════════════════════════════════════════════════════════════════ */
+var _mat8Fichas = { cap: 1, nivel: 'medio', qtd: 10, solucoes: true };
+
+function mat8FichasBuildNav() {
+  if (!_mat8Gerador(_mat8Fichas.cap)) _mat8Fichas.cap = 1;
+  _mat8BuildCapRow('mat8-fichas-cap-row', _mat8Fichas.cap, 'mat8FichasSelectCap');
+}
+
+function mat8FichasSelectCap(cap, btn) {
+  if (!_mat8Gerador(cap)) return;
+  _mat8SetActiveCapBtn('mat8-fichas-cap-row', btn, cap);
+  _mat8Fichas.cap = cap;
+}
+
+function mat8FichasSetNivel(nivel, btn) {
+  _mat8Fichas.nivel = nivel;
+  var grp = document.getElementById('mat8-fichas-nivel');
+  if (grp) grp.querySelectorAll('.gen-level-btn').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+}
+
+function mat8FichasToggleSolucoes(btn) {
+  _mat8Fichas.solucoes = !_mat8Fichas.solucoes;
+  if (btn) { btn.classList.toggle('active', _mat8Fichas.solucoes); var tick = btn.querySelector('.gf-tick'); if (tick) tick.textContent = _mat8Fichas.solucoes ? '✓' : ''; }
+}
+
+function mat8FichasGerar() {
+  var gen = _mat8Gerador(_mat8Fichas.cap); if (!gen) return;
+  var qtdEl = document.getElementById('mat8-fichas-qtd');
+  _mat8Fichas.qtd = qtdEl ? parseInt(qtdEl.value) : 10;
+  var m = _mat8CapMeta[_mat8Fichas.cap - 1];
+  var nTemas = _mat8TemasCount[_mat8Fichas.cap] || 1;
+  var tipos = ['mc', 'fill', 'vf', 'fill', 'mc'];
+  var exs = [];
+  for (var i = 0; i < _mat8Fichas.qtd; i++) {
+    var ex = gen(String((i % nTemas) + 1), tipos[i % tipos.length], _mat8Fichas.nivel);
+    if (ex) exs.push(ex);
+  }
+
+  var nivelLabel = { facil: 'Fácil', medio: 'Médio', dificil: 'Difícil' }[_mat8Fichas.nivel];
+  var body = '';
+  exs.forEach(function(ex, i) {
+    body += '<div style="margin-bottom:14px;page-break-inside:avoid">'
+      + '<div style="font-weight:700;font-size:13px;margin-bottom:4px">' + (i + 1) + '. ' + ex.enun + '</div>';
+    if (ex.tipo === 'mc' && ex.opcoes) {
+      body += '<div style="font-size:12.5px;color:#333;padding-left:14px">';
+      ex.opcoes.forEach(function(o, k) { body += '(' + 'ABCD'[k] + ') ' + o + '&nbsp;&nbsp;&nbsp; '; });
+      body += '</div>';
+    } else if (ex.tipo === 'vf') {
+      body += '<div style="font-size:12.5px;color:#333;padding-left:14px">Verdadeiro &nbsp;☐&nbsp;&nbsp; Falso &nbsp;☐</div>';
+    } else {
+      body += '<div style="border-bottom:1px solid #bbb;height:22px;margin:4px 0 0;width:60%"></div>';
+    }
+    body += '</div>';
+  });
+
+  var solucoesHTML = '';
+  if (_mat8Fichas.solucoes) {
+    var sol = exs.map(function(ex, i) {
+      return '<div style="font-size:12px;margin-bottom:3px"><strong>' + (i + 1) + '.</strong> ' + ex.resposta + (ex.expl ? ' — <span style="color:#555">' + ex.expl + '</span>' : '') + '</div>';
+    }).join('');
+    solucoesHTML = '<div style="page-break-before:always;padding-top:10px">'
+      + '<h2 style="font-size:16px;border-bottom:2px solid #36527a;padding-bottom:4px">Soluções</h2>' + sol + '</div>';
+  }
+
+  var html = '<div style="font-family:Arial,sans-serif;max-width:720px;margin:0 auto;padding:24px;color:#222">'
+    + '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #36527a;padding-bottom:8px;margin-bottom:16px">'
+    + '<div><h1 style="font-size:19px;margin:0">Ficha · ' + m.label + '</h1>'
+    + '<div style="font-size:12px;color:#666">Matemática 8.º Ano · Nível ' + nivelLabel + '</div></div>'
+    + '<div style="font-size:12px;color:#888">3ponto14</div></div>'
+    + '<div style="font-size:12px;color:#666;margin-bottom:14px">Nome: ____________________________  Data: ____ / ____ / ______</div>'
+    + body + solucoesHTML + '</div>';
+
+  if (typeof htmlToPdfDownload === 'function') htmlToPdfDownload(html, 'ficha-mat8-cap' + _mat8Fichas.cap + '.pdf');
+  else if (typeof eduToast === 'function') eduToast('Geração de PDF indisponível.', 'warn');
 }
 
 // ═══ INIT ═══

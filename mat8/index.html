@@ -164,23 +164,34 @@
 <!-- ══════════ PANEL: FICHAS ══════════ -->
 <div class="mat7-panel" id="mat8p-fichas">
   <div class="mat7-panel-heading">Gerador de Fichas</div>
-  <div class="mat7-panel-sub">Escolhe os capítulos e gera uma ficha PDF personalizada.</div>
-  <div class="resumo-empty" style="margin-top:1.5rem">
-    <i class="ph ph-file-pdf resumo-empty-icon"></i>
-    <div class="resumo-empty-title">Em construção</div>
-    <div class="resumo-empty-sub">O gerador de fichas do 8.º ano está a ser preparado.</div>
+  <div class="mat7-panel-sub">Escolhe o capítulo, o nível e o número de exercícios. Gera uma ficha PDF personalizada. <strong>Para professores:</strong> mantém "Soluções" para a versão com respostas.</div>
+  <div class="resumo-nav" style="margin-top:.5rem">
+    <div class="resumo-cap-row" id="mat8-fichas-cap-row"></div>
+  </div>
+  <div class="level-bar" style="margin:.75rem 0 .5rem">
+    <div class="gen-level-group" id="mat8-fichas-nivel">
+      <span class="gen-level-label">Nível:</span>
+      <button class="gen-level-btn" data-level="facil" onclick="mat8FichasSetNivel('facil',this)"><span class="status-dot status-dot--easy"></span> Fácil</button>
+      <button class="gen-level-btn active" data-level="medio" onclick="mat8FichasSetNivel('medio',this)"><span class="status-dot status-dot--medium"></span> Médio</button>
+      <button class="gen-level-btn" data-level="dificil" onclick="mat8FichasSetNivel('dificil',this)"><span class="status-dot status-dot--hard"></span> Difícil</button>
+    </div>
+  </div>
+  <div class="flex items-center gap-3 flex-wrap" style="margin-bottom:1rem">
+    <select class="ai-select" id="mat8-fichas-qtd">
+      <option value="10" selected>10 exercícios</option>
+      <option value="15">15 exercícios</option>
+      <option value="20">20 exercícios</option>
+    </select>
+    <button class="gf-type-btn active" onclick="mat8FichasToggleSolucoes(this)"><span class="gf-tick">✓</span> Soluções <span style="font-size:.65rem;background:var(--m8c1-mid);color:#fff;border-radius:999px;padding:1px 6px;margin-left:3px">Professor</span></button>
+    <button class="gf-gen-btn" onclick="mat8FichasGerar()"><i class="ph ph-download-simple"></i> Gerar ficha PDF</button>
   </div>
 </div>
 
 <!-- ══════════ PANEL: PROGRESSO ══════════ -->
 <div class="mat7-panel" id="mat8p-progresso">
   <div class="mat7-panel-heading">O Teu Progresso</div>
-  <div class="mat7-panel-sub">Resumo das tuas atividades no 8.º ano.</div>
-  <div class="resumo-empty" style="margin-top:1.5rem">
-    <i class="ph ph-chart-bar resumo-empty-icon"></i>
-    <div class="resumo-empty-title">Em construção</div>
-    <div class="resumo-empty-sub">O acompanhamento de progresso fica disponível quando o treino estiver pronto.</div>
-  </div>
+  <div class="mat7-panel-sub">Resumo das tuas atividades no 8.º ano — desempenho por capítulo e relatório PDF.</div>
+  <div id="mat8-progresso-content" style="margin-top:1rem"></div>
 </div>
 
 </main>
