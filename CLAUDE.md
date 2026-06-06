@@ -222,18 +222,42 @@ In `css/styles.css`, add `--c5-*` color variables following the `--c1-*` through
 - **DON'T** define navigation functions outside `nav.js`
 - **DON'T** duplicate Pomodoro/Calculator HTML — `widgets.js` injects them
 
-## How to Add a New Course
+## ⭐ MODELO BASE de um Curso de Matemática (FAZER SEMPRE IGUAL)
 
-To add an entirely new course (e.g., "Matemática 8.º Ano"):
+**Este é o molde definitivo. Todos os anos de Matemática (7.º, 8.º, 9.º, …) seguem EXATAMENTE esta estrutura. Não analisar nem reinventar — copiar o padrão do 8.º ano (`mat8/index.html` + `js/mat8.js`), que é a referência canónica.**
 
-1. **Create a new directory** (e.g., `mat8/`) with `index.html` (hub) and chapter pages
-2. **Reuse the engine**: `shared.js`, `chapter-engine.js`, `systems.js`, `widgets.js`, `fx.js`, and `nav.js` are course-agnostic
-3. **Create course-specific JS**: `mat8.js` (hub), `mat8-cap1.js` etc.
-4. **Update `nav.js`**: add path detection for `/mat8/` and navigation functions
-5. **Update `index.html`** portal to link to the new course hub
-6. **Add course color variables** in CSS (e.g., `--m8c1-*`)
+### Ficheiros de um curso `matN`
+- `matN/index.html` — o HUB único (copiar de `mat8/index.html` e adaptar nomes/cores).
+- `js/matN.js` — toda a lógica do curso (copiar de `js/mat8.js`; é auto-contido).
+- Em `css/styles.css` — 8 cores `--mNcX-*` (base/mid/deep/pale) + cards do hub.
+- Em `js/nav.js` — `showMatNView()` + `showPortalFromMatN()`.
+- Em `index.html` (portal) — um card do ano no `.portal-main-grid`.
+- Em `js/systems.js` — o `lazyLoad` já deteta qualquer `matN/` (regex `/\/mat\d+(\/|$)/`).
 
-The `CAP_DATA` registration is global, so use a namespace strategy: chapters 1–10 for mat7, 11–20 for mat8, or string keys (`'m8c1'`).
+### Estrutura OBRIGATÓRIA do hub (nunca mudar)
+- **Topbar** unificada (`.site-topbar`).
+- **Tab bar** (`.mat7-hub-tabbar`, classes reutilizadas) com 4 tabs: **Teoria · Praticar · Fichas · Progresso**.
+- **Tab Teoria**: capítulos como botões de seleção (`.resumo-cap-row`) → subtemas (`.resumo-st-row`) → cards de teoria agrupados por tag, vindos das flashcards do capítulo.
+- **Tab Praticar**: menu de **5 cartões** → Exercícios · Quiz Relâmpago · Flashcards · Teste Cronometrado · Jogos. Cada cartão abre um sub-painel (com botão "← Praticar"). Tudo renderizado no painel; jogos via `_j24AutoInit` (genérico).
+- **Tab Fichas**: gerador rico — multi-capítulo + 5 tipos (Resumo teórico, Exercícios, Teste, Minitestes, Soluções) + nível + quantidade + exportar PDF/HTML.
+- **Tab Progresso**: resumo global, stat chips (incl. XP e streak via `ProgressManager` com capId `'mNcapX'`), barras por capítulo, Treino Direcionado, Relatório PDF, Limpar (que preserva os outros anos).
+
+### Estrutura de DADOS em `matN.js` (preencher só isto por ano)
+- `_matNCapMeta` (8 caps: n, icon, label) · `_matNCapColors` · `_matNSubtemas[cap]`.
+- `_matNCards[cap]` = flashcards de teoria (`{tag, q, a}`). **Mínimo ~16 por capítulo.**
+- Geradores `buildEx_mNc<cap>(tema, tipo, dif)` no fim do ficheiro; ligados em `_matNGerador(cap)`, `_matNTemasCount[cap]`, `_matNSubtemaTemas[cap]`.
+- XP via helper `_matNPM(cap, tipo, opts)` → `ProgressManager.record('mNcap'+cap, …)`.
+
+### Padrão de CONTEÚDO (qualidade, sempre igual)
+- Fonte: manuais na pasta `Nº ano_matemática/` (Prisma/MX/Mat). PDFs "Depressa e bem" extraem bem (`pdftotext -layout`); .docx têm fórmulas como imagem (não extraem).
+- Flashcards: Definição, Regra, Fórmula, Propriedade, Estratégia, Exemplo (com casos resolvidos).
+- Exercícios: tipos `mc`, `fill`, `vf`; respostas não numéricas (frações, "kπ", "(x,y)") usam tipo `fill_frac`. Incluir **questões de contexto/problema** nos níveis médio/difícil.
+- **VALIDAR SEMPRE** a matemática com jsc (gerar amostras e conferir à mão) e a sintaxe com `new Function(read('matN.js'))`.
+
+### Regras invioláveis
+- NUNCA páginas por capítulo nem secções/tabs novas (ver REGRA DE OURO acima e regra "só encher secções existentes").
+- Namespace de progresso por ano: `'mNcapX'` (não misturar anos no `ProgressManager`/localStorage).
+- Reaproveitar o motor genérico do `chapter-engine.js` (`_capBuildQuizHTML`, `_capCheckAnswer`, `_capShowFeedback`) e do `shared.js` (`ProgressManager`, `htmlToPdfDownload`).
 
 ## Cross-Page Consistency Rules (OBRIGATÓRIO)
 
