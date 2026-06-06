@@ -63,7 +63,17 @@ var _mat8Cards = {
     { tag: 'Regra', q: 'Dividir em notação científica', a: '(a × 10ᵐ) ÷ (b × 10ⁿ) = (a÷b) × 10ᵐ⁻ⁿ.' },
     { tag: 'Exemplo', q: 'Escreve 0,0016 em notação científica', a: '0,0016 = 1,6 × 10⁻³.' },
     { tag: 'Exemplo', q: 'Calcula (3 × 10⁴) × (6 × 10²)', a: '(3×6) × 10⁴⁺² = 18 × 10⁶ = 1,8 × 10⁷.' },
-    { tag: 'Exemplo', q: 'Calcula √64 − √36', a: '√64 − √36 = 8 − 6 = 2.' }
+    { tag: 'Exemplo', q: 'Calcula √64 − √36', a: '√64 − √36 = 8 − 6 = 2.' },
+    { tag: 'Definição', q: 'Que conjuntos numéricos conheces?', a: 'ℕ (naturais), ℤ (inteiros), ℚ (racionais). Todo o inteiro é racional e todo o natural é inteiro: ℕ ⊂ ℤ ⊂ ℚ.' },
+    { tag: 'Definição', q: 'O que é uma fração decimal?', a: 'Uma fração cujo denominador é uma potência de 10 (10, 100, 1000…). Ex: 3/10, 17/100. Dá sempre origem a uma dízima finita.' },
+    { tag: 'Regra', q: 'Como comparar dois números racionais?', a: 'Reduz ao mesmo denominador e compara os numeradores; ou converte ambos a dízima. Atenção aos negativos: quanto "mais negativo", menor.' },
+    { tag: 'Regra', q: 'Como transformar uma dízima finita em fração?', a: 'Escreve os algarismos sem vírgula sobre 10, 100… conforme as casas decimais. Ex: 0,24 = 24/100 = 6/25 (simplificada).' },
+    { tag: 'Regra', q: 'Regra dos sinais na multiplicação/divisão', a: 'Sinais iguais → resultado positivo; sinais diferentes → resultado negativo. Ex: (−2)×(−3)=6; (−2)×3=−6.' },
+    { tag: 'Definição', q: 'O que é o inverso de um número?', a: 'O inverso de a (≠0) é 1/a; o produto de um número pelo seu inverso é 1. O inverso de 3/5 é 5/3. (Não confundir com simétrico!)' },
+    { tag: 'Fórmula', q: 'Como calcular p% de um valor N?', a: 'p% de N = (p/100) × N. Ex: 5% de 6750 € = 0,05 × 6750 = 337,50 €.' },
+    { tag: 'Estratégia', q: 'Hierarquia das operações', a: '1.º parênteses; 2.º potências e raízes; 3.º multiplicação e divisão (da esquerda para a direita); 4.º adição e subtração.' },
+    { tag: 'Exemplo', q: 'Problema: Cândido pagou 4000 € em 4 prestações', a: 'Se já pagou frações conhecidas nas 3 primeiras, a 4.ª é o que falta para o todo (1): subtrai a soma das outras a 1 e multiplica por 4000 €.' },
+    { tag: 'Exemplo', q: 'Calcula (2/3)² × (3/4)', a: '(2/3)² = 4/9; 4/9 × 3/4 = 12/36 = 1/3.' }
   ],
   2: [
     { tag: 'Definição', q: 'O que é um vetor?', a: 'Um segmento orientado caracterizado por direção, sentido e comprimento (norma). Em coordenadas: v(x, y). Representa-se por uma seta.' },
@@ -1395,6 +1405,32 @@ function buildEx_m81(tema, tipo, dif) {
 
   // ── TEMA 5 · Expressões numéricas com racionais ──
   if (tema === '5') {
+    // Variante de contexto (problema com percentagem) — aumenta a variedade
+    if (!easy && Math.random() < 0.4) {
+      var ctx5 = [
+        { nome: 'A Sueli recebe uma comissão de p% sobre as suas vendas', vendas: true },
+        { nome: 'Um artigo de V € tem um desconto de p%', desconto: true }
+      ];
+      var p5 = [5, 10, 15, 20, 25][rnd_m81(0, 4)];
+      var V5 = [200, 350, 500, 800, 1200, 6750][rnd_m81(0, 5)];
+      var qual = rnd_m81(0, 1);
+      if (qual === 0) {
+        var com = V5 * p5 / 100;
+        return {
+          enun: 'Num mês, a Sueli vendeu ' + V5 + ' € e recebe uma comissão de ' + p5 + '%. Quanto recebeu de comissão? (em €)',
+          tipo: 'fill', resposta: String(com),
+          expl: p5 + '% de ' + V5 + ' € = (' + p5 + '/100) × ' + V5 + ' = ' + com + ' €.',
+          tema: 'T5 · Expressões'
+        };
+      }
+      var pago = V5 * (1 - p5 / 100);
+      return {
+        enun: 'Um artigo custava ' + V5 + ' € e tem um desconto de ' + p5 + '%. Quanto se paga agora? (em €)',
+        tipo: 'fill', resposta: String(pago),
+        expl: 'Valor final = ' + V5 + ' × (1 − ' + p5 + '/100) = ' + V5 + ' × ' + (1 - p5 / 100) + ' = ' + pago + ' €.',
+        tema: 'T5 · Expressões'
+      };
+    }
     // a/b × c/d + e/f  (resultado reduzido)
     var a5 = rndNZ_m81(1, L.mx), b5 = rndNZ_m81(2, 6);
     var c5 = rndNZ_m81(1, L.mx), d5 = rndNZ_m81(2, 6);
