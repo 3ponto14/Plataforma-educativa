@@ -23,6 +23,15 @@
   --c6-base:#e8f4f2;--c6-mid:#5a9e94;--c6-deep:#33706a;--c6-pale:#f0f9f8;
   --c7-base:#f0eaf8;--c7-mid:#7c5ea8;--c7-deep:#52397a;--c7-pale:#f8f4fc;
   --c8-base:#fdf0e8;--c8-mid:#c4733a;--c8-deep:#8a4d1f;--c8-pale:#fef7f2;
+  /* Matemática 8.º Ano — paleta própria (tons azul/teal/índigo) */
+  --m8c1-base:#e9f0f6;--m8c1-mid:#5a7fa8;--m8c1-deep:#36527a;--m8c1-pale:#f1f6fb;
+  --m8c2-base:#e6f2f1;--m8c2-mid:#4d978f;--m8c2-deep:#2e645e;--m8c2-pale:#eff9f8;
+  --m8c3-base:#eee9f6;--m8c3-mid:#7d6aa8;--m8c3-deep:#50407a;--m8c3-pale:#f5f1fb;
+  --m8c4-base:#f6ecec;--m8c4-mid:#b06a6a;--m8c4-deep:#7a4242;--m8c4-pale:#fbf3f3;
+  --m8c5-base:#e9f1ec;--m8c5-mid:#5e9676;--m8c5-deep:#3a6450;--m8c5-pale:#f1f8f4;
+  --m8c6-base:#f4eee6;--m8c6-mid:#a8854d;--m8c6-deep:#7a5e30;--m8c6-pale:#fbf6ef;
+  --m8c7-base:#e6eef4;--m8c7-mid:#4f86b0;--m8c7-deep:#305a7a;--m8c7-pale:#eff6fb;
+  --m8c8-base:#f2eaf2;--m8c8-mid:#9a5e96;--m8c8-deep:#6a3c66;--m8c8-pale:#faf2f9;
   --available:#516860;--avail-bg:#edf4f1;
   --progress:#AB9790;--prog-bg:#f5f0ee;--soon:#9e9e9e;
   --p-radius:16px;--radius-sm:10px;
@@ -2969,6 +2978,16 @@ body.dark-mode .portal-card:hover {
   margin-bottom: .75rem;
 }
 
+/* ── Grid de cards de curso (7.º + 8.º lado a lado) ── */
+.portal-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 640px) {
+  .portal-main-grid { grid-template-columns: 1fr; }
+}
+
 /* ── Card grande: Matemática 7.º ── */
 .portal-main-card {
   display: block;
@@ -3007,6 +3026,12 @@ body.dark-mode .portal-card:hover {
   flex-shrink: 0;
 }
 .portal-main-card--mat .portal-main-card-icon { background: var(--c2-base); color: var(--c2-deep); }
+/* Card 8.º ano — cor própria (índigo/azul) */
+.portal-main-card--mat8 { border-left-color: var(--m8c1-mid); }
+.portal-main-card--mat8:hover { border-color: var(--m8c1-mid); box-shadow: 0 6px 24px rgba(90,127,168,.14); }
+.portal-main-card--mat8 .portal-main-card-icon { background: var(--m8c1-base); color: var(--m8c1-deep); }
+.portal-main-card--mat8 .portal-main-card-chips span { color: var(--m8c1-deep); background: var(--m8c1-base); }
+.portal-main-card--mat8 .portal-main-card-cta { color: var(--m8c1-mid); }
 .portal-main-card-title {
   font-size: 1rem;
   font-weight: 800;
@@ -3122,6 +3147,57 @@ body.dark-mode .portal-card:hover {
 }
 .portal-exam-card--mat .portal-exam-card-cta { color: #5c4e8a; }
 .portal-exam-card--pt  .portal-exam-card-cta { color: #4a3f7a; }
+
+/* ── Hub 8.º ano: grelha de capítulos ── */
+.m8-cap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.m8-cap-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-left: 4px solid var(--ink4);
+  border-radius: 14px;
+  padding: 1.1rem 1.25rem;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.m8-cap-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.m8-cap-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--ink4);
+  line-height: 1;
+  min-width: 2ch;
+}
+.m8-cap-icon {
+  width: 42px; height: 42px;
+  border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+.m8-cap-body { flex: 1; min-width: 0; }
+.m8-cap-title { font-size: .95rem; font-weight: 800; color: var(--ink1); margin-bottom: .15rem; }
+.m8-cap-desc { font-size: .74rem; color: var(--ink3); line-height: 1.45; }
+.m8-cap-arrow { color: var(--ink4); font-size: 1.1rem; flex-shrink: 0; transition: transform .2s; }
+.m8-cap-card:hover .m8-cap-arrow { transform: translateX(3px); }
+/* Cores por capítulo */
+.m8-cap-card.m8c1 { border-left-color: var(--m8c1-mid); } .m8-cap-card.m8c1:hover { border-color: var(--m8c1-mid); } .m8c1 .m8-cap-icon { background: var(--m8c1-base); color: var(--m8c1-deep); } .m8c1 .m8-cap-num { color: var(--m8c1-mid); }
+.m8-cap-card.m8c2 { border-left-color: var(--m8c2-mid); } .m8-cap-card.m8c2:hover { border-color: var(--m8c2-mid); } .m8c2 .m8-cap-icon { background: var(--m8c2-base); color: var(--m8c2-deep); } .m8c2 .m8-cap-num { color: var(--m8c2-mid); }
+.m8-cap-card.m8c3 { border-left-color: var(--m8c3-mid); } .m8-cap-card.m8c3:hover { border-color: var(--m8c3-mid); } .m8c3 .m8-cap-icon { background: var(--m8c3-base); color: var(--m8c3-deep); } .m8c3 .m8-cap-num { color: var(--m8c3-mid); }
+.m8-cap-card.m8c4 { border-left-color: var(--m8c4-mid); } .m8-cap-card.m8c4:hover { border-color: var(--m8c4-mid); } .m8c4 .m8-cap-icon { background: var(--m8c4-base); color: var(--m8c4-deep); } .m8c4 .m8-cap-num { color: var(--m8c4-mid); }
+.m8-cap-card.m8c5 { border-left-color: var(--m8c5-mid); } .m8-cap-card.m8c5:hover { border-color: var(--m8c5-mid); } .m8c5 .m8-cap-icon { background: var(--m8c5-base); color: var(--m8c5-deep); } .m8c5 .m8-cap-num { color: var(--m8c5-mid); }
+.m8-cap-card.m8c6 { border-left-color: var(--m8c6-mid); } .m8-cap-card.m8c6:hover { border-color: var(--m8c6-mid); } .m8c6 .m8-cap-icon { background: var(--m8c6-base); color: var(--m8c6-deep); } .m8c6 .m8-cap-num { color: var(--m8c6-mid); }
+.m8-cap-card.m8c7 { border-left-color: var(--m8c7-mid); } .m8-cap-card.m8c7:hover { border-color: var(--m8c7-mid); } .m8c7 .m8-cap-icon { background: var(--m8c7-base); color: var(--m8c7-deep); } .m8c7 .m8-cap-num { color: var(--m8c7-mid); }
+.m8-cap-card.m8c8 { border-left-color: var(--m8c8-mid); } .m8-cap-card.m8c8:hover { border-color: var(--m8c8-mid); } .m8c8 .m8-cap-icon { background: var(--m8c8-base); color: var(--m8c8-deep); } .m8c8 .m8-cap-num { color: var(--m8c8-mid); }
 
 /* ── Footer ── */
 .portal-footer {

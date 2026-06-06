@@ -11,8 +11,12 @@
 ─────────────────────────────────────────────────────────────────── */
 var _inMat7 = window.location.pathname.indexOf('/mat7/') !== -1 ||
               window.location.pathname.endsWith('/mat7');
-var _rootPath = _inMat7 ? '../' : '';
-var _mat7Path = _inMat7 ? '' : 'mat7/';
+var _inMat8 = window.location.pathname.indexOf('/mat8/') !== -1 ||
+              window.location.pathname.endsWith('/mat8');
+var _inSub  = _inMat7 || _inMat8;
+var _rootPath = _inSub ? '../' : '';
+var _mat7Path = _inMat7 ? '' : (_inMat8 ? '../mat7/' : 'mat7/');
+var _mat8Path = _inMat8 ? '' : (_inMat7 ? '../mat8/' : 'mat8/');
 
 /* ── Portal (index.html at root) ── */
 function showPortalView() { window.location.href = _rootPath + 'index.html'; }
@@ -22,6 +26,18 @@ var showPortalFromMat7 = showPortalView;
 
 /* ── Mat7 hub ── */
 function showMat7View() { window.location.href = _mat7Path + 'index.html'; }
+
+/* ── Mat8 hub + chapters ── */
+function showMat8View()  { window.location.href = _mat8Path + 'index.html'; }
+function showMath8View1(){ window.location.href = _mat8Path + 'cap1.html'; }
+function showMath8View2(){ window.location.href = _mat8Path + 'cap2.html'; }
+function showMath8View3(){ window.location.href = _mat8Path + 'cap3.html'; }
+function showMath8View4(){ window.location.href = _mat8Path + 'cap4.html'; }
+function showMath8View5(){ window.location.href = _mat8Path + 'cap5.html'; }
+function showMath8View6(){ window.location.href = _mat8Path + 'cap6.html'; }
+function showMath8View7(){ window.location.href = _mat8Path + 'cap7.html'; }
+function showMath8View8(){ window.location.href = _mat8Path + 'cap8.html'; }
+function goToChapter8(n){ window.location.href = _mat8Path + 'cap' + n + '.html'; }
 
 /* ── Chapter pages ── */
 function showMathView()  { window.location.href = _mat7Path + 'cap1.html'; }
