@@ -924,10 +924,36 @@ function mat8RenderProgresso() {
   });
   h += '</div></div>';
 
+  // Treino Direcionado: capítulo com pior taxa (entre os que têm atividade)
+  if (totalT > 0) {
+    var pior = null;
+    caps.forEach(function(c) { if (c.total >= 3 && (!pior || c.pct < pior.pct)) pior = c; });
+    if (pior) {
+      var mp = _mat8CapMeta[pior.cap - 1];
+      var colorp = _mat8CapColors[pior.cap] || '#516860';
+      h += '<div class="card mt-4" style="border-color:' + colorp + '">'
+        + '<div class="card-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">'
+        + '<span>🎯 Treino Direcionado</span></div>'
+        + '<div style="font-size:.85rem;color:var(--ink2);margin:.3rem 0 .8rem">O capítulo onde tens mais a melhorar é <strong>' + mp.label + '</strong> (' + pior.pct + '%). Pratica mais um pouco para subir a tua taxa!</div>'
+        + '<button class="btn btn-primary" onclick="mat8TreinarCap(' + pior.cap + ')" style="display:inline-flex;align-items:center;gap:6px"><i class="ph ph-target"></i> Treinar ' + mp.label + '</button>'
+        + '</div>';
+    }
+  }
+
+  // Última atualização
+  h += '<div style="font-size:.72rem;color:var(--ink4);margin-top:1rem">Última atualização: ' + new Date().toLocaleString('pt-PT', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' }) + '</div>';
+
   // Limpar
   h += '<div class="mt-4 flex flex-wrap gap-3"><button class="btn btn-ghost" onclick="mat8ProgReset()"><i class="ph ph-trash"></i> Limpar progresso</button></div>';
 
   el.innerHTML = h;
+}
+
+// Abre a tab Exercícios da Praticar já no capítulo indicado (treino direcionado).
+function mat8TreinarCap(cap) {
+  _mat8Prat.cap = cap;
+  _mat8Prat.st = 0;
+  mat8SwitchTab('exercicios', null);
 }
 
 function mat8ProgReset() {
@@ -961,84 +987,196 @@ function mat8ProgDownloadPDF() {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   TAB FICHAS — gerador de ficha PDF (auto-contido)
-   Escolhe capítulo + nível + nº de exercícios; gera ficha imprimível
-   com os exercícios do gerador, com opção de soluções.
+   TAB FICHAS — gerador rico (multi-capítulo), igual ao 7.º ano.
+   Tipos: resumo teórico, exercícios, teste, minitestes, soluções.
+   Seleção de vários capítulos; nível; nº de exercícios; PDF ou HTML.
    ════════════════════════════════════════════════════════════════ */
-var _mat8Fichas = { cap: 1, nivel: 'medio', qtd: 10, solucoes: true };
+var _mat8gf = {
+  caps: {},            // { cap: true } selecionados
+  tipos: { resumo: true, exercicios: true, teste: true, minitestes: false, solucoes: true },
+  dif: 'facil',
+  qty: 10
+};
 
+// Constrói a lista de capítulos selecionáveis (só os com gerador).
 function mat8FichasBuildNav() {
-  if (!_mat8Gerador(_mat8Fichas.cap)) _mat8Fichas.cap = 1;
-  _mat8BuildCapRow('mat8-fichas-cap-row', _mat8Fichas.cap, 'mat8FichasSelectCap');
+  var el = document.getElementById('mat8-fichas-caps');
+  if (!el) return;
+  // por defeito, seleciona o primeiro capítulo com gerador
+  var temAlgum = false;
+  for (var k in _mat8gf.caps) { if (_mat8gf.caps[k]) { temAlgum = true; break; } }
+  var h = '';
+  _mat8CapMeta.forEach(function(m) {
+    var hasGen = !!_mat8Gerador(m.n);
+    if (!hasGen) return;
+    if (!temAlgum) { _mat8gf.caps[m.n] = true; temAlgum = true; } // 1.º disponível
+    var sel = !!_mat8gf.caps[m.n];
+    var color = _mat8CapColors[m.n] || '#516860';
+    var style = sel ? 'background:' + color + ';border-color:' + color + ';color:#fff' : '';
+    h += '<button class="gf-cap-btn' + (sel ? ' active' : '') + '" data-cap="' + m.n + '" onclick="mat8gfToggleCap(' + m.n + ',this)" style="' + style + '">' + m.icon + ' ' + m.label + '</button>';
+  });
+  el.innerHTML = h;
 }
 
-function mat8FichasSelectCap(cap, btn) {
-  if (!_mat8Gerador(cap)) return;
-  _mat8SetActiveCapBtn('mat8-fichas-cap-row', btn, cap);
-  _mat8Fichas.cap = cap;
+function mat8gfToggleCap(cap, btn) {
+  _mat8gf.caps[cap] = !_mat8gf.caps[cap];
+  var color = _mat8CapColors[cap] || '#516860';
+  if (_mat8gf.caps[cap]) { btn.classList.add('active'); btn.style.background = color; btn.style.borderColor = color; btn.style.color = '#fff'; }
+  else { btn.classList.remove('active'); btn.style.background = ''; btn.style.borderColor = ''; btn.style.color = ''; }
 }
 
-function mat8FichasSetNivel(nivel, btn) {
-  _mat8Fichas.nivel = nivel;
-  var grp = document.getElementById('mat8-fichas-nivel');
-  if (grp) grp.querySelectorAll('.gen-level-btn').forEach(function(b){ b.classList.remove('active'); });
-  if (btn) btn.classList.add('active');
+function mat8gfToggleType(btn) {
+  var t = btn.getAttribute('data-type');
+  _mat8gf.tipos[t] = !_mat8gf.tipos[t];
+  btn.classList.toggle('active', _mat8gf.tipos[t]);
+  var tick = btn.querySelector('.gf-tick'); if (tick) tick.textContent = _mat8gf.tipos[t] ? '✓' : '';
 }
 
-function mat8FichasToggleSolucoes(btn) {
-  _mat8Fichas.solucoes = !_mat8Fichas.solucoes;
-  if (btn) { btn.classList.toggle('active', _mat8Fichas.solucoes); var tick = btn.querySelector('.gf-tick'); if (tick) tick.textContent = _mat8Fichas.solucoes ? '✓' : ''; }
+function mat8gfSetDif(btn) {
+  _mat8gf.dif = btn.getAttribute('data-dif');
+  var grp = document.getElementById('mat8-fichas-dif');
+  if (grp) grp.querySelectorAll('.gf-dif-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
 }
 
-function mat8FichasGerar() {
-  var gen = _mat8Gerador(_mat8Fichas.cap); if (!gen) return;
-  var qtdEl = document.getElementById('mat8-fichas-qtd');
-  _mat8Fichas.qtd = qtdEl ? parseInt(qtdEl.value) : 10;
-  var m = _mat8CapMeta[_mat8Fichas.cap - 1];
-  var nTemas = _mat8TemasCount[_mat8Fichas.cap] || 1;
-  var tipos = ['mc', 'fill', 'vf', 'fill', 'mc'];
+function mat8gfSetQty(btn) {
+  _mat8gf.qty = parseInt(btn.getAttribute('data-qty')) || 10;
+  var grp = document.getElementById('mat8-fichas-qty');
+  if (grp) grp.querySelectorAll('.gf-dif-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+}
+
+// Renderiza um bloco de exercícios (com ou sem espaço de resposta).
+function _mat8gfExBloco(exs, startNum) {
+  var h = '';
+  exs.forEach(function(ex, i) {
+    h += '<div style="margin-bottom:13px;page-break-inside:avoid">'
+      + '<div style="font-weight:600;font-size:12.5px;margin-bottom:3px">' + (startNum + i) + '. ' + ex.enun + '</div>';
+    if (ex.tipo === 'mc' && ex.opcoes) {
+      h += '<div style="font-size:12px;color:#333;padding-left:14px">';
+      ex.opcoes.forEach(function(o, k) { h += '(' + 'ABCD'[k] + ') ' + o + '&nbsp;&nbsp;&nbsp; '; });
+      h += '</div>';
+    } else if (ex.tipo === 'vf') {
+      h += '<div style="font-size:12px;color:#333;padding-left:14px">Verdadeiro&nbsp;☐&nbsp;&nbsp;Falso&nbsp;☐</div>';
+    } else {
+      h += '<div style="border-bottom:1px solid #bbb;height:20px;width:55%;margin-top:3px"></div>';
+    }
+    h += '</div>';
+  });
+  return h;
+}
+
+function _mat8gfGenExs(cap, n) {
+  var gen = _mat8Gerador(cap); if (!gen) return [];
+  var nTemas = _mat8TemasCount[cap] || 1;
+  var tipos = ['mc', 'fill', 'vf', 'fill', 'mc', 'mc'];
   var exs = [];
-  for (var i = 0; i < _mat8Fichas.qtd; i++) {
-    var ex = gen(String((i % nTemas) + 1), tipos[i % tipos.length], _mat8Fichas.nivel);
+  for (var i = 0; i < n; i++) {
+    var ex = gen(String((i % nTemas) + 1), tipos[i % tipos.length], _mat8gf.dif);
     if (ex) exs.push(ex);
   }
+  return exs;
+}
 
-  var nivelLabel = { facil: 'Fácil', medio: 'Médio', dificil: 'Difícil' }[_mat8Fichas.nivel];
-  var body = '';
-  exs.forEach(function(ex, i) {
-    body += '<div style="margin-bottom:14px;page-break-inside:avoid">'
-      + '<div style="font-weight:700;font-size:13px;margin-bottom:4px">' + (i + 1) + '. ' + ex.enun + '</div>';
-    if (ex.tipo === 'mc' && ex.opcoes) {
-      body += '<div style="font-size:12.5px;color:#333;padding-left:14px">';
-      ex.opcoes.forEach(function(o, k) { body += '(' + 'ABCD'[k] + ') ' + o + '&nbsp;&nbsp;&nbsp; '; });
-      body += '</div>';
-    } else if (ex.tipo === 'vf') {
-      body += '<div style="font-size:12.5px;color:#333;padding-left:14px">Verdadeiro &nbsp;☐&nbsp;&nbsp; Falso &nbsp;☐</div>';
-    } else {
-      body += '<div style="border-bottom:1px solid #bbb;height:22px;margin:4px 0 0;width:60%"></div>';
+function mat8gfGerar(formato) {
+  // capítulos selecionados
+  var capsSel = [];
+  _mat8CapMeta.forEach(function(m) { if (_mat8gf.caps[m.n] && _mat8Gerador(m.n)) capsSel.push(m.n); });
+  var status = document.getElementById('mat8-fichas-status');
+  if (!capsSel.length) { if (status) status.textContent = 'Seleciona pelo menos um capítulo.'; return; }
+  var algumTipo = _mat8gf.tipos.resumo || _mat8gf.tipos.exercicios || _mat8gf.tipos.teste || _mat8gf.tipos.minitestes;
+  if (!algumTipo) { if (status) status.textContent = 'Seleciona pelo menos um tipo de conteúdo.'; return; }
+  if (status) status.textContent = 'A gerar…';
+
+  var difLabel = { facil: 'Fácil', medio: 'Médio', dificil: 'Difícil' }[_mat8gf.dif];
+  var solucoes = []; // {num, ex} acumuladas para a secção final
+  var solCounter = 0;
+
+  var corpo = '';
+  capsSel.forEach(function(cap, ci) {
+    var m = _mat8CapMeta[cap - 1];
+    var color = _mat8CapColors[cap] || '#36527a';
+    corpo += '<div style="' + (ci > 0 ? 'page-break-before:always;' : '') + 'margin-bottom:6px">'
+      + '<h2 style="font-size:16px;color:' + color + ';border-bottom:2px solid ' + color + ';padding-bottom:4px;margin:0 0 10px">' + cap + '. ' + m.label + '</h2>';
+
+    // Resumo teórico (das flashcards)
+    if (_mat8gf.tipos.resumo) {
+      var cards = _mat8Cards[cap] || [];
+      if (cards.length) {
+        corpo += '<div style="margin-bottom:12px"><h3 style="font-size:13px;color:#444;margin:0 0 5px">Resumo teórico</h3>';
+        cards.slice(0, 8).forEach(function(c) {
+          corpo += '<div style="font-size:11.5px;margin-bottom:4px"><strong>' + c.q + '</strong> ' + c.a + '</div>';
+        });
+        corpo += '</div>';
+      }
     }
-    body += '</div>';
+    // Exercícios
+    if (_mat8gf.tipos.exercicios) {
+      var exs = _mat8gfGenExs(cap, _mat8gf.qty);
+      corpo += '<div style="margin-bottom:12px"><h3 style="font-size:13px;color:#444;margin:0 0 5px">Exercícios</h3>'
+        + _mat8gfExBloco(exs, solCounter + 1) + '</div>';
+      exs.forEach(function(ex) { solCounter++; solucoes.push({ num: solCounter, ex: ex }); });
+    }
+    // Teste de avaliação (8 questões mistas)
+    if (_mat8gf.tipos.teste) {
+      var exsT = _mat8gfGenExs(cap, 8);
+      corpo += '<div style="margin-bottom:12px"><h3 style="font-size:13px;color:#444;margin:0 0 5px">Teste de avaliação</h3>'
+        + _mat8gfExBloco(exsT, solCounter + 1) + '</div>';
+      exsT.forEach(function(ex) { solCounter++; solucoes.push({ num: solCounter, ex: ex }); });
+    }
+    // Minitestes (um por subtema, 4 questões cada)
+    if (_mat8gf.tipos.minitestes) {
+      var subt = _mat8Subtemas[cap] || [];
+      var mapa = _mat8SubtemaTemas[cap] || {};
+      corpo += '<div style="margin-bottom:12px"><h3 style="font-size:13px;color:#444;margin:0 0 5px">Minitestes</h3>';
+      subt.forEach(function(st, si) {
+        var temas = mapa[si + 1] || [String(si + 1)];
+        var gen = _mat8Gerador(cap);
+        var exsM = [];
+        for (var q = 0; q < 4; q++) {
+          var tema = temas[q % temas.length];
+          var ex = gen(tema, (q % 2 === 0) ? 'mc' : 'fill', _mat8gf.dif);
+          if (ex) exsM.push(ex);
+        }
+        corpo += '<div style="margin-bottom:8px"><div style="font-size:12px;font-weight:700;color:#555">Mini ' + (si + 1) + ' · ' + st + '</div>'
+          + _mat8gfExBloco(exsM, solCounter + 1) + '</div>';
+        exsM.forEach(function(ex) { solCounter++; solucoes.push({ num: solCounter, ex: ex }); });
+      });
+      corpo += '</div>';
+    }
+    corpo += '</div>';
   });
 
-  var solucoesHTML = '';
-  if (_mat8Fichas.solucoes) {
-    var sol = exs.map(function(ex, i) {
-      return '<div style="font-size:12px;margin-bottom:3px"><strong>' + (i + 1) + '.</strong> ' + ex.resposta + (ex.expl ? ' — <span style="color:#555">' + ex.expl + '</span>' : '') + '</div>';
+  // Secção de soluções
+  var solHTML = '';
+  if (_mat8gf.tipos.solucoes && solucoes.length) {
+    var lst = solucoes.map(function(s) {
+      return '<div style="font-size:11px;margin-bottom:2px"><strong>' + s.num + '.</strong> ' + s.ex.resposta + (s.ex.expl ? ' — <span style="color:#666">' + s.ex.expl + '</span>' : '') + '</div>';
     }).join('');
-    solucoesHTML = '<div style="page-break-before:always;padding-top:10px">'
-      + '<h2 style="font-size:16px;border-bottom:2px solid #36527a;padding-bottom:4px">Soluções</h2>' + sol + '</div>';
+    solHTML = '<div style="page-break-before:always;padding-top:8px"><h2 style="font-size:16px;border-bottom:2px solid #36527a;padding-bottom:4px">Soluções</h2>' + lst + '</div>';
   }
 
-  var html = '<div style="font-family:Arial,sans-serif;max-width:720px;margin:0 auto;padding:24px;color:#222">'
-    + '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #36527a;padding-bottom:8px;margin-bottom:16px">'
-    + '<div><h1 style="font-size:19px;margin:0">Ficha · ' + m.label + '</h1>'
-    + '<div style="font-size:12px;color:#666">Matemática 8.º Ano · Nível ' + nivelLabel + '</div></div>'
-    + '<div style="font-size:12px;color:#888">3ponto14</div></div>'
-    + '<div style="font-size:12px;color:#666;margin-bottom:14px">Nome: ____________________________  Data: ____ / ____ / ______</div>'
-    + body + solucoesHTML + '</div>';
+  var nomesCaps = capsSel.map(function(c) { return _mat8CapMeta[c - 1].label; }).join(', ');
+  var html = '<div style="font-family:Arial,sans-serif;max-width:740px;margin:0 auto;padding:24px;color:#222">'
+    + '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #36527a;padding-bottom:8px;margin-bottom:14px">'
+    + '<div><h1 style="font-size:18px;margin:0">Ficha de Trabalho · Matemática 8.º Ano</h1>'
+    + '<div style="font-size:11.5px;color:#666">' + nomesCaps + ' · Nível ' + difLabel + '</div></div>'
+    + '<div style="font-size:11.5px;color:#888">3ponto14</div></div>'
+    + '<div style="font-size:11.5px;color:#666;margin-bottom:12px">Nome: ____________________________  Data: ____ / ____ / ______</div>'
+    + corpo + solHTML + '</div>';
 
-  if (typeof htmlToPdfDownload === 'function') htmlToPdfDownload(html, 'ficha-mat8-cap' + _mat8Fichas.cap + '.pdf');
-  else if (typeof eduToast === 'function') eduToast('Geração de PDF indisponível.', 'warn');
+  var fname = 'ficha-mat8.' + (formato === 'html' ? 'html' : 'pdf');
+  if (formato === 'html') {
+    try {
+      var blob = new Blob(['<!DOCTYPE html><meta charset="utf-8">' + html], { type: 'text/html' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = fname; a.click();
+      if (status) status.textContent = 'Ficha HTML gerada ✓';
+    } catch (e) { if (status) status.textContent = 'Erro ao gerar HTML.'; }
+  } else {
+    if (typeof htmlToPdfDownload === 'function') { htmlToPdfDownload(html, fname); if (status) status.textContent = 'Ficha PDF gerada ✓'; }
+    else if (status) status.textContent = 'Geração de PDF indisponível.';
+  }
 }
 
 // ═══ INIT ═══

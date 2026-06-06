@@ -164,26 +164,52 @@
 <!-- ══════════ PANEL: FICHAS ══════════ -->
 <div class="mat7-panel" id="mat8p-fichas">
   <div class="mat7-panel-heading">Gerador de Fichas</div>
-  <div class="mat7-panel-sub">Escolhe o capítulo, o nível e o número de exercícios. Gera uma ficha PDF personalizada. <strong>Para professores:</strong> mantém "Soluções" para a versão com respostas.</div>
-  <div class="resumo-nav" style="margin-top:.5rem">
-    <div class="resumo-cap-row" id="mat8-fichas-cap-row"></div>
-  </div>
-  <div class="level-bar" style="margin:.75rem 0 .5rem">
-    <div class="gen-level-group" id="mat8-fichas-nivel">
-      <span class="gen-level-label">Nível:</span>
-      <button class="gen-level-btn" data-level="facil" onclick="mat8FichasSetNivel('facil',this)"><span class="status-dot status-dot--easy"></span> Fácil</button>
-      <button class="gen-level-btn active" data-level="medio" onclick="mat8FichasSetNivel('medio',this)"><span class="status-dot status-dot--medium"></span> Médio</button>
-      <button class="gen-level-btn" data-level="dificil" onclick="mat8FichasSetNivel('dificil',this)"><span class="status-dot status-dot--hard"></span> Difícil</button>
+  <div class="mat7-panel-sub">Escolhe os capítulos e o que incluir gera e descarrega uma ficha PDF personalizada. <strong>Para professores:</strong> ativa "Soluções" para a versão com respostas.</div>
+  <div class="mat7-dl-panel">
+    <div class="gf-row mb-4">
+      <div class="gf-col">
+        <div class="gf-label">Capítulos a incluir</div>
+        <div class="gf-caps mt-1.5" id="mat8-fichas-caps" style="display:block"><!-- gerado por mat8gfBuildCaps() --></div>
+      </div>
+    </div>
+    <div class="gf-row mb-4">
+      <div class="gf-col">
+        <div class="gf-label">O que incluir</div>
+        <div class="gf-types mt-1.5" id="mat8-fichas-types">
+          <button class="gf-type-btn active" data-type="resumo" onclick="mat8gfToggleType(this)"><span class="gf-tick">✓</span> Resumo teórico</button>
+          <button class="gf-type-btn active" data-type="exercicios" onclick="mat8gfToggleType(this)"><span class="gf-tick">✓</span> Exercícios</button>
+          <button class="gf-type-btn active" data-type="teste" onclick="mat8gfToggleType(this)"><span class="gf-tick">✓</span> Teste de avaliação</button>
+          <button class="gf-type-btn" data-type="minitestes" onclick="mat8gfToggleType(this)"><span class="gf-tick"></span> Minitestes</button>
+          <button class="gf-type-btn active" data-type="solucoes" onclick="mat8gfToggleType(this)" title="Incluir respostas no final da ficha" style="border-color:var(--m8c1-mid);color:var(--m8c1-deep)"><span class="gf-tick">✓</span> Soluções <span style="font-size:.65rem;background:var(--m8c1-mid);color:#fff;border-radius:999px;padding:1px 6px;margin-left:3px">Professor</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="gf-row mb-5">
+      <div class="gf-col">
+        <div class="gf-label">Nível de dificuldade</div>
+        <div class="gf-dif-row mt-1.5" id="mat8-fichas-dif">
+          <button class="gf-dif-btn active" data-dif="facil" onclick="mat8gfSetDif(this)"><span class="status-dot status-dot--easy"></span> Fácil</button>
+          <button class="gf-dif-btn" data-dif="medio" onclick="mat8gfSetDif(this)"><span class="status-dot status-dot--medium"></span> Médio</button>
+          <button class="gf-dif-btn" data-dif="dificil" onclick="mat8gfSetDif(this)"><span class="status-dot status-dot--hard"></span> Difícil</button>
+        </div>
+      </div>
+    </div>
+    <div class="gf-row mb-5">
+      <div class="gf-col">
+        <div class="gf-label">Exercícios por subtema</div>
+        <div class="gf-dif-row mt-1.5" id="mat8-fichas-qty">
+          <button class="gf-dif-btn" data-qty="5" onclick="mat8gfSetQty(this)">5</button>
+          <button class="gf-dif-btn active" data-qty="10" onclick="mat8gfSetQty(this)">10</button>
+          <button class="gf-dif-btn" data-qty="15" onclick="mat8gfSetQty(this)">15</button>
+          <button class="gf-dif-btn" data-qty="20" onclick="mat8gfSetQty(this)">20</button>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="flex items-center gap-3 flex-wrap" style="margin-bottom:1rem">
-    <select class="ai-select" id="mat8-fichas-qtd">
-      <option value="10" selected>10 exercícios</option>
-      <option value="15">15 exercícios</option>
-      <option value="20">20 exercícios</option>
-    </select>
-    <button class="gf-type-btn active" onclick="mat8FichasToggleSolucoes(this)"><span class="gf-tick">✓</span> Soluções <span style="font-size:.65rem;background:var(--m8c1-mid);color:#fff;border-radius:999px;padding:1px 6px;margin-left:3px">Professor</span></button>
-    <button class="gf-gen-btn" onclick="mat8FichasGerar()"><i class="ph ph-download-simple"></i> Gerar ficha PDF</button>
+  <div class="flex items-center gap-3 flex-wrap mt-2">
+    <button class="gf-gen-btn" onclick="mat8gfGerar('pdf')"><i class="ph ph-download-simple"></i> Guardar como PDF</button>
+    <button class="gf-gen-btn gf-gen-btn--html" onclick="mat8gfGerar('html')"><i class="ph ph-code"></i> Guardar como HTML</button>
+    <span id="mat8-fichas-status" class="gf-status"></span>
   </div>
 </div>
 
