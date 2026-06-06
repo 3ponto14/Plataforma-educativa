@@ -293,6 +293,8 @@ function mat8RenderResumoInline() {
     return;
   }
 
+  _mat8PM(cap, 'teoria'); // estudou a teoria deste capítulo
+
   // Agrupar por tag
   var groups = {}, order = [];
   cards.forEach(function(card) {
@@ -512,6 +514,13 @@ function mat8SaveProgress(cap, correct) {
   } catch (e) {}
 }
 
+// Regista atividade no ProgressManager (XP + streak), com capId próprio do 8.º ano
+// ('m8capN') para não misturar com o progresso do 7.º ano.
+function _mat8PM(cap, tipo, opts) {
+  if (typeof ProgressManager === 'undefined') return;
+  try { ProgressManager.record('m8cap' + cap, tipo, opts || {}); } catch (e) {}
+}
+
 /* ════════════════════════════════════════════════════════════════
    HELPER: linha de capítulos para sub-modos (quiz, flashcards, teste)
    Só capítulos com gerador ficam ativos.
@@ -629,6 +638,7 @@ function mat8QuizAnswer(idx) {
 
 function mat8QuizGameOver(app) {
   var pct = _mat8Quiz.total > 0 ? Math.round(_mat8Quiz.score / _mat8Quiz.total * 100) : 0;
+  _mat8PM(_mat8Quiz.cap, 'quiz', { pontuacao: _mat8Quiz.score, total: _mat8Quiz.total });
   var emoji = pct >= 90 ? '🏆' : pct >= 70 ? '⭐' : pct >= 50 ? '👍' : '📚';
   app.innerHTML =
     '<div style="text-align:center;padding:2.5rem 1rem">' +
@@ -676,6 +686,7 @@ function mat8FcSelectCap(cap, btn) {
   _mat8Fc.cap = cap;
   _mat8Fc.cards = _mat8Cards[cap].slice();
   _mat8Fc.idx = 0; _mat8Fc.flipped = false;
+  _mat8PM(cap, 'flashcard');
   mat8FcRender();
 }
 
@@ -821,6 +832,7 @@ function mat8TesteFinish() {
   var total = _mat8Teste.qtd;
   var correct = _mat8Teste.score.correct;
   var pct = total > 0 ? Math.round(correct / total * 100) : 0;
+  _mat8PM(_mat8Teste.cap, 'quiz', { pontuacao: correct, total: total });
   var nota = Math.round(correct / total * 20 * 10) / 10;
   var emoji = pct >= 90 ? '🏆' : pct >= 70 ? '⭐' : pct >= 50 ? '👍' : '📚';
   app.innerHTML =
@@ -837,6 +849,7 @@ function mat8TesteFinish() {
    ════════════════════════════════════════════════════════════════ */
 var _mat8JogosInited = false;
 function mat8JogosInit() {
+  _mat8PM(_mat8Prat.cap || 1, 'jogo');
   if (_mat8JogosInited) return;
   if (typeof _j24AutoInit === 'function') {
     _j24AutoInit('mat8-jogos-app', 'medio');
@@ -901,9 +914,19 @@ function mat8RenderProgresso() {
      +   '<button class="btn btn-ghost" onclick="mat8ProgDownloadPDF()" style="font-size:.78rem;padding:7px 14px;display:inline-flex;align-items:center;gap:5px"><i class="ph ph-file-text"></i>Relatório PDF</button>'
      + '</div>';
 
+  // XP + streak do ProgressManager (apenas dos capítulos do 8.º ano)
+  var pmXp = 0, pmStreak = 0;
+  if (typeof ProgressManager !== 'undefined') {
+    try {
+      var sum = ProgressManager.getSummary();
+      pmStreak = sum.streak || 0;
+      if (sum.caps) Object.keys(sum.caps).forEach(function(k) { if (k.indexOf('m8cap') === 0) pmXp += (sum.caps[k].xp || 0); });
+    } catch (e) {}
+  }
+
   // Stat chips
   h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem;margin-bottom:1.5rem">';
-  [{ v: totalT, l: 'Questões respondidas' }, { v: totalC, l: 'Respostas certas' }, { v: totalT > 0 ? globalPct + '%' : '—', l: 'Taxa global' }].forEach(function(s) {
+  [{ v: totalT, l: 'Questões respondidas' }, { v: totalC, l: 'Respostas certas' }, { v: totalT > 0 ? globalPct + '%' : '—', l: 'Taxa global' }, { v: pmXp + ' XP', l: 'XP total' }, { v: pmStreak + (pmStreak === 1 ? ' dia' : ' dias'), l: 'Streak atual' }].forEach(function(s) {
     h += '<div class="card" style="text-align:center;padding:1rem .75rem">'
        + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.75rem;font-weight:900;color:var(--ink);line-height:1">' + s.v + '</div>'
        + '<div style="font-size:.68rem;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-top:4px">' + s.l + '</div>'
@@ -959,6 +982,15 @@ function mat8TreinarCap(cap) {
 function mat8ProgReset() {
   if (typeof window !== 'undefined' && window.confirm && !window.confirm('Limpar todo o progresso do 8.º ano? Esta ação não pode ser desfeita.')) return;
   for (var cap = 1; cap <= 8; cap++) { try { localStorage.removeItem('edupt_mat8_cap' + cap); } catch (e) {} }
+  // Remove só os capítulos do 8.º ano (m8cap*) do ProgressManager, preservando o 7.º.
+  try {
+    var raw = localStorage.getItem('edupt_progress_v2');
+    if (raw) {
+      var d = JSON.parse(raw);
+      if (d.caps) { Object.keys(d.caps).forEach(function(k) { if (k.indexOf('m8cap') === 0) delete d.caps[k]; }); }
+      localStorage.setItem('edupt_progress_v2', JSON.stringify(d));
+    }
+  } catch (e) {}
   mat8RenderProgresso();
   if (typeof eduToast === 'function') eduToast('Progresso do 8.º ano limpo.', 'ok');
 }
@@ -1094,6 +1126,7 @@ function mat8gfGerar(formato) {
 
   var corpo = '';
   capsSel.forEach(function(cap, ci) {
+    _mat8PM(cap, 'ficha'); // gerou ficha deste capítulo
     var m = _mat8CapMeta[cap - 1];
     var color = _mat8CapColors[cap] || '#36527a';
     corpo += '<div style="' + (ci > 0 ? 'page-break-before:always;' : '') + 'margin-bottom:6px">'
