@@ -32,7 +32,7 @@ var _mat8Subtemas = {
   5: ['Equações literais', 'Imagem de uma função', 'Função afim', 'Declive de uma reta'],
   6: ['Equação com 2 incógnitas', 'Resolver sistema (valor de x)', 'Resolver sistema (valor de y)', 'Solução do sistema'],
   7: ['Prismas e pirâmides', 'Cilindros e cones', 'Esfera', 'Volumes'],
-  8: ['Organização de dados', 'Medidas (média, moda, mediana)', 'Probabilidade']
+  8: ['Média', 'Moda', 'Mediana', 'Amplitude', 'Probabilidade', 'Frequência relativa']
 };
 
 // ═══ FLASHCARDS / TEORIA por capítulo ═══
@@ -118,7 +118,20 @@ var _mat8Cards = {
     { tag: 'Exemplo', q: 'Como verificar se um par é solução do sistema?', a: 'Substitui o par nas duas equações. Só é solução se AMBAS se verificarem. Ex: (6, 2) em { x + 2y = 10 ; 3x − y = 16 } → 6+4=10 ✓ e 18−2=16 ✓ → é solução.' },
     { tag: 'Exemplo', q: 'Resolve { x + y = 3 ; 4x − 3y = 33 }', a: 'Da 1.ª: x = 3 − y. Substitui: 4(3−y) − 3y = 33 → 12 − 7y = 33 → y = −3, x = 6. Solução (6, −3).' }
   ],
-  7: [], 8: []
+  7: [],
+  8: [
+    { tag: 'Definição', q: 'O que é a média?', a: 'A soma de todos os valores dividida pelo número de valores. Ex: média de 2, 4, 6 = (2+4+6)/3 = 4.' },
+    { tag: 'Definição', q: 'O que é a moda?', a: 'O valor (ou valores) que aparece mais vezes num conjunto de dados. Ex: em 3, 6, 6, 6, 7 a moda é 6.' },
+    { tag: 'Definição', q: 'O que é a mediana?', a: 'O valor central dos dados ORDENADOS. Se o nº de dados for par, é a média dos dois valores centrais.' },
+    { tag: 'Estratégia', q: 'Como calcular a mediana?', a: '1) Ordena os dados. 2) Se forem ímpares, é o do meio. 3) Se forem pares, é a média dos dois centrais. Ex: 8,9,10,14,20 → mediana = 10.' },
+    { tag: 'Definição', q: 'O que é a amplitude?', a: 'A diferença entre o maior e o menor valor: amplitude = máximo − mínimo. Mede a dispersão dos dados.' },
+    { tag: 'Definição', q: 'O que são os quartis?', a: 'Q1, Q2 (mediana) e Q3 dividem os dados ordenados em quatro partes iguais (25% cada). A amplitude interquartis é Q3 − Q1.' },
+    { tag: 'Definição', q: 'O que é a frequência absoluta?', a: 'O número de vezes que um valor (ou classe) ocorre nos dados.' },
+    { tag: 'Definição', q: 'O que é a frequência relativa?', a: 'A frequência absoluta dividida pelo total. Costuma exprimir-se em % : (fa ÷ total) × 100.' },
+    { tag: 'Regra', q: 'Como calcular uma probabilidade?', a: 'Em casos equiprováveis: P = casos favoráveis ÷ casos possíveis. O resultado está sempre entre 0 e 1.' },
+    { tag: 'Exemplo', q: 'P de sair par num dado?', a: 'Casos favoráveis (2,4,6) = 3; possíveis = 6. P = 3/6 = 1/2.' },
+    { tag: 'Exemplo', q: 'Probabilidade de um acontecimento certo / impossível', a: 'Acontecimento certo: P = 1. Acontecimento impossível: P = 0.' }
+  ]
 };
 
 // Seleção atual por tab
@@ -301,9 +314,10 @@ function _mat8Gerador(cap) {
   if (cap === 4 && typeof buildEx_m84 === 'function') return buildEx_m84;
   if (cap === 5 && typeof buildEx_m85 === 'function') return buildEx_m85;
   if (cap === 6 && typeof buildEx_m86 === 'function') return buildEx_m86;
+  if (cap === 8 && typeof buildEx_m88 === 'function') return buildEx_m88;
   return null;
 }
-var _mat8TemasCount = { 1: 11, 3: 6, 4: 4, 5: 4, 6: 4 };
+var _mat8TemasCount = { 1: 11, 3: 6, 4: 4, 5: 4, 6: 4, 8: 6 };
 
 // Estado da prática
 var _mat8Prat = { cap: 1, st: 0, nivel: 'medio', score: { correct: 0, total: 0 }, answered: {}, exs: [] };
@@ -392,6 +406,9 @@ var _mat8SubtemaTemas = {
   },
   6: { // Cap 6 Sistemas (1:1 com os 4 temas)
     1: ['1'], 2: ['2'], 3: ['3'], 4: ['4']
+  },
+  8: { // Cap 8 Dados e Probabilidades (1:1 com os 6 temas)
+    1: ['1'], 2: ['2'], 3: ['3'], 4: ['4'], 5: ['5'], 6: ['6']
   }
 };
 
@@ -1909,4 +1926,168 @@ function buildEx_m86(tema, tipo, dif) {
 
   // fallback
   return { enun: '(2,1) é solução de x + y = 3?', tipo: 'mc', opcoes: ['Sim', 'Não'], resposta: 'Sim', expl: '2+1=3 → sim.', tema: 'Sistemas' };
+}
+
+/* ════════════════════════════════════════════════════════════════
+   GERADOR — Cap 8 Dados e Probabilidades (Prisma 8)
+   Temas:
+    1 Média
+    2 Moda
+    3 Mediana
+    4 Amplitude / amplitude interquartis (amplitude)
+    5 Probabilidade simples
+    6 Frequência relativa (%)
+   ════════════════════════════════════════════════════════════════ */
+function _media_m88(arr) { var s = 0; for (var i = 0; i < arr.length; i++) s += arr[i]; return s / arr.length; }
+function _ordena_m88(arr) { return arr.slice().sort(function (a, b) { return a - b; }); }
+
+function buildEx_m88(tema, tipo, dif) {
+  tema = String(tema);
+  var easy = (dif === 'facil'), hard = (dif === 'dificil');
+  var n = easy ? 5 : hard ? 7 : 5; // tamanho do conjunto (ímpar para mediana limpa)
+
+  // gera conjunto pequeno de dados
+  function dados(len, lo, hi) {
+    var a = [];
+    for (var i = 0; i < len; i++) a.push(rnd_m81(lo, hi));
+    return a;
+  }
+
+  // ── TEMA 1 · Média (garante média inteira) ──
+  if (tema === '1') {
+    var arr;
+    do { arr = dados(n, 1, easy ? 10 : 20); } while (_media_m88(arr) % 1 !== 0);
+    var media = _media_m88(arr);
+    if (tipo === 'mc') {
+      var opts = shuffle_m81([media, media + 1, media - 1, Math.max.apply(null, arr)].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4).map(String);
+      if (opts.indexOf(String(media)) === -1) opts[0] = String(media);
+      return {
+        enun: 'Calcula a média do conjunto: <strong>' + arr.join(', ') + '</strong>',
+        tipo: 'mc', opcoes: opts, resposta: String(media),
+        expl: 'Média = soma ÷ nº de dados = ' + arr.join('+') + ' = ' + arr.reduce(function (s, v) { return s + v; }, 0) + ' ÷ ' + arr.length + ' = ' + media + '.',
+        tema: 'T1 · Média'
+      };
+    }
+    return {
+      enun: 'Calcula a média de: ' + arr.join(', '), tipo: 'fill', resposta: String(media),
+      expl: 'Soma = ' + arr.reduce(function (s, v) { return s + v; }, 0) + '; ÷ ' + arr.length + ' = ' + media + '.',
+      tema: 'T1 · Média'
+    };
+  }
+
+  // ── TEMA 2 · Moda (garante moda única) ──
+  if (tema === '2') {
+    var base = dados(n - 2, 1, 8);
+    var modaVal = base[rnd_m81(0, base.length - 1)];
+    var arr2 = base.concat([modaVal, modaVal]); // garante que modaVal aparece mais vezes
+    shuffle_m81(arr2);
+    // confirma moda única
+    var freq = {}; arr2.forEach(function (v) { freq[v] = (freq[v] || 0) + 1; });
+    var maxF = 0, moda = modaVal, ties = 0;
+    Object.keys(freq).forEach(function (k) { if (freq[k] > maxF) { maxF = freq[k]; moda = parseInt(k); } });
+    Object.keys(freq).forEach(function (k) { if (freq[k] === maxF) ties++; });
+    if (ties > 1) { arr2.push(moda); } // reforça
+    if (tipo === 'mc') {
+      var distintos = Object.keys(freq).map(Number);
+      var opts2 = shuffle_m81([moda].concat(distintos.filter(function (v) { return v !== moda; }))).slice(0, 4).map(String);
+      if (opts2.indexOf(String(moda)) === -1) opts2[0] = String(moda);
+      return {
+        enun: 'Qual é a moda do conjunto: <strong>' + arr2.join(', ') + '</strong>?',
+        tipo: 'mc', opcoes: opts2, resposta: String(moda),
+        expl: 'A moda é o valor que aparece mais vezes: ' + moda + ' (aparece ' + maxF + ' vezes).',
+        tema: 'T2 · Moda'
+      };
+    }
+    return {
+      enun: 'Indica a moda de: ' + arr2.join(', '), tipo: 'fill', resposta: String(moda),
+      expl: 'O valor mais frequente é ' + moda + '.', tema: 'T2 · Moda'
+    };
+  }
+
+  // ── TEMA 3 · Mediana (n ímpar → valor central) ──
+  if (tema === '3') {
+    var len3 = (n % 2 === 0) ? n + 1 : n;
+    var arr3 = dados(len3, 1, 20);
+    var ord = _ordena_m88(arr3);
+    var mediana = ord[(len3 - 1) / 2];
+    if (tipo === 'mc') {
+      var opts3 = shuffle_m81([mediana, mediana + 1, mediana - 1, ord[0]].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4).map(String);
+      if (opts3.indexOf(String(mediana)) === -1) opts3[0] = String(mediana);
+      return {
+        enun: 'Qual é a mediana do conjunto: <strong>' + arr3.join(', ') + '</strong>?',
+        tipo: 'mc', opcoes: opts3, resposta: String(mediana),
+        expl: 'Ordena os dados: ' + ord.join(', ') + '. Com ' + len3 + ' valores (ímpar), a mediana é o valor central → ' + mediana + '.',
+        tema: 'T3 · Mediana'
+      };
+    }
+    return {
+      enun: 'Indica a mediana de: ' + arr3.join(', '), tipo: 'fill', resposta: String(mediana),
+      expl: 'Ordenado: ' + ord.join(', ') + '. Valor central = ' + mediana + '.', tema: 'T3 · Mediana'
+    };
+  }
+
+  // ── TEMA 4 · Amplitude ──
+  if (tema === '4') {
+    var arr4 = dados(n, 1, 30);
+    var ord4 = _ordena_m88(arr4);
+    var amp = ord4[ord4.length - 1] - ord4[0];
+    if (tipo === 'mc') {
+      var opts4 = shuffle_m81([amp, amp + 1, amp - 1, ord4[ord4.length - 1]].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4).map(String);
+      if (opts4.indexOf(String(amp)) === -1) opts4[0] = String(amp);
+      return {
+        enun: 'Qual é a amplitude do conjunto: <strong>' + arr4.join(', ') + '</strong>?',
+        tipo: 'mc', opcoes: opts4, resposta: String(amp),
+        expl: 'Amplitude = máximo − mínimo = ' + ord4[ord4.length - 1] + ' − ' + ord4[0] + ' = ' + amp + '.',
+        tema: 'T4 · Amplitude'
+      };
+    }
+    return {
+      enun: 'Calcula a amplitude de: ' + arr4.join(', '), tipo: 'fill', resposta: String(amp),
+      expl: 'Máximo (' + ord4[ord4.length - 1] + ') − mínimo (' + ord4[0] + ') = ' + amp + '.', tema: 'T4 · Amplitude'
+    };
+  }
+
+  // ── TEMA 5 · Probabilidade simples ──
+  if (tema === '5') {
+    var contextos = [
+      { tot: 6, desc: 'lançar um dado', fav: rnd_m81(1, 3), o: 'sair um número' },
+      { tot: rnd_m81(8, 12), desc: 'tirar uma bola de um saco' }
+    ];
+    var ctx = contextos[rnd_m81(0, contextos.length - 1)];
+    var total = ctx.tot, fav = rnd_m81(1, total - 1);
+    var r = reduce_m81(fav, total);
+    var fracStr = (r[1] === 1) ? String(r[0]) : r[0] + '/' + r[1];
+    var enun = (ctx.desc === 'lançar um dado')
+      ? 'Ao lançar um dado equilibrado, qual é a probabilidade de sair um de ' + fav + ' resultados favoráveis (em ' + total + ')?'
+      : 'Num saco há ' + total + ' bolas, ' + fav + ' das quais são vermelhas. Qual é a probabilidade de tirar uma bola vermelha?';
+    return {
+      enun: enun, tipo: 'fill', resposta: fracStr,
+      expl: 'P = casos favoráveis ÷ casos possíveis = ' + fav + '/' + total + ' = ' + fracStr + '.',
+      tema: 'T5 · Probabilidade'
+    };
+  }
+
+  // ── TEMA 6 · Frequência relativa (%) ──
+  if (tema === '6') {
+    var tot6 = [10, 20, 25, 50, 100][rnd_m81(0, 4)];
+    var abs = rnd_m81(1, tot6);
+    var pct = Math.round(abs / tot6 * 100);
+    if (tipo === 'mc') {
+      var opts6 = shuffle_m81([pct, pct + 5, pct - 5, abs].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4).map(String);
+      if (opts6.indexOf(String(pct)) === -1) opts6[0] = String(pct);
+      return {
+        enun: 'Num total de ' + tot6 + ' alunos, ' + abs + ' praticam natação. Qual é a frequência relativa (em %)?',
+        tipo: 'mc', opcoes: opts6.map(function (v) { return v + '%'; }), resposta: pct + '%',
+        expl: 'Frequência relativa = ' + abs + ' ÷ ' + tot6 + ' = ' + (abs / tot6) + ' = ' + pct + '%.',
+        tema: 'T6 · Frequência'
+      };
+    }
+    return {
+      enun: 'Em ' + tot6 + ' alunos, ' + abs + ' praticam natação. Frequência relativa em %?', tipo: 'fill',
+      resposta: String(pct), expl: abs + ' ÷ ' + tot6 + ' × 100 = ' + pct + '%.', tema: 'T6 · Frequência'
+    };
+  }
+
+  // fallback
+  return { enun: 'Média de 2, 4, 6?', tipo: 'fill', resposta: '4', expl: '(2+4+6)/3 = 4.', tema: 'Dados' };
 }
