@@ -1703,6 +1703,25 @@ function _jogoQFromGerador(genFn, temasCount, banco, level) {
   return null;
 }
 
+// Gera um nome de ficheiro no formato ano_disciplina_tema_data.
+// ano: '9' · disc: 'matematica' · temas: ['Funções', …] · ext: 'pdf'/'html'
+// Ex.: 9ano_matematica_funcoes_2026-06-07.pdf
+function _nomeFicha(ano, disc, temas, ext) {
+  function slug(s) {
+    return String(s).toLowerCase()
+      .replace(/[áàâãä]/g, 'a').replace(/[éèêë]/g, 'e').replace(/[íìîï]/g, 'i')
+      .replace(/[óòôõö]/g, 'o').replace(/[úùûü]/g, 'u').replace(/ç/g, 'c')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+  var d = new Date();
+  var data = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+  var tema;
+  if (!temas || !temas.length) tema = 'geral';
+  else if (temas.length === 1) tema = slug(temas[0]);
+  else tema = slug(temas[0]) + '-mais' + (temas.length - 1); // ex: funcoes-mais2
+  return ano + 'ano_' + slug(disc) + '_' + tema + '_' + data + '.' + (ext === 'html' ? 'html' : 'pdf');
+}
+
 // Garante que uma pergunta de escolha múltipla (mc) tem 4 opções.
 // Perguntas binárias legítimas (Sim/Não, Verdadeiro/Falso, finita/infinita…)
 // ficam com 2. As que têm 3 (falta um distrator) são completadas para 4.

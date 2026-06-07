@@ -1157,7 +1157,8 @@ function mat10gfGerar(formato) {
     + '<div style="font-size:11.5px;color:#666;margin-bottom:12px">Nome: ____________________________  Data: ____ / ____ / ______</div>'
     + corpo + solHTML + '</div>';
 
-  var fname = 'ficha-mat10.' + (formato === 'html' ? 'html' : 'pdf');
+  var _temasNomes = capsSel.map(function(c){ return _mat10CapMeta[c-1].label; });
+  var fname = (typeof _nomeFicha === 'function') ? _nomeFicha('10', 'matematica', _temasNomes, formato) : ('ficha-mat10.' + (formato === 'html' ? 'html' : 'pdf'));
   if (formato === 'html') {
     try {
       var blob = new Blob(['<!DOCTYPE html><meta charset="utf-8">' + html], { type: 'text/html' });

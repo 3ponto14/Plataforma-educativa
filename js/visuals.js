@@ -37,7 +37,7 @@ var EduVisual = (function () {
     var plotW = W - padL - padR, plotH = H - padT - padB;
     var n = data.length, gap = 0.35;
     var bw = plotW / (n + (n - 1) * gap);
-    var svg = '<div class="edv-wrap"><svg viewBox="0 0 ' + W + ' ' + H + '" class="edv-svg" role="img">';
+    var svg = '<div class="edv-wrap"><svg viewBox="0 0 ' + W + ' ' + H + '" class="edv-svg" role="img" style="max-width:300px">';
     // eixos + grelha horizontal
     for (var g = 0; g <= top; g += step) {
       var gy = padT + plotH - (g / top) * plotH;
@@ -64,7 +64,7 @@ var EduVisual = (function () {
     palette = palette || ['#5a7fa8', '#4d978f', '#b06a6a', '#a8854d', '#7d6aa8', '#5e9676'];
     var total = data.reduce(function (s, d) { return s + d.value; }, 0) || 1;
     var W = 300, H = 170, cx = 80, cy = 85, r = 65;
-    var svg = '<div class="edv-wrap"><svg viewBox="0 0 ' + W + ' ' + H + '" class="edv-svg" role="img">';
+    var svg = '<div class="edv-wrap"><svg viewBox="0 0 ' + W + ' ' + H + '" class="edv-svg" role="img" style="max-width:300px">';
     var ang = -90; // começa no topo
     var legend = '';
     data.forEach(function (d, i) {
@@ -99,7 +99,7 @@ var EduVisual = (function () {
     var n = data.length;
     function px(i) { return padL + (n === 1 ? plotW / 2 : (i / (n - 1)) * plotW); }
     function py(v) { return padT + plotH - ((v - minV) / (maxV - minV)) * plotH; }
-    var svg = '<div class="edv-wrap"><svg viewBox="0 0 ' + W + ' ' + H + '" class="edv-svg" role="img">';
+    var svg = '<div class="edv-wrap"><svg viewBox="0 0 ' + W + ' ' + H + '" class="edv-svg" role="img" style="max-width:300px">';
     svg += '<line x1="' + padL + '" y1="' + (padT + plotH) + '" x2="' + (W - padR) + '" y2="' + (padT + plotH) + '" stroke="#bbb"/>';
     var pts = data.map(function (d, i) { return px(i).toFixed(1) + ',' + py(d.value).toFixed(1); }).join(' ');
     svg += '<polyline points="' + pts + '" fill="none" stroke="' + color + '" stroke-width="2"/>';
@@ -122,7 +122,7 @@ var EduVisual = (function () {
     var P = opts.right
       ? { ax: 40, ay: 130, bx: 210, by: 130, cx: 40, cy: 40 }   // retângulo em A (canto inf esq)
       : { ax: 30, ay: 135, bx: 230, by: 135, cx: 130, cy: 30 }; // genérico
-    var svg = '<div class="edv-wrap"><svg viewBox="0 0 ' + W + ' ' + H + '" class="edv-svg" role="img">';
+    var svg = '<div class="edv-wrap"><svg viewBox="0 0 ' + W + ' ' + H + '" class="edv-svg" role="img" style="max-width:300px">';
     svg += '<polygon points="' + P.ax + ',' + P.ay + ' ' + P.bx + ',' + P.by + ' ' + P.cx + ',' + P.cy + '" fill="' + color + '22" stroke="' + color + '" stroke-width="2"/>';
     // marca de ângulo reto
     if (opts.right) svg += '<path d="M' + (P.ax + 14) + ',' + P.ay + ' L' + (P.ax + 14) + ',' + (P.ay - 14) + ' L' + P.ax + ',' + (P.ay - 14) + '" fill="none" stroke="' + color + '" stroke-width="1.5"/>';
@@ -152,7 +152,7 @@ var EduVisual = (function () {
     var scale = 150 / maxDim;
     var w = comp * scale, h = larg * scale;
     var x = (W - w) / 2, y = (H - h) / 2 - 4;
-    var svg = '<div class="edv-wrap"><svg viewBox="0 0 ' + W + ' ' + H + '" class="edv-svg" role="img">';
+    var svg = '<div class="edv-wrap"><svg viewBox="0 0 ' + W + ' ' + H + '" class="edv-svg" role="img" style="max-width:300px">';
     svg += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + w.toFixed(1) + '" height="' + h.toFixed(1) + '" fill="' + color + '22" stroke="' + color + '" stroke-width="2"/>';
     svg += '<text x="' + (W / 2) + '" y="' + (y + h + 16) + '" font-size="11" text-anchor="middle" fill="#444">' + esc(opts.compLabel || (comp + ' cm')) + '</text>';
     svg += '<text x="' + (x - 6) + '" y="' + (y + h / 2) + '" font-size="11" text-anchor="end" fill="#444">' + esc(opts.largLabel || (larg + ' cm')) + '</text>';
@@ -165,7 +165,7 @@ var EduVisual = (function () {
     opts = opts || {};
     var color = opts.color || '#5a9e94';
     var W = 220, H = 170, cx = 110, cy = 82, r = 60;
-    var svg = '<div class="edv-wrap"><svg viewBox="0 0 ' + W + ' ' + H + '" class="edv-svg" role="img">';
+    var svg = '<div class="edv-wrap"><svg viewBox="0 0 ' + W + ' ' + H + '" class="edv-svg" role="img" style="max-width:300px">';
     svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + color + '18" stroke="' + color + '" stroke-width="2"/>';
     svg += '<circle cx="' + cx + '" cy="' + cy + '" r="2.5" fill="' + color + '"/>';
     svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + r) + '" y2="' + cy + '" stroke="' + color + '" stroke-width="1.5" stroke-dasharray="3,2"/>';
@@ -183,7 +183,7 @@ var EduVisual = (function () {
     var range = opts.range || 5;
     function X(x) { return cx + x * u; }
     function Y(y) { return cy - y * u; }
-    var svg = '<div class="edv-wrap"><svg viewBox="0 0 ' + W + ' ' + H + '" class="edv-svg" role="img">';
+    var svg = '<div class="edv-wrap"><svg viewBox="0 0 ' + W + ' ' + H + '" class="edv-svg" role="img" style="max-width:300px">';
     // grelha
     for (var g = -range; g <= range; g++) {
       svg += '<line x1="' + X(g) + '" y1="6" x2="' + X(g) + '" y2="' + (H - 6) + '" stroke="#f0f0f0"/>';
@@ -212,23 +212,47 @@ var EduVisual = (function () {
   function grafico(fn, opts) {
     opts = opts || {};
     var color = opts.color || '#5a7fa8';
-    var W = 240, H = 220, cx = W / 2, cy = H / 2, u = opts.unit || 18;
     var range = opts.range || 5;
+    // escala: garante que a curva cabe na vertical (procura o y máximo no domínio)
+    var W = 230, H = 230, pad = 16, cx = W / 2, cy = H / 2;
+    var u = (cx - pad) / range;           // unidades por valor, eixo X
     function X(x) { return cx + x * u; }
     function Y(y) { return cy - y * u; }
-    var svg = '<div class="edv-wrap"><svg viewBox="0 0 ' + W + ' ' + H + '" class="edv-svg" role="img">';
-    svg += '<line x1="6" y1="' + cy + '" x2="' + (W - 6) + '" y2="' + cy + '" stroke="#999" stroke-width="1.5"/>';
-    svg += '<line x1="' + cx + '" y1="6" x2="' + cx + '" y2="' + (H - 6) + '" stroke="#999" stroke-width="1.5"/>';
-    // curva
-    var pts = [], xmin = -range, xmax = range;
-    for (var x = xmin; x <= xmax; x += 0.2) {
-      var y = fn(x);
-      if (isFinite(y) && Math.abs(y) <= range + 0.5) pts.push(X(x).toFixed(1) + ',' + Y(y).toFixed(1));
+    function clampY(v) { return Math.max(pad, Math.min(H - pad, v)); }
+    var svg = '<div class="edv-wrap"><svg viewBox="0 0 ' + W + ' ' + H + '" class="edv-svg" role="img" style="max-width:230px">';
+    // grelha
+    var g = '';
+    for (var k = -range; k <= range; k++) {
+      if (k === 0) continue;
+      g += '<line x1="' + X(k) + '" y1="' + pad + '" x2="' + X(k) + '" y2="' + (H - pad) + '" stroke="#eee" stroke-width="1"/>';
+      g += '<line x1="' + pad + '" y1="' + Y(k) + '" x2="' + (W - pad) + '" y2="' + Y(k) + '" stroke="#eee" stroke-width="1"/>';
     }
-    svg += '<polyline points="' + pts.join(' ') + '" fill="none" stroke="' + color + '" stroke-width="2"/>';
+    svg += g;
+    // eixos com setas
+    svg += '<defs><marker id="edvar" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#888"/></marker></defs>';
+    svg += '<line x1="' + pad + '" y1="' + cy + '" x2="' + (W - pad + 2) + '" y2="' + cy + '" stroke="#888" stroke-width="1.2" marker-end="url(#edvar)"/>';
+    svg += '<line x1="' + cx + '" y1="' + (H - pad) + '" x2="' + cx + '" y2="' + (pad - 2) + '" stroke="#888" stroke-width="1.2" marker-end="url(#edvar)"/>';
+    svg += '<text x="' + (W - pad - 1) + '" y="' + (cy + 12) + '" font-size="9" fill="#888" text-anchor="end">x</text>';
+    svg += '<text x="' + (cx + 8) + '" y="' + (pad + 6) + '" font-size="9" fill="#888">y</text>';
+    // números nos eixos
+    for (var n = -range; n <= range; n++) {
+      if (n === 0) continue;
+      svg += '<text x="' + X(n) + '" y="' + (cy + 11) + '" font-size="7.5" fill="#999" text-anchor="middle">' + n + '</text>';
+      svg += '<text x="' + (cx - 5) + '" y="' + (Y(n) + 3) + '" font-size="7.5" fill="#999" text-anchor="end">' + n + '</text>';
+    }
+    svg += '<text x="' + (cx - 4) + '" y="' + (cy + 11) + '" font-size="7.5" fill="#999" text-anchor="end">0</text>';
+    // curva (só o troço que cabe; corta nas bordas em vez de desaparecer)
+    var pts = [], xmin = -range, xmax = range;
+    for (var x = xmin; x <= xmax; x += 0.1) {
+      var y = fn(x);
+      if (!isFinite(y)) continue;
+      if (Math.abs(y) <= range + 0.3) pts.push(X(x).toFixed(1) + ',' + clampY(Y(y)).toFixed(1));
+    }
+    svg += '<polyline points="' + pts.join(' ') + '" fill="none" stroke="' + color + '" stroke-width="2.2"/>';
+    // marcadores (vértice, zeros…)
     (opts.markers || []).forEach(function (m) {
-      svg += '<circle cx="' + X(m.x) + '" cy="' + Y(m.y) + '" r="3.5" fill="#c0392b"/>';
-      if (m.label) svg += '<text x="' + (X(m.x) + 5) + '" y="' + (Y(m.y) - 5) + '" font-size="10" font-weight="600" fill="#c0392b">' + esc(m.label) + '</text>';
+      svg += '<circle cx="' + X(m.x) + '" cy="' + clampY(Y(m.y)) + '" r="3.2" fill="#c0392b"/>';
+      if (m.label) svg += '<text x="' + (X(m.x) + 5) + '" y="' + (clampY(Y(m.y)) - 5) + '" font-size="9" font-weight="700" fill="#c0392b">' + esc(m.label) + '</text>';
     });
     svg += '</svg></div>';
     return svg;
