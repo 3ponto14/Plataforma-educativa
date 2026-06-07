@@ -1283,6 +1283,20 @@ function buildEx_m9c1(tema, tipo, dif) {
 
   // ── TEMA 3 · Inequações do 1.º grau ──
   if (tema === '3') {
+    // Variante VISUAL: ler um intervalo na reta numérica → escrever a condição
+    if (typeof EduVisual !== 'undefined' && Math.random() < 0.35) {
+      var pt = rnd_m81(-3, 3);
+      var lado3 = Math.random() < 0.5, aberto3 = Math.random() < 0.5;
+      var cond = 'x ' + (lado3 ? (aberto3 ? '> ' : '≥ ') : (aberto3 ? '< ' : '≤ ')) + pt;
+      var iv = lado3 ? { from: pt, to: 6, openL: aberto3, openR: false } : { from: -6, to: pt, openL: false, openR: aberto3 };
+      return {
+        enun: 'A reta numérica representa um conjunto de soluções. Escreve a condição em x. (ex: x ≥ 2)',
+        visual: EduVisual.retaNumerica(-6, 6, { intervals: [iv], points: lado3 ? [{ x: pt, open: aberto3 }] : [{ x: pt, open: aberto3 }], color: '#b06a3a' }),
+        tipo: 'fill_frac', resposta: cond.replace(/ /g, ''),
+        expl: 'A bola ' + (aberto3 ? 'aberta exclui' : 'cheia inclui') + ' o ' + pt + ', e o traço vai para a ' + (lado3 ? 'direita (maiores)' : 'esquerda (menores)') + ' → ' + cond + '.',
+        tema: 'T3 · Inequações'
+      };
+    }
     // a x + b (sinal) c, garante solução inteira simples
     var a3 = rnd_m81(1, easy ? 4 : 6);
     var neg = (!easy && Math.random() < 0.4); // coeficiente negativo (inverte sinal)
@@ -1444,24 +1458,29 @@ function buildEx_m9c3(tema, tipo, dif) {
 
   // ── TEMA 2 · Função quadrática (vértice / zeros) ──
   if (tema === '2') {
-    // f(x) = x² + bx + c com zeros inteiros r1, r2
-    var r1 = rnd_m81(-4, 5), r2 = rnd_m81(-4, 5);
+    // f(x) = x² + bx + c com zeros inteiros r1, r2 (pequenos, para caber no gráfico)
+    var r1 = rnd_m81(-3, 3), r2 = rnd_m81(-3, 3);
     var b = -(r1 + r2), c = r1 * r2;
     var fn = 'f(x) = x' + sup_m81(2) + ' ' + (b >= 0 ? '+ ' + b : '− ' + Math.abs(b)) + 'x ' + (c >= 0 ? '+ ' + c : '− ' + Math.abs(c));
+    var xvert = -b / 2, yvert = xvert * xvert + b * xvert + c;
+    // parábola desenhada com vértice e zeros marcados
+    var visQ = (typeof EduVisual !== 'undefined') ? EduVisual.grafico(
+      function (x) { return x * x + b * x + c; },
+      { range: 5, color: '#4d8f87', markers: [{ x: r1, y: 0 }, { x: r2, y: 0 }, { x: xvert, y: yvert, label: 'V' }] }
+    ) : '';
     var kind = rnd_m81(0, 1);
     if (kind === 0) {
-      // abcissa do vértice = -b/2
-      var xv = -b / 2;
       return {
-        enun: 'Qual é a abcissa do vértice de <strong>' + fn + '</strong>?',
-        tipo: 'fill', resposta: String(xv),
-        expl: 'x_vértice = −b/(2a) = −(' + b + ')/(2×1) = ' + xv + '.',
+        enun: 'A figura mostra o gráfico de <strong>' + fn + '</strong>. Qual é a abcissa do vértice?',
+        visual: visQ,
+        tipo: 'fill', resposta: String(xvert),
+        expl: 'x_vértice = −b/(2a) = −(' + b + ')/(2×1) = ' + xvert + '.',
         tema: 'T2 · Função Quadrática'
       };
     }
-    // menor zero
     return {
-      enun: 'Indica o MENOR zero de <strong>' + fn + '</strong>.',
+      enun: 'A figura mostra o gráfico de <strong>' + fn + '</strong>. Indica o MENOR zero (onde corta o eixo Ox).',
+      visual: visQ,
       tipo: 'fill', resposta: String(Math.min(r1, r2)),
       expl: 'Os zeros (f(x)=0) são ' + Math.min(r1, r2) + ' e ' + Math.max(r1, r2) + '. O menor é ' + Math.min(r1, r2) + '.',
       tema: 'T2 · Função Quadrática'

@@ -2632,11 +2632,19 @@ function buildEx_m82(tema, tipo, dif) {
         tema: 'T1 · Translação'
       };
     }
+    // referencial com o ponto P e o vetor de translação (a partir de P)
+    var visT = (typeof EduVisual !== 'undefined') ? EduVisual.referencial({
+      range: Math.max(6, lim + Math.max(Math.abs(vx), Math.abs(vy))),
+      points: [{ x: px, y: py, label: 'P' }],
+      vectors: [{ x1: px, y1: py, x2: rx, y2: ry, label: 'v' }],
+      color: '#4d978f'
+    }) : '';
     if (tipo === 'mc') {
       var opts = shuffle_m81([resp, '(' + (px - vx) + ', ' + (py - vy) + ')', '(' + rx + ', ' + (py - vy) + ')', '(' + (px * vx) + ', ' + (py * vy) + ')'].filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4);
       if (opts.indexOf(resp) === -1) opts[0] = resp;
       return {
         enun: 'Aplica ao ponto P(' + px + ', ' + py + ') a translação associada ao vetor v(' + vx + ', ' + vy + '). Qual é a imagem?',
+        visual: visT,
         tipo: 'mc', opcoes: opts, resposta: resp,
         expl: 'A translação soma as componentes do vetor às coordenadas: (' + px + ' + ' + vx + ', ' + py + ' + ' + vy + ') = ' + resp + '.',
         tema: 'T1 · Translação'
@@ -2644,6 +2652,7 @@ function buildEx_m82(tema, tipo, dif) {
     }
     return {
       enun: 'Imagem de P(' + px + ', ' + py + ') pela translação do vetor v(' + vx + ', ' + vy + ')? (forma (x, y))',
+      visual: visT,
       tipo: 'fill_frac', resposta: resp,
       expl: '(' + px + '+' + vx + ', ' + py + '+' + vy + ') = ' + resp + '.', tema: 'T1 · Translação'
     };

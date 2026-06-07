@@ -1330,12 +1330,21 @@ function buildEx_m10c3(tema, tipo, dif) {
   tema = String(tema);
   var TERNOS = [[3, 4, 5], [6, 8, 10], [5, 12, 13], [8, 15, 17], [9, 12, 15]];
   if (tema === '1') {
-    var t = TERNOS[rnd_m81(0, TERNOS.length - 1)];
-    var ax = rnd_m81(-4, 4), ay = rnd_m81(-4, 4);
-    var bx = ax + t[0] * (Math.random() < 0.5 ? 1 : -1);
-    var by = ay + t[1] * (Math.random() < 0.5 ? 1 : -1);
+    // terno pequeno (3,4,5) para os dois pontos caberem no referencial
+    var t = TERNOS[rnd_m81(0, 1)]; // (3,4,5) ou (6,8,10)
+    var ax = rnd_m81(-3, 1), ay = rnd_m81(-3, 1);
+    var sgx = Math.random() < 0.5 ? 1 : -1, sgy = Math.random() < 0.5 ? 1 : -1;
+    var bx = ax + t[0] * sgx, by = ay + t[1] * sgy;
+    var rangeD = Math.max(6, Math.abs(ax), Math.abs(ay), Math.abs(bx), Math.abs(by) + 1);
+    var visD = (typeof EduVisual !== 'undefined') ? EduVisual.referencial({
+      range: rangeD,
+      points: [{ x: ax, y: ay, label: 'A' }, { x: bx, y: by, label: 'B' }],
+      vectors: [{ x1: ax, y1: ay, x2: bx, y2: by }],
+      color: '#4a5ea0'
+    }) : '';
     return {
       enun: 'Calcula a distância entre A(' + ax + ', ' + ay + ') e B(' + bx + ', ' + by + ').',
+      visual: visD,
       tipo: 'fill', resposta: String(t[2]),
       expl: 'd = √((' + bx + '−' + ax + ')² + (' + by + '−' + ay + ')²) = √(' + (t[0] * t[0]) + '+' + (t[1] * t[1]) + ') = √' + (t[2] * t[2]) + ' = ' + t[2] + '.',
       tema: 'T1 · Distância'
@@ -1412,21 +1421,27 @@ function buildEx_m10c4(tema, tipo, dif) {
     };
   }
   if (tema === '2') {
-    // vértice de x²+bx+c (b par para x_v inteiro)
-    var bv = rnd_m81(-5, 5) * 2, cv = rnd_m81(-6, 6);
+    // vértice de x²+bx+c (b par para x_v inteiro); valores pequenos p/ caber no gráfico
+    var bv = rnd_m81(-2, 2) * 2, cv = rnd_m81(-3, 3);
     var xv = -bv / 2, yv = xv * xv + bv * xv + cv;
     var f = 'f(x) = x² ' + (bv >= 0 ? '+ ' + bv : '− ' + Math.abs(bv)) + 'x ' + (cv >= 0 ? '+ ' + cv : '− ' + Math.abs(cv));
+    var visP = (typeof EduVisual !== 'undefined') ? EduVisual.grafico(
+      function (x) { return x * x + bv * x + cv; },
+      { range: 5, color: '#3f7a9a', markers: [{ x: xv, y: yv, label: 'V' }] }
+    ) : '';
     var pedeX = Math.random() < 0.5;
     if (pedeX) {
       return {
-        enun: 'Qual é a abcissa do vértice de <strong>' + f + '</strong>?',
+        enun: 'A figura mostra o gráfico de <strong>' + f + '</strong>. Qual é a abcissa do vértice?',
+        visual: visP,
         tipo: 'fill', resposta: String(xv),
         expl: 'x_v = −b/(2a) = −(' + bv + ')/2 = ' + xv + '.',
         tema: 'T2 · Quadrática'
       };
     }
     return {
-      enun: 'Qual é a ordenada do vértice de <strong>' + f + '</strong>?',
+      enun: 'A figura mostra o gráfico de <strong>' + f + '</strong>. Qual é a ordenada do vértice?',
+      visual: visP,
       tipo: 'fill', resposta: String(yv),
       expl: 'x_v = ' + xv + '; y_v = f(' + xv + ') = ' + yv + '.',
       tema: 'T2 · Quadrática'

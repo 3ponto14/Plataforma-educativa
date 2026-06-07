@@ -1414,13 +1414,19 @@ function buildEx_m11c5(tema, tipo, dif) {
       tema: 'T2 · Taxa de Variação'
     };
   }
-  // tema 3 · declive da tangente a f(x)=a x² em x0 → f'(x0)=2a x0
-  var a3 = rndNZ_m81(1, 4), x3 = rnd_m81(-4, 5);
+  // tema 3 · declive da tangente a f(x)=x² em x0 (a=1 p/ caber no gráfico)
+  var a3 = 1, x3 = rnd_m81(-2, 2);
   var decl = 2 * a3 * x3;
+  var y3 = a3 * x3 * x3;
+  var visTg = (typeof EduVisual !== 'undefined') ? EduVisual.grafico(
+    function (x) { return a3 * x * x; },
+    { range: 5, color: '#4a8a74', markers: [{ x: x3, y: y3, label: 'P' }] }
+  ) : '';
   return {
-    enun: 'Qual é o declive da reta tangente ao gráfico de <strong>f(x) = ' + (a3 === 1 ? 'x²' : a3 + 'x²') + '</strong> no ponto de abcissa ' + x3 + '?',
+    enun: 'A figura mostra o gráfico de <strong>f(x) = x²</strong>. Qual é o declive da reta tangente no ponto de abcissa ' + x3 + '?',
+    visual: visTg,
     tipo: 'fill', resposta: String(decl),
-    expl: 'O declive é f\'(' + x3 + '). f\'(x) = ' + (2 * a3) + 'x → f\'(' + x3 + ') = ' + (2 * a3) + '×' + x3 + ' = ' + decl + '.',
+    expl: 'O declive é f\'(' + x3 + '). f\'(x) = 2x → f\'(' + x3 + ') = 2×' + x3 + ' = ' + decl + '.',
     tema: 'T3 · Tangente'
   };
 }
