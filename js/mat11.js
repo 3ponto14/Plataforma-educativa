@@ -1038,7 +1038,8 @@ function mat11gfSetQty(btn) {
 // Renderiza um bloco de exercícios (com ou sem espaço de resposta).
 function _mat11gfExBloco(exs, startNum) {
   var h = '';
-  var fm = (typeof formatMath === 'function') ? formatMath : function(x){ return x; };
+  var _lm = (typeof _limpaMath === 'function') ? _limpaMath : function(x){ return x; };
+  var fm = (typeof formatMath === 'function') ? function(x){ return formatMath(_lm(x)); } : function(x){ return _lm(x); };
   exs.forEach(function(ex, i) {
     h += '<div style="margin-bottom:22px;page-break-inside:avoid">'
       + '<div style="font-weight:600;font-size:12.5px;margin-bottom:6px;line-height:1.5">' + (startNum + i) + '. ' + fm(ex.enun) + '</div>';
@@ -1153,7 +1154,8 @@ function mat11gfGerar(formato) {
   // Secção de soluções
   var solHTML = '';
   if (_mat11gf.tipos.solucoes && solucoes.length) {
-    var fmS = (typeof formatMath === 'function') ? formatMath : function(x){ return x; };
+    var _lmS = (typeof _limpaMath === 'function') ? _limpaMath : function(x){ return x; };
+    var fmS = (typeof formatMath === 'function') ? function(x){ return formatMath(_lmS(x)); } : function(x){ return _lmS(x); };
     var lst = solucoes.map(function(s) {
       return '<div style="font-size:11.5px;margin-bottom:7px;line-height:1.5;page-break-inside:avoid">'
         + '<strong>' + s.num + '.</strong> <strong style="color:#1a6b4a">' + fmS(String(s.ex.resposta)) + '</strong>'
@@ -1296,7 +1298,7 @@ function buildEx_m11c2(tema, tipo, dif) {
     return {
       enun: 'Calcula a norma do vetor <strong>v(' + v1 + ', ' + v2 + ', ' + v3 + ')</strong>.',
       tipo: 'fill', resposta: String(q[3]),
-      expl: '‖v‖ = √(' + v1 + '² + ' + v2 + '² + ' + v3 + '²) = √(' + (v1 * v1) + '+' + (v2 * v2) + '+' + (v3 * v3) + ') = √' + (q[3] * q[3]) + ' = ' + q[3] + '.',
+      expl: '‖v‖ = √(' + _parenSeNeg(v1) + '² + ' + _parenSeNeg(v2) + '² + ' + _parenSeNeg(v3) + '²) = √(' + (v1 * v1) + ' + ' + (v2 * v2) + ' + ' + (v3 * v3) + ') = √' + (q[3] * q[3]) + ' = ' + q[3] + '.',
       tema: 'T1 · Distâncias'
     };
   }

@@ -1828,6 +1828,40 @@ function _fabricarOpcoes(resp) {
 // ═══ Banco de questões: mistura questões fixas (reais, multi-passo) com geradas ═══
 // banco: array de questões {tema?, tipo, enun, opcoes?, resposta, expl, visual?} para um capítulo.
 // Devolve até `qtd` questões: algumas do banco (baralhadas) + o resto geradas.
+// Limpa pequenos erros de escrita matemática no texto já montado:
+//  "1x" → "x" ; "− -3" / "−-3" → "+ 3" ; "+ -3" → "− 3" ; "+ 0" isolado → "" ;
+//  "× -3" → "× (-3)". Não altera números dentro de palavras nem casas decimais.
+function _limpaMath(s) {
+  if (s == null) return s;
+  s = String(s);
+  // coeficiente 1 antes de x: "1x" → "x" (mas não "11x", "0,1x")
+  s = s.replace(/([+−–\-(\s×])1x(?![0-9])/g, '$1x');
+  // "− -3" ou "−-3" (subtração de negativo) → "+ 3"
+  s = s.replace(/[−\-]\s*-(\d)/g, '+ $1');
+  // "+ -3" → "− 3"
+  s = s.replace(/\+\s*-(\d)/g, '− $1');
+  // "+ 0" ou "− 0" isolado (termo nulo) → remove
+  s = s.replace(/\s[+−\-]\s*0(?![0-9,.])/g, '');
+  // multiplicação/divisão por negativo: "× -3" → "× (-3)"
+  s = s.replace(/([×÷])\s*-(\d+)/g, '$1 (-$2)');
+  return s;
+}
+
+// Formata "+ bx" corretamente: b=1 → "+ x"; b=-1 → "− x"; b=0 → ""; senão "+ bx"/"− |b|x".
+function _termoX(b) {
+  if (b === 0) return '';
+  if (b === 1) return ' + x';
+  if (b === -1) return ' − x';
+  return b > 0 ? ' + ' + b + 'x' : ' − ' + Math.abs(b) + 'x';
+}
+// Formata "+ c" corretamente: c=0 → ""; senão "+ c"/"− |c|".
+function _termoC(c) {
+  if (c === 0) return '';
+  return c > 0 ? ' + ' + c : ' − ' + Math.abs(c);
+}
+// Escreve um número entre parênteses se for negativo: -1 → "(-1)"; 3 → "3".
+function _parenSeNeg(n) { return n < 0 ? '(' + n + ')' : '' + n; }
+
 // Escala de números por nível de dificuldade. Devolve um inteiro aleatório
 // num intervalo que cresce com a dificuldade. Usar nos geradores para que
 // difícil tenha números maiores que fácil.

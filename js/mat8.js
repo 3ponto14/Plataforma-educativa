@@ -1130,7 +1130,8 @@ function mat8gfSetQty(btn) {
 // Renderiza um bloco de exercícios (com ou sem espaço de resposta).
 function _mat8gfExBloco(exs, startNum) {
   var h = '';
-  var fm = (typeof formatMath === 'function') ? formatMath : function(x){ return x; };
+  var _lm = (typeof _limpaMath === 'function') ? _limpaMath : function(x){ return x; };
+  var fm = (typeof formatMath === 'function') ? function(x){ return formatMath(_lm(x)); } : function(x){ return _lm(x); };
   exs.forEach(function(ex, i) {
     h += '<div style="margin-bottom:22px;page-break-inside:avoid">'
       + '<div style="font-weight:600;font-size:12.5px;margin-bottom:6px;line-height:1.5">' + (startNum + i) + '. ' + fm(ex.enun) + '</div>';
@@ -1245,7 +1246,8 @@ function mat8gfGerar(formato) {
   // Secção de soluções
   var solHTML = '';
   if (_mat8gf.tipos.solucoes && solucoes.length) {
-    var fmS = (typeof formatMath === 'function') ? formatMath : function(x){ return x; };
+    var _lmS = (typeof _limpaMath === 'function') ? _limpaMath : function(x){ return x; };
+    var fmS = (typeof formatMath === 'function') ? function(x){ return formatMath(_lmS(x)); } : function(x){ return _lmS(x); };
     var lst = solucoes.map(function(s) {
       return '<div style="font-size:11.5px;margin-bottom:7px;line-height:1.5;page-break-inside:avoid">'
         + '<strong>' + s.num + '.</strong> <strong style="color:#1a6b4a">' + fmS(String(s.ex.resposta)) + '</strong>'

@@ -1065,7 +1065,8 @@ function mat9gfSetQty(btn) {
 // Renderiza um bloco de exercícios (com ou sem espaço de resposta).
 function _mat9gfExBloco(exs, startNum) {
   var h = '';
-  var fm = (typeof formatMath === 'function') ? formatMath : function(x){ return x; };
+  var _lm = (typeof _limpaMath === 'function') ? _limpaMath : function(x){ return x; };
+  var fm = (typeof formatMath === 'function') ? function(x){ return formatMath(_lm(x)); } : function(x){ return _lm(x); };
   exs.forEach(function(ex, i) {
     h += '<div style="margin-bottom:22px;page-break-inside:avoid">'
       + '<div style="font-weight:600;font-size:12.5px;margin-bottom:6px;line-height:1.5">' + (startNum + i) + '. ' + fm(ex.enun) + '</div>';
@@ -1180,7 +1181,8 @@ function mat9gfGerar(formato) {
   // Secção de soluções
   var solHTML = '';
   if (_mat9gf.tipos.solucoes && solucoes.length) {
-    var fmS = (typeof formatMath === 'function') ? formatMath : function(x){ return x; };
+    var _lmS = (typeof _limpaMath === 'function') ? _limpaMath : function(x){ return x; };
+    var fmS = (typeof formatMath === 'function') ? function(x){ return formatMath(_lmS(x)); } : function(x){ return _lmS(x); };
     var lst = solucoes.map(function(s) {
       return '<div style="font-size:11.5px;margin-bottom:7px;line-height:1.5;page-break-inside:avoid">'
         + '<strong>' + s.num + '.</strong> <strong style="color:#1a6b4a">' + fmS(String(s.ex.resposta)) + '</strong>'
@@ -1450,13 +1452,13 @@ function buildEx_m9c2(tema, tipo, dif) {
     var a4 = 1, b4 = rnd_m81(-6, 6), c4 = rnd_m81(-6, 9);
     var delta = b4 * b4 - 4 * a4 * c4;
     var nsol = delta > 0 ? 'duas soluções' : delta === 0 ? 'uma solução' : 'nenhuma solução real';
-    var eqn4 = 'x' + sup_m81(2) + ' ' + (b4 >= 0 ? '+ ' + b4 : '− ' + Math.abs(b4)) + 'x ' + (c4 >= 0 ? '+ ' + c4 : '− ' + Math.abs(c4)) + ' = 0';
+    var eqn4 = 'x' + sup_m81(2) + _termoX(b4) + _termoC(c4) + ' = 0';
     if (tipo === 'mc') {
       return {
         enun: 'Quantas soluções reais tem <strong>' + eqn4 + '</strong>?',
         tipo: 'mc', opcoes: ['duas soluções', 'uma solução', 'nenhuma solução real'],
         resposta: nsol,
-        expl: 'Δ = b² − 4ac = ' + b4 + '² − 4×1×' + c4 + ' = ' + delta + '. ' + (delta > 0 ? 'Δ > 0 → duas.' : delta === 0 ? 'Δ = 0 → uma.' : 'Δ < 0 → nenhuma real.'),
+        expl: 'Δ = b² − 4ac = ' + _parenSeNeg(b4) + '² − 4×1×' + _parenSeNeg(c4) + ' = ' + delta + '. ' + (delta > 0 ? 'Δ > 0 → duas.' : delta === 0 ? 'Δ = 0 → uma.' : 'Δ < 0 → nenhuma real.'),
         tema: 'T4 · Discriminante'
       };
     }

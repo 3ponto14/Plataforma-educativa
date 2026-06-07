@@ -1038,7 +1038,8 @@ function mat10gfSetQty(btn) {
 // Renderiza um bloco de exercícios (com ou sem espaço de resposta).
 function _mat10gfExBloco(exs, startNum) {
   var h = '';
-  var fm = (typeof formatMath === 'function') ? formatMath : function(x){ return x; };
+  var _lm = (typeof _limpaMath === 'function') ? _limpaMath : function(x){ return x; };
+  var fm = (typeof formatMath === 'function') ? function(x){ return formatMath(_lm(x)); } : function(x){ return _lm(x); };
   exs.forEach(function(ex, i) {
     h += '<div style="margin-bottom:22px;page-break-inside:avoid">'
       + '<div style="font-weight:600;font-size:12.5px;margin-bottom:6px;line-height:1.5">' + (startNum + i) + '. ' + fm(ex.enun) + '</div>';
@@ -1153,7 +1154,8 @@ function mat10gfGerar(formato) {
   // Secção de soluções
   var solHTML = '';
   if (_mat10gf.tipos.solucoes && solucoes.length) {
-    var fmS = (typeof formatMath === 'function') ? formatMath : function(x){ return x; };
+    var _lmS = (typeof _limpaMath === 'function') ? _limpaMath : function(x){ return x; };
+    var fmS = (typeof formatMath === 'function') ? function(x){ return formatMath(_lmS(x)); } : function(x){ return _lmS(x); };
     var lst = solucoes.map(function(s) {
       return '<div style="font-size:11.5px;margin-bottom:7px;line-height:1.5;page-break-inside:avoid">'
         + '<strong>' + s.num + '.</strong> <strong style="color:#1a6b4a">' + fmS(String(s.ex.resposta)) + '</strong>'
@@ -1332,13 +1334,16 @@ function buildEx_m10c2(tema, tipo, dif) {
   }
   if (tema === '2') {
     // resto de P(x) por (x-a) = P(a). P(x)=x²+bx+c
-    var b = rnd_m81(-5, 5), c = rnd_m81(-6, 6), a = rnd_m81(-3, 4);
+    var b = rndNZ_m81(-5, 5), c = rndNZ_m81(-6, 6), a = rndNZ_m81(-3, 4);
     var Pa = a * a + b * a + c;
-    var pol = 'x² ' + (b >= 0 ? '+ ' + b : '− ' + Math.abs(b)) + 'x ' + (c >= 0 ? '+ ' + c : '− ' + Math.abs(c));
+    var pol = 'x²' + _termoX(b) + _termoC(c);
+    // fator (x − a): se a<0 escreve (x + |a|); se a>0 (x − a)
+    var fator = (a < 0) ? '(x + ' + Math.abs(a) + ')' : '(x − ' + a + ')';
+    var aStr = _parenSeNeg(a);
     return {
-      enun: 'Pelo teorema do resto, qual é o resto da divisão de <strong>P(x) = ' + pol + '</strong> por (x − ' + a + ')?',
+      enun: 'Pelo teorema do resto, qual é o resto da divisão de <strong>P(x) = ' + pol + '</strong> por ' + fator + '?',
       tipo: 'fill', resposta: String(Pa),
-      expl: 'O resto é P(' + a + ') = ' + a + '² ' + (b >= 0 ? '+ ' + b : '− ' + Math.abs(b)) + '×' + a + ' ' + (c >= 0 ? '+ ' + c : '− ' + Math.abs(c)) + ' = ' + Pa + '.',
+      expl: 'O resto é P(' + aStr + ') = ' + aStr + '² ' + (b >= 0 ? '+ ' + b : '− ' + Math.abs(b)) + '×' + aStr + _termoC(c) + ' = ' + Pa + '.',
       tema: 'T2 · Polinómios'
     };
   }
@@ -1347,7 +1352,7 @@ function buildEx_m10c2(tema, tipo, dif) {
   if (kind === 0) {
     var r1 = rnd_m81(-5, 6), r2 = rnd_m81(-5, 6);
     var bC = -(r1 + r2), cC = r1 * r2;
-    var eqn = 'x² ' + (bC >= 0 ? '+ ' + bC : '− ' + Math.abs(bC)) + 'x ' + (cC >= 0 ? '+ ' + cC : '− ' + Math.abs(cC)) + ' = 0';
+    var eqn = 'x²' + _termoX(bC) + _termoC(cC) + ' = 0';
     return {
       enun: 'Resolve <strong>' + eqn + '</strong>. Indica a MENOR solução.',
       tipo: 'fill', resposta: String(Math.min(r1, r2)),
@@ -1355,13 +1360,13 @@ function buildEx_m10c2(tema, tipo, dif) {
       tema: 'T3 · Equações'
     };
   }
-  var b4 = rnd_m81(-6, 6), c4 = rnd_m81(-6, 9);
+  var b4 = rndNZ_m81(-6, 6), c4 = rndNZ_m81(-6, 9);
   var delta = b4 * b4 - 4 * c4;
-  var eqn4 = 'x² ' + (b4 >= 0 ? '+ ' + b4 : '− ' + Math.abs(b4)) + 'x ' + (c4 >= 0 ? '+ ' + c4 : '− ' + Math.abs(c4)) + ' = 0';
+  var eqn4 = 'x²' + _termoX(b4) + _termoC(c4) + ' = 0';
   return {
     enun: 'Calcula o discriminante Δ de <strong>' + eqn4 + '</strong>.',
     tipo: 'fill', resposta: String(delta),
-    expl: 'Δ = b² − 4ac = ' + (b4 * b4) + ' − ' + (4 * c4) + ' = ' + delta + '.',
+    expl: 'Δ = b² − 4ac = ' + _parenSeNeg(b4) + '² − 4×1×' + _parenSeNeg(c4) + ' = ' + (b4 * b4) + ' − ' + _parenSeNeg(4 * c4) + ' = ' + delta + '.',
     tema: 'T3 · Equações'
   };
 }
@@ -1388,7 +1393,7 @@ function buildEx_m10c3(tema, tipo, dif) {
       enun: 'Calcula a distância entre A(' + ax + ', ' + ay + ') e B(' + bx + ', ' + by + ').',
       visual: visD,
       tipo: 'fill', resposta: String(t[2]),
-      expl: 'd = √((' + bx + '−' + ax + ')² + (' + by + '−' + ay + ')²) = √(' + (t[0] * t[0]) + '+' + (t[1] * t[1]) + ') = √' + (t[2] * t[2]) + ' = ' + t[2] + '.',
+      expl: 'd = √((' + bx + ' − ' + _parenSeNeg(ax) + ')² + (' + by + ' − ' + _parenSeNeg(ay) + ')²) = √(' + (t[0] * t[0]) + ' + ' + (t[1] * t[1]) + ') = √' + (t[2] * t[2]) + ' = ' + t[2] + '.',
       tema: 'T1 · Distância'
     };
   }
@@ -1428,7 +1433,7 @@ function buildEx_m10c3(tema, tipo, dif) {
   return {
     enun: 'Calcula a norma do vetor <strong>v(' + v1 + ', ' + v2 + ')</strong>.',
     tipo: 'fill', resposta: String(t4[2]),
-    expl: '‖v‖ = √(' + v1 + '² + ' + v2 + '²) = √(' + (v1 * v1) + '+' + (v2 * v2) + ') = √' + (t4[2] * t4[2]) + ' = ' + t4[2] + '.',
+    expl: '‖v‖ = √(' + _parenSeNeg(v1) + '² + ' + _parenSeNeg(v2) + '²) = √(' + (v1 * v1) + ' + ' + (v2 * v2) + ') = √' + (t4[2] * t4[2]) + ' = ' + t4[2] + '.',
     tema: 'T4 · Vetores'
   };
 }

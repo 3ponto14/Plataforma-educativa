@@ -30,6 +30,12 @@ function _capBuildQuizHTML(exs, qidPrefix, checkFnCall) {
   var labels = ['A','B','C','D'], html = '';
   exs.forEach(function(ex, i) {
     var qid = qidPrefix + i;
+    // limpa pequenos erros de escrita matemática (1x, − -3, + 0…)
+    if (typeof _limpaMath === 'function') {
+      if (ex.enun) ex.enun = _limpaMath(ex.enun);
+      if (ex.expl) ex.expl = _limpaMath(ex.expl);
+      if (ex.opcoes) ex.opcoes = ex.opcoes.map(function (o) { return _limpaMath(o); });
+    }
     html += '<div class="quiz-question" id="' + qid + '"><div class="q-number">Questão ' + (ex.num || i+1) + ' · ' + (ex.tema||'') + '</div><div class="q-text">' + (ex.enun||'') + '</div>';
     if (ex.visual) html += ex.visual; // gráfico/tabela/figura SVG (opcional)
     if (ex.tipo === 'fill' || ex.tipo === 'fill_frac') {
