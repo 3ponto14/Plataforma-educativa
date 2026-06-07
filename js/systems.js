@@ -538,34 +538,8 @@ function gTabSwitch(wrapId, tabName) {
   var panel = wrap.querySelector('[data-gpanel="'+tabName+'"]');
   if (tab) tab.classList.add('active');
   if (panel) panel.classList.add('active');
-  // Lazy init
-  var inst = _gInstances[wrapId];
-  if (!inst) return;
-  if (tabName === 'j24'  && !_j24State[wrapId+'-j24-game']) {
-    var _j24GameId = wrapId+'-j24-game';
-    var _j24Panel  = document.getElementById(wrapId+'-j24');
-    if (_j24Panel && !_j24Panel.querySelector('.j24-card')) {
-      _j24Panel.innerHTML = _j24BuildHTML(_j24GameId, inst.defaultLevel || 'medio');
-      _j24Init(_j24GameId, inst.defaultLevel || 'medio');
-    }
-  }
-  // Games from systems-games.js (lazy-loaded)
-  var _needsGames = (tabName === 'c4' && !inst.c4) || (tabName === 'mine' && !inst.mine) ||
-                    (tabName === 'sdk' && !inst.sdk) || (tabName === 'hanoi' && !inst.hanoi);
-  if (_needsGames) {
-    lazyLoad('systems-games.js', function() {
-      if (tabName === 'c4'   && !inst.c4)   { inst.c4   = new Game4Linha(wrapId+'-c4',   inst.qFn); }
-      if (tabName === 'mine' && !inst.mine) { inst.mine = new GameMine(wrapId+'-mine', inst.qFn); }
-      if (tabName === 'sdk'  && !inst.sdk)  { inst.sdk  = new GameSudoku(wrapId+'-sdk'); }
-      if (tabName === 'hanoi'&& !inst.hanoi){ inst.hanoi= new GameHanoi(wrapId+'-hanoi', inst.qFn); }
-    });
-    return;
-  }
-  if (tabName === 'escape' && !inst.escape) {
-    lazyLoad('games.js', function() {
-      inst.escape = new GameEscapeRoom(wrapId+'-escape', inst.qFn);
-    });
-  }
+  // Lazy init do separador escolhido (catálogo data-driven)
+  _gInitTab(wrapId, tabName);
 }
 
 var _gInstances = {};
@@ -577,6 +551,33 @@ var _gProviders = {};
 function _gRegisterProvider(wrapId, fn) { if (wrapId && typeof fn === 'function') _gProviders[wrapId] = fn; }
 
 // Build the full jogos HTML for a wrapper div
+// ── Catálogo de jogos (label + ícone HTML do separador) ──
+var _gCatalogo = {
+  j24:    { label: '24',            icon: '<i class="ph ph-dice-five"></i> ' },
+  c4:     { label: '4 em Linha',    icon: '<span style="display:inline-block;width:.6em;height:.6em;border-radius:50%;background:#ef4444;vertical-align:middle;flex-shrink:0;margin-right:1px"></span> ' },
+  mine:   { label: 'Campo Minado',  icon: '<i class="ph ph-bomb"></i> ' },
+  sdk:    { label: 'Sudoku',        icon: '<i class="ph ph-grid-four"></i> ' },
+  hanoi:  { label: 'Hanói',         icon: '<i class="ph ph-tree-structure"></i> ' },
+  escape: { label: 'Escape Room',   icon: '🔐 ' },
+  corrida:{ label: 'Corrida de Cálculo', icon: '<i class="ph ph-timer"></i> ' },
+  pares:  { label: 'Caça ao Par',   icon: '<i class="ph ph-cards"></i> ' },
+  vfrelampago: { label: 'V/F Relâmpago', icon: '<i class="ph ph-lightning"></i> ' }
+};
+// ── Conjuntos de jogos por faixa etária ──
+// 2.º ciclo (5.º/6.º), 3.º ciclo (7.º/8.º/9.º), secundário (10.º/11.º).
+var _gSets = {
+  ciclo2: ['j24', 'corrida', 'pares', 'c4', 'mine', 'escape'],
+  ciclo3: ['j24', 'pares', 'c4', 'mine', 'vfrelampago', 'escape'],
+  sec:    ['vfrelampago', 'pares', 'c4', 'mine', 'corrida', 'escape']
+};
+function _gSetFor(wrapId) {
+  // mat5/mat6 → ciclo2; mat10/mat11 → sec; resto (mat7/8/9) → ciclo3
+  if (/mat5|mat6/.test(wrapId)) return _gSets.ciclo2;
+  if (/mat10|mat11/.test(wrapId)) return _gSets.sec;
+  if (/mat7|mat8|mat9/.test(wrapId)) return _gSets.ciclo3;
+  return ['j24', 'c4', 'mine', 'sdk', 'hanoi', 'escape']; // legado (7.º por capítulo)
+}
+
 function _gBuildJogos(wrapId, defaultLevel) {
   var wrap = document.getElementById(wrapId);
   if (!wrap) return;
@@ -586,28 +587,43 @@ function _gBuildJogos(wrapId, defaultLevel) {
       if (_gProviders[wrapId]) { var q = _gProviders[wrapId](lv); if (q) return q; }
       return _gGetQuestion(wrapId, lv);
     }, defaultLevel: defaultLevel || 'medio' };
-  wrap.innerHTML = [
-    '<div class="g-tabs">',
-    '  <button class="g-tab active" data-gtab="j24"  onclick="gTabSwitch(\''+wrapId+'\',\'j24\')"><i class="ph ph-dice-five"></i> 24</button>',
-    '  <button class="g-tab"        data-gtab="c4"   onclick="gTabSwitch(\''+wrapId+'\',\'c4\')"><span style="display:inline-block;width:.6em;height:.6em;border-radius:50%;background:#ef4444;vertical-align:middle;flex-shrink:0;margin-right:1px"></span> 4 em Linha</button>',
-    '  <button class="g-tab"        data-gtab="mine" onclick="gTabSwitch(\''+wrapId+'\',\'mine\')"><i class="ph ph-bomb"></i> Campo Minado</button>',
-    '  <button class="g-tab"        data-gtab="sdk"  onclick="gTabSwitch(\''+wrapId+'\',\'sdk\')"><i class="ph ph-grid-four"></i> Sudoku</button>',
-    '  <button class="g-tab"        data-gtab="hanoi" onclick="gTabSwitch(\''+wrapId+'\',\'hanoi\')"><i class="ph ph-tree-structure"></i> Hanoi</button>',
-    '  <button class="g-tab"        data-gtab="escape" onclick="gTabSwitch(\''+wrapId+'\',\'escape\')">🔐 Escape Room</button>',
-    '</div>',
-    '<div class="g-panel active" data-gpanel="j24"  id="'+wrapId+'-j24"></div>',
-    '<div class="g-panel"        data-gpanel="c4"   id="'+wrapId+'-c4"></div>',
-    '<div class="g-panel"        data-gpanel="mine" id="'+wrapId+'-mine"></div>',
-    '<div class="g-panel"        data-gpanel="sdk"  id="'+wrapId+'-sdk"></div>',
-    '<div class="g-panel"        data-gpanel="hanoi" id="'+wrapId+'-hanoi"></div>',
-    '<div class="g-panel"        data-gpanel="escape" id="'+wrapId+'-escape"></div>',
-  ].join('\n');
-  // Init j24 immediately (default tab)
-  // Must build the HTML first (like the old _j24AutoInit did), then init
-  var _j24GameId = wrapId+'-j24-game';
-  var _j24Panel  = document.getElementById(wrapId+'-j24');
-  if (_j24Panel) { _j24Panel.innerHTML = _j24BuildHTML(_j24GameId, defaultLevel || 'medio'); }
-  _j24Init(_j24GameId, defaultLevel || 'medio');
+  var jogos = _gSetFor(wrapId);
+  var tabs = ['<div class="g-tabs">'], panels = [];
+  jogos.forEach(function (id, i) {
+    var c = _gCatalogo[id]; if (!c) return;
+    tabs.push('  <button class="g-tab' + (i === 0 ? ' active' : '') + '" data-gtab="' + id + '" onclick="gTabSwitch(\'' + wrapId + '\',\'' + id + '\')">' + c.icon + c.label + '</button>');
+    panels.push('<div class="g-panel' + (i === 0 ? ' active' : '') + '" data-gpanel="' + id + '" id="' + wrapId + '-' + id + '"></div>');
+  });
+  tabs.push('</div>');
+  wrap.innerHTML = tabs.concat(panels).join('\n');
+  // inicia o primeiro jogo do conjunto
+  _gInitTab(wrapId, jogos[0], defaultLevel || 'medio');
+}
+
+// Inicializa um separador de jogo (usado no build e no switch).
+function _gInitTab(wrapId, id, level) {
+  var inst = _gInstances[wrapId]; if (!inst) return;
+  level = level || inst.defaultLevel || 'medio';
+  if (id === 'j24') {
+    var gid = wrapId + '-j24-game', p = document.getElementById(wrapId + '-j24');
+    if (p && !p.querySelector('.j24-card')) { p.innerHTML = _j24BuildHTML(gid, level); _j24Init(gid, level); }
+  } else if (id === 'c4' && !inst.c4) {
+    lazyLoad('systems-games.js', function () { if (!inst.c4) inst.c4 = new Game4Linha(wrapId + '-c4', inst.qFn); });
+  } else if (id === 'mine' && !inst.mine) {
+    lazyLoad('systems-games.js', function () { if (!inst.mine) inst.mine = new GameMine(wrapId + '-mine', inst.qFn); });
+  } else if (id === 'sdk' && !inst.sdk) {
+    lazyLoad('systems-games.js', function () { if (!inst.sdk) inst.sdk = new GameSudoku(wrapId + '-sdk'); });
+  } else if (id === 'hanoi' && !inst.hanoi) {
+    lazyLoad('systems-games.js', function () { if (!inst.hanoi) inst.hanoi = new GameHanoi(wrapId + '-hanoi', inst.qFn); });
+  } else if (id === 'escape' && !inst.escape) {
+    lazyLoad('games.js', function () { if (!inst.escape) inst.escape = new GameEscapeRoom(wrapId + '-escape', inst.qFn); });
+  } else if (id === 'corrida' || id === 'pares' || id === 'vfrelampago') {
+    if (!inst['edu_' + id]) {
+      lazyLoad('games-edu.js', function () {
+        if (!inst['edu_' + id] && typeof GameEdu === 'function') inst['edu_' + id] = new GameEdu(wrapId + '-' + id, id, inst.qFn, level);
+      });
+    }
+  }
 }
 
 // ── Question provider: pulls from cap-specific question banks ──
