@@ -1160,10 +1160,16 @@ function _mat8gfGenExs(cap, n) {
   var gen = _mat8Gerador(cap); if (!gen) return [];
   var nTemas = _mat8TemasCount[cap] || 1;
   var tipos = ['mc', 'fill', 'vf', 'fill', 'mc', 'mc'];
-  var geradas = [];
-  for (var i = 0; i < n; i++) {
+  var geradas = [], vistos = {};
+  // gera até n questões DISTINTAS (evita enunciados repetidos na ficha)
+  for (var i = 0, tent = 0; geradas.length < n && tent < n * 6; tent++) {
     var ex = gen(String((i % nTemas) + 1), tipos[i % tipos.length], _mat8gf.dif);
-    if (ex) geradas.push(ex);
+    i++;
+    if (!ex) continue;
+    var chave = String(ex.enun || '').replace(/<[^>]+>/g, '').trim();
+    if (vistos[chave]) continue;
+    vistos[chave] = 1;
+    geradas.push(ex);
   }
   // mistura questões reais do banco (multi-passo, com contexto/figuras)
   var banco = (typeof _mat8Banco !== 'undefined' && _mat8Banco[cap]) ? _mat8Banco[cap] : [];

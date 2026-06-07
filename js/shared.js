@@ -1920,11 +1920,20 @@ function _mixBancoGeradas(banco, geradas, qtd, nBanco, nivel) {
     var take = Math.min(nBanco || Math.floor(qtd / 2), pool.length);
     for (var k = 0; k < take; k++) out.push(Object.assign({}, pool[k]));
   }
-  // completa com geradas
+  // completa com geradas, evitando enunciados repetidos
+  var vistos = {};
+  out.forEach(function (e) { vistos[String(e.enun || '').replace(/<[^>]+>/g, '').trim()] = 1; });
   var gi = 0;
+  while (out.length < qtd && gi < geradas.length) {
+    var ch = String(geradas[gi].enun || '').replace(/<[^>]+>/g, '').trim();
+    if (!vistos[ch]) { vistos[ch] = 1; out.push(geradas[gi]); }
+    gi++;
+  }
+  // se ainda faltar (poucas distintas), completa mesmo com repetidas
+  gi = 0;
   while (out.length < qtd && gi < geradas.length) { out.push(geradas[gi]); gi++; }
   // baralha o conjunto final e numera
-  for (var m = out.length - 1; m > 0; m--) { var n = Math.floor(Math.random() * (m + 1)); var s = out[m]; out[m] = out[n]; out[n] = s; }
+  for (var m = out.length - 1; m > 0; m--) { var nn = Math.floor(Math.random() * (m + 1)); var s = out[m]; out[m] = out[nn]; out[nn] = s; }
   return out.map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
 }
 
