@@ -428,12 +428,15 @@ function mat9GerarExercicios() {
 
   var QTD = 8;
   var tipos = ['mc', 'fill', 'mc', 'vf', 'fill', 'mc', 'fill', 'mc'];
-  var exs = [];
+  var geradas = [];
   for (var i = 0; i < QTD; i++) {
     var tema = temas[i % temas.length];
     var ex = gen(tema, tipos[i % tipos.length], _mat9Prat.nivel);
-    if (ex) exs.push(Object.assign({}, ex, { num: i + 1 }));
+    if (ex) geradas.push(ex);
   }
+  var banco = (typeof _mat9Banco !== 'undefined' && _mat9Banco[cap]) ? _mat9Banco[cap].filter(function (q) { return temas.indexOf(q.t) !== -1; }) : [];
+  var exs = (typeof _mixBancoGeradas === 'function') ? _mixBancoGeradas(banco, geradas, QTD, 3)
+    : geradas.map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
   _mat9Prat.exs = exs;
   _mat9Prat.answered = {};
   _mat9Prat.score = { correct: 0, total: 0 };
@@ -1733,3 +1736,45 @@ function buildEx_m9c6(tema, tipo, dif) {
 
   return { enun: 'Média de 2,4,6?', tipo: 'fill', resposta: '4', expl: '(2+4+6)/3=4.', tema: 'Estatística' };
 }
+
+/* ════════════════════════════════════════════════════════════════
+   BANCO DE QUESTÕES (reais/ricas) — Matemática · 9.º ano
+   ════════════════════════════════════════════════════════════════ */
+var _mat9Banco = {
+  1: [ // Números Reais e Inequações
+    { t: '1', tipo: 'mc', enun: 'Qual das afirmações é VERDADEIRA?', opcoes: ['√2 é irracional', 'Todo o número real é racional', '0,(3) é irracional', 'π é racional'], resposta: '√2 é irracional', expl: '√2 tem dízima infinita não periódica → irracional. 0,(3)=1/3 é racional; π é irracional.', tema: 'T1 · Conjuntos' },
+    { t: '3', tipo: 'fill_frac', enun: 'Resolve a inequação 2(x − 1) ≤ x + 3 e indica a solução em intervalo.', resposta: ']−∞,5]', expl: '2x − 2 ≤ x + 3 → x ≤ 5. Solução: ]−∞, 5].', tema: 'T3 · Inequações' },
+    { t: '3', tipo: 'mc', enun: 'Ao resolver −2x > 6, obtém-se:', opcoes: ['x < −3', 'x > −3', 'x < 3', 'x > 3'], resposta: 'x < −3', expl: 'Divide por −2 e INVERTE o sinal: x < −3.', tema: 'T3 · Inequações' },
+    { t: '2', tipo: 'mc', enun: 'O intervalo [−2, 5[ contém:', opcoes: ['o −2 mas não o 5', 'o 5 mas não o −2', 'ambos', 'nenhum'], resposta: 'o −2 mas não o 5', expl: '[ inclui −2; [ (à direita) exclui o 5.', tema: 'T2 · Intervalos' }
+  ],
+  2: [ // Equações do 2.º grau
+    { t: '3', tipo: 'fill', enun: 'A equação x² − 10x + 25 = 0 tem quantas soluções diferentes?', resposta: '1', expl: 'Δ = 100 − 100 = 0 → uma solução (dupla): x = 5.', tema: 'T3 · Eq. 2.º grau' },
+    { t: '1', tipo: 'fill_frac', enun: 'Desenvolve (2x − 3)².', resposta: '4x2-12x+9', expl: '(a−b)² = a² − 2ab + b² → (2x)² − 2·2x·3 + 3² = 4x² − 12x + 9.', tema: 'T1 · Casos Notáveis' },
+    { t: '3', tipo: 'fill', enun: 'A equação x² = 7x tem duas soluções. Qual é a maior?', resposta: '7', expl: 'x² − 7x = 0 → x(x−7)=0 → x=0 ou x=7. A maior é 7.', tema: 'T3 · Eq. 2.º grau' },
+    { t: '4', tipo: 'mc', enun: 'Para que a equação x² + bx + 9 = 0 tenha uma única solução, b deve ser:', opcoes: ['6 ou −6', 'apenas 6', '3 ou −3', '9'], resposta: '6 ou −6', expl: 'Δ = b² − 36 = 0 → b² = 36 → b = ±6.', tema: 'T4 · Discriminante' }
+  ],
+  3: [ // Funções
+    { t: '1', tipo: 'mc', enun: 'Na função afim f(x) = −3x + 2, ao aumentar x em 1 unidade, f(x):', opcoes: ['diminui 3 unidades', 'aumenta 3', 'aumenta 2', 'não muda'], resposta: 'diminui 3 unidades', expl: 'O declive é −3: por cada +1 em x, f(x) varia −3.', tema: 'T1 · Função Afim' },
+    { t: '3', tipo: 'fill', enun: 'Numa proporcionalidade inversa, y = 8 quando x = 3. Quanto vale y quando x = 6?', resposta: '4', expl: 'k = x·y = 3·8 = 24. Para x = 6: y = 24/6 = 4.', tema: 'T3 · Prop. Inversa' },
+    { t: '2', tipo: 'fill', enun: 'A parábola f(x) = x² − 6x + 8 tem dois zeros. Qual é a soma dos zeros?', resposta: '6', expl: 'Zeros: 2 e 4. Soma = 6 (ou −b/a = 6).', tema: 'T2 · Função Quadrática' },
+    { t: '1', tipo: 'mc', enun: 'Duas retas y = 2x + 1 e y = 2x − 5 são:', opcoes: ['paralelas', 'perpendiculares', 'coincidentes', 'concorrentes num ponto'], resposta: 'paralelas', expl: 'Mesmo declive (2) e ordenadas na origem diferentes → paralelas.', tema: 'T1 · Função Afim' }
+  ],
+  4: [ // Trigonometria e Circunferência
+    { t: '1', tipo: 'fill_frac', enun: 'Num triângulo retângulo, o cateto oposto a α mede 8 e a hipotenusa 17. Qual é sen(α)?', resposta: '8/17', expl: 'sen α = cateto oposto / hipotenusa = 8/17.', tema: 'T1 · Razões' },
+    { t: '3', tipo: 'fill', enun: 'Um ângulo inscrito numa circunferência corresponde a um arco de 100°. Quanto mede o ângulo inscrito?', resposta: '50', expl: 'O ângulo inscrito é metade do arco: 100°/2 = 50°.', tema: 'T3 · Ângulos e Arcos' },
+    { t: '2', tipo: 'fill', enun: 'Uma escada de 13 m apoia-se numa parede, com a base a 5 m. A que altura chega? (em m)', resposta: '12', expl: 'altura = √(13² − 5²) = √(169 − 25) = √144 = 12 m.', tema: 'T2 · Lados' },
+    { t: '1', tipo: 'mc', enun: 'Se cos(α) = 4/5 num triângulo retângulo, então tg(α) é:', opcoes: ['3/4', '4/3', '3/5', '5/4'], resposta: '3/4', expl: 'cos = 4/5 → cateto oposto 3 (terno 3,4,5). tg = oposto/adjacente = 3/4.', tema: 'T1 · Razões' }
+  ],
+  5: [ // Probabilidades
+    { t: '2', tipo: 'fill_frac', enun: 'Num saco há 5 bolas vermelhas e 3 azuis. Qual a probabilidade de tirar uma azul? (fração irredutível)', resposta: '3/8', expl: 'P = 3/(5+3) = 3/8.', tema: 'T2 · Probabilidade' },
+    { t: '3', tipo: 'fill_frac', enun: 'A probabilidade de um acontecimento A é 2/7. Qual é a probabilidade do contrário? (fração irredutível)', resposta: '5/7', expl: 'P(Ā) = 1 − 2/7 = 5/7.', tema: 'T3 · Contrário' },
+    { t: '1', tipo: 'fill', enun: 'Ao lançar duas moedas, quantos resultados diferentes há no espaço de resultados?', resposta: '4', expl: '{CC, CK, KC, KK} → 4 resultados.', tema: 'T1 · Espaço de Resultados' },
+    { t: '2', tipo: 'mc', enun: 'Ao lançar um dado, qual é a probabilidade de sair um número maior ou igual a 5?', opcoes: ['1/3', '1/2', '2/3', '1/6'], resposta: '1/3', expl: 'Favoráveis: 5 e 6 → 2 casos. P = 2/6 = 1/3.', tema: 'T2 · Probabilidade' }
+  ],
+  6: [ // Estatística
+    { t: '1', tipo: 'fill', enun: 'As notas de 5 alunos foram 8, 12, 14, 16, 20. Qual é a média?', resposta: '14', expl: '(8+12+14+16+20)/5 = 70/5 = 14.', tema: 'T1 · Média' },
+    { t: '3', tipo: 'fill', enun: 'Num conjunto de dados, Q1 = 12 e Q3 = 28. Qual é a amplitude interquartis?', resposta: '16', expl: 'AIQ = Q3 − Q1 = 28 − 12 = 16.', tema: 'T3 · Quartis' },
+    { t: '2', tipo: 'fill', enun: 'Qual é a mediana de 5, 9, 2, 7, 11, 3? (dados não ordenados)', resposta: '6', expl: 'Ordena: 2, 3, 5, 7, 9, 11. 6 valores (par): mediana = (5+7)/2 = 6.', tema: 'T2 · Mediana' },
+    { t: '4', tipo: 'fill', enun: 'Qual é a amplitude do conjunto 3, 17, 8, 25, 12?', resposta: '22', expl: 'Amplitude = máximo − mínimo = 25 − 3 = 22.', tema: 'T4 · Amplitude' }
+  ]
+};
