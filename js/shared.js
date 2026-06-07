@@ -1828,10 +1828,57 @@ function _fabricarOpcoes(resp) {
 // ═══ Banco de questões: mistura questões fixas (reais, multi-passo) com geradas ═══
 // banco: array de questões {tema?, tipo, enun, opcoes?, resposta, expl, visual?} para um capítulo.
 // Devolve até `qtd` questões: algumas do banco (baralhadas) + o resto geradas.
-function _mixBancoGeradas(banco, geradas, qtd, nBanco) {
+// Escala de números por nível de dificuldade. Devolve um inteiro aleatório
+// num intervalo que cresce com a dificuldade. Usar nos geradores para que
+// difícil tenha números maiores que fácil.
+// _escalaNum('facil') ~ [1,10]; 'medio' ~ [5,50]; 'dificil' ~ [10,100]
+function _escalaNum(dif, base) {
+  var r;
+  if (dif === 'dificil') r = [10, 100];
+  else if (dif === 'medio') r = [5, 50];
+  else r = [1, 10];
+  if (base) { r = [Math.round(r[0] * base / 10), Math.round(r[1] * base / 10)]; }
+  return r[0] + Math.floor(Math.random() * (r[1] - r[0] + 1));
+}
+
+// Classifica a dificuldade de uma questão (do banco): 'facil' | 'medio' | 'dificil'.
+// Usa: se já tem campo .dif, respeita; senão estima por contexto e nº de passos.
+function _nivelQuestao(q) {
+  if (q.dif) return q.dif;
+  var e = String(q.enun || '');
+  var x = String(q.expl || '');
+  var passos = (x.match(/Passo \d/g) || []).length;
+  var temContexto = /[Uu]m[a]? |custa|comprou|tem |escola|loja|euros|€| metros| km|caixa|aluno|saco|carteira|terreno|rampa|escada|bola|drone|temperatura|mergulhador|comboio|receita|farol|cromos|piza|agricultor|lan[çc]a/.test(e);
+  var afirmacoes = /I\.|II\.|III\.|afirma[çc]/.test(e);
+  if (passos >= 2 || afirmacoes || (temContexto && e.length > 80)) return 'dificil';
+  if (passos === 1 || temContexto || e.length > 70) return 'medio';
+  return 'facil';
+}
+
+// banco: questões. geradas: array. qtd: total. nBanco: quantas do banco.
+// nivel (opcional): 'facil'|'medio'|'dificil' — filtra o banco para esse nível
+// (no fácil só questões simples; no difícil só as de contexto/multi-passo).
+function _mixBancoGeradas(banco, geradas, qtd, nBanco, nivel) {
   qtd = qtd || 8;
   var out = [];
-  // escolhe nBanco questões do banco (no máximo metade), sem repetir
+  // filtrar o banco pelo nível pedido (mantém só as adequadas; se ficar vazio, usa todas)
+  if (banco && banco.length && nivel) {
+    var ordem = { facil: 0, medio: 1, dificil: 2 };
+    var alvo = ordem[nivel];
+    var filtrado = banco.filter(function (q) {
+      var nq = ordem[_nivelQuestao(q)];
+      // fácil: só fáceis; médio: médias e fáceis; difícil: médias e difíceis
+      if (nivel === 'facil') return nq === 0;
+      if (nivel === 'dificil') return nq >= 1;
+      return true; // médio: aceita tudo, mas dará prioridade às médias
+    });
+    if (filtrado.length) banco = filtrado;
+  }
+  // no difícil, puxa MAIS questões do banco (que são as de contexto/multi-passo);
+  // no fácil, menos. Cria uma diferença de nível mais marcada.
+  if (nivel === 'dificil') nBanco = Math.max(nBanco || 0, Math.ceil(qtd / 2));
+  else if (nivel === 'facil') nBanco = Math.min(nBanco || 1, Math.max(1, Math.floor(qtd / 4)));
+  // escolhe nBanco questões do banco (sem repetir)
   if (banco && banco.length) {
     var pool = banco.slice();
     // baralha

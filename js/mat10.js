@@ -408,7 +408,7 @@ function mat10GerarExercicios() {
   }
   // mistura questões reais do banco (filtradas pelos temas ativos) com as geradas
   var banco = (typeof _mat10Banco !== 'undefined' && _mat10Banco[cap]) ? _mat10Banco[cap].filter(function (q) { return temas.indexOf(q.t) !== -1; }) : [];
-  var exs = (typeof _mixBancoGeradas === 'function') ? _mixBancoGeradas(banco, geradas, QTD, 3)
+  var exs = (typeof _mixBancoGeradas === 'function') ? _mixBancoGeradas(banco, geradas, QTD, 3, _mat10Prat.nivel)
     : geradas.map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
   _mat10Prat.exs = exs;
   _mat10Prat.answered = {};
@@ -1075,7 +1075,7 @@ function _mat10gfGenExs(cap, n) {
   // mistura questões reais do banco (multi-passo, com contexto/figuras)
   var banco = (typeof _mat10Banco !== 'undefined' && _mat10Banco[cap]) ? _mat10Banco[cap] : [];
   if (banco.length && typeof _mixBancoGeradas === 'function') {
-    return _mixBancoGeradas(banco, geradas, n, Math.min(Math.ceil(n / 3), banco.length));
+    return _mixBancoGeradas(banco, geradas, n, Math.min(Math.ceil(n / 3), banco.length), _mat10gf.dif);
   }
   return geradas;
 }
@@ -1518,8 +1518,10 @@ function buildEx_m10c5(tema, tipo, dif) {
   function dados(n, lo, hi) { var a = []; for (var i = 0; i < n; i++) a.push(rnd_m81(lo, hi)); return a; }
   function ord(a) { return a.slice().sort(function (x, y) { return x - y; }); }
   if (tema === '1') {
+    // dificuldade: números maiores no difícil
+    var hiVal = (dif === 'dificil') ? 50 : (dif === 'medio') ? 30 : 12;
     var arr; var s;
-    do { arr = dados(5, 1, 20); s = arr.reduce(function (acc, v) { return acc + v; }, 0); } while (s % 5 !== 0);
+    do { arr = dados(5, 1, hiVal); s = arr.reduce(function (acc, v) { return acc + v; }, 0); } while (s % 5 !== 0);
     if (typeof EduVisual !== 'undefined' && Math.random() < 0.4) {
       var cats10 = ['A', 'B', 'C', 'D', 'E'];
       var data10 = cats10.map(function (c, k) { return { label: c, value: arr[k] }; });

@@ -435,7 +435,7 @@ function mat9GerarExercicios() {
     if (ex) geradas.push(ex);
   }
   var banco = (typeof _mat9Banco !== 'undefined' && _mat9Banco[cap]) ? _mat9Banco[cap].filter(function (q) { return temas.indexOf(q.t) !== -1; }) : [];
-  var exs = (typeof _mixBancoGeradas === 'function') ? _mixBancoGeradas(banco, geradas, QTD, 3)
+  var exs = (typeof _mixBancoGeradas === 'function') ? _mixBancoGeradas(banco, geradas, QTD, 3, _mat9Prat.nivel)
     : geradas.map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
   _mat9Prat.exs = exs;
   _mat9Prat.answered = {};
@@ -1102,7 +1102,7 @@ function _mat9gfGenExs(cap, n) {
   // mistura questões reais do banco (multi-passo, com contexto/figuras)
   var banco = (typeof _mat9Banco !== 'undefined' && _mat9Banco[cap]) ? _mat9Banco[cap] : [];
   if (banco.length && typeof _mixBancoGeradas === 'function') {
-    return _mixBancoGeradas(banco, geradas, n, Math.min(Math.ceil(n / 3), banco.length));
+    return _mixBancoGeradas(banco, geradas, n, Math.min(Math.ceil(n / 3), banco.length), _mat9gf.dif);
   }
   return geradas;
 }
