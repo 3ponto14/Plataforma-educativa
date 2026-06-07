@@ -1687,6 +1687,47 @@ function _addStatsTeoriaVisuais(cardsArr, color) {
   });
 }
 
+// Junta a um array de cards de teoria de Geometria exemplos visuais
+// (triângulo, círculo, retângulo). cap pode ser 'pitagoras' p/ tri retângulo.
+function _addGeoTeoriaVisuais(cardsArr, color, opts) {
+  if (typeof EduVisual === 'undefined' || !cardsArr || cardsArr._visuaisG) return;
+  cardsArr._visuaisG = true; opts = opts || {};
+  if (opts.pitagoras) {
+    cardsArr.push({
+      tag: 'Exemplo', q: 'Como aplicar o Teorema de Pitágoras num triângulo?',
+      a: 'Num triângulo retângulo, hipotenusa² = cateto² + cateto². Ex: catetos 3 e 4 → hipotenusa = √(9+16) = 5.',
+      v: EduVisual.triangulo({ right: true, aLabel: '5', bLabel: '4', cLabel: '3', color: color })
+    });
+  } else {
+    cardsArr.push({
+      tag: 'Exemplo', q: 'Como é um retângulo e o seu perímetro/área?',
+      a: 'Perímetro = 2×(comp+larg); Área = comp×larg. Exemplo de 6 cm por 4 cm:',
+      v: EduVisual.retangulo(6, 4, { compLabel: '6 cm', largLabel: '4 cm', color: color })
+    });
+    cardsArr.push({
+      tag: 'Exemplo', q: 'O que é o raio de um círculo?',
+      a: 'A distância do centro à circunferência. Perímetro = 2πr; Área = πr².',
+      v: EduVisual.circulo({ rLabel: 'r', color: color })
+    });
+  }
+}
+
+// Junta cards de teoria com gráficos de funções (reta e parábola).
+function _addFuncTeoriaVisuais(cardsArr, color) {
+  if (typeof EduVisual === 'undefined' || !cardsArr || cardsArr._visuaisF) return;
+  cardsArr._visuaisF = true;
+  cardsArr.push({
+    tag: 'Exemplo', q: 'Como é o gráfico de uma função afim?',
+    a: 'É uma reta y = mx + b. Aqui f(x) = x + 1 (declive 1, ordenada na origem 1):',
+    v: EduVisual.grafico(function (x) { return x + 1; }, { range: 5, color: color })
+  });
+  cardsArr.push({
+    tag: 'Exemplo', q: 'Como é o gráfico de uma função quadrática?',
+    a: 'É uma parábola. Aqui f(x) = x² − 4, com vértice (0, −4) e zeros −2 e 2:',
+    v: EduVisual.grafico(function (x) { return x * x - 4; }, { range: 5, color: color, markers: [{ x: 0, y: -4, label: 'V' }, { x: -2, y: 0 }, { x: 2, y: 0 }] })
+  });
+}
+
 function _teoriaToggleGroup(gid) {
   var g = document.getElementById(gid);
   if (g) g.classList.toggle('open');

@@ -1154,6 +1154,7 @@ function mat10gfGerar(formato) {
 // ═══ INIT ═══
 function _mat10Init() {
   if (typeof _addStatsTeoriaVisuais === 'function') _addStatsTeoriaVisuais(_mat10Cards[5], '#5a5ea0'); // cap5 Estatística
+  if (typeof _addFuncTeoriaVisuais === 'function') _addFuncTeoriaVisuais(_mat10Cards[4], '#3f7a9a'); // cap4 Funções Reais
   // arranca na tab Teoria com o cap 1 selecionado
   mat10BuildResumoNav();
 }
@@ -1251,12 +1252,18 @@ function buildEx_m10c1(tema, tipo, dif) {
   var a = rnd_m81(-4, 2), b = a + rnd_m81(2, 5);
   var c = a + rnd_m81(1, 3), d = c + rnd_m81(2, 5);
   var op = Math.random() < 0.5;
-  // A=[a,b], B=[c,d]
+  // A=[a,b], B=[c,d] — visual na reta numérica (A acima, B abaixo no mesmo eixo)
+  var lo0 = Math.min(a, c) - 1, hi0 = Math.max(b, d) + 1;
+  var visI = (typeof EduVisual !== 'undefined') ? EduVisual.retaNumerica(lo0, hi0, {
+    intervals: [{ from: a, to: b, openL: false, openR: false }],
+    points: [{ x: a, label: 'A' }, { x: b }], color: '#3f6b8a'
+  }) : '';
   if (op) {
     var lo = Math.max(a, c), hi = Math.min(b, d);
     var res = lo <= hi ? '[' + lo + ', ' + hi + ']' : '∅ (vazio)';
     return {
-      enun: 'Calcula [' + a + ', ' + b + '] ∩ [' + c + ', ' + d + '].',
+      enun: 'Calcula <strong>[' + a + ', ' + b + '] ∩ [' + c + ', ' + d + ']</strong>. (A figura mostra o intervalo A.)',
+      visual: visI,
       tipo: 'fill_frac', resposta: res.replace(/ /g, ''),
       expl: 'A interseção são os reais em AMBOS: de ' + Math.max(a, c) + ' a ' + Math.min(b, d) + ' → ' + res + '.',
       tema: 'T3 · Conjuntos'

@@ -1177,6 +1177,7 @@ function mat6gfGerar(formato) {
 // ═══ INIT ═══
 function _mat6Init() {
   if (typeof _addStatsTeoriaVisuais === 'function') _addStatsTeoriaVisuais(_mat6Cards[7], '#c44a5a'); // cap7 Dados
+  if (typeof _addGeoTeoriaVisuais === 'function') _addGeoTeoriaVisuais(_mat6Cards[4], '#c44a6a'); // cap4 Perímetros e Áreas
   // arranca na tab Teoria com o cap 1 selecionado
   mat6BuildResumoNav();
 }

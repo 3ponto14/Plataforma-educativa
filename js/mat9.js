@@ -1181,6 +1181,7 @@ function mat9gfGerar(formato) {
 
 // ═══ INIT ═══
 function _mat9Init() {
+  if (typeof _addFuncTeoriaVisuais === 'function') _addFuncTeoriaVisuais(_mat9Cards[3], '#4d8f87'); // cap3 Funções
   // arranca na tab Teoria com o cap 1 selecionado
   mat9BuildResumoNav();
 }

@@ -1176,6 +1176,7 @@ function mat5gfGerar(formato) {
 // ═══ INIT ═══
 function _mat5Init() {
   if (typeof _addStatsTeoriaVisuais === 'function') _addStatsTeoriaVisuais(_mat5Cards[7], '#4a9e72'); // cap7 Dados
+  if (typeof _addGeoTeoriaVisuais === 'function') _addGeoTeoriaVisuais(_mat5Cards[4], '#8a9e4a'); // cap4 Figuras
   // arranca na tab Teoria com o cap 1 selecionado
   mat5BuildResumoNav();
 }

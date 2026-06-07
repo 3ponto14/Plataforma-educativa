@@ -1247,6 +1247,7 @@ function mat8gfGerar(formato) {
 // ═══ INIT ═══
 function _mat8Init() {
   if (typeof _addStatsTeoriaVisuais === 'function') _addStatsTeoriaVisuais(_mat8Cards[8], '#9a5e96'); // cap8 Dados
+  if (typeof _addGeoTeoriaVisuais === 'function') _addGeoTeoriaVisuais(_mat8Cards[4], '#b06a6a', { pitagoras: true }); // cap4 Pitágoras
   // arranca na tab Teoria com o cap 1 selecionado
   mat8BuildResumoNav();
 }

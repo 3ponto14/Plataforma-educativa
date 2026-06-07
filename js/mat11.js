@@ -1154,6 +1154,7 @@ function mat11gfGerar(formato) {
 
 // ═══ INIT ═══
 function _mat11Init() {
+  if (typeof _addFuncTeoriaVisuais === 'function') _addFuncTeoriaVisuais(_mat11Cards[5], '#4a8a74'); // cap5 Derivadas
   // arranca na tab Teoria com o cap 1 selecionado
   mat11BuildResumoNav();
 }
