@@ -57,8 +57,22 @@ function htmlToPdfDownload(htmlContent, filename) {
     '<\/script>'
   ].join('\n');
 
+  // Nome sugerido ao "Guardar como PDF" = título do documento.
+  // Sem isto, o browser usa o id do blob (ex: 8e46c8a1-...). Por isso
+  // injetamos um <title> com o nome do ficheiro (sem extensão).
+  var tituloDoc = String(filename || 'ficha').replace(/\.(pdf|html)$/i, '');
+  var headTitulo = '<title>' + tituloDoc.replace(/</g, '&lt;') + '</title>';
+
   // Inject the bar into the HTML document
   var html = htmlContent;
+  // garantir um <title> correto (substitui se existir, senão adiciona ao <head> ou ao topo)
+  if (/<title>[\s\S]*?<\/title>/i.test(html)) {
+    html = html.replace(/<title>[\s\S]*?<\/title>/i, headTitulo);
+  } else if (html.indexOf('<head>') !== -1) {
+    html = html.replace('<head>', '<head>' + headTitulo);
+  } else {
+    html = headTitulo + html;
+  }
   if (html.indexOf('<body>') !== -1) {
     html = html.replace('<body>', '<body>' + printBtn);
   } else if (html.indexOf('<body ') !== -1) {
@@ -72,6 +86,12 @@ function htmlToPdfDownload(htmlContent, filename) {
   var blob = new Blob([html], {type: 'text/html;charset=utf-8'});
   var url = URL.createObjectURL(blob);
   var win = window.open(url, '_blank');
+  if (win) {
+    // reforça o título da nova janela (nome sugerido ao guardar PDF)
+    try {
+      win.addEventListener('load', function () { try { win.document.title = tituloDoc; } catch (e) {} });
+    } catch (e) {}
+  }
   if (!win) {
     // If still blocked, try <a download> as fallback
     var a = document.createElement('a');
