@@ -55,6 +55,20 @@
   --m6c5-base:#f4e6f0;--m6c5-mid:#a84a8e;--m6c5-deep:#682c56;--m6c5-pale:#faeff7;
   --m6c6-base:#f6ebe6;--m6c6-mid:#c4684a;--m6c6-deep:#7a3e2c;--m6c6-pale:#fbf2ef;
   --m6c7-base:#f6e6e8;--m6c7-mid:#c44a5a;--m6c7-deep:#7a2c38;--m6c7-pale:#fbeff1;
+  /* Matemática 10.º Ano — paleta própria (azul-petróleo/marinho), 6 capítulos */
+  --m10c1-base:#e6edf2;--m10c1-mid:#3f6b8a;--m10c1-deep:#264458;--m10c1-pale:#eff4f8;
+  --m10c2-base:#e6f0f0;--m10c2-mid:#3f8a84;--m10c2-deep:#265854;--m10c2-pale:#eff8f7;
+  --m10c3-base:#e8ecf4;--m10c3-mid:#4a5ea0;--m10c3-deep:#2e3a66;--m10c3-pale:#eff2fb;
+  --m10c4-base:#e6eef2;--m10c4-mid:#3f7a9a;--m10c4-deep:#264e64;--m10c4-pale:#eff6fa;
+  --m10c5-base:#e9eaf2;--m10c5-mid:#5a5ea0;--m10c5-deep:#383a66;--m10c5-pale:#f1f1fb;
+  --m10c6-base:#e6f1ee;--m10c6-mid:#3f9a7e;--m10c6-deep:#266450;--m10c6-pale:#eff9f5;
+  /* Matemática 11.º Ano — paleta própria (ardósia/grafite-azulado), 6 capítulos */
+  --m11c1-base:#eaedef;--m11c1-mid:#5a6e7e;--m11c1-deep:#36454f;--m11c1-pale:#f2f5f6;
+  --m11c2-base:#ece9ef;--m11c2-mid:#6e5a7e;--m11c2-deep:#45364f;--m11c2-pale:#f5f2f6;
+  --m11c3-base:#e9eef0;--m11c3-mid:#4a7a8a;--m11c3-deep:#2e4e58;--m11c3-pale:#f1f7f8;
+  --m11c4-base:#eeebe8;--m11c4-mid:#8a7058;--m11c4-deep:#564636;--m11c4-pale:#f7f4f1;
+  --m11c5-base:#e9eeec;--m11c5-mid:#4a8a74;--m11c5-deep:#2e584a;--m11c5-pale:#f1f8f5;
+  --m11c6-base:#edeaef;--m11c6-mid:#7a5a8a;--m11c6-deep:#4e3658;--m11c6-pale:#f6f2f8;
   --available:#516860;--avail-bg:#edf4f1;
   --progress:#AB9790;--prog-bg:#f5f0ee;--soon:#9e9e9e;
   --p-radius:16px;--radius-sm:10px;
@@ -3453,6 +3467,8 @@ body.dark-mode .portal-card:hover {
 .portal-year-card.y7 { border-left-color: var(--c2-mid); } .y7 .portal-year-icon { background: var(--c2-base); color: var(--c2-deep); } .portal-year-card.y7:hover { border-color: var(--c2-mid); }
 .portal-year-card.y8 { border-left-color: var(--m8c1-mid); } .y8 .portal-year-icon { background: var(--m8c1-base); color: var(--m8c1-deep); } .portal-year-card.y8:hover { border-color: var(--m8c1-mid); }
 .portal-year-card.y9 { border-left-color: var(--m9c1-mid); } .y9 .portal-year-icon { background: var(--m9c1-base); color: var(--m9c1-deep); } .portal-year-card.y9:hover { border-color: var(--m9c1-mid); }
+.portal-year-card.y10 { border-left-color: var(--m10c1-mid); } .y10 .portal-year-icon { background: var(--m10c1-base); color: var(--m10c1-deep); } .portal-year-card.y10:hover { border-color: var(--m10c1-mid); }
+.portal-year-card.y11 { border-left-color: var(--m11c1-mid); } .y11 .portal-year-icon { background: var(--m11c1-base); color: var(--m11c1-deep); } .portal-year-card.y11:hover { border-color: var(--m11c1-mid); }
 .portal-year-card.yex { border-left-color: #5c4e8a; } .yex .portal-year-icon { background: #f0edf7; color: #5c4e8a; } .portal-year-card.yex:hover { border-color: #5c4e8a; }
 .portal-year-card.ypt { border-left-color: #4a3f7a; } .ypt .portal-year-icon { background: #ede8f5; color: #4a3f7a; } .portal-year-card.ypt:hover { border-color: #4a3f7a; }
 /* estado "sem resultados" da pesquisa */

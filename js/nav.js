@@ -21,6 +21,8 @@ var _mat6Path = _inMat(6) ? '' : _coursePath('mat6');
 var _mat7Path = _inMat7 ? '' : _coursePath('mat7');
 var _mat8Path = _inMat8 ? '' : _coursePath('mat8');
 var _mat9Path = _inMat9 ? '' : _coursePath('mat9');
+var _mat10Path = _inMat(10) ? '' : _coursePath('mat10');
+var _mat11Path = _inMat(11) ? '' : _coursePath('mat11');
 
 /* ── Portal (index.html at root) ── */
 function showPortalView() { window.location.href = _rootPath + 'index.html'; }
@@ -44,6 +46,12 @@ function showMat5View()  { window.location.href = _mat5Path + 'index.html'; }
 function showPortalFromMat5() { showPortalView(); }
 function showMat6View()  { window.location.href = _mat6Path + 'index.html'; }
 function showPortalFromMat6() { showPortalView(); }
+
+/* ── Mat10 e Mat11 hubs (secundário) ── */
+function showMat10View() { window.location.href = _mat10Path + 'index.html'; }
+function showPortalFromMat10() { showPortalView(); }
+function showMat11View() { window.location.href = _mat11Path + 'index.html'; }
+function showPortalFromMat11() { showPortalView(); }
 
 /* ── Chapter pages ── */
 function showMathView()  { window.location.href = _mat7Path + 'cap1.html'; }
