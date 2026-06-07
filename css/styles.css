@@ -1545,6 +1545,48 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
   transform: translateY(-2px);
 }
 
+/* ── Visuais (tabelas e gráficos SVG nos exercícios e teoria) ── */
+.edv-wrap {
+  display: flex;
+  justify-content: center;
+  margin: .75rem 0;
+}
+.edv-svg {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 6px;
+}
+.edv-table {
+  border-collapse: collapse;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .8rem;
+  min-width: 200px;
+  background: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+.edv-table th {
+  background: var(--edv, var(--c2-mid));
+  color: #fff;
+  font-weight: 700;
+  padding: .45rem .7rem;
+  text-align: center;
+  font-size: .76rem;
+}
+.edv-table td {
+  padding: .4rem .7rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink2);
+}
+.edv-table tbody tr:last-child td { border-bottom: none; }
+.edv-table tbody tr:nth-child(even) td { background: var(--surface); }
+
 /* ── Teoria: acordeão (grupos colapsáveis + perguntas que abrem a resposta) ── */
 .teoria-acc { display: flex; flex-direction: column; gap: .6rem; padding: .25rem 0 1.5rem; }
 .teoria-group {

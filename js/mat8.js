@@ -1245,7 +1245,33 @@ function mat8gfGerar(formato) {
 }
 
 // ═══ INIT ═══
+// Adiciona visuais (SVG) a alguns cards de teoria de Estatística (Cap 8).
+function _mat8AddTeoriaVisuais() {
+  if (typeof EduVisual === 'undefined' || !_mat8Cards[8]) return;
+  _mat8Cards[8].push({
+    tag: 'Exemplo', q: 'Como se lê um gráfico de barras?',
+    a: 'A altura de cada barra indica a frequência. Neste exemplo, a desporto preferido pelos alunos:',
+    v: EduVisual.barras([
+      { label: 'Futebol', value: 12 }, { label: 'Natação', value: 7 },
+      { label: 'Ténis', value: 5 }, { label: 'Dança', value: 6 }
+    ], '#9a5e96')
+  });
+  _mat8Cards[8].push({
+    tag: 'Exemplo', q: 'Como se representa um gráfico circular?',
+    a: 'Cada setor é uma fração do total (frequência relativa × 360°). Exemplo de meios de transporte:',
+    v: EduVisual.circular([
+      { label: 'A pé', value: 40 }, { label: 'Autocarro', value: 35 }, { label: 'Carro', value: 25 }
+    ])
+  });
+  _mat8Cards[8].push({
+    tag: 'Exemplo', q: 'Como organizar dados numa tabela de frequências?',
+    a: 'Cada linha tem o valor e quantas vezes ocorre. Exemplo das idades de uma equipa:',
+    v: EduVisual.tabela(['Idade', 'N.º jogadores'], [['14', '4'], ['15', '6'], ['16', '8'], ['17', '5']], '#9a5e96')
+  });
+}
+
 function _mat8Init() {
+  _mat8AddTeoriaVisuais();
   // arranca na tab Teoria com o cap 1 selecionado
   mat8BuildResumoNav();
 }
@@ -2269,6 +2295,20 @@ function buildEx_m88(tema, tipo, dif) {
 
   // ── TEMA 1 · Média (garante média inteira) ──
   if (tema === '1') {
+    // Variante VISUAL: gráfico de barras → ler e calcular a média
+    if (typeof EduVisual !== 'undefined' && Math.random() < 0.35) {
+      var cats = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'];
+      var valsV; do { valsV = dados(5, 2, 12); } while (_media_m88(valsV) % 1 !== 0);
+      var mediaV = _media_m88(valsV);
+      var dataV = cats.map(function (c, i) { return { label: c, value: valsV[i] }; });
+      return {
+        enun: 'O gráfico mostra o número de livros lidos em cada dia. Qual é a <strong>média</strong> diária?',
+        visual: EduVisual.barras(dataV, '#9a5e96'),
+        tipo: 'fill', resposta: String(mediaV),
+        expl: 'Média = (' + valsV.join(' + ') + ') ÷ 5 = ' + valsV.reduce(function (s, v) { return s + v; }, 0) + ' ÷ 5 = ' + mediaV + '.',
+        tema: 'T1 · Média'
+      };
+    }
     // Variante de contexto (notas de um aluno), média inteira
     if (!easy && Math.random() < 0.4) {
       var notas;

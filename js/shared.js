@@ -1651,6 +1651,8 @@ function _teoriaAccordionHTML(cards, color, tagIcons) {
       + '<div class="teoria-group-body">';
     groups[tag].forEach(function(card) {
       var answer = (card.a || '').replace(/\n/g, '<br>');
+      // card.v (opcional) = visual SVG (tabela/gráfico/figura) a mostrar na resposta
+      if (card.v) answer += card.v;
       h += '<div class="teoria-item">'
         + '<button class="teoria-q" onclick="_teoriaToggleItem(this)" style="--acc:' + color + '">'
         + '<span>' + (card.q || '') + '</span><i class="ph ph-plus teoria-q-icon"></i></button>'

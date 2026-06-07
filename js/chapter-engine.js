@@ -31,6 +31,7 @@ function _capBuildQuizHTML(exs, qidPrefix, checkFnCall) {
   exs.forEach(function(ex, i) {
     var qid = qidPrefix + i;
     html += '<div class="quiz-question" id="' + qid + '"><div class="q-number">Questão ' + (ex.num || i+1) + ' · ' + (ex.tema||'') + '</div><div class="q-text">' + (ex.enun||'') + '</div>';
+    if (ex.visual) html += ex.visual; // gráfico/tabela/figura SVG (opcional)
     if (ex.tipo === 'fill' || ex.tipo === 'fill_frac') {
       var inpType = ex.tipo === 'fill_frac' ? 'text' : 'number';
       html += '<div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap"><input class="fill-input" id="' + qid + '-in" placeholder="?" type="' + inpType + '" style="width:100px"><button class="check-btn" onclick="' + checkFnCall + '(\'' + qid + '\',\'' + ex.tipo + '\',' + JSON.stringify(String(ex.resposta)).replace(/"/g,"'") + ')">Verificar</button></div>';
