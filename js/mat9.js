@@ -1065,19 +1065,25 @@ function mat9gfSetQty(btn) {
 // Renderiza um bloco de exercícios (com ou sem espaço de resposta).
 function _mat9gfExBloco(exs, startNum) {
   var h = '';
+  var fm = (typeof formatMath === 'function') ? formatMath : function(x){ return x; };
   exs.forEach(function(ex, i) {
-    h += '<div style="margin-bottom:13px;page-break-inside:avoid">'
-      + '<div style="font-weight:600;font-size:12.5px;margin-bottom:3px">' + (startNum + i) + '. ' + ex.enun + '</div>';
-    if (ex.visual) h += '<div style="margin:4px 0 6px">' + ex.visual + '</div>'; // gráfico/tabela/figura SVG
+    h += '<div style="margin-bottom:22px;page-break-inside:avoid">'
+      + '<div style="font-weight:600;font-size:12.5px;margin-bottom:6px;line-height:1.5">' + (startNum + i) + '. ' + fm(ex.enun) + '</div>';
+    if (ex.visual) h += '<div style="margin:6px 0 10px">' + ex.visual + '</div>'; // gráfico/tabela/figura SVG
     if (ex.tipo === 'mc' && ex.opcoes) {
-      h += '<div style="font-size:12px;color:#333;padding-left:14px">';
+      h += '<div style="font-size:12px;color:#333;padding-left:14px;line-height:2.1">';
       var _ops = (typeof _normalizaOpcoes === 'function') ? _normalizaOpcoes(ex.opcoes, ex.resposta) : ex.opcoes;
-      _ops.forEach(function(o, k) { h += '(' + 'ABCD'[k] + ') ' + o + '&nbsp;&nbsp;&nbsp; '; });
+      _ops.forEach(function(o, k) { h += '<span style="display:inline-block;min-width:46%;margin-bottom:3px">(' + 'ABCD'[k] + ') ' + fm(o) + '</span>'; });
       h += '</div>';
     } else if (ex.tipo === 'vf') {
-      h += '<div style="font-size:12px;color:#333;padding-left:14px">Verdadeiro&nbsp;☐&nbsp;&nbsp;Falso&nbsp;☐</div>';
+      h += '<div style="font-size:12px;color:#333;padding-left:14px;margin-top:4px">Verdadeiro&nbsp;&#9744;&nbsp;&nbsp;&nbsp;&nbsp;Falso&nbsp;&#9744;</div>';
     } else {
-      h += '<div style="border-bottom:1px solid #bbb;height:20px;width:55%;margin-top:3px"></div>';
+      // espaço de resolução: 3 linhas para o aluno escrever
+      h += '<div style="margin-top:6px">'
+        + '<div style="border-bottom:1px solid #ccc;height:22px"></div>'
+        + '<div style="border-bottom:1px solid #ccc;height:22px"></div>'
+        + '<div style="border-bottom:1px solid #ccc;height:22px;width:70%"></div>'
+        + '</div>';
     }
     h += '</div>';
   });
@@ -1088,12 +1094,17 @@ function _mat9gfGenExs(cap, n) {
   var gen = _mat9Gerador(cap); if (!gen) return [];
   var nTemas = _mat9TemasCount[cap] || 1;
   var tipos = ['mc', 'fill', 'vf', 'fill', 'mc', 'mc'];
-  var exs = [];
+  var geradas = [];
   for (var i = 0; i < n; i++) {
     var ex = gen(String((i % nTemas) + 1), tipos[i % tipos.length], _mat9gf.dif);
-    if (ex) exs.push(ex);
+    if (ex) geradas.push(ex);
   }
-  return exs;
+  // mistura questões reais do banco (multi-passo, com contexto/figuras)
+  var banco = (typeof _mat9Banco !== 'undefined' && _mat9Banco[cap]) ? _mat9Banco[cap] : [];
+  if (banco.length && typeof _mixBancoGeradas === 'function') {
+    return _mixBancoGeradas(banco, geradas, n, Math.min(Math.ceil(n / 3), banco.length));
+  }
+  return geradas;
 }
 
 function mat9gfGerar(formato) {
@@ -1169,8 +1180,11 @@ function mat9gfGerar(formato) {
   // Secção de soluções
   var solHTML = '';
   if (_mat9gf.tipos.solucoes && solucoes.length) {
+    var fmS = (typeof formatMath === 'function') ? formatMath : function(x){ return x; };
     var lst = solucoes.map(function(s) {
-      return '<div style="font-size:11px;margin-bottom:2px"><strong>' + s.num + '.</strong> ' + s.ex.resposta + (s.ex.expl ? ' - <span style="color:#666">' + s.ex.expl + '</span>' : '') + '</div>';
+      return '<div style="font-size:11.5px;margin-bottom:7px;line-height:1.5;page-break-inside:avoid">'
+        + '<strong>' + s.num + '.</strong> <strong style="color:#1a6b4a">' + fmS(String(s.ex.resposta)) + '</strong>'
+        + (s.ex.expl ? '<br><span style="color:#555">' + fmS(s.ex.expl) + '</span>' : '') + '</div>';
     }).join('');
     solHTML = '<div style="page-break-before:always;padding-top:8px"><h2 style="font-size:16px;border-bottom:2px solid #36527a;padding-bottom:4px">Soluções</h2>' + lst + '</div>';
   }

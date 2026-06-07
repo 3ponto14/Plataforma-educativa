@@ -1206,9 +1206,11 @@ function formatMath(s) {
   // Must be: optional sign + (digits or ?) / (digits or ?)
   // Avoid matching things already inside HTML tags
   s = s.replace(/(?<![<\w\/])(-?)(\d+|\?)\/(\d+|\?)(?![>\w])/g, function(match, sign, num, den) {
-    return '<span class="mfrac" style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1;margin:0 .1em">'
-      + '<span style="border-bottom:1.5px solid currentColor;padding:0 .15em .05em;font-size:.85em;text-align:center">' + sign + num + '</span>'
-      + '<span style="padding:.05em .15em 0;font-size:.85em;text-align:center">' + den + '</span>'
+    // sinal negativo fica À ESQUERDA da fração inteira (não dentro do numerador)
+    var pre = sign ? '<span style="vertical-align:middle">&minus;</span>' : '';
+    return pre + '<span class="mfrac" style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1;margin:0 .12em">'
+      + '<span style="border-bottom:1.5px solid currentColor;padding:0 .25em .04em;font-size:.82em;text-align:center">' + num + '</span>'
+      + '<span style="padding:.04em .25em 0;font-size:.82em;text-align:center">' + den + '</span>'
       + '</span>';
   });
   // Exponents

@@ -1038,19 +1038,25 @@ function mat11gfSetQty(btn) {
 // Renderiza um bloco de exercícios (com ou sem espaço de resposta).
 function _mat11gfExBloco(exs, startNum) {
   var h = '';
+  var fm = (typeof formatMath === 'function') ? formatMath : function(x){ return x; };
   exs.forEach(function(ex, i) {
-    h += '<div style="margin-bottom:13px;page-break-inside:avoid">'
-      + '<div style="font-weight:600;font-size:12.5px;margin-bottom:3px">' + (startNum + i) + '. ' + ex.enun + '</div>';
-    if (ex.visual) h += '<div style="margin:4px 0 6px">' + ex.visual + '</div>'; // gráfico/tabela/figura SVG
+    h += '<div style="margin-bottom:22px;page-break-inside:avoid">'
+      + '<div style="font-weight:600;font-size:12.5px;margin-bottom:6px;line-height:1.5">' + (startNum + i) + '. ' + fm(ex.enun) + '</div>';
+    if (ex.visual) h += '<div style="margin:6px 0 10px">' + ex.visual + '</div>'; // gráfico/tabela/figura SVG
     if (ex.tipo === 'mc' && ex.opcoes) {
-      h += '<div style="font-size:12px;color:#333;padding-left:14px">';
+      h += '<div style="font-size:12px;color:#333;padding-left:14px;line-height:2.1">';
       var _ops = (typeof _normalizaOpcoes === 'function') ? _normalizaOpcoes(ex.opcoes, ex.resposta) : ex.opcoes;
-      _ops.forEach(function(o, k) { h += '(' + 'ABCD'[k] + ') ' + o + '&nbsp;&nbsp;&nbsp; '; });
+      _ops.forEach(function(o, k) { h += '<span style="display:inline-block;min-width:46%;margin-bottom:3px">(' + 'ABCD'[k] + ') ' + fm(o) + '</span>'; });
       h += '</div>';
     } else if (ex.tipo === 'vf') {
-      h += '<div style="font-size:12px;color:#333;padding-left:14px">Verdadeiro&nbsp;☐&nbsp;&nbsp;Falso&nbsp;☐</div>';
+      h += '<div style="font-size:12px;color:#333;padding-left:14px;margin-top:4px">Verdadeiro&nbsp;&#9744;&nbsp;&nbsp;&nbsp;&nbsp;Falso&nbsp;&#9744;</div>';
     } else {
-      h += '<div style="border-bottom:1px solid #bbb;height:20px;width:55%;margin-top:3px"></div>';
+      // espaço de resolução: 3 linhas para o aluno escrever
+      h += '<div style="margin-top:6px">'
+        + '<div style="border-bottom:1px solid #ccc;height:22px"></div>'
+        + '<div style="border-bottom:1px solid #ccc;height:22px"></div>'
+        + '<div style="border-bottom:1px solid #ccc;height:22px;width:70%"></div>'
+        + '</div>';
     }
     h += '</div>';
   });
@@ -1061,12 +1067,17 @@ function _mat11gfGenExs(cap, n) {
   var gen = _mat11Gerador(cap); if (!gen) return [];
   var nTemas = _mat11TemasCount[cap] || 1;
   var tipos = ['mc', 'fill', 'vf', 'fill', 'mc', 'mc'];
-  var exs = [];
+  var geradas = [];
   for (var i = 0; i < n; i++) {
     var ex = gen(String((i % nTemas) + 1), tipos[i % tipos.length], _mat11gf.dif);
-    if (ex) exs.push(ex);
+    if (ex) geradas.push(ex);
   }
-  return exs;
+  // mistura questões reais do banco (multi-passo, com contexto/figuras)
+  var banco = (typeof _mat11Banco !== 'undefined' && _mat11Banco[cap]) ? _mat11Banco[cap] : [];
+  if (banco.length && typeof _mixBancoGeradas === 'function') {
+    return _mixBancoGeradas(banco, geradas, n, Math.min(Math.ceil(n / 3), banco.length));
+  }
+  return geradas;
 }
 
 function mat11gfGerar(formato) {
@@ -1142,8 +1153,11 @@ function mat11gfGerar(formato) {
   // Secção de soluções
   var solHTML = '';
   if (_mat11gf.tipos.solucoes && solucoes.length) {
+    var fmS = (typeof formatMath === 'function') ? formatMath : function(x){ return x; };
     var lst = solucoes.map(function(s) {
-      return '<div style="font-size:11px;margin-bottom:2px"><strong>' + s.num + '.</strong> ' + s.ex.resposta + (s.ex.expl ? ' - <span style="color:#666">' + s.ex.expl + '</span>' : '') + '</div>';
+      return '<div style="font-size:11.5px;margin-bottom:7px;line-height:1.5;page-break-inside:avoid">'
+        + '<strong>' + s.num + '.</strong> <strong style="color:#1a6b4a">' + fmS(String(s.ex.resposta)) + '</strong>'
+        + (s.ex.expl ? '<br><span style="color:#555">' + fmS(s.ex.expl) + '</span>' : '') + '</div>';
     }).join('');
     solHTML = '<div style="page-break-before:always;padding-top:8px"><h2 style="font-size:16px;border-bottom:2px solid #36527a;padding-bottom:4px">Soluções</h2>' + lst + '</div>';
   }
@@ -1516,36 +1530,48 @@ var _mat11Banco = {
     { t: '2', tipo: 'mc', enun: 'Se cos(α) = −3/5 e α pertence ao 2.º quadrante, qual é sen(α)?', opcoes: ['4/5', '−4/5', '3/5', '−3/5'], resposta: '4/5', expl: 'sen²α = 1 − 9/25 = 16/25 → sen α = ±4/5. No 2.º quadrante o seno é positivo → 4/5.', tema: 'T2 · Fórmula Fundamental' },
     { t: '1', tipo: 'fill_frac', enun: 'Converte 5π/6 radianos para graus.', resposta: '150', expl: '5π/6 × 180/π = 5×180/6 = 150°.', tema: 'T1 · Radianos' },
     { t: '3', tipo: 'mc', enun: 'Quantas soluções tem a equação sen(x) = 1/2 no intervalo [0, 2π]?', opcoes: ['2', '1', '3', '4'], resposta: '2', expl: 'sen x = 1/2 em [0,2π]: x = π/6 e x = 5π/6 → duas soluções.', tema: 'T3 · Equações Trig.' },
-    { t: '2', tipo: 'vf', enun: 'Verdadeiro ou Falso: para qualquer ângulo α, tem-se sen(α) ≤ 1.', resposta: 'V', expl: 'O contradomínio do seno é [−1, 1], logo sen α ≤ 1 sempre.', tema: 'T2 · Razões' }
+    { t: '2', tipo: 'vf', enun: 'Verdadeiro ou Falso: para qualquer ângulo α, tem-se sen(α) ≤ 1.', resposta: 'V', expl: 'O contradomínio do seno é [−1, 1], logo sen α ≤ 1 sempre.', tema: 'T2 · Razões' },
+    { t: '2', tipo: 'fill_frac', enun: 'Sabe-se que tg(α) = 2 e que α é um ângulo agudo. Determina o valor de sen(α).', resposta: '2√5/5', expl: 'Passo 1: tg α = sen/cos = 2, logo sen = 2cos. Passo 2: na fórmula fundamental, sen²+cos²=1 → (2cos)²+cos²=1 → 5cos²=1 → cos²=1/5. Passo 3: cos=1/√5 (agudo, positivo) e sen=2/√5 = 2√5/5.', tema: 'T2 · Fórmula Fundamental' },
+    { t: '3', tipo: 'mc', enun: 'Considera a função f(x) = 2sen(x) + 1. Qual é o contradomínio de f?', opcoes: ['[−1, 3]', '[−2, 2]', '[0, 2]', '[1, 3]'], resposta: '[−1, 3]', expl: 'Passo 1: sen(x) varia em [−1, 1]. Passo 2: 2sen(x) varia em [−2, 2]. Passo 3: somando 1, f(x) varia em [−2+1, 2+1] = [−1, 3].', tema: 'T3 · Funções Trigonométricas' }
   ],
   2: [ // Geometria no Espaço
     { t: '2', tipo: 'mc', enun: 'Os vetores u(1, 2, −1) e v(3, −1, 1) são perpendiculares?', opcoes: ['Sim, porque u·v = 0', 'Não', 'Só se forem unitários', 'São colineares'], resposta: 'Sim, porque u·v = 0', expl: 'u·v = 1×3 + 2×(−1) + (−1)×1 = 3 − 2 − 1 = 0 → perpendiculares.', tema: 'T2 · Produto Escalar' },
     { t: '1', tipo: 'fill', enun: 'Calcula a distância entre A(1, 0, 2) e B(1, 4, 5).', resposta: '5', expl: 'd = √(0² + 4² + 3²) = √(0+16+9) = √25 = 5.', tema: 'T1 · Distâncias' },
     { t: '3', tipo: 'mc', enun: 'Um vetor normal ao plano de equação 3x − 2y + z − 7 = 0 é:', opcoes: ['(3, −2, 1)', '(3, 2, 1)', '(−7, 0, 0)', '(1, 1, 1)'], resposta: '(3, −2, 1)', expl: 'Em ax+by+cz+d=0, o vetor normal é (a, b, c) = (3, −2, 1).', tema: 'T3 · Planos' },
-    { t: '1', tipo: 'fill', enun: 'Qual é o raio da superfície esférica x² + y² + z² = 49?', resposta: '7', expl: 'r² = 49 → r = 7. (Centro na origem.)', tema: 'T1 · Esfera' }
+    { t: '1', tipo: 'fill', enun: 'Qual é o raio da superfície esférica x² + y² + z² = 49?', resposta: '7', expl: 'r² = 49 → r = 7. (Centro na origem.)', tema: 'T1 · Esfera' },
+    { t: '2', tipo: 'mc', enun: 'Os pontos A(1, 2, 0), B(3, 2, 0) e C(1, 2, 4) definem um triângulo. Qual é a sua área?', opcoes: ['4', '8', '6', '2√5'], resposta: '4', expl: 'Passo 1: AB = (2,0,0), ‖AB‖=2. Passo 2: AC = (0,0,4), ‖AC‖=4. Passo 3: AB·AC = 0 → são perpendiculares (triângulo retângulo em A). Passo 4: área = (2×4)/2 = 4.', tema: 'T2 · Produto Escalar' },
+    { t: '3', tipo: 'mc', enun: 'A interseção da esfera x²+y²+z²=25 com o plano z=3 é uma circunferência. Qual é o seu raio?', opcoes: ['4', '3', '5', '√34'], resposta: '4', expl: 'Passo 1: substituindo z=3: x²+y²+9=25 → x²+y²=16. Passo 2: é uma circunferência de raio √16 = 4 (no plano z=3).', tema: 'T1 · Esfera' }
   ],
   3: [ // Sucessões
     { t: '2', tipo: 'mc', enun: 'Numa progressão aritmética, u₃ = 7 e u₇ = 19. Qual é a razão?', opcoes: ['3', '4', '2', '12'], resposta: '3', expl: 'De u₃ a u₇ vão 4 razões: 19 − 7 = 12 = 4r → r = 3.', tema: 'T2 · PA' },
     { t: '2', tipo: 'fill', enun: 'A soma dos 20 primeiros termos da PA com u₁ = 2 e razão 3 é:', resposta: '610', expl: 'u₂₀ = 2 + 19×3 = 59. S₂₀ = (2 + 59)×20/2 = 61×10 = 610.', tema: 'T2 · PA' },
     { t: '3', tipo: 'fill', enun: 'Numa progressão geométrica de razão 2, o 1.º termo é 3. Qual é o 5.º termo?', resposta: '48', expl: 'u₅ = 3 × 2⁴ = 3 × 16 = 48.', tema: 'T3 · PG' },
-    { t: '1', tipo: 'mc', enun: 'A sucessão uₙ = (n − 5) é:', opcoes: ['crescente', 'decrescente', 'constante', 'não monótona'], resposta: 'crescente', expl: 'uₙ₊₁ − uₙ = (n+1−5) − (n−5) = 1 > 0 → crescente.', tema: 'T1 · Monotonia' }
+    { t: '1', tipo: 'mc', enun: 'A sucessão uₙ = (n − 5) é:', opcoes: ['crescente', 'decrescente', 'constante', 'não monótona'], resposta: 'crescente', expl: 'uₙ₊₁ − uₙ = (n+1−5) − (n−5) = 1 > 0 → crescente.', tema: 'T1 · Monotonia' },
+    { t: '2', tipo: 'fill', enun: 'Numa PA, a soma do 2.º com o 5.º termo é 17 e u₁ = 1. Determina a razão r.', resposta: '3', expl: 'Passo 1: u₂ = 1+r e u₅ = 1+4r. Passo 2: soma = (1+r)+(1+4r) = 2+5r = 17. Passo 3: 5r = 15 → r = 3.', tema: 'T2 · PA' },
+    { t: '3', tipo: 'mc', enun: 'Numa PG de termos positivos, u₂ = 6 e u₄ = 54. Qual é a razão r?', opcoes: ['3', '9', '6', '√3'], resposta: '3', expl: 'Passo 1: u₄/u₂ = r² = 54/6 = 9. Passo 2: r = √9 = 3 (termos positivos → r>0).', tema: 'T3 · PG' }
   ],
   4: [ // Limites e Continuidade
     { t: '2', tipo: 'mc', enun: 'O valor de lim(x→+∞) (5x² − 3x + 1)/(2x² + 7) é:', opcoes: ['5/2', '0', '+∞', '5/7'], resposta: '5/2', expl: 'Mesmo grau (x²): quociente dos coeficientes principais = 5/2.', tema: 'T2 · Limite de Função' },
     { t: '3', tipo: 'fill', enun: 'A função f tem domínio ℝ, é contínua, f(1) = −2 e f(3) = 4. Pelo Teorema de Bolzano, quantos zeros TEM DE existir em ]1, 3[ (no mínimo)?', resposta: '1', expl: 'f(1)·f(3) = (−2)(4) < 0 → existe pelo menos UM zero em ]1, 3[.', tema: 'T3 · Bolzano' },
     { t: '2', tipo: 'fill', enun: 'Calcula lim(x→3) (x² − 9)/(x − 3).', resposta: '6', expl: '(x²−9)/(x−3) = (x−3)(x+3)/(x−3) = x+3 → para x=3 dá 6.', tema: 'T2 · Indeterminação' },
-    { t: '2', tipo: 'mc', enun: 'A reta y = 4 é assíntota horizontal de f(x) = (4x + 1)/(x − 2) porque:', opcoes: ['lim(x→±∞) f(x) = 4', 'f(4) = 0', 'f(2) não existe', 'o gráfico passa em (0, 4)'], resposta: 'lim(x→±∞) f(x) = 4', expl: 'No infinito, o quociente tende para 4/1 = 4 → assíntota horizontal y = 4.', tema: 'T2 · Assíntotas' }
+    { t: '2', tipo: 'mc', enun: 'A reta y = 4 é assíntota horizontal de f(x) = (4x + 1)/(x − 2) porque:', opcoes: ['lim(x→±∞) f(x) = 4', 'f(4) = 0', 'f(2) não existe', 'o gráfico passa em (0, 4)'], resposta: 'lim(x→±∞) f(x) = 4', expl: 'No infinito, o quociente tende para 4/1 = 4 → assíntota horizontal y = 4.', tema: 'T2 · Assíntotas' },
+    { t: '2', tipo: 'fill', enun: 'Calcula lim(x→2) (x² + x − 6)/(x − 2).', resposta: '5', expl: 'Passo 1: substituir x=2 dá 0/0 (indeterminação). Passo 2: fatorizar o numerador: x²+x−6 = (x−2)(x+3). Passo 3: simplificar (x−2)(x+3)/(x−2) = x+3. Passo 4: para x=2 → 2+3 = 5.', tema: 'T2 · Indeterminação' },
+    { t: '1', tipo: 'mc', enun: 'A função f(x) = (3x − 6)/(x² − 4) tem uma assíntota vertical em:', opcoes: ['x = −2', 'x = 2', 'x = 0', 'não tem'], resposta: 'x = −2', expl: 'Passo 1: x²−4 = (x−2)(x+2) anula-se em x=2 e x=−2. Passo 2: simplificar f = 3(x−2)/[(x−2)(x+2)] = 3/(x+2) (x≠2). Passo 3: em x=2 há um buraco; a assíntota vertical é em x=−2.', tema: 'T2 · Assíntotas' }
   ],
   5: [ // Derivadas
     { t: '1', tipo: 'fill', enun: 'Sendo f(x) = x³ − 3x, calcula f\'(2).', resposta: '9', expl: 'f\'(x) = 3x² − 3 → f\'(2) = 3×4 − 3 = 9.', tema: 'T1 · Derivar' },
     { t: '3', tipo: 'mc', enun: 'A função f(x) = x² − 4x tem, em x = 2:', opcoes: ['um mínimo', 'um máximo', 'um ponto de inflexão', 'uma assíntota'], resposta: 'um mínimo', expl: 'f\'(x) = 2x − 4 = 0 → x = 2. f\' passa de − para + → mínimo.', tema: 'T3 · Extremos' },
     { t: '2', tipo: 'fill', enun: 'Calcula a taxa de variação média de f(x) = x² no intervalo [2, 5].', resposta: '7', expl: 'tvm = (25 − 4)/(5 − 2) = 21/3 = 7.', tema: 'T2 · Taxa de Variação' },
-    { t: '3', tipo: 'mc', enun: 'Se f\'(x) > 0 para todo o x ∈ ]a, b[, então f é, nesse intervalo:', opcoes: ['estritamente crescente', 'estritamente decrescente', 'constante', 'descontínua'], resposta: 'estritamente crescente', expl: 'Derivada positiva ⟺ função estritamente crescente.', tema: 'T3 · Monotonia' }
+    { t: '3', tipo: 'mc', enun: 'Se f\'(x) > 0 para todo o x ∈ ]a, b[, então f é, nesse intervalo:', opcoes: ['estritamente crescente', 'estritamente decrescente', 'constante', 'descontínua'], resposta: 'estritamente crescente', expl: 'Derivada positiva ⟺ função estritamente crescente.', tema: 'T3 · Monotonia' },
+    { t: '1', tipo: 'fill', enun: 'Considera f(x) = x³ − 6x² + 9x. A reta tangente ao gráfico no ponto de abcissa x = 1 tem que declive?', resposta: '0', expl: 'Passo 1: o declive da tangente é f\'(1). Passo 2: f\'(x) = 3x² − 12x + 9. Passo 3: f\'(1) = 3 − 12 + 9 = 0. (A tangente é horizontal.)', tema: 'T1 · Tangente' },
+    { t: '3', tipo: 'mc', enun: 'A função f(x) = x³ − 3x² tem extremos em:', opcoes: ['x = 0 (máx) e x = 2 (mín)', 'x = 0 (mín) e x = 2 (máx)', 'apenas x = 2', 'não tem extremos'], resposta: 'x = 0 (máx) e x = 2 (mín)', expl: 'Passo 1: f\'(x) = 3x² − 6x = 3x(x−2), zeros em x=0 e x=2. Passo 2: f\' é positiva antes de 0, negativa entre 0 e 2, positiva depois. Passo 3: em x=0 passa de + para − (máximo); em x=2 de − para + (mínimo).', tema: 'T3 · Extremos' }
   ],
   6: [ // Probabilidades e Combinatória
     { t: '1', tipo: 'fill', enun: 'De quantas maneiras se podem sentar 4 pessoas em 4 cadeiras em fila?', resposta: '24', expl: 'Permutações de 4: 4! = 4×3×2×1 = 24.', tema: 'T1 · Combinatória' },
     { t: '1', tipo: 'fill', enun: 'Quantas comissões de 3 pessoas se podem formar a partir de 6 pessoas?', resposta: '20', expl: '⁶C₃ = 6!/(3!3!) = (6×5×4)/(3×2×1) = 20. (A ordem não conta.)', tema: 'T1 · Combinatória' },
     { t: '2', tipo: 'fill_frac', enun: 'P(A∩B) = 0,3 e P(B) = 0,6. Calcula P(A|B) (fração irredutível).', resposta: '1/2', expl: 'P(A|B) = P(A∩B)/P(B) = 0,3/0,6 = 1/2.', tema: 'T2 · Prob. Condicionada' },
-    { t: '3', tipo: 'fill_frac', enun: 'Lança-se um dado. Qual a probabilidade de sair um número primo? (2, 3 e 5 são primos)', resposta: '1/2', expl: 'Primos no dado: 2, 3, 5 → 3 casos. P = 3/6 = 1/2.', tema: 'T3 · Laplace' }
+    { t: '3', tipo: 'fill_frac', enun: 'Lança-se um dado. Qual a probabilidade de sair um número primo? (2, 3 e 5 são primos)', resposta: '1/2', expl: 'Primos no dado: 2, 3, 5 → 3 casos. P = 3/6 = 1/2.', tema: 'T3 · Laplace' },
+    { t: '2', tipo: 'fill_frac', enun: 'Numa turma, 60% dos alunos pratica desporto e, destes, metade joga futebol. Escolhido um aluno ao acaso, qual a probabilidade de praticar desporto E jogar futebol? (fração irredutível)', resposta: '3/10', expl: 'Passo 1: P(desporto) = 0,6. Passo 2: P(futebol | desporto) = 0,5. Passo 3: P(desporto ∩ futebol) = 0,6 × 0,5 = 0,3 = 3/10.', tema: 'T2 · Prob. Condicionada' },
+    { t: '1', tipo: 'fill', enun: 'Quantos números de 3 algarismos DIFERENTES se podem formar com os algarismos 1, 2, 3, 4 e 5?', resposta: '60', expl: 'Passo 1: ordem conta e sem repetir → arranjos de 5, 3 a 3. Passo 2: ⁵A₃ = 5×4×3 = 60.', tema: 'T1 · Combinatória' }
   ]
 };
