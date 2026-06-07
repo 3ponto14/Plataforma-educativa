@@ -1444,7 +1444,8 @@ function buildEx_m5c4(tema, tipo, dif) {
   if (forma === 0) {
     var lado = rnd_m81(3, 12);
     return {
-      enun: 'Qual é o perímetro de um quadrado de lado ' + lado + ' cm?',
+      enun: 'Qual é o perímetro deste quadrado de lado ' + lado + ' cm?',
+      visual: (typeof EduVisual !== 'undefined') ? EduVisual.retangulo(lado, lado, { compLabel: lado + ' cm', largLabel: lado + ' cm', color: '#8a9e4a' }) : '',
       tipo: 'fill', resposta: String(4 * lado),
       expl: 'Perímetro do quadrado = 4 × lado = 4 × ' + lado + ' = ' + (4 * lado) + ' cm.',
       tema: 'T3 · Perímetro'
@@ -1453,7 +1454,8 @@ function buildEx_m5c4(tema, tipo, dif) {
   if (forma === 1) {
     var comp = rnd_m81(4, 12), larg = rnd_m81(2, comp - 1);
     return {
-      enun: 'Qual é o perímetro de um retângulo de ' + comp + ' cm por ' + larg + ' cm?',
+      enun: 'Qual é o perímetro deste retângulo de ' + comp + ' cm por ' + larg + ' cm?',
+      visual: (typeof EduVisual !== 'undefined') ? EduVisual.retangulo(comp, larg, { compLabel: comp + ' cm', largLabel: larg + ' cm', color: '#8a9e4a' }) : '',
       tipo: 'fill', resposta: String(2 * (comp + larg)),
       expl: 'Perímetro = 2 × (comprimento + largura) = 2 × (' + comp + ' + ' + larg + ') = ' + (2 * (comp + larg)) + ' cm.',
       tema: 'T3 · Perímetro'

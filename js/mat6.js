@@ -1382,11 +1382,13 @@ function buildEx_m6c4(tema, tipo, dif) {
   var PI = 3.14;
   if (tema === '1') {
     var r = rnd_m81(1, 10);
+    var visCirc = (typeof EduVisual !== 'undefined') ? EduVisual.circulo({ rLabel: 'r = ' + r + ' cm', color: '#c44a6a' }) : '';
     var pedePerim = Math.random() < 0.5;
     if (pedePerim) {
       var p = Math.round(2 * PI * r * 100) / 100;
       return {
-        enun: 'Qual é o perímetro de um círculo de raio ' + r + ' cm? (usa π = 3,14)',
+        enun: 'Qual é o perímetro deste círculo de raio ' + r + ' cm? (usa π = 3,14)',
+        visual: visCirc,
         tipo: 'fill', resposta: (p % 1 === 0 ? String(p) : p.toString().replace('.', ',')),
         expl: 'P = 2 × π × r = 2 × 3,14 × ' + r + ' = ' + (p % 1 === 0 ? p : p.toString().replace('.', ',')) + ' cm.',
         tema: 'T1 · Círculo'
@@ -1394,7 +1396,8 @@ function buildEx_m6c4(tema, tipo, dif) {
     }
     var area = Math.round(PI * r * r * 100) / 100;
     return {
-      enun: 'Qual é a área de um círculo de raio ' + r + ' cm? (usa π = 3,14)',
+      enun: 'Qual é a área deste círculo de raio ' + r + ' cm? (usa π = 3,14)',
+      visual: visCirc,
       tipo: 'fill', resposta: (area % 1 === 0 ? String(area) : area.toString().replace('.', ',')),
       expl: 'A = π × r² = 3,14 × ' + (r * r) + ' = ' + (area % 1 === 0 ? area : area.toString().replace('.', ',')) + ' cm².',
       tema: 'T1 · Círculo'
@@ -1404,7 +1407,8 @@ function buildEx_m6c4(tema, tipo, dif) {
     var forma = rnd_m81(0, 2);
     if (forma === 0) {
       var c = rnd_m81(3, 15), l = rnd_m81(2, c);
-      return { enun: 'Área de um retângulo de ' + c + ' cm por ' + l + ' cm?', tipo: 'fill', resposta: String(c * l), expl: 'A = comprimento × largura = ' + c + ' × ' + l + ' = ' + (c * l) + ' cm².', tema: 'T2 · Áreas' };
+      var visRet = (typeof EduVisual !== 'undefined') ? EduVisual.retangulo(c, l, { compLabel: c + ' cm', largLabel: l + ' cm', color: '#c44a6a' }) : '';
+      return { enun: 'Qual é a área deste retângulo de ' + c + ' cm por ' + l + ' cm?', visual: visRet, tipo: 'fill', resposta: String(c * l), expl: 'A = comprimento × largura = ' + c + ' × ' + l + ' = ' + (c * l) + ' cm².', tema: 'T2 · Áreas' };
     }
     if (forma === 1) {
       var base = rnd_m81(2, 12) * 2, h = rnd_m81(3, 10);

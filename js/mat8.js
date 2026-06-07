@@ -1896,18 +1896,20 @@ function buildEx_m84(tema, tipo, dif) {
   if (tema === '1') {
     var t = _TERNOS_m84[rnd_m81(0, easy ? 3 : _TERNOS_m84.length - 1)];
     var a = t[0], b = t[1], c = t[2]; // c = hipotenusa
+    var visT1 = (typeof EduVisual !== 'undefined') ? EduVisual.triangulo({ right: true, aLabel: '?', bLabel: b + '', cLabel: a + '', color: '#c4733a' }) : '';
     if (tipo === 'mc') {
       var opts = shuffle_m81([c, c + 1, c - 1, a + b].filter(function (v, i, ar) { return ar.indexOf(v) === i; })).slice(0, 4).map(String);
       if (opts.indexOf(String(c)) === -1) opts[0] = String(c);
       return {
         enun: 'Um triângulo retângulo tem catetos ' + a + ' e ' + b + '. Qual é a hipotenusa?',
+        visual: visT1,
         tipo: 'mc', opcoes: opts, resposta: String(c),
         expl: 'Pitágoras: h² = ' + a + '² + ' + b + '² = ' + (a*a) + ' + ' + (b*b) + ' = ' + (a*a+b*b) + '. h = √' + (a*a+b*b) + ' = ' + c + '.',
         tema: 'T1 · Hipotenusa'
       };
     }
     return {
-      enun: 'Triângulo retângulo de catetos ' + a + ' e ' + b + '. Calcula a hipotenusa.', tipo: 'fill',
+      enun: 'Triângulo retângulo de catetos ' + a + ' e ' + b + '. Calcula a hipotenusa.', visual: visT1, tipo: 'fill',
       resposta: String(c), expl: 'h = √(' + a + '² + ' + b + '²) = √' + (a*a+b*b) + ' = ' + c + '.',
       tema: 'T1 · Hipotenusa'
     };
