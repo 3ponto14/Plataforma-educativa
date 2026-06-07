@@ -127,6 +127,10 @@ function _mat7Init() {
   if (typeof _addStatsTeoriaVisuais === 'function' && typeof BANCO8 !== 'undefined' && BANCO8.flashcards) {
     _addStatsTeoriaVisuais(BANCO8.flashcards, '#61afef');
   }
+  // visuais de teoria no cap 6 (Funções) — gráficos de reta e parábola
+  if (typeof _addFuncTeoriaVisuais === 'function' && typeof BANCO6 !== 'undefined' && BANCO6.flashcards) {
+    _addFuncTeoriaVisuais(BANCO6.flashcards, '#56b6c2');
+  }
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _mat7Init);
 else _mat7Init();
