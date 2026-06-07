@@ -423,12 +423,15 @@ function mat6GerarExercicios() {
 
   var QTD = 8;
   var tipos = ['mc', 'fill', 'mc', 'vf', 'fill', 'mc', 'fill', 'mc'];
-  var exs = [];
+  var geradas = [];
   for (var i = 0; i < QTD; i++) {
     var tema = temas[i % temas.length];
     var ex = gen(tema, tipos[i % tipos.length], _mat6Prat.nivel);
-    if (ex) exs.push(Object.assign({}, ex, { num: i + 1 }));
+    if (ex) geradas.push(ex);
   }
+  var banco = (typeof _mat6Banco !== "undefined" && _mat6Banco[cap]) ? _mat6Banco[cap].filter(function (q) { return temas.indexOf(q.t) !== -1; }) : [];
+  var exs = (typeof _mixBancoGeradas === "function") ? _mixBancoGeradas(banco, geradas, QTD, 2)
+    : geradas.map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
   _mat6Prat.exs = exs;
   _mat6Prat.answered = {};
   _mat6Prat.score = { correct: 0, total: 0 };
@@ -1560,3 +1563,42 @@ function buildEx_m6c7(tema, tipo, dif) {
     tema: 'T3 · Moda'
   };
 }
+
+/* ════════════════════════════════════════════════════════════════
+   BANCO DE QUESTÕES (contexto/problema) — Matemática · 6.º ano
+   ════════════════════════════════════════════════════════════════ */
+var _mat6Banco = {
+  1: [ // Números Primos e Divisibilidade
+    { t: '1', tipo: 'mc', enun: 'Qual é a decomposição de 45 em fatores primos?', opcoes: ['3 × 3 × 5', '5 × 9', '3 × 15', '2 × 3 × 5'], resposta: '3 × 3 × 5', expl: '45 = 9 × 5 = 3 × 3 × 5 = 3² × 5.', tema: 'T1 · Primos' },
+    { t: '3', tipo: 'fill', enun: 'A Ana tem 12 rosas e 18 cravos. Quer fazer ramos iguais usando todas as flores. Qual é o maior número de ramos que pode fazer? (m.d.c.)', resposta: '6', expl: 'm.d.c.(12, 18) = 6 → 6 ramos iguais.', tema: 'T3 · mmc/mdc' },
+    { t: '3', tipo: 'fill', enun: 'Dois faróis piscam: um de 4 em 4 segundos, outro de 6 em 6. De quantos em quantos segundos piscam juntos? (m.m.c.)', resposta: '12', expl: 'm.m.c.(4, 6) = 12 segundos.', tema: 'T3 · mmc/mdc' }
+  ],
+  2: [ // Frações e Potências
+    { t: '1', tipo: 'fill_frac', enun: 'Calcula 2/3 × 3/4 (fração irredutível).', resposta: '1/2', expl: '(2×3)/(3×4) = 6/12 = 1/2.', tema: 'T1 · Operações' },
+    { t: '3', tipo: 'fill', enun: 'Numa escola, 3/5 dos 200 alunos almoçam na cantina. Quantos alunos almoçam na cantina?', resposta: '120', expl: '3/5 de 200 = (3×200)/5 = 120 alunos.', tema: 'T3 · Fração de Quantidade' },
+    { t: '2', tipo: 'fill_frac', enun: 'Calcula (2/3)² (fração irredutível).', resposta: '4/9', expl: '(2/3)² = 2²/3² = 4/9.', tema: 'T2 · Potências' }
+  ],
+  3: [ // Números Racionais (negativos)
+    { t: '1', tipo: 'mc', enun: 'A temperatura era −3 °C e desceu 5 °C. Qual é a nova temperatura?', opcoes: ['−8 °C', '2 °C', '−2 °C', '8 °C'], resposta: '−8 °C', expl: '−3 − 5 = −8 °C.', tema: 'T2 · Adição' },
+    { t: '1', tipo: 'mc', enun: 'Qual é o maior número: −7 ou −2?', opcoes: ['−2', '−7', 'são iguais', '−7 + 2'], resposta: '−2', expl: 'Na reta numérica, −2 está mais à direita → é maior.', tema: 'T1 · Comparar' },
+    { t: '3', tipo: 'fill', enun: 'Um mergulhador está a −12 m e sobe 7 m. A que profundidade fica? (escreve só o número, ex: -5)', resposta: '-5', expl: '−12 + 7 = −5 → fica a −5 m (5 m de profundidade).', tema: 'T3 · Subtração' }
+  ],
+  4: [ // Perímetros e Áreas
+    { t: '2', tipo: 'fill', enun: 'Uma sala retangular tem 6 m por 5 m. Quantos m² de tijoleira são precisos para o chão (área)?', resposta: '30', expl: 'Área = 6 × 5 = 30 m².', tema: 'T2 · Áreas' },
+    { t: '1', tipo: 'fill', enun: 'Uma roda de bicicleta tem raio 30 cm. Qual é o perímetro (usa π = 3,14)? (em cm)', resposta: '188,4', expl: 'P = 2 × 3,14 × 30 = 188,4 cm.', tema: 'T1 · Círculo' },
+    { t: '2', tipo: 'fill', enun: 'Um triângulo tem base 10 cm e altura 6 cm. Qual é a área (em cm²)?', resposta: '30', expl: 'A = (10 × 6)/2 = 30 cm².', tema: 'T2 · Áreas' }
+  ],
+  5: [ // Volumes
+    { t: '1', tipo: 'fill', enun: 'Um aquário tem a forma de uma caixa de 40 cm × 20 cm × 25 cm. Qual é o volume (em cm³)?', resposta: '20000', expl: 'V = 40 × 20 × 25 = 20000 cm³.', tema: 'T1 · Volume' },
+    { t: '2', tipo: 'fill', enun: 'Quantos litros cabem num recipiente de 3000 cm³? (1000 cm³ = 1 L)', resposta: '3', expl: '3000 cm³ = 3000 ÷ 1000 = 3 litros.', tema: 'T2 · Capacidade' }
+  ],
+  6: [ // Proporcionalidade Direta
+    { t: '2', tipo: 'fill', enun: 'Se 3 cadernos custam 6 €, quanto custam 7 cadernos? (em €)', resposta: '14', expl: 'Cada caderno custa 6÷3 = 2 €. 7 × 2 = 14 €.', tema: 'T2 · Regra de Três' },
+    { t: '3', tipo: 'fill', enun: 'Um comboio percorre 240 km em 3 horas. Qual é a velocidade média (em km/h)?', resposta: '80', expl: 'v = 240 ÷ 3 = 80 km/h.', tema: 'T3 · Velocidade' },
+    { t: '1', tipo: 'fill', enun: 'Numa receita, 4 ovos servem para 8 pessoas. Qual é a constante (ovos por pessoa, em fração ou decimal)?', resposta: '0,5', expl: 'k = 4 ÷ 8 = 0,5 ovos por pessoa.', tema: 'T1 · Constante' }
+  ],
+  7: [ // Organização de Dados
+    { t: '1', tipo: 'fill', enun: 'As alturas (cm) de 5 plantas são 10, 14, 12, 16, 18. Qual é a média (em cm)?', resposta: '14', expl: '(10+14+12+16+18)/5 = 70/5 = 14.', tema: 'T1 · Média' },
+    { t: '2', tipo: 'fill', enun: 'Num inquérito a 50 pessoas, 30 preferem café. Qual é a frequência relativa (em %)?', resposta: '60', expl: '30/50 × 100 = 60%.', tema: 'T2 · Frequência' }
+  ]
+};

@@ -494,12 +494,15 @@ function mat8GerarExercicios() {
 
   var QTD = 8;
   var tipos = ['mc', 'fill', 'mc', 'vf', 'fill', 'mc', 'fill', 'mc'];
-  var exs = [];
+  var geradas = [];
   for (var i = 0; i < QTD; i++) {
     var tema = temas[i % temas.length];
     var ex = gen(tema, tipos[i % tipos.length], _mat8Prat.nivel);
-    if (ex) exs.push(Object.assign({}, ex, { num: i + 1 }));
+    if (ex) geradas.push(ex);
   }
+  var banco = (typeof _mat8Banco !== "undefined" && _mat8Banco[cap]) ? _mat8Banco[cap].filter(function (q) { return temas.indexOf(q.t) !== -1; }) : [];
+  var exs = (typeof _mixBancoGeradas === "function") ? _mixBancoGeradas(banco, geradas, QTD, 2)
+    : geradas.map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
   _mat8Prat.exs = exs;
   _mat8Prat.answered = {};
   _mat8Prat.score = { correct: 0, total: 0 };
@@ -2724,3 +2727,45 @@ function buildEx_m82(tema, tipo, dif) {
   // fallback
   return { enun: 'Simétrico de v(2, −3)?', tipo: 'mc', opcoes: ['(−2, 3)', '(2, 3)', '(−2, −3)', '(3, 2)'], resposta: '(−2, 3)', expl: 'Troca os sinais.', tema: 'Vetores' };
 }
+
+/* ════════════════════════════════════════════════════════════════
+   BANCO DE QUESTÕES (contexto/problema) — Matemática · 8.º ano
+   ════════════════════════════════════════════════════════════════ */
+var _mat8Banco = {
+  1: [ // Números (racionais, potências, notação científica)
+    { t: '5', tipo: 'fill', enun: 'Um telemóvel custa 240 € e tem 15% de desconto. Quanto se paga (em €)?', resposta: '204', expl: '240 × (1 − 0,15) = 240 × 0,85 = 204 €.', tema: 'T5 · Expressões' },
+    { t: '10', tipo: 'fill_frac', enun: 'A distância da Terra ao Sol é cerca de 150 000 000 km. Escreve em notação científica.', resposta: '1,5×10⁸', expl: '150 000 000 = 1,5 × 10⁸.', tema: 'T10 · Notação Científica' },
+    { t: '11', tipo: 'fill_frac', enun: 'Calcula (3 × 10⁴) × (2 × 10³) em notação científica.', resposta: '6×10⁷', expl: '(3×2) × 10⁴⁺³ = 6 × 10⁷.', tema: 'T11 · Operações N.C.' },
+    { t: '9', tipo: 'fill', enun: 'Um quadrado tem área 64 cm². Qual é o comprimento do lado (em cm)?', resposta: '8', expl: 'lado = √64 = 8 cm.', tema: 'T9 · Raízes' }
+  ],
+  2: [ // Vetores e Isometrias
+    { t: '1', tipo: 'fill_frac', enun: 'Um drone está em (2, −1) e desloca-se segundo o vetor (3, 4). Qual é a nova posição? (forma (x, y))', resposta: '(5,3)', expl: '(2+3, −1+4) = (5, 3).', tema: 'T1 · Translação' },
+    { t: '3', tipo: 'mc', enun: 'A imagem de uma figura por uma isometria é sempre:', opcoes: ['geometricamente igual (congruente)', 'maior', 'menor', 'de forma diferente'], resposta: 'geometricamente igual (congruente)', expl: 'As isometrias preservam distâncias e ângulos → figuras congruentes.', tema: 'T3 · Isometrias' }
+  ],
+  3: [ // Polinómios e Equações
+    { t: '5', tipo: 'fill', enun: 'O triplo de um número, mais 7, é igual a 22. Qual é o número?', resposta: '5', expl: '3x + 7 = 22 → 3x = 15 → x = 5.', tema: 'T5 · Equações' },
+    { t: '1', tipo: 'fill', enun: 'Simplifica 3x² × 2x³ (escreve no formato axⁿ, ex: 6x5).', resposta: '6x5', expl: 'Coeficientes 3×2=6; expoentes 2+3=5 → 6x⁵.', tema: 'T1 · Monómios' },
+    { t: '5', tipo: 'fill', enun: 'A Rita tem 5 € e poupa 3 € por semana. Ao fim de quantas semanas terá 26 €?', resposta: '7', expl: '3x + 5 = 26 → 3x = 21 → x = 7 semanas.', tema: 'T5 · Equações' }
+  ],
+  4: [ // Teorema de Pitágoras
+    { t: '4', tipo: 'fill', enun: 'Uma escada de 10 m está encostada a uma parede, com a base a 6 m. A que altura chega? (em m)', resposta: '8', expl: 'altura = √(10² − 6²) = √(100 − 36) = √64 = 8 m.', tema: 'T4 · Aplicações' },
+    { t: '1', tipo: 'fill', enun: 'Um triângulo retângulo tem catetos 9 e 12. Qual é a hipotenusa?', resposta: '15', expl: 'h = √(9² + 12²) = √(81 + 144) = √225 = 15.', tema: 'T1 · Hipotenusa' },
+    { t: '4', tipo: 'fill', enun: 'Um ecrã de TV tem 16 cm de largura e 12 cm de altura. Qual é a diagonal (em cm)?', resposta: '20', expl: 'd = √(16² + 12²) = √(256 + 144) = √400 = 20 cm.', tema: 'T4 · Aplicações' }
+  ],
+  5: [ // Equações Literais e Funções
+    { t: '2', tipo: 'fill', enun: 'Um táxi cobra 3 € de partida e 1 € por km. Quanto custa uma viagem de 8 km (em €)?', resposta: '11', expl: 'C(x) = x + 3 → C(8) = 8 + 3 = 11 €.', tema: 'T2 · Imagem' },
+    { t: '3', tipo: 'fill', enun: 'Na função f(x) = 2x − 1, qual é o declive?', resposta: '2', expl: 'Na forma f(x) = ax + b, o declive é a = 2.', tema: 'T3 · Função Afim' }
+  ],
+  6: [ // Sistemas de Equações
+    { t: '2', tipo: 'fill', enun: 'A soma de dois números é 12 e a diferença é 4. Qual é o número maior?', resposta: '8', expl: 'Sistema {x+y=12; x−y=4}. Somando: 2x=16 → x=8 (maior), y=4.', tema: 'T2 · Sistema (x)' },
+    { t: '3', tipo: 'fill', enun: '2 bolas e 1 raquete custam 13 €. 1 bola e 1 raquete custam 10 €. Quanto custa uma bola (em €)?', resposta: '3', expl: 'Subtraindo as equações: 1 bola = 13 − 10 = 3 €.', tema: 'T3 · Sistema (y)' }
+  ],
+  7: [ // Figuras no Espaço e Volumes
+    { t: '1', tipo: 'fill', enun: 'Um depósito tem a forma de uma caixa de 5 m × 3 m × 2 m. Qual é o volume (em m³)?', resposta: '30', expl: 'V = 5 × 3 × 2 = 30 m³.', tema: 'T1 · Volume Prisma' },
+    { t: '1', tipo: 'fill', enun: 'Um prisma tem base de área 12 cm² e altura 5 cm. Qual é o volume (em cm³)?', resposta: '60', expl: 'V = área da base × altura = 12 × 5 = 60 cm³.', tema: 'T1 · Volume Prisma' }
+  ],
+  8: [ // Dados e Probabilidades
+    { t: '1', tipo: 'fill', enun: 'As notas de um teste foram 10, 12, 14, 16, 18. Qual é a média (em valores)?', resposta: '14', expl: '(10+12+14+16+18)/5 = 70/5 = 14.', tema: 'T1 · Média' },
+    { t: '5', tipo: 'fill_frac', enun: 'Num saco há 4 bolas verdes e 6 vermelhas. Qual a probabilidade de tirar uma verde? (fração irredutível)', resposta: '2/5', expl: 'P = 4/(4+6) = 4/10 = 2/5.', tema: 'T5 · Probabilidade' }
+  ]
+};

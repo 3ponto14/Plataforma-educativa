@@ -422,12 +422,15 @@ function mat5GerarExercicios() {
 
   var QTD = 8;
   var tipos = ['mc', 'fill', 'mc', 'vf', 'fill', 'mc', 'fill', 'mc'];
-  var exs = [];
+  var geradas = [];
   for (var i = 0; i < QTD; i++) {
     var tema = temas[i % temas.length];
     var ex = gen(tema, tipos[i % tipos.length], _mat5Prat.nivel);
-    if (ex) exs.push(Object.assign({}, ex, { num: i + 1 }));
+    if (ex) geradas.push(ex);
   }
+  var banco = (typeof _mat5Banco !== "undefined" && _mat5Banco[cap]) ? _mat5Banco[cap].filter(function (q) { return temas.indexOf(q.t) !== -1; }) : [];
+  var exs = (typeof _mixBancoGeradas === "function") ? _mixBancoGeradas(banco, geradas, QTD, 2)
+    : geradas.map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
   _mat5Prat.exs = exs;
   _mat5Prat.answered = {};
   _mat5Prat.score = { correct: 0, total: 0 };
@@ -1617,3 +1620,42 @@ function buildEx_m5c7(tema, tipo, dif) {
     tema: 'T3 · Média'
   };
 }
+
+/* ════════════════════════════════════════════════════════════════
+   BANCO DE QUESTÕES (contexto/problema) — Matemática · 5.º ano
+   ════════════════════════════════════════════════════════════════ */
+var _mat5Banco = {
+  1: [ // Números Naturais
+    { t: '1', tipo: 'fill', enun: 'Uma carteira de cromos tem 5 cromos. Quantos cromos há em 23 carteiras?', resposta: '115', expl: '23 × 5 = 115 cromos.', tema: 'T1 · Múltiplos' },
+    { t: '1', tipo: 'mc', enun: 'Qual é o número compreendido entre 50 e 60 que é múltiplo de 6, de 10 e de 12 ao mesmo tempo?', opcoes: ['60', '54', '50', '56'], resposta: '60', expl: 'm.m.c.(6,10,12) = 60. O único entre 50 e 60 (inclusive) é 60.', tema: 'T1 · Múltiplos' },
+    { t: '2', tipo: 'fill', enun: 'O Tomás guardou os seus 24 berlindes em caixas iguais, com 4 berlindes cada. Quantas caixas usou?', resposta: '6', expl: '24 ÷ 4 = 6 caixas.', tema: 'T2 · Potências' },
+    { t: '3', tipo: 'fill', enun: 'Numa expressão, calcula 5 + 3 × 4 (respeita a prioridade das operações).', resposta: '17', expl: 'Primeiro 3×4 = 12; depois 5 + 12 = 17.', tema: 'T3 · Expressões' }
+  ],
+  2: [ // Frações
+    { t: '2', tipo: 'mc', enun: 'A Maria comeu 2/8 de uma piza e o João comeu 3/8. Que fração da piza comeram juntos?', opcoes: ['5/8', '5/16', '1/8', '6/8'], resposta: '5/8', expl: 'Mesmo denominador: 2/8 + 3/8 = 5/8.', tema: 'T2 · Adição' },
+    { t: '1', tipo: 'fill', enun: 'Simplifica a fração 9/12 (escreve no formato a/b).', resposta: '3/4', expl: 'Divide por 3: 9/12 = 3/4.', tema: 'T1 · Equivalentes' },
+    { t: '3', tipo: 'mc', enun: 'Numa turma, 3/5 dos alunos têm cão. Que fração NÃO tem cão?', opcoes: ['2/5', '3/5', '1/5', '5/5'], resposta: '2/5', expl: 'O todo é 5/5. 5/5 − 3/5 = 2/5 não têm cão.', tema: 'T3 · Subtração' }
+  ],
+  3: [ // Decimais e Percentagens
+    { t: '2', tipo: 'fill', enun: 'Um casaco custa 80 € e tem 25% de desconto. Quanto se poupa (em €)?', resposta: '20', expl: '25% de 80 = 0,25 × 80 = 20 €.', tema: 'T2 · Percentagens' },
+    { t: '3', tipo: 'fill', enun: 'A Rita comprou 1,5 kg de maçãs a 2 € o quilo. Quanto pagou (em €)?', resposta: '3', expl: '1,5 × 2 = 3 €.', tema: 'T3 · Operações' },
+    { t: '1', tipo: 'mc', enun: 'Qual é maior?', opcoes: ['0,7', '0,68', '0,7 e 0,68 são iguais', '0,07'], resposta: '0,7', expl: '0,7 = 0,70 > 0,68.', tema: 'T1 · Comparar Decimais' }
+  ],
+  4: [ // Figuras Geométricas
+    { t: '2', tipo: 'fill', enun: 'Num triângulo, dois ângulos medem 50° e 60°. Quanto mede o terceiro? (em graus)', resposta: '70', expl: '180° − 50° − 60° = 70°.', tema: 'T2 · Triângulos' },
+    { t: '3', tipo: 'fill', enun: 'Uma horta retangular tem 8 m de comprimento e 5 m de largura. Quantos metros de rede são precisos para a cercar (perímetro)?', resposta: '26', expl: 'Perímetro = 2 × (8 + 5) = 26 m.', tema: 'T3 · Perímetro' },
+    { t: '1', tipo: 'fill', enun: 'Qual é o ângulo complementar de 35°? (em graus)', resposta: '55', expl: '90° − 35° = 55°.', tema: 'T1 · Ângulos' }
+  ],
+  5: [ // Sólidos Geométricos
+    { t: '1', tipo: 'fill', enun: 'Quantas arestas tem um cubo?', resposta: '12', expl: 'O cubo tem 12 arestas (e 6 faces, 8 vértices).', tema: 'T1 · Faces/Vértices/Arestas' },
+    { t: '2', tipo: 'fill', enun: 'Uma pirâmide tem base quadrada. Quantas faces tem ao todo?', resposta: '5', expl: '4 faces laterais (triângulos) + 1 base = 5 faces.', tema: 'T2 · Pirâmides' }
+  ],
+  6: [ // Sequências
+    { t: '1', tipo: 'fill', enun: 'Observa a sequência 4, 7, 10, 13, … Qual é o termo seguinte?', resposta: '16', expl: 'Regra: somar 3 → 13 + 3 = 16.', tema: 'T1 · Termo Seguinte' },
+    { t: '2', tipo: 'fill', enun: 'Numa sequência que começa em 2 e soma sempre 5, qual é o 6.º termo?', resposta: '27', expl: '2 + 5×(6−1) = 2 + 25 = 27.', tema: 'T2 · Lei de Formação' }
+  ],
+  7: [ // Organização de Dados
+    { t: '3', tipo: 'fill', enun: 'As idades de 4 amigos são 10, 11, 12 e 15 anos. Qual é a média (em anos)?', resposta: '12', expl: '(10+11+12+15)/4 = 48/4 = 12.', tema: 'T3 · Média' },
+    { t: '2', tipo: 'fill_frac', enun: 'Num inquérito a 20 alunos, 8 preferem futebol. Que fração (irredutível) representa?', resposta: '2/5', expl: '8/20 = 2/5.', tema: 'T2 · Frequência' }
+  ]
+};
