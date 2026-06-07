@@ -21,11 +21,14 @@ function GameEdu(panelId, modo, qFn, level) {
 
 GameEdu.prototype._meta = function () {
   if (this.modo === 'corrida') return { titulo: 'Corrida de Cálculo', icone: 'ph-timer', cor: '#2f9e63',
-    desc: 'Responde ao máximo de questões em <strong>60 segundos</strong>. Cada acerto vale 1 ponto!' };
+    desc: 'Quantas questões consegues acertar contra o relógio?',
+    regras: '<b>Como jogar:</b><br>• Tens <b>60 segundos</b>.<br>• Em cada questão, escolhe a opção certa entre as 4.<br>• Cada acerto vale <b>1 ponto</b> — erros não tiram pontos.<br>• Responde o mais rápido que conseguires para somar o máximo!' };
   if (this.modo === 'pares') return { titulo: 'Caça ao Par', icone: 'ph-cards', cor: '#7b61c4',
-    desc: 'Vira as cartas e <strong>associa cada questão à sua resposta</strong>. Encontra todos os pares!' };
+    desc: 'Um jogo de memória com a matéria do teu ano.',
+    regras: '<b>Como jogar:</b><br>• Há <b>8 cartas</b> viradas para baixo: 4 questões e 4 respostas.<br>• Toca em duas para as virar.<br>• Se a questão e a resposta <b>combinarem</b>, o par fica resolvido.<br>• Se não, viram-se de novo — <b>memoriza</b> onde estão!<br>• Encontra os 4 pares com o menor número de jogadas.' };
   return { titulo: 'V/F Relâmpago', icone: 'ph-lightning', cor: '#c4892f',
-    desc: 'Decide se cada afirmação é <strong>Verdadeira ou Falsa</strong>. Tens 45 segundos!' };
+    desc: 'Verdadeiro ou Falso, contra o tempo.',
+    regras: '<b>Como jogar:</b><br>• Tens <b>45 segundos</b>.<br>• Aparece uma afirmação com uma resposta.<br>• Decide se está <b>Verdadeira ✓</b> ou <b>Falsa ✗</b>.<br>• Cada acerto vale <b>1 ponto</b>. Pensa depressa!' };
 };
 
 GameEdu.prototype.renderStart = function () {
@@ -34,6 +37,7 @@ GameEdu.prototype.renderStart = function () {
     '<div class="edu-game-card" style="--eg:' + m.cor + '">' +
     '  <div class="edu-game-head"><i class="ph ' + m.icone + '"></i> ' + m.titulo + '</div>' +
     '  <p class="edu-game-desc">' + m.desc + '</p>' +
+    '  <div class="edu-rules">' + m.regras + '</div>' +
     '  <button class="btn btn-primary edu-game-start" onclick="_eduStart(\'' + this.panelId + '\')"><i class="ph ph-play"></i> Começar</button>' +
     '</div>';
 };
@@ -112,19 +116,43 @@ GameEdu.prototype._vfQ = function () {
     '</div>';
 };
 
+// Encurta um enunciado para caber numa carta de memória:
+// remove HTML, prefixos verbais ("Calcula", "Qual é", "Sendo … ,"),
+// e devolve a parte essencial (a expressão a calcular).
+GameEdu.prototype.curtaQ = function (q) {
+  if (!q) return '';
+  var s = String(q).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  // "Sendo f(x) = …, calcula f'(-3)." → fica "f'(-3), f(x)=…"? Simplificamos:
+  // tira a parte "Sendo " inicial e junta o pedido ao fim.
+  s = s.replace(/^Sendo\s+/i, '');
+  // remove verbos de comando comuns no início
+  s = s.replace(/^(Calcula(?:r)?|Determina(?:r)?|Indica(?:r)?|Qual é (?:o|a)?|Quanto (?:é|vale)|Resolve|Simplifica|Escreve)\s*:?\s*/i, '');
+  // remove pontuação final e "."
+  s = s.replace(/[.?]\s*$/, '').trim();
+  return s;
+};
+
 /* ───────────── MODO 3: CAÇA AO PAR (memória) ───────────── */
 GameEdu.prototype.startPares = function () {
   var self = this;
   self.pairsFound = 0; self.flipped = []; self.lock = false; self.moves = 0;
-  // 4 questões → 8 cartas (Q + R)
-  var qs = [];
-  for (var i = 0; i < 4; i++) { var q = self.nextQ(); if (q) qs.push(q); }
-  if (qs.length < 4) { self.el.innerHTML = '<div class="edu-game-card"><p class="edu-game-desc">Não foi possível preparar o jogo. Tenta outra vez.</p></div>'; return; }
+  // 4 questões CURTAS → 8 cartas (Q + R). Cartas de memória precisam de
+  // texto curto, por isso encurtamos o enunciado e evitamos problemas longos.
+  var qs = [], seen = {};
+  for (var tries = 0; tries < 40 && qs.length < 4; tries++) {
+    var q = self.nextQ();
+    if (!q) continue;
+    var curta = self.curtaQ(q.q);
+    if (!curta || curta.length > 38) continue;     // só enunciados curtos
+    if (seen[curta]) continue;                     // sem repetir
+    seen[curta] = true;
+    qs.push({ q: curta, resp: q.opts[q.ans] });
+  }
+  if (qs.length < 4) { self.el.innerHTML = '<div class="edu-game-card"><p class="edu-game-desc">A preparar o jogo… toca em "Começar" outra vez.</p><button class="btn btn-primary" style="margin-top:.8rem" onclick="_eduStart(\'' + self.panelId + '\')">↻ Tentar</button></div>'; return; }
   var cards = [];
   qs.forEach(function (q, k) {
-    var resp = q.opts[q.ans];
     cards.push({ pair: k, txt: q.q, tipo: 'q' });
-    cards.push({ pair: k, txt: resp, tipo: 'r' });
+    cards.push({ pair: k, txt: String(q.resp), tipo: 'r' });
   });
   // baralhar
   for (var j = cards.length - 1; j > 0; j--) { var r = Math.floor(Math.random() * (j + 1)); var t = cards[j]; cards[j] = cards[r]; cards[r] = t; }
@@ -135,7 +163,9 @@ GameEdu.prototype.renderPares = function () {
   var self = this;
   var cells = self.cards.map(function (c, i) {
     var done = c.found, up = self.flipped.indexOf(i) !== -1 || done;
-    var inner = up ? (typeof formatMath === 'function' ? formatMath(c.txt) : c.txt) : '<i class="ph ph-question"></i>';
+    // texto puro nas cartas (sem formatMath: spans de expoente/fração partem
+    // feio em cartas estreitas). O texto já vem com símbolos unicode.
+    var inner = up ? '<span class="edu-card-txt">' + c.txt + '</span>' : '<i class="ph ph-question"></i>';
     return '<button class="edu-card' + (up ? ' up' : '') + (done ? ' done' : '') + (c.tipo === 'r' ? ' isr' : '') + '"' +
       (done ? ' disabled' : '') + ' onclick="_eduFlip(\'' + self.panelId + '\',' + i + ')">' + inner + '</button>';
   }).join('');

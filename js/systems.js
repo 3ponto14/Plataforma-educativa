@@ -582,10 +582,15 @@ function _gBuildJogos(wrapId, defaultLevel) {
   var wrap = document.getElementById(wrapId);
   if (!wrap) return;
   // Store question function and defaultLevel. Usa provedor do ano se registado.
+  // NUNCA devolve null (os jogos antigos assumem q.q válido).
   _gInstances[wrapId] = { qFn: function(level){
       var lv = level || defaultLevel || 'medio';
-      if (_gProviders[wrapId]) { var q = _gProviders[wrapId](lv); if (q) return q; }
-      return _gGetQuestion(wrapId, lv);
+      var q = null;
+      if (_gProviders[wrapId]) { try { q = _gProviders[wrapId](lv); } catch (e) { q = null; } if (q && q.q && q.opts) return q; }
+      q = _gGetQuestion(wrapId, lv);
+      if (q && q.q && q.opts && q.opts.length) return q;
+      // fallback final: pergunta simples garantida
+      return _gFallbackQ();
     }, defaultLevel: defaultLevel || 'medio' };
   var jogos = _gSetFor(wrapId);
   var tabs = ['<div class="g-tabs">'], panels = [];
@@ -598,6 +603,18 @@ function _gBuildJogos(wrapId, defaultLevel) {
   wrap.innerHTML = tabs.concat(panels).join('\n');
   // inicia o primeiro jogo do conjunto
   _gInitTab(wrapId, jogos[0], defaultLevel || 'medio');
+}
+
+// Pergunta de reserva (nunca falha): uma conta simples com 4 opções.
+function _gFallbackQ() {
+  var a = 2 + Math.floor(Math.random() * 9), b = 2 + Math.floor(Math.random() * 9);
+  var r = a * b, opts = [String(r)], set = {}; set[r] = true;
+  while (opts.length < 4) {
+    var d = r + (Math.floor(Math.random() * 9) - 4);
+    if (d > 0 && !set[d]) { set[d] = true; opts.push(String(d)); }
+  }
+  for (var i = opts.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = opts[i]; opts[i] = opts[j]; opts[j] = t; }
+  return { q: 'Quanto é ' + a + ' × ' + b + '?', opts: opts, ans: opts.indexOf(String(r)) };
 }
 
 // Inicializa um separador de jogo (usado no build e no switch).

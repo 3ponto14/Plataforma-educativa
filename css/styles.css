@@ -3696,10 +3696,15 @@ body.dark-mode .resumo-st-btn.active {
 .edu-vf:hover{transform:translateY(-2px)}
 .edu-vf-v{background:#2f9e63}.edu-vf-f{background:#d9534f}
 .edu-mem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem}
-.edu-card{aspect-ratio:1;border:2px solid var(--line,#e8e2d9);border-radius:12px;background:var(--eg,#7b61c4);color:#fff;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:.4rem;transition:all .2s;overflow:hidden;text-align:center;line-height:1.15}
-.edu-card.up{background:#fff;color:var(--ink,#2c2418);font-size:.78rem;font-weight:700;border-color:var(--eg,#7b61c4)}
+.edu-card{aspect-ratio:1;border:2px solid var(--line,#e8e2d9);border-radius:12px;background:var(--eg,#7b61c4);color:#fff;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:.35rem;transition:all .2s;overflow:hidden;text-align:center;line-height:1.15}
+.edu-card.up{background:#fff;color:var(--ink,#2c2418);font-weight:700;border-color:var(--eg,#7b61c4)}
+.edu-card-txt{font-size:.72rem;line-height:1.2;font-weight:700;word-break:break-word;overflow-wrap:anywhere;hyphens:auto;max-width:100%;display:block}
 .edu-card.isr.up{background:#f3eefb}
+.edu-card.isr.up .edu-card-txt{font-size:.98rem;color:var(--eg,#7b61c4)}
 .edu-card.done{opacity:.45;cursor:default}
 .edu-game-end h3{font-size:1.2rem;color:var(--ink,#2c2418);margin:.5rem 0}
 .edu-end-emoji{font-size:2.6rem;margin-bottom:.3rem}
-@media(max-width:480px){.edu-mem-grid{grid-template-columns:repeat(4,1fr);gap:.4rem}.edu-card{font-size:1rem}.edu-card.up{font-size:.62rem}}
+.edu-rules{background:var(--cream,#faf7f2);border:1px dashed var(--line,#e8e2d9);border-radius:12px;padding:.7rem .9rem;margin:0 auto 1.1rem;max-width:440px;font-size:.8rem;color:var(--ink3,#6b6357);text-align:left;line-height:1.5}
+.edu-rules b{color:var(--ink,#2c2418)}
+.edu-help{background:none;border:none;color:var(--ink3,#6b6357);cursor:pointer;font-size:.82rem;padding:.2rem .5rem;text-decoration:underline}
+@media(max-width:480px){.edu-mem-grid{gap:.4rem}.edu-card{font-size:1rem}.edu-card-txt{font-size:.58rem}.edu-card.isr.up .edu-card-txt{font-size:.8rem}}
