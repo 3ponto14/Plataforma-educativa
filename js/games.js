@@ -11,6 +11,25 @@ function gcd(a,b){return b===0?a:gcd(b,a%b);}
 function lcm(a,b){return a*b/gcd(a,b);}
 
 // ── Puzzle generators (one per object) ───────────────────────
+// Adapta uma pergunta do provedor do ano (qFn → {q, opts:[4], ans índice})
+// ao formato das salas 'mc' do Escape Room ({q, opts valores, ans valor,
+// digit, explain}). O 'digit' (para o código final) é o último algarismo da
+// resposta correta. Devolve null se não conseguir uma pergunta válida.
+function _erQFromYear(qFn) {
+  for (var tries = 0; tries < 8; tries++) {
+    var q;
+    try { q = qFn('dificil'); } catch (e) { q = null; }
+    if (!q || !q.q || !q.opts || q.opts.length !== 4 || q.ans == null) continue;
+    var correta = q.opts[q.ans];
+    // dígito = último algarismo numérico da resposta correta (0 se não houver)
+    var m = String(correta).match(/(\d)(?=\D*$)/);
+    var dig = m ? parseInt(m[1], 10) : 0;
+    return { q: q.q, opts: q.opts.slice(), ans: correta, digit: dig,
+             explain: 'Resposta correta: ' + correta };
+  }
+  return null;
+}
+
 var PUZZLES = {
 
   blackboard: {
@@ -707,8 +726,16 @@ GameEscapeRoom.prototype._startGame = function(themeId){
     ].join('\n');
   })(theme.css, _applyPid, theme.id);
   var puzzles = {};
+  var selfQfn = this.qFn;
   Object.keys(PUZZLES).forEach(function(k){
-    var p = PUZZLES[k]; var data = p.gen();
+    var p = PUZZLES[k];
+    // Salas de escolha múltipla usam as perguntas DO ANO (qFn) quando existe,
+    // para o nível ser adequado à idade. A sala 'code' (cofre) mantém o gen().
+    var data = null;
+    if (p.type === 'mc' && typeof selfQfn === 'function') {
+      data = _erQFromYear(selfQfn);
+    }
+    if (!data) data = p.gen();
     var ov = themeObjs[k] || {};
     puzzles[k] = { def:p, data:data, solved:false, digit:data.digit!=null?data.digit:null,
       icon: ov.icon||p.icon, label: ov.label||p.label, flavour: ov.flavour||p.flavour };
