@@ -1291,10 +1291,11 @@ function buildEx_m5c1(tema, tipo, dif) {
     // qual NÃO é múltiplo / divisor
     var d = [2, 3, 4, 5][rnd_m81(0, 3)];
     var n3 = d * rnd_m81(3, 9);
+    var menorD = _menorDivisor_m5(n3);
     return {
-      enun: 'Qual é o ' + (rnd_m81(0, 1) ? 'maior' : 'menor') + ' divisor de ' + n3 + ' diferente de 1?',
-      tipo: 'fill', resposta: String(_menorDivisor_m5(n3)),
-      expl: 'O menor divisor de ' + n3 + ' diferente de 1 é ' + _menorDivisor_m5(n3) + '.',
+      enun: 'Qual é o menor divisor de ' + n3 + ' diferente de 1?',
+      tipo: 'fill', resposta: String(menorD),
+      expl: 'Procura-se o menor número (maior que 1) que divide ' + n3 + ' com resto 0. É ' + menorD + '.',
       tema: 'T1 · Divisores'
     };
   }
