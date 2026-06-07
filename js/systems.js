@@ -1262,7 +1262,7 @@ setTimeout(function(){
   });
 },1500);
 
-// ISSUES 1–4: SELEÇÃO MULTI-CAPÍTULO + MEGAGERADOR
+// ISSUES 1-4: SELEÇÃO MULTI-CAPÍTULO + MEGAGERADOR
 // ── Actualiza o botão no topbar ──────────────
 function pmUpdateTopbar() {
   var s = ProgressManager.getSummary();
@@ -1413,7 +1413,7 @@ function _progRecolherTudo() {
   function secTotals(data) {
     var c=0,t=0;
     if (data && data.sections) Object.values(data.sections).forEach(function(s){ c+=s.correct||0; t+=s.total||0; });
-    return { corretas: c, total: t, taxa: t>0 ? Math.round(c/t*100)+'%' : '—', detalhe: data && data.sections ? data.sections : {} };
+    return { corretas: c, total: t, taxa: t>0 ? Math.round(c/t*100)+'%' : '-', detalhe: data && data.sections ? data.sections : {} };
   }
   function cap4Totals() {
     var c=0,t=0,det={};
@@ -1421,7 +1421,7 @@ function _progRecolherTudo() {
       var k=kv[0], v=kv[1];
       if (v && typeof v.correct==='number') { c+=v.correct; t+=v.total||0; det[k]={corretas:v.correct,total:v.total||0}; }
     });
-    return { corretas: c, total: t, taxa: t>0 ? Math.round(c/t*100)+'%' : '—', detalhe: det };
+    return { corretas: c, total: t, taxa: t>0 ? Math.round(c/t*100)+'%' : '-', detalhe: det };
   }
 
   return {
@@ -1452,13 +1452,13 @@ function progDownloadPDF() {
   var d = _progRecolherTudo();
   var caps = d.capitulos;
   var cor = function(taxa) {
-    if (taxa==='—') return '#9e9e9e';
+    if (taxa==='-') return '#9e9e9e';
     var n = parseInt(taxa);
     if (isNaN(n)) return '#9e9e9e';
     return n>=80 ? '#516860' : n>=50 ? '#c4a030' : '#c4796e';
   };
   var barraHtml = function(taxa) {
-    if (taxa==='—') return '<div style="width:100%;height:8px;background:#eee;border-radius:4px"></div>';
+    if (taxa==='-') return '<div style="width:100%;height:8px;background:#eee;border-radius:4px"></div>';
     var n = parseInt(taxa);
     if (isNaN(n)) n = 0;
     return '<div style="width:100%;height:8px;background:#eee;border-radius:4px;overflow:hidden"><div style="height:100%;width:'+n+'%;background:'+cor(taxa)+';border-radius:4px"></div></div>';
@@ -1474,7 +1474,7 @@ function progDownloadPDF() {
 
   var totalCorretas = Object.values(caps).reduce(function(s,c){return s+c.corretas;},0);
   var totalQs       = Object.values(caps).reduce(function(s,c){return s+c.total;},0);
-  var taxaGlobal    = totalQs>0 ? Math.round(totalCorretas/totalQs*100)+'%' : '—';
+  var taxaGlobal    = totalQs>0 ? Math.round(totalCorretas/totalQs*100)+'%' : '-';
 
   var html = '<!DOCTYPE html><html><head><meta charset="UTF-8">'
     + '<title>Progresso 3ponto14 · Mat 7</title>'
@@ -1591,7 +1591,7 @@ function _treinoRenderExercicios(exercicios, containerId) {
     var qid = 'treino-q-' + i;
     _treinoState[qid] = { answered: false };
     var capLabel = {cap1:'Inteiros',cap2:'Racionais',cap3:'Geometria',cap4:'Equações',cap5:'Sequências',cap6:'Funções',cap7:'Semelhantes',cap8:'Dados/Prob.'}[ex._capId]||'';
-    var temaShort = (ex.tema||'').replace(/^(Tema \d+\s*[—\-]?\s*)/,'').trim() || ex.tema;
+    var temaShort = (ex.tema||'').replace(/^(Tema \d+\s*[-\-]?\s*)/,'').trim() || ex.tema;
     html += '<div class="quiz-question" id="' + qid + '" style="margin-bottom:1rem">';
     html += '<div class="q-number" style="color:var(--cs-deep)">' + capLabel + ' · ' + (temaShort||ex.tema||'') + '</div>';
     if (ex.visual) html += '<div class="q-visual">' + ex.visual + '</div>';
@@ -1703,7 +1703,7 @@ function gerarFichaTreino() {
   body += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px">';
   grupos.forEach(function(g) {
     var capLabel = {cap1:'Inteiros',cap2:'Racionais',cap3:'Geometria',cap4:'Equações',cap5:'Sequências',cap6:'Funções',cap7:'Semelhantes',cap8:'Dados/Prob.'}[g.capId]||'';
-    var temaLabel = g.tema ? g.tema.replace(/^Tema \d+\s*[—\-]?\s*/,'').trim() : 'Tema '+g.temaNum;
+    var temaLabel = g.tema ? g.tema.replace(/^Tema \d+\s*[-\-]?\s*/,'').trim() : 'Tema '+g.temaNum;
     body += '<span style="font-size:.72rem;font-weight:700;background:#f5f0ee;color:#7a6860;border:1px solid #e0d8d4;padding:3px 10px;border-radius:999px">'
           + capLabel+' · '+temaLabel+' ('+g.erros+'✗)</span>';
   });
@@ -1716,7 +1716,7 @@ function gerarFichaTreino() {
     body += '<h2>' + (capNames[capId]||capId) + '</h2>';
     exs.forEach(function(ex) {
       exNum++;
-      var temaShort = (ex.tema||'').replace(/^(Tema \d+\s*[—\-]?\s*)/,'').trim()||ex.tema||'';
+      var temaShort = (ex.tema||'').replace(/^(Tema \d+\s*[-\-]?\s*)/,'').trim()||ex.tema||'';
       body += '<div class="ex">'
             + '<div class="ex-num"><span class="n">'+exNum+'</span> '+temaShort+'</div>';
 
@@ -1864,7 +1864,7 @@ function renderProgressoUnificado() {
         +     '<i class="ph '+_motivIcon+'" style="font-size:1.4rem;color:#fff"></i>'
         +   '</div>'
         +   '<div style="flex:1;min-width:180px">'
-        +     '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.6rem;font-weight:900;color:var(--ink);line-height:1;letter-spacing:-.02em">'+(totalT>0 ? globalPct+'<span style="font-size:1rem">%</span>' : '—')+'</div>'
+        +     '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.6rem;font-weight:900;color:var(--ink);line-height:1;letter-spacing:-.02em">'+(totalT>0 ? globalPct+'<span style="font-size:1rem">%</span>' : '-')+'</div>'
         +     '<div style="font-size:.82rem;color:var(--ink2);margin-top:3px">'+_motivMsg+'</div>'
         +   '</div>'
         +   '<div style="display:flex;gap:.6rem;flex-wrap:wrap">'
@@ -1876,7 +1876,7 @@ function renderProgressoUnificado() {
 
   // ── Stat chips ──
   html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem;margin-bottom:1.5rem">';
-  [{v:totalT,l:'Questões respondidas'},{v:totalC,l:'Respostas certas'},{v:totalT>0?globalPct+'%':'—',l:'Taxa global'},{v:pm.totalXp+' XP',l:'XP total'},{v:pm.streak+(pm.streak===1?' dia':' dias'),l:'Streak atual'}]
+  [{v:totalT,l:'Questões respondidas'},{v:totalC,l:'Respostas certas'},{v:totalT>0?globalPct+'%':'-',l:'Taxa global'},{v:pm.totalXp+' XP',l:'XP total'},{v:pm.streak+(pm.streak===1?' dia':' dias'),l:'Streak atual'}]
   .forEach(function(s){
     html += '<div class="card" style="text-align:center;padding:1rem .75rem">'
           + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.75rem;font-weight:900;color:var(--ink);letter-spacing:-.03em;line-height:1">'+s.v+'</div>'

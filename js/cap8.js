@@ -297,7 +297,7 @@ function buildEx8(tema,dif){
     if(fav>=total)fav=1;
     return {enunciado:'Um saco tem '+total+' bolas, '+fav+' das quais são azuis. Qual é a probabilidade de retirar uma bola azul?',resposta:fav+'/'+total,dica:'P(azul) = '+fav+'/'+total+'.'};
   }
-  return {enunciado:'Questão indisponível.',resposta:'—',dica:''};
+  return {enunciado:'Questão indisponível.',resposta:'-',dica:''};
 }
 
 // ── Topic grid ─────────────────────────────────────────────────────────────

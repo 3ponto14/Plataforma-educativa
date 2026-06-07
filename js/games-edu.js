@@ -1,9 +1,9 @@
 /* ════════════════════════════════════════════════════════════════
-   games-edu.js — Jogos EDUCATIVOS por faixa etária (lazy-loaded)
+   games-edu.js - Jogos EDUCATIVOS por faixa etária (lazy-loaded)
    Um único construtor GameEdu(panelId, modo, qFn, level) faz 3 modos:
-     'corrida'     — Corrida de Cálculo: responder rápido contra o tempo
-     'pares'       — Caça ao Par: associar enunciado ↔ resposta (memória)
-     'vfrelampago' — V/F Relâmpago: afirmações certas/erradas contra o tempo
+     'corrida'     - Corrida de Cálculo: responder rápido contra o tempo
+     'pares'       - Caça ao Par: associar enunciado ↔ resposta (memória)
+     'vfrelampago' - V/F Relâmpago: afirmações certas/erradas contra o tempo
    Todos usam qFn(level) → {q, opts:[4 strings], ans} do conteúdo do ano.
    ES5 only. Sem frameworks.
    ════════════════════════════════════════════════════════════════ */
@@ -22,10 +22,10 @@ function GameEdu(panelId, modo, qFn, level) {
 GameEdu.prototype._meta = function () {
   if (this.modo === 'corrida') return { titulo: 'Corrida de Cálculo', icone: 'ph-timer', cor: '#2f9e63',
     desc: 'Quantas questões consegues acertar contra o relógio?',
-    regras: '<b>Como jogar:</b><br>• Tens <b>60 segundos</b>.<br>• Em cada questão, escolhe a opção certa entre as 4.<br>• Cada acerto vale <b>1 ponto</b> — erros não tiram pontos.<br>• Responde o mais rápido que conseguires para somar o máximo!' };
+    regras: '<b>Como jogar:</b><br>• Tens <b>60 segundos</b>.<br>• Em cada questão, escolhe a opção certa entre as 4.<br>• Cada acerto vale <b>1 ponto</b> - erros não tiram pontos.<br>• Responde o mais rápido que conseguires para somar o máximo!' };
   if (this.modo === 'pares') return { titulo: 'Caça ao Par', icone: 'ph-cards', cor: '#7b61c4',
     desc: 'Um jogo de memória com a matéria do teu ano.',
-    regras: '<b>Como jogar:</b><br>• Há <b>8 cartas</b> viradas para baixo: 4 questões e 4 respostas.<br>• Toca em duas para as virar.<br>• Se a questão e a resposta <b>combinarem</b>, o par fica resolvido.<br>• Se não, viram-se de novo — <b>memoriza</b> onde estão!<br>• Encontra os 4 pares com o menor número de jogadas.' };
+    regras: '<b>Como jogar:</b><br>• Há <b>8 cartas</b> viradas para baixo: 4 questões e 4 respostas.<br>• Toca em duas para as virar.<br>• Se a questão e a resposta <b>combinarem</b>, o par fica resolvido.<br>• Se não, viram-se de novo - <b>memoriza</b> onde estão!<br>• Encontra os 4 pares com o menor número de jogadas.' };
   return { titulo: 'V/F Relâmpago', icone: 'ph-lightning', cor: '#c4892f',
     desc: 'Verdadeiro ou Falso, contra o tempo.',
     regras: '<b>Como jogar:</b><br>• Tens <b>45 segundos</b>.<br>• Aparece uma afirmação com uma resposta.<br>• Decide se está <b>Verdadeira ✓</b> ou <b>Falsa ✗</b>.<br>• Cada acerto vale <b>1 ponto</b>. Pensa depressa!' };
@@ -97,7 +97,7 @@ GameEdu.prototype._vfQ = function () {
   var self = this;
   var q = self.nextQ();
   if (!q) { self.endTimed(); return; }
-  // monta uma afirmação: "<enunciado> A resposta é <opção>." — V se for a correta
+  // monta uma afirmação: "<enunciado> A resposta é <opção>." - V se for a correta
   var mostrarCorreta = Math.random() < 0.5;
   var idx = mostrarCorreta ? q.ans : (function () {
     var o; do { o = Math.floor(Math.random() * 4); } while (o === q.ans); return o;

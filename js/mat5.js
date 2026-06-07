@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════════
-   MAT5 HUB — Matemática 5.º ano (7 capítulos)
+   MAT5 HUB - Matemática 5.º ano (7 capítulos)
    Modelo de HUB ÚNICO (ver MODELO BASE no CLAUDE.md). NUNCA páginas
    por capítulo. Tabs: Teoria · Praticar · Fichas · Progresso.
    ════════════════════════════════════════════════════════════════ */
@@ -32,8 +32,8 @@ var _mat5Subtemas = {
 };
 
 // ═══ FLASHCARDS / TEORIA por capítulo ═══
-// Cap 1 (Números) — conteúdo real, fiel ao Prisma 8.
-// Caps 2-8 — placeholders honestos até serem construídos.
+// Cap 1 (Números) - conteúdo real, fiel ao Prisma 8.
+// Caps 2-8 - placeholders honestos até serem construídos.
 // ═══ FLASHCARDS / TEORIA por capítulo (5.º ano) ═══
 // ═══ FLASHCARDS / TEORIA por capítulo (5.º ano) ═══
 var _mat5Cards = {
@@ -85,7 +85,7 @@ var _mat5Cards = {
     { tag: 'Regra', q: 'Como somar números decimais?', a: 'Alinha as vírgulas (e as casas) e soma como números inteiros, mantendo a vírgula. Ex: 2,5 + 1,75 = 4,25.' },
     { tag: 'Regra', q: 'Como multiplicar um decimal por 10, 100, 1000?', a: 'Move a vírgula para a direita: 1 casa (×10), 2 casas (×100), 3 casas (×1000). Ex: 3,4 × 100 = 340.' },
     { tag: 'Regra', q: 'Como dividir um decimal por 10, 100, 1000?', a: 'Move a vírgula para a esquerda. Ex: 56 ÷ 100 = 0,56.' },
-    { tag: 'Definição', q: 'Equivalências úteis (fração–decimal–%)', a: '1/2 = 0,5 = 50%; 1/4 = 0,25 = 25%; 3/4 = 0,75 = 75%; 1/10 = 0,1 = 10%.' },
+    { tag: 'Definição', q: 'Equivalências úteis (fração-decimal-%)', a: '1/2 = 0,5 = 50%; 1/4 = 0,25 = 25%; 3/4 = 0,75 = 75%; 1/10 = 0,1 = 10%.' },
     { tag: 'Exemplo', q: 'Quanto é 50% de 80?', a: '0,50 × 80 = 40 (metade de 80).' },
     { tag: 'Exemplo', q: 'Escreve 0,45 em percentagem', a: '0,45 = 45/100 = 45%.' },
     { tag: 'Exemplo', q: 'Compara 0,45 e 40%', a: '40% = 0,40. Como 0,45 > 0,40, então 0,45 > 40%.' },
@@ -308,13 +308,13 @@ function mat5RenderResumoInline() {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   TAB PRATICAR — exercícios gerados com correção imediata
+   TAB PRATICAR - exercícios gerados com correção imediata
    Renderiza tudo no painel (sem páginas externas). Reutiliza os
    motores genéricos do chapter-engine: _capBuildQuizHTML,
    _capCheckAnswer, _capShowFeedback.
    ════════════════════════════════════════════════════════════════ */
 
-// Gerador por capítulo (resolução lazy — os buildEx_m5cN são definidos no fim do ficheiro).
+// Gerador por capítulo (resolução lazy - os buildEx_m5cN são definidos no fim do ficheiro).
 // Só os caps com gerador são "praticáveis".
 function _mat5Gerador(cap) {
   if (cap === 1 && typeof buildEx_m5c1 === 'function') return buildEx_m5c1;
@@ -871,7 +871,7 @@ function mat5RenderProgresso() {
     : globalPct >= 80 ? 'Excelente trabalho! Estás a dominar a matéria.'
     : globalPct >= 60 ? 'Bom progresso! Continua a praticar para consolidar.'
     : globalPct >= 40 ? 'A progredir! Há capítulos que pedem mais atenção.'
-    : 'Começaste! Pratica com regularidade — cada questão conta.';
+    : 'Começaste! Pratica com regularidade - cada questão conta.';
   var icon = totalT === 0 ? 'ph-rocket-launch' : globalPct >= 80 ? 'ph-trophy' : globalPct >= 60 ? 'ph-star' : globalPct >= 40 ? 'ph-trend-up' : 'ph-book-open';
 
   var h = '';
@@ -886,7 +886,7 @@ function mat5RenderProgresso() {
   h += '<div style="background:var(--m5c1-base);border:1.5px solid var(--m5c1-mid);border-radius:16px;padding:1.1rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap">'
      +   '<div style="width:52px;height:52px;border-radius:50%;background:var(--m5c1-mid);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ph ' + icon + '" style="font-size:1.4rem;color:#fff"></i></div>'
      +   '<div style="flex:1;min-width:180px">'
-     +     '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.6rem;font-weight:900;color:var(--ink);line-height:1">' + (totalT > 0 ? globalPct + '<span style="font-size:1rem">%</span>' : '—') + '</div>'
+     +     '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.6rem;font-weight:900;color:var(--ink);line-height:1">' + (totalT > 0 ? globalPct + '<span style="font-size:1rem">%</span>' : '-') + '</div>'
      +     '<div style="font-size:.82rem;color:var(--ink2);margin-top:3px">' + msg + '</div>'
      +   '</div>'
      +   '<button class="btn btn-ghost" onclick="mat5ProgDownloadPDF()" style="font-size:.78rem;padding:7px 14px;display:inline-flex;align-items:center;gap:5px"><i class="ph ph-file-text"></i>Relatório PDF</button>'
@@ -904,7 +904,7 @@ function mat5RenderProgresso() {
 
   // Stat chips
   h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem;margin-bottom:1.5rem">';
-  [{ v: totalT, l: 'Questões respondidas' }, { v: totalC, l: 'Respostas certas' }, { v: totalT > 0 ? globalPct + '%' : '—', l: 'Taxa global' }, { v: pmXp + ' XP', l: 'XP total' }, { v: pmStreak + (pmStreak === 1 ? ' dia' : ' dias'), l: 'Streak atual' }].forEach(function(s) {
+  [{ v: totalT, l: 'Questões respondidas' }, { v: totalC, l: 'Respostas certas' }, { v: totalT > 0 ? globalPct + '%' : '-', l: 'Taxa global' }, { v: pmXp + ' XP', l: 'XP total' }, { v: pmStreak + (pmStreak === 1 ? ' dia' : ' dias'), l: 'Streak atual' }].forEach(function(s) {
     h += '<div class="card" style="text-align:center;padding:1rem .75rem">'
        + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.75rem;font-weight:900;color:var(--ink);line-height:1">' + s.v + '</div>'
        + '<div style="font-size:.68rem;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-top:4px">' + s.l + '</div>'
@@ -981,14 +981,14 @@ function mat5ProgDownloadPDF() {
   var rows = caps.map(function(c) {
     var m = _mat5CapMeta[c.cap - 1];
     return '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">' + m.label + '</td>'
-      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.total > 0 ? c.correct + ' / ' + c.total : '—') + '</td>'
-      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.total > 0 ? c.pct + '%' : '—') + '</td></tr>';
+      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.total > 0 ? c.correct + ' / ' + c.total : '-') + '</td>'
+      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.total > 0 ? c.pct + '%' : '-') + '</td></tr>';
   }).join('');
   var html = '<div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;padding:24px">'
     + '<h1 style="font-size:20px;margin:0 0 4px">Relatório de Progresso · Matemática 5.º Ano</h1>'
     + '<div style="color:#666;font-size:13px;margin-bottom:16px">3ponto14 · ' + new Date().toLocaleString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' }) + '</div>'
     + '<div style="background:#eef3f9;border:1px solid #5a7fa8;border-radius:8px;padding:12px 16px;margin-bottom:16px">'
-    + '<strong>Taxa global:</strong> ' + (totalT > 0 ? globalPct + '%' : '—') + ' &nbsp;·&nbsp; ' + totalC + ' certas em ' + totalT + ' questões.</div>'
+    + '<strong>Taxa global:</strong> ' + (totalT > 0 ? globalPct + '%' : '-') + ' &nbsp;·&nbsp; ' + totalC + ' certas em ' + totalT + ' questões.</div>'
     + '<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr style="background:#36527a;color:#fff">'
     + '<th style="padding:8px 10px;text-align:left">Capítulo</th><th style="padding:8px 10px">Certas</th><th style="padding:8px 10px">%</th></tr></thead>'
     + '<tbody>' + rows + '</tbody></table></div>';
@@ -997,7 +997,7 @@ function mat5ProgDownloadPDF() {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   TAB FICHAS — gerador rico (multi-capítulo), igual ao 7.º ano.
+   TAB FICHAS - gerador rico (multi-capítulo), igual ao 7.º ano.
    Tipos: resumo teórico, exercícios, teste, minitestes, soluções.
    Seleção de vários capítulos; nível; nº de exercícios; PDF ou HTML.
    ════════════════════════════════════════════════════════════════ */
@@ -1065,7 +1065,8 @@ function _mat5gfExBloco(exs, startNum) {
     if (ex.visual) h += '<div style="margin:4px 0 6px">' + ex.visual + '</div>'; // gráfico/tabela/figura SVG
     if (ex.tipo === 'mc' && ex.opcoes) {
       h += '<div style="font-size:12px;color:#333;padding-left:14px">';
-      ex.opcoes.forEach(function(o, k) { h += '(' + 'ABCD'[k] + ') ' + o + '&nbsp;&nbsp;&nbsp; '; });
+      var _ops = (typeof _normalizaOpcoes === 'function') ? _normalizaOpcoes(ex.opcoes, ex.resposta) : ex.opcoes;
+      _ops.forEach(function(o, k) { h += '(' + 'ABCD'[k] + ') ' + o + '&nbsp;&nbsp;&nbsp; '; });
       h += '</div>';
     } else if (ex.tipo === 'vf') {
       h += '<div style="font-size:12px;color:#333;padding-left:14px">Verdadeiro&nbsp;☐&nbsp;&nbsp;Falso&nbsp;☐</div>';
@@ -1163,7 +1164,7 @@ function mat5gfGerar(formato) {
   var solHTML = '';
   if (_mat5gf.tipos.solucoes && solucoes.length) {
     var lst = solucoes.map(function(s) {
-      return '<div style="font-size:11px;margin-bottom:2px"><strong>' + s.num + '.</strong> ' + s.ex.resposta + (s.ex.expl ? ' — <span style="color:#666">' + s.ex.expl + '</span>' : '') + '</div>';
+      return '<div style="font-size:11px;margin-bottom:2px"><strong>' + s.num + '.</strong> ' + s.ex.resposta + (s.ex.expl ? ' - <span style="color:#666">' + s.ex.expl + '</span>' : '') + '</div>';
     }).join('');
     solHTML = '<div style="page-break-before:always;padding-top:8px"><h2 style="font-size:16px;border-bottom:2px solid #36527a;padding-bottom:4px">Soluções</h2>' + lst + '</div>';
   }
@@ -1201,7 +1202,7 @@ function _mat5Init() {
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _mat5Init);
 else _mat5Init();
 
-/* ═══ GERADOR DE EXERCÍCIOS — Cap 1 Números (fiel ao Prisma 8) ═══ */
+/* ═══ GERADOR DE EXERCÍCIOS - Cap 1 Números (fiel ao Prisma 8) ═══ */
 function rnd_m81(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
 function rndNZ_m81(a, b) { var v; do { v = rnd_m81(a, b); } while (v === 0); return v; }
 function shuffle_m81(arr) { for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; } return arr; }
@@ -1238,7 +1239,7 @@ var dynState_m81 = {
 };
 
 /* ════════════════════════════════════════════════════════════════
-   GERADORES DE EXERCÍCIOS — Matemática 5.º ano
+   GERADORES DE EXERCÍCIOS - Matemática 5.º ano
    Reutilizam os helpers genéricos acima (rnd_m81, shuffle_m81…).
    ════════════════════════════════════════════════════════════════ */
 function _opts4_m5(correct, distractors) {
@@ -1592,8 +1593,8 @@ function buildEx_m5c7(tema, tipo, dif) {
     var maxV = Math.max.apply(null, vals), minV = Math.min.apply(null, vals);
     var totalV = vals.reduce(function (s, v) { return s + v; }, 0);
     var perg, resp, expl;
-    if (modo === 0) { perg = 'Qual é a cor preferida (a barra mais alta) — quantos votos tem?'; resp = maxV; expl = 'A barra mais alta tem ' + maxV + ' votos.'; }
-    else if (modo === 1) { perg = 'Qual é a cor menos votada (a barra mais baixa) — quantos votos tem?'; resp = minV; expl = 'A barra mais baixa tem ' + minV + ' votos.'; }
+    if (modo === 0) { perg = 'Qual é a cor preferida (a barra mais alta) - quantos votos tem?'; resp = maxV; expl = 'A barra mais alta tem ' + maxV + ' votos.'; }
+    else if (modo === 1) { perg = 'Qual é a cor menos votada (a barra mais baixa) - quantos votos tem?'; resp = minV; expl = 'A barra mais baixa tem ' + minV + ' votos.'; }
     else { perg = 'Quantas pessoas foram inquiridas ao todo (soma de todas as barras)?'; resp = totalV; expl = 'Soma das barras: ' + vals.join(' + ') + ' = ' + totalV + '.'; }
     return {
       enun: 'O gráfico mostra a cor preferida de um grupo de alunos. ' + perg,
@@ -1614,7 +1615,7 @@ function buildEx_m5c7(tema, tipo, dif) {
       tema: 'T2 · Frequência'
     };
   }
-  // tema 3 · média (inteira) — por vezes a partir de um gráfico
+  // tema 3 · média (inteira) - por vezes a partir de um gráfico
   var arr; var s;
   do { arr = []; for (var j = 0; j < 4; j++) arr.push(rnd_m81(2, 20)); s = arr.reduce(function (acc, v) { return acc + v; }, 0); } while (s % 4 !== 0);
   if (typeof EduVisual !== 'undefined' && Math.random() < 0.4) {
@@ -1637,7 +1638,7 @@ function buildEx_m5c7(tema, tipo, dif) {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   BANCO DE QUESTÕES (contexto/problema) — Matemática · 5.º ano
+   BANCO DE QUESTÕES (contexto/problema) - Matemática · 5.º ano
    ════════════════════════════════════════════════════════════════ */
 var _mat5Banco = {
   1: [ // Números Naturais

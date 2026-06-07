@@ -307,7 +307,7 @@ function buildEx6(tema,dif){
     var q2='Considera f(x) = '+k+'x. Qual é o valor de f('+x2+')?';
     return {enunciado:q2,resposta:String(k*x2),dica:'f(x) = kx. Substitui x = '+x2+': f('+x2+') = '+k+' × '+x2+' = '+(k*x2)+'.'};
   }
-  return {enunciado:'Questão indisponível.',resposta:'—',dica:''};
+  return {enunciado:'Questão indisponível.',resposta:'-',dica:''};
 }
 
 // ── Topic grid ─────────────────────────────────────────────────────────────

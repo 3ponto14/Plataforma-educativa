@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════════
-   MAT9 HUB — Matemática 9.º ano (6 capítulos)
+   MAT9 HUB - Matemática 9.º ano (6 capítulos)
    Modelo de HUB ÚNICO (ver MODELO BASE no CLAUDE.md). NUNCA páginas
    por capítulo. Tabs: Teoria · Praticar · Fichas · Progresso.
    Capítulos são botões de seleção; conteúdo renderizado por JS.
@@ -31,8 +31,8 @@ var _mat9Subtemas = {
 };
 
 // ═══ FLASHCARDS / TEORIA por capítulo ═══
-// Cap 1 (Números) — conteúdo real, fiel ao Prisma 8.
-// Caps 2-8 — placeholders honestos até serem construídos.
+// Cap 1 (Números) - conteúdo real, fiel ao Prisma 8.
+// Caps 2-8 - placeholders honestos até serem construídos.
 // ═══ FLASHCARDS / TEORIA por capítulo (9.º ano) ═══
 var _mat9Cards = {
   1: [
@@ -90,7 +90,7 @@ var _mat9Cards = {
     { tag: 'Exemplo', q: 'f(x) = 3x − 2, calcula f(4)', a: 'f(4) = 3·4 − 2 = 10.' }
   ],
   4: [
-    { tag: 'Definição', q: 'O que são as razões trigonométricas?', a: 'Num triângulo retângulo, para um ângulo agudo: seno, cosseno e tangente — quocientes entre os lados do triângulo.' },
+    { tag: 'Definição', q: 'O que são as razões trigonométricas?', a: 'Num triângulo retângulo, para um ângulo agudo: seno, cosseno e tangente - quocientes entre os lados do triângulo.' },
     { tag: 'Fórmula', q: 'Definição de seno de um ângulo agudo', a: 'sen(α) = cateto oposto / hipotenusa.' },
     { tag: 'Fórmula', q: 'Definição de cosseno de um ângulo agudo', a: 'cos(α) = cateto adjacente / hipotenusa.' },
     { tag: 'Fórmula', q: 'Definição de tangente de um ângulo agudo', a: 'tg(α) = cateto oposto / cateto adjacente = sen(α)/cos(α).' },
@@ -136,7 +136,7 @@ var _mat9Cards = {
     { tag: 'Definição', q: 'O que é o diagrama de extremos e quartis?', a: 'A "caixa de bigodes": mostra mínimo, Q1, mediana, Q3 e máximo. Resume a distribuição e permite comparar conjuntos.' },
     { tag: 'Definição', q: 'O que é a frequência absoluta e relativa?', a: 'Absoluta (fi): nº de vezes que um valor ocorre. Relativa (fri): fi/n (total), muitas vezes em %.' },
     { tag: 'Definição', q: 'O que é um histograma?', a: 'Um gráfico de barras contíguas para dados agrupados em classes (variáveis contínuas). A área de cada barra representa a frequência.' },
-    { tag: 'Definição', q: 'Variável qualitativa vs quantitativa', a: 'Qualitativa: não numérica (cor, desporto). Quantitativa: numérica — discreta (nº de irmãos) ou contínua (altura).' },
+    { tag: 'Definição', q: 'Variável qualitativa vs quantitativa', a: 'Qualitativa: não numérica (cor, desporto). Quantitativa: numérica - discreta (nº de irmãos) ou contínua (altura).' },
     { tag: 'Estratégia', q: 'Como calcular a mediana?', a: 'Ordena os dados. Se n é ímpar, é o do meio; se n é par, é a média dos dois centrais.' },
     { tag: 'Exemplo', q: 'Média de 10, 12, 14, 16, 18?', a: '(10+12+14+16+18)/5 = 70/5 = 14.' },
     { tag: 'Exemplo', q: 'Mediana de 3, 7, 8, 12, 15?', a: 'Já ordenados, 5 valores (ímpar): a mediana é o central → 8.' },
@@ -288,13 +288,13 @@ function mat9RenderResumoInline() {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   TAB PRATICAR — exercícios gerados com correção imediata
+   TAB PRATICAR - exercícios gerados com correção imediata
    Renderiza tudo no painel (sem páginas externas). Reutiliza os
    motores genéricos do chapter-engine: _capBuildQuizHTML,
    _capCheckAnswer, _capShowFeedback.
    ════════════════════════════════════════════════════════════════ */
 
-// Gerador por capítulo (resolução lazy — os buildEx_m9cN são definidos no fim do ficheiro).
+// Gerador por capítulo (resolução lazy - os buildEx_m9cN são definidos no fim do ficheiro).
 // Só os caps com gerador são "praticáveis".
 function _mat9Gerador(cap) {
   if (cap === 1 && typeof buildEx_m9c1 === 'function') return buildEx_m9c1;
@@ -877,7 +877,7 @@ function mat9RenderProgresso() {
     : globalPct >= 80 ? 'Excelente trabalho! Estás a dominar a matéria.'
     : globalPct >= 60 ? 'Bom progresso! Continua a praticar para consolidar.'
     : globalPct >= 40 ? 'A progredir! Há capítulos que pedem mais atenção.'
-    : 'Começaste! Pratica com regularidade — cada questão conta.';
+    : 'Começaste! Pratica com regularidade - cada questão conta.';
   var icon = totalT === 0 ? 'ph-rocket-launch' : globalPct >= 80 ? 'ph-trophy' : globalPct >= 60 ? 'ph-star' : globalPct >= 40 ? 'ph-trend-up' : 'ph-book-open';
 
   var h = '';
@@ -892,7 +892,7 @@ function mat9RenderProgresso() {
   h += '<div style="background:var(--m9c1-base);border:1.5px solid var(--m9c1-mid);border-radius:16px;padding:1.1rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap">'
      +   '<div style="width:52px;height:52px;border-radius:50%;background:var(--m9c1-mid);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ph ' + icon + '" style="font-size:1.4rem;color:#fff"></i></div>'
      +   '<div style="flex:1;min-width:180px">'
-     +     '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.6rem;font-weight:900;color:var(--ink);line-height:1">' + (totalT > 0 ? globalPct + '<span style="font-size:1rem">%</span>' : '—') + '</div>'
+     +     '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.6rem;font-weight:900;color:var(--ink);line-height:1">' + (totalT > 0 ? globalPct + '<span style="font-size:1rem">%</span>' : '-') + '</div>'
      +     '<div style="font-size:.82rem;color:var(--ink2);margin-top:3px">' + msg + '</div>'
      +   '</div>'
      +   '<button class="btn btn-ghost" onclick="mat9ProgDownloadPDF()" style="font-size:.78rem;padding:7px 14px;display:inline-flex;align-items:center;gap:5px"><i class="ph ph-file-text"></i>Relatório PDF</button>'
@@ -910,7 +910,7 @@ function mat9RenderProgresso() {
 
   // Stat chips
   h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem;margin-bottom:1.5rem">';
-  [{ v: totalT, l: 'Questões respondidas' }, { v: totalC, l: 'Respostas certas' }, { v: totalT > 0 ? globalPct + '%' : '—', l: 'Taxa global' }, { v: pmXp + ' XP', l: 'XP total' }, { v: pmStreak + (pmStreak === 1 ? ' dia' : ' dias'), l: 'Streak atual' }].forEach(function(s) {
+  [{ v: totalT, l: 'Questões respondidas' }, { v: totalC, l: 'Respostas certas' }, { v: totalT > 0 ? globalPct + '%' : '-', l: 'Taxa global' }, { v: pmXp + ' XP', l: 'XP total' }, { v: pmStreak + (pmStreak === 1 ? ' dia' : ' dias'), l: 'Streak atual' }].forEach(function(s) {
     h += '<div class="card" style="text-align:center;padding:1rem .75rem">'
        + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.75rem;font-weight:900;color:var(--ink);line-height:1">' + s.v + '</div>'
        + '<div style="font-size:.68rem;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-top:4px">' + s.l + '</div>'
@@ -987,14 +987,14 @@ function mat9ProgDownloadPDF() {
   var rows = caps.map(function(c) {
     var m = _mat9CapMeta[c.cap - 1];
     return '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">' + m.label + '</td>'
-      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.total > 0 ? c.correct + ' / ' + c.total : '—') + '</td>'
-      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.total > 0 ? c.pct + '%' : '—') + '</td></tr>';
+      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.total > 0 ? c.correct + ' / ' + c.total : '-') + '</td>'
+      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.total > 0 ? c.pct + '%' : '-') + '</td></tr>';
   }).join('');
   var html = '<div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;padding:24px">'
     + '<h1 style="font-size:20px;margin:0 0 4px">Relatório de Progresso · Matemática 9.º Ano</h1>'
     + '<div style="color:#666;font-size:13px;margin-bottom:16px">3ponto14 · ' + new Date().toLocaleString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' }) + '</div>'
     + '<div style="background:#eef3f9;border:1px solid #5a7fa8;border-radius:8px;padding:12px 16px;margin-bottom:16px">'
-    + '<strong>Taxa global:</strong> ' + (totalT > 0 ? globalPct + '%' : '—') + ' &nbsp;·&nbsp; ' + totalC + ' certas em ' + totalT + ' questões.</div>'
+    + '<strong>Taxa global:</strong> ' + (totalT > 0 ? globalPct + '%' : '-') + ' &nbsp;·&nbsp; ' + totalC + ' certas em ' + totalT + ' questões.</div>'
     + '<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr style="background:#36527a;color:#fff">'
     + '<th style="padding:8px 10px;text-align:left">Capítulo</th><th style="padding:8px 10px">Certas</th><th style="padding:8px 10px">%</th></tr></thead>'
     + '<tbody>' + rows + '</tbody></table></div>';
@@ -1003,7 +1003,7 @@ function mat9ProgDownloadPDF() {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   TAB FICHAS — gerador rico (multi-capítulo), igual ao 7.º ano.
+   TAB FICHAS - gerador rico (multi-capítulo), igual ao 7.º ano.
    Tipos: resumo teórico, exercícios, teste, minitestes, soluções.
    Seleção de vários capítulos; nível; nº de exercícios; PDF ou HTML.
    ════════════════════════════════════════════════════════════════ */
@@ -1071,7 +1071,8 @@ function _mat9gfExBloco(exs, startNum) {
     if (ex.visual) h += '<div style="margin:4px 0 6px">' + ex.visual + '</div>'; // gráfico/tabela/figura SVG
     if (ex.tipo === 'mc' && ex.opcoes) {
       h += '<div style="font-size:12px;color:#333;padding-left:14px">';
-      ex.opcoes.forEach(function(o, k) { h += '(' + 'ABCD'[k] + ') ' + o + '&nbsp;&nbsp;&nbsp; '; });
+      var _ops = (typeof _normalizaOpcoes === 'function') ? _normalizaOpcoes(ex.opcoes, ex.resposta) : ex.opcoes;
+      _ops.forEach(function(o, k) { h += '(' + 'ABCD'[k] + ') ' + o + '&nbsp;&nbsp;&nbsp; '; });
       h += '</div>';
     } else if (ex.tipo === 'vf') {
       h += '<div style="font-size:12px;color:#333;padding-left:14px">Verdadeiro&nbsp;☐&nbsp;&nbsp;Falso&nbsp;☐</div>';
@@ -1169,7 +1170,7 @@ function mat9gfGerar(formato) {
   var solHTML = '';
   if (_mat9gf.tipos.solucoes && solucoes.length) {
     var lst = solucoes.map(function(s) {
-      return '<div style="font-size:11px;margin-bottom:2px"><strong>' + s.num + '.</strong> ' + s.ex.resposta + (s.ex.expl ? ' — <span style="color:#666">' + s.ex.expl + '</span>' : '') + '</div>';
+      return '<div style="font-size:11px;margin-bottom:2px"><strong>' + s.num + '.</strong> ' + s.ex.resposta + (s.ex.expl ? ' - <span style="color:#666">' + s.ex.expl + '</span>' : '') + '</div>';
     }).join('');
     solHTML = '<div style="page-break-before:always;padding-top:8px"><h2 style="font-size:16px;border-bottom:2px solid #36527a;padding-bottom:4px">Soluções</h2>' + lst + '</div>';
   }
@@ -1206,7 +1207,7 @@ function _mat9Init() {
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _mat9Init);
 else _mat9Init();
 
-/* ═══ GERADOR DE EXERCÍCIOS — Cap 1 Números (fiel ao Prisma 8) ═══ */
+/* ═══ GERADOR DE EXERCÍCIOS - Cap 1 Números (fiel ao Prisma 8) ═══ */
 function rnd_m81(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
 function rndNZ_m81(a, b) { var v; do { v = rnd_m81(a, b); } while (v === 0); return v; }
 function shuffle_m81(arr) { for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; } return arr; }
@@ -1243,7 +1244,7 @@ var dynState_m81 = {
 };
 
 /* ════════════════════════════════════════════════════════════════
-   GERADORES DE EXERCÍCIOS — Matemática 9.º ano
+   GERADORES DE EXERCÍCIOS - Matemática 9.º ano
    Reutilizam os helpers genéricos acima (rnd_m81, shuffle_m81, sup_m81…).
    ════════════════════════════════════════════════════════════════ */
 
@@ -1753,7 +1754,7 @@ function buildEx_m9c6(tema, tipo, dif) {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   BANCO DE QUESTÕES (reais/ricas) — Matemática · 9.º ano
+   BANCO DE QUESTÕES (reais/ricas) - Matemática · 9.º ano
    ════════════════════════════════════════════════════════════════ */
 var _mat9Banco = {
   1: [ // Números Reais e Inequações

@@ -4,12 +4,12 @@
 // Requer: provas.js (PROVAS_BANCO), shared.js (eduToast)
 
 var _PROVAS_TOPICS = [
-  { key: 'semelhanca',     label: 'Figuras Semelhantes',        sub: 'Cap. 7 — Proporcionalidade, razão de semelhança, áreas' },
-  { key: 'areas',          label: 'Áreas de Figuras',           sub: 'Cap. 3 — Trapézios, paralelogramos, círculos' },
-  { key: 'otd',            label: 'Organização de Dados',       sub: 'Cap. 5 — Tabelas, gráficos, medidas de tendência central' },
-  { key: 'funcoes',        label: 'Funções',                    sub: 'Cap. 6 — Proporcionalidade direta, gráficos, equações' },
-  { key: 'sequencias',     label: 'Sequências e Regularidades', sub: 'Cap. 4 — Termos, leis de formação, expressões algébricas' },
-  { key: 'not_cientifica', label: 'Notação Científica',         sub: 'Cap. 1 — Potências, notação científica, operações' }
+  { key: 'semelhanca',     label: 'Figuras Semelhantes',        sub: 'Cap. 7 - Proporcionalidade, razão de semelhança, áreas' },
+  { key: 'areas',          label: 'Áreas de Figuras',           sub: 'Cap. 3 - Trapézios, paralelogramos, círculos' },
+  { key: 'otd',            label: 'Organização de Dados',       sub: 'Cap. 5 - Tabelas, gráficos, medidas de tendência central' },
+  { key: 'funcoes',        label: 'Funções',                    sub: 'Cap. 6 - Proporcionalidade direta, gráficos, equações' },
+  { key: 'sequencias',     label: 'Sequências e Regularidades', sub: 'Cap. 4 - Termos, leis de formação, expressões algébricas' },
+  { key: 'not_cientifica', label: 'Notação Científica',         sub: 'Cap. 1 - Potências, notação científica, operações' }
 ];
 
 var _PN_FRASES = [
@@ -181,7 +181,7 @@ function _pnRenderQuestion(practice) {
   h += '</div>';
 
   // Enunciado em texto
-  // Imagem recortada do exame — substitui o enunciado em texto, com fallback para texto se a imagem não carregar
+  // Imagem recortada do exame - substitui o enunciado em texto, com fallback para texto se a imagem não carregar
   if (q.examKey && q.page) {
     var _pfx = (window.location.pathname.indexOf('/mat7/') !== -1) ? '../' : '';
     var _cropSrc = _pfx + 'img/exames/crops/' + q.examKey + '/' + q.id + '.png';
@@ -521,7 +521,7 @@ function pnVerProvaImg(btn, examKey, page) {
   var prefix = (window.location.pathname.indexOf('/mat7/') !== -1) ? '../' : '';
   var imgBase = prefix + 'img/exames/' + examKey + '/';
   var h = '<div style="background:#111;border-radius:10px;padding:.75rem">';
-  h += '<div style="color:#fff;font-size:.75rem;font-weight:700;margin-bottom:.5rem;opacity:.7">Prova original — ' + examKey + '</div>';
+  h += '<div style="color:#fff;font-size:.75rem;font-weight:700;margin-bottom:.5rem;opacity:.7">Prova original - ' + examKey + '</div>';
   if (page) {
     var pStr = String(page);
     var p = pStr.length < 2 ? '0' + pStr : pStr;

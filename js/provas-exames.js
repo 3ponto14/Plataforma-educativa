@@ -1,14 +1,14 @@
 // Banco de questões dos Exames Nacionais de Matemática 9.º Ano
-// Extraído das Provas Finais do 3.º Ciclo (Prova 92) — 2019 a 2024
+// Extraído das Provas Finais do 3.º Ciclo (Prova 92) - 2019 a 2024
 // Inclui questões de escolha múltipla e resposta aberta com resolução
 
 var EXAMES_BANCO = {
 
 /* ══════════════════════════════════════════════════════
-   2024 — 1.ª Fase
+   2024 - 1.ª Fase
 ══════════════════════════════════════════════════════ */
 '2024_f1': {
-  label: 'Prova Final 2024 — 1.ª Fase',
+  label: 'Prova Final 2024 - 1.ª Fase',
   ano: 2024,
   questoes: [
     {
@@ -23,7 +23,7 @@ var EXAMES_BANCO = {
       enun: 'Assinala a opção que apresenta um número que pode ser representado por uma <strong>dízima infinita periódica</strong>.',
       opts: ['(A) −49/51', '(B) 2π', '(C) −√30 + √6', '(D) √8'],
       correct: 'A',
-      resolucao: 'Dízima infinita periódica ↔ número racional.\n(A) −49/51 é uma fração ⇒ racional ✔\n(B) 2π — irracional\n(C) −√30 + √6 — irracional\n(D) √8 — irracional\nResposta: <strong>(A)</strong>'
+      resolucao: 'Dízima infinita periódica ↔ número racional.\n(A) −49/51 é uma fração ⇒ racional ✔\n(B) 2π - irracional\n(C) −√30 + √6 - irracional\n(D) √8 - irracional\nResposta: <strong>(A)</strong>'
     },
     {
       id: 'e24f1-3', tipo: 'escolha', tema: 'not_cientifica', examKey: '2024_f1', page: 4,
@@ -126,10 +126,10 @@ var EXAMES_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2024 — 2.ª Fase
+   2024 - 2.ª Fase
 ══════════════════════════════════════════════════════ */
 '2024_f2': {
-  label: 'Prova Final 2024 — 2.ª Fase',
+  label: 'Prova Final 2024 - 2.ª Fase',
   ano: 2024,
   questoes: [
     {
@@ -150,7 +150,7 @@ var EXAMES_BANCO = {
       enun: 'Assinala a opção que apresenta um número que pode ser representado por uma <strong>dízima infinita não periódica</strong>.',
       opts: ['(A) −2√2', '(B) −17/31', '(C) 0,(75)', '(D) √(9/11)'],
       correct: 'A',
-      resolucao: '(A) −2√2 — irracional (não periódica) ✔\n(B) −17/31 — racional\n(C) 0,(75) — racional\n(D) √(9/11) = 3/√11 — irracional, mas igual caso que A\nResposta: <strong>(A)</strong>'
+      resolucao: '(A) −2√2 - irracional (não periódica) ✔\n(B) −17/31 - racional\n(C) 0,(75) - racional\n(D) √(9/11) = 3/√11 - irracional, mas igual caso que A\nResposta: <strong>(A)</strong>'
     },
     {
       id: 'e24f2-3', tipo: 'escolha', tema: 'not_cientifica', examKey: '2024_f2', page: 5,
@@ -229,10 +229,10 @@ var EXAMES_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2023 — 1.ª Fase
+   2023 - 1.ª Fase
 ══════════════════════════════════════════════════════ */
 '2023_f1': {
-  label: 'Prova Final 2023 — 1.ª Fase',
+  label: 'Prova Final 2023 - 1.ª Fase',
   ano: 2023,
   questoes: [
     {
@@ -240,7 +240,7 @@ var EXAMES_BANCO = {
       enun: 'Assinala a opção que apresenta um número que pode ser representado por uma <strong>dízima infinita periódica</strong>.',
       opts: ['(A) 17/5', '(B) π/2', '(C) 13/17', '(D) √13/11'],
       correct: 'C',
-      resolucao: '(A) 17/5 = 3,4 — dízima finita\n(B) π/2 — irracional\n(C) 13/17 — racional ⟹ dízima periódica ✔\n(D) √13/11 — irracional\nResposta: <strong>(C)</strong>'
+      resolucao: '(A) 17/5 = 3,4 - dízima finita\n(B) π/2 - irracional\n(C) 13/17 - racional ⟹ dízima periódica ✔\n(D) √13/11 - irracional\nResposta: <strong>(C)</strong>'
     },
     {
       id: 'e23f1-2', tipo: 'aberta', tema: 'not_cientifica', examKey: '2023_f1', page: 4,
@@ -328,10 +328,10 @@ var EXAMES_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2023 — 2.ª Fase
+   2023 - 2.ª Fase
 ══════════════════════════════════════════════════════ */
 '2023_f2': {
-  label: 'Prova Final 2023 — 2.ª Fase',
+  label: 'Prova Final 2023 - 2.ª Fase',
   ano: 2023,
   questoes: [
     {
@@ -352,7 +352,7 @@ var EXAMES_BANCO = {
       enun: 'Assinala a opção que apresenta um número que pode ser representado por uma <strong>dízima infinita não periódica</strong>.',
       opts: ['(A) 17/23', '(B) 21/17', '(C) √121', '(D) √117'],
       correct: 'D',
-      resolucao: '(A) 17/23 — racional\n(B) 21/17 — racional\n(C) √121 = 11 — inteiro\n(D) √117 — irracional ✔\nResposta: <strong>(D)</strong>'
+      resolucao: '(A) 17/23 - racional\n(B) 21/17 - racional\n(C) √121 = 11 - inteiro\n(D) √117 - irracional ✔\nResposta: <strong>(D)</strong>'
     },
     {
       id: 'e23f2-4', tipo: 'escolha', tema: 'otd', examKey: '2023_f2', page: 5,
@@ -406,7 +406,7 @@ var EXAMES_BANCO = {
       id: 'e23f2-15', tipo: 'aberta', tema: 'sequencias', examKey: '2023_f2',
       enun: 'Para cada equação, assinala o conjunto solução:\n(1) x² + 4 = 0\n(2) x² − 4 = 0\n(3) (x − 4)² = 0',
       opts: null, correct: null,
-      resolucao: '(1) x² = −4 — sem solução real: S = <strong>∅</strong>\n(2) x² = 4 ⟹ x = ±2: S = <strong>{−2; 2}</strong>\n(3) x − 4 = 0 ⟹ x = 4: S = <strong>{4}</strong>'
+      resolucao: '(1) x² = −4 - sem solução real: S = <strong>∅</strong>\n(2) x² = 4 ⟹ x = ±2: S = <strong>{−2; 2}</strong>\n(3) x − 4 = 0 ⟹ x = 4: S = <strong>{4}</strong>'
     },
     {
       id: 'e23f2-16', tipo: 'aberta', tema: 'funcoes', examKey: '2023_f2', page: 13,
@@ -418,10 +418,10 @@ var EXAMES_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2022 — 1.ª Fase
+   2022 - 1.ª Fase
 ══════════════════════════════════════════════════════ */
 '2022_f1': {
-  label: 'Prova Final 2022 — 1.ª Fase',
+  label: 'Prova Final 2022 - 1.ª Fase',
   ano: 2022,
   questoes: [
     {
@@ -485,10 +485,10 @@ var EXAMES_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2022 — 2.ª Fase
+   2022 - 2.ª Fase
 ══════════════════════════════════════════════════════ */
 '2022_f2': {
-  label: 'Prova Final 2022 — 2.ª Fase',
+  label: 'Prova Final 2022 - 2.ª Fase',
   ano: 2022,
   questoes: [
     {
@@ -572,7 +572,7 @@ var EXAMES_BANCO = {
       enun: 'Considera o conjunto P = {√17/10 ; 0,0225 ; √11/15 ; √13 ; 2+π}.\n\nQual das opções apresenta dois números irracionais que pertencem a P?',
       opts: ['(A) −√17/10 e √11/15', '(B) 0,0225 e √13', '(C) 0,0225 e 2 + π', '(D) √13 e 2 + π'],
       correct: 'D',
-      resolucao: '0,0225 = 225/10000 — racional\n√13 — irracional ✔\n2 + π — irracional ✔\nResposta: <strong>(D)</strong>'
+      resolucao: '0,0225 = 225/10000 - racional\n√13 - irracional ✔\n2 + π - irracional ✔\nResposta: <strong>(D)</strong>'
     },
     {
       id: 'e21-2', tipo: 'escolha', tema: 'not_cientifica', examKey: '2021', page: 4,
@@ -603,10 +603,10 @@ var EXAMES_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2019 — 1.ª Fase
+   2019 - 1.ª Fase
 ══════════════════════════════════════════════════════ */
 '2019_f1': {
-  label: 'Prova Final 2019 — 1.ª Fase',
+  label: 'Prova Final 2019 - 1.ª Fase',
   ano: 2019,
   questoes: [
     {
@@ -633,7 +633,7 @@ var EXAMES_BANCO = {
       enun: 'Qual dos seguintes números pode ser representado por uma <strong>dízima infinita não periódica</strong>?',
       opts: ['(A) √7', '(B) 1/7', '(C) ³√64', '(D) 1/64'],
       correct: 'A',
-      resolucao: '(A) √7 — irracional ✔\n(B) 1/7 — racional\n(C) ³√64 = 4 — inteiro\n(D) 1/64 — racional\nResposta: <strong>(A)</strong>'
+      resolucao: '(A) √7 - irracional ✔\n(B) 1/7 - racional\n(C) ³√64 = 4 - inteiro\n(D) 1/64 - racional\nResposta: <strong>(A)</strong>'
     },
     {
       id: 'e19f1-8.1', tipo: 'aberta', tema: 'otd', examKey: '2019_f1', page: 10,
@@ -689,10 +689,10 @@ var EXAMES_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2019 — 2.ª Fase
+   2019 - 2.ª Fase
 ══════════════════════════════════════════════════════ */
 '2019_f2': {
-  label: 'Prova Final 2019 — 2.ª Fase',
+  label: 'Prova Final 2019 - 2.ª Fase',
   ano: 2019,
   questoes: [
     {
@@ -700,7 +700,7 @@ var EXAMES_BANCO = {
       enun: 'Considera o conjunto I = [2π, 2√10]. Qual dos seguintes números pertence a I?',
       opts: ['(A) 6,27', '(B) 6,28', '(C) 6,32', '(D) 6,33'],
       correct: 'C',
-      resolucao: '2π ≈ 6,2832 e 2√10 ≈ 6,3246\nI ≈ [6,2832; 6,3246]\n(A) 6,27 < 2π — fora\n(B) 6,28 < 6,2832 — fora\n(C) 6,32 ∈ I ✔\n(D) 6,33 > 2√10 — fora\nResposta: <strong>(C)</strong>'
+      resolucao: '2π ≈ 6,2832 e 2√10 ≈ 6,3246\nI ≈ [6,2832; 6,3246]\n(A) 6,27 < 2π - fora\n(B) 6,28 < 6,2832 - fora\n(C) 6,32 ∈ I ✔\n(D) 6,33 > 2√10 - fora\nResposta: <strong>(C)</strong>'
     },
     {
       id: 'e19f2-2', tipo: 'aberta', tema: 'not_cientifica', examKey: '2019_f2', page: 4,
@@ -719,7 +719,7 @@ var EXAMES_BANCO = {
       id: 'e19f2-6', tipo: 'aberta', tema: 'not_cientifica', examKey: '2019_f2',
       enun: 'Considera o conjunto A = {√17 ; 34/49 ; ³√125 ; π}.\n\nEscreve os <strong>números racionais</strong> que pertencem ao conjunto A.',
       opts: null, correct: null,
-      resolucao: '√17 — irracional\n34/49 — racional ✔\n³√125 = 5 — inteiro, racional ✔\nπ — irracional\nRacionais: <strong>34/49 e 5</strong>'
+      resolucao: '√17 - irracional\n34/49 - racional ✔\n³√125 = 5 - inteiro, racional ✔\nπ - irracional\nRacionais: <strong>34/49 e 5</strong>'
     },
     {
       id: 'e19f2-7.1', tipo: 'aberta', tema: 'otd', examKey: '2019_f2', page: 10,

@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════════
-   MAT8 HUB — Matemática 8.º ano
+   MAT8 HUB - Matemática 8.º ano
    Modelo de HUB ÚNICO espelhado no mat7 (NUNCA páginas por capítulo).
    Tabs: Teoria · Praticar · Fichas · Progresso.
    Capítulos são botões de seleção; conteúdo renderizado por JS.
@@ -36,8 +36,8 @@ var _mat8Subtemas = {
 };
 
 // ═══ FLASHCARDS / TEORIA por capítulo ═══
-// Cap 1 (Números) — conteúdo real, fiel ao Prisma 8.
-// Caps 2-8 — placeholders honestos até serem construídos.
+// Cap 1 (Números) - conteúdo real, fiel ao Prisma 8.
+// Caps 2-8 - placeholders honestos até serem construídos.
 var _mat8Cards = {
   1: [
     { tag: 'Definição', q: 'O que é uma dízima finita?', a: 'Uma dízima com um número finito de casas decimais. Acontece quando o denominador (reduzido) só tem fatores 2 e/ou 5. Ex: 3/5 = 0,6.' },
@@ -80,7 +80,7 @@ var _mat8Cards = {
     { tag: 'Definição', q: 'O que são vetores equipolentes?', a: 'Vetores com a mesma direção, o mesmo sentido e o mesmo comprimento. São representações do mesmo vetor.' },
     { tag: 'Definição', q: 'O que é o vetor simétrico?', a: 'O vetor com a mesma direção e comprimento mas sentido oposto. As componentes têm o sinal trocado: −v de (3, −2) é (−3, 2).' },
     { tag: 'Regra', q: 'Como somar vetores em coordenadas?', a: 'Somam-se as componentes: u(a, b) + v(c, d) = (a+c, b+d).' },
-    { tag: 'Definição', q: 'O que é uma translação?', a: 'A isometria que desloca todos os pontos a mesma distância, na mesma direção e sentido — segundo um vetor. P(x, y) → (x + vₓ, y + v_y).' },
+    { tag: 'Definição', q: 'O que é uma translação?', a: 'A isometria que desloca todos os pontos a mesma distância, na mesma direção e sentido - segundo um vetor. P(x, y) → (x + vₓ, y + v_y).' },
     { tag: 'Regra', q: 'Como aplicar uma translação a um ponto?', a: 'Soma as componentes do vetor às coordenadas do ponto. Ex: P(2, −5) pela translação de v(3, 7) → (5, 2).' },
     { tag: 'Definição', q: 'O que é uma isometria?', a: 'Uma transformação que preserva as distâncias (e a forma). As quatro isometrias: translação, reflexão, rotação e reflexão deslizante.' },
     { tag: 'Definição', q: 'O que é uma reflexão?', a: 'A isometria que produz a imagem "ao espelho" em relação a uma reta (o eixo de reflexão).' },
@@ -136,7 +136,7 @@ var _mat8Cards = {
     { tag: 'Exemplo', q: 'Qual a diagonal de um ecrã 16 cm × 12 cm?', a: 'd = √(16² + 12²) = √(256+144) = √400 = 20 cm.' },
     { tag: 'Regra', q: 'Como classificar um triângulo pelos lados (com o recíproco)?', a: 'Compara o maior lado² com a soma dos quadrados dos outros: igual → retângulo; maior² menor → acutângulo; maior² maior → obtusângulo.' },
     { tag: 'Definição', q: 'O que é um terno pitagórico?', a: 'Um trio de números inteiros (a, b, c) com a² + b² = c². Ex: (3,4,5). Servem para encontrar triângulos retângulos com lados inteiros.' },
-    { tag: 'Estratégia', q: 'A raiz quadrada não é exata — o que fazer?', a: 'Deixa o resultado na forma de raiz (ex: √20) ou apresenta um valor aproximado às décimas com a calculadora (√20 ≈ 4,5).' }
+    { tag: 'Estratégia', q: 'A raiz quadrada não é exata - o que fazer?', a: 'Deixa o resultado na forma de raiz (ex: √20) ou apresenta um valor aproximado às décimas com a calculadora (√20 ≈ 4,5).' }
   ],
   5: [
     { tag: 'Definição', q: 'O que é uma equação literal?', a: 'Uma equação com mais do que uma letra (variáveis/parâmetros). Pode resolver-se "em ordem a" uma delas, isolando-a. Ex: P = 2(c + l) → c = P/2 − l.' },
@@ -147,7 +147,7 @@ var _mat8Cards = {
     { tag: 'Definição', q: 'O que é uma função linear?', a: 'Uma função afim com b = 0, ou seja y = mx. O gráfico é uma reta que passa na origem. Traduz proporcionalidade direta.' },
     { tag: 'Definição', q: 'O que é o declive?', a: 'O declive m mede a inclinação da reta: quanto y varia quando x aumenta 1 unidade. m = (y₂ − y₁) / (x₂ − x₁).' },
     { tag: 'Definição', q: 'O que é a ordenada na origem?', a: 'É o valor de y quando x = 0 (o b em y = mx + b). É o ponto onde a reta corta o eixo das ordenadas (Oy).' },
-    { tag: 'Regra', q: 'Retas paralelas — que relação têm?', a: 'Duas retas são paralelas se tiverem o mesmo declive (m igual). Ex: y = 2x + 1 e y = 2x − 3 são paralelas.' },
+    { tag: 'Regra', q: 'Retas paralelas - que relação têm?', a: 'Duas retas são paralelas se tiverem o mesmo declive (m igual). Ex: y = 2x + 1 e y = 2x − 3 são paralelas.' },
     { tag: 'Exemplo', q: 'Calcula o declive entre A(1, 2) e B(3, 8)', a: 'm = (8 − 2) / (3 − 1) = 6 / 2 = 3.' },
     { tag: 'Exemplo', q: 'Em y = −4x + 5, qual o declive e a ordenada na origem?', a: 'Declive m = −4; ordenada na origem b = 5.' },
     { tag: 'Definição', q: 'O que é uma função constante?', a: 'Uma função do tipo y = b (declive 0). O gráfico é uma reta horizontal: o valor de y é sempre o mesmo, qualquer que seja x.' },
@@ -159,7 +159,7 @@ var _mat8Cards = {
     { tag: 'Estratégia', q: 'Como traduzir uma situação real numa função afim?', a: 'A parte fixa é a ordenada na origem (b); o valor por unidade é o declive (m). Escreve y = mx + b.' }
   ],
   6: [
-    { tag: 'Definição', q: 'O que é uma equação com duas incógnitas?', a: 'Uma equação com duas letras, como 4x − 2y = 12. Tem infinitas soluções (pares ordenados) — o seu gráfico é uma reta.' },
+    { tag: 'Definição', q: 'O que é uma equação com duas incógnitas?', a: 'Uma equação com duas letras, como 4x − 2y = 12. Tem infinitas soluções (pares ordenados) - o seu gráfico é uma reta.' },
     { tag: 'Definição', q: 'O que é um sistema de equações?', a: 'Um conjunto de duas (ou mais) equações que se consideram em simultâneo. Escreve-se com uma chaveta { ... ; ... }.' },
     { tag: 'Definição', q: 'O que é a solução de um sistema?', a: 'É o par (x, y) que satisfaz TODAS as equações ao mesmo tempo. Graficamente, é o ponto de interseção das retas.' },
     { tag: 'Estratégia', q: 'Método de substituição', a: '1) Isola uma incógnita numa equação. 2) Substitui essa expressão na outra equação. 3) Resolve. 4) Substitui de volta para achar a outra incógnita.' },
@@ -208,7 +208,7 @@ var _mat8Cards = {
     { tag: 'Estratégia', q: 'Qual medida central usar?', a: 'Média: dados sem valores extremos. Mediana: resistente a extremos (ex: salários). Moda: dados qualitativos ou para o valor mais comum.' },
     { tag: 'Exemplo', q: 'Notas de um aluno: 12, 14, 14, 16, 19. Média?', a: '(12+14+14+16+19)/5 = 75/5 = 15 valores.' },
     { tag: 'Exemplo', q: 'P de tirar uma bola vermelha (5 em 20)?', a: 'P = 5/20 = 1/4 = 0,25 = 25%.' },
-    { tag: 'Regra', q: 'Como se exprime uma probabilidade?', a: 'Como fração (1/4), decimal (0,25) ou percentagem (25%) — formas equivalentes. Está sempre entre 0 e 1 (ou 0% e 100%).' },
+    { tag: 'Regra', q: 'Como se exprime uma probabilidade?', a: 'Como fração (1/4), decimal (0,25) ou percentagem (25%) - formas equivalentes. Está sempre entre 0 e 1 (ou 0% e 100%).' },
     { tag: 'Definição', q: 'O que é o diagrama de extremos e quartis?', a: 'Um gráfico (caixa de bigodes) que mostra o mínimo, Q1, mediana, Q3 e o máximo. Resume a distribuição e mostra a dispersão.' },
     { tag: 'Estratégia', q: 'Como construir uma tabela de frequências?', a: 'Conta cada valor/classe (frequência absoluta), divide pelo total (frequência relativa) e acumula (frequência acumulada).' }
   ]
@@ -357,13 +357,13 @@ function mat8RenderResumoInline() {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   TAB PRATICAR — exercícios gerados com correção imediata
+   TAB PRATICAR - exercícios gerados com correção imediata
    Renderiza tudo no painel (sem páginas externas). Reutiliza os
    motores genéricos do chapter-engine: _capBuildQuizHTML,
    _capCheckAnswer, _capShowFeedback.
    ════════════════════════════════════════════════════════════════ */
 
-// Gerador por capítulo (resolução lazy — buildEx_m81 é definida no fim do ficheiro).
+// Gerador por capítulo (resolução lazy - buildEx_m81 é definida no fim do ficheiro).
 // Só os caps com gerador são "praticáveis".
 function _mat8Gerador(cap) {
   if (cap === 1 && typeof buildEx_m81 === 'function') return buildEx_m81;
@@ -942,7 +942,7 @@ function mat8RenderProgresso() {
     : globalPct >= 80 ? 'Excelente trabalho! Estás a dominar a matéria.'
     : globalPct >= 60 ? 'Bom progresso! Continua a praticar para consolidar.'
     : globalPct >= 40 ? 'A progredir! Há capítulos que pedem mais atenção.'
-    : 'Começaste! Pratica com regularidade — cada questão conta.';
+    : 'Começaste! Pratica com regularidade - cada questão conta.';
   var icon = totalT === 0 ? 'ph-rocket-launch' : globalPct >= 80 ? 'ph-trophy' : globalPct >= 60 ? 'ph-star' : globalPct >= 40 ? 'ph-trend-up' : 'ph-book-open';
 
   var h = '';
@@ -957,7 +957,7 @@ function mat8RenderProgresso() {
   h += '<div style="background:var(--m8c1-base);border:1.5px solid var(--m8c1-mid);border-radius:16px;padding:1.1rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap">'
      +   '<div style="width:52px;height:52px;border-radius:50%;background:var(--m8c1-mid);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ph ' + icon + '" style="font-size:1.4rem;color:#fff"></i></div>'
      +   '<div style="flex:1;min-width:180px">'
-     +     '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.6rem;font-weight:900;color:var(--ink);line-height:1">' + (totalT > 0 ? globalPct + '<span style="font-size:1rem">%</span>' : '—') + '</div>'
+     +     '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.6rem;font-weight:900;color:var(--ink);line-height:1">' + (totalT > 0 ? globalPct + '<span style="font-size:1rem">%</span>' : '-') + '</div>'
      +     '<div style="font-size:.82rem;color:var(--ink2);margin-top:3px">' + msg + '</div>'
      +   '</div>'
      +   '<button class="btn btn-ghost" onclick="mat8ProgDownloadPDF()" style="font-size:.78rem;padding:7px 14px;display:inline-flex;align-items:center;gap:5px"><i class="ph ph-file-text"></i>Relatório PDF</button>'
@@ -975,7 +975,7 @@ function mat8RenderProgresso() {
 
   // Stat chips
   h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem;margin-bottom:1.5rem">';
-  [{ v: totalT, l: 'Questões respondidas' }, { v: totalC, l: 'Respostas certas' }, { v: totalT > 0 ? globalPct + '%' : '—', l: 'Taxa global' }, { v: pmXp + ' XP', l: 'XP total' }, { v: pmStreak + (pmStreak === 1 ? ' dia' : ' dias'), l: 'Streak atual' }].forEach(function(s) {
+  [{ v: totalT, l: 'Questões respondidas' }, { v: totalC, l: 'Respostas certas' }, { v: totalT > 0 ? globalPct + '%' : '-', l: 'Taxa global' }, { v: pmXp + ' XP', l: 'XP total' }, { v: pmStreak + (pmStreak === 1 ? ' dia' : ' dias'), l: 'Streak atual' }].forEach(function(s) {
     h += '<div class="card" style="text-align:center;padding:1rem .75rem">'
        + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.75rem;font-weight:900;color:var(--ink);line-height:1">' + s.v + '</div>'
        + '<div style="font-size:.68rem;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-top:4px">' + s.l + '</div>'
@@ -1052,14 +1052,14 @@ function mat8ProgDownloadPDF() {
   var rows = caps.map(function(c) {
     var m = _mat8CapMeta[c.cap - 1];
     return '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">' + m.label + '</td>'
-      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.total > 0 ? c.correct + ' / ' + c.total : '—') + '</td>'
-      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.total > 0 ? c.pct + '%' : '—') + '</td></tr>';
+      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.total > 0 ? c.correct + ' / ' + c.total : '-') + '</td>'
+      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.total > 0 ? c.pct + '%' : '-') + '</td></tr>';
   }).join('');
   var html = '<div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;padding:24px">'
     + '<h1 style="font-size:20px;margin:0 0 4px">Relatório de Progresso · Matemática 8.º Ano</h1>'
     + '<div style="color:#666;font-size:13px;margin-bottom:16px">3ponto14 · ' + new Date().toLocaleString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' }) + '</div>'
     + '<div style="background:#eef3f9;border:1px solid #5a7fa8;border-radius:8px;padding:12px 16px;margin-bottom:16px">'
-    + '<strong>Taxa global:</strong> ' + (totalT > 0 ? globalPct + '%' : '—') + ' &nbsp;·&nbsp; ' + totalC + ' certas em ' + totalT + ' questões.</div>'
+    + '<strong>Taxa global:</strong> ' + (totalT > 0 ? globalPct + '%' : '-') + ' &nbsp;·&nbsp; ' + totalC + ' certas em ' + totalT + ' questões.</div>'
     + '<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr style="background:#36527a;color:#fff">'
     + '<th style="padding:8px 10px;text-align:left">Capítulo</th><th style="padding:8px 10px">Certas</th><th style="padding:8px 10px">%</th></tr></thead>'
     + '<tbody>' + rows + '</tbody></table></div>';
@@ -1068,7 +1068,7 @@ function mat8ProgDownloadPDF() {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   TAB FICHAS — gerador rico (multi-capítulo), igual ao 7.º ano.
+   TAB FICHAS - gerador rico (multi-capítulo), igual ao 7.º ano.
    Tipos: resumo teórico, exercícios, teste, minitestes, soluções.
    Seleção de vários capítulos; nível; nº de exercícios; PDF ou HTML.
    ════════════════════════════════════════════════════════════════ */
@@ -1136,7 +1136,8 @@ function _mat8gfExBloco(exs, startNum) {
     if (ex.visual) h += '<div style="margin:4px 0 6px">' + ex.visual + '</div>'; // gráfico/tabela/figura SVG
     if (ex.tipo === 'mc' && ex.opcoes) {
       h += '<div style="font-size:12px;color:#333;padding-left:14px">';
-      ex.opcoes.forEach(function(o, k) { h += '(' + 'ABCD'[k] + ') ' + o + '&nbsp;&nbsp;&nbsp; '; });
+      var _ops = (typeof _normalizaOpcoes === 'function') ? _normalizaOpcoes(ex.opcoes, ex.resposta) : ex.opcoes;
+      _ops.forEach(function(o, k) { h += '(' + 'ABCD'[k] + ') ' + o + '&nbsp;&nbsp;&nbsp; '; });
       h += '</div>';
     } else if (ex.tipo === 'vf') {
       h += '<div style="font-size:12px;color:#333;padding-left:14px">Verdadeiro&nbsp;☐&nbsp;&nbsp;Falso&nbsp;☐</div>';
@@ -1234,7 +1235,7 @@ function mat8gfGerar(formato) {
   var solHTML = '';
   if (_mat8gf.tipos.solucoes && solucoes.length) {
     var lst = solucoes.map(function(s) {
-      return '<div style="font-size:11px;margin-bottom:2px"><strong>' + s.num + '.</strong> ' + s.ex.resposta + (s.ex.expl ? ' — <span style="color:#666">' + s.ex.expl + '</span>' : '') + '</div>';
+      return '<div style="font-size:11px;margin-bottom:2px"><strong>' + s.num + '.</strong> ' + s.ex.resposta + (s.ex.expl ? ' - <span style="color:#666">' + s.ex.expl + '</span>' : '') + '</div>';
     }).join('');
     solHTML = '<div style="page-break-before:always;padding-top:8px"><h2 style="font-size:16px;border-bottom:2px solid #36527a;padding-bottom:4px">Soluções</h2>' + lst + '</div>';
   }
@@ -1272,7 +1273,7 @@ function _mat8Init() {
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _mat8Init);
 else _mat8Init();
 
-/* ═══ GERADOR DE EXERCÍCIOS — Cap 1 Números (fiel ao Prisma 8) ═══ */
+/* ═══ GERADOR DE EXERCÍCIOS - Cap 1 Números (fiel ao Prisma 8) ═══ */
 function rnd_m81(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
 function rndNZ_m81(a, b) { var v; do { v = rnd_m81(a, b); } while (v === 0); return v; }
 function shuffle_m81(arr) { for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; } return arr; }
@@ -1447,7 +1448,7 @@ function buildEx_m81(tema, tipo, dif) {
 
   // ── TEMA 5 · Expressões numéricas com racionais ──
   if (tema === '5') {
-    // Variante de contexto (problema com percentagem) — aumenta a variedade
+    // Variante de contexto (problema com percentagem) - aumenta a variedade
     if (!easy && Math.random() < 0.4) {
       var ctx5 = [
         { nome: 'A Sueli recebe uma comissão de p% sobre as suas vendas', vendas: true },
@@ -1677,7 +1678,7 @@ function buildEx_m81(tema, tipo, dif) {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   GERADOR — Cap 3 Polinómios e Equações do 1.º grau (Prisma 8)
+   GERADOR - Cap 3 Polinómios e Equações do 1.º grau (Prisma 8)
    Temas:
     1 Monómios (coeficiente, grau, semelhantes)
     2 Operações com monómios (produto, soma de semelhantes)
@@ -1897,12 +1898,12 @@ function buildEx_m83(tema, tipo, dif) {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   GERADOR — Cap 4 Teorema de Pitágoras e Áreas (Prisma 8)
+   GERADOR - Cap 4 Teorema de Pitágoras e Áreas (Prisma 8)
    Temas:
-    1 Pitágoras — calcular a hipotenusa
-    2 Pitágoras — calcular um cateto
-    3 Recíproco — verificar se é triângulo retângulo
-    4 Aplicações — diagonal de quadrado/retângulo, áreas
+    1 Pitágoras - calcular a hipotenusa
+    2 Pitágoras - calcular um cateto
+    3 Recíproco - verificar se é triângulo retângulo
+    4 Aplicações - diagonal de quadrado/retângulo, áreas
    Usa ternos pitagóricos para respostas exatas.
    ════════════════════════════════════════════════════════════════ */
 var _TERNOS_m84 = [[3,4,5],[6,8,10],[5,12,13],[8,15,17],[9,12,15],[7,24,25],[20,21,29],[10,24,26]];
@@ -2025,7 +2026,7 @@ function buildEx_m84(tema, tipo, dif) {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   GERADOR — Cap 5 Equações Literais e Funções (Prisma 8)
+   GERADOR - Cap 5 Equações Literais e Funções (Prisma 8)
    Temas:
     1 Equações literais (resolver em ordem a uma variável)
     2 Calcular imagem de uma função f(x)
@@ -2156,11 +2157,11 @@ function buildEx_m85(tema, tipo, dif) {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   GERADOR — Cap 6 Sistemas de Equações (Prisma 8)
+   GERADOR - Cap 6 Sistemas de Equações (Prisma 8)
    Temas:
     1 Equação com duas incógnitas (verificar par solução)
-    2 Resolver sistema — valor de x
-    3 Resolver sistema — valor de y
+    2 Resolver sistema - valor de x
+    3 Resolver sistema - valor de y
     4 Verificar se um par é solução do sistema
    Soluções inteiras controladas (constrói o sistema a partir de (x,y)).
    ════════════════════════════════════════════════════════════════ */
@@ -2265,7 +2266,7 @@ function buildEx_m86(tema, tipo, dif) {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   GERADOR — Cap 8 Dados e Probabilidades (Prisma 8)
+   GERADOR - Cap 8 Dados e Probabilidades (Prisma 8)
    Temas:
     1 Média
     2 Moda
@@ -2464,14 +2465,14 @@ function buildEx_m88(tema, tipo, dif) {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   GERADOR — Cap 7 Figuras no Espaço e Volumes (Prisma 8)
+   GERADOR - Cap 7 Figuras no Espaço e Volumes (Prisma 8)
    Temas:
     1 Volume de prisma (Abase × altura)
-    2 Volume de cilindro (π r² h) — resposta "kπ"
+    2 Volume de cilindro (π r² h) - resposta "kπ"
     3 Volume de pirâmide (1/3 Abase × altura)
-    4 Volume de cone (1/3 π r² h) — resposta "kπ"
-    5 Volume de esfera (4/3 π r³) — resposta "kπ"
-    6 Área do círculo (π r²) — resposta "kπ"
+    4 Volume de cone (1/3 π r² h) - resposta "kπ"
+    5 Volume de esfera (4/3 π r³) - resposta "kπ"
+    6 Área do círculo (π r²) - resposta "kπ"
    Respostas com π usam tipo 'fill_frac' (comparação textual).
    ════════════════════════════════════════════════════════════════ */
 function buildEx_m87(tema, tipo, dif) {
@@ -2483,7 +2484,7 @@ function buildEx_m87(tema, tipo, dif) {
 
   // ── TEMA 1 · Volume de prisma ──
   if (tema === '1') {
-    // Variante de contexto (caixa / aquário) — paralelepípedo c × l × a
+    // Variante de contexto (caixa / aquário) - paralelepípedo c × l × a
     if (!easy && Math.random() < 0.4) {
       var c1 = rnd_m81(4, 12), l1 = rnd_m81(3, 8), a1 = rnd_m81(2, 6);
       var Vcx = c1 * l1 * a1;
@@ -2623,7 +2624,7 @@ function buildEx_m87(tema, tipo, dif) {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   GERADOR — Cap 2 Vetores e Isometrias (Prisma 8)
+   GERADOR - Cap 2 Vetores e Isometrias (Prisma 8)
    Capítulo muito visual; o gerador cobre o que é viável sem figura:
     1 Translação em coordenadas (somar vetor a ponto)
     2 Componentes da soma de vetores
@@ -2744,7 +2745,7 @@ function buildEx_m82(tema, tipo, dif) {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   BANCO DE QUESTÕES (contexto/problema) — Matemática · 8.º ano
+   BANCO DE QUESTÕES (contexto/problema) - Matemática · 8.º ano
    ════════════════════════════════════════════════════════════════ */
 var _mat8Banco = {
   1: [ // Números (racionais, potências, notação científica)

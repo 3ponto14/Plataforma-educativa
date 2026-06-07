@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════════
-   VISUAIS SVG — tabelas e gráficos desenhados por código (sem imagens)
+   VISUAIS SVG - tabelas e gráficos desenhados por código (sem imagens)
    Usados nos exercícios (campo ex.visual) e na Teoria.
    Todas as funções devolvem uma string HTML/SVG pronta a injetar.
    Cores: aceitam um "color" (cor do capítulo) para coerência.
@@ -59,7 +59,7 @@ var EduVisual = (function () {
   }
 
   // ── Gráfico circular (pizza) ──
-  // data: [{label, value}]  — usa percentagens
+  // data: [{label, value}]  - usa percentagens
   function circular(data, palette) {
     palette = palette || ['#5a7fa8', '#4d978f', '#b06a6a', '#a8854d', '#7d6aa8', '#5e9676'];
     var total = data.reduce(function (s, d) { return s + d.value; }, 0) || 1;

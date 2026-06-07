@@ -6,11 +6,11 @@
   "flashcardsStorageKey": "edupt_fc1",
 
   "temas": [
-    "Tema 1 — Conjunto dos Inteiros",
-    "Tema 2 — Valor Absoluto e Simétrico",
-    "Tema 3 — Adição de Inteiros",
-    "Tema 4 — Subtração e Adição Algébrica",
-    "Tema 5 — Expressões com Parênteses"
+    "Tema 1 - Conjunto dos Inteiros",
+    "Tema 2 - Valor Absoluto e Simétrico",
+    "Tema 3 - Adição de Inteiros",
+    "Tema 4 - Subtração e Adição Algébrica",
+    "Tema 5 - Expressões com Parênteses"
   ],
 
   "temaNomes": {
@@ -28,9 +28,9 @@
     "2:absoluto": "Valor Absoluto |a|",
     "2:simetrico": "Simétrico de um Número",
     "2:comparar": "Comparar usando Valor Absoluto",
-    "3:mesmo_sinal": "Adição — Mesmo Sinal",
-    "3:sinais_dif": "Adição — Sinais Diferentes",
-    "3:contexto": "Adição — Problemas de Contexto",
+    "3:mesmo_sinal": "Adição - Mesmo Sinal",
+    "3:sinais_dif": "Adição - Sinais Diferentes",
+    "3:contexto": "Adição - Problemas de Contexto",
     "4:subtracao": "Subtração de Inteiros",
     "4:adicao_alg": "Adição Algébrica",
     "4:simplificar": "Simplificar Expressões",
@@ -40,9 +40,9 @@
   },
 
   "flashcards": [
-    { "tag": "Definição", "q": "O que são os números inteiros (ℤ)?", "a": "ℤ = {…, −3, −2, −1, 0, 1, 2, 3, …} — todos os números inteiros positivos, negativos e o zero." },
+    { "tag": "Definição", "q": "O que são os números inteiros (ℤ)?", "a": "ℤ = {…, −3, −2, −1, 0, 1, 2, 3, …} - todos os números inteiros positivos, negativos e o zero." },
     { "tag": "Hierarquia", "q": "Qual a relação entre ℕ e ℤ?", "a": "ℕ ⊂ ℤ. Todos os naturais são inteiros, mas nem todos os inteiros são naturais (ex: −5 ∈ ℤ mas −5 ∉ ℕ)." },
-    { "tag": "Definição", "q": "O que é ℤ⁺ e ℤ⁻?", "a": "ℤ⁺ = {1, 2, 3, …} — inteiros positivos. ℤ⁻ = {…, −3, −2, −1} — inteiros negativos. O 0 não pertence a nenhum deles." },
+    { "tag": "Definição", "q": "O que é ℤ⁺ e ℤ⁻?", "a": "ℤ⁺ = {1, 2, 3, …} - inteiros positivos. ℤ⁻ = {…, −3, −2, −1} - inteiros negativos. O 0 não pertence a nenhum deles." },
     { "tag": "Definição", "q": "O que é o valor absoluto |a|?", "a": "|a| é a distância de a ao zero na reta numérica. |a| ≥ 0 sempre. Exemplo: |−5| = 5, |3| = 3." },
     { "tag": "Regra", "q": "Como calcular |a| para a < 0?", "a": "Se a < 0, então |a| = −a (inverte o sinal). Exemplo: |−7| = −(−7) = 7." },
     { "tag": "Definição", "q": "O que é o simétrico de a?", "a": "O simétrico de a é −a (sinal oposto). a + (−a) = 0. Exemplo: simétrico de 5 é −5; simétrico de −3 é 3." },

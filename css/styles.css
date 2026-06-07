@@ -23,7 +23,7 @@
   --c6-base:#e8f4f2;--c6-mid:#5a9e94;--c6-deep:#33706a;--c6-pale:#f0f9f8;
   --c7-base:#f0eaf8;--c7-mid:#7c5ea8;--c7-deep:#52397a;--c7-pale:#f8f4fc;
   --c8-base:#fdf0e8;--c8-mid:#c4733a;--c8-deep:#8a4d1f;--c8-pale:#fef7f2;
-  /* Matemática 8.º Ano — paleta própria (tons azul/teal/índigo) */
+  /* Matemática 8.º Ano - paleta própria (tons azul/teal/índigo) */
   --m8c1-base:#e9f0f6;--m8c1-mid:#5a7fa8;--m8c1-deep:#36527a;--m8c1-pale:#f1f6fb;
   --m8c2-base:#e6f2f1;--m8c2-mid:#4d978f;--m8c2-deep:#2e645e;--m8c2-pale:#eff9f8;
   --m8c3-base:#eee9f6;--m8c3-mid:#7d6aa8;--m8c3-deep:#50407a;--m8c3-pale:#f5f1fb;
@@ -32,14 +32,14 @@
   --m8c6-base:#f4eee6;--m8c6-mid:#a8854d;--m8c6-deep:#7a5e30;--m8c6-pale:#fbf6ef;
   --m8c7-base:#e6eef4;--m8c7-mid:#4f86b0;--m8c7-deep:#305a7a;--m8c7-pale:#eff6fb;
   --m8c8-base:#f2eaf2;--m8c8-mid:#9a5e96;--m8c8-deep:#6a3c66;--m8c8-pale:#faf2f9;
-  /* Matemática 9.º Ano — paleta própria (tons terracota/verde/borgonha), 6 capítulos */
+  /* Matemática 9.º Ano - paleta própria (tons terracota/verde/borgonha), 6 capítulos */
   --m9c1-base:#f6ece6;--m9c1-mid:#b06a3a;--m9c1-deep:#7a4420;--m9c1-pale:#fbf4ef;
   --m9c2-base:#eef0e6;--m9c2-mid:#7f8a4d;--m9c2-deep:#545c30;--m9c2-pale:#f6f8ef;
   --m9c3-base:#e6f0ee;--m9c3-mid:#4d8f87;--m9c3-deep:#2e5e58;--m9c3-pale:#eff8f6;
   --m9c4-base:#f3e9ef;--m9c4-mid:#9c5e80;--m9c4-deep:#6a3c54;--m9c4-pale:#faf2f7;
   --m9c5-base:#e8edf4;--m9c5-mid:#5a72a0;--m9c5-deep:#384a72;--m9c5-pale:#eff3fb;
   --m9c6-base:#f4ece6;--m9c6-mid:#a87a4d;--m9c6-deep:#785230;--m9c6-pale:#fbf5ef;
-  /* Matemática 5.º Ano — paleta própria (tons verde-fresco), 7 capítulos */
+  /* Matemática 5.º Ano - paleta própria (tons verde-fresco), 7 capítulos */
   --m5c1-base:#e6f3ec;--m5c1-mid:#4a9e6e;--m5c1-deep:#2c6044;--m5c1-pale:#eff9f3;
   --m5c2-base:#e8f1e6;--m5c2-mid:#6a9e4a;--m5c2-deep:#44602c;--m5c2-pale:#f1f8ef;
   --m5c3-base:#e6f0f2;--m5c3-mid:#4a8e9e;--m5c3-deep:#2c5660;--m5c3-pale:#eff7f9;
@@ -47,7 +47,7 @@
   --m5c5-base:#e6f2ee;--m5c5-mid:#4a9e88;--m5c5-deep:#2c6054;--m5c5-pale:#eff9f6;
   --m5c6-base:#eaf0e6;--m5c6-mid:#7a9e4a;--m5c6-deep:#4e602c;--m5c6-pale:#f3f8ef;
   --m5c7-base:#e6f1ea;--m5c7-mid:#4a9e72;--m5c7-deep:#2c6046;--m5c7-pale:#eff9f3;
-  /* Matemática 6.º Ano — paleta própria (tons laranja/coral), 7 capítulos */
+  /* Matemática 6.º Ano - paleta própria (tons laranja/coral), 7 capítulos */
   --m6c1-base:#f6ece6;--m6c1-mid:#c47a4a;--m6c1-deep:#7a4a2c;--m6c1-pale:#fbf4ef;
   --m6c2-base:#f6e8e6;--m6c2-mid:#c45a4a;--m6c2-deep:#7a342c;--m6c2-pale:#fbf1ef;
   --m6c3-base:#f6eee6;--m6c3-mid:#c48e4a;--m6c3-deep:#7a562c;--m6c3-pale:#fbf6ef;
@@ -55,14 +55,14 @@
   --m6c5-base:#f4e6f0;--m6c5-mid:#a84a8e;--m6c5-deep:#682c56;--m6c5-pale:#faeff7;
   --m6c6-base:#f6ebe6;--m6c6-mid:#c4684a;--m6c6-deep:#7a3e2c;--m6c6-pale:#fbf2ef;
   --m6c7-base:#f6e6e8;--m6c7-mid:#c44a5a;--m6c7-deep:#7a2c38;--m6c7-pale:#fbeff1;
-  /* Matemática 10.º Ano — paleta própria (azul-petróleo/marinho), 6 capítulos */
+  /* Matemática 10.º Ano - paleta própria (azul-petróleo/marinho), 6 capítulos */
   --m10c1-base:#e6edf2;--m10c1-mid:#3f6b8a;--m10c1-deep:#264458;--m10c1-pale:#eff4f8;
   --m10c2-base:#e6f0f0;--m10c2-mid:#3f8a84;--m10c2-deep:#265854;--m10c2-pale:#eff8f7;
   --m10c3-base:#e8ecf4;--m10c3-mid:#4a5ea0;--m10c3-deep:#2e3a66;--m10c3-pale:#eff2fb;
   --m10c4-base:#e6eef2;--m10c4-mid:#3f7a9a;--m10c4-deep:#264e64;--m10c4-pale:#eff6fa;
   --m10c5-base:#e9eaf2;--m10c5-mid:#5a5ea0;--m10c5-deep:#383a66;--m10c5-pale:#f1f1fb;
   --m10c6-base:#e6f1ee;--m10c6-mid:#3f9a7e;--m10c6-deep:#266450;--m10c6-pale:#eff9f5;
-  /* Matemática 11.º Ano — paleta própria (ardósia/grafite-azulado), 6 capítulos */
+  /* Matemática 11.º Ano - paleta própria (ardósia/grafite-azulado), 6 capítulos */
   --m11c1-base:#eaedef;--m11c1-mid:#5a6e7e;--m11c1-deep:#36454f;--m11c1-pale:#f2f5f6;
   --m11c2-base:#ece9ef;--m11c2-mid:#6e5a7e;--m11c2-deep:#45364f;--m11c2-pale:#f5f2f6;
   --m11c3-base:#e9eef0;--m11c3-mid:#4a7a8a;--m11c3-deep:#2e4e58;--m11c3-pale:#f1f7f8;
@@ -228,7 +228,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 .mat7-chk-box.checked::after{content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:.65rem;color:#fff;font-weight:900;line-height:1}
 
 
-/* ═══ MATH VIEW — Portal Theme ═══ */
+/* ═══ MATH VIEW - Portal Theme ═══ */
 .math-view{background:var(--cream);color:var(--ink);font-family:'Montserrat',sans-serif;min-height:100vh;overflow-x:hidden}
 .math-view::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(circle at 10% 15%,rgba(81,104,96,.05) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(171,151,144,.04) 0%,transparent 40%)}
 
@@ -245,7 +245,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 .math-view header h1 em{display:block;color:var(--c2-mid);font-style:normal}
 .math-view header p{color:var(--ink3);font-size:1rem;margin-top:.75rem;font-style:italic}
 
-/* tabs — mobile-first scroll */
+/* tabs - mobile-first scroll */
 .tabs{position:sticky;top:60px;z-index:90;display:flex;gap:.5rem;padding:.75rem 1.25rem;border-bottom:1px solid var(--border);background:rgba(253,249,243,.97);backdrop-filter:blur(12px);overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;scrollbar-width:none;justify-content:flex-start}
 .tabs::-webkit-scrollbar{display:none}
 .tabs::after{content:'';flex-shrink:0;width:.5rem}
@@ -355,7 +355,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 :focus-visible{outline:3px solid var(--c2-mid);outline-offset:2px}
 .option-btn:focus-visible{outline:3px solid var(--c2-mid);outline-offset:2px;border-color:var(--c2-mid)}
 .fill-input:focus-visible{outline:3px solid var(--c2-mid);outline-offset:1px}
-/* Fix contrast: ink4 was too light — boost to ink3 for body text contexts */
+/* Fix contrast: ink4 was too light - boost to ink3 for body text contexts */
 .hero-stat .l,.score-label{color:var(--ink3)!important}
 /* ── Timeline component ── */
 .tl-item{display:flex;gap:1.1rem;align-items:flex-start;margin-bottom:1.25rem;position:relative}
@@ -457,7 +457,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 .gf-share-btn:hover{background:var(--c2-pale)}
 .gf-share-btn.copied{background:var(--c2-mid);color:#fff;border-color:var(--c2-mid)}
 
-/* ═══ DESIGN — Original colours + Dynamic floating elements ═══ */
+/* ═══ DESIGN - Original colours + Dynamic floating elements ═══ */
 
 /* Confetti burst on correct answer */
 @keyframes confettiBurst {
@@ -505,7 +505,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
   animation: floatUp linear infinite;
 }
 
-/* ── Option buttons — more tactile ── */
+/* ── Option buttons - more tactile ── */
 .option-btn {
   border-radius: 14px !important;
   padding: 13px 18px !important;
@@ -535,7 +535,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 }
 .option-btn.wrong .opt-label { background: #f87171 !important; color:#fff !important; }
 
-/* ── Fill input — bigger ── */
+/* ── Fill input - bigger ── */
 .fill-input {
   border-radius: 14px !important;
   padding: 11px 18px !important;
@@ -558,7 +558,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
   border-color: #f87171 !important; color: #7f1d1d !important;
 }
 
-/* ── Buttons — bounce ── */
+/* ── Buttons - bounce ── */
 .check-btn {
   border-radius: 14px !important;
   padding: 12px 28px !important;
@@ -922,7 +922,7 @@ footer{background:linear-gradient(135deg,#4D4D4D,#2a3330,#516860)!important}
 /* Cap 4: tab-based sections */
 #view-math4 .section4 { display: none; }
 #view-math4 .section4.active { display: block; }
-/* Tabs are available but hidden by default — only shown when navigating directly */
+/* Tabs are available but hidden by default - only shown when navigating directly */
 #view-math .tabs, #view-math #tabs-cap1 { display: none; }
 #view-math2 #tabs2 { display: none; }
 #view-math3 #tabs3 { display: none; }
@@ -1032,12 +1032,12 @@ footer{background:linear-gradient(135deg,#4D4D4D,#2a3330,#516860)!important}
 #fc4-front,#fc4-back{position:absolute;inset:0;border-radius:var(--p-radius);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 #fc4-front{background:var(--white);border:1.5px solid var(--border)}
 #fc4-back{background:var(--c2-pale);border:1.5px solid rgba(81,104,96,.2);transform:rotateY(180deg)}
-/* FLASHCARD SRS — modo selector */
+/* FLASHCARD SRS - modo selector */
 .fc-mode-btn{padding:6px 14px;background:var(--white);border:1.5px solid var(--border);border-radius:999px;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;color:var(--ink3);cursor:pointer;transition:all .18s}
 .fc-mode-btn:hover{border-color:var(--c2-mid);color:var(--c2-mid)}
 .fc-mode-btn.active{background:var(--c2-mid);border-color:var(--c2-mid);color:#fff;box-shadow:0 3px 10px rgba(81,104,96,.25)}
-/* FLASHCARD SRS — estado da carta (badge canto) */
-/* FLASHCARD SRS — botões de confiança */
+/* FLASHCARD SRS - estado da carta (badge canto) */
+/* FLASHCARD SRS - botões de confiança */
 .fc-conf-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:.55rem .8rem;background:var(--white);border:1.5px solid var(--border);border-radius:12px;font-family:'Montserrat',sans-serif;cursor:pointer;transition:all .18s;min-width:72px}
 .fc-conf-btn span{font-size:.78rem;font-weight:700;color:var(--ink2)}
 .fc-conf-btn small{font-size:.62rem;color:var(--ink4);font-weight:500}
@@ -1046,15 +1046,15 @@ footer{background:linear-gradient(135deg,#4D4D4D,#2a3330,#516860)!important}
 .fc-conf-1:hover,.fc-conf-1.selected{border-color:#e67e22;background:#fff3e0}
 .fc-conf-2:hover,.fc-conf-2.selected{border-color:#3498db;background:#e8f4fd}
 .fc-conf-3:hover,.fc-conf-3.selected{border-color:var(--correct);background:#edf4f1}
-/* FLASHCARD SRS — dots coloridos por estado */
+/* FLASHCARD SRS - dots coloridos por estado */
 /* EXAME TIMER */
 .exame-timer-bar{position:sticky;top:120px;z-index:50;background:rgba(253,249,243,.95);backdrop-filter:blur(8px);border:1.5px solid var(--border);border-radius:var(--p-radius);padding:.9rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;box-shadow:var(--shadow)}
 /* PROGRESSO */
 .prog-section-row{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}
 .prog-section-name{font-size:.82rem;font-weight:600;color:var(--ink2);min-width:140px}
 .prog-pct{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--ink4);min-width:36px;text-align:right}
-/* DOWNLOAD CARD — flex layout (Cap 4 style with dl-icon/dl-body/dl-btn) */
-/* DOWNLOAD CARD — grid layout (Cap 1-3 style inside download-grid) */
+/* DOWNLOAD CARD - flex layout (Cap 4 style with dl-icon/dl-body/dl-btn) */
+/* DOWNLOAD CARD - grid layout (Cap 1-3 style inside download-grid) */
 .dl-btn{background:linear-gradient(135deg,#516860,#77998E);color:#fff;border:none;border-radius:999px;padding:8px 18px;font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;flex-shrink:0;transition:opacity .2s}
 .dl-btn:hover{opacity:.9}
 /* JOGO */
@@ -1201,7 +1201,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 }
 
 /* ══════════════════════════════════════════
-   JOGO DO 24 — CSS
+   JOGO DO 24 - CSS
 ══════════════════════════════════════════ */
 .j24-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--p-radius);padding:1.5rem 1.75rem;box-shadow:var(--shadow);margin-top:1.5rem}
 .j24-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
@@ -1239,7 +1239,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 .j24-status.step3{color:var(--c2-deep)}
 
 /* ══════════════════════════════════════════
-   JOGOS — TABS + 4 GAMES
+   JOGOS - TABS + 4 GAMES
 ══════════════════════════════════════════ */
 
 /* ── Game tab bar ── */
@@ -1318,7 +1318,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 .hanoi-moves{font-family:'JetBrains Mono',monospace;font-size:.88rem;color:var(--ink3);font-weight:600}
 
 /* ═══ MAT7 HUB STYLES ═══ */
-/* ═══ 3ponto14 HUB — youthful redesign ═══ */
+/* ═══ 3ponto14 HUB - youthful redesign ═══ */
 
 /* ── Top bar ── */
 .mat7-hub-bar {
@@ -1360,7 +1360,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
   letter-spacing: .03em;
 }
 
-/* ── Tab bar — pill style ── */
+/* ── Tab bar - pill style ── */
 .mat7-hub-tabbar {
   display: flex; gap: 6px; overflow-x: auto;
   padding: .65rem 1.5rem;
@@ -1417,7 +1417,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
   line-height: 1.5;
 }
 
-/* ── Chapter selector — capsule toggles ── */
+/* ── Chapter selector - capsule toggles ── */
 .mat7-cap-btn {
   display: inline-flex; align-items: center; gap: .4rem;
   padding: .5rem .9rem;
@@ -1833,7 +1833,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
   }
   .card { border-radius: 8px !important; }
 
-  /* Options — show answers clearly */
+  /* Options - show answers clearly */
   .option-btn { border: 1px solid #ddd !important; background: #fafafa !important; box-shadow: none !important; }
   .option-btn.correct { background: #edf4f1 !important; border-color: #516860 !important; }
 
@@ -1852,7 +1852,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
   @page { size: A4; margin: 18mm 16mm 18mm 16mm; }
 }
 
-/* Print header — hidden on screen, shown on print */
+/* Print header - hidden on screen, shown on print */
 #print-header {
   display: none;
   border-bottom: 2px solid #516860;
@@ -2034,7 +2034,7 @@ body.dark-mode .pom-mode-btn.active{background:#2e2e2e!important;}
 .calc-btn.eq:active{opacity:.85;}
 .calc-btn.clr{background:var(--cs-base);color:var(--cs-deep);}
 .calc-btn.zero{grid-column:span 2;}
-/* Calculadora roxa — página de exames */
+/* Calculadora roxa - página de exames */
 [data-no-pomodoro] #calc-fab{background:linear-gradient(135deg,#7570a8,#9b96d4);box-shadow:0 6px 20px rgba(117,112,168,.4);}
 [data-no-pomodoro] #calc-fab:hover{box-shadow:0 10px 28px rgba(117,112,168,.55);}
 [data-no-pomodoro] #calc-display{background:linear-gradient(135deg,#2a2848,#484580);}
@@ -2151,7 +2151,7 @@ body.dark-mode .pom-mode-btn.active{background:#2e2e2e!important;}
 .er2-modal-footer{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;}
 .er2-unlocked-msg{text-align:center;padding:.6rem;background:#1a3a1a;border:2px solid #0a2a0a;color:#80e080;font-weight:800;font-size:.84rem;margin-bottom:.6rem;}
 
-/* Final lock — chest style */
+/* Final lock - chest style */
 .er2-final-lock{margin-top:.7rem;padding:.9rem 1rem;background:#8b7355;border:3px solid #3d2e0a;box-shadow:inset 0 0 0 2px #a08860,2px 2px 0 #2a1e06;}
 .er2-final-lock h3{font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:900;color:#3d2e0a;margin-bottom:.2rem;text-transform:uppercase;letter-spacing:.05em;}
 .er2-final-lock p{font-size:.73rem;color:#5c4a1e;margin-bottom:.7rem;line-height:1.5;}
@@ -2371,7 +2371,7 @@ body.dark-mode .pom-mode-btn.active{background:#2e2e2e!important;}
 .pn-prog-fill{height:100%;background:var(--sage-dark);border-radius:999px;transition:width .4s ease}
 .pn-prog-label{font-size:.78rem;font-weight:700;color:var(--ink4);white-space:nowrap}
 
-/* Provas panel wrapper — aligns everything to same width */
+/* Provas panel wrapper - aligns everything to same width */
 .pn-panel-wrap{max-width:680px;margin:0 auto}
 /* Question card */
 .pn-practice-wrap{max-width:680px;margin:0 auto}
@@ -2474,7 +2474,7 @@ body.dark-mode .pom-mode-btn.active{background:#2e2e2e!important;}
 .pn-ans-wrong{color:#c62828}
 
 /* ══════════════════════════════════════════════════════
-   UX IMPROVEMENTS — Melhorias globais de UX
+   UX IMPROVEMENTS - Melhorias globais de UX
    Adicionado para melhor experiência em todas as páginas
 ══════════════════════════════════════════════════════ */
 
@@ -2510,41 +2510,41 @@ body.dark-mode .pom-mode-btn.active{background:#2e2e2e!important;}
 /* Progress bar animação */
 .ex-progress-fill,.ex-sim-timer-bar{transition:width .6s cubic-bezier(.4,0,.2,1)!important}
 
-/* Dark mode — ex-topbar */
+/* Dark mode - ex-topbar */
 body.dark-mode .ex-topbar{background:rgba(18,16,32,.97)!important;border-bottom-color:#2a2840!important}
 body.dark-mode .ex-topbar-back{border-color:#3a3060!important;color:#9080c0!important}
 body.dark-mode .ex-topbar-back:hover{background:rgba(107,95,160,.15)!important}
 
-/* Dark mode — hero das páginas de exames */
+/* Dark mode - hero das páginas de exames */
 body.dark-mode .ex-hero{background:linear-gradient(150deg,#050310 0%,#0e0b20 35%,#1a1540 70%,#2a2058 100%)!important}
 body.dark-mode .ex-hstat{background:rgba(255,255,255,.05)!important;border-color:rgba(255,255,255,.08)!important}
 body.dark-mode .ex-hstat-n{color:#e0d8ff!important}
 body.dark-mode .ex-hstat-l{color:rgba(255,255,255,.4)!important}
 
-/* Dark mode — tabs */
+/* Dark mode - tabs */
 body.dark-mode .ex-tabs-wrap{background:rgba(20,18,36,.9)!important;border-color:#2a2840!important}
 body.dark-mode .ex-tab{color:#908890!important}
 body.dark-mode .ex-tab:hover:not(.active){background:rgba(107,95,160,.12)!important;color:#c0b8e0!important}
 body.dark-mode .ex-tab.active{color:#fff!important}
 
-/* Dark mode — cards de tema */
+/* Dark mode - cards de tema */
 body.dark-mode .ex-topic-card,body.dark-mode .pt-topic-card{background:#1e1c2e!important;border-color:#2a2840!important}
 body.dark-mode .ex-topic-label,body.dark-mode .pt-topic-label,.dark-mode .ex-topic-card *{color:#e0daf0!important}
 body.dark-mode .ex-topic-sub,body.dark-mode .pt-topic-sub{color:#8080a0!important}
 body.dark-mode .ex-topic-icon,body.dark-mode .pt-topic-icon{filter:brightness(.85)}
 
-/* Dark mode — year rows */
+/* Dark mode - year rows */
 body.dark-mode .pt-year-row,body.dark-mode .ex-year-row{background:#1e1c2e!important;border-color:#2a2840!important}
 body.dark-mode .pt-year-label,body.dark-mode .ex-year-label{color:#e0daf0!important}
 body.dark-mode .pt-year-sub,body.dark-mode .ex-year-sub{color:#7070a0!important}
 body.dark-mode .pt-year-btn-view{background:#252340!important;border-color:#3a3860!important;color:#a0a0c0!important}
 
-/* Dark mode — progress section */
+/* Dark mode - progress section */
 body.dark-mode .ex-progress-bar-section{background:#1e1c2e!important;border-color:#2a2840!important}
 body.dark-mode .ex-progress-bar{background:#2a2840!important}
 body.dark-mode .ex-progress-topic-label{color:#c0b8e0!important}
 
-/* Dark mode — simulador */
+/* Dark mode - simulador */
 body.dark-mode .pt-sim-card,body.dark-mode .ex-sim-card{background:#1e1c2e!important;border-color:#2a2840!important}
 body.dark-mode .pt-sim-opt,body.dark-mode .ex-sim-opt{background:#252340!important;border-color:#3a3860!important;color:#e0daf0!important}
 body.dark-mode .pt-sim-opt:hover,body.dark-mode .ex-sim-opt:hover{border-color:#6b5fa0!important;background:#2d2a50!important}
@@ -2552,33 +2552,33 @@ body.dark-mode .pt-sim-opt.active,body.dark-mode .ex-sim-opt.active{border-color
 body.dark-mode .ex-sim-tema-pill{background:#1e1c2e!important;border-color:#3a3860!important;color:#a090d0!important}
 body.dark-mode .ex-sim-tema-pill.active{background:#5c4e8a!important;border-color:#5c4e8a!important;color:#fff!important}
 
-/* Dark mode — question cards */
+/* Dark mode - question cards */
 body.dark-mode #pt-inline-engine .pn-question-card,
 body.dark-mode #pt-gram-engine>div>div,
 body.dark-mode #pt-fig-engine>div>div{background:#1e1c2e!important;border-color:#2a2840!important}
 body.dark-mode .pn-opt{background:#252340!important;border-color:#3a3860!important;color:#e0daf0!important}
 body.dark-mode .pn-opt:hover:not(:disabled){background:#2d2a50!important;border-color:#6b5fa0!important}
 
-/* Dark mode — texto boxes */
+/* Dark mode - texto boxes */
 body.dark-mode .pt-texto-box{background:#151325!important;border-color:#2a2840!important}
 body.dark-mode .pt-texto-box-content{color:#e0daf0!important}
 body.dark-mode .pt-toggle-texto{background:#1e1c2e!important;border-color:#3a3860!important;color:#9080c0!important}
 
-/* Dark mode — composição */
+/* Dark mode - composição */
 body.dark-mode .pt-composicao-card{background:linear-gradient(135deg,#080618,#150f30)!important}
 body.dark-mode textarea{background:#1a1830!important;border-color:#3a3860!important;color:#e0daf0!important}
 
-/* Dark mode — result hero */
+/* Dark mode - result hero */
 body.dark-mode .ex-result-hero{background:linear-gradient(135deg,#0a0618,#1a1440)!important}
 
-/* Dark mode — overlay */
+/* Dark mode - overlay */
 body.dark-mode .pt-overlay,body.dark-mode .ex-overlay{background:rgba(4,3,12,.96)!important}
 body.dark-mode .pt-overlay-bar,body.dark-mode .ex-overlay-bar{background:rgba(4,3,12,.98)!important;border-bottom-color:#1a1840!important}
 
-/* Melhorias de acessibilidade — foco visível */
+/* Melhorias de acessibilidade - foco visível */
 button:focus-visible,a:focus-visible{outline:2px solid #6b5fa0!important;outline-offset:2px}
 
-/* Touch — botões maiores em mobile */
+/* Touch - botões maiores em mobile */
 @media(max-width:480px){
   .pt-year-btn,.ex-year-btn{padding:8px 14px!important;font-size:.75rem!important}
   .ex-tab{padding:.65rem .35rem!important;font-size:.72rem!important}
@@ -2594,7 +2594,7 @@ button:focus-visible,a:focus-visible{outline:2px solid #6b5fa0!important;outline
 .ex-hstat[style*="cursor:pointer"]{cursor:pointer}
 .ex-hstat[style*="cursor:pointer"]:hover{background:rgba(255,255,255,.16)!important;transform:translateY(-3px)}
 
-/* ══ PT GRAMÁTICA — melhorar sublinhado mobile ══ */
+/* ══ PT GRAMÁTICA - melhorar sublinhado mobile ══ */
 /* O sublinhado nas frases de gramática precisa ser bem visível */
 .pt-gram-frase u, .pt-gram-frase ins {
   text-decoration: underline;
@@ -2614,7 +2614,7 @@ button:focus-visible,a:focus-visible{outline:2px solid #6b5fa0!important;outline
   font-weight: 700;
 }
 
-/* ══ TEACHER STRIP — design melhorado ══ */
+/* ══ TEACHER STRIP - design melhorado ══ */
 /* Torna a secção "Para o professor" mais visível e distinta */
 .teacher-strip {
   margin: 1.25rem 0 .5rem !important;
@@ -2671,7 +2671,7 @@ button:focus-visible,a:focus-visible{outline:2px solid #6b5fa0!important;outline
   font-weight: 600;
 }
 
-/* ══ CAP GROUP TABS — Sub-nav ══ */
+/* ══ CAP GROUP TABS - Sub-nav ══ */
 /* Sub-barra que aparece quando se clica em Aprender/Praticar/Testar */
 .cap-subnav {
   display: none;
@@ -2706,12 +2706,12 @@ button:focus-visible,a:focus-visible{outline:2px solid #6b5fa0!important;outline
   color: #fff;
 }
 
-/* Hub mat7 tabs — 4 tabs mais largas e visíveis */
+/* Hub mat7 tabs - 4 tabs mais largas e visíveis */
 .mat7-hub-tabbar .mat7-hub-tab {
   flex: 1;
 }
 
-/* Cap page tabs — 5 tabs mais limpas */
+/* Cap page tabs - 5 tabs mais limpas */
 .tabs .tab-btn.cap-group-btn {
   position: relative;
 }
@@ -2884,9 +2884,9 @@ body.dark-mode .site-topbar-back:hover {
 }
 
 
-/* ══ EXAMES-PT — classes extraídas dos inline styles ══ */
+/* ══ EXAMES-PT - classes extraídas dos inline styles ══ */
 
-/* Gramática — cards de categoria */
+/* Gramática - cards de categoria */
 .pt-gram-card {
   background: var(--white);
   border: 1.5px solid var(--border);
@@ -2906,7 +2906,7 @@ body.dark-mode .site-topbar-back:hover {
 .pt-gram-card-time { font-size: .68rem; color: var(--ink4); }
 .pt-gram-card-diff { font-size: .68rem; font-weight: 700; border-radius: 999px; padding: 2px 8px; }
 
-/* Progresso — tabela */
+/* Progresso - tabela */
 .pt-prog-table-row {
   display: flex;
   align-items: center;
@@ -2923,7 +2923,7 @@ body.dark-mode .site-topbar-back:hover {
   text-overflow: ellipsis;
 }
 
-/* Composição — secção de critérios (complementa .pt-composicao-card existente) */
+/* Composição - secção de critérios (complementa .pt-composicao-card existente) */
 .pt-comp-section-title {
   font-size: .68rem;
   font-weight: 800;
@@ -2970,7 +2970,7 @@ body.dark-mode .site-topbar-back:hover {
   color: var(--ink1);
 }
 
-/* Discurso — tabela de regras */
+/* Discurso - tabela de regras */
 .pt-disc-table {
   width: 100%;
   border-collapse: collapse;
@@ -2994,7 +2994,7 @@ body.dark-mode .site-topbar-back:hover {
 .pt-overlay-pg { width: 100%; border-radius: 8px; margin-bottom: .75rem; display: block; box-shadow: 0 4px 24px rgba(0,0,0,.5); }
 
 
-/* ══ PORTAL CARDS — novo design minimalista ══ */
+/* ══ PORTAL CARDS - novo design minimalista ══ */
 .portal-cards {
   max-width: 600px;
   margin: 2rem auto;
@@ -3070,7 +3070,7 @@ body.dark-mode .portal-card:hover {
 
 
 /* ══════════════════════════════════════════════════════════════
-   PORTAL — Redesign
+   PORTAL - Redesign
 ══════════════════════════════════════════════════════════════ */
 
 /* ── Hero ── */
@@ -3177,25 +3177,25 @@ body.dark-mode .portal-card:hover {
   flex-shrink: 0;
 }
 .portal-main-card--mat .portal-main-card-icon { background: var(--c2-base); color: var(--c2-deep); }
-/* Card 8.º ano — cor própria (índigo/azul) */
+/* Card 8.º ano - cor própria (índigo/azul) */
 .portal-main-card--mat8 { border-left-color: var(--m8c1-mid); }
 .portal-main-card--mat8:hover { border-color: var(--m8c1-mid); box-shadow: 0 6px 24px rgba(90,127,168,.14); }
 .portal-main-card--mat8 .portal-main-card-icon { background: var(--m8c1-base); color: var(--m8c1-deep); }
 .portal-main-card--mat8 .portal-main-card-chips span { color: var(--m8c1-deep); background: var(--m8c1-base); }
 .portal-main-card--mat8 .portal-main-card-cta { color: var(--m8c1-mid); }
-/* Card 9.º ano — cor própria (terracota) */
+/* Card 9.º ano - cor própria (terracota) */
 .portal-main-card--mat9 { border-left-color: var(--m9c1-mid); }
 .portal-main-card--mat9:hover { border-color: var(--m9c1-mid); box-shadow: 0 6px 24px rgba(176,106,58,.14); }
 .portal-main-card--mat9 .portal-main-card-icon { background: var(--m9c1-base); color: var(--m9c1-deep); }
 .portal-main-card--mat9 .portal-main-card-chips span { color: var(--m9c1-deep); background: var(--m9c1-base); }
 .portal-main-card--mat9 .portal-main-card-cta { color: var(--m9c1-mid); }
-/* Card 5.º ano — verde-fresco */
+/* Card 5.º ano - verde-fresco */
 .portal-main-card--mat5 { border-left-color: var(--m5c1-mid); }
 .portal-main-card--mat5:hover { border-color: var(--m5c1-mid); box-shadow: 0 6px 24px rgba(74,158,110,.14); }
 .portal-main-card--mat5 .portal-main-card-icon { background: var(--m5c1-base); color: var(--m5c1-deep); }
 .portal-main-card--mat5 .portal-main-card-chips span { color: var(--m5c1-deep); background: var(--m5c1-base); }
 .portal-main-card--mat5 .portal-main-card-cta { color: var(--m5c1-mid); }
-/* Card 6.º ano — laranja/coral */
+/* Card 6.º ano - laranja/coral */
 .portal-main-card--mat6 { border-left-color: var(--m6c1-mid); }
 .portal-main-card--mat6:hover { border-color: var(--m6c1-mid); box-shadow: 0 6px 24px rgba(196,122,74,.14); }
 .portal-main-card--mat6 .portal-main-card-icon { background: var(--m6c1-base); color: var(--m6c1-deep); }
@@ -3538,12 +3538,12 @@ body.dark-mode .portal-exam-card { background: #1e1e1e !important; border-color:
 body.dark-mode .portal-main-card:hover { border-color: var(--c2-mid) !important; }
 
 
-/* ══ RESUMO/TEORIA HUB — novo seletor ══ */
+/* ══ RESUMO/TEORIA HUB - novo seletor ══ */
 .resumo-nav {
   margin-bottom: 1.5rem;
 }
 
-/* Linha de capítulos — scroll horizontal */
+/* Linha de capítulos - scroll horizontal */
 .resumo-cap-row {
   display: flex;
   gap: .4rem;

@@ -1,5 +1,5 @@
 /* ── Block 7 (from line 15631) ── */
-// ESCAPE ROOM v2 — SALA VISUAL ÚNICA
+// ESCAPE ROOM v2 - SALA VISUAL ÚNICA
 (function(){
 'use strict';
 
@@ -172,7 +172,7 @@ var ER_THEMES = {
       window:     { icon:'🪟', label:'Janela',        flavour:'Lá fora vês a sombra de um mob no chão. A área triangular é o próximo dígito.' },
       desk:       { icon:'📦', label:'Baú',           flavour:'O baú está trancado por um redstone lock. Resolve a expressão para obter o último dígito.' }
     },
-    chips: ['📖 Mesa Encant. — inteiros','🪵 Bancada — frações','📚 Estante — potências','🪟 Janela — geometria','📦 Baú — ordem ops.'],
+    chips: ['📖 Mesa Encant. - inteiros','🪵 Bancada - frações','📚 Estante - potências','🪟 Janela - geometria','📦 Baú - ordem ops.'],
     css: {
       lobbyBg: '#c6b078', lobbyBorder: '#5c4a1e', lobbyText: '#3d2e0a', lobbySubText: '#5c4a1e',
       chipBg: '#8b7355', chipBorder: '#3d2e0a', chipText: '#f0e0b0',
@@ -263,7 +263,7 @@ var ER_THEMES = {
       window:     { icon:'🔭', label:'Telescópio', flavour:'O telescópio mede a área de impacto de um meteorito triangular. Calcula para prosseguir.' },
       desk:       { icon:'⚡', label:'Reator',    flavour:'O reator nuclear precisa da expressão correta para não entrar em colapso.' }
     },
-    chips: ['📡 Antena — inteiros','🔬 Lab. — frações','💾 Computador — potências','🔭 Telescópio — geometria','⚡ Reator — ordem ops.'],
+    chips: ['📡 Antena - inteiros','🔬 Lab. - frações','💾 Computador - potências','🔭 Telescópio - geometria','⚡ Reator - ordem ops.'],
     css: {
       lobbyBg: '#060d1a', lobbyBorder: '#1a3a8a', lobbyText: '#80b0ff', lobbySubText: '#5080c0',
       chipBg: '#0a1a3a', chipBorder: '#1a3a8a', chipText: '#80b0ff',
@@ -371,7 +371,7 @@ var ER_THEMES = {
       window:     { icon:'🐟', label:'Peixe',      flavour:'A sombra do peixe tem forma triangular. Calcula a área para prosseguir.' },
       desk:       { icon:'⚓', label:'Âncora',     flavour:'A âncora tem uma expressão matemática gravada. Resolve pela ordem correta.' }
     },
-    chips: ['🐙 Polvo — inteiros','🐚 Concha — frações','🪸 Coral — potências','🐟 Peixe — geometria','⚓ Âncora — ordem ops.'],
+    chips: ['🐙 Polvo - inteiros','🐚 Concha - frações','🪸 Coral - potências','🐟 Peixe - geometria','⚓ Âncora - ordem ops.'],
     css: {
       lobbyBg: '#041428', lobbyBorder: '#0a5a8a', lobbyText: '#80d0ff', lobbySubText: '#4a90b0',
       chipBg: '#061828', chipBorder: '#0a5a8a', chipText: '#80d0ff',
@@ -483,7 +483,7 @@ var ER_THEMES = {
       window:     { icon:'🥅', label:'Baliza',     flavour:'A área da grande penalidade tem forma triangular neste campo especial. Calcula a área.' },
       desk:       { icon:'📊', label:'Estatísticas', flavour:'As estatísticas do jogador seguem uma expressão matemática. Resolve para desbloqueares.' }
     },
-    chips: ['📋 Tática — inteiros','👟 Cacifos — frações','🏆 Troféus — potências','🥅 Baliza — geometria','📊 Stats — ordem ops.'],
+    chips: ['📋 Tática - inteiros','👟 Cacifos - frações','🏆 Troféus - potências','🥅 Baliza - geometria','📊 Stats - ordem ops.'],
     css: {
       lobbyBg: '#0a2a14', lobbyBorder: '#1a5c2a', lobbyText: '#a0e0b0', lobbySubText: '#4a9a5a',
       chipBg: '#061a0c', chipBorder: '#1a5c2a', chipText: '#a0e0b0',
@@ -645,7 +645,7 @@ GameEscapeRoom.prototype._render = function(){
   el.innerHTML = '<div class="er2">'
     + '<div class="er2-theme-lobby">'
     + '<span style="font-size:2.8rem;display:block;margin-bottom:.6rem">🔐</span>'
-    + '<h2 style="font-family:Montserrat,sans-serif;font-size:1.3rem;font-weight:900;color:var(--ink);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.04em">Escape Room — Matemática</h2>'
+    + '<h2 style="font-family:Montserrat,sans-serif;font-size:1.3rem;font-weight:900;color:var(--ink);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.04em">Escape Room - Matemática</h2>'
     + '<p style="color:var(--ink3);font-size:.82rem;line-height:1.6;max-width:380px;margin:.3rem auto .85rem">Resolve 5 enigmas matemáticos para escapar. Escolhe o teu mundo:</p>'
     + '<div class="er2-theme-row">'+themeCards+'</div>'
     + '<div id="er2-theme-desc" style="margin:.8rem auto 0;max-width:380px;background:var(--cream2);border-radius:10px;padding:.55rem .85rem;font-size:.75rem;color:var(--ink4);line-height:1.6">Seleciona um tema para começar.</div>'
@@ -679,7 +679,7 @@ GameEscapeRoom.prototype._startGame = function(themeId){
     football:  { blackboard:{left:'24%',top:'44%',w:'60px',h:'60px'}, bookshelf:{left:'76%',top:'40%',w:'60px',h:'60px'}, window:{left:'18%',top:'12%',w:'60px',h:'60px'}, safe:{left:'3%', top:'44%',w:'56px',h:'56px'}, desk:{left:'55%',top:'44%',w:'64px',h:'64px'} }
   };
   var pos = themePos[theme.id] || themePos.minecraft;
-  // hotspots stored per-instance in state.hotspots — no global mutation
+  // hotspots stored per-instance in state.hotspots - no global mutation
   // FIX 1: apply theme CSS variables to DOM
   var _applyPid = this.id;
   (function applyThemeCSS(css, pid, themeId){
@@ -1092,7 +1092,7 @@ GameEscapeRoom.prototype._renderFail = function(reason){
   el.innerHTML = '<div class="er2"><div class="er2-fail">'
     + '<span class="er2-fail-icon">💀</span>'
     + '<h3>Não escapaste...</h3>'
-    + '<p>'+msg+' Tenta de novo — já conheces os enigmas!</p>'
+    + '<p>'+msg+' Tenta de novo - já conheces os enigmas!</p>'
     + '<button class="er2-play-again" id="er2-pa">↺ Tentar novamente</button>'
     + '</div></div>';
 

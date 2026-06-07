@@ -1,11 +1,11 @@
-// Banco completo dos Exames Nacionais de Matematica A — 12.o Ano
-// Prova 635 — 2020 a 2025
+// Banco completo dos Exames Nacionais de Matematica A - 12.o Ano
+// Prova 635 - 2020 a 2025
 // Inclui TODAS as questoes: escolha multipla (mc) e desenvolvimento (dev)
 
 var MAT12_BANCO = {
 
 /* ══════════════════════════════════════════════════════
-   2024 — 1.ª Fase
+   2024 - 1.ª Fase
 ══════════════════════════════════════════════════════ */
 '24_f1': {
   label: 'Exame 2024 1.ª Fase', ano: 2024, fase: '1.ª Fase',
@@ -90,7 +90,7 @@ var MAT12_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2024 — 2.ª Fase
+   2024 - 2.ª Fase
 ══════════════════════════════════════════════════════ */
 '24_f2': {
   label: 'Exame 2024 2.ª Fase', ano: 2024, fase: '2.ª Fase',
@@ -140,7 +140,7 @@ var MAT12_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2024 — Época Especial
+   2024 - Época Especial
 ══════════════════════════════════════════════════════ */
 '24_esp': {
   label: 'Exame 2024 Época Especial', ano: 2024, fase: 'Época Especial',
@@ -173,12 +173,12 @@ var MAT12_BANCO = {
 
     { id:'m12-24esp-42', num:'4.2', page:4, tipo:'dev', tema:'probabilidades',
       enun:'Num saco com 200 bolas (49% verdes = 98 verdes, 102 amarelas). Extraem-se 4 bolas. Determine P(pelo menos 3 verdes). Apresente em dízima arredondada às décimas.',
-      resolucao:'P(X=3) = C(98,3)×C(102,1)/C(200,4). P(X=4) = C(98,4)/C(200,4). Calculando: P(X≥3) = P(X=3)+P(X=4) ≈ 0,2 (valor aproximado — usar calculadora).' },
+      resolucao:'P(X=3) = C(98,3)×C(102,1)/C(200,4). P(X=4) = C(98,4)/C(200,4). Calculando: P(X≥3) = P(X=3)+P(X=4) ≈ 0,2 (valor aproximado - usar calculadora).' },
 
     { id:'m12-24esp-51', num:'5.1', page:4, tipo:'mc', tema:'geometria',
       enun:'Num cone reto de vértice V, a base intersecta Ox em A e Oy em B, e está contida no plano x+2y-8=0. Qual equação define um plano paralelo ao da base que passa em (1,-3,5)?',
       opts:['(A) -2x+y+5=0','(B) x+2y+10=0','(C) x+2y-5=0','(D) x+3y+5=0'], correct:'C',
-      resolucao:'Plano paralelo à base tem a mesma normal (1,2,0). Equação: x+2y+d=0. Substituindo (1,-3,5): 1+2(-3)+d=0 → 1-6+d=0 → d=5. Equação: x+2y+5=0. Mas verificando: x+2y-5=0 em (1,-3): 1-6-5=-10≠0. Rever: 1+2(-3)+d=0 → d=5 → x+2y+5=0... Opção B: x+2y+10=0 em (1,-3): 1-6+10=5≠0. Opção C: x+2y-5=0 em (1,-3): 1-6-5=-10≠0. Recalcular com ponto (1,-3,5): 1+2(-3)+d=0 → d=5 → x+2y+5=0. Nenhuma coincide exatamente — o plano da base é x+2y=8, logo plano paralelo: x+2y=k. Em (1,-3): 1-6=-5 → k=-5 → x+2y=-5 → x+2y+5=0. Opção correta: C (x+2y-5=0 seria x+2y=5... verificar sinal).' },
+      resolucao:'Plano paralelo à base tem a mesma normal (1,2,0). Equação: x+2y+d=0. Substituindo (1,-3,5): 1+2(-3)+d=0 → 1-6+d=0 → d=5. Equação: x+2y+5=0. Mas verificando: x+2y-5=0 em (1,-3): 1-6-5=-10≠0. Rever: 1+2(-3)+d=0 → d=5 → x+2y+5=0... Opção B: x+2y+10=0 em (1,-3): 1-6+10=5≠0. Opção C: x+2y-5=0 em (1,-3): 1-6-5=-10≠0. Recalcular com ponto (1,-3,5): 1+2(-3)+d=0 → d=5 → x+2y+5=0. Nenhuma coincide exatamente - o plano da base é x+2y=8, logo plano paralelo: x+2y=k. Em (1,-3): 1-6=-5 → k=-5 → x+2y=-5 → x+2y+5=0. Opção correta: C (x+2y-5=0 seria x+2y=5... verificar sinal).' },
 
     { id:'m12-24esp-52', num:'5.2', page:4, tipo:'dev', tema:'geometria',
       enun:'Determine, sem recorrer à calculadora, as coordenadas do vértice V do cone (dados do item anterior: base no plano x+2y-8=0, [AB] diâmetro da base, abcissa de V = ordenada de V - 1).',
@@ -192,7 +192,7 @@ var MAT12_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2023 — 1.ª Fase
+   2023 - 1.ª Fase
 ══════════════════════════════════════════════════════ */
 '23_f1': {
   label: 'Exame 2023 1.ª Fase', ano: 2023, fase: '1.ª Fase',
@@ -251,7 +251,7 @@ var MAT12_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2023 — 2.ª Fase
+   2023 - 2.ª Fase
 ══════════════════════════════════════════════════════ */
 '23_f2': {
   label: 'Exame 2023 2.ª Fase', ano: 2023, fase: '2.ª Fase',
@@ -311,7 +311,7 @@ var MAT12_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2023 — Época Especial
+   2023 - Época Especial
 ══════════════════════════════════════════════════════ */
 '23_esp': {
   label: 'Exame 2023 Época Especial', ano: 2023, fase: 'Época Especial',
@@ -370,7 +370,7 @@ var MAT12_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2022 — 1.ª Fase
+   2022 - 1.ª Fase
 ══════════════════════════════════════════════════════ */
 '22_f1': {
   label: 'Exame 2022 1.ª Fase', ano: 2022, fase: '1.ª Fase',
@@ -425,7 +425,7 @@ var MAT12_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2022 — 2.ª Fase
+   2022 - 2.ª Fase
 ══════════════════════════════════════════════════════ */
 '22_f2': {
   label: 'Exame 2022 2.ª Fase', ano: 2022, fase: '2.ª Fase',
@@ -472,7 +472,7 @@ var MAT12_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2022 — Época Especial
+   2022 - Época Especial
 ══════════════════════════════════════════════════════ */
 '22_esp': {
   label: 'Exame 2022 Época Especial', ano: 2022, fase: 'Época Especial',
@@ -519,7 +519,7 @@ var MAT12_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2021 — 1.ª Fase
+   2021 - 1.ª Fase
 ══════════════════════════════════════════════════════ */
 '21_f1': {
   label: 'Exame 2021 1.ª Fase', ano: 2021, fase: '1.ª Fase',
@@ -578,7 +578,7 @@ var MAT12_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2021 — 2.ª Fase
+   2021 - 2.ª Fase
 ══════════════════════════════════════════════════════ */
 '21_f2': {
   label: 'Exame 2021 2.ª Fase', ano: 2021, fase: '2.ª Fase',
@@ -586,7 +586,7 @@ var MAT12_BANCO = {
     { id:'m12-21f2-11', num:'1.1', page:2, tipo:'mc', tema:'geometria',
       enun:'Qual define a superfície esférica de centro R(5,5,3) que passa no ponto Q?',
       opts:['(A) (x-5)²+(y-5)²+(z-3)²=59','(B) (x-5)²+(y-5)²+(z-3)²=41','(C) (x+5)²+(y+5)²+(z+3)²=41','(D) (x+5)²+(y+5)²+(z+3)²=59'], correct:'C',
-      resolucao:'Centro R=(5,5,3). Q é o ponto calculado. Raio=|RQ|. Verificando opção C: centro (-5,-5,-3) — não é R. Rever: O centro deve ser R=(5,5,3). Opção A ou B. Se |RQ|²=41 → opção B. Resposta oficial: C (revisar com a figura).' },
+      resolucao:'Centro R=(5,5,3). Q é o ponto calculado. Raio=|RQ|. Verificando opção C: centro (-5,-5,-3) - não é R. Rever: O centro deve ser R=(5,5,3). Opção A ou B. Se |RQ|²=41 → opção B. Resposta oficial: C (revisar com a figura).' },
 
     { id:'m12-21f2-12', num:'1.2', page:2, tipo:'dev', tema:'geometria',
       enun:'Determine equações de planos ou retas adicionais no sólido do item anterior.',
@@ -639,7 +639,7 @@ var MAT12_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2021 — Época Especial
+   2021 - Época Especial
 ══════════════════════════════════════════════════════ */
 '21_esp': {
   label: 'Exame 2021 Época Especial', ano: 2021, fase: 'Época Especial',
@@ -694,7 +694,7 @@ var MAT12_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2020 — 1.ª Fase
+   2020 - 1.ª Fase
 ══════════════════════════════════════════════════════ */
 '20_f1': {
   label: 'Exame 2020 1.ª Fase', ano: 2020, fase: '1.ª Fase',
@@ -754,7 +754,7 @@ var MAT12_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2020 — 2.ª Fase
+   2020 - 2.ª Fase
 ══════════════════════════════════════════════════════ */
 '20_f2': {
   label: 'Exame 2020 2.ª Fase', ano: 2020, fase: '2.ª Fase',
@@ -814,7 +814,7 @@ var MAT12_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2020 — Época Especial
+   2020 - Época Especial
 ══════════════════════════════════════════════════════ */
 '20_esp': {
   label: 'Exame 2020 Época Especial', ano: 2020, fase: 'Época Especial',
@@ -867,7 +867,7 @@ var MAT12_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2025 — 1.ª Fase
+   2025 - 1.ª Fase
 ══════════════════════════════════════════════════════ */
 '25_f1': {
   label: 'Exame 2025 1.ª Fase', ano: 2025, fase: '1.ª Fase',
@@ -927,7 +927,7 @@ var MAT12_BANCO = {
 },
 
 /* ══════════════════════════════════════════════════════
-   2025 — 2.ª Fase
+   2025 - 2.ª Fase
 ══════════════════════════════════════════════════════ */
 '25_f2': {
   label: 'Exame 2025 2.ª Fase', ano: 2025, fase: '2.ª Fase',

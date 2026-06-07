@@ -1,8 +1,8 @@
-// pt-figuras.js — Figuras de Estilo, Discurso Direto/Indireto e Conectores
+// pt-figuras.js - Figuras de Estilo, Discurso Direto/Indireto e Conectores
 // Português 9.º Ano
 
 /* ══════════════════════════════════════════════════════
-   FIGURAS DE ESTILO — DEFINIÇÕES E EXEMPLOS
+   FIGURAS DE ESTILO - DEFINIÇÕES E EXEMPLOS
 ══════════════════════════════════════════════════════ */
 var PT_FIGURAS_INFO = [
   {
@@ -19,13 +19,13 @@ var PT_FIGURAS_INFO = [
   {
     id: 'metafora',
     nome: 'Metáfora',
-    def: 'Estabelece uma semelhança entre dois elementos <strong>sem</strong> palavras de comparação — é uma comparação implícita.',
+    def: 'Estabelece uma semelhança entre dois elementos <strong>sem</strong> palavras de comparação - é uma comparação implícita.',
     ex: [
       'A vida é um palco.',
       'Ela tinha pedras no lugar do coração.',
       'Os seus olhos eram estrelas.'
     ],
-    dica: 'Sem "como" nem "tal como" — a identificação é direta.'
+    dica: 'Sem "como" nem "tal como" - a identificação é direta.'
   },
   {
     id: 'personificacao',
@@ -69,7 +69,7 @@ var PT_FIGURAS_INFO = [
       '<em>Amor</em> é fogo que arde sem se ver,<br><em>Amor</em> é ferida que dói e não se sente.',
       '<em>Nascem</em> os rios, <em>nascem</em> as flores, <em>nascem</em> os homens.'
     ],
-    dica: 'A mesma palavra/expressão repete-se no início — cria ritmo e ênfase.'
+    dica: 'A mesma palavra/expressão repete-se no início - cria ritmo e ênfase.'
   },
   {
     id: 'eufemismo',
@@ -80,7 +80,7 @@ var PT_FIGURAS_INFO = [
       'Ele está <em>em dificuldades financeiras</em>. (= é pobre)',
       'Ela ficou <em>grávida sem querer</em>. (= engravidou acidentalmente)'
     ],
-    dica: 'Suaviza algo desagradável — morte, pobreza, doença são substituídas por expressões mais delicadas.'
+    dica: 'Suaviza algo desagradável - morte, pobreza, doença são substituídas por expressões mais delicadas.'
   },
   {
     id: 'aliteracao',
@@ -90,7 +90,7 @@ var PT_FIGURAS_INFO = [
       '«O rato roeu a rolha da garrafa do rei.»',
       '«Sete cigarras na sarça, sete cigarras serenas.»'
     ],
-    dica: 'O mesmo som consonântico repete-se — cria efeito musical ou sonoro.'
+    dica: 'O mesmo som consonântico repete-se - cria efeito musical ou sonoro.'
   },
   {
     id: 'pleonasmo',
@@ -101,7 +101,7 @@ var PT_FIGURAS_INFO = [
       'Subiu para <em>cima</em>.',
       'O silêncio <em>calado</em> da noite.'
     ],
-    dica: 'Algo já implícito é dito novamente — a redundância é intencional para dar ênfase.'
+    dica: 'Algo já implícito é dito novamente - a redundância é intencional para dar ênfase.'
   },
   {
     id: 'ironia',
@@ -111,32 +111,32 @@ var PT_FIGURAS_INFO = [
       '(Sobre um desastre): «Que dia maravilhoso tivemos!»',
       '(A um aluno que errou tudo): «Muito bem, excelente trabalho!»'
     ],
-    dica: 'O sentido literal é o oposto do sentido real — contexto revela o verdadeiro significado.'
+    dica: 'O sentido literal é o oposto do sentido real - contexto revela o verdadeiro significado.'
   }
 ];
 
 /* ══════════════════════════════════════════════════════
-   BANCO DE EXERCÍCIOS — IDENTIFICAR FIGURA
+   BANCO DE EXERCÍCIOS - IDENTIFICAR FIGURA
 ══════════════════════════════════════════════════════ */
 var PT_FIGURAS_BANCO = [
-  { frase: '«A vida é uma viagem sem regresso.»', correct: 'Metáfora', opts: ['Metáfora','Comparação','Personificação','Hipérbole'], exp: 'Identifica «vida» com «viagem» sem usar palavras de comparação — é uma metáfora.' },
-  { frase: '«Ela corria como o vento.»', correct: 'Comparação', opts: ['Comparação','Metáfora','Hipérbole','Personificação'], exp: '«Como o vento» é uma comparação explícita — usa a palavra de comparação «como».' },
-  { frase: '«O mar rugiu de raiva toda a noite.»', correct: 'Personificação', opts: ['Personificação','Metáfora','Hipérbole','Comparação'], exp: '«Rugiu de raiva» atribui uma ação e sentimento humanos ao mar — personificação.' },
-  { frase: '«Já te disse isto um milhão de vezes!»', correct: 'Hipérbole', opts: ['Hipérbole','Personificação','Ironia','Pleonasmo'], exp: 'Exagero óbvio («um milhão de vezes») para intensificar — hipérbole.' },
-  { frase: '«Amor é fogo que arde sem se ver / É ferida que dói e não se sente.» (Camões)', correct: 'Antítese', opts: ['Antítese','Anáfora','Metáfora','Comparação'], exp: 'Coloca opostos em confronto: arde/não se ver, dói/não se sente — antítese. (Também há metáfora, mas a figura dominante deste par é a antítese.)' },
-  { frase: '«Há fotografias, há pinturas, há esculturas nesta exposição.»', correct: 'Anáfora', opts: ['Anáfora','Aliteração','Pleonasmo','Hipérbole'], exp: 'Repetição de «há» no início de cada grupo — anáfora.' },
-  { frase: '«O avô partiu para uma vida melhor.» (= morreu)', correct: 'Eufemismo', opts: ['Eufemismo','Ironia','Metáfora','Antítese'], exp: 'Substitui «morreu» por uma expressão mais suave — eufemismo.' },
-  { frase: '«O silêncio falava mais alto do que as palavras.»', correct: 'Personificação', opts: ['Personificação','Metáfora','Comparação','Hipérbole'], exp: '«O silêncio falava» — atribui a capacidade de falar (humana) ao silêncio — personificação.' },
-  { frase: '«Vi com os meus próprios olhos.»', correct: 'Pleonasmo', opts: ['Pleonasmo','Hipérbole','Anáfora','Eufemismo'], exp: '«Próprios olhos» é redundante — vê-se sempre com os olhos. A redundância é intencional para reforçar — pleonasmo.' },
-  { frase: '«A lua era uma foice de prata pendurada no céu.»', correct: 'Metáfora', opts: ['Metáfora','Comparação','Personificação','Aliteração'], exp: 'Identifica a lua com uma «foice de prata» sem palavras de comparação — metáfora.' },
-  { frase: '«Que bonito dia de chuva!» (dito sarcasticamente)', correct: 'Ironia', opts: ['Ironia','Eufemismo','Hipérbole','Antítese'], exp: 'Diz-se o contrário do que se sente — ironia.' },
-  { frase: '«O tempo cura todas as feridas.»', correct: 'Personificação', opts: ['Personificação','Metáfora','Comparação','Hipérbole'], exp: 'Atribui ao «tempo» a capacidade de curar (ação humana/médica) — personificação.' },
-  { frase: '«No início da sua intervenção, a locutora recorre a uma <u>enumeração</u>.» — O que é uma enumeração?', correct: 'Lista de elementos do mesmo tipo', opts: ['Lista de elementos do mesmo tipo','Repetição de uma palavra no início de frases','Substituição por expressão mais suave','Comparação sem palavras de comparação'], exp: 'Enumeração é a listagem de vários elementos da mesma categoria — cria um efeito de acumulação.' },
-  { frase: '«O orvalho da manhã brilhava como diamantes na erva.»', correct: 'Comparação', opts: ['Comparação','Metáfora','Aliteração','Personificação'], exp: '«Como diamantes» é uma comparação explícita — usa «como» para estabelecer a semelhança.' },
+  { frase: '«A vida é uma viagem sem regresso.»', correct: 'Metáfora', opts: ['Metáfora','Comparação','Personificação','Hipérbole'], exp: 'Identifica «vida» com «viagem» sem usar palavras de comparação - é uma metáfora.' },
+  { frase: '«Ela corria como o vento.»', correct: 'Comparação', opts: ['Comparação','Metáfora','Hipérbole','Personificação'], exp: '«Como o vento» é uma comparação explícita - usa a palavra de comparação «como».' },
+  { frase: '«O mar rugiu de raiva toda a noite.»', correct: 'Personificação', opts: ['Personificação','Metáfora','Hipérbole','Comparação'], exp: '«Rugiu de raiva» atribui uma ação e sentimento humanos ao mar - personificação.' },
+  { frase: '«Já te disse isto um milhão de vezes!»', correct: 'Hipérbole', opts: ['Hipérbole','Personificação','Ironia','Pleonasmo'], exp: 'Exagero óbvio («um milhão de vezes») para intensificar - hipérbole.' },
+  { frase: '«Amor é fogo que arde sem se ver / É ferida que dói e não se sente.» (Camões)', correct: 'Antítese', opts: ['Antítese','Anáfora','Metáfora','Comparação'], exp: 'Coloca opostos em confronto: arde/não se ver, dói/não se sente - antítese. (Também há metáfora, mas a figura dominante deste par é a antítese.)' },
+  { frase: '«Há fotografias, há pinturas, há esculturas nesta exposição.»', correct: 'Anáfora', opts: ['Anáfora','Aliteração','Pleonasmo','Hipérbole'], exp: 'Repetição de «há» no início de cada grupo - anáfora.' },
+  { frase: '«O avô partiu para uma vida melhor.» (= morreu)', correct: 'Eufemismo', opts: ['Eufemismo','Ironia','Metáfora','Antítese'], exp: 'Substitui «morreu» por uma expressão mais suave - eufemismo.' },
+  { frase: '«O silêncio falava mais alto do que as palavras.»', correct: 'Personificação', opts: ['Personificação','Metáfora','Comparação','Hipérbole'], exp: '«O silêncio falava» - atribui a capacidade de falar (humana) ao silêncio - personificação.' },
+  { frase: '«Vi com os meus próprios olhos.»', correct: 'Pleonasmo', opts: ['Pleonasmo','Hipérbole','Anáfora','Eufemismo'], exp: '«Próprios olhos» é redundante - vê-se sempre com os olhos. A redundância é intencional para reforçar - pleonasmo.' },
+  { frase: '«A lua era uma foice de prata pendurada no céu.»', correct: 'Metáfora', opts: ['Metáfora','Comparação','Personificação','Aliteração'], exp: 'Identifica a lua com uma «foice de prata» sem palavras de comparação - metáfora.' },
+  { frase: '«Que bonito dia de chuva!» (dito sarcasticamente)', correct: 'Ironia', opts: ['Ironia','Eufemismo','Hipérbole','Antítese'], exp: 'Diz-se o contrário do que se sente - ironia.' },
+  { frase: '«O tempo cura todas as feridas.»', correct: 'Personificação', opts: ['Personificação','Metáfora','Comparação','Hipérbole'], exp: 'Atribui ao «tempo» a capacidade de curar (ação humana/médica) - personificação.' },
+  { frase: '«No início da sua intervenção, a locutora recorre a uma <u>enumeração</u>.» - O que é uma enumeração?', correct: 'Lista de elementos do mesmo tipo', opts: ['Lista de elementos do mesmo tipo','Repetição de uma palavra no início de frases','Substituição por expressão mais suave','Comparação sem palavras de comparação'], exp: 'Enumeração é a listagem de vários elementos da mesma categoria - cria um efeito de acumulação.' },
+  { frase: '«O orvalho da manhã brilhava como diamantes na erva.»', correct: 'Comparação', opts: ['Comparação','Metáfora','Aliteração','Personificação'], exp: '«Como diamantes» é uma comparação explícita - usa «como» para estabelecer a semelhança.' },
   { frase: '«As pedras, tal como os animais, têm a sua própria memória.»', correct: 'Comparação', opts: ['Comparação','Personificação','Metáfora','Hipérbole'], exp: '«Tal como os animais» é uma comparação explícita. A personificação poderia ser implícita mas a figura identificável é a comparação.' },
-  { frase: '«Sete cigarras serenas sussurravam suavemente.»', correct: 'Aliteração', opts: ['Aliteração','Anáfora','Pleonasmo','Assonância'], exp: 'Repetição do som /s/ — aliteração. Cria efeito sonoro e musical.' },
-  { frase: '«Chorei rios de lágrimas.»', correct: 'Hipérbole', opts: ['Hipérbole','Metáfora','Comparação','Personificação'], exp: 'Exagero — «rios de lágrimas» é claramente impossível. Intensifica a tristeza — hipérbole.' },
-  { frase: '«A felicidade é uma borboleta que, quanto mais a persegues, mais se afasta de ti.»', correct: 'Metáfora', opts: ['Metáfora','Comparação','Personificação','Hipérbole'], exp: 'Identifica «felicidade» com «borboleta» sem usar palavras de comparação — metáfora.' }
+  { frase: '«Sete cigarras serenas sussurravam suavemente.»', correct: 'Aliteração', opts: ['Aliteração','Anáfora','Pleonasmo','Assonância'], exp: 'Repetição do som /s/ - aliteração. Cria efeito sonoro e musical.' },
+  { frase: '«Chorei rios de lágrimas.»', correct: 'Hipérbole', opts: ['Hipérbole','Metáfora','Comparação','Personificação'], exp: 'Exagero - «rios de lágrimas» é claramente impossível. Intensifica a tristeza - hipérbole.' },
+  { frase: '«A felicidade é uma borboleta que, quanto mais a persegues, mais se afasta de ti.»', correct: 'Metáfora', opts: ['Metáfora','Comparação','Personificação','Hipérbole'], exp: 'Identifica «felicidade» com «borboleta» sem usar palavras de comparação - metáfora.' }
 ];
 
 /* ══════════════════════════════════════════════════════
@@ -251,7 +251,7 @@ function ptFigFinish() {
 var PT_DISCURSO_BANCO = [
   {
     tipo: 'direto_para_indireto',
-    original: '— Vou ao cinema hoje à noite — disse a Ana.',
+    original: '- Vou ao cinema hoje à noite - disse a Ana.',
     opcoes: [
       'A Ana disse que iria ao cinema naquela noite.',
       'A Ana disse que vai ao cinema hoje à noite.',
@@ -263,7 +263,7 @@ var PT_DISCURSO_BANCO = [
   },
   {
     tipo: 'direto_para_indireto',
-    original: '— Ouçam agora, homens de Ítaca, o que tenho para dizer! — disse Egípcio.',
+    original: '- Ouçam agora, homens de Ítaca, o que tenho para dizer! - disse Egípcio.',
     opcoes: [
       'Egípcio pediu aos homens de Ítaca que ouvissem naquele momento o que tinha para dizer.',
       'Egípcio disse aos homens de Ítaca que ouvissem agora o que tem para dizer.',
@@ -275,7 +275,7 @@ var PT_DISCURSO_BANCO = [
   },
   {
     tipo: 'direto_para_indireto',
-    original: '— Estás a estudar? — perguntou a professora.',
+    original: '- Estás a estudar? - perguntou a professora.',
     opcoes: [
       'A professora perguntou se eu estava a estudar.',
       'A professora perguntou que eu estava a estudar.',
@@ -287,7 +287,7 @@ var PT_DISCURSO_BANCO = [
   },
   {
     tipo: 'direto_para_indireto',
-    original: '— Não saias de casa! — disse a mãe ao filho.',
+    original: '- Não saias de casa! - disse a mãe ao filho.',
     opcoes: [
       'A mãe disse ao filho que não saísse de casa.',
       'A mãe disse ao filho que não saía de casa.',
@@ -301,10 +301,10 @@ var PT_DISCURSO_BANCO = [
     tipo: 'indireto_para_direto',
     original: 'O João disse que viria na semana seguinte.',
     opcoes: [
-      '— Venho na semana que vem — disse o João.',
-      '— Virei na semana seguinte — disse o João.',
-      '— Venho na semana seguinte — disse o João.',
-      '— Vim na semana passada — disse o João.'
+      '- Venho na semana que vem - disse o João.',
+      '- Virei na semana seguinte - disse o João.',
+      '- Venho na semana seguinte - disse o João.',
+      '- Vim na semana passada - disse o João.'
     ],
     correct: 0,
     exp: '«Viria» (condicional) → «venho» (presente). «Na semana seguinte» → «na semana que vem» (ajuste do dêitico temporal para o momento da fala).'
@@ -313,17 +313,17 @@ var PT_DISCURSO_BANCO = [
     tipo: 'indireto_para_direto',
     original: 'A professora perguntou se tínhamos feito os trabalhos de casa.',
     opcoes: [
-      '— Fizeram os trabalhos de casa? — perguntou a professora.',
-      '— Tinham feito os trabalhos de casa? — perguntou a professora.',
-      '— Fazem os trabalhos de casa? — perguntou a professora.',
-      '— Fizemos os trabalhos de casa? — perguntou a professora.'
+      '- Fizeram os trabalhos de casa? - perguntou a professora.',
+      '- Tinham feito os trabalhos de casa? - perguntou a professora.',
+      '- Fazem os trabalhos de casa? - perguntou a professora.',
+      '- Fizemos os trabalhos de casa? - perguntou a professora.'
     ],
     correct: 0,
     exp: '«Se tínhamos feito» → interrogativa com «Fizeram?» (mais-que-perfeito volta a perfeito; «nós» → «vocês» na inversão de perspetiva).'
   },
   {
     tipo: 'direto_para_indireto',
-    original: '— Por favor, abre a janela! — pediu ela.',
+    original: '- Por favor, abre a janela! - pediu ela.',
     opcoes: [
       'Ela pediu que abrissem a janela.',
       'Ela pediu para abrir a janela.',
@@ -331,7 +331,7 @@ var PT_DISCURSO_BANCO = [
       'Ela pediu para que abriram a janela.'
     ],
     correct: 0,
-    exp: 'Imperativo «abre» → «que abrissem» (imperfeito do conjuntivo). «Por favor» cai — era marcador de polidez do discurso oral.'
+    exp: 'Imperativo «abre» → «que abrissem» (imperfeito do conjuntivo). «Por favor» cai - era marcador de polidez do discurso oral.'
   },
   {
     tipo: 'regra',
@@ -458,21 +458,21 @@ var PT_CONECTORES_INFO = [
 ];
 
 var PT_CONECTORES_BANCO = [
-  { frase: 'Estudei muito ___ queria ter boa nota.', blank: 'porque', correct: 'porque', opts: ['porque','portanto','embora','quando'], tipo: 'Causa', exp: '«Porque» introduz uma causa — é um conector de causa/causal.' },
+  { frase: 'Estudei muito ___ queria ter boa nota.', blank: 'porque', correct: 'porque', opts: ['porque','portanto','embora','quando'], tipo: 'Causa', exp: '«Porque» introduz uma causa - é um conector de causa/causal.' },
   { frase: 'Não estudou nada; ___, reprovou.', blank: 'portanto', correct: 'portanto', opts: ['portanto','porque','embora','se'], tipo: 'Consequência', exp: '«Portanto» introduz uma consequência lógica do que foi dito antes.' },
-  { frase: '___ tivesse chovido muito, foram à praia.', blank: 'Embora', correct: 'Embora', opts: ['Embora','Porque','Portanto','Quando'], tipo: 'Concessão', exp: '«Embora» introduz uma concessão (+ conjuntivo) — a chuva não impediu a ida à praia.' },
-  { frase: 'Vou estudar mais ___ quero passar no exame.', blank: 'porque', correct: 'porque', opts: ['porque','portanto','embora','contudo'], tipo: 'Causa', exp: 'O falante apresenta a causa/razão da sua ação — «porque».' },
-  { frase: 'Trabalhou muito; ___, conseguiu o que queria.', blank: 'assim', correct: 'assim', opts: ['assim','embora','se','porque'], tipo: 'Consequência', exp: '«Assim» conecta uma consequência — resultado do trabalho árduo.' },
-  { frase: 'Estu­dou pouco; ___, tirou boa nota.', blank: 'contudo', correct: 'contudo', opts: ['contudo','portanto','porque','quando'], tipo: 'Oposição/Concessão', exp: '«Contudo» introduz uma ideia contrária ao esperado — surpresa.' },
-  { frase: 'Lê muito ___ aprender novas palavras.', blank: 'para', correct: 'para', opts: ['para','porque','portanto','embora'], tipo: 'Finalidade', exp: '«Para» + infinitivo indica finalidade — o objetivo da leitura.' },
-  { frase: 'Gosto de ler ___ de escrever.', blank: 'e', correct: 'e', opts: ['e','mas','portanto','embora'], tipo: 'Adição', exp: '«E» é conector de adição/copulativo — acrescenta informação.' },
-  { frase: 'Gostava de ir à festa, ___ tenho muito trabalho.', blank: 'mas', correct: 'mas', opts: ['mas','e','portanto','porque'], tipo: 'Oposição', exp: '«Mas» introduz uma oposição — o desejo vs. a realidade.' },
-  { frase: '___ chegarmos, começamos imediatamente.', blank: 'Assim que', correct: 'Assim que', opts: ['Assim que','Embora','Portanto','Porque'], tipo: 'Tempo', exp: '«Assim que» é conector temporal — indica imediatamente após.' },
+  { frase: '___ tivesse chovido muito, foram à praia.', blank: 'Embora', correct: 'Embora', opts: ['Embora','Porque','Portanto','Quando'], tipo: 'Concessão', exp: '«Embora» introduz uma concessão (+ conjuntivo) - a chuva não impediu a ida à praia.' },
+  { frase: 'Vou estudar mais ___ quero passar no exame.', blank: 'porque', correct: 'porque', opts: ['porque','portanto','embora','contudo'], tipo: 'Causa', exp: 'O falante apresenta a causa/razão da sua ação - «porque».' },
+  { frase: 'Trabalhou muito; ___, conseguiu o que queria.', blank: 'assim', correct: 'assim', opts: ['assim','embora','se','porque'], tipo: 'Consequência', exp: '«Assim» conecta uma consequência - resultado do trabalho árduo.' },
+  { frase: 'Estu­dou pouco; ___, tirou boa nota.', blank: 'contudo', correct: 'contudo', opts: ['contudo','portanto','porque','quando'], tipo: 'Oposição/Concessão', exp: '«Contudo» introduz uma ideia contrária ao esperado - surpresa.' },
+  { frase: 'Lê muito ___ aprender novas palavras.', blank: 'para', correct: 'para', opts: ['para','porque','portanto','embora'], tipo: 'Finalidade', exp: '«Para» + infinitivo indica finalidade - o objetivo da leitura.' },
+  { frase: 'Gosto de ler ___ de escrever.', blank: 'e', correct: 'e', opts: ['e','mas','portanto','embora'], tipo: 'Adição', exp: '«E» é conector de adição/copulativo - acrescenta informação.' },
+  { frase: 'Gostava de ir à festa, ___ tenho muito trabalho.', blank: 'mas', correct: 'mas', opts: ['mas','e','portanto','porque'], tipo: 'Oposição', exp: '«Mas» introduz uma oposição - o desejo vs. a realidade.' },
+  { frase: '___ chegarmos, começamos imediatamente.', blank: 'Assim que', correct: 'Assim que', opts: ['Assim que','Embora','Portanto','Porque'], tipo: 'Tempo', exp: '«Assim que» é conector temporal - indica imediatamente após.' },
   { frase: 'Há muitas formas de aprender, ___, ler, ver filmes e conversar.', blank: 'por exemplo', correct: 'por exemplo', opts: ['por exemplo','portanto','embora','porque'], tipo: 'Exemplificação', exp: '«Por exemplo» introduz exemplos concretos do que foi afirmado.' },
-  { frase: 'Estudou muito; ___ assim, não passou no exame.', blank: 'mesmo', correct: 'mesmo', opts: ['mesmo','portanto','porque','quando'], tipo: 'Concessão', exp: '«Mesmo assim» introduz uma concessão — o esforço não foi suficiente.' },
+  { frase: 'Estudou muito; ___ assim, não passou no exame.', blank: 'mesmo', correct: 'mesmo', opts: ['mesmo','portanto','porque','quando'], tipo: 'Concessão', exp: '«Mesmo assim» introduz uma concessão - o esforço não foi suficiente.' },
   { frase: 'Em ___, o texto defende que a leitura é fundamental.', blank: 'suma', correct: 'suma', opts: ['suma','conclusão','exemplo','vez'], tipo: 'Conclusão', exp: '«Em suma» é um conector de conclusão/síntese.' },
   { frase: '___ o texto seja difícil, consegues perceber a ideia principal.', blank: 'Ainda que', correct: 'Ainda que', opts: ['Ainda que','Porque','Portanto','Quando'], tipo: 'Concessão', exp: '«Ainda que» é conector concessivo (equivalente a «embora», usa conjuntivo).' },
-  { frase: 'Não quero sair ___ esteja mau tempo.', blank: 'caso', correct: 'caso', opts: ['caso','porque','portanto','embora'], tipo: 'Condição', exp: '«Caso» é conector condicional (usa conjuntivo) — equivale a «se».' }
+  { frase: 'Não quero sair ___ esteja mau tempo.', blank: 'caso', correct: 'caso', opts: ['caso','porque','portanto','embora'], tipo: 'Condição', exp: '«Caso» é conector condicional (usa conjuntivo) - equivale a «se».' }
 ];
 
 var _ptCon = { idx: 0, score: 0, total: 0, answered: false, banco: [] };

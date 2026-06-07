@@ -287,7 +287,7 @@ function buildEx7(tema,dif){
     var p=Math.floor(Math.random()*10)+10;
     return {enunciado:'Duas figuras semelhantes têm k = '+k2+'. O perímetro da menor é '+p+' cm. Qual é a área da maior se a área da menor é '+p+' cm²?',resposta:String(k2*k2*p)+' cm²',dica:'Razão das áreas = k² = '+(k2*k2)+'. Área da maior = '+(p)+' × '+(k2*k2)+' = '+(k2*k2*p)+' cm².'};
   }
-  return {enunciado:'Questão indisponível.',resposta:'—',dica:''};
+  return {enunciado:'Questão indisponível.',resposta:'-',dica:''};
 }
 
 // ── Topic grid ─────────────────────────────────────────────────────────────

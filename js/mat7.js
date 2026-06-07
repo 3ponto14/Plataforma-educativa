@@ -127,7 +127,7 @@ function _mat7Init() {
   if (typeof _addStatsTeoriaVisuais === 'function' && typeof BANCO8 !== 'undefined' && BANCO8.flashcards) {
     _addStatsTeoriaVisuais(BANCO8.flashcards, '#61afef');
   }
-  // visuais de teoria no cap 6 (Funções) — gráficos de reta e parábola
+  // visuais de teoria no cap 6 (Funções) - gráficos de reta e parábola
   if (typeof _addFuncTeoriaVisuais === 'function' && typeof BANCO6 !== 'undefined' && BANCO6.flashcards) {
     _addFuncTeoriaVisuais(BANCO6.flashcards, '#56b6c2');
   }
@@ -422,7 +422,7 @@ function mat7RenderUnifiedExercicios(caps, inlineEl) {
           capExs.push({enun:q.enunciado||q.en||'',opcoes:q.opts||[],resposta:q.correct||q.c||'',tipo:'mc',expl:q.fb||'',_capId:8,_capLabel:capNames[8]||'Dados e Probabilidades'});
         });
       } else {
-        // Procedural generation for caps 1–4
+        // Procedural generation for caps 1-4
         var temas = ['1','2','3','4','5'];
 
         // Build a varied plan mixing fill, mc, vf, contexto
@@ -1035,7 +1035,7 @@ function qgHubSelectCap(cap, btn) {
 }
 
 function _qgHubBuildQuestion(cap) {
-  // Caps 5–8: pull from BANCO relampago pool
+  // Caps 5-8: pull from BANCO relampago pool
   var bancoMap = { 5: (typeof BANCO5 !== 'undefined' ? BANCO5 : null),
                    6: (typeof BANCO6 !== 'undefined' ? BANCO6 : null),
                    7: (typeof BANCO7 !== 'undefined' ? BANCO7 : null),

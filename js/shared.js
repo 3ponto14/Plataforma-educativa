@@ -1504,7 +1504,7 @@ function _qgBuildPool(cap) {
       return { q: q.enunciado || q.en || '', opts: opts, ans: ans, fb: q.fb || '' };
     });
   }
-  // caps 1–4: no pool, will generate procedurally each question
+  // caps 1-4: no pool, will generate procedurally each question
   return null;
 }
 
@@ -1514,7 +1514,7 @@ function _qgBuildQuestion(cap) {
     var idx = Math.floor(Math.random() * pool.length);
     return pool[idx];
   }
-  // Procedural for caps 1–4
+  // Procedural for caps 1-4
   var temas = ['1','2','3','4','5'];
   var tema = temas[Math.floor(Math.random() * temas.length)];
   var ex = null;
@@ -1671,7 +1671,7 @@ function _teoriaAccordionHTML(cards, color, tagIcons) {
 // 4 opções e a matéria correta. Devolve null se não conseguir.
 function _jogoQFromGerador(genFn, temasCount, banco, level) {
   var dif = level === 'facil' ? 'facil' : (level === 'dificil' ? 'dificil' : 'medio');
-  // 1) tenta o banco (questões mc com 4 opções) — conteúdo real
+  // 1) tenta o banco (questões mc com 4 opções) - conteúdo real
   if (banco && banco.length) {
     var mcs = banco.filter(function (q) { return q.tipo === 'mc' && q.opcoes && q.opcoes.length === 4; });
     if (mcs.length && Math.random() < 0.4) {
@@ -1703,8 +1703,61 @@ function _jogoQFromGerador(genFn, temasCount, banco, level) {
   return null;
 }
 
+// Garante que uma pergunta de escolha múltipla (mc) tem 4 opções.
+// Perguntas binárias legítimas (Sim/Não, Verdadeiro/Falso, finita/infinita…)
+// ficam com 2. As que têm 3 (falta um distrator) são completadas para 4.
+// Recebe e devolve o array de opções (modifica/retorna novo).
+function _normalizaOpcoes(opcoes, resposta) {
+  if (!opcoes || !opcoes.length) return opcoes;
+  // pares binários aceitáveis: mantêm-se com 2 opções
+  if (opcoes.length === 2) return opcoes;
+  if (opcoes.length >= 4) return opcoes.slice(0, 4);
+  // 3 opções: completar para 4 com um distrator plausível
+  var out = opcoes.slice();
+  // 1) distrator numérico simples
+  var fab = _fabricarOpcoes(resposta);
+  if (fab && fab.opts) {
+    for (var i = 0; i < fab.opts.length && out.length < 4; i++) {
+      if (out.map(String).indexOf(String(fab.opts[i])) < 0) out.push(fab.opts[i]);
+    }
+  }
+  // 2) ainda falta? deriva de uma opção existente (troca de sinal / inverte fração)
+  if (out.length < 4) {
+    var cand = _distratorDe(out);
+    if (cand && out.map(String).indexOf(String(cand)) < 0) out.push(cand);
+  }
+  // 3) último recurso: rótulo neutro para nunca deixar a mc com 3
+  if (out.length < 4) out.push('Nenhuma das anteriores');
+  return out;
+}
+
+// Deriva um distrator a partir de opções existentes: troca o sinal,
+// inverte uma fração a/b → b/a, ou soma 1 a um número. Devolve string ou null.
+function _distratorDe(opcoes) {
+  var have = {}; opcoes.forEach(function (o) { have[String(o).trim()] = 1; });
+  for (var i = 0; i < opcoes.length; i++) {
+    var o = String(opcoes[i]).trim();
+    var mf = o.match(/^(-?)(\d+)\/(\d+)$/);
+    if (mf) {
+      var sign = mf[1], num = parseInt(mf[2], 10), den = parseInt(mf[3], 10);
+      // candidatos: inverte, troca sinal, numerador±1, denominador±1
+      var cands = [(sign ? '' : '-') + num + '/' + den, den + '/' + num,
+                   sign + (num + 1) + '/' + den, sign + num + '/' + (den + 1),
+                   sign + (num > 1 ? num - 1 : num + 2) + '/' + den];
+      for (var c = 0; c < cands.length; c++) { if (!have[cands[c]]) return cands[c]; }
+    }
+    var mn = o.match(/^(-?)(\d+)$/);
+    if (mn) {
+      var n = parseInt(o, 10);
+      var ns = [n + 1, n - 1, n + 2, n - 2];
+      for (var j = 0; j < ns.length; j++) { if (!have[String(ns[j])]) return String(ns[j]); }
+    }
+  }
+  return null;
+}
+
 // A partir de uma resposta numérica, cria 4 opções (a correta + 3 distratores
-// plausíveis), baralhadas. Devolve array de 4 strings ou null se não numérica.
+// plausíveis), baralhadas. Devolve {opts:[4 strings], ans} ou null se não numérica.
 function _fabricarOpcoes(resp) {
   var s = String(resp).replace(',', '.');
   if (!/^-?\d+(\.\d+)?$/.test(s)) return null; // só respostas numéricas simples
@@ -1713,7 +1766,7 @@ function _fabricarOpcoes(resp) {
   // formata a resposta correta no mesmo estilo dos distratores (vírgula decimal)
   var ordem = (decimais === 0) ? String(Math.round(n)) : n.toFixed(decimais).replace('.', ',');
   var set = {}; set[String(n)] = true; set[ordem] = true;
-  // distratores: ±1, ±2, ±10%, dobro/metade — só os que forem distintos
+  // distratores: ±1, ±2, ±10%, dobro/metade - só os que forem distintos
   var base = Math.abs(n) || 1;
   var cands = [n + 1, n - 1, n + 2, n - 2, Math.round(n * 1.1 * Math.pow(10, decimais)) / Math.pow(10, decimais),
                n * 2, (decimais === 0 && n % 2 === 0) ? n / 2 : n + 3, n - 3];
@@ -2123,7 +2176,7 @@ function svgPiecewiseGraph(opts) {
   return svg;
 }
 
-// ── Inline worksheet generator for individual chapter pages (caps 5–8) ──
+// ── Inline worksheet generator for individual chapter pages (caps 5-8) ──
 // Calls _dinamico(cap, dif) from gf.js if available; otherwise calls window['_dinamicoN'](dif) directly.
 function _capGerarFichaInline(cap, nivelSelId, outputId, dlBtnId, capNome) {
   var nivelSel = document.getElementById(nivelSelId);

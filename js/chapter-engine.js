@@ -1,4 +1,4 @@
-// CHAPTER ENGINE Generic parameterized logic for cap1–cap4
+// CHAPTER ENGINE Generic parameterized logic for cap1-cap4
 // Each chapter registers its data in window.CAP_DATA[n].
 
 window.CAP_DATA = window.CAP_DATA || {};
@@ -37,7 +37,8 @@ function _capBuildQuizHTML(exs, qidPrefix, checkFnCall) {
       html += '<div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap"><input class="fill-input" id="' + qid + '-in" placeholder="?" type="' + inpType + '" style="width:100px"><button class="check-btn" onclick="' + checkFnCall + '(\'' + qid + '\',\'' + ex.tipo + '\',' + JSON.stringify(String(ex.resposta)).replace(/"/g,"'") + ')">Verificar</button></div>';
     } else if (ex.tipo === 'mc') {
       html += '<div class="options">';
-      (ex.opcoes||[]).forEach(function(opt,k) { var isC = String(opt) === String(ex.resposta); html += '<button class="option-btn" data-correct="' + isC + '" onclick="' + checkFnCall + '(\'' + qid + '\',\'mc\',' + isC + ',this)"><span class="opt-label">' + labels[k] + '</span>' + opt + '</button>'; });
+      var _ops = (typeof _normalizaOpcoes === 'function') ? _normalizaOpcoes(ex.opcoes || [], ex.resposta) : (ex.opcoes || []);
+      _ops.forEach(function(opt,k) { var isC = String(opt) === String(ex.resposta); html += '<button class="option-btn" data-correct="' + isC + '" onclick="' + checkFnCall + '(\'' + qid + '\',\'mc\',' + isC + ',this)"><span class="opt-label">' + labels[k] + '</span>' + opt + '</button>'; });
       html += '</div>';
     } else if (ex.tipo === 'vf') {
       var vC = ex.resposta === 'V';

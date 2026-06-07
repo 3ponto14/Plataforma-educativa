@@ -1,11 +1,11 @@
-// ux-improvements.js — Melhorias de UX globais para todas as páginas
+// ux-improvements.js - Melhorias de UX globais para todas as páginas
 // Carregado em exames.html e exames-pt.html (e pode ser incluído noutras páginas)
 
 (function() {
 'use strict';
 
 /* ══════════════════════════════════════════════════════
-   1. DARK MODE — funciona com .ex-topbar e .topbar
+   1. DARK MODE - funciona com .ex-topbar e .topbar
 ══════════════════════════════════════════════════════ */
 var UX_DARK_KEY = 'edupt_dark';
 
@@ -49,7 +49,7 @@ function uxInjectTopbarControls() {
 
   wrap.appendChild(darkBtn);
 
-  // Inserir — antes do back button ou dentro de .site-topbar-actions se existir
+  // Inserir - antes do back button ou dentro de .site-topbar-actions se existir
   var actionsSlot = topbar.querySelector('.site-topbar-actions');
   if (actionsSlot) {
     actionsSlot.appendChild(darkBtn);
@@ -87,7 +87,7 @@ window.addEventListener('beforeunload', function(e) {
 });
 
 /* ══════════════════════════════════════════════════════
-   4. TOAST MELHORADO — com ícones e animação
+   4. TOAST MELHORADO - com ícones e animação
 ══════════════════════════════════════════════════════ */
 window.uxToast = function(msg, type, duration) {
   // Usa eduToast se disponível, senão cria o seu próprio
@@ -118,7 +118,7 @@ window.uxToast = function(msg, type, duration) {
 };
 
 /* ══════════════════════════════════════════════════════
-   5. STREAK DIÁRIO — badge de motivação
+   5. STREAK DIÁRIO - badge de motivação
 ══════════════════════════════════════════════════════ */
 function uxCheckStreak() {
   var KEY = 'ux_streak';
@@ -224,7 +224,7 @@ document.addEventListener('keydown', function(e) {
 });
 
 /* ══════════════════════════════════════════════════════
-   10. DARK MODE — CSS extra para páginas de exames
+   10. DARK MODE - CSS extra para páginas de exames
 ══════════════════════════════════════════════════════ */
 (function injectDarkCSS() {
   var css = '\
