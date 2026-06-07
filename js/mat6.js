@@ -1539,7 +1539,8 @@ function buildEx_m6c7(tema, tipo, dif) {
   tema = String(tema);
   if (tema === '1') {
     var arr; var s;
-    do { arr = []; for (var j = 0; j < 5; j++) arr.push(rnd_m81(2, 20)); s = arr.reduce(function (a, v) { return a + v; }, 0); } while (s % 5 !== 0);
+    var _hiV6 = (dif === 'dificil') ? 50 : (dif === 'medio') ? 28 : 14;
+    do { arr = []; for (var j = 0; j < 5; j++) arr.push(rnd_m81(2, _hiV6)); s = arr.reduce(function (a, v) { return a + v; }, 0); } while (s % 5 !== 0);
     if (typeof EduVisual !== 'undefined' && Math.random() < 0.4) {
       var dias6 = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'];
       var dataM6 = dias6.map(function (d, k) { return { label: d, value: arr[k] }; });

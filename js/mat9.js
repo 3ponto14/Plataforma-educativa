@@ -1712,7 +1712,9 @@ function buildEx_m9c5(tema, tipo, dif) {
 function buildEx_m9c6(tema, tipo, dif) {
   tema = String(tema);
   var easy = (dif === 'facil'), hard = (dif === 'dificil');
-  function dados(len, lo, hi) { var a = []; for (var i = 0; i < len; i++) a.push(rnd_m81(lo, hi)); return a; }
+  // escala o topo dos dados conforme a dificuldade (difícil = números maiores)
+  var _escD = hard ? 2.5 : easy ? 0.6 : 1;
+  function dados(len, lo, hi) { var h = Math.max(lo + len, Math.round(hi * _escD)); var a = []; for (var i = 0; i < len; i++) a.push(rnd_m81(lo, h)); return a; }
   function media(a) { var s = 0; for (var i = 0; i < a.length; i++) s += a[i]; return s / a.length; }
   function ord(a) { return a.slice().sort(function (x, y) { return x - y; }); }
 
@@ -1743,7 +1745,7 @@ function buildEx_m9c6(tema, tipo, dif) {
 
   // ── TEMA 3 · Amplitude interquartis (a partir de Q1 e Q3 dados) ──
   if (tema === '3') {
-    var q1 = rnd_m81(5, 15), q3 = q1 + rnd_m81(4, 15);
+    var q1 = rnd_m81(5, hard ? 40 : easy ? 10 : 15), q3 = q1 + rnd_m81(4, hard ? 40 : easy ? 10 : 15);
     return {
       enun: 'Num conjunto de dados, Q1 = ' + q1 + ' e Q3 = ' + q3 + '. Qual é a amplitude interquartis (AIQ)?',
       tipo: 'fill', resposta: String(q3 - q1),

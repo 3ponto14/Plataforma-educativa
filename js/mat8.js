@@ -2298,10 +2298,12 @@ function buildEx_m88(tema, tipo, dif) {
   var easy = (dif === 'facil'), hard = (dif === 'dificil');
   var n = easy ? 5 : hard ? 7 : 5; // tamanho do conjunto (ímpar para mediana limpa)
 
-  // gera conjunto pequeno de dados
+  // gera conjunto de dados; difícil usa números maiores
+  var _escD8 = hard ? 2.5 : easy ? 0.7 : 1;
   function dados(len, lo, hi) {
+    var h = Math.max(lo + len, Math.round(hi * _escD8));
     var a = [];
-    for (var i = 0; i < len; i++) a.push(rnd_m81(lo, hi));
+    for (var i = 0; i < len; i++) a.push(rnd_m81(lo, h));
     return a;
   }
 

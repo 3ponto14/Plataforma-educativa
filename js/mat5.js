@@ -1603,7 +1603,8 @@ function buildEx_m5c7(tema, tipo, dif) {
   if (tema === '1') {
     // Ler um GRÁFICO DE BARRAS real (SVG): máximo, mínimo ou total
     var cats = ['Azul', 'Verde', 'Vermelho', 'Amarelo'];
-    var vals = []; for (var i = 0; i < 4; i++) vals.push(rnd_m81(2, 18));
+    var _hiV5 = (dif === 'dificil') ? 45 : (dif === 'medio') ? 25 : 12;
+    var vals = []; for (var i = 0; i < 4; i++) vals.push(rnd_m81(2, _hiV5));
     var dataG = cats.map(function (c, k) { return { label: c, value: vals[k] }; });
     var modo = rnd_m81(0, 2); // 0 máximo, 1 mínimo, 2 total
     var maxV = Math.max.apply(null, vals), minV = Math.min.apply(null, vals);
