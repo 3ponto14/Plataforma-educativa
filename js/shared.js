@@ -1664,6 +1664,28 @@ function _teoriaAccordionHTML(cards, color, tagIcons) {
   h += '</div>';
   return h;
 }
+// ═══ Banco de questões: mistura questões fixas (reais, multi-passo) com geradas ═══
+// banco: array de questões {tema?, tipo, enun, opcoes?, resposta, expl, visual?} para um capítulo.
+// Devolve até `qtd` questões: algumas do banco (baralhadas) + o resto geradas.
+function _mixBancoGeradas(banco, geradas, qtd, nBanco) {
+  qtd = qtd || 8;
+  var out = [];
+  // escolhe nBanco questões do banco (no máximo metade), sem repetir
+  if (banco && banco.length) {
+    var pool = banco.slice();
+    // baralha
+    for (var i = pool.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = pool[i]; pool[i] = pool[j]; pool[j] = t; }
+    var take = Math.min(nBanco || Math.floor(qtd / 2), pool.length);
+    for (var k = 0; k < take; k++) out.push(Object.assign({}, pool[k]));
+  }
+  // completa com geradas
+  var gi = 0;
+  while (out.length < qtd && gi < geradas.length) { out.push(geradas[gi]); gi++; }
+  // baralha o conjunto final e numera
+  for (var m = out.length - 1; m > 0; m--) { var n = Math.floor(Math.random() * (m + 1)); var s = out[m]; out[m] = out[n]; out[n] = s; }
+  return out.map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
+}
+
 // Junta a um array de cards de teoria de Estatística 3 exemplos visuais
 // (gráfico de barras, circular e tabela). Usado pelos inits dos cursos.
 function _addStatsTeoriaVisuais(cardsArr, color) {

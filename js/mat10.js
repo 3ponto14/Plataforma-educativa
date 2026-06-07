@@ -400,12 +400,16 @@ function mat10GerarExercicios() {
 
   var QTD = 8;
   var tipos = ['mc', 'fill', 'mc', 'vf', 'fill', 'mc', 'fill', 'mc'];
-  var exs = [];
+  var geradas = [];
   for (var i = 0; i < QTD; i++) {
     var tema = temas[i % temas.length];
     var ex = gen(tema, tipos[i % tipos.length], _mat10Prat.nivel);
-    if (ex) exs.push(Object.assign({}, ex, { num: i + 1 }));
+    if (ex) geradas.push(ex);
   }
+  // mistura questões reais do banco (filtradas pelos temas ativos) com as geradas
+  var banco = (typeof _mat10Banco !== 'undefined' && _mat10Banco[cap]) ? _mat10Banco[cap].filter(function (q) { return temas.indexOf(q.t) !== -1; }) : [];
+  var exs = (typeof _mixBancoGeradas === 'function') ? _mixBancoGeradas(banco, geradas, QTD, 3)
+    : geradas.map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
   _mat10Prat.exs = exs;
   _mat10Prat.answered = {};
   _mat10Prat.score = { correct: 0, total: 0 };
@@ -1579,3 +1583,51 @@ function buildEx_m10c6(tema, tipo, dif) {
     tema: 'T3 · Radianos'
   };
 }
+
+/* ════════════════════════════════════════════════════════════════
+   BANCO DE QUESTÕES (reais/ricas) — Matemática A · 10.º ano
+   Questões de raciocínio e multi-passo, no estilo das fichas/exames.
+   Misturadas com as geradas por _mixBancoGeradas.
+   ════════════════════════════════════════════════════════════════ */
+var _mat10Banco = {
+  1: [ // Lógica e Conjuntos
+    { t: '1', tipo: 'mc', enun: 'Considera as afirmações: I. ¬(p ∧ q) ⇔ ¬p ∨ ¬q;  II. p ⇒ q é equivalente a ¬q ⇒ ¬p (contrarrecíproco);  III. p ∨ ¬p é sempre verdadeira. Quais são verdadeiras?', opcoes: ['Todas', 'Apenas I e II', 'Apenas I e III', 'Apenas II'], resposta: 'Todas', expl: 'I é a Lei de De Morgan; II é o contrarrecíproco (válido); III é o princípio do terço excluído. Todas verdadeiras.', tema: 'T1 · Lógica' },
+    { t: '2', tipo: 'mc', enun: 'A negação de "∀x ∈ ℝ, x² ≥ 0" é:', opcoes: ['∃x ∈ ℝ: x² < 0', '∀x ∈ ℝ, x² < 0', '∃x ∈ ℝ: x² ≥ 0', '∀x ∈ ℝ, x² ≤ 0'], resposta: '∃x ∈ ℝ: x² < 0', expl: 'Nega-se trocando ∀ por ∃ e negando a condição (≥ passa a <).', tema: 'T2 · Quantificadores' },
+    { t: '1', tipo: 'vf', enun: 'Verdadeiro ou Falso: se p é falsa, então a implicação p ⇒ q é sempre verdadeira (qualquer que seja q).', resposta: 'V', expl: 'A implicação só é falsa quando o antecedente é V e o consequente F. Com p falsa, é sempre verdadeira.', tema: 'T1 · Lógica' },
+    { t: '3', tipo: 'fill_frac', enun: 'Considera A = ]−∞, 3] e B = [0, +∞[. Indica A ∩ B (em intervalo).', resposta: '[0,3]', expl: 'A interseção são os reais ≤ 3 E ≥ 0 → [0, 3].', tema: 'T3 · Conjuntos' },
+    { t: '1', tipo: 'mc', enun: 'Qual das condições é necessária mas NÃO suficiente para "um número é múltiplo de 6"?', opcoes: ['Ser múltiplo de 2', 'Ser múltiplo de 6', 'Ser múltiplo de 12', 'Ser par e múltiplo de 3'], resposta: 'Ser múltiplo de 2', expl: 'Todo o múltiplo de 6 é par (necessária), mas ser par não garante ser múltiplo de 6 (não suficiente).', tema: 'T1 · Lógica' }
+  ],
+  2: [ // Álgebra
+    { t: '1', tipo: 'fill_frac', enun: 'Simplifica e racionaliza: 6/√3.', resposta: '2√3', expl: '6/√3 = 6√3/3 = 2√3.', tema: 'T1 · Radicais' },
+    { t: '3', tipo: 'mc', enun: 'A equação x² + 2x + 5 = 0:', opcoes: ['não tem soluções reais', 'tem uma solução', 'tem duas soluções reais', 'tem solução x = 5'], resposta: 'não tem soluções reais', expl: 'Δ = 4 − 20 = −16 < 0 → sem soluções reais.', tema: 'T3 · Equações' },
+    { t: '2', tipo: 'fill', enun: 'Sabendo que (x − 2) é fator de P(x) = x³ − 3x² + 4, qual é o resto da divisão de P(x) por (x − 2)?', resposta: '0', expl: 'Se (x−2) é fator, P(2) = 0, logo o resto é 0 (teorema do resto).', tema: 'T2 · Polinómios' },
+    { t: '3', tipo: 'fill', enun: 'A soma das soluções da equação x² − 7x + 12 = 0 é:', resposta: '7', expl: 'As soluções são 3 e 4 (3×4=12, 3+4=7). Soma = 7. (Ou: soma = −b/a = 7.)', tema: 'T3 · Equações' },
+    { t: '1', tipo: 'mc', enun: 'A expressão ³√(x⁶) (x ≥ 0) é igual a:', opcoes: ['x²', 'x³', 'x⁹', 'x⁰·⁵'], resposta: 'x²', expl: '³√(x⁶) = x^(6/3) = x².', tema: 'T1 · Radicais' }
+  ],
+  3: [ // Geometria Analítica
+    { t: '1', tipo: 'fill', enun: 'Os pontos A(1, 2) e B(4, 6) e C(1, 6) formam um triângulo retângulo em C. Qual é a área do triângulo [ABC]?', resposta: '6', expl: 'Catetos: AC = 6−2 = 4 e BC = 4−1 = 3. Área = (3 × 4)/2 = 6.', tema: 'T1 · Distância' },
+    { t: '2', tipo: 'mc', enun: 'M(3, 5) é o ponto médio de [AB]. Se A(1, 2), quais são as coordenadas de B?', opcoes: ['(5, 8)', '(2, 3)', '(4, 7)', '(6, 10)'], resposta: '(5, 8)', expl: 'M = ((1+xB)/2, (2+yB)/2) = (3, 5) → xB = 5, yB = 8.', tema: 'T2 · Ponto Médio' },
+    { t: '3', tipo: 'mc', enun: 'A equação x² + y² − 4x + 6y − 3 = 0 representa uma circunferência. Qual é o seu centro?', opcoes: ['(2, −3)', '(−2, 3)', '(4, −6)', '(−4, 6)'], resposta: '(2, −3)', expl: 'Completando o quadrado: (x−2)² + (y+3)² = 16. Centro (2, −3), raio 4.', tema: 'T3 · Circunferência' },
+    { t: '4', tipo: 'mc', enun: 'Os vetores u(2, −3) e v(−4, 6) são:', opcoes: ['colineares (v = −2u)', 'perpendiculares', 'iguais', 'simétricos'], resposta: 'colineares (v = −2u)', expl: 'v = (−4, 6) = −2×(2, −3) = −2u → colineares.', tema: 'T4 · Vetores' },
+    { t: '1', tipo: 'fill', enun: 'Qual é o perímetro do triângulo de vértices A(0,0), B(3,0) e C(0,4)?', resposta: '12', expl: 'AB = 3, AC = 4, BC = √(3²+4²) = 5. Perímetro = 3 + 4 + 5 = 12.', tema: 'T1 · Distância' }
+  ],
+  4: [ // Funções Reais
+    { t: '1', tipo: 'mc', enun: 'Qual é o domínio de f(x) = √(x − 1) / (x − 4)?', opcoes: ['[1, 4[ ∪ ]4, +∞[', '[1, +∞[', 'ℝ \\ {4}', ']1, 4['], resposta: '[1, 4[ ∪ ]4, +∞[', expl: 'Precisa de x − 1 ≥ 0 (x ≥ 1) E x − 4 ≠ 0 (x ≠ 4). Domínio: [1, 4[ ∪ ]4, +∞[.', tema: 'T1 · Domínio' },
+    { t: '2', tipo: 'mc', enun: 'A função f(x) = −2(x − 3)² + 5 tem:', opcoes: ['máximo 5 em x = 3', 'mínimo 5 em x = 3', 'máximo 3 em x = 5', 'mínimo −2'], resposta: 'máximo 5 em x = 3', expl: 'Forma canónica a(x−h)²+k com a = −2 < 0 → concavidade para baixo → vértice (3, 5) é máximo.', tema: 'T2 · Quadrática' },
+    { t: '3', tipo: 'mc', enun: 'O gráfico de g(x) = f(x) − 3 obtém-se a partir do de f por:', opcoes: ['translação 3 unidades para baixo', 'translação 3 para cima', 'reflexão no eixo Ox', 'translação 3 para a direita'], resposta: 'translação 3 unidades para baixo', expl: 'y = f(x) + k com k = −3 → desce 3 unidades.', tema: 'T3 · Transformações' },
+    { t: '1', tipo: 'vf', enun: 'Verdadeiro ou Falso: a função f(x) = x² é injetiva em ℝ.', resposta: 'F', expl: 'Não é injetiva: f(−2) = f(2) = 4 (objetos diferentes, mesma imagem).', tema: 'T1 · Funções' },
+    { t: '2', tipo: 'fill', enun: 'Os zeros de f(x) = x² − x − 6 são dois números. Qual é o produto desses zeros?', resposta: '-6', expl: 'Zeros: 3 e −2 (3×(−2) = −6). Ou: produto = c/a = −6.', tema: 'T2 · Quadrática' }
+  ],
+  5: [ // Estatística
+    { t: '1', tipo: 'fill', enun: 'Num conjunto de 10 valores, a média é 6. Se for acrescentado o valor 17, qual passa a ser a média?', resposta: '7', expl: 'Soma inicial = 10×6 = 60. Nova soma = 77, com 11 valores → 77/11 = 7.', tema: 'T1 · Média' },
+    { t: '2', tipo: 'mc', enun: 'Numa distribuição, se a todos os valores se somar 5, a média e o desvio-padrão:', opcoes: ['média aumenta 5, desvio-padrão não muda', 'ambos aumentam 5', 'média não muda, desvio aumenta 5', 'nenhum muda'], resposta: 'média aumenta 5, desvio-padrão não muda', expl: 'Somar uma constante desloca todos os valores (média +5) mas não altera a dispersão (desvio-padrão igual).', tema: 'T2 · Dispersão' },
+    { t: '3', tipo: 'mc', enun: 'Se o coeficiente de correlação é r = −0,9, então:', opcoes: ['correlação forte e negativa', 'correlação fraca', 'não há correlação', 'correlação positiva'], resposta: 'correlação forte e negativa', expl: 'r próximo de −1 → forte e negativa (uma variável cresce, a outra decresce).', tema: 'T3 · Regressão' },
+    { t: '1', tipo: 'fill', enun: 'Dados ordenados: 2, 4, 4, 6, 8, 10, 12, 14. Qual é a mediana?', resposta: '7', expl: '8 valores (par): mediana = média dos 2 centrais (6 e 8) = (6+8)/2 = 7.', tema: 'T1 · Mediana' }
+  ],
+  6: [ // Trigonometria
+    { t: '2', tipo: 'mc', enun: 'Se sen(α) = 12/13 e α é agudo, qual é tg(α)?', opcoes: ['12/5', '5/13', '13/12', '5/12'], resposta: '12/5', expl: 'cos α = 5/13 (terno 5,12,13). tg α = sen/cos = (12/13)/(5/13) = 12/5.', tema: 'T2 · Fórmula Fundamental' },
+    { t: '3', tipo: 'fill_frac', enun: 'Quanto vale, em radianos, um ângulo de 225°?', resposta: '5π/4', expl: '225 × π/180 = 5π/4.', tema: 'T3 · Radianos' },
+    { t: '1', tipo: 'fill_frac', enun: 'Num triângulo retângulo, a hipotenusa mede 10 e um cateto mede 6. Qual é o cosseno do ângulo adjacente a esse cateto?', resposta: '3/5', expl: 'cos = cateto adjacente / hipotenusa = 6/10 = 3/5.', tema: 'T1 · Razões' },
+    { t: '2', tipo: 'mc', enun: 'O valor de sen²(40°) + cos²(40°) é:', opcoes: ['1', '0', '40', 'sen(80°)'], resposta: '1', expl: 'Pela fórmula fundamental, sen²α + cos²α = 1 para qualquer α.', tema: 'T2 · Fórmula Fundamental' }
+  ]
+};
