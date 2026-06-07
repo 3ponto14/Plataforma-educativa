@@ -33,114 +33,115 @@ var _mat10Subtemas = {
 // Cap 1 (Números) — conteúdo real, fiel ao Prisma 8.
 // Caps 2-8 — placeholders honestos até serem construídos.
 // ═══ FLASHCARDS / TEORIA por capítulo (10.º ano) ═══
+// ═══ FLASHCARDS / TEORIA por capítulo (10.º ano · Matemática A) ═══
 var _mat10Cards = {
   1: [
-    { tag: 'Definição', q: 'O que são os números reais (ℝ)?', a: 'O conjunto que reúne os racionais (ℚ) e os irracionais. Inclui todos os números que se podem representar na reta numérica. ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ.' },
-    { tag: 'Definição', q: 'O que é um número irracional?', a: 'Um número que NÃO se pode escrever como fração de inteiros. A sua dízima é infinita e não periódica. Ex: √2, π, √3.' },
-    { tag: 'Definição', q: 'O que é uma dízima infinita não periódica?', a: 'Uma representação decimal com infinitas casas que nunca se repetem num período. Corresponde sempre a um número irracional. Ex: π = 3,14159…' },
-    { tag: 'Definição', q: 'O que é um intervalo de números reais?', a: 'Um conjunto de todos os reais entre dois extremos. Ex: [2, 5] = todos os x com 2 ≤ x ≤ 5. Usa [ ] para incluir o extremo e ] [ para excluir.' },
-    { tag: 'Regra', q: 'Diferença entre intervalo aberto e fechado', a: 'Fechado [a, b]: inclui a e b (≤). Aberto ]a, b[: exclui a e b (<). Pode ser misto: [a, b[ inclui a mas não b.' },
-    { tag: 'Notação', q: 'Como se escreve "x ≥ 3" como intervalo?', a: '[3, +∞[. O +∞ usa-se sempre com parêntese aberto. "x > 3" seria ]3, +∞[.' },
-    { tag: 'Definição', q: 'O que é uma inequação?', a: 'Uma desigualdade com uma incógnita (<, >, ≤, ≥). A solução é, em geral, um intervalo de valores. Ex: 2x + 1 > 5.' },
-    { tag: 'Regra', q: 'Regra de OURO ao resolver inequações', a: 'Ao multiplicar ou dividir ambos os membros por um número NEGATIVO, INVERTE-SE o sentido da desigualdade (< passa a >).' },
-    { tag: 'Estratégia', q: 'Como resolver uma inequação do 1.º grau?', a: 'Procede como numa equação: isola x. Mas atenção: se multiplicares/dividires por negativo, inverte o sinal. Apresenta a solução como intervalo.' },
-    { tag: 'Definição', q: 'O que é a reunião e a interseção de intervalos?', a: 'Reunião (∪): todos os elementos de ambos. Interseção (∩): apenas os elementos comuns a ambos.' },
-    { tag: 'Regra', q: 'Como representar a solução de uma inequação?', a: 'Por uma condição (x ≥ 2), por um intervalo ([2, +∞[) e/ou na reta numérica (bola cheia = incluído, bola vazia = excluído).' },
-    { tag: 'Exemplo', q: 'Resolve 2x − 4 > 6', a: '2x > 10 → x > 5. Solução: ]5, +∞[.' },
-    { tag: 'Exemplo', q: 'Resolve −3x ≥ 9', a: 'Divide por −3 e INVERTE: x ≤ −3. Solução: ]−∞, −3].' },
-    { tag: 'Exemplo', q: '√2 é racional ou irracional?', a: 'Irracional: não se pode escrever como fração e a dízima é infinita não periódica (√2 ≈ 1,41421…).' },
-    { tag: 'Definição', q: 'O que é o valor absoluto de um número real?', a: '|x| é a distância de x ao zero na reta; é sempre ≥ 0. |−5| = 5 e |5| = 5.' },
-    { tag: 'Exemplo', q: 'Escreve ]−∞, 4] como condição', a: 'x ≤ 4 (todos os reais menores ou iguais a 4).' }
+    { tag: 'Definição', q: 'O que é uma proposição?', a: 'Uma afirmação à qual se pode atribuir um e um só valor lógico: Verdadeiro (V) ou Falso (F). Ex: "2 é par" é verdadeira.' },
+    { tag: 'Definição', q: 'O que é a negação (¬p)?', a: 'A proposição com o valor lógico contrário de p. Se p é V, ¬p é F (e vice-versa).' },
+    { tag: 'Definição', q: 'O que é a conjunção (p ∧ q)?', a: 'A proposição "p e q". É verdadeira apenas quando p e q são ambas verdadeiras.' },
+    { tag: 'Definição', q: 'O que é a disjunção (p ∨ q)?', a: 'A proposição "p ou q". É falsa apenas quando p e q são ambas falsas.' },
+    { tag: 'Definição', q: 'O que é a implicação (p ⇒ q)?', a: 'A proposição "se p então q". Só é falsa quando p é verdadeira e q é falsa.' },
+    { tag: 'Definição', q: 'O que é a equivalência (p ⇔ q)?', a: 'A proposição "p se e só se q". É verdadeira quando p e q têm o mesmo valor lógico.' },
+    { tag: 'Propriedade', q: 'Leis de De Morgan', a: '¬(p ∧ q) ⇔ ¬p ∨ ¬q  e  ¬(p ∨ q) ⇔ ¬p ∧ ¬q. A negação troca ∧ por ∨ e nega cada parcela.' },
+    { tag: 'Definição', q: 'O que é uma condição?', a: 'Uma expressão com variáveis que se torna proposição quando se atribuem valores às variáveis. Ex: x > 3.' },
+    { tag: 'Definição', q: 'Quantificador universal (∀)', a: '"∀x, p(x)" lê-se "qualquer que seja x, p(x)" — a condição é verdadeira para TODOS os valores.' },
+    { tag: 'Definição', q: 'Quantificador existencial (∃)', a: '"∃x: p(x)" lê-se "existe x tal que p(x)" — há PELO MENOS UM valor que verifica a condição.' },
+    { tag: 'Propriedade', q: 'Negação de quantificadores', a: '¬(∀x, p(x)) ⇔ ∃x: ¬p(x)  e  ¬(∃x: p(x)) ⇔ ∀x, ¬p(x).' },
+    { tag: 'Definição', q: 'Condição necessária e suficiente', a: 'Em p ⇒ q: p é suficiente para q; q é necessária para p. Se p ⇔ q, é necessária E suficiente.' },
+    { tag: 'Definição', q: 'Operações com conjuntos', a: 'Reunião (A ∪ B): elementos de A ou B. Interseção (A ∩ B): elementos comuns. A \\ B: em A mas não em B.' },
+    { tag: 'Exemplo', q: 'Nega "todos os alunos passaram"', a: '"Existe (pelo menos) um aluno que não passou."' },
+    { tag: 'Exemplo', q: 'Valor lógico de (V ∧ F) ∨ V', a: '(V ∧ F) = F; depois F ∨ V = V. Resultado: Verdadeiro.' },
+    { tag: 'Exemplo', q: '[2, 5] ∩ [4, 8] = ?', a: '[4, 5] (os reais que pertencem a ambos os intervalos).' }
   ],
   2: [
-    { tag: 'Fórmula', q: 'Caso notável: quadrado da soma', a: '(a + b)² = a² + 2ab + b². Ex: (x + 3)² = x² + 6x + 9.' },
-    { tag: 'Fórmula', q: 'Caso notável: quadrado da diferença', a: '(a − b)² = a² − 2ab + b². Ex: (x − 5)² = x² − 10x + 25.' },
-    { tag: 'Fórmula', q: 'Caso notável: diferença de quadrados', a: '(a + b)(a − b) = a² − b². Ex: (x + 2)(x − 2) = x² − 4.' },
-    { tag: 'Definição', q: 'O que é uma equação do 2.º grau?', a: 'Uma equação da forma ax² + bx + c = 0, com a ≠ 0. Pode ter 0, 1 ou 2 soluções.' },
-    { tag: 'Fórmula', q: 'Fórmula resolvente', a: 'x = (−b ± √(b² − 4ac)) / (2a). Serve para resolver qualquer equação ax² + bx + c = 0.' },
-    { tag: 'Definição', q: 'O que é o binómio discriminante?', a: 'Δ = b² − 4ac. Δ > 0 → duas soluções; Δ = 0 → uma solução; Δ < 0 → nenhuma solução real.' },
-    { tag: 'Estratégia', q: 'Equação incompleta ax² + bx = 0', a: 'Põe x em evidência: x(ax + b) = 0. Soluções: x = 0 ou x = −b/a. (Lei do anulamento do produto.)' },
-    { tag: 'Estratégia', q: 'Equação incompleta ax² + c = 0', a: 'Isola x²: x² = −c/a. Se −c/a ≥ 0, x = ±√(−c/a); se < 0, não tem solução real.' },
-    { tag: 'Regra', q: 'Lei do anulamento do produto', a: 'Se A × B = 0, então A = 0 ou B = 0. Usa-se para resolver equações fatorizadas. Ex: (x−2)(x+3)=0 → x=2 ou x=−3.' },
-    { tag: 'Definição', q: 'O que é a forma canónica de uma equação do 2.º grau?', a: 'a(x − h)² + k = 0, onde (h, k) é o vértice da parábola associada. Obtém-se completando o quadrado.' },
-    { tag: 'Definição', q: 'O que é um monómio e um polinómio?', a: 'Monómio: produto de um número por potências de letras (ex: 3x²). Polinómio: soma de monómios (ex: x² + 2x − 1).' },
-    { tag: 'Regra', q: 'Como multiplicar dois polinómios?', a: 'Aplica a distributiva: multiplica cada termo do primeiro por cada termo do segundo e junta os semelhantes.' },
+    { tag: 'Definição', q: 'O que é a raiz de índice n?', a: 'ⁿ√a é o número que, elevado a n, dá a. Ex: ³√8 = 2 porque 2³ = 8.' },
+    { tag: 'Regra', q: 'Radical como potência de expoente fracionário', a: 'ⁿ√(aᵐ) = a^(m/n). Ex: √(a³) = a^(3/2); ³√a = a^(1/3).' },
+    { tag: 'Regra', q: 'Produto e quociente de radicais (mesmo índice)', a: 'ⁿ√a × ⁿ√b = ⁿ√(a×b)  e  ⁿ√a ÷ ⁿ√b = ⁿ√(a÷b).' },
+    { tag: 'Regra', q: 'Como racionalizar um denominador?', a: 'Multiplica numerador e denominador por um fator que elimine a raiz. Ex: 1/√2 = √2/2.' },
+    { tag: 'Propriedade', q: 'Propriedades das potências (expoente racional)', a: 'aᵐ × aⁿ = aᵐ⁺ⁿ; aᵐ ÷ aⁿ = aᵐ⁻ⁿ; (aᵐ)ⁿ = aᵐⁿ; a⁻ⁿ = 1/aⁿ; a^(1/n) = ⁿ√a.' },
+    { tag: 'Definição', q: 'O que é um polinómio?', a: 'Uma expressão aₙxⁿ + … + a₁x + a₀. O grau é o maior expoente com coeficiente não nulo.' },
+    { tag: 'Definição', q: 'O que é uma raiz (ou zero) de um polinómio?', a: 'Um valor a tal que P(a) = 0. Se a é raiz, então (x − a) é fator de P(x).' },
+    { tag: 'Regra', q: 'Teorema do resto', a: 'O resto da divisão de P(x) por (x − a) é P(a). Se P(a) = 0, (x − a) divide P(x) exatamente.' },
+    { tag: 'Estratégia', q: 'Regra de Ruffini', a: 'Método rápido para dividir um polinómio por (x − a): usa só os coeficientes e o valor a. Dá o quociente e o resto.' },
+    { tag: 'Estratégia', q: 'Como fatorizar um polinómio?', a: 'Encontra uma raiz a (entre os divisores do termo independente), divide por (x − a) e repete com o quociente.' },
+    { tag: 'Definição', q: 'Fórmula resolvente (2.º grau)', a: 'x = (−b ± √(b² − 4ac)) / (2a) para ax² + bx + c = 0.' },
+    { tag: 'Regra', q: 'Discriminante e nº de soluções', a: 'Δ = b² − 4ac. Δ > 0 → duas raízes; Δ = 0 → uma; Δ < 0 → nenhuma real.' },
+    { tag: 'Exemplo', q: 'Simplifica √8', a: '√8 = √(4×2) = 2√2.' },
     { tag: 'Exemplo', q: 'Resolve x² − 5x + 6 = 0', a: 'Δ = 25 − 24 = 1; x = (5 ± 1)/2 → x = 3 ou x = 2.' },
-    { tag: 'Exemplo', q: 'Resolve x² − 9 = 0', a: 'x² = 9 → x = ±3. (Ou diferença de quadrados: (x−3)(x+3)=0.)' },
-    { tag: 'Exemplo', q: 'Desenvolve (x − 4)²', a: 'x² − 2·x·4 + 4² = x² − 8x + 16.' },
-    { tag: 'Exemplo', q: 'Quantas soluções tem x² + x + 5 = 0?', a: 'Δ = 1 − 20 = −19 < 0 → não tem soluções reais.' }
+    { tag: 'Exemplo', q: 'Resto de P(x)=x²−3x+2 por (x−1)?', a: 'P(1) = 1 − 3 + 2 = 0 → resto 0 (e (x−1) é fator).' },
+    { tag: 'Exemplo', q: 'Escreve ⁴√(x²) como potência', a: 'x^(2/4) = x^(1/2) = √x.' }
   ],
   3: [
-    { tag: 'Definição', q: 'O que é uma função afim?', a: 'Uma função do tipo f(x) = ax + b. O gráfico é uma reta; a é o declive e b a ordenada na origem.' },
-    { tag: 'Definição', q: 'O que é uma função linear?', a: 'Uma função afim com b = 0: f(x) = ax. O gráfico passa na origem. Traduz proporcionalidade direta.' },
-    { tag: 'Definição', q: 'O que é uma função quadrática?', a: 'Uma função do tipo f(x) = ax² + bx + c (a ≠ 0). O gráfico é uma parábola.' },
-    { tag: 'Definição', q: 'O que é o vértice de uma parábola?', a: 'O ponto mais alto (a < 0) ou mais baixo (a > 0). A sua abcissa é x = −b/(2a).' },
-    { tag: 'Regra', q: 'Concavidade de uma parábola', a: 'Se a > 0, a parábola tem concavidade voltada para cima (∪); se a < 0, para baixo (∩).' },
-    { tag: 'Definição', q: 'O que são os zeros de uma função?', a: 'Os valores de x para os quais f(x) = 0. Graficamente, onde o gráfico corta o eixo Ox. Numa quadrática, resolvem-se com a fórmula resolvente.' },
-    { tag: 'Definição', q: 'O que é a função de proporcionalidade inversa?', a: 'f(x) = k/x (k ≠ 0). O gráfico é uma hipérbole. O produto x·y = k é constante.' },
-    { tag: 'Regra', q: 'Como reconhecer proporcionalidade inversa numa tabela?', a: 'O produto x × y é constante (= k) em todas as colunas. Quando x duplica, y reduz-se a metade.' },
-    { tag: 'Definição', q: 'O que é o domínio e o contradomínio?', a: 'Domínio: conjunto dos objetos (valores de x). Contradomínio: conjunto das imagens (valores de y efetivamente atingidos).' },
-    { tag: 'Estratégia', q: 'Como calcular a imagem f(x)?', a: 'Substitui x pelo valor pretendido na expressão. Ex: f(x) = x² − 1 → f(3) = 9 − 1 = 8.' },
-    { tag: 'Definição', q: 'O que é o declive de uma reta?', a: 'O valor a em f(x) = ax + b. Mede a inclinação: m = (y₂ − y₁)/(x₂ − x₁). Positivo → cresce; negativo → decresce.' },
-    { tag: 'Definição', q: 'O que é a ordenada na origem?', a: 'O valor b em f(x) = ax + b: a ordenada do ponto onde a reta corta o eixo Oy (x = 0).' },
-    { tag: 'Exemplo', q: 'Calcula o vértice de f(x) = x² − 4x + 3', a: 'x_v = −(−4)/(2·1) = 2; y_v = f(2) = 4 − 8 + 3 = −1. Vértice (2, −1).' },
-    { tag: 'Exemplo', q: 'Zeros de f(x) = x² − 4', a: 'x² − 4 = 0 → x = ±2. Os zeros são −2 e 2.' },
-    { tag: 'Exemplo', q: 'Numa proporcionalidade inversa, se y = 6 quando x = 2, qual k?', a: 'k = x·y = 2·6 = 12. A função é f(x) = 12/x.' },
-    { tag: 'Exemplo', q: 'f(x) = 3x − 2, calcula f(4)', a: 'f(4) = 3·4 − 2 = 10.' }
+    { tag: 'Fórmula', q: 'Distância entre dois pontos no plano', a: 'd(A,B) = √((x_B − x_A)² + (y_B − y_A)²). É a aplicação do Teorema de Pitágoras.' },
+    { tag: 'Fórmula', q: 'Ponto médio de um segmento [AB]', a: 'M = ((x_A + x_B)/2, (y_A + y_B)/2). É a média das coordenadas.' },
+    { tag: 'Fórmula', q: 'Equação reduzida da reta', a: 'y = mx + b, com declive m e ordenada na origem b. Declive: m = (y₂ − y₁)/(x₂ − x₁).' },
+    { tag: 'Regra', q: 'Retas paralelas e perpendiculares', a: 'Paralelas: mesmo declive (m₁ = m₂). Perpendiculares: m₁ × m₂ = −1.' },
+    { tag: 'Fórmula', q: 'Equação da circunferência', a: '(x − a)² + (y − b)² = r², com centro (a, b) e raio r.' },
+    { tag: 'Definição', q: 'O que é um vetor?', a: 'Um segmento orientado, caracterizado por direção, sentido e norma. Em coordenadas: v(v₁, v₂).' },
+    { tag: 'Fórmula', q: 'Norma de um vetor', a: '‖v(v₁, v₂)‖ = √(v₁² + v₂²). É o comprimento do vetor.' },
+    { tag: 'Regra', q: 'Operações com vetores em coordenadas', a: 'Soma: (a₁+b₁, a₂+b₂). Produto por escalar: k·v = (k·v₁, k·v₂). Vetor AB = B − A.' },
+    { tag: 'Definição', q: 'Vetores colineares', a: 'Dois vetores são colineares (paralelos) se um é múltiplo escalar do outro: u = k·v.' },
+    { tag: 'Fórmula', q: 'Equação vetorial da reta', a: '(x, y) = (x₀, y₀) + k(v₁, v₂), k ∈ ℝ, onde (x₀, y₀) é um ponto e (v₁, v₂) um vetor diretor.' },
+    { tag: 'Definição', q: 'Mediatriz de um segmento', a: 'O lugar geométrico dos pontos equidistantes dos extremos. Obtém-se igualando distâncias: d(P,A) = d(P,B).' },
+    { tag: 'Definição', q: 'O que é a elipse?', a: 'O lugar geométrico dos pontos cuja soma das distâncias a dois pontos fixos (focos) é constante.' },
+    { tag: 'Exemplo', q: 'Distância entre A(1,2) e B(4,6)?', a: '√((4−1)² + (6−2)²) = √(9+16) = √25 = 5.' },
+    { tag: 'Exemplo', q: 'Ponto médio de [A(2,4), B(6,8)]?', a: '((2+6)/2, (4+8)/2) = (4, 6).' },
+    { tag: 'Exemplo', q: 'Centro e raio de (x−1)² + (y+3)² = 16?', a: 'Centro (1, −3) e raio √16 = 4.' },
+    { tag: 'Exemplo', q: 'Norma do vetor v(3, 4)?', a: '√(3² + 4²) = √25 = 5.' }
   ],
   4: [
-    { tag: 'Definição', q: 'O que são as razões trigonométricas?', a: 'Num triângulo retângulo, para um ângulo agudo: seno, cosseno e tangente — quocientes entre os lados do triângulo.' },
-    { tag: 'Fórmula', q: 'Definição de seno de um ângulo agudo', a: 'sen(α) = cateto oposto / hipotenusa.' },
-    { tag: 'Fórmula', q: 'Definição de cosseno de um ângulo agudo', a: 'cos(α) = cateto adjacente / hipotenusa.' },
-    { tag: 'Fórmula', q: 'Definição de tangente de um ângulo agudo', a: 'tg(α) = cateto oposto / cateto adjacente = sen(α)/cos(α).' },
-    { tag: 'Fórmula', q: 'Fórmula fundamental da trigonometria', a: 'sen²(α) + cos²(α) = 1. Permite calcular uma razão a partir da outra.' },
-    { tag: 'Definição', q: 'Valores notáveis: 30°, 45° e 60°', a: 'sen30°=½, cos30°=√3/2; sen45°=cos45°=√2/2; sen60°=√3/2, cos60°=½; tg45°=1.' },
-    { tag: 'Estratégia', q: 'Como determinar um lado com trigonometria?', a: 'Identifica o ângulo e os lados (oposto/adjacente/hipotenusa), escolhe a razão adequada (sen, cos ou tg) e resolve a equação.' },
-    { tag: 'Definição', q: 'O que é um ângulo ao centro?', a: 'Um ângulo com o vértice no centro da circunferência. A sua amplitude é igual à do arco correspondente.' },
-    { tag: 'Definição', q: 'O que é um ângulo inscrito?', a: 'Um ângulo com o vértice na circunferência. A sua amplitude é METADE do arco (ou do ângulo ao centro) correspondente.' },
-    { tag: 'Fórmula', q: 'Comprimento de um arco de circunferência', a: 'Comprimento = (amplitude/360°) × 2πr. É a fração da circunferência correspondente ao ângulo.' },
-    { tag: 'Definição', q: 'O que é um lugar geométrico?', a: 'O conjunto de todos os pontos que satisfazem uma dada condição. Ex: a circunferência é o lugar dos pontos a distância r de um centro.' },
-    { tag: 'Definição', q: 'O que é a mediatriz de um segmento?', a: 'O lugar geométrico dos pontos equidistantes dos dois extremos do segmento. É uma reta perpendicular ao segmento no seu ponto médio.' },
-    { tag: 'Definição', q: 'O que é a bissetriz de um ângulo?', a: 'O lugar geométrico dos pontos equidistantes dos dois lados do ângulo. Divide o ângulo em dois ângulos iguais.' },
-    { tag: 'Exemplo', q: 'Num triângulo retângulo, cateto oposto 3 e hipotenusa 5. sen(α)?', a: 'sen(α) = 3/5 = 0,6.' },
-    { tag: 'Exemplo', q: 'Arco correspondente a um ângulo ao centro de 90° numa circunferência?', a: 'É 90°, igual ao ângulo ao centro. O comprimento é ¼ da circunferência.' },
-    { tag: 'Exemplo', q: 'Ângulo inscrito que "vê" um arco de 80°. Quanto mede?', a: 'Metade do arco: 80°/2 = 40°.' }
+    { tag: 'Definição', q: 'O que é o domínio de uma função?', a: 'O conjunto de todos os objetos (valores de x) para os quais a função está definida.' },
+    { tag: 'Definição', q: 'O que é o contradomínio?', a: 'O conjunto de todas as imagens (valores de y) que a função efetivamente atinge.' },
+    { tag: 'Definição', q: 'O que são os zeros de uma função?', a: 'Os valores de x para os quais f(x) = 0. Graficamente, onde o gráfico corta o eixo Ox.' },
+    { tag: 'Definição', q: 'Função injetiva', a: 'Objetos diferentes têm imagens diferentes. Graficamente: qualquer reta horizontal corta o gráfico no máximo uma vez.' },
+    { tag: 'Definição', q: 'Monotonia de uma função', a: 'Crescente: x aumenta → f(x) aumenta. Decrescente: x aumenta → f(x) diminui. Pode variar por intervalos.' },
+    { tag: 'Definição', q: 'Função par e função ímpar', a: 'Par: f(−x) = f(x) (simétrica em Oy). Ímpar: f(−x) = −f(x) (simétrica na origem).' },
+    { tag: 'Definição', q: 'Função quadrática e o vértice', a: 'f(x) = ax² + bx + c. Vértice em x = −b/(2a); a > 0 concavidade para cima, a < 0 para baixo.' },
+    { tag: 'Definição', q: 'Função módulo', a: 'f(x) = |x|: vale x se x ≥ 0 e −x se x < 0. O gráfico é um "V" com vértice na origem.' },
+    { tag: 'Regra', q: 'Transformação: y = f(x) + k', a: 'Translação vertical: sobe k unidades (k > 0) ou desce (k < 0).' },
+    { tag: 'Regra', q: 'Transformação: y = f(x − a)', a: 'Translação horizontal: a unidades para a direita (a > 0) ou esquerda (a < 0).' },
+    { tag: 'Regra', q: 'Transformação: y = −f(x) e y = f(−x)', a: 'y = −f(x): reflexão no eixo Ox. y = f(−x): reflexão no eixo Oy.' },
+    { tag: 'Definição', q: 'Função definida por ramos', a: 'Tem expressões diferentes em diferentes intervalos do domínio. Avalia-se com o ramo correspondente a x.' },
+    { tag: 'Exemplo', q: 'Domínio de f(x) = √(x − 2)?', a: 'Precisa de x − 2 ≥ 0 → x ≥ 2. Domínio: [2, +∞[.' },
+    { tag: 'Exemplo', q: 'Domínio de f(x) = 1/(x − 3)?', a: 'O denominador não pode ser 0 → x ≠ 3. Domínio: ℝ \\ {3}.' },
+    { tag: 'Exemplo', q: 'Vértice de f(x) = x² − 6x + 5?', a: 'x_v = 6/2 = 3; f(3) = 9 − 18 + 5 = −4. Vértice (3, −4).' },
+    { tag: 'Exemplo', q: 'Calcula |−7| e |4|', a: '|−7| = 7 e |4| = 4.' }
   ],
   5: [
-    { tag: 'Definição', q: 'O que é uma experiência aleatória?', a: 'Uma experiência cujo resultado não se consegue prever com certeza, embora se conheçam os resultados possíveis. Ex: lançar um dado.' },
-    { tag: 'Definição', q: 'O que é o espaço de resultados (ou amostral)?', a: 'O conjunto de TODOS os resultados possíveis de uma experiência aleatória. Representa-se por S ou Ω. Ex: dado → {1,2,3,4,5,6}.' },
-    { tag: 'Definição', q: 'O que é um acontecimento?', a: 'Um subconjunto do espaço de resultados. Ex: "sair par" = {2, 4, 6}.' },
-    { tag: 'Definição', q: 'Acontecimento certo, impossível e elementar', a: 'Certo: ocorre sempre (P = 1). Impossível: nunca ocorre (P = 0). Elementar: tem um só resultado.' },
-    { tag: 'Fórmula', q: 'Regra de Laplace (probabilidade)', a: 'Em casos equiprováveis: P(A) = nº de casos favoráveis / nº de casos possíveis. O valor está entre 0 e 1.' },
-    { tag: 'Definição', q: 'O que são acontecimentos incompatíveis (disjuntos)?', a: 'Não podem ocorrer ao mesmo tempo: A ∩ B = ∅. Ex: "sair 1" e "sair 6" num dado.' },
-    { tag: 'Definição', q: 'O que é o acontecimento contrário?', a: 'O contrário de A (Ā) ocorre quando A não ocorre. P(Ā) = 1 − P(A).' },
-    { tag: 'Fórmula', q: 'Probabilidade da reunião (acontecimentos)', a: 'P(A ∪ B) = P(A) + P(B) − P(A ∩ B). Se forem incompatíveis: P(A ∪ B) = P(A) + P(B).' },
-    { tag: 'Definição', q: 'Operações com acontecimentos', a: 'Reunião (A ∪ B): ocorre A ou B. Interseção (A ∩ B): ocorrem ambos. Contrário (Ā): não ocorre A.' },
-    { tag: 'Estratégia', q: 'Como contar casos em experiências compostas?', a: 'Usa uma tabela de dupla entrada ou um diagrama de árvore para listar todos os resultados possíveis.' },
-    { tag: 'Regra', q: 'Valores possíveis de uma probabilidade', a: '0 ≤ P(A) ≤ 1. A soma das probabilidades de todos os resultados de S é sempre 1.' },
-    { tag: 'Exemplo', q: 'P de sair número par num dado?', a: 'Favoráveis {2,4,6} = 3; possíveis = 6. P = 3/6 = 1/2.' },
-    { tag: 'Exemplo', q: 'P de NÃO sair o 5 num dado?', a: 'P(sair 5) = 1/6, logo P(não sair 5) = 1 − 1/6 = 5/6.' },
-    { tag: 'Exemplo', q: 'Espaço de resultados ao lançar duas moedas?', a: '{CC, CK, KC, KK} → 4 resultados (C = cara, K = coroa).' },
-    { tag: 'Exemplo', q: 'P de tirar uma bola vermelha (4 em 10)?', a: 'P = 4/10 = 2/5 = 0,4 = 40%.' },
-    { tag: 'Exemplo', q: 'P de sair um número maior que 4 num dado?', a: 'Favoráveis {5, 6} = 2; P = 2/6 = 1/3.' }
+    { tag: 'Definição', q: 'O que é a média?', a: 'A soma de todos os valores a dividir pelo número de valores (x̄). Sensível a valores extremos.' },
+    { tag: 'Definição', q: 'O que é a mediana?', a: 'O valor central dos dados ordenados. Divide a amostra em duas metades. Resistente a extremos.' },
+    { tag: 'Definição', q: 'O que são os quartis?', a: 'Q1, Q2 (mediana) e Q3 dividem os dados em quatro partes de 25%. AIQ = Q3 − Q1.' },
+    { tag: 'Definição', q: 'O que é o desvio-padrão?', a: 'Mede a dispersão: indica quanto, em média, os dados se afastam da média. Maior → mais dispersos.' },
+    { tag: 'Definição', q: 'O que é a variância?', a: 'A média dos quadrados dos desvios em relação à média. O desvio-padrão é a sua raiz quadrada.' },
+    { tag: 'Definição', q: 'O que é a amplitude?', a: 'A diferença entre o maior e o menor valor (máximo − mínimo).' },
+    { tag: 'Definição', q: 'O que é a frequência relativa?', a: 'A frequência absoluta dividida pelo total. Costuma exprimir-se em %.' },
+    { tag: 'Definição', q: 'Diagrama de extremos e quartis', a: 'A "caixa de bigodes": mostra mínimo, Q1, mediana, Q3 e máximo. Resume e compara distribuições.' },
+    { tag: 'Definição', q: 'O que é a reta de regressão linear?', a: 'A reta y = ax + b que melhor se ajusta a uma nuvem de pontos (mínimos quadrados), para descrever a relação entre duas variáveis.' },
+    { tag: 'Definição', q: 'O que é o coeficiente de correlação (r)?', a: 'Mede a força e o sentido da relação linear entre duas variáveis. Varia entre −1 e 1; perto de ±1 → forte correlação.' },
+    { tag: 'Estratégia', q: 'Como interpretar o declive da reta de regressão?', a: 'Indica quanto y varia, em média, quando x aumenta uma unidade. Permite fazer previsões.' },
+    { tag: 'Definição', q: 'Variável qualitativa vs quantitativa', a: 'Qualitativa: não numérica (cor). Quantitativa: numérica — discreta (nº filhos) ou contínua (altura).' },
+    { tag: 'Exemplo', q: 'Média de 4, 6, 8, 10, 12?', a: '(4+6+8+10+12)/5 = 40/5 = 8.' },
+    { tag: 'Exemplo', q: 'Mediana de 3, 7, 8, 12, 20?', a: '5 valores ordenados → o central é 8.' },
+    { tag: 'Exemplo', q: 'Amplitude interquartis se Q1=10 e Q3=18?', a: 'AIQ = 18 − 10 = 8.' },
+    { tag: 'Exemplo', q: 'Se r = 0,95, a correlação é…?', a: 'Forte e positiva (perto de 1): as variáveis crescem juntas de forma quase linear.' }
   ],
   6: [
-    { tag: 'Definição', q: 'O que são as medidas de localização?', a: 'Valores que resumem onde se "centram" os dados: média, moda, mediana e quartis.' },
-    { tag: 'Definição', q: 'O que é a média?', a: 'A soma de todos os valores a dividir pelo número de valores. Sensível a valores extremos.' },
-    { tag: 'Definição', q: 'O que é a mediana?', a: 'O valor central dos dados ORDENADOS. Se o número de dados for par, é a média dos dois centrais. Resistente a extremos.' },
-    { tag: 'Definição', q: 'O que é a moda?', a: 'O valor (ou valores) que ocorre com maior frequência. Pode haver mais de uma moda ou nenhuma.' },
-    { tag: 'Definição', q: 'O que são os quartis (Q1, Q2, Q3)?', a: 'Dividem os dados ordenados em quatro partes iguais (25% cada). Q2 é a mediana. Q1 = 1.º quartil, Q3 = 3.º quartil.' },
-    { tag: 'Fórmula', q: 'O que é a amplitude interquartis (AIQ)?', a: 'AIQ = Q3 − Q1. Mede a dispersão dos 50% centrais dos dados; é resistente a valores extremos.' },
-    { tag: 'Definição', q: 'O que é a amplitude?', a: 'A diferença entre o maior e o menor valor: máximo − mínimo. Mede a dispersão total.' },
-    { tag: 'Definição', q: 'O que é o diagrama de extremos e quartis?', a: 'A "caixa de bigodes": mostra mínimo, Q1, mediana, Q3 e máximo. Resume a distribuição e permite comparar conjuntos.' },
-    { tag: 'Definição', q: 'O que é a frequência absoluta e relativa?', a: 'Absoluta (fi): nº de vezes que um valor ocorre. Relativa (fri): fi/n (total), muitas vezes em %.' },
-    { tag: 'Definição', q: 'O que é um histograma?', a: 'Um gráfico de barras contíguas para dados agrupados em classes (variáveis contínuas). A área de cada barra representa a frequência.' },
-    { tag: 'Definição', q: 'Variável qualitativa vs quantitativa', a: 'Qualitativa: não numérica (cor, desporto). Quantitativa: numérica — discreta (nº de irmãos) ou contínua (altura).' },
-    { tag: 'Estratégia', q: 'Como calcular a mediana?', a: 'Ordena os dados. Se n é ímpar, é o do meio; se n é par, é a média dos dois centrais.' },
-    { tag: 'Exemplo', q: 'Média de 10, 12, 14, 16, 18?', a: '(10+12+14+16+18)/5 = 70/5 = 14.' },
-    { tag: 'Exemplo', q: 'Mediana de 3, 7, 8, 12, 15?', a: 'Já ordenados, 5 valores (ímpar): a mediana é o central → 8.' },
-    { tag: 'Exemplo', q: 'Amplitude interquartis se Q1 = 10 e Q3 = 22?', a: 'AIQ = Q3 − Q1 = 22 − 10 = 12.' },
-    { tag: 'Exemplo', q: 'Moda de 4, 4, 5, 7, 7, 7, 9?', a: 'O valor mais frequente é 7 (três vezes). Moda = 7.' }
+    { tag: 'Fórmula', q: 'Seno de um ângulo agudo', a: 'sen(α) = cateto oposto / hipotenusa (num triângulo retângulo).' },
+    { tag: 'Fórmula', q: 'Cosseno de um ângulo agudo', a: 'cos(α) = cateto adjacente / hipotenusa.' },
+    { tag: 'Fórmula', q: 'Tangente de um ângulo agudo', a: 'tg(α) = cateto oposto / cateto adjacente = sen(α) / cos(α).' },
+    { tag: 'Fórmula', q: 'Fórmula fundamental da trigonometria', a: 'sen²(α) + cos²(α) = 1. Permite obter uma razão a partir da outra.' },
+    { tag: 'Fórmula', q: 'Relação entre tangente, seno e cosseno', a: 'tg(α) = sen(α)/cos(α). E 1 + tg²(α) = 1/cos²(α).' },
+    { tag: 'Definição', q: 'Valores notáveis (30°, 45°, 60°)', a: 'sen30°=½, cos30°=√3/2, tg30°=√3/3; sen45°=cos45°=√2/2, tg45°=1; sen60°=√3/2, cos60°=½, tg60°=√3.' },
+    { tag: 'Estratégia', q: 'Como determinar um lado com trigonometria?', a: 'Identifica o ângulo e os lados (oposto/adjacente/hipotenusa), escolhe a razão e resolve a equação.' },
+    { tag: 'Definição', q: 'O que é o círculo trigonométrico?', a: 'Uma circunferência de raio 1 centrada na origem. As coordenadas do ponto associado ao ângulo α são (cos α, sen α).' },
+    { tag: 'Definição', q: 'O que é o radiano?', a: 'Uma unidade de medida de ângulo. 180° = π radianos; 360° = 2π. Converte: rad = graus × π/180.' },
+    { tag: 'Regra', q: 'Sinais das razões por quadrante', a: '1.º Q: tudo positivo. 2.º Q: só sen positivo. 3.º Q: só tg positiva. 4.º Q: só cos positivo.' },
+    { tag: 'Estratégia', q: 'Como calcular cos a partir de sen (ângulo agudo)?', a: 'Usa cos²(α) = 1 − sen²(α) e tira a raiz (positiva para ângulo agudo).' },
+    { tag: 'Definição', q: 'Ângulos complementares em trigonometria', a: 'sen(90° − α) = cos(α) e cos(90° − α) = sen(α).' },
+    { tag: 'Exemplo', q: 'Cateto oposto 3, hipotenusa 5. sen(α)?', a: 'sen(α) = 3/5 = 0,6.' },
+    { tag: 'Exemplo', q: 'Se sen(α) = 0,6, quanto é cos(α) (ângulo agudo)?', a: 'cos²α = 1 − 0,36 = 0,64 → cos α = 0,8.' },
+    { tag: 'Exemplo', q: 'Converte 90° para radianos', a: '90 × π/180 = π/2 radianos.' },
+    { tag: 'Exemplo', q: 'tg(45°) = ?', a: '1 (porque sen45° = cos45°).' }
   ]
 };
 
@@ -304,7 +305,7 @@ function _mat10Gerador(cap) {
   if (cap === 6 && typeof buildEx_m10c6 === 'function') return buildEx_m10c6;
   return null;
 }
-var _mat10TemasCount = { 1: 3, 2: 4, 3: 4, 4: 3, 5: 4, 6: 4 };
+var _mat10TemasCount = { 1: 3, 2: 3, 3: 4, 4: 3, 5: 3, 6: 3 };
 
 // Estado da prática
 var _mat10Prat = { cap: 1, st: 0, nivel: 'medio', score: { correct: 0, total: 0 }, answered: {}, exs: [] };
@@ -374,40 +375,12 @@ function mat10PraticarSetNivel(nivel, btn) {
 
 // Mapa subtema → temas a usar no gerador (Cap 1 Números)
 var _mat10SubtemaTemas = {
-  1: { // Cap 1 Números Reais e Inequações (3 temas)
-    1: ['1'],  // Conjuntos numéricos
-    2: ['2'],  // Intervalos
-    3: ['3']   // Inequações do 1.º grau
-  },
-  2: { // Cap 2 Equações do 2.º grau (4 temas)
-    1: ['1'],  // Casos notáveis
-    2: ['2'],  // Operações com polinómios
-    3: ['3'],  // Equações do 2.º grau (resolvente)
-    4: ['4']   // Forma canónica / discriminante
-  },
-  3: { // Cap 3 Funções (4 temas)
-    1: ['1'],  // Função afim
-    2: ['2'],  // Função quadrática
-    3: ['3'],  // Proporcionalidade inversa
-    4: ['4']   // Imagem / declive
-  },
-  4: { // Cap 4 Trigonometria e Circunferência (3 temas)
-    1: ['1'],  // Razões trigonométricas
-    2: ['2'],  // Lados de triângulos retângulos
-    3: ['3']   // Ângulos ao centro e arcos
-  },
-  5: { // Cap 5 Probabilidades (4 temas)
-    1: ['1'],  // Espaço de resultados
-    2: ['2'],  // Probabilidade (Laplace)
-    3: ['3'],  // Acontecimento contrário
-    4: ['4']   // Operações com acontecimentos
-  },
-  6: { // Cap 6 Estatística (4 temas)
-    1: ['1'],  // Média
-    2: ['2'],  // Mediana
-    3: ['3'],  // Quartis / AIQ
-    4: ['4']   // Amplitude
-  }
+  1: { 1: ['1'], 2: ['2'], 3: ['3'] },            // Lógica · Quantificadores · Conjuntos/intervalos
+  2: { 1: ['1'], 2: ['2'], 3: ['3'] },            // Radicais/potências · Polinómios · Equações
+  3: { 1: ['1'], 2: ['2'], 3: ['3'], 4: ['4'] },  // Distâncias/ponto médio · Reta · Circunferência · Vetores
+  4: { 1: ['1'], 2: ['2'], 3: ['3'] },            // Domínio · Função quadrática · Módulo/transformações
+  5: { 1: ['1'], 2: ['2'], 3: ['3'] },            // Medidas · Dispersão · Regressão
+  6: { 1: ['1'], 2: ['2'], 3: ['3'] }             // Razões · Fórmula fundamental · Conversão graus/rad
 };
 
 function mat10GerarExercicios() {
@@ -1223,492 +1196,352 @@ var dynState_m81 = {
 };
 
 /* ════════════════════════════════════════════════════════════════
-   GERADORES DE EXERCÍCIOS — Matemática 10.º ano
-   Reutilizam os helpers genéricos acima (rnd_m81, shuffle_m81, sup_m81…).
+   GERADORES DE EXERCÍCIOS — Matemática A · 10.º ano
+   Reutilizam os helpers genéricos acima (rnd_m81, shuffle_m81…).
    ════════════════════════════════════════════════════════════════ */
-
-// ═══ CAP 1 · Números Reais e Inequações ═══
-// Temas: 1 Conjuntos numéricos · 2 Intervalos · 3 Inequações do 1.º grau
-function buildEx_m10c1(tema, tipo, dif) {
-  tema = String(tema);
-  var easy = (dif === 'facil'), hard = (dif === 'dificil');
-
-  // ── TEMA 1 · Conjuntos numéricos (racional vs irracional) ──
-  if (tema === '1') {
-    var irr = [['√2', true], ['√3', true], ['π', true], ['√5', true], ['√7', true]];
-    var rac = [['√4', false, '= 2'], ['√9', false, '= 3'], ['0,5', false], ['3/4', false], ['√16', false, '= 4'], ['−7', false], ['2,(3)', false]];
-    var useIrr = Math.random() < 0.5;
-    var item = useIrr ? irr[rnd_m81(0, irr.length - 1)] : rac[rnd_m81(0, rac.length - 1)];
-    return {
-      enun: 'O número <strong>' + item[0] + '</strong>' + (item[2] ? ' (' + item[2] + ')' : '') + ' é:',
-      tipo: 'mc', opcoes: ['racional', 'irracional'],
-      resposta: item[1] ? 'irracional' : 'racional',
-      expl: item[1] ? item[0] + ' tem dízima infinita não periódica → é irracional.' : item[0] + (item[2] ? ' ' + item[2] + ', que' : '') + ' pode escrever-se como fração → é racional.',
-      tema: 'T1 · Conjuntos'
-    };
+function _opts4_m10(correct, distractors) {
+  var opts = [String(correct)];
+  for (var i = 0; i < distractors.length && opts.length < 4; i++) {
+    var d = String(distractors[i]);
+    if (opts.indexOf(d) === -1) opts.push(d);
   }
-
-  // ── TEMA 2 · Intervalos de números reais ──
-  if (tema === '2') {
-    var a = rnd_m81(-6, 4), b = a + rnd_m81(2, 6);
-    var tipos2 = [
-      { cond: 'x ≥ ' + a, intv: '[' + a + ', +∞[' },
-      { cond: 'x > ' + a, intv: ']' + a + ', +∞[' },
-      { cond: 'x ≤ ' + b, intv: ']−∞, ' + b + ']' },
-      { cond: 'x < ' + b, intv: ']−∞, ' + b + '[' },
-      { cond: a + ' ≤ x ≤ ' + b, intv: '[' + a + ', ' + b + ']' },
-      { cond: a + ' < x < ' + b, intv: ']' + a + ', ' + b + '[' }
-    ];
-    var t2 = tipos2[rnd_m81(0, tipos2.length - 1)];
-    var pedeIntv = Math.random() < 0.5;
-    if (pedeIntv) {
-      var wrongs = tipos2.filter(function (x) { return x.intv !== t2.intv; }).map(function (x) { return x.intv; });
-      var opts = shuffle_m81([t2.intv].concat(wrongs)).slice(0, 4);
-      if (opts.indexOf(t2.intv) === -1) opts[0] = t2.intv;
-      return {
-        enun: 'Escreve a condição <strong>' + t2.cond + '</strong> na forma de intervalo.',
-        tipo: 'mc', opcoes: opts, resposta: t2.intv,
-        expl: t2.cond + ' corresponde ao intervalo ' + t2.intv + '. (Usa [ ] para incluir o extremo, ] [ para excluir; ∞ tem sempre parêntese aberto.)',
-        tema: 'T2 · Intervalos'
-      };
-    }
-    return {
-      enun: 'Escreve o intervalo <strong>' + t2.intv + '</strong> como condição em x.',
-      tipo: 'fill_frac', resposta: t2.cond.replace(/ /g, ''),
-      expl: t2.intv + ' significa ' + t2.cond + '.',
-      tema: 'T2 · Intervalos'
-    };
-  }
-
-  // ── TEMA 3 · Inequações do 1.º grau ──
-  if (tema === '3') {
-    // a x + b (sinal) c, garante solução inteira simples
-    var a3 = rnd_m81(1, easy ? 4 : 6);
-    var neg = (!easy && Math.random() < 0.4); // coeficiente negativo (inverte sinal)
-    if (neg) a3 = -a3;
-    var sol = rnd_m81(-5, 6);
-    var b3 = rnd_m81(-8, 8);
-    var c3 = a3 * sol + b3;
-    var sinais = ['>', '<', '≥', '≤'];
-    var s = sinais[rnd_m81(0, 3)];
-    // ao dividir por a3<0, inverte
-    var sFinal = s;
-    if (a3 < 0) { sFinal = (s === '>') ? '<' : (s === '<') ? '>' : (s === '≥') ? '≤' : '≥'; }
-    var aberto = (sFinal === '>' || sFinal === '<');
-    var lado = (sFinal === '>' || sFinal === '≥');
-    var intv = lado ? (aberto ? ']' : '[') + sol + ', +∞[' : ']−∞, ' + sol + (aberto ? '[' : ']');
-    var ax3 = (a3 === 1) ? 'x' : (a3 === -1) ? '−x' : (a3 < 0 ? '−' + Math.abs(a3) + 'x' : a3 + 'x');
-    var bx3 = (b3 === 0) ? '' : (b3 > 0 ? ' + ' + b3 : ' − ' + Math.abs(b3));
-    var enunSinal = ax3 + bx3 + ' ' + s + ' ' + c3;
-    return {
-      enun: 'Resolve a inequação <strong>' + enunSinal + '</strong> e indica a solução em intervalo.',
-      tipo: 'fill_frac', resposta: intv.replace(/ /g, ''),
-      expl: 'Isola x: ' + (a3 < 0 ? '−' + Math.abs(a3) : a3) + 'x ' + s + ' ' + (c3 - b3) + '. ' + (a3 < 0 ? 'Divide por ' + a3 + ' e INVERTE o sinal → ' : 'Divide por ' + a3 + ' → ') + 'x ' + sFinal + ' ' + sol + '. Solução: ' + intv + '.',
-      tema: 'T3 · Inequações'
-    };
-  }
-
-  return { enun: '√2 é racional?', tipo: 'mc', opcoes: ['Sim', 'Não'], resposta: 'Não', expl: '√2 é irracional.', tema: 'Números Reais' };
+  var bump = 1;
+  while (opts.length < 4) { var c = String(Number(correct) + bump); if (opts.indexOf(c) === -1) opts.push(c); bump++; if (bump > 50) break; }
+  return shuffle_m81(opts.slice(0, 4));
 }
 
-// ═══ CAP 2 · Equações do 2.º grau ═══
-// Temas: 1 Casos notáveis · 2 Operações polinómios · 3 Eq. 2.º grau (resolvente) · 4 Discriminante/nº soluções
-function buildEx_m10c2(tema, tipo, dif) {
+// ═══ CAP 1 · Lógica e Conjuntos ═══
+// Temas: 1 Valor lógico · 2 Negação de quantificadores · 3 Operações com intervalos
+function buildEx_m10c1(tema, tipo, dif) {
   tema = String(tema);
-  var easy = (dif === 'facil'), hard = (dif === 'dificil');
-
-  // ── TEMA 1 · Casos notáveis ──
   if (tema === '1') {
-    var b = rnd_m81(1, easy ? 5 : 9);
-    var kind = rnd_m81(0, 2);
-    if (kind === 0) { // (x+b)²
-      var res = 'x' + sup_m81(2) + ' + ' + (2 * b) + 'x + ' + (b * b);
-      return {
-        enun: 'Desenvolve o caso notável: <strong>(x + ' + b + ')' + sup_m81(2) + '</strong>',
-        tipo: 'fill_frac', resposta: ('x2+' + (2 * b) + 'x+' + (b * b)),
-        expl: '(a+b)² = a² + 2ab + b² → x² + ' + (2 * b) + 'x + ' + (b * b) + '.',
-        tema: 'T1 · Casos Notáveis'
-      };
-    }
-    if (kind === 1) { // (x−b)²
-      return {
-        enun: 'Desenvolve o caso notável: <strong>(x − ' + b + ')' + sup_m81(2) + '</strong>',
-        tipo: 'fill_frac', resposta: ('x2-' + (2 * b) + 'x+' + (b * b)),
-        expl: '(a−b)² = a² − 2ab + b² → x² − ' + (2 * b) + 'x + ' + (b * b) + '.',
-        tema: 'T1 · Casos Notáveis'
-      };
-    }
-    // (x+b)(x−b) = x²−b²
+    var p = Math.random() < 0.5, q = Math.random() < 0.5;
+    var ops = [
+      { s: 'p ∧ q', v: p && q }, { s: 'p ∨ q', v: p || q },
+      { s: 'p ⇒ q', v: (!p) || q }, { s: 'p ⇔ q', v: p === q }, { s: '¬p ∨ q', v: (!p) || q }
+    ];
+    var o = ops[rnd_m81(0, ops.length - 1)];
     return {
-      enun: 'Desenvolve: <strong>(x + ' + b + ')(x − ' + b + ')</strong>',
-      tipo: 'fill_frac', resposta: ('x2-' + (b * b)),
-      expl: '(a+b)(a−b) = a² − b² → x² − ' + (b * b) + '.',
-      tema: 'T1 · Casos Notáveis'
+      enun: 'Sendo p ' + (p ? 'verdadeira' : 'falsa') + ' e q ' + (q ? 'verdadeira' : 'falsa') + ', qual é o valor lógico de <strong>' + o.s + '</strong>?',
+      tipo: 'mc', opcoes: ['Verdadeira', 'Falsa'], resposta: o.v ? 'Verdadeira' : 'Falsa',
+      expl: 'Com p=' + (p ? 'V' : 'F') + ' e q=' + (q ? 'V' : 'F'), tema: 'T1 · Lógica'
     };
   }
-
-  // ── TEMA 2 · Operações com polinómios (produto monómio×binómio) ──
   if (tema === '2') {
-    var a2 = rndNZ_m81(2, easy ? 5 : 8), b2 = rndNZ_m81(1, 6), c2 = rndNZ_m81(1, 8);
-    var t1 = a2 * b2, t2 = a2 * c2;
-    var resp = t1 + 'x' + (t2 >= 0 ? '+' + t2 : '-' + Math.abs(t2));
+    var frases = [
+      { e: 'Todos os alunos passaram.', n: 'Existe (pelo menos) um aluno que não passou.' },
+      { e: 'Existe um número par maior que 100.', n: 'Todos os números pares são menores ou iguais a 100.' },
+      { e: 'Qualquer triângulo tem 3 lados.', n: 'Existe (pelo menos) um triângulo que não tem 3 lados.' },
+      { e: 'Algum aluno chegou atrasado.', n: 'Nenhum aluno chegou atrasado (todos chegaram a horas).' }
+    ];
+    var fr = frases[rnd_m81(0, frases.length - 1)];
+    // distratores: trocar quantificador sem negar a condição
+    var dist = ['Todos os elementos verificam a condição.', 'Existe um elemento que verifica a condição.', 'Nenhuma das anteriores.'];
+    var opts = shuffle_m81([fr.n].concat(dist).filter(function (v, i, a) { return a.indexOf(v) === i; })).slice(0, 4);
+    if (opts.indexOf(fr.n) === -1) opts[0] = fr.n;
     return {
-      enun: 'Aplica a distributiva: <strong>' + a2 + '(' + b2 + 'x + ' + c2 + ')</strong>',
-      tipo: 'fill_frac', resposta: resp,
-      expl: a2 + '×' + b2 + 'x + ' + a2 + '×' + c2 + ' = ' + t1 + 'x + ' + t2 + '.',
+      enun: 'Qual é a negação de: <strong>"' + fr.e + '"</strong>?',
+      tipo: 'mc', opcoes: opts, resposta: fr.n,
+      expl: 'A negação troca ∀ por ∃ (e vice-versa) e nega a condição: ' + fr.n,
+      tema: 'T2 · Quantificadores'
+    };
+  }
+  // tema 3 · interseção/reunião de intervalos
+  var a = rnd_m81(-4, 2), b = a + rnd_m81(2, 5);
+  var c = a + rnd_m81(1, 3), d = c + rnd_m81(2, 5);
+  var op = Math.random() < 0.5;
+  // A=[a,b], B=[c,d]
+  if (op) {
+    var lo = Math.max(a, c), hi = Math.min(b, d);
+    var res = lo <= hi ? '[' + lo + ', ' + hi + ']' : '∅ (vazio)';
+    return {
+      enun: 'Calcula [' + a + ', ' + b + '] ∩ [' + c + ', ' + d + '].',
+      tipo: 'fill_frac', resposta: res.replace(/ /g, ''),
+      expl: 'A interseção são os reais em AMBOS: de ' + Math.max(a, c) + ' a ' + Math.min(b, d) + ' → ' + res + '.',
+      tema: 'T3 · Conjuntos'
+    };
+  }
+  var lo2 = Math.min(a, c), hi2 = Math.max(b, d);
+  var res2 = (Math.max(a, c) <= Math.min(b, d)) ? '[' + lo2 + ', ' + hi2 + ']' : '[' + a + ', ' + b + '] ∪ [' + c + ', ' + d + ']';
+  return {
+    enun: 'Calcula [' + a + ', ' + b + '] ∪ [' + c + ', ' + d + '].',
+    tipo: 'fill_frac', resposta: res2.replace(/ /g, ''),
+    expl: 'A reunião são os reais em PELO MENOS UM dos intervalos → ' + res2 + '.',
+    tema: 'T3 · Conjuntos'
+  };
+}
+
+// ═══ CAP 2 · Álgebra ═══
+// Temas: 1 Simplificar radicais · 2 Teorema do resto · 3 Equação 2.º grau / discriminante
+function buildEx_m10c2(tema, tipo, dif) {
+  tema = String(tema);
+  if (tema === '1') {
+    // simplificar √(k²·m) = k√m
+    var k = rnd_m81(2, 6), m = [2, 3, 5, 6, 7][rnd_m81(0, 4)];
+    var dentro = k * k * m;
+    var correct = k + '√' + m;
+    return {
+      enun: 'Simplifica o radical <strong>√' + dentro + '</strong>.',
+      tipo: 'fill_frac', resposta: correct.replace(/ /g, ''),
+      expl: '√' + dentro + ' = √(' + (k * k) + '×' + m + ') = ' + k + '√' + m + '.',
+      tema: 'T1 · Radicais'
+    };
+  }
+  if (tema === '2') {
+    // resto de P(x) por (x-a) = P(a). P(x)=x²+bx+c
+    var b = rnd_m81(-5, 5), c = rnd_m81(-6, 6), a = rnd_m81(-3, 4);
+    var Pa = a * a + b * a + c;
+    var pol = 'x² ' + (b >= 0 ? '+ ' + b : '− ' + Math.abs(b)) + 'x ' + (c >= 0 ? '+ ' + c : '− ' + Math.abs(c));
+    return {
+      enun: 'Pelo teorema do resto, qual é o resto da divisão de <strong>P(x) = ' + pol + '</strong> por (x − ' + a + ')?',
+      tipo: 'fill', resposta: String(Pa),
+      expl: 'O resto é P(' + a + ') = ' + a + '² ' + (b >= 0 ? '+ ' + b : '− ' + Math.abs(b)) + '×' + a + ' ' + (c >= 0 ? '+ ' + c : '− ' + Math.abs(c)) + ' = ' + Pa + '.',
       tema: 'T2 · Polinómios'
     };
   }
-
-  // ── TEMA 3 · Equações do 2.º grau (resolvente, soluções inteiras) ──
-  if (tema === '3') {
-    // (x − r1)(x − r2) = 0 → x² − (r1+r2)x + r1·r2 = 0
+  // tema 3 · equação 2.º grau (soluções inteiras) ou discriminante
+  var kind = rnd_m81(0, 1);
+  if (kind === 0) {
     var r1 = rnd_m81(-5, 6), r2 = rnd_m81(-5, 6);
     var bC = -(r1 + r2), cC = r1 * r2;
-    var eqn = 'x' + sup_m81(2) + ' ' + (bC >= 0 ? '+ ' + bC : '− ' + Math.abs(bC)) + 'x ' + (cC >= 0 ? '+ ' + cC : '− ' + Math.abs(cC)) + ' = 0';
-    var lo = Math.min(r1, r2), hi = Math.max(r1, r2);
-    var sols = (r1 === r2) ? ('x = ' + r1) : ('x = ' + lo + ' ou x = ' + hi);
-    if (tipo === 'mc') {
-      // distratores garantidamente únicos e diferentes da resposta
-      function _pair(a, b) { var x = Math.min(a, b), y = Math.max(a, b); return (x === y) ? ('x = ' + x) : ('x = ' + x + ' ou x = ' + y); }
-      var cand = [_pair(lo + 1, hi), _pair(lo, hi + 1), _pair(-lo, -hi), _pair(lo - 1, hi), _pair(lo, hi - 1)];
-      var opts = [sols];
-      for (var di = 0; di < cand.length && opts.length < 4; di++) {
-        if (opts.indexOf(cand[di]) === -1) opts.push(cand[di]);
-      }
-      // se ainda faltarem (caso raro), preenche com pares afastados
-      var bump = 2;
-      while (opts.length < 4) { var c2 = _pair(lo + bump, hi + bump); if (opts.indexOf(c2) === -1) opts.push(c2); bump++; }
-      opts = shuffle_m81(opts);
-      return {
-        enun: 'Resolve a equação <strong>' + eqn + '</strong>',
-        tipo: 'mc', opcoes: opts, resposta: sols,
-        expl: 'Δ = ' + bC + '² − 4×1×' + cC + ' = ' + (bC * bC - 4 * cC) + '. Aplicando a resolvente: ' + sols + '.',
-        tema: 'T3 · Eq. 2.º grau'
-      };
-    }
+    var eqn = 'x² ' + (bC >= 0 ? '+ ' + bC : '− ' + Math.abs(bC)) + 'x ' + (cC >= 0 ? '+ ' + cC : '− ' + Math.abs(cC)) + ' = 0';
     return {
       enun: 'Resolve <strong>' + eqn + '</strong>. Indica a MENOR solução.',
       tipo: 'fill', resposta: String(Math.min(r1, r2)),
-      expl: 'As soluções são ' + sols.replace('x = ', '') + '. A menor é ' + Math.min(r1, r2) + '.',
-      tema: 'T3 · Eq. 2.º grau'
+      expl: 'As soluções são ' + Math.min(r1, r2) + ' e ' + Math.max(r1, r2) + ' (a menor: ' + Math.min(r1, r2) + ').',
+      tema: 'T3 · Equações'
     };
   }
-
-  // ── TEMA 4 · Discriminante / número de soluções ──
-  if (tema === '4') {
-    var a4 = 1, b4 = rnd_m81(-6, 6), c4 = rnd_m81(-6, 9);
-    var delta = b4 * b4 - 4 * a4 * c4;
-    var nsol = delta > 0 ? 'duas soluções' : delta === 0 ? 'uma solução' : 'nenhuma solução real';
-    var eqn4 = 'x' + sup_m81(2) + ' ' + (b4 >= 0 ? '+ ' + b4 : '− ' + Math.abs(b4)) + 'x ' + (c4 >= 0 ? '+ ' + c4 : '− ' + Math.abs(c4)) + ' = 0';
-    if (tipo === 'mc') {
-      return {
-        enun: 'Quantas soluções reais tem <strong>' + eqn4 + '</strong>?',
-        tipo: 'mc', opcoes: ['duas soluções', 'uma solução', 'nenhuma solução real'],
-        resposta: nsol,
-        expl: 'Δ = b² − 4ac = ' + b4 + '² − 4×1×' + c4 + ' = ' + delta + '. ' + (delta > 0 ? 'Δ > 0 → duas.' : delta === 0 ? 'Δ = 0 → uma.' : 'Δ < 0 → nenhuma real.'),
-        tema: 'T4 · Discriminante'
-      };
-    }
-    return {
-      enun: 'Calcula o discriminante Δ de ' + eqn4,
-      tipo: 'fill', resposta: String(delta),
-      expl: 'Δ = b² − 4ac = ' + (b4 * b4) + ' − ' + (4 * c4) + ' = ' + delta + '.',
-      tema: 'T4 · Discriminante'
-    };
-  }
-
-  return { enun: 'Δ de x²−5x+6?', tipo: 'fill', resposta: '1', expl: '25−24=1.', tema: 'Eq. 2.º grau' };
+  var b4 = rnd_m81(-6, 6), c4 = rnd_m81(-6, 9);
+  var delta = b4 * b4 - 4 * c4;
+  var eqn4 = 'x² ' + (b4 >= 0 ? '+ ' + b4 : '− ' + Math.abs(b4)) + 'x ' + (c4 >= 0 ? '+ ' + c4 : '− ' + Math.abs(c4)) + ' = 0';
+  return {
+    enun: 'Calcula o discriminante Δ de <strong>' + eqn4 + '</strong>.',
+    tipo: 'fill', resposta: String(delta),
+    expl: 'Δ = b² − 4ac = ' + (b4 * b4) + ' − ' + (4 * c4) + ' = ' + delta + '.',
+    tema: 'T3 · Equações'
+  };
 }
 
-// ═══ CAP 3 · Funções ═══
-// Temas: 1 Função afim · 2 Função quadrática (vértice/zeros) · 3 Proporcionalidade inversa · 4 Imagem/declive
+// ═══ CAP 3 · Geometria Analítica ═══
+// Temas: 1 Distância · 2 Ponto médio · 3 Circunferência (centro/raio) · 4 Norma de vetor
 function buildEx_m10c3(tema, tipo, dif) {
   tema = String(tema);
-  var easy = (dif === 'facil'), hard = (dif === 'dificil');
-
-  // ── TEMA 1 · Função afim (declive e ordenada na origem) ──
+  var TERNOS = [[3, 4, 5], [6, 8, 10], [5, 12, 13], [8, 15, 17], [9, 12, 15]];
   if (tema === '1') {
-    var m = rndNZ_m81(-6, 6), b = rnd_m81(-6, 6);
-    var fn = 'f(x) = ' + (m === 1 ? 'x' : m === -1 ? '−x' : (m + 'x').replace('-', '−')) + (b === 0 ? '' : (b > 0 ? ' + ' + b : ' − ' + Math.abs(b)));
-    var pedeDecl = Math.random() < 0.5;
-    var resp = pedeDecl ? m : b;
+    var t = TERNOS[rnd_m81(0, TERNOS.length - 1)];
+    var ax = rnd_m81(-4, 4), ay = rnd_m81(-4, 4);
+    var bx = ax + t[0] * (Math.random() < 0.5 ? 1 : -1);
+    var by = ay + t[1] * (Math.random() < 0.5 ? 1 : -1);
     return {
-      enun: 'Na função afim <strong>' + fn + '</strong>, qual é ' + (pedeDecl ? 'o declive' : 'a ordenada na origem') + '?',
-      tipo: 'fill', resposta: String(resp),
-      expl: 'Na forma f(x) = ax + b: declive a = ' + m + ', ordenada na origem b = ' + b + '. Pedido: ' + resp + '.',
-      tema: 'T1 · Função Afim'
+      enun: 'Calcula a distância entre A(' + ax + ', ' + ay + ') e B(' + bx + ', ' + by + ').',
+      tipo: 'fill', resposta: String(t[2]),
+      expl: 'd = √((' + bx + '−' + ax + ')² + (' + by + '−' + ay + ')²) = √(' + (t[0] * t[0]) + '+' + (t[1] * t[1]) + ') = √' + (t[2] * t[2]) + ' = ' + t[2] + '.',
+      tema: 'T1 · Distância'
     };
   }
-
-  // ── TEMA 2 · Função quadrática (vértice / zeros) ──
   if (tema === '2') {
-    // f(x) = x² + bx + c com zeros inteiros r1, r2
-    var r1 = rnd_m81(-4, 5), r2 = rnd_m81(-4, 5);
-    var b = -(r1 + r2), c = r1 * r2;
-    var fn = 'f(x) = x' + sup_m81(2) + ' ' + (b >= 0 ? '+ ' + b : '− ' + Math.abs(b)) + 'x ' + (c >= 0 ? '+ ' + c : '− ' + Math.abs(c));
-    var kind = rnd_m81(0, 1);
-    if (kind === 0) {
-      // abcissa do vértice = -b/2
-      var xv = -b / 2;
-      return {
-        enun: 'Qual é a abcissa do vértice de <strong>' + fn + '</strong>?',
-        tipo: 'fill', resposta: String(xv),
-        expl: 'x_vértice = −b/(2a) = −(' + b + ')/(2×1) = ' + xv + '.',
-        tema: 'T2 · Função Quadrática'
-      };
-    }
-    // menor zero
+    var ax2 = rnd_m81(-6, 6) * 2, ay2 = rnd_m81(-6, 6) * 2; // pares → ponto médio inteiro
+    var bx2 = rnd_m81(-6, 6) * 2, by2 = rnd_m81(-6, 6) * 2;
+    var mx = (ax2 + bx2) / 2, my = (ay2 + by2) / 2;
     return {
-      enun: 'Indica o MENOR zero de <strong>' + fn + '</strong>.',
-      tipo: 'fill', resposta: String(Math.min(r1, r2)),
-      expl: 'Os zeros (f(x)=0) são ' + Math.min(r1, r2) + ' e ' + Math.max(r1, r2) + '. O menor é ' + Math.min(r1, r2) + '.',
-      tema: 'T2 · Função Quadrática'
+      enun: 'Qual é o ponto médio de [A(' + ax2 + ', ' + ay2 + '), B(' + bx2 + ', ' + by2 + ')]? (forma (x, y))',
+      tipo: 'fill_frac', resposta: '(' + mx + ',' + my + ')',
+      expl: 'M = ((' + ax2 + '+' + bx2 + ')/2, (' + ay2 + '+' + by2 + ')/2) = (' + mx + ', ' + my + ').',
+      tema: 'T2 · Ponto Médio'
     };
   }
-
-  // ── TEMA 3 · Proporcionalidade inversa ──
   if (tema === '3') {
-    var k = [12, 18, 24, 36, 48, 60][rnd_m81(0, 5)];
-    var x0 = [2, 3, 4, 6][rnd_m81(0, 3)];
-    while (k % x0 !== 0) x0 = [2, 3, 4, 6][rnd_m81(0, 3)];
-    var y0 = k / x0;
-    var kind3 = rnd_m81(0, 1);
-    if (kind3 === 0) {
+    var ca = rnd_m81(-5, 5), cb = rnd_m81(-5, 5), r = rnd_m81(2, 7);
+    var pedeRaio = Math.random() < 0.5;
+    var eq = '(x ' + (ca === 0 ? '' : (ca > 0 ? '− ' + ca : '+ ' + (-ca))) + ')² + (y ' + (cb === 0 ? '' : (cb > 0 ? '− ' + cb : '+ ' + (-cb))) + ')² = ' + (r * r);
+    if (pedeRaio) {
       return {
-        enun: 'Numa proporcionalidade inversa, y = ' + y0 + ' quando x = ' + x0 + '. Qual é a constante k?',
-        tipo: 'fill', resposta: String(k),
-        expl: 'k = x × y = ' + x0 + ' × ' + y0 + ' = ' + k + '. A função é f(x) = ' + k + '/x.',
-        tema: 'T3 · Prop. Inversa'
+        enun: 'Qual é o raio da circunferência <strong>' + eq + '</strong>?',
+        tipo: 'fill', resposta: String(r),
+        expl: 'A equação é (x−a)²+(y−b)²=r², logo r² = ' + (r * r) + ' → r = ' + r + '.',
+        tema: 'T3 · Circunferência'
       };
     }
-    var x1 = [2, 3, 4, 6, 12].filter(function (v) { return k % v === 0 && v !== x0; })[0] || x0;
     return {
-      enun: 'A função f(x) = ' + k + '/x. Calcula f(' + x1 + ').',
-      tipo: 'fill', resposta: String(k / x1),
-      expl: 'f(' + x1 + ') = ' + k + ' ÷ ' + x1 + ' = ' + (k / x1) + '.',
-      tema: 'T3 · Prop. Inversa'
+      enun: 'Qual é o centro da circunferência <strong>' + eq + '</strong>? (forma (a, b))',
+      tipo: 'fill_frac', resposta: '(' + ca + ',' + cb + ')',
+      expl: 'Centro = (a, b) = (' + ca + ', ' + cb + ').',
+      tema: 'T3 · Circunferência'
     };
   }
-
-  // ── TEMA 4 · Imagem de uma função ──
-  if (tema === '4') {
-    var m4 = rndNZ_m81(-5, 5), b4 = rnd_m81(-6, 6), x4 = rnd_m81(-4, 5);
-    var fx = m4 * x4 + b4;
-    var fn4 = 'f(x) = ' + (m4 === 1 ? 'x' : m4 === -1 ? '−x' : (m4 + 'x').replace('-', '−')) + (b4 === 0 ? '' : (b4 > 0 ? ' + ' + b4 : ' − ' + Math.abs(b4)));
-    return {
-      enun: 'Sendo <strong>' + fn4 + '</strong>, calcula f(' + x4 + ').',
-      tipo: 'fill', resposta: String(fx),
-      expl: 'f(' + x4 + ') = ' + m4 + '×(' + x4 + ') ' + (b4 >= 0 ? '+ ' + b4 : '− ' + Math.abs(b4)) + ' = ' + fx + '.',
-      tema: 'T4 · Imagem f(x)'
-    };
-  }
-
-  return { enun: 'f(x)=2x, f(3)?', tipo: 'fill', resposta: '6', expl: '2×3=6.', tema: 'Funções' };
+  // tema 4 · norma de vetor (usa ternos)
+  var t4 = TERNOS[rnd_m81(0, TERNOS.length - 1)];
+  var v1 = t4[0] * (Math.random() < 0.5 ? 1 : -1), v2 = t4[1] * (Math.random() < 0.5 ? 1 : -1);
+  return {
+    enun: 'Calcula a norma do vetor <strong>v(' + v1 + ', ' + v2 + ')</strong>.',
+    tipo: 'fill', resposta: String(t4[2]),
+    expl: '‖v‖ = √(' + v1 + '² + ' + v2 + '²) = √(' + (v1 * v1) + '+' + (v2 * v2) + ') = √' + (t4[2] * t4[2]) + ' = ' + t4[2] + '.',
+    tema: 'T4 · Vetores'
+  };
 }
 
-// ═══ CAP 4 · Trigonometria e Circunferência ═══
-// Temas: 1 Razões trigonométricas (ternos) · 2 Lados (valores notáveis) · 3 Ângulos ao centro/inscrito e arcos
+// ═══ CAP 4 · Funções Reais ═══
+// Temas: 1 Domínio · 2 Vértice de quadrática · 3 Módulo / imagem
 function buildEx_m10c4(tema, tipo, dif) {
   tema = String(tema);
-  var easy = (dif === 'facil'), hard = (dif === 'dificil');
-  var TERNOS = [[3, 4, 5], [6, 8, 10], [5, 12, 13], [8, 15, 17]];
-
-  // ── TEMA 1 · Razões trigonométricas (a partir de um terno) ──
   if (tema === '1') {
-    var t = TERNOS[rnd_m81(0, easy ? 1 : TERNOS.length - 1)];
-    var op = t[0], adj = t[1], hip = t[2]; // ângulo cujo cateto oposto é op
-    var razao = ['sen', 'cos', 'tg'][rnd_m81(0, 2)];
-    var resp, expl;
-    if (razao === 'sen') { resp = fmtFrac_m81(op, hip); expl = 'sen = cateto oposto / hipotenusa = ' + op + '/' + hip + ' = ' + resp + '.'; }
-    else if (razao === 'cos') { resp = fmtFrac_m81(adj, hip); expl = 'cos = cateto adjacente / hipotenusa = ' + adj + '/' + hip + ' = ' + resp + '.'; }
-    else { resp = fmtFrac_m81(op, adj); expl = 'tg = cateto oposto / cateto adjacente = ' + op + '/' + adj + ' = ' + resp + '.'; }
-    return {
-      enun: 'Num triângulo retângulo, o cateto oposto ao ângulo α mede ' + op + ', o adjacente ' + adj + ' e a hipotenusa ' + hip + '. Qual é <strong>' + razao + '(α)</strong>?',
-      tipo: 'fill_frac', resposta: resp,
-      expl: expl,
-      tema: 'T1 · Razões Trig.'
-    };
-  }
-
-  // ── TEMA 2 · Determinar um lado (valores notáveis simples) ──
-  if (tema === '2') {
-    // usa terno: dado hipotenusa e seno, achar cateto oposto, etc.
-    var t2 = TERNOS[rnd_m81(0, TERNOS.length - 1)];
-    var op2 = t2[0], hip2 = t2[2];
-    return {
-      enun: 'Num triângulo retângulo, sen(α) = ' + op2 + '/' + hip2 + ' e a hipotenusa mede ' + hip2 + '. Quanto mede o cateto oposto a α?',
-      tipo: 'fill', resposta: String(op2),
-      expl: 'sen(α) = oposto/hipotenusa → oposto = sen(α) × hipotenusa = (' + op2 + '/' + hip2 + ') × ' + hip2 + ' = ' + op2 + '.',
-      tema: 'T2 · Lados'
-    };
-  }
-
-  // ── TEMA 3 · Ângulos ao centro / inscrito e arcos ──
-  if (tema === '3') {
-    var ang = [30, 40, 60, 80, 90, 100, 120][rnd_m81(0, 6)];
     var kind = rnd_m81(0, 1);
     if (kind === 0) {
-      // ângulo inscrito = metade do arco/ângulo ao centro
+      // f(x) = 1/(x-a) → domínio R\{a}
+      var a = rndNZ_m81(-6, 6); // a≠0 para não colidir com o distrator ℝ\{0}
+      var resp1 = 'ℝ \\ {' + a + '}';
+      var opts1 = [resp1, 'ℝ', '[' + a + ', +∞[', 'ℝ \\ {0}'].filter(function (v, i, ar) { return ar.indexOf(v) === i; });
       return {
-        enun: 'Um ângulo inscrito numa circunferência corresponde a um arco de ' + ang + '°. Qual é a amplitude do ângulo inscrito?',
-        tipo: 'fill', resposta: String(ang / 2),
-        expl: 'O ângulo inscrito é METADE do arco correspondente: ' + ang + '° ÷ 2 = ' + (ang / 2) + '°.',
-        tema: 'T3 · Ângulos e Arcos'
+        enun: 'Qual é o domínio de <strong>f(x) = 1/(x ' + (a >= 0 ? '− ' + a : '+ ' + (-a)) + ')</strong>?',
+        tipo: 'mc', opcoes: shuffle_m81(opts1), resposta: resp1,
+        expl: 'O denominador não pode ser 0: x ' + (a >= 0 ? '− ' + a : '+ ' + (-a)) + ' ≠ 0 → x ≠ ' + a + '. Domínio: ℝ \\ {' + a + '}.',
+        tema: 'T1 · Domínio'
       };
     }
-    // ângulo ao centro = arco
+    // f(x) = √(x-a) → domínio [a, +∞[
+    var a2 = rndNZ_m81(-5, 6);
+    var resp2 = '[' + a2 + ', +∞[';
+    var opts2 = [resp2, ']−∞, ' + a2 + ']', 'ℝ', 'ℝ \\ {' + a2 + '}'].filter(function (v, i, ar) { return ar.indexOf(v) === i; });
     return {
-      enun: 'Um ângulo ao centro tem amplitude ' + ang + '°. Qual é a amplitude do arco correspondente?',
-      tipo: 'fill', resposta: String(ang),
-      expl: 'O arco correspondente a um ângulo ao centro tem a MESMA amplitude: ' + ang + '°.',
-      tema: 'T3 · Ângulos e Arcos'
+      enun: 'Qual é o domínio de <strong>f(x) = √(x ' + (a2 >= 0 ? '− ' + a2 : '+ ' + (-a2)) + ')</strong>?',
+      tipo: 'mc', opcoes: shuffle_m81(opts2), resposta: resp2,
+      expl: 'O radicando deve ser ≥ 0: x ' + (a2 >= 0 ? '− ' + a2 : '+ ' + (-a2)) + ' ≥ 0 → x ≥ ' + a2 + '. Domínio: [' + a2 + ', +∞[.',
+      tema: 'T1 · Domínio'
     };
   }
-
-  return { enun: 'sen(α)=3/5, oposto se hip=5?', tipo: 'fill', resposta: '3', expl: '3/5×5=3.', tema: 'Trigonometria' };
+  if (tema === '2') {
+    // vértice de x²+bx+c (b par para x_v inteiro)
+    var bv = rnd_m81(-5, 5) * 2, cv = rnd_m81(-6, 6);
+    var xv = -bv / 2, yv = xv * xv + bv * xv + cv;
+    var f = 'f(x) = x² ' + (bv >= 0 ? '+ ' + bv : '− ' + Math.abs(bv)) + 'x ' + (cv >= 0 ? '+ ' + cv : '− ' + Math.abs(cv));
+    var pedeX = Math.random() < 0.5;
+    if (pedeX) {
+      return {
+        enun: 'Qual é a abcissa do vértice de <strong>' + f + '</strong>?',
+        tipo: 'fill', resposta: String(xv),
+        expl: 'x_v = −b/(2a) = −(' + bv + ')/2 = ' + xv + '.',
+        tema: 'T2 · Quadrática'
+      };
+    }
+    return {
+      enun: 'Qual é a ordenada do vértice de <strong>' + f + '</strong>?',
+      tipo: 'fill', resposta: String(yv),
+      expl: 'x_v = ' + xv + '; y_v = f(' + xv + ') = ' + yv + '.',
+      tema: 'T2 · Quadrática'
+    };
+  }
+  // tema 3 · módulo / imagem
+  var kind3 = rnd_m81(0, 1);
+  if (kind3 === 0) {
+    var n = rndNZ_m81(-12, 12);
+    return {
+      enun: 'Calcula <strong>|' + n + '|</strong>.',
+      tipo: 'fill', resposta: String(Math.abs(n)),
+      expl: '|' + n + '| = ' + Math.abs(n) + ' (distância ao zero).',
+      tema: 'T3 · Módulo'
+    };
+  }
+  // imagem de função afim
+  var m = rndNZ_m81(-5, 5), b = rnd_m81(-6, 6), x0 = rnd_m81(-5, 5);
+  var fx = m * x0 + b;
+  return {
+    enun: 'Sendo f(x) = ' + (m === 1 ? 'x' : m === -1 ? '−x' : (m + 'x').replace('-', '−')) + (b === 0 ? '' : (b > 0 ? ' + ' + b : ' − ' + Math.abs(b))) + ', calcula f(' + x0 + ').',
+    tipo: 'fill', resposta: String(fx),
+    expl: 'f(' + x0 + ') = ' + m + '×(' + x0 + ') ' + (b >= 0 ? '+ ' + b : '− ' + Math.abs(b)) + ' = ' + fx + '.',
+    tema: 'T3 · Imagem'
+  };
 }
 
-// ═══ CAP 5 · Probabilidades ═══
-// Temas: 1 Espaço de resultados · 2 Probabilidade (Laplace) · 3 Acontecimento contrário · 4 Operações (reunião)
+// ═══ CAP 5 · Estatística ═══
+// Temas: 1 Média · 2 Mediana · 3 Amplitude / amplitude interquartis
 function buildEx_m10c5(tema, tipo, dif) {
   tema = String(tema);
-  var easy = (dif === 'facil'), hard = (dif === 'dificil');
-
-  // ── TEMA 1 · Espaço de resultados (número de casos) ──
-  if (tema === '1') {
-    var exps = [
-      { e: 'lançar um dado', n: 6 },
-      { e: 'lançar uma moeda', n: 2 },
-      { e: 'lançar duas moedas', n: 4 },
-      { e: 'tirar uma carta do naipe de copas (13 cartas)', n: 13 },
-      { e: 'rodar uma roleta com 8 setores iguais', n: 8 }
-    ];
-    var ex = exps[rnd_m81(0, exps.length - 1)];
-    return {
-      enun: 'Quantos resultados possíveis tem a experiência: <strong>' + ex.e + '</strong>?',
-      tipo: 'fill', resposta: String(ex.n),
-      expl: 'O espaço de resultados de "' + ex.e + '" tem ' + ex.n + ' elementos.',
-      tema: 'T1 · Espaço de Resultados'
-    };
-  }
-
-  // ── TEMA 2 · Probabilidade (regra de Laplace), resposta como fração ──
-  if (tema === '2') {
-    var contextos = [
-      { tot: 6, fav: function () { var f = [[3, 'par'], [3, 'ímpar'], [2, 'maior que 4'], [4, 'menor que 5']][rnd_m81(0, 3)]; return { n: f[0], d: 'sair um número ' + f[1] }; }, obj: 'lançar um dado' },
-      { tot: rnd_m81(8, 15), fav: null, obj: 'saco' }
-    ];
-    var useDado = Math.random() < 0.5;
-    if (useDado) {
-      var opcoesD = [[3, 'par'], [3, 'ímpar'], [2, 'maior que 4'], [4, 'menor que 5'], [1, 'igual a 6']];
-      var od = opcoesD[rnd_m81(0, opcoesD.length - 1)];
-      var r = reduce_m81(od[0], 6);
-      return {
-        enun: 'Ao lançar um dado equilibrado, qual é a probabilidade de ' + od[1] + '? (forma de fração irredutível)',
-        tipo: 'fill_frac', resposta: fmtFrac_m81(r[0], r[1]),
-        expl: 'P = casos favoráveis / casos possíveis = ' + od[0] + '/6 = ' + fmtFrac_m81(r[0], r[1]) + '.',
-        tema: 'T2 · Probabilidade'
-      };
-    }
-    var tot = rnd_m81(8, 15), fav = rnd_m81(1, tot - 1);
-    var rr = reduce_m81(fav, tot);
-    return {
-      enun: 'Num saco há ' + tot + ' bolas, ' + fav + ' das quais são vermelhas. Qual é a probabilidade de tirar uma vermelha? (fração irredutível)',
-      tipo: 'fill_frac', resposta: fmtFrac_m81(rr[0], rr[1]),
-      expl: 'P = ' + fav + '/' + tot + ' = ' + fmtFrac_m81(rr[0], rr[1]) + '.',
-      tema: 'T2 · Probabilidade'
-    };
-  }
-
-  // ── TEMA 3 · Acontecimento contrário ──
-  if (tema === '3') {
-    var dens = [4, 5, 6, 8, 10];
-    var d = dens[rnd_m81(0, dens.length - 1)];
-    var num = rnd_m81(1, d - 1);
-    var rContr = reduce_m81(d - num, d);
-    return {
-      enun: 'A probabilidade de um acontecimento A é ' + num + '/' + d + '. Qual é a probabilidade do acontecimento contrário (Ā)? (fração irredutível)',
-      tipo: 'fill_frac', resposta: fmtFrac_m81(rContr[0], rContr[1]),
-      expl: 'P(Ā) = 1 − P(A) = 1 − ' + num + '/' + d + ' = ' + (d - num) + '/' + d + ' = ' + fmtFrac_m81(rContr[0], rContr[1]) + '.',
-      tema: 'T3 · Contrário'
-    };
-  }
-
-  // ── TEMA 4 · Operações com acontecimentos (reunião de incompatíveis) ──
-  if (tema === '4') {
-    // dois acontecimentos incompatíveis num dado: P(A ∪ B) = P(A) + P(B)
-    var d4 = 6;
-    var nA = rnd_m81(1, 2), nB = rnd_m81(1, 2);
-    var rUn = reduce_m81(nA + nB, d4);
-    return {
-      enun: 'Num dado, A = "sair ' + (nA === 1 ? 'o 1' : 'o 1 ou o 2') + '" e B = "sair ' + (nB === 1 ? 'o 6' : 'o 5 ou o 6') + '" (incompatíveis). Qual é P(A ∪ B)? (fração irredutível)',
-      tipo: 'fill_frac', resposta: fmtFrac_m81(rUn[0], rUn[1]),
-      expl: 'Acontecimentos incompatíveis: P(A ∪ B) = P(A) + P(B) = ' + nA + '/6 + ' + nB + '/6 = ' + (nA + nB) + '/6 = ' + fmtFrac_m81(rUn[0], rUn[1]) + '.',
-      tema: 'T4 · Operações'
-    };
-  }
-
-  return { enun: 'P de par num dado?', tipo: 'fill_frac', resposta: '1/2', expl: '3/6=1/2.', tema: 'Probabilidades' };
-}
-
-// ═══ CAP 6 · Estatística ═══
-// Temas: 1 Média · 2 Mediana · 3 Quartis/AIQ · 4 Amplitude
-function buildEx_m10c6(tema, tipo, dif) {
-  tema = String(tema);
-  var easy = (dif === 'facil'), hard = (dif === 'dificil');
-  function dados(len, lo, hi) { var a = []; for (var i = 0; i < len; i++) a.push(rnd_m81(lo, hi)); return a; }
-  function media(a) { var s = 0; for (var i = 0; i < a.length; i++) s += a[i]; return s / a.length; }
+  function dados(n, lo, hi) { var a = []; for (var i = 0; i < n; i++) a.push(rnd_m81(lo, hi)); return a; }
   function ord(a) { return a.slice().sort(function (x, y) { return x - y; }); }
-
-  // ── TEMA 1 · Média (inteira) ──
   if (tema === '1') {
-    var arr; do { arr = dados(5, 1, easy ? 12 : 20); } while (media(arr) % 1 !== 0);
-    var m = media(arr);
+    var arr; var s;
+    do { arr = dados(5, 1, 20); s = arr.reduce(function (acc, v) { return acc + v; }, 0); } while (s % 5 !== 0);
     return {
-      enun: 'Calcula a média do conjunto: <strong>' + arr.join(', ') + '</strong>',
-      tipo: 'fill', resposta: String(m),
-      expl: 'Média = (' + arr.join(' + ') + ') ÷ 5 = ' + arr.reduce(function (s, v) { return s + v; }, 0) + ' ÷ 5 = ' + m + '.',
+      enun: 'Calcula a média de: <strong>' + arr.join(', ') + '</strong>',
+      tipo: 'fill', resposta: String(s / 5),
+      expl: 'Média = (' + arr.join(' + ') + ') ÷ 5 = ' + s + ' ÷ 5 = ' + (s / 5) + '.',
       tema: 'T1 · Média'
     };
   }
-
-  // ── TEMA 2 · Mediana (n ímpar) ──
   if (tema === '2') {
-    var arr2 = dados(5, 1, 20);
+    var arr2 = dados(5, 1, 25);
     var o = ord(arr2);
-    var med = o[2];
     return {
       enun: 'Qual é a mediana de: <strong>' + arr2.join(', ') + '</strong>?',
-      tipo: 'fill', resposta: String(med),
-      expl: 'Ordena: ' + o.join(', ') + '. Com 5 valores (ímpar), a mediana é o central → ' + med + '.',
+      tipo: 'fill', resposta: String(o[2]),
+      expl: 'Ordena: ' + o.join(', ') + '. Com 5 valores (ímpar), a mediana é o central → ' + o[2] + '.',
       tema: 'T2 · Mediana'
     };
   }
-
-  // ── TEMA 3 · Amplitude interquartis (a partir de Q1 e Q3 dados) ──
-  if (tema === '3') {
-    var q1 = rnd_m81(5, 15), q3 = q1 + rnd_m81(4, 15);
+  // tema 3 · amplitude ou AIQ
+  var kind = rnd_m81(0, 1);
+  if (kind === 0) {
+    var arr3 = dados(6, 1, 40);
+    var o3 = ord(arr3);
+    var amp = o3[o3.length - 1] - o3[0];
     return {
-      enun: 'Num conjunto de dados, Q1 = ' + q1 + ' e Q3 = ' + q3 + '. Qual é a amplitude interquartis (AIQ)?',
-      tipo: 'fill', resposta: String(q3 - q1),
-      expl: 'AIQ = Q3 − Q1 = ' + q3 + ' − ' + q1 + ' = ' + (q3 - q1) + '.',
-      tema: 'T3 · Quartis / AIQ'
-    };
-  }
-
-  // ── TEMA 4 · Amplitude ──
-  if (tema === '4') {
-    var arr4 = dados(6, 1, 35);
-    var o4 = ord(arr4);
-    var amp = o4[o4.length - 1] - o4[0];
-    return {
-      enun: 'Qual é a amplitude do conjunto: <strong>' + arr4.join(', ') + '</strong>?',
+      enun: 'Qual é a amplitude de: <strong>' + arr3.join(', ') + '</strong>?',
       tipo: 'fill', resposta: String(amp),
-      expl: 'Amplitude = máximo − mínimo = ' + o4[o4.length - 1] + ' − ' + o4[0] + ' = ' + amp + '.',
-      tema: 'T4 · Amplitude'
+      expl: 'Amplitude = máximo − mínimo = ' + o3[o3.length - 1] + ' − ' + o3[0] + ' = ' + amp + '.',
+      tema: 'T3 · Dispersão'
     };
   }
+  var q1 = rnd_m81(5, 15), q3 = q1 + rnd_m81(4, 14);
+  return {
+    enun: 'Num conjunto de dados, Q1 = ' + q1 + ' e Q3 = ' + q3 + '. Qual é a amplitude interquartis (AIQ)?',
+    tipo: 'fill', resposta: String(q3 - q1),
+    expl: 'AIQ = Q3 − Q1 = ' + q3 + ' − ' + q1 + ' = ' + (q3 - q1) + '.',
+    tema: 'T3 · Dispersão'
+  };
+}
 
-  return { enun: 'Média de 2,4,6?', tipo: 'fill', resposta: '4', expl: '(2+4+6)/3=4.', tema: 'Estatística' };
+// ═══ CAP 6 · Trigonometria ═══
+// Temas: 1 Razões (ternos) · 2 Fórmula fundamental · 3 Conversão graus↔rad / valores notáveis
+function buildEx_m10c6(tema, tipo, dif) {
+  tema = String(tema);
+  var TERNOS = [[3, 4, 5], [6, 8, 10], [5, 12, 13], [8, 15, 17]];
+  if (tema === '1') {
+    var t = TERNOS[rnd_m81(0, TERNOS.length - 1)];
+    var op = t[0], adj = t[1], hip = t[2];
+    var razao = ['sen', 'cos', 'tg'][rnd_m81(0, 2)];
+    var resp;
+    if (razao === 'sen') resp = fmtFrac_m81(op, hip);
+    else if (razao === 'cos') resp = fmtFrac_m81(adj, hip);
+    else resp = fmtFrac_m81(op, adj);
+    return {
+      enun: 'Num triângulo retângulo, o cateto oposto a α mede ' + op + ', o adjacente ' + adj + ' e a hipotenusa ' + hip + '. Qual é <strong>' + razao + '(α)</strong>?',
+      tipo: 'fill_frac', resposta: resp,
+      expl: razao + '(α) = ' + (razao === 'sen' ? 'oposto/hipotenusa = ' + op + '/' + hip : razao === 'cos' ? 'adjacente/hipotenusa = ' + adj + '/' + hip : 'oposto/adjacente = ' + op + '/' + adj) + ' = ' + resp + '.',
+      tema: 'T1 · Razões'
+    };
+  }
+  if (tema === '2') {
+    // dado sen (decimal de terno), achar cos (ângulo agudo)
+    var pares = [[3, 5, 4], [4, 5, 3], [6, 10, 8], [8, 10, 6], [5, 13, 12], [12, 13, 5]];
+    var pr = pares[rnd_m81(0, pares.length - 1)];
+    var senV = (pr[0] / pr[1]).toFixed(1);
+    var cosV = (pr[2] / pr[1]);
+    var cosStr = (cosV === Math.round(cosV * 10) / 10) ? cosV.toFixed(1).replace('.', ',') : cosV.toFixed(2).replace('.', ',');
+    return {
+      enun: 'Sabendo que sen(α) = ' + (pr[0] / pr[1]).toFixed(1).replace('.', ',') + ' e que α é agudo, calcula cos(α). (usa sen²+cos²=1)',
+      tipo: 'fill_frac', resposta: cosStr,
+      expl: 'cos²α = 1 − sen²α = 1 − ' + (Math.pow(pr[0] / pr[1], 2)).toFixed(2) + ' = ' + (Math.pow(pr[2] / pr[1], 2)).toFixed(2) + ' → cos α = ' + cosStr + '.',
+      tema: 'T2 · Fórmula Fundamental'
+    };
+  }
+  // tema 3 · conversão graus → radianos (múltiplos de 30/45/60/90)
+  var graus = [30, 45, 60, 90, 120, 135, 150, 180][rnd_m81(0, 7)];
+  var fracs = { 30: 'π/6', 45: 'π/4', 60: 'π/3', 90: 'π/2', 120: '2π/3', 135: '3π/4', 150: '5π/6', 180: 'π' };
+  return {
+    enun: 'Converte <strong>' + graus + '°</strong> para radianos.',
+    tipo: 'fill_frac', resposta: fracs[graus],
+    expl: graus + '° × π/180 = ' + fracs[graus] + ' rad.',
+    tema: 'T3 · Radianos'
+  };
 }
