@@ -1664,6 +1664,73 @@ function _teoriaAccordionHTML(cards, color, tagIcons) {
   h += '</div>';
   return h;
 }
+// ═══ Provedor de perguntas para JOGOS, a partir do conteúdo de cada ano ═══
+// Os jogos (4 em Linha, Campo Minado, Escape) precisam de questões de escolha
+// múltipla: {q, opts:[4 strings], ans (índice 0-3)}. Este helper gera uma a
+// partir do gerador do ano (genFn(tema,tipo,dif)) e/ou do banco, garantindo
+// 4 opções e a matéria correta. Devolve null se não conseguir.
+function _jogoQFromGerador(genFn, temasCount, banco, level) {
+  var dif = level === 'facil' ? 'facil' : (level === 'dificil' ? 'dificil' : 'medio');
+  // 1) tenta o banco (questões mc com 4 opções) — conteúdo real
+  if (banco && banco.length) {
+    var mcs = banco.filter(function (q) { return q.tipo === 'mc' && q.opcoes && q.opcoes.length === 4; });
+    if (mcs.length && Math.random() < 0.4) {
+      var b = mcs[Math.floor(Math.random() * mcs.length)];
+      var ai = b.opcoes.map(String).indexOf(String(b.resposta));
+      if (ai >= 0) return { q: b.enun, opts: b.opcoes.slice(), ans: ai };
+    }
+  }
+  // 2) tenta o gerador: questões mc com 4 opções, OU fabrica opções a partir
+  //    de uma questão numérica (fill) com resposta inteira/decimal.
+  if (typeof genFn === 'function') {
+    var nT = temasCount || 1;
+    for (var tries = 0; tries < 16; tries++) {
+      var tema = String(1 + Math.floor(Math.random() * nT));
+      var ex = genFn(tema, 'mc', dif);
+      if (!ex) continue;
+      // a) já é mc com 4 opções
+      if (ex.opcoes && ex.opcoes.length === 4) {
+        var idx = ex.opcoes.map(String).indexOf(String(ex.resposta));
+        if (idx >= 0) return { q: (ex.enun || ex.pergunta || ''), opts: ex.opcoes.slice(), ans: idx };
+      }
+      // b) fill numérico → fabricar 4 opções (resposta + 3 distratores)
+      var fab = _fabricarOpcoes(ex.resposta);
+      if (fab && fab.ans >= 0) {
+        return { q: (ex.enun || ex.pergunta || ''), opts: fab.opts, ans: fab.ans };
+      }
+    }
+  }
+  return null;
+}
+
+// A partir de uma resposta numérica, cria 4 opções (a correta + 3 distratores
+// plausíveis), baralhadas. Devolve array de 4 strings ou null se não numérica.
+function _fabricarOpcoes(resp) {
+  var s = String(resp).replace(',', '.');
+  if (!/^-?\d+(\.\d+)?$/.test(s)) return null; // só respostas numéricas simples
+  var n = parseFloat(s);
+  var decimais = (s.indexOf('.') >= 0) ? (s.split('.')[1].length) : 0;
+  // formata a resposta correta no mesmo estilo dos distratores (vírgula decimal)
+  var ordem = (decimais === 0) ? String(Math.round(n)) : n.toFixed(decimais).replace('.', ',');
+  var set = {}; set[String(n)] = true; set[ordem] = true;
+  // distratores: ±1, ±2, ±10%, dobro/metade — só os que forem distintos
+  var base = Math.abs(n) || 1;
+  var cands = [n + 1, n - 1, n + 2, n - 2, Math.round(n * 1.1 * Math.pow(10, decimais)) / Math.pow(10, decimais),
+               n * 2, (decimais === 0 && n % 2 === 0) ? n / 2 : n + 3, n - 3];
+  var out = [ordem];
+  for (var i = 0; i < cands.length && out.length < 4; i++) {
+    var c = cands[i];
+    if (decimais === 0) c = Math.round(c);
+    var cs = (decimais === 0) ? String(c) : c.toFixed(decimais).replace('.', ',');
+    var csKey = String(c);
+    if (!set[csKey] && !set[cs] && isFinite(c)) { set[csKey] = true; set[cs] = true; out.push(cs); }
+  }
+  if (out.length < 4) return null;
+  // baralhar
+  for (var j = out.length - 1; j > 0; j--) { var k = Math.floor(Math.random() * (j + 1)); var t = out[j]; out[j] = out[k]; out[k] = t; }
+  return { opts: out, ans: out.indexOf(ordem) };
+}
+
 // ═══ Banco de questões: mistura questões fixas (reais, multi-passo) com geradas ═══
 // banco: array de questões {tema?, tipo, enun, opcoes?, resposta, expl, visual?} para um capítulo.
 // Devolve até `qtd` questões: algumas do banco (baralhadas) + o resto geradas.

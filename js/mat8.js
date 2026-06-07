@@ -887,6 +887,20 @@ function mat8JogosInit() {
   _mat8PM(_mat8Prat.cap || 1, 'jogo');
   if (_mat8JogosInited) return;
   if (typeof _j24AutoInit === 'function') {
+    // Regista o provedor de perguntas DESTE ano (matéria correta nos jogos)
+    if (typeof _gRegisterProvider === 'function') {
+      _gRegisterProvider('mat8-jogos-app', function (level) {
+        var nCaps = _mat8CapMeta.length;
+        for (var att = 0; att < 6; att++) {
+          var cap = 1 + Math.floor(Math.random() * nCaps);
+          var gen = _mat8Gerador(cap);
+          var banco = (typeof _mat8Banco !== 'undefined' && _mat8Banco[cap]) ? _mat8Banco[cap] : null;
+          var q = _jogoQFromGerador(gen, _mat8TemasCount[cap], banco, level);
+          if (q) return q;
+        }
+        return null;
+      });
+    }
     _j24AutoInit('mat8-jogos-app', 'medio');
     _mat8JogosInited = true;
   } else {

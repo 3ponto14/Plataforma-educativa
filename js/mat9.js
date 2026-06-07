@@ -821,6 +821,20 @@ function mat9JogosInit() {
   _mat9PM(_mat9Prat.cap || 1, 'jogo');
   if (_mat9JogosInited) return;
   if (typeof _j24AutoInit === 'function') {
+    // Regista o provedor de perguntas DESTE ano (matéria correta nos jogos)
+    if (typeof _gRegisterProvider === 'function') {
+      _gRegisterProvider('mat9-jogos-app', function (level) {
+        var nCaps = _mat9CapMeta.length;
+        for (var att = 0; att < 6; att++) {
+          var cap = 1 + Math.floor(Math.random() * nCaps);
+          var gen = _mat9Gerador(cap);
+          var banco = (typeof _mat9Banco !== 'undefined' && _mat9Banco[cap]) ? _mat9Banco[cap] : null;
+          var q = _jogoQFromGerador(gen, _mat9TemasCount[cap], banco, level);
+          if (q) return q;
+        }
+        return null;
+      });
+    }
     _j24AutoInit('mat9-jogos-app', 'medio');
     _mat9JogosInited = true;
   } else {

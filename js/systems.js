@@ -570,12 +570,22 @@ function gTabSwitch(wrapId, tabName) {
 
 var _gInstances = {};
 
+// Provedores de perguntas por wrapId. Cada ano (mat5..mat11) regista aqui
+// uma função (level) → {q, opts:[4], ans} que usa o conteúdo DESSE ano,
+// para os jogos (4 em Linha, Campo Minado, Escape) usarem a matéria certa.
+var _gProviders = {};
+function _gRegisterProvider(wrapId, fn) { if (wrapId && typeof fn === 'function') _gProviders[wrapId] = fn; }
+
 // Build the full jogos HTML for a wrapper div
 function _gBuildJogos(wrapId, defaultLevel) {
   var wrap = document.getElementById(wrapId);
   if (!wrap) return;
-  // Store question function and defaultLevel
-  _gInstances[wrapId] = { qFn: function(level){ return _gGetQuestion(wrapId, level || defaultLevel || 'medio'); }, defaultLevel: defaultLevel || 'medio' };
+  // Store question function and defaultLevel. Usa provedor do ano se registado.
+  _gInstances[wrapId] = { qFn: function(level){
+      var lv = level || defaultLevel || 'medio';
+      if (_gProviders[wrapId]) { var q = _gProviders[wrapId](lv); if (q) return q; }
+      return _gGetQuestion(wrapId, lv);
+    }, defaultLevel: defaultLevel || 'medio' };
   wrap.innerHTML = [
     '<div class="g-tabs">',
     '  <button class="g-tab active" data-gtab="j24"  onclick="gTabSwitch(\''+wrapId+'\',\'j24\')"><i class="ph ph-dice-five"></i> 24</button>',
