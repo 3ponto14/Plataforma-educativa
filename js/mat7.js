@@ -123,6 +123,10 @@ function _mat7BuildSelectors() {
 // Auto-run when DOM is ready
 function _mat7Init() {
   _mat7BuildSelectors();
+  // visuais de teoria no cap 8 (Dados e Probabilidades)
+  if (typeof _addStatsTeoriaVisuais === 'function' && typeof BANCO8 !== 'undefined' && BANCO8.flashcards) {
+    _addStatsTeoriaVisuais(BANCO8.flashcards, '#61afef');
+  }
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _mat7Init);
 else _mat7Init();

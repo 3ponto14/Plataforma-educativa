@@ -1664,6 +1664,29 @@ function _teoriaAccordionHTML(cards, color, tagIcons) {
   h += '</div>';
   return h;
 }
+// Junta a um array de cards de teoria de Estatística 3 exemplos visuais
+// (gráfico de barras, circular e tabela). Usado pelos inits dos cursos.
+function _addStatsTeoriaVisuais(cardsArr, color) {
+  if (typeof EduVisual === 'undefined' || !cardsArr) return;
+  // evita duplicar se a função for chamada duas vezes
+  if (cardsArr._visuais) return; cardsArr._visuais = true;
+  cardsArr.push({
+    tag: 'Exemplo', q: 'Como se lê um gráfico de barras?',
+    a: 'A altura de cada barra indica a frequência. Exemplo do desporto preferido:',
+    v: EduVisual.barras([{ label: 'Futebol', value: 12 }, { label: 'Natação', value: 7 }, { label: 'Ténis', value: 5 }, { label: 'Dança', value: 6 }], color || '#5a7fa8')
+  });
+  cardsArr.push({
+    tag: 'Exemplo', q: 'O que é um gráfico circular?',
+    a: 'Cada setor é uma fração do total (frequência relativa × 360°). Exemplo de meios de transporte:',
+    v: EduVisual.circular([{ label: 'A pé', value: 40 }, { label: 'Autocarro', value: 35 }, { label: 'Carro', value: 25 }])
+  });
+  cardsArr.push({
+    tag: 'Exemplo', q: 'Como organizar dados numa tabela de frequências?',
+    a: 'Cada linha tem o valor e quantas vezes ocorre. Exemplo das idades de uma equipa:',
+    v: EduVisual.tabela(['Idade', 'N.º'], [['14', '4'], ['15', '6'], ['16', '8'], ['17', '5']], color || '#5a7fa8')
+  });
+}
+
 function _teoriaToggleGroup(gid) {
   var g = document.getElementById(gid);
   if (g) g.classList.toggle('open');

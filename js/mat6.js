@@ -1176,6 +1176,7 @@ function mat6gfGerar(formato) {
 
 // ═══ INIT ═══
 function _mat6Init() {
+  if (typeof _addStatsTeoriaVisuais === 'function') _addStatsTeoriaVisuais(_mat6Cards[7], '#c44a5a'); // cap7 Dados
   // arranca na tab Teoria com o cap 1 selecionado
   mat6BuildResumoNav();
 }
@@ -1500,6 +1501,17 @@ function buildEx_m6c7(tema, tipo, dif) {
   if (tema === '1') {
     var arr; var s;
     do { arr = []; for (var j = 0; j < 5; j++) arr.push(rnd_m81(2, 20)); s = arr.reduce(function (a, v) { return a + v; }, 0); } while (s % 5 !== 0);
+    if (typeof EduVisual !== 'undefined' && Math.random() < 0.4) {
+      var dias6 = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'];
+      var dataM6 = dias6.map(function (d, k) { return { label: d, value: arr[k] }; });
+      return {
+        enun: 'O gráfico mostra os pontos obtidos em cada dia. Qual é a <strong>média</strong>?',
+        visual: EduVisual.barras(dataM6, '#c44a5a'),
+        tipo: 'fill', resposta: String(s / 5),
+        expl: 'Média = (' + arr.join(' + ') + ') ÷ 5 = ' + s + ' ÷ 5 = ' + (s / 5) + '.',
+        tema: 'T1 · Média'
+      };
+    }
     return {
       enun: 'Calcula a média de: <strong>' + arr.join(', ') + '</strong>',
       tipo: 'fill', resposta: String(s / 5),

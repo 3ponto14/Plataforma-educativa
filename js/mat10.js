@@ -1153,6 +1153,7 @@ function mat10gfGerar(formato) {
 
 // ═══ INIT ═══
 function _mat10Init() {
+  if (typeof _addStatsTeoriaVisuais === 'function') _addStatsTeoriaVisuais(_mat10Cards[5], '#5a5ea0'); // cap5 Estatística
   // arranca na tab Teoria com o cap 1 selecionado
   mat10BuildResumoNav();
 }
@@ -1462,6 +1463,17 @@ function buildEx_m10c5(tema, tipo, dif) {
   if (tema === '1') {
     var arr; var s;
     do { arr = dados(5, 1, 20); s = arr.reduce(function (acc, v) { return acc + v; }, 0); } while (s % 5 !== 0);
+    if (typeof EduVisual !== 'undefined' && Math.random() < 0.4) {
+      var cats10 = ['A', 'B', 'C', 'D', 'E'];
+      var data10 = cats10.map(function (c, k) { return { label: c, value: arr[k] }; });
+      return {
+        enun: 'O gráfico mostra as vendas (em milhares) de 5 produtos. Qual é a <strong>média</strong>?',
+        visual: EduVisual.barras(data10, '#5a5ea0'),
+        tipo: 'fill', resposta: String(s / 5),
+        expl: 'Média = (' + arr.join(' + ') + ') ÷ 5 = ' + s + ' ÷ 5 = ' + (s / 5) + '.',
+        tema: 'T1 · Média'
+      };
+    }
     return {
       enun: 'Calcula a média de: <strong>' + arr.join(', ') + '</strong>',
       tipo: 'fill', resposta: String(s / 5),

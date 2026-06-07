@@ -1245,33 +1245,8 @@ function mat8gfGerar(formato) {
 }
 
 // ═══ INIT ═══
-// Adiciona visuais (SVG) a alguns cards de teoria de Estatística (Cap 8).
-function _mat8AddTeoriaVisuais() {
-  if (typeof EduVisual === 'undefined' || !_mat8Cards[8]) return;
-  _mat8Cards[8].push({
-    tag: 'Exemplo', q: 'Como se lê um gráfico de barras?',
-    a: 'A altura de cada barra indica a frequência. Neste exemplo, a desporto preferido pelos alunos:',
-    v: EduVisual.barras([
-      { label: 'Futebol', value: 12 }, { label: 'Natação', value: 7 },
-      { label: 'Ténis', value: 5 }, { label: 'Dança', value: 6 }
-    ], '#9a5e96')
-  });
-  _mat8Cards[8].push({
-    tag: 'Exemplo', q: 'Como se representa um gráfico circular?',
-    a: 'Cada setor é uma fração do total (frequência relativa × 360°). Exemplo de meios de transporte:',
-    v: EduVisual.circular([
-      { label: 'A pé', value: 40 }, { label: 'Autocarro', value: 35 }, { label: 'Carro', value: 25 }
-    ])
-  });
-  _mat8Cards[8].push({
-    tag: 'Exemplo', q: 'Como organizar dados numa tabela de frequências?',
-    a: 'Cada linha tem o valor e quantas vezes ocorre. Exemplo das idades de uma equipa:',
-    v: EduVisual.tabela(['Idade', 'N.º jogadores'], [['14', '4'], ['15', '6'], ['16', '8'], ['17', '5']], '#9a5e96')
-  });
-}
-
 function _mat8Init() {
-  _mat8AddTeoriaVisuais();
+  if (typeof _addStatsTeoriaVisuais === 'function') _addStatsTeoriaVisuais(_mat8Cards[8], '#9a5e96'); // cap8 Dados
   // arranca na tab Teoria com o cap 1 selecionado
   mat8BuildResumoNav();
 }

@@ -1175,6 +1175,7 @@ function mat5gfGerar(formato) {
 
 // ═══ INIT ═══
 function _mat5Init() {
+  if (typeof _addStatsTeoriaVisuais === 'function') _addStatsTeoriaVisuais(_mat5Cards[7], '#4a9e72'); // cap7 Dados
   // arranca na tab Teoria com o cap 1 selecionado
   mat5BuildResumoNav();
 }
@@ -1562,14 +1563,22 @@ function buildEx_m5c6(tema, tipo, dif) {
 function buildEx_m5c7(tema, tipo, dif) {
   tema = String(tema);
   if (tema === '1') {
-    // pequeno conjunto: máximo/mínimo
-    var dados = []; for (var i = 0; i < 4; i++) dados.push(rnd_m81(2, 30));
-    var pedeMax = Math.random() < 0.5;
-    var val = pedeMax ? Math.max.apply(null, dados) : Math.min.apply(null, dados);
+    // Ler um GRÁFICO DE BARRAS real (SVG): máximo, mínimo ou total
+    var cats = ['Azul', 'Verde', 'Vermelho', 'Amarelo'];
+    var vals = []; for (var i = 0; i < 4; i++) vals.push(rnd_m81(2, 18));
+    var dataG = cats.map(function (c, k) { return { label: c, value: vals[k] }; });
+    var modo = rnd_m81(0, 2); // 0 máximo, 1 mínimo, 2 total
+    var maxV = Math.max.apply(null, vals), minV = Math.min.apply(null, vals);
+    var totalV = vals.reduce(function (s, v) { return s + v; }, 0);
+    var perg, resp, expl;
+    if (modo === 0) { perg = 'Qual é a cor preferida (a barra mais alta) — quantos votos tem?'; resp = maxV; expl = 'A barra mais alta tem ' + maxV + ' votos.'; }
+    else if (modo === 1) { perg = 'Qual é a cor menos votada (a barra mais baixa) — quantos votos tem?'; resp = minV; expl = 'A barra mais baixa tem ' + minV + ' votos.'; }
+    else { perg = 'Quantas pessoas foram inquiridas ao todo (soma de todas as barras)?'; resp = totalV; expl = 'Soma das barras: ' + vals.join(' + ') + ' = ' + totalV + '.'; }
     return {
-      enun: 'Num gráfico de barras, as alturas são ' + dados.join(', ') + '. Qual é o valor ' + (pedeMax ? 'MÁXIMO' : 'MÍNIMO') + '?',
-      tipo: 'fill', resposta: String(val),
-      expl: 'O valor ' + (pedeMax ? 'máximo (a maior barra)' : 'mínimo (a menor barra)') + ' é ' + val + '.',
+      enun: 'O gráfico mostra a cor preferida de um grupo de alunos. ' + perg,
+      visual: (typeof EduVisual !== 'undefined') ? EduVisual.barras(dataG, '#4a9e72') : '',
+      tipo: 'fill', resposta: String(resp),
+      expl: expl,
       tema: 'T1 · Ler Gráficos'
     };
   }
@@ -1584,9 +1593,20 @@ function buildEx_m5c7(tema, tipo, dif) {
       tema: 'T2 · Frequência'
     };
   }
-  // tema 3 · média (inteira)
+  // tema 3 · média (inteira) — por vezes a partir de um gráfico
   var arr; var s;
   do { arr = []; for (var j = 0; j < 4; j++) arr.push(rnd_m81(2, 20)); s = arr.reduce(function (acc, v) { return acc + v; }, 0); } while (s % 4 !== 0);
+  if (typeof EduVisual !== 'undefined' && Math.random() < 0.4) {
+    var dias = ['Seg', 'Ter', 'Qua', 'Qui'];
+    var dataM = dias.map(function (d, k) { return { label: d, value: arr[k] }; });
+    return {
+      enun: 'O gráfico mostra os golos marcados em cada dia. Qual é a <strong>média</strong> diária?',
+      visual: EduVisual.barras(dataM, '#4a9e72'),
+      tipo: 'fill', resposta: String(s / 4),
+      expl: 'Média = (' + arr.join(' + ') + ') ÷ 4 = ' + s + ' ÷ 4 = ' + (s / 4) + '.',
+      tema: 'T3 · Média'
+    };
+  }
   return {
     enun: 'Calcula a média de: <strong>' + arr.join(', ') + '</strong>',
     tipo: 'fill', resposta: String(s / 4),
