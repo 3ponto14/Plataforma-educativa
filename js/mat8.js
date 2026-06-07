@@ -1133,6 +1133,7 @@ function _mat8gfExBloco(exs, startNum) {
   exs.forEach(function(ex, i) {
     h += '<div style="margin-bottom:13px;page-break-inside:avoid">'
       + '<div style="font-weight:600;font-size:12.5px;margin-bottom:3px">' + (startNum + i) + '. ' + ex.enun + '</div>';
+    if (ex.visual) h += '<div style="margin:4px 0 6px">' + ex.visual + '</div>'; // gráfico/tabela/figura SVG
     if (ex.tipo === 'mc' && ex.opcoes) {
       h += '<div style="font-size:12px;color:#333;padding-left:14px">';
       ex.opcoes.forEach(function(o, k) { h += '(' + 'ABCD'[k] + ') ' + o + '&nbsp;&nbsp;&nbsp; '; });
@@ -1187,7 +1188,7 @@ function mat8gfGerar(formato) {
       if (cards.length) {
         corpo += '<div style="margin-bottom:12px"><h3 style="font-size:13px;color:#444;margin:0 0 5px">Resumo teórico</h3>';
         cards.slice(0, 8).forEach(function(c) {
-          corpo += '<div style="font-size:11.5px;margin-bottom:4px"><strong>' + c.q + '</strong> ' + c.a + '</div>';
+          corpo += '<div style="font-size:11.5px;margin-bottom:4px"><strong>' + c.q + '</strong> ' + c.a + (c.v ? '<div style="margin:3px 0">' + c.v + '</div>' : '') + '</div>';
         });
         corpo += '</div>';
       }
