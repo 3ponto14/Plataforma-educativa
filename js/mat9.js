@@ -518,36 +518,10 @@ function _mat9SetActiveCapBtn(rowId, btn, cap) {
   if (btn) { var color = _mat9CapColors[cap] || '#516860'; btn.classList.add('active'); btn.style.background=color; btn.style.borderColor=color; btn.style.color='#fff'; }
 }
 
-// Gera uma questão de escolha múltipla para um capítulo (usada por quiz).
-// Converte uma questão de resposta aberta (fill/fill_frac) em escolha múltipla,
-// gerando distratores plausíveis. Usado pelo Quiz nos capítulos cujos geradores
-// só produzem 'fill' (caps 3-6).
+// Converte uma questão de resposta aberta em escolha múltipla. Delega no
+// helper partilhado _fillParaMc (shared.js), com distratores pedagógicos.
 function _mat9FillToMc(ex) {
-  if (!ex || ex.resposta === undefined || ex.resposta === null || ex.resposta === '') return null;
-  var correta = String(ex.resposta);
-  var opcoes = [correta];
-  var num = parseFloat(correta.replace(',', '.'));
-  var soNumero = /^-?\d+(?:[.,]\d+)?$/.test(correta.trim());
-  if (soNumero && !isNaN(num)) {
-    var inteiro = (num % 1 === 0);
-    var passo = inteiro ? (Math.abs(num) >= 100 ? 10 : (Math.abs(num) >= 20 ? 5 : (Math.abs(num) >= 8 ? 2 : 1))) : (Math.abs(num) < 1 ? 0.1 : 1);
-    var cand = [num + passo, num - passo, num + 2 * passo, num - 2 * passo, -num, num + 3 * passo];
-    for (var i = 0; i < cand.length && opcoes.length < 4; i++) {
-      var cStr = inteiro ? String(Math.round(cand[i])) : (Math.round(cand[i] * 100) / 100).toString().replace('.', ',');
-      if (opcoes.indexOf(cStr) === -1) opcoes.push(cStr);
-    }
-  } else {
-    var mf = correta.match(/^(-?)(\d+)\/(\d+)$/);
-    if (mf) {
-      var s = mf[1], a = parseInt(mf[2], 10), b = parseInt(mf[3], 10);
-      var cf = [(a + 1) + '/' + b, (a > 1 ? a - 1 : a + 2) + '/' + b, a + '/' + (b + 1), b + '/' + a, (s ? '' : '-') + a + '/' + b];
-      for (var j = 0; j < cf.length && opcoes.length < 4; j++) {
-        if (opcoes.indexOf(cf[j]) === -1 && cf[j] !== correta) opcoes.push(cf[j]);
-      }
-    }
-  }
-  if (opcoes.length < 2) return null; // não foi possível fabricar distratores → não converte
-  return { enun: ex.enun, tipo: 'mc', opcoes: shuffle_m81(opcoes.slice()), resposta: correta, expl: ex.expl, tema: ex.tema, visual: ex.visual };
+  return (typeof _fillParaMc === 'function') ? _fillParaMc(ex) : null;
 }
 
 function _mat9BuildMcQuestion(cap) {

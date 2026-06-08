@@ -512,38 +512,10 @@ function _mat5SetActiveCapBtn(rowId, btn, cap) {
   if (btn) { var color = _mat5CapColors[cap] || '#516860'; btn.classList.add('active'); btn.style.background=color; btn.style.borderColor=color; btn.style.color='#fff'; }
 }
 
-// Converte uma questão de resposta aberta (fill/fill_frac) em escolha múltipla,
-// gerando distratores plausíveis a partir da resposta certa. Usado pelo Quiz
-// para capítulos cujos geradores só produzem 'fill' (caps 4-7).
+// Converte uma questão de resposta aberta em escolha múltipla. Delega no
+// helper partilhado _fillParaMc (shared.js), com distratores pedagógicos.
 function _mat5FillToMc(ex) {
-  if (!ex || !ex.resposta) return null;
-  var correta = String(ex.resposta);
-  var opcoes = [correta];
-  // resposta numérica inteira → distratores ±1, ±2, e perto
-  var num = parseFloat(correta.replace(',', '.'));
-  if (!isNaN(num) && correta.indexOf('/') === -1) {
-    var inteiro = (num % 1 === 0);
-    var passo = inteiro ? (Math.abs(num) >= 20 ? 5 : (Math.abs(num) >= 8 ? 2 : 1)) : (num < 1 ? 0.1 : 1);
-    var candidatos = [num + passo, num - passo, num + 2 * passo, num - 2 * passo, num + 3 * passo];
-    for (var i = 0; i < candidatos.length && opcoes.length < 4; i++) {
-      var c = candidatos[i];
-      if (c <= 0 && num > 0) continue;            // evita negativos quando a resposta é positiva
-      var cStr = inteiro ? String(Math.round(c)) : (Math.round(c * 10) / 10).toString().replace('.', ',');
-      if (opcoes.indexOf(cStr) === -1) opcoes.push(cStr);
-    }
-  } else if (correta.indexOf('/') > -1) {
-    // resposta em fração a/b → distratores trocando/alterando numerador
-    var p = correta.split('/'); var a = parseInt(p[0], 10), b = parseInt(p[1], 10);
-    var cand = [(a + 1) + '/' + b, (a > 1 ? (a - 1) : (a + 2)) + '/' + b, a + '/' + (b + 1), b + '/' + a];
-    for (var j = 0; j < cand.length && opcoes.length < 4; j++) {
-      if (opcoes.indexOf(cand[j]) === -1 && cand[j] !== correta) opcoes.push(cand[j]);
-    }
-  }
-  if (opcoes.length < 2) return null;
-  return {
-    enun: ex.enun, tipo: 'mc', opcoes: shuffle_m81(opcoes.slice()),
-    resposta: correta, expl: ex.expl, tema: ex.tema, visual: ex.visual
-  };
+  return (typeof _fillParaMc === 'function') ? _fillParaMc(ex) : null;
 }
 
 // Gera uma questão de escolha múltipla para um capítulo (usada por quiz).

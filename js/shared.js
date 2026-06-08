@@ -1838,6 +1838,68 @@ function _fabricarOpcoes(resp) {
   return { opts: out, ans: out.indexOf(ordem) };
 }
 
+// ─────────────────────────────────────────────────────────────────────────
+// Converte uma questão de resposta aberta (fill/fill_frac) em escolha múltipla,
+// com distratores PLAUSÍVEIS (parecidos com erros típicos de aluno). Partilhado
+// por todos os anos (5.º–11.º) via _matNFillToMc → _fillParaMc.
+//
+// Cobre: números (reaproveita _fabricarOpcoes), frações a/b, coordenadas 2D e
+// 3D, e termos "kπ/n". Devolve um objeto-questão MC ou null se não converter.
+// ─────────────────────────────────────────────────────────────────────────
+function _fillParaMc(ex) {
+  if (!ex || ex.resposta === undefined || ex.resposta === null || ex.resposta === '') return null;
+  var correta = String(ex.resposta).trim();
+  var opcoes = [correta], mm;
+  function _shuf(arr) { for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; } return arr; }
+  function add(arr) { for (var i = 0; i < arr.length && opcoes.length < 4; i++) { var v = arr[i]; if (v != null && opcoes.indexOf(v) === -1 && v !== correta) opcoes.push(v); } }
+  function pack() {
+    if (opcoes.length < 2) return null;
+    return { enun: ex.enun, tipo: 'mc', opcoes: _shuf(opcoes.slice()), resposta: correta, expl: ex.expl, tema: ex.tema, visual: ex.visual };
+  }
+
+  // 1) Número → distratores pedagógicos (±1, ±2, ±10%, dobro/metade, troca de sinal).
+  if (/^-?\d+(?:[.,]\d+)?$/.test(correta)) {
+    var fab = (typeof _fabricarOpcoes === 'function') ? _fabricarOpcoes(correta) : null;
+    if (fab && fab.opts && fab.ans >= 0) {
+      // _fabricarOpcoes formata com vírgula decimal; a resposta TEM de ser a
+      // mesma string que está nas opções (senão nenhuma opção corresponde).
+      return { enun: ex.enun, tipo: 'mc', opcoes: fab.opts.slice(), resposta: fab.opts[fab.ans], expl: ex.expl, tema: ex.tema, visual: ex.visual };
+    }
+    // fallback simples se _fabricarOpcoes não converter
+    var num = parseFloat(correta.replace(',', '.'));
+    var inteiro = (num % 1 === 0);
+    var p = inteiro ? (Math.abs(num) >= 100 ? 10 : (Math.abs(num) >= 20 ? 5 : (Math.abs(num) >= 8 ? 2 : 1))) : (Math.abs(num) < 1 ? 0.1 : 1);
+    add([num + p, num - p, -num, num + 2 * p].map(function (v) { return inteiro ? String(Math.round(v)) : (Math.round(v * 100) / 100).toString().replace('.', ','); }));
+    return pack();
+  }
+  // 2) Fração a/b → erros típicos: inverter, trocar sinal, ±1 no numerador/denominador.
+  if (mm = correta.match(/^(-?)(\d+)\/(\d+)$/)) {
+    var s = mm[1], a = parseInt(mm[2], 10), b = parseInt(mm[3], 10);
+    add([b + '/' + a, (s ? '' : '-') + a + '/' + b, (a + 1) + '/' + b, (a > 1 ? a - 1 : a + 2) + '/' + b, a + '/' + (b + 1)]);
+    return pack();
+  }
+  // 3) Coordenada 3D (x,y,z) → mexe numa componente / troca sinais / troca ordem.
+  if (mm = correta.match(/^\(\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*\)$/)) {
+    var x = +mm[1], y = +mm[2], z = +mm[3];
+    add(['(' + (x + 1) + ', ' + y + ', ' + z + ')', '(' + x + ', ' + (y + 1) + ', ' + z + ')', '(' + x + ', ' + y + ', ' + (z + 1) + ')', '(' + (-x) + ', ' + (-y) + ', ' + (-z) + ')', '(' + z + ', ' + y + ', ' + x + ')']);
+    return pack();
+  }
+  // 4) Coordenada 2D (x,y).
+  if (mm = correta.match(/^\(\s*(-?\d+)\s*,\s*(-?\d+)\s*\)$/)) {
+    var x2 = +mm[1], y2 = +mm[2];
+    add(['(' + (x2 + 1) + ', ' + y2 + ')', '(' + x2 + ', ' + (y2 + 1) + ')', '(' + (-x2) + ', ' + (-y2) + ')', '(' + y2 + ', ' + x2 + ')']);
+    return pack();
+  }
+  // 5) Termo com π (ex: 3π/4, π/6, 5π) → mexe no denominador / valores notáveis.
+  if (/π/.test(correta)) {
+    var mden = correta.match(/π\/(\d+)/);
+    if (mden) { var dn = parseInt(mden[1], 10); add([correta.replace('/' + dn, '/' + (dn + 1)), correta.replace('/' + dn, '/' + (dn === 2 ? 3 : 2)), 'π/' + dn]); }
+    add(['π', '2π', 'π/2', 'π/3', 'π/4', '3π/4', 'π/6', '5π/6']);
+    return pack();
+  }
+  return null; // tipo de resposta não suportado → não converte
+}
+
 // ═══ Banco de questões: mistura questões fixas (reais, multi-passo) com geradas ═══
 // banco: array de questões {tema?, tipo, enun, opcoes?, resposta, expl, visual?} para um capítulo.
 // Devolve até `qtd` questões: algumas do banco (baralhadas) + o resto geradas.

@@ -36,7 +36,7 @@ declare -a ANOS=(
 extract_shared_helpers() {
   node_like_extract "$JS_DIR/shared.js" \
     _termoX _termoC _parenSeNeg _escalaNum _nivelQuestao \
-    _limpaMath _normalizaOpcoes _distratorDe _fabricarOpcoes _mixBancoGeradas
+    _limpaMath _normalizaOpcoes _distratorDe _fabricarOpcoes _fillParaMc _mixBancoGeradas
 }
 
 # Extrai funções nomeadas de um ficheiro por balanceamento de chavetas (awk).
