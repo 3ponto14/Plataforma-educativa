@@ -214,7 +214,7 @@
   <div class="page-header-inner">
     <div class="page-header-eyebrow"><i class="ph ph-book-open-text"></i> Provas Finais Nacionais 2019-2024</div>
     <h1>Português <em>9.º Ano</em></h1>
-    <p class="page-header-sub">Questões reais, gramática, figuras de estilo, Os Lusíadas e composição tudo para o exame.</p>
+    <p class="page-header-sub">Questões reais, gramática, figuras de estilo, obras de educação literária e composição tudo para o exame.</p>
   </div>
 </header>
 
@@ -239,8 +239,8 @@
     <button class="ex-tab" onclick="ptSwitchMode('conectores',this)" role="tab">
       <i class="ph ph-link"></i> <span class="tab-lbl">Conectores</span>
     </button>
-    <button class="ex-tab" onclick="ptSwitchMode('lusiadas',this)" role="tab">
-      <i class="ph ph-book-open-text"></i> <span class="tab-lbl">Lusíadas</span>
+    <button class="ex-tab" onclick="ptSwitchMode('obras',this)" role="tab">
+      <i class="ph ph-book-open-text"></i> <span class="tab-lbl">Obras</span>
     </button>
     <button class="ex-tab" onclick="ptSwitchMode('composicao',this)" role="tab">
       <i class="ph ph-pencil-line"></i> <span class="tab-lbl">Composição</span>
@@ -405,12 +405,12 @@
   </div>
 
   <!-- ══ PAINEL: OS LUSÍADAS ══ -->
-  <div id="pt-panel-lusiadas" class="ex-panel">
+  <div id="pt-panel-obras" class="ex-panel">
     <div class="ex-sec-head">
-      <div class="ex-sec-title">Os Lusíadas</div>
-      <div class="ex-sec-sub">Guia de estudo completo episódios, personagens, temas e quiz de preparação para o exame.</div>
+      <div class="ex-sec-title">Obras · Educação Literária</div>
+      <div class="ex-sec-sub">As obras do programa de Português do 9.º ano. Escolhe uma obra para o guia de estudo, personagens, temas e quiz.</div>
     </div>
-    <div id="pt-lus-content"></div>
+    <div id="pt-obras-content"></div>
   </div>
 
   <!-- ══ PAINEL: DISCURSO DIRETO/INDIRETO ══ -->
@@ -541,6 +541,7 @@
 <script src="js/pt-gramatica.js"></script>
 <script src="js/pt-figuras.js"></script>
 <script src="js/pt-lusiadas.js"></script>
+<script src="js/pt-obras.js"></script>
 <script src="js/ux-improvements.js"></script>
 <script src="js/nav.js"></script>
 <script>
@@ -645,7 +646,7 @@ function ptSwitchMode(mode, btn) {
   }
   if (mode === 'progresso') ptRenderProgresso();
   if (mode === 'composicao') { ptRenderComposicaoTemas(); ptOpenComposicao('opiniao'); }
-  if (mode === 'lusiadas') { if (typeof ptLusRenderMenu === 'function') ptLusRenderMenu(); }
+  if (mode === 'obras') { if (typeof ptObrasRenderGrid === 'function') ptObrasRenderGrid(); }
   if (mode === 'figuras') ptRenderFigCards();
   if (mode === 'conectores') ptRenderConFichas();
   window.scrollTo({top:0,behavior:'smooth'});
