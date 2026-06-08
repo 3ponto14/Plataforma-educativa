@@ -614,6 +614,25 @@ function _dinamicoRow(n, q, espacos) {
   return '<div class="ex"><div class="ex-num">'+n+'.</div><p>'+q+'</p>'+(espacos!==false?_dinamicoLinha():'')+'</div>';
 }
 
+// ── Notação científica (partilhado pelos geradores de fichas) ──
+// converte um número para notação científica (string "m × 10^e")
+function _sciNot(val){
+  if (val===0) return '0';
+  var neg=val<0; var x=Math.abs(val); var e=0;
+  if (x>=10){ while(x>=10){ x/=10; e++; } }
+  else if (x<1){ while(x<1){ x*=10; e--; } }
+  var m=parseFloat(x.toFixed(3));
+  var mStr=(''+m).replace('.',',');
+  return (neg?'−':'')+mStr+' × 10<sup>'+e+'</sup>';
+}
+// converte "m × 10^e" para decimal (string com vírgula)
+function _sciDec(m,e){
+  var v=m*Math.pow(10,e);
+  var s=(''+v);
+  if (s.indexOf('e')>-1 || s.indexOf('E')>-1) s=v.toFixed(Math.max(0,-e));
+  return s.replace('.',',');
+}
+
 // ── Cap 1 Números Inteiros ──────────────────────────────────────────────────
 function _dinamico1(dif) {
   var R=_RND;
@@ -852,11 +871,12 @@ function _dinamico2(dif) {
 
     ex+='<h2>Grupo 3 Potências e Notação Científica</h2>';
     var m1=R.int(1,9),e1=R.int(2,5),m2=R.int(1,9),e2=R.int(2,5);
+    var valSci=R.pick([25000,340000,1500,72000]);
     ex+=_dinamicoRow(5,'Calcula e escreve em notação científica:<br>'
-      +'a) ('+m1+' × 10<sup>'+e1+'</sup>) × ('+m2+' × 10<sup>'+e2+'</sup>) &nbsp;&nbsp; b) Escreve '+R.pick([25000,340000,1500,72000])+' em notação científica');
+      +'a) ('+m1+' × 10<sup>'+e1+'</sup>) × ('+m2+' × 10<sup>'+e2+'</sup>) &nbsp;&nbsp; b) Escreve '+valSci+' em notação científica');
     var prodM=m1*m2,prodE=e1+e2;
     var prodNorm=prodM>=10?prodM/10+'×10<sup>'+(prodE+1)+'</sup>':''+prodM+'×10<sup>'+prodE+'</sup>';
-    sol+='<div class="ex"><strong>5.</strong> a) '+prodNorm+' &nbsp; b) (ver raciocínio: mover vírgula)</div>';
+    sol+='<div class="ex"><strong>5.</strong> a) '+prodNorm+' &nbsp; b) '+_sciNot(valSci)+'</div>';
 
   } else { // difícil
     ex+='<h2>Grupo 1 Operações Mistas com Racionais</h2>';
@@ -1462,6 +1482,7 @@ function _gfSubtema2(st, dif, n) {
   function row(i,q){ return '<div class="ex"><div class="ex-num">'+i+'.</div><p>'+q+'</p><div class="linha"></div></div>'; }
   function gcd(a,b){ return b===0?Math.abs(a):gcd(b,a%b); }
   function frac(a,b){ if(!b)return '?'; var g=gcd(Math.abs(a),Math.abs(b)); var sn=a/g,sd=b/g; if(sd<0){sn=-sn;sd=-sd;} return sd===1?''+sn:sn+'/'+sd; }
+  var _sci=_sciNot, _dec=_sciDec;
   var titles={1:'Comparação e Ordenação',2:'Adição e Subtração de Frações',3:'Percentagens',4:'Potências',5:'Notação Científica'};
   ex+='<h3 style="color:#516860;border-left:3px solid #77998e;padding-left:8px;margin:1rem 0 .5rem">T'+st+' '+titles[st]+'</h3>';
   for (var i=1;i<=n;i++) {
@@ -1530,8 +1551,10 @@ function _gfSubtema2(st, dif, n) {
     } else if (st===4) {
       if (dif==='facil') {
         var base=R.pick([2,3,10]),exp1=R.pick([2,3]);
-        ex+=row(i,'Calcula: &nbsp; a) '+base+'<sup>'+exp1+'</sup> = _____&nbsp;&nbsp; b) 2<sup>3</sup> = _____&nbsp;&nbsp; c) 10<sup>2</sup> = _____');
-        sol+='<div class="ex"><strong>'+i+'.</strong> a) '+Math.pow(base,exp1)+'&nbsp; b) 8&nbsp; c) 100</div>';
+        var bb=R.pick([2,3,5]),be=R.pick([2,3]);   // b) base^exp variado
+        var cb=R.pick([4,5,10]);                    // c) quadrado variado
+        ex+=row(i,'Calcula: &nbsp; a) '+base+'<sup>'+exp1+'</sup> = _____&nbsp;&nbsp; b) '+bb+'<sup>'+be+'</sup> = _____&nbsp;&nbsp; c) '+cb+'<sup>2</sup> = _____');
+        sol+='<div class="ex"><strong>'+i+'.</strong> a) '+Math.pow(base,exp1)+'&nbsp; b) '+Math.pow(bb,be)+'&nbsp; c) '+Math.pow(cb,2)+'</div>';
       } else if (dif==='medio') {
         var base=R.pick([2,3,5,10]),exp1=R.pick([2,3,4]),exp2=R.pick([2,3]);
         ex+=row(i,'Calcula: &nbsp; a) '+base+'<sup>'+exp1+'</sup> = _____&nbsp;&nbsp; b) '+base+'<sup>'+exp1+'</sup> × '+base+'<sup>'+exp2+'</sup> = _____&nbsp;&nbsp; c) '+base+'<sup>'+(exp1+exp2)+'</sup> ÷ '+base+'<sup>'+exp2+'</sup> = _____');
@@ -1544,18 +1567,20 @@ function _gfSubtema2(st, dif, n) {
       }
     } else if (st===5) {
       if (dif==='facil') {
-        var vals=[2500,34000,0.042,150000];
+        var vals=[2500,34000,0.042,150000,7800,0.0056,920000];
         var val=R.pick(vals);
-        ex+=row(i,'a) Escreve '+val+' em notação científica = _____&nbsp;&nbsp; b) Converte 3×10<sup>3</sup> para decimal = _____&nbsp;&nbsp; c) Converte 5×10<sup>−2</sup> para decimal = _____');
-        sol+='<div class="ex"><strong>'+i+'.</strong> a) ver raciocínio&nbsp; b) 3 000&nbsp; c) 0,05</div>';
+        var bm=R.int(2,9),be=R.int(2,4);          // b) m × 10^e  (positivo)
+        var cm=R.int(2,9),ce=-R.int(1,3);         // c) m × 10^-e (negativo)
+        ex+=row(i,'a) Escreve '+(''+val).replace('.',',')+' em notação científica = _____&nbsp;&nbsp; b) Converte '+bm+'×10<sup>'+be+'</sup> para decimal = _____&nbsp;&nbsp; c) Converte '+cm+'×10<sup>'+ce+'</sup> para decimal = _____');
+        sol+='<div class="ex"><strong>'+i+'.</strong> a) '+_sci(val)+'&nbsp; b) '+_dec(bm,be)+'&nbsp; c) '+_dec(cm,ce)+'</div>';
       } else if (dif==='medio') {
         var vals=[25000,340000,0.0042,1500000,0.000081];
         var val=R.pick(vals);
         var m1=R.int(1,9),e1=R.int(2,5),m2=R.int(1,9),e2=R.int(1,4);
         var prodM=m1*m2,prodE=e1+e2;
         var prodStr=prodM>=10?(prodM/10).toFixed(1)+'×10<sup>'+(prodE+1)+'</sup>':''+prodM+'×10<sup>'+prodE+'</sup>';
-        ex+=row(i,'a) Escreve '+val+' em notação científica&nbsp;&nbsp; b) Calcula: ('+m1+'×10<sup>'+e1+'</sup>) × ('+m2+'×10<sup>'+e2+'</sup>) = _____&nbsp;&nbsp; c) Converte 3,2×10<sup>4</sup> para decimal');
-        sol+='<div class="ex"><strong>'+i+'.</strong> a) ver raciocínio&nbsp; b) '+prodStr+'&nbsp; c) 32 000</div>';
+        ex+=row(i,'a) Escreve '+(''+val).replace('.',',')+' em notação científica&nbsp;&nbsp; b) Calcula: ('+m1+'×10<sup>'+e1+'</sup>) × ('+m2+'×10<sup>'+e2+'</sup>) = _____&nbsp;&nbsp; c) Converte 3,2×10<sup>4</sup> para decimal');
+        sol+='<div class="ex"><strong>'+i+'.</strong> a) '+_sci(val)+'&nbsp; b) '+prodStr+'&nbsp; c) 32 000</div>';
       } else {
         var m1=R.int(1,9),e1=R.int(3,6),m2=R.int(2,9),e2=R.int(2,5);
         var prodM=m1*m2,prodE=e1+e2;
@@ -2148,6 +2173,11 @@ function gfGenerar(secId) {
           else if (cap===8) res = _gfSubtema8(st, dif, N_PER_ST);
         } catch(e){ console.warn('subtema err', cap, st, e); }
         if (res && res.ex) {
+          // limpa pequenos erros de escrita matemática (1x → x, − -3 → + 3, + 0 …)
+          if (typeof _limpaMath === 'function') {
+            res.ex = _limpaMath(res.ex);
+            if (res.sol) res.sol = _limpaMath(res.sol);
+          }
           capHtml += res.ex;
           hasContent = true;
           if (hasSolucoes && res.sol) capSolHtml += res.sol;
