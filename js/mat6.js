@@ -513,18 +513,52 @@ function _mat6SetActiveCapBtn(rowId, btn, cap) {
   if (btn) { var color = _mat6CapColors[cap] || '#516860'; btn.classList.add('active'); btn.style.background=color; btn.style.borderColor=color; btn.style.color='#fff'; }
 }
 
+// Converte uma questão de resposta aberta (fill/fill_frac) em escolha múltipla,
+// gerando distratores plausíveis. Usado pelo Quiz para capítulos cujos geradores
+// só produzem 'fill' (caps 2,4,5,6,7).
+function _mat6FillToMc(ex) {
+  if (!ex || !ex.resposta) return null;
+  var correta = String(ex.resposta);
+  var opcoes = [correta];
+  var num = parseFloat(correta.replace(',', '.'));
+  if (!isNaN(num) && correta.indexOf('/') === -1) {
+    var inteiro = (num % 1 === 0);
+    var passo = inteiro ? (Math.abs(num) >= 100 ? 10 : (Math.abs(num) >= 20 ? 5 : (Math.abs(num) >= 8 ? 2 : 1))) : (Math.abs(num) < 1 ? 0.1 : 1);
+    var candidatos = [num + passo, num - passo, num + 2 * passo, num - 2 * passo, num + 3 * passo];
+    for (var i = 0; i < candidatos.length && opcoes.length < 4; i++) {
+      var c = candidatos[i];
+      if (c < 0 && num >= 0) continue;
+      var cStr = inteiro ? String(Math.round(c)) : (Math.round(c * 100) / 100).toString().replace('.', ',');
+      if (opcoes.indexOf(cStr) === -1) opcoes.push(cStr);
+    }
+  } else if (correta.indexOf('/') > -1) {
+    var p = correta.split('/'); var a = parseInt(p[0], 10), b = parseInt(p[1], 10);
+    var cand = [(a + 1) + '/' + b, (a > 1 ? (a - 1) : (a + 2)) + '/' + b, a + '/' + (b + 1), b + '/' + a];
+    for (var j = 0; j < cand.length && opcoes.length < 4; j++) {
+      if (opcoes.indexOf(cand[j]) === -1 && cand[j] !== correta) opcoes.push(cand[j]);
+    }
+  }
+  if (opcoes.length < 2) return null;
+  return { enun: ex.enun, tipo: 'mc', opcoes: shuffle_m81(opcoes.slice()), resposta: correta, expl: ex.expl, tema: ex.tema, visual: ex.visual };
+}
+
 // Gera uma questão de escolha múltipla para um capítulo (usada por quiz).
 function _mat6BuildMcQuestion(cap) {
   var gen = _mat6Gerador(cap);
   if (!gen) return null;
   var nTemas = _mat6TemasCount[cap] || 1;
-  var ex = null;
   for (var i = 0; i < 10; i++) {
     var tema = String(rnd_m81(1, nTemas));
-    ex = gen(tema, 'mc', 'medio');
-    if (ex && ex.tipo === 'mc' && ex.opcoes && ex.opcoes.length >= 2) break;
+    var ex = gen(tema, 'mc', 'medio');
+    if (ex && ex.tipo === 'mc' && ex.opcoes && ex.opcoes.length >= 2) return ex;
   }
-  return (ex && ex.tipo === 'mc' && ex.opcoes && ex.opcoes.length >= 2) ? ex : null;
+  // Sem MC nativo: converte uma questão de resposta aberta em MC.
+  for (var k = 0; k < 10; k++) {
+    var tema2 = String(rnd_m81(1, nTemas));
+    var mc = _mat6FillToMc(gen(tema2, 'fill', 'medio'));
+    if (mc && mc.opcoes && mc.opcoes.length >= 2) return mc;
+  }
+  return null;
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -1321,7 +1355,8 @@ function buildEx_m6c1(tema, tipo, dif) {
 function buildEx_m6c2(tema, tipo, dif) {
   tema = String(tema);
   if (tema === '1') {
-    var a = rnd_m81(1, 6), b = rnd_m81(2, 7), c = rnd_m81(1, 6), d = rnd_m81(2, 7);
+    // frações próprias de partida (numerador < denominador); o resultado pode ser impróprio.
+    var b = rnd_m81(3, 7), a = rnd_m81(1, b - 1), d = rnd_m81(3, 7), c = rnd_m81(1, d - 1);
     var mult = Math.random() < 0.6;
     if (mult) {
       var r = reduce_m81(a * c, b * d);
@@ -1341,7 +1376,8 @@ function buildEx_m6c2(tema, tipo, dif) {
     };
   }
   if (tema === '2') {
-    var bn = rnd_m81(2, 4), bd = rnd_m81(2, 5), e = rnd_m81(2, 3);
+    // base própria (numerador < denominador): evita (2/2)² e bases ≥ 1.
+    var bd = rnd_m81(3, 5), bn = rnd_m81(1, bd - 1), e = rnd_m81(2, 3);
     var rn = Math.pow(bn, e), rd = Math.pow(bd, e);
     var r3 = reduce_m81(rn, rd);
     return {
@@ -1569,7 +1605,7 @@ function buildEx_m6c7(tema, tipo, dif) {
   }
   if (tema === '2') {
     var total = [10, 20, 25, 50, 100][rnd_m81(0, 4)];
-    var fav = rnd_m81(1, total - 1);
+    var fav = rnd_m81(2, total - 1);   // ≥ 2 → concordância "escolheram" (plural)
     var pct = Math.round(fav / total * 100);
     return {
       enun: 'Num inquérito a ' + total + ' pessoas, ' + fav + ' escolheram a cor azul. Qual é a frequência relativa (em %)?',
@@ -1590,8 +1626,10 @@ function buildEx_m6c7(tema, tipo, dif) {
       tema: 'T3 · Amplitude'
     };
   }
-  // moda com moda única garantida
-  var base = []; for (var b = 0; b < 4; b++) base.push(rnd_m81(1, 9));
+  // moda única garantida: valores-base DISTINTOS (cada um aparece 1×),
+  // mais a moda repetida 2× → a moda fica como único valor com 3 ocorrências.
+  var pool = [1, 2, 3, 4, 5, 6, 7, 8, 9]; shuffle_m81(pool);
+  var base = pool.slice(0, 4);            // 4 valores distintos
   var moda = base[rnd_m81(0, 3)];
   var arr2 = base.concat([moda, moda]); shuffle_m81(arr2);
   var freq = {}; arr2.forEach(function (v) { freq[v] = (freq[v] || 0) + 1; });
