@@ -1259,23 +1259,26 @@ function buildEx_m11c1(tema, tipo, dif) {
     };
   }
   if (tema === '2') {
-    // dado sen, achar cos (ângulo agudo), usando pares de ternos
-    var pares = [[3, 5, 4], [4, 5, 3], [6, 10, 8], [8, 10, 6], [5, 13, 12], [12, 13, 5]];
+    // dado sen, achar cos (ângulo agudo). Só pares com 1 casa decimal EXATA
+    // (sen,cos): garantem que sen²+cos²=1 e que arredondam sem ambiguidade.
+    var pares = [[0.6, 0.8], [0.8, 0.6]];
     var pr = pares[rnd_m81(0, pares.length - 1)];
     var dadoSen = Math.random() < 0.5;
-    var senV = (pr[0] / pr[1]), cosV = (pr[2] / pr[1]);
+    var senV = pr[0], cosV = pr[1];
+    var fmt = function (x) { return x.toFixed(1).replace('.', ','); };
+    var sq = function (x) { return (x * x).toFixed(2).replace('.', ','); };
     if (dadoSen) {
       return {
-        enun: 'Sendo sen(α) = ' + senV.toFixed(1).replace('.', ',') + ' e α agudo, calcula cos(α). (usa sen²+cos²=1)',
-        tipo: 'fill_frac', resposta: cosV.toFixed(1).replace('.', ','),
-        expl: 'cos²α = 1 − ' + (senV * senV).toFixed(2) + ' = ' + (cosV * cosV).toFixed(2) + ' → cos α = ' + cosV.toFixed(1).replace('.', ',') + '.',
+        enun: 'Sendo sen(α) = ' + fmt(senV) + ' e α agudo, calcula cos(α). (usa sen²+cos²=1)',
+        tipo: 'fill_frac', resposta: fmt(cosV),
+        expl: 'cos²α = 1 − sen²α = 1 − ' + sq(senV) + ' = ' + sq(cosV) + ' → cos α = ' + fmt(cosV) + '.',
         tema: 'T2 · Fórmula Fundamental'
       };
     }
     return {
-      enun: 'Sendo cos(α) = ' + cosV.toFixed(1).replace('.', ',') + ' e α agudo, calcula sen(α). (usa sen²+cos²=1)',
-      tipo: 'fill_frac', resposta: senV.toFixed(1).replace('.', ','),
-      expl: 'sen²α = 1 − ' + (cosV * cosV).toFixed(2) + ' = ' + (senV * senV).toFixed(2) + ' → sen α = ' + senV.toFixed(1).replace('.', ',') + '.',
+      enun: 'Sendo cos(α) = ' + fmt(cosV) + ' e α agudo, calcula sen(α). (usa sen²+cos²=1)',
+      tipo: 'fill_frac', resposta: fmt(senV),
+      expl: 'sen²α = 1 − cos²α = 1 − ' + sq(cosV) + ' = ' + sq(senV) + ' → sen α = ' + fmt(senV) + '.',
       tema: 'T2 · Fórmula Fundamental'
     };
   }

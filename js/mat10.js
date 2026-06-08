@@ -1604,16 +1604,17 @@ function buildEx_m10c6(tema, tipo, dif) {
     };
   }
   if (tema === '2') {
-    // dado sen (decimal de terno), achar cos (ângulo agudo)
-    var pares = [[3, 5, 4], [4, 5, 3], [6, 10, 8], [8, 10, 6], [5, 13, 12], [12, 13, 5]];
+    // dado sen, achar cos (ângulo agudo). Só pares com 1 casa decimal EXATA,
+    // para o valor do enunciado e o da solução serem coerentes (evita "sen=0,4" mas "1−0,15").
+    var pares = [[0.6, 0.8], [0.8, 0.6]];
     var pr = pares[rnd_m81(0, pares.length - 1)];
-    var senV = (pr[0] / pr[1]).toFixed(1);
-    var cosV = (pr[2] / pr[1]);
-    var cosStr = (cosV === Math.round(cosV * 10) / 10) ? cosV.toFixed(1).replace('.', ',') : cosV.toFixed(2).replace('.', ',');
+    var senV = pr[0], cosV = pr[1];
+    var fmt = function (x) { return x.toFixed(1).replace('.', ','); };
+    var sq = function (x) { return (x * x).toFixed(2).replace('.', ','); };
     return {
-      enun: 'Sabendo que sen(α) = ' + (pr[0] / pr[1]).toFixed(1).replace('.', ',') + ' e que α é agudo, calcula cos(α). (usa sen²+cos²=1)',
-      tipo: 'fill_frac', resposta: cosStr,
-      expl: 'cos²α = 1 − sen²α = 1 − ' + (Math.pow(pr[0] / pr[1], 2)).toFixed(2) + ' = ' + (Math.pow(pr[2] / pr[1], 2)).toFixed(2) + ' → cos α = ' + cosStr + '.',
+      enun: 'Sabendo que sen(α) = ' + fmt(senV) + ' e que α é agudo, calcula cos(α). (usa sen²+cos²=1)',
+      tipo: 'fill_frac', resposta: fmt(cosV),
+      expl: 'cos²α = 1 − sen²α = 1 − ' + sq(senV) + ' = ' + sq(cosV) + ' → cos α = ' + fmt(cosV) + '.',
       tema: 'T2 · Fórmula Fundamental'
     };
   }
