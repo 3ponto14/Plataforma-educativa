@@ -512,6 +512,40 @@ function _mat5SetActiveCapBtn(rowId, btn, cap) {
   if (btn) { var color = _mat5CapColors[cap] || '#516860'; btn.classList.add('active'); btn.style.background=color; btn.style.borderColor=color; btn.style.color='#fff'; }
 }
 
+// Converte uma questão de resposta aberta (fill/fill_frac) em escolha múltipla,
+// gerando distratores plausíveis a partir da resposta certa. Usado pelo Quiz
+// para capítulos cujos geradores só produzem 'fill' (caps 4-7).
+function _mat5FillToMc(ex) {
+  if (!ex || !ex.resposta) return null;
+  var correta = String(ex.resposta);
+  var opcoes = [correta];
+  // resposta numérica inteira → distratores ±1, ±2, e perto
+  var num = parseFloat(correta.replace(',', '.'));
+  if (!isNaN(num) && correta.indexOf('/') === -1) {
+    var inteiro = (num % 1 === 0);
+    var passo = inteiro ? (Math.abs(num) >= 20 ? 5 : (Math.abs(num) >= 8 ? 2 : 1)) : (num < 1 ? 0.1 : 1);
+    var candidatos = [num + passo, num - passo, num + 2 * passo, num - 2 * passo, num + 3 * passo];
+    for (var i = 0; i < candidatos.length && opcoes.length < 4; i++) {
+      var c = candidatos[i];
+      if (c <= 0 && num > 0) continue;            // evita negativos quando a resposta é positiva
+      var cStr = inteiro ? String(Math.round(c)) : (Math.round(c * 10) / 10).toString().replace('.', ',');
+      if (opcoes.indexOf(cStr) === -1) opcoes.push(cStr);
+    }
+  } else if (correta.indexOf('/') > -1) {
+    // resposta em fração a/b → distratores trocando/alterando numerador
+    var p = correta.split('/'); var a = parseInt(p[0], 10), b = parseInt(p[1], 10);
+    var cand = [(a + 1) + '/' + b, (a > 1 ? (a - 1) : (a + 2)) + '/' + b, a + '/' + (b + 1), b + '/' + a];
+    for (var j = 0; j < cand.length && opcoes.length < 4; j++) {
+      if (opcoes.indexOf(cand[j]) === -1 && cand[j] !== correta) opcoes.push(cand[j]);
+    }
+  }
+  if (opcoes.length < 2) return null;
+  return {
+    enun: ex.enun, tipo: 'mc', opcoes: shuffle_m81(opcoes.slice()),
+    resposta: correta, expl: ex.expl, tema: ex.tema, visual: ex.visual
+  };
+}
+
 // Gera uma questão de escolha múltipla para um capítulo (usada por quiz).
 function _mat5BuildMcQuestion(cap) {
   var gen = _mat5Gerador(cap);
@@ -521,9 +555,16 @@ function _mat5BuildMcQuestion(cap) {
   for (var i = 0; i < 10; i++) {
     var tema = String(rnd_m81(1, nTemas));
     ex = gen(tema, 'mc', 'medio');
-    if (ex && ex.tipo === 'mc' && ex.opcoes && ex.opcoes.length >= 2) break;
+    if (ex && ex.tipo === 'mc' && ex.opcoes && ex.opcoes.length >= 2) return ex;
   }
-  return (ex && ex.tipo === 'mc' && ex.opcoes && ex.opcoes.length >= 2) ? ex : null;
+  // Sem MC nativo: converte uma questão de resposta aberta em MC (caps 4-7).
+  for (var k = 0; k < 10; k++) {
+    var tema2 = String(rnd_m81(1, nTemas));
+    var fillEx = gen(tema2, 'fill', 'medio');
+    var mc = _mat5FillToMc(fillEx);
+    if (mc && mc.opcoes && mc.opcoes.length >= 2) return mc;
+  }
+  return null;
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -1365,8 +1406,8 @@ function buildEx_m5c2(tema, tipo, dif) {
         tema: 'T2 · Comparar'
       };
     }
-    // mesmo numerador, denominadores diferentes
-    var num2 = rnd_m81(1, 4), d1 = rnd_m81(2, 6), d2; do { d2 = rnd_m81(2, 8); } while (d2 === d1);
+    // mesmo numerador, denominadores diferentes — só frações próprias (num < denominador)
+    var num2 = rnd_m81(1, 4), d1 = rnd_m81(num2 + 1, 6), d2; do { d2 = rnd_m81(num2 + 1, 8); } while (d2 === d1);
     var maior2 = d1 < d2 ? num2 + '/' + d1 : num2 + '/' + d2;
     return {
       enun: 'Qual é a maior fração: <strong>' + num2 + '/' + d1 + '</strong> ou <strong>' + num2 + '/' + d2 + '</strong>?',
@@ -1529,10 +1570,13 @@ function buildEx_m5c5(tema, tipo, dif) {
     var s = solidos[rnd_m81(0, solidos.length - 1)];
     var prop = ['faces', 'vértices', 'arestas'][rnd_m81(0, 2)];
     var val = prop === 'faces' ? s.f : prop === 'vértices' ? s.v : s.a;
+    // concordância: "vértices" é masculino ("Quantos"); pirâmide é feminino ("uma")
+    var quant = (prop === 'vértices') ? 'Quantos' : 'Quantas';
+    var artigo = (s.nome.indexOf('pirâmide') === 0) ? 'uma' : 'um';
     return {
-      enun: 'Quantas <strong>' + prop + '</strong> tem um ' + s.nome + '?',
+      enun: quant + ' <strong>' + prop + '</strong> tem ' + artigo + ' ' + s.nome + '?',
       tipo: 'fill', resposta: String(val),
-      expl: 'Um ' + s.nome + ' tem ' + s.f + ' faces, ' + s.v + ' vértices e ' + s.a + ' arestas.',
+      expl: artigo.charAt(0).toUpperCase() + artigo.slice(1) + ' ' + s.nome + ' tem ' + s.f + ' faces, ' + s.v + ' vértices e ' + s.a + ' arestas.',
       tema: 'T1 · Faces/Vértices/Arestas'
     };
   }
