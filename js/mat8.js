@@ -2504,8 +2504,10 @@ function buildEx_m87(tema, tipo, dif) {
   tema = String(tema);
   var easy = (dif === 'facil'), hard = (dif === 'dificil');
   function piStr(k) { return k === 1 ? 'π' : k + 'π'; }
-  // tipo "fill" pedido mas com π → usa fill_frac (texto)
-  function fillTipoPi(t) { return (t === 'fill') ? 'fill_frac' : t; }
+  // Respostas em "kπ" são sempre de resposta aberta → fill_frac (texto).
+  // Qualquer pedido que não seja 'mc' (fill, vf, …) cai em fill_frac, para
+  // nunca gerar um falso "Verdadeiro/Falso" com resposta tipo "180π".
+  function fillTipoPi(t) { return (t === 'mc') ? 'mc' : 'fill_frac'; }
 
   // ── TEMA 1 · Volume de prisma ──
   if (tema === '1') {
