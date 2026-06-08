@@ -2069,24 +2069,30 @@ function buildEx_m85(tema, tipo, dif) {
 
   // ── TEMA 1 · Equações literais ──
   if (tema === '1') {
-    // ax + b = y  → x = (y - b)/a  (apresentar resolução em ordem a x)
+    // ax + b = y  → x = (y − b)/a. Para evitar "y − -b", usamos b POSITIVO
+    // e mostramos a equação como "ax + b = y" (b somado, sempre limpo).
     var a = rndNZ_m81(2, 5);
     var sol = rnd_m81(-5, 6);
-    var b = rndNZ_m81(-8, 8);
+    var b = rnd_m81(1, 8);                 // b > 0 → enunciado e passos sem sinais duplos
     var yval = a * sol + b;
     if (tipo === 'mc') {
       var correct = 'x = (' + yval + ' − ' + b + ') ÷ ' + a;
-      var opts = shuffle_m81([correct, 'x = (' + yval + ' + ' + b + ') ÷ ' + a, 'x = ' + yval + ' ÷ ' + a + ' − ' + b, 'x = (' + yval + ' − ' + b + ') × ' + a]).slice(0, 4);
+      var opts = shuffle_m81([
+        correct,
+        'x = (' + yval + ' + ' + b + ') ÷ ' + a,
+        'x = ' + yval + ' ÷ ' + a + ' − ' + b,
+        'x = (' + yval + ' − ' + b + ') × ' + a
+      ]).slice(0, 4);
       return {
         enun: 'Resolve em ordem a x: <strong>' + a + 'x + ' + b + ' = ' + yval + '</strong>',
         tipo: 'mc', opcoes: opts, resposta: correct,
-        expl: 'Isola x: ' + a + 'x = ' + yval + ' − ' + b + ', logo x = (' + yval + ' − ' + b + ') ÷ ' + a + ' = ' + sol + '.',
+        expl: 'Isola x: ' + a + 'x = ' + yval + ' − ' + b + ' = ' + (yval - b) + ', logo x = ' + (yval - b) + ' ÷ ' + a + ' = ' + sol + '.',
         tema: 'T1 · Eq. Literais'
       };
     }
     return {
-      enun: 'Resolve em ordem a x e indica o valor: ' + _afim_m85(a, b) + ' = ' + yval, tipo: 'fill',
-      resposta: String(sol), expl: a + 'x = ' + (yval - b) + ', x = ' + sol + '.',
+      enun: 'Resolve em ordem a x e indica o valor: ' + a + 'x + ' + b + ' = ' + yval, tipo: 'fill',
+      resposta: String(sol), expl: a + 'x = ' + yval + ' − ' + b + ' = ' + (yval - b) + ', x = ' + (yval - b) + ' ÷ ' + a + ' = ' + sol + '.',
       tema: 'T1 · Eq. Literais'
     };
   }
