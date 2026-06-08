@@ -9,6 +9,22 @@ function lim(dif) {
   return { min: -12, max: 12 };
 }
 
+// Gera 'n' distratores numéricos DISTINTOS da resposta e entre si (evita opções repetidas).
+function _distratoresNum(res, n, cands) {
+  var usados = {}; usados[res] = true;
+  var out = [];
+  // candidatos preferenciais (já plausíveis), depois fallback ±k
+  var lista = (cands || []).concat([res + 1, res - 1, res + 2, res - 2, -res, res + 3, res - 3, res + 5, res - 5, res + 10]);
+  for (var i = 0; i < lista.length && out.length < n; i++) {
+    var v = lista[i];
+    if (!usados[v] && typeof v === 'number' && !isNaN(v)) { usados[v] = true; out.push(v); }
+  }
+  // garantia final: se ainda faltarem, afasta-se mais
+  var k = 4;
+  while (out.length < n) { var v2 = res + k; if (!usados[v2]) { usados[v2] = true; out.push(v2); } k++; }
+  return out;
+}
+
 // ── State Cap1 (kept for backward compat with onclick handlers) ──
 var dynState = {
   q:  { level: 'medio', score: { correct: 0, total: 0 }, answered: {} },
@@ -99,12 +115,13 @@ function buildExercicio(tema, tipo, min, max, n, dif) {
     }
     if (tipo === 'mc') {
       if (hard) {
-        // dificil: ordenar |a|, b, |c|, d do menor para maior
-        var vals2h = [rnd(1,5), -rnd(3,8), rnd(2,6), -rnd(1,4)];
-        var absVals = vals2h.map(function(v){ return Math.abs(v); });
-        var sorted = absVals.slice().sort(function(a,b){ return a-b; });
+        // dificil: ordenar |a|, |b|, |c|, |d| do menor para maior.
+        // Valores absolutos DISTINTOS → ordenação única e distratores genuinamente errados.
+        var absPool = shuffle([1, 2, 3, 4, 5, 6, 7, 8]).slice(0, 4); // 4 módulos distintos
+        var vals2h = absPool.map(function (m) { return Math.random() < 0.5 ? m : -m; });
+        var absVals = vals2h.map(function (v) { return Math.abs(v); });
+        var sorted = absVals.slice().sort(function (a, b) { return a - b; });
         var sortedStr = sorted.join(', ');
-        var shuffled = shuffle(absVals.slice()).join(', ');
         var w2ha = sorted[0] + ', ' + sorted[2] + ', ' + sorted[1] + ', ' + sorted[3];
         var w2hb = sorted[3] + ', ' + sorted[2] + ', ' + sorted[1] + ', ' + sorted[0];
         var w2hc = sorted[1] + ', ' + sorted[0] + ', ' + sorted[3] + ', ' + sorted[2];
@@ -139,9 +156,8 @@ function buildExercicio(tema, tipo, min, max, n, dif) {
         expl: '(' + a3 + ') + (' + b3 + ') = ' + res3, tema: 'T3 · Adição' };
     }
     if (tipo === 'mc') {
-      var w1 = res3 + rnd(1,3), w2 = res3 - rnd(1,3), w3 = -(res3);
-      if (w2 === res3) w2 = res3 + 4;
-      var opts3 = shuffle([String(res3), String(w1), String(w2), String(w3)]);
+      var w3arr = _distratoresNum(res3, 3, [res3 + rnd(1, 3), res3 - rnd(1, 3), -(res3)]);
+      var opts3 = shuffle([String(res3)].concat(w3arr.map(String)));
       return { enun: 'Calcula: (' + a3 + ') + (' + b3 + ').', tipo: 'mc', opcoes: opts3, resposta: String(res3),
         expl: '(' + a3 + ') + (' + b3 + ') = ' + res3, tema: 'T3 · Adição' };
     }
@@ -179,14 +195,14 @@ function buildExercicio(tema, tipo, min, max, n, dif) {
         // dificil: expressão com sinal duplo +(−n) ou −(+n)
         var a4hm = rnd(2, 12), b4hm = rnd(2, 12);
         var res4hm = a4hm + (-b4hm); // simula a − b
-        var w4hma = res4hm + 2, w4hmb = a4hm + b4hm, w4hmc = -(a4hm + b4hm);
-        var opts4h = shuffle([String(res4hm), String(w4hma), String(w4hmb), String(w4hmc)]);
+        var w4harr = _distratoresNum(res4hm, 3, [res4hm + 2, a4hm + b4hm, -(a4hm + b4hm)]);
+        var opts4h = shuffle([String(res4hm)].concat(w4harr.map(String)));
         return { enun: 'Calcula: (+' + a4hm + ') + (−' + b4hm + ').',
           tipo: 'mc', opcoes: opts4h, resposta: String(res4hm),
           expl: '(+' + a4hm + ') + (−' + b4hm + ') = ' + a4hm + ' − ' + b4hm + ' = ' + res4hm, tema: 'T4 · Subtração' };
       }
-      var w4a = res4 + rnd(1,3), w4b = res4 - rnd(1,3), w4c = a4 + b4;
-      var opts4 = shuffle([String(res4), String(w4a), String(w4b), String(w4c)]);
+      var w4arr = _distratoresNum(res4, 3, [res4 + rnd(1, 3), res4 - rnd(1, 3), a4 + b4]);
+      var opts4 = shuffle([String(res4)].concat(w4arr.map(String)));
       return { enun: 'Calcula: (' + a4 + ') − (' + b4 + ').', tipo: 'mc', opcoes: opts4, resposta: String(res4),
         expl: '(' + a4 + ') − (' + b4 + ') = ' + res4, tema: 'T4 · Subtração' };
     }

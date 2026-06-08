@@ -71,7 +71,7 @@ var BANCO4={
     {id:'q4-38',tema:3,enunciado:'O perímetro de um pentágono regular é 15 cm. A medida do lado é:',opts:['A) 5 cm','B) 3 cm','C) 10 cm','D) 75 cm'],correct:'B',fb:'5 × lado = 15 → lado = 15 ÷ 5 = 3 cm.'},
     {id:'q4-39',tema:3,enunciado:'Qual é a solução de x + 7 = 6?',opts:['A) 13','B) 1','C) −1','D) −13'],correct:'C',fb:'x = 6 − 7 = −1. Verificação: −1 + 7 = 6 ✓'},
     // Tema 4 QA11/QA12
-    {id:'q4-40',tema:4,enunciado:'Resolve: a + 2a − 8 + 5a = 0',opts:['A) a = 1','B) a = −1','C) a = 8','D) a = 1'],correct:'A',fb:'8a − 8 = 0 → 8a = 8 → a = 1.'},
+    {id:'q4-40',tema:4,enunciado:'Resolve: a + 2a − 8 + 5a = 0',opts:['A) a = 1','B) a = −1','C) a = 8','D) a = 0'],correct:'A',fb:'8a − 8 = 0 → 8a = 8 → a = 1.'},
     {id:'q4-41',tema:4,enunciado:'Resolve: (2/3)x − 2 = 4',opts:['A) x = 3','B) x = 6','C) x = 9','D) x = 12'],correct:'C',fb:'(2/3)x = 6 → x = 6 × (3/2) = 9.'},
     {id:'q4-42',tema:4,enunciado:'A equação 2x + 5 = 3 + x é equivalente a:',opts:['A) x = 3','B) x = −2','C) x = 2','D) x = 8'],correct:'B',fb:'2x − x = 3 − 5 → x = −2. Verificação: 2(−2)+5=1; 3+(−2)=1 ✓'},
     // Tema 5 QA13/QA14
@@ -105,7 +105,7 @@ var BANCO4={
     [{en:'João: n lápis; Inês: n+12 lápis; Pedro: 2n lápis. Qual expressão dá o total?',opts:['A) 4n + 10','B) 4n + 12','C) 5n','D) 13n'],c:'B',fb:'n + (n+12) + 2n = 4n + 12.'},
      {en:'A expressão 5 + 7 + x − 3x é equivalente a:',opts:['A) 10x','B) −10x','C) −2x − 12','D) −2x + 12'],c:'D',fb:'5+7=12; x−3x=−2x. Logo −2x + 12.'},
      {en:'Um triângulo equilátero de lado 2x e um quadrado de lado x formam uma figura. O perímetro da figura combinada (sem lados partilhados) é:',opts:['A) 6x','B) 7x','C) 5x','D) 4x'],c:'B',fb:'Triângulo: 3×2x=6x. Quadrado: 4×x=4x. Partilham um lado 2x... P = 6x+4x−2×2x+... Neste caso: 3 lados do triângulo + 3 lados do quadrado = 2x×3 + x×3 = 7x. Resposta B.'},
-     {en:'Qual expressão representa o perímetro da figura com lados x+3, x+3, x+7, x+7?',opts:['A) 4x + 20','B) 4x + 20','C) 6x + 24','D) 4x + 24'],c:'A',fb:'P = 2(x+3)+2(x+7) = 2x+6+2x+14 = 4x+20.'},
+     {en:'Qual expressão representa o perímetro da figura com lados x+3, x+3, x+7, x+7?',opts:['A) 4x + 20','B) 2x + 20','C) 6x + 24','D) 4x + 24'],c:'A',fb:'P = 2(x+3)+2(x+7) = 2x+6+2x+14 = 4x+20.'},
      {en:'O António deu 2 voltas a um retângulo com lados 150 m e 2x m. Distância total:',opts:['A) 600 + 4x','B) 300 + 2x','C) 600 + 2x','D) 300 + 4x'],c:'A',fb:'1 volta: P = 2(150+2x) = 300+4x. 2 voltas: 600+8x... Revisando: P = 2×150+2×2x = 300+4x. Duas voltas: 600+8x. Mas a resposta A também é válida para P = 2(150+x).'}],
     // Mini 3 Equações
     [{en:'Na equação 2x + x − 3 = 0, qual afirmação é FALSA?',opts:['A) O 1.º membro tem 3 termos','B) Os termos dependentes são 2x e x','C) A solução é 3','D) Há dois termos independentes'],c:'D',fb:'Há apenas 1 termo independente (−3). A solução: 3x−3=0 → x=1, não 3. Logo C também é falsa, mas D é a resposta do enunciado.'},
@@ -120,7 +120,7 @@ var BANCO4={
      {en:'Uma horta retangular tem comprimento que excede a largura em 5 m. O perímetro é 34 m. Qual é a área?',opts:['A) 66 m²','B) 6 m²','C) 36 m²','D) 60 m²'],c:'D',fb:'2(l + l+5) = 34 → l = 6. Comprimento = 11... P = 2(l+l+5)=34 → 4l+10=34 → l=6. C=11. Área=6×10=60 m².'}],
     // Mini 5 Classificação
     [{en:'Qual equação é possível indeterminada?',opts:['A) 2x = 2 + 2x','B) 2x + 2 = 2','C) 2x = 2 + x','D) 2x = x + x'],c:'D',fb:'2x = x+x → 2x = 2x → 0x = 0 → PI, S = ℝ.'},
-     {en:'Qual equação tem solução racional não inteira?',opts:['A) 5x = 3 + 2x','B) 2x − 2 = 3 − x','C) (1/3)x = 2','D) −(2/3)x = −4/3'],c:'C',fb:'(1/3)x = 2 → x = 6 (inteiro!). Opção B: 3x=5 → x=5/3 (não inteiro!). Resposta correta: B.'},
+     {en:'Qual equação tem solução racional não inteira?',opts:['A) 5x = 3 + 2x','B) 2x − 2 = 3 − x','C) (1/3)x = 2','D) −(2/3)x = −4/3'],c:'B',fb:'B) 2x−2=3−x → 3x=5 → x=5/3 (não inteiro). As outras dão inteiros: A) x=1; C) x=6; D) x=2.'},
      {en:'Qual é o conjunto-solução de 3x − 3 = 3 − x?',opts:['A) S = ∅','B) S = {0}','C) S = {3/2}','D) S = {−3/2}'],c:'C',fb:'4x = 6 → x = 3/2.'},
      {en:'Um triângulo com lados x, x e x (equilátero) para qualquer x positivo, podemos afirmar:',opts:['A) É escaleno para qualquer x','B) É equilátero para qualquer x','C) É isósceles para qualquer x','D) É isósceles para qualquer x positivo'],c:'D',fb:'Todos os lados iguais → é equilátero E isósceles (todo equilátero é isósceles). Para x > 0 é válido.'},
      {en:'Num triângulo com ângulos 40°, x° e (2x+10)°. A afirmação «É retângulo» é verdadeira se:',opts:['A) x = 40','B) x = 50','C) É falsa','D) Nada se pode concluir'],c:'A',fb:'40+x+2x+10=180 → 3x=130 → x=130/3 ≈ 43. Para ser retângulo, um ângulo = 90: x=90? 40+90+2(90)+10 ≠ 180. Ou 2x+10=90 → x=40. Verificação: 40+40+90=170 ≠ 180. Resp: A é o valor dado no enunciado.'}],

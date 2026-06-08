@@ -1750,10 +1750,17 @@ function _nomeFicha(ano, disc, temas, ext) {
 // Recebe e devolve o array de opções (modifica/retorna novo).
 function _normalizaOpcoes(opcoes, resposta) {
   if (!opcoes || !opcoes.length) return opcoes;
-  // pares binários aceitáveis: mantêm-se com 2 opções
+  // pares binários genuínos (V/F, Sim/Não): mantêm-se com 2 opções.
   if (opcoes.length === 2) return opcoes;
+  // 0) remove opções DUPLICADAS (mantém a 1.ª ocorrência; a correta nunca se perde).
+  var vistos = {}, dedup = [];
+  for (var z = 0; z < opcoes.length; z++) {
+    var key = String(opcoes[z]).trim();
+    if (!vistos[key]) { vistos[key] = 1; dedup.push(opcoes[z]); }
+  }
+  opcoes = dedup;
   if (opcoes.length >= 4) return opcoes.slice(0, 4);
-  // 3 opções: completar para 4 com um distrator plausível
+  // < 4 (originalmente ≥3, possivelmente reduzido por dedup): completar para 4.
   var out = opcoes.slice();
   // 1) distrator numérico simples
   var fab = _fabricarOpcoes(resposta);
@@ -1763,13 +1770,19 @@ function _normalizaOpcoes(opcoes, resposta) {
     }
   }
   // 2) ainda falta? deriva de uma opção existente (troca de sinal / inverte fração)
-  if (out.length < 4) {
+  while (out.length < 4) {
     var cand = _distratorDe(out);
-    if (cand && out.map(String).indexOf(String(cand)) < 0) out.push(cand);
+    if (cand && out.map(String).indexOf(String(cand)) < 0) { out.push(cand); }
+    else break;
   }
-  // 3) último recurso: rótulo neutro para nunca deixar a mc com 3
-  if (out.length < 4) out.push('Nenhuma das anteriores');
-  return out;
+  // 3) garante a presença da resposta correta (dedup nunca a deve ter perdido, mas por segurança)
+  if (resposta !== undefined && resposta !== null && out.map(String).indexOf(String(resposta)) < 0) out.unshift(resposta);
+  // 4) último recurso: rótulo neutro para nunca deixar a mc com menos de 4
+  var neutros = ['Nenhuma das anteriores', 'Outro valor', 'Não é possível determinar'];
+  for (var w = 0; out.length < 4 && w < neutros.length; w++) {
+    if (out.map(String).indexOf(neutros[w]) < 0) out.push(neutros[w]);
+  }
+  return out.slice(0, 4);
 }
 
 // Deriva um distrator a partir de opções existentes: troca o sinal,

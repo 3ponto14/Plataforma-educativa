@@ -1602,9 +1602,10 @@ function _treinoRenderExercicios(exercicios, containerId) {
             + '<button class="check-btn" onclick="checkTreino(\''+qid+'\',\'fill\','+ex.resposta+')">Verificar</button>'
             + '</div>';
     } else {
+      var _exOps = (typeof _normalizaOpcoes==='function') ? _normalizaOpcoes((ex.opcoes||[]).slice(), ex.resposta) : (ex.opcoes||[]);
       var opcs = ex.tipo==='vf'
         ? [{txt:'Verdadeiro',isC:ex.resposta==='V'},{txt:'Falso',isC:ex.resposta==='F'}]
-        : (ex.opcoes||[]).map(function(o){ return {txt:o,isC:String(o)===String(ex.resposta)}; });
+        : _exOps.map(function(o){ return {txt:o,isC:String(o)===String(ex.resposta)}; });
       html += '<div class="options">';
       opcs.forEach(function(o,k){
         var lbl = ex.tipo==='vf'?(k===0?'V':'F'):labels[k];
@@ -1735,11 +1736,12 @@ function gerarFichaTreino() {
       } else {
         // mc
         var labels = ['A','B','C','D'];
-        (ex.opcoes||[]).forEach(function(o, k) {
+        var _mcOps = (typeof _normalizaOpcoes==='function') ? _normalizaOpcoes((ex.opcoes||[]).slice(), ex.resposta) : (ex.opcoes||[]);
+        _mcOps.forEach(function(o, k) {
           var optClean = String(o).replace(/<[^>]+>/g,'').trim();
           body += '<div class="opcao">'+labels[k]+') '+optClean+'</div>';
         });
-        var correctIdx = (ex.opcoes||[]).findIndex(function(o){ return String(o)===String(ex.resposta); });
+        var correctIdx = _mcOps.findIndex(function(o){ return String(o)===String(ex.resposta); });
         solucoes.push({ n: exNum, v: correctIdx>=0 ? labels[correctIdx]+') '+String(ex.resposta).replace(/<[^>]+>/g,'').trim() : String(ex.resposta).replace(/<[^>]+>/g,'').trim() });
       }
       body += '</div>';
