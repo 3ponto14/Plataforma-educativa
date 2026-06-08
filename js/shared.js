@@ -1851,7 +1851,17 @@ function _fillParaMc(ex) {
   var correta = String(ex.resposta).trim();
   var opcoes = [correta], mm;
   function _shuf(arr) { for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; } return arr; }
-  function add(arr) { for (var i = 0; i < arr.length && opcoes.length < 4; i++) { var v = arr[i]; if (v != null && opcoes.indexOf(v) === -1 && v !== correta) opcoes.push(v); } }
+
+  // Quantidades limitadas: deduz [min,max] do enunciado/tema para não gerar
+  // distratores impossíveis (ex: cos = 2,6 ou probabilidade = 5/3).
+  var ctx = ((ex.enun || '') + ' ' + (ex.tema || '')).toLowerCase();
+  var lim = null;
+  if (/\bsen\b|\bcos\b|seno|cosseno|sen\(|cos\(/.test(ctx)) lim = /agudo/.test(ctx) ? [0, 1] : [-1, 1];
+  else if (/probabilidad|frequência relativa|\bp\(a/.test(ctx)) lim = [0, 1];
+  function valorDe(str) { var t = String(str).trim(); var mfr = t.match(/^(-?\d+)\/(-?\d+)$/); if (mfr) return (+mfr[1]) / (+mfr[2]); return parseFloat(t.replace(',', '.')); }
+  function dentro(str) { if (!lim) return true; var v = valorDe(str); if (isNaN(v)) return true; return v >= lim[0] - 1e-9 && v <= lim[1] + 1e-9; }
+
+  function add(arr) { for (var i = 0; i < arr.length && opcoes.length < 4; i++) { var v = arr[i]; if (v != null && opcoes.indexOf(v) === -1 && v !== correta && dentro(v)) opcoes.push(v); } }
   function pack() {
     if (opcoes.length < 2) return null;
     return { enun: ex.enun, tipo: 'mc', opcoes: _shuf(opcoes.slice()), resposta: correta, expl: ex.expl, tema: ex.tema, visual: ex.visual };
@@ -1860,22 +1870,25 @@ function _fillParaMc(ex) {
   // 1) Número → distratores pedagógicos (±1, ±2, ±10%, dobro/metade, troca de sinal).
   if (/^-?\d+(?:[.,]\d+)?$/.test(correta)) {
     var fab = (typeof _fabricarOpcoes === 'function') ? _fabricarOpcoes(correta) : null;
-    if (fab && fab.opts && fab.ans >= 0) {
+    if (fab && fab.opts && fab.ans >= 0 && (!lim || fab.opts.every(dentro))) {
       // _fabricarOpcoes formata com vírgula decimal; a resposta TEM de ser a
       // mesma string que está nas opções (senão nenhuma opção corresponde).
       return { enun: ex.enun, tipo: 'mc', opcoes: fab.opts.slice(), resposta: fab.opts[fab.ans], expl: ex.expl, tema: ex.tema, visual: ex.visual };
     }
-    // fallback simples se _fabricarOpcoes não converter
+    // distratores próprios (respeitam o limite via add→dentro).
     var num = parseFloat(correta.replace(',', '.'));
     var inteiro = (num % 1 === 0);
     var p = inteiro ? (Math.abs(num) >= 100 ? 10 : (Math.abs(num) >= 20 ? 5 : (Math.abs(num) >= 8 ? 2 : 1))) : (Math.abs(num) < 1 ? 0.1 : 1);
-    add([num + p, num - p, -num, num + 2 * p].map(function (v) { return inteiro ? String(Math.round(v)) : (Math.round(v * 100) / 100).toString().replace('.', ','); }));
+    var cand = inteiro ? [num + p, num - p, num + 2 * p, num - 2 * p, -num, num + 3 * p]
+                       : [num + p, num - p, num + 2 * p, num - 2 * p, num + 3 * p, num - 3 * p];
+    add(cand.map(function (v) { return inteiro ? String(Math.round(v)) : (Math.round(v * 100) / 100).toString().replace('.', ','); }));
     return pack();
   }
   // 2) Fração a/b → erros típicos: inverter, trocar sinal, ±1 no numerador/denominador.
+  //    (add→dentro descarta distratores impossíveis quando é probabilidade.)
   if (mm = correta.match(/^(-?)(\d+)\/(\d+)$/)) {
     var s = mm[1], a = parseInt(mm[2], 10), b = parseInt(mm[3], 10);
-    add([b + '/' + a, (s ? '' : '-') + a + '/' + b, (a + 1) + '/' + b, (a > 1 ? a - 1 : a + 2) + '/' + b, a + '/' + (b + 1)]);
+    add([b + '/' + a, (s ? '' : '-') + a + '/' + b, (a + 1) + '/' + b, (a > 1 ? a - 1 : a + 2) + '/' + b, a + '/' + (b + 1), (a > 1 ? a - 1 : a + 2) + '/' + (b + 1)]);
     return pack();
   }
   // 3) Coordenada 3D (x,y,z) → mexe numa componente / troca sinais / troca ordem.

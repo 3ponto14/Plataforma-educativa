@@ -65,6 +65,30 @@ node_like_extract() {
   ' "$file"
 }
 
+# O 7.º ano usa cap1.js/cap2.js/cap3.js + bancos cap4..8.js — motor diferente.
+run_mat7() {
+  for f in cap1 cap2 cap3 cap4 cap5 cap6 cap7 cap8; do
+    if [ ! -f "$JS_DIR/$f.js" ]; then echo "  (7.º: $f.js não existe — saltado)"; return 0; fi
+  done
+  local tmp; tmp="$(mktemp /tmp/valida_mat7_XXXX.js)"
+  {
+    cat "$TEST_DIR/_stubs.js"
+    echo ""
+    # helpers globais que cap1/2/3 esperam do shared.js
+    node_like_extract "$JS_DIR/shared.js" rnd rndNZ shuffle fmt gcd _limpaMath _normalizaOpcoes
+    echo ""
+    cat "$JS_DIR/cap1.js" "$JS_DIR/cap2.js" "$JS_DIR/cap3.js" \
+        "$JS_DIR/cap4.js" "$JS_DIR/cap5.js" "$JS_DIR/cap6.js" "$JS_DIR/cap7.js" "$JS_DIR/cap8.js"
+    echo ""
+    cat "$TEST_DIR/validate-mat7.js"
+  } > "$tmp"
+  local out; out="$("$JSC" "$tmp" 2>&1)"
+  echo "$out" | grep -v '__VALIDATION_FAILED__'
+  rm -f "$tmp"
+  if echo "$out" | grep -q '__VALIDATION_FAILED__'; then return 1; fi
+  return 0
+}
+
 run_year() {
   local n="$1" temas_csv="$2"
   local matfile="$JS_DIR/mat${n}.js"
@@ -110,6 +134,10 @@ for entry in "${ANOS[@]}"; do
   if [ -n "$ONLY" ] && [ "$ONLY" != "$n" ]; then continue; fi
   if ! run_year "$n" "$temas"; then FAIL=1; fi
 done
+# 7.º ano (motor próprio)
+if [ -z "$ONLY" ] || [ "$ONLY" = "7" ]; then
+  if ! run_mat7; then FAIL=1; fi
+fi
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 if [ "$FAIL" -eq 0 ]; then

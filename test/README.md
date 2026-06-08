@@ -1,7 +1,7 @@
 # Testes dos geradores de exercícios
 
 Rede de segurança que corre **todos os exercícios** dos anos de Matemática
-(5.º, 6.º, 8.º, 9.º, 10.º, 11.º) e falha se encontrar um bug que um aluno
+(5.º, 6.º, 7.º, 8.º, 9.º, 10.º, 11.º) e falha se encontrar um bug que um aluno
 apanharia — sem precisar de abrir o browser.
 
 ## Como correr
@@ -39,11 +39,10 @@ testa o que o aluno **vê de facto**.
 
 - `run.sh` — orquestrador (config dos anos + jsc).
 - `_stubs.js` — mocks de ambiente (DOM, EduVisual, localStorage).
-- `validate-geradores.js` — a lógica de validação propriamente dita.
+- `validate-geradores.js` — validação dos anos matN (5/6/8/9/10/11).
+- `validate-mat7.js` — validação do 7.º (motor próprio: `cap1.js`/`buildExercicio`,
+  `cap2.js`/`buildEx2`, `cap3.js`/`buildEx3` + bancos `BANCO4..8`).
 
 > Nota: os helpers matemáticos reais (`_limpaMath`, `_normalizaOpcoes`,
 > `_termoX`, …) são extraídos do `js/shared.js` verdadeiro em cada execução,
 > para o teste nunca divergir do código de produção.
->
-> O 7.º ano usa um motor diferente (`cap1.js`/`buildExercicio`) e não está
-> coberto por este runner.
