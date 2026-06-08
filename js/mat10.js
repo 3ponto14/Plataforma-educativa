@@ -492,17 +492,51 @@ function _mat10SetActiveCapBtn(rowId, btn, cap) {
 }
 
 // Gera uma questão de escolha múltipla para um capítulo (usada por quiz).
+// Converte uma questão de resposta aberta em escolha múltipla, com distratores
+// plausíveis. Cobre números, frações a/b, coordenadas (x,y) e termos "kπ/n".
+// Usado pelo Quiz nos capítulos cujos geradores só produzem 'fill' (caps 2,3,5,6).
+function _mat10FillToMc(ex) {
+  if (!ex || ex.resposta === undefined || ex.resposta === null || ex.resposta === '') return null;
+  var correta = String(ex.resposta).trim();
+  var opcoes = [correta], mm;
+  function add(arr) { for (var i = 0; i < arr.length && opcoes.length < 4; i++) { if (opcoes.indexOf(arr[i]) === -1 && arr[i] !== correta) opcoes.push(arr[i]); } }
+  if (/^-?\d+(?:[.,]\d+)?$/.test(correta)) {                  // número
+    var num = parseFloat(correta.replace(',', '.'));
+    var inteiro = (num % 1 === 0);
+    var p = inteiro ? (Math.abs(num) >= 100 ? 10 : (Math.abs(num) >= 20 ? 5 : (Math.abs(num) >= 8 ? 2 : 1))) : (Math.abs(num) < 1 ? 0.1 : 1);
+    var c = [num + p, num - p, num + 2 * p, num - 2 * p, -num, num + 3 * p];
+    add(c.map(function (v) { return inteiro ? String(Math.round(v)) : (Math.round(v * 100) / 100).toString().replace('.', ','); }));
+  } else if (mm = correta.match(/^(-?)(\d+)\/(\d+)$/)) {       // fração a/b
+    var s = mm[1], a = parseInt(mm[2], 10), b = parseInt(mm[3], 10);
+    add([(a + 1) + '/' + b, (a > 1 ? a - 1 : a + 2) + '/' + b, a + '/' + (b + 1), b + '/' + a, (s ? '' : '-') + a + '/' + b]);
+  } else if (mm = correta.match(/^\((-?\d+),\s*(-?\d+)\)$/)) { // coordenada (x,y)
+    var x = parseInt(mm[1], 10), y = parseInt(mm[2], 10);
+    add(['(' + (x + 1) + ', ' + y + ')', '(' + x + ', ' + (y + 1) + ')', '(' + (-x) + ', ' + (-y) + ')', '(' + y + ', ' + x + ')', '(' + (x - 1) + ', ' + (y - 1) + ')']);
+  } else if (/π/.test(correta)) {                             // termo com π (ex: 3π/4, π/6, 5π)
+    var mden = correta.match(/π\/(\d+)/);
+    if (mden) { var dn = parseInt(mden[1], 10); add([correta.replace('/' + dn, '/' + (dn + 1)), correta.replace('/' + dn, '/' + (dn === 2 ? 3 : 2)), '2' + correta.replace(/^(\d*)/, ''), 'π/' + dn]); }
+    add(['π', '2π', 'π/2', 'π/3', 'π/4', '3π/4']);
+  }
+  if (opcoes.length < 2) return null;
+  return { enun: ex.enun, tipo: 'mc', opcoes: shuffle_m81(opcoes.slice()), resposta: correta, expl: ex.expl, tema: ex.tema, visual: ex.visual };
+}
+
 function _mat10BuildMcQuestion(cap) {
   var gen = _mat10Gerador(cap);
   if (!gen) return null;
   var nTemas = _mat10TemasCount[cap] || 1;
-  var ex = null;
   for (var i = 0; i < 10; i++) {
     var tema = String(rnd_m81(1, nTemas));
-    ex = gen(tema, 'mc', 'medio');
-    if (ex && ex.tipo === 'mc' && ex.opcoes && ex.opcoes.length >= 2) break;
+    var ex = gen(tema, 'mc', 'medio');
+    if (ex && ex.tipo === 'mc' && ex.opcoes && ex.opcoes.length >= 2) return ex;
   }
-  return (ex && ex.tipo === 'mc' && ex.opcoes && ex.opcoes.length >= 2) ? ex : null;
+  // Sem MC nativo: converte uma questão de resposta aberta em MC.
+  for (var k = 0; k < 14; k++) {
+    var tema2 = String(rnd_m81(1, nTemas));
+    var conv = _mat10FillToMc(gen(tema2, 'fill', 'medio'));
+    if (conv && conv.opcoes && conv.opcoes.length >= 2) return conv;
+  }
+  return null;
 }
 
 /* ════════════════════════════════════════════════════════════════
