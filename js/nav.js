@@ -9,9 +9,10 @@
    navigation functions resolve paths correctly regardless of the
    current page location.
 ─────────────────────────────────────────────────────────────────── */
-// Deteção genérica: estamos dentro de um diretório de curso matN/?
-var _inSub = /\/mat\d+(\/|$)/.test(window.location.pathname);
+// Deteção genérica: estamos dentro de um diretório de curso (matN/ ou portN/)?
+var _inSub = /\/(mat\d+|port\d+)(\/|$)/.test(window.location.pathname);
 function _inMat(n) { return window.location.pathname.indexOf('/mat' + n + '/') !== -1 || window.location.pathname.endsWith('/mat' + n); }
+function _inPort(n) { return window.location.pathname.indexOf('/port' + n + '/') !== -1 || window.location.pathname.endsWith('/port' + n); }
 var _inMat7 = _inMat(7), _inMat8 = _inMat(8), _inMat9 = _inMat(9);
 var _rootPath = _inSub ? '../' : '';
 // Caminho para cada curso, relativo à página atual (raiz ou dentro de matN/).
@@ -23,6 +24,7 @@ var _mat8Path = _inMat8 ? '' : _coursePath('mat8');
 var _mat9Path = _inMat9 ? '' : _coursePath('mat9');
 var _mat10Path = _inMat(10) ? '' : _coursePath('mat10');
 var _mat11Path = _inMat(11) ? '' : _coursePath('mat11');
+var _port9Path = _inPort(9) ? '' : _coursePath('port9');
 
 /* ── Portal (index.html at root) ── */
 function showPortalView() { window.location.href = _rootPath + 'index.html'; }
@@ -40,6 +42,10 @@ function showPortalFromMat8() { showPortalView(); }
 /* ── Mat9 hub (único, sem páginas por capítulo) ── */
 function showMat9View()  { window.location.href = _mat9Path + 'index.html'; }
 function showPortalFromMat9() { showPortalView(); }
+
+/* ── Port9 hub · Português 9.º (mesmo modelo de hub) ── */
+function showPort9View() { window.location.href = _port9Path + 'index.html'; }
+function showPortalFromPort9() { showPortalView(); }
 
 /* ── Mat5 e Mat6 hubs (2.º ciclo) ── */
 function showMat5View()  { window.location.href = _mat5Path + 'index.html'; }
