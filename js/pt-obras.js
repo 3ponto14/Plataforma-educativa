@@ -1,104 +1,42 @@
-// pt-obras.js — Educação Literária do 9.º ano: lista de obras + grelha de navegação.
+// pt-obras.js — Educação Literária NA ZONA DO EXAME (exames-pt.html).
 //
-// A página de Português tinha só Os Lusíadas. Esta camada apresenta TODAS as obras
-// do programa (Aprendizagens Essenciais + manuais Mensagens 9 / A Par e Passo) numa
-// grelha de cartões. Cada obra tem um guia próprio; por agora só Os Lusíadas está
-// disponível (`disponivel: true`) e abre o guia existente (ptLusRenderMenu).
-// As restantes mostram um cartão "Em breve" — a estrutura fica pronta para encher.
+// IMPORTANTE: esta é a zona de PREPARAÇÃO PARA O EXAME, por isso lista apenas
+// o que SAI MESMO no exame nacional do 9.º ano. Verificado nas provas finais
+// 2019–2024 (PDFs em "Exames nacionais português 9º ano/"):
+//   • Os Lusíadas é o texto de ANÁLISE LITERÁRIA em 7 dos 8 exames — é A obra.
+//   • Os outros textos do exame são de LEITURA: contos/excertos que MUDAM
+//     todos os anos (Eça, Vergílio Ferreira, Saramago…) — não são obras fixas.
+// O programa completo do 9.º (Auto da Barca, poesia, etc.) vive no CURSO
+// port9/, não aqui — essas obras não são avaliadas no exame.
 
 /* ══════════════════════════════════════════════════════
-   OBRAS DO 9.º ANO · EDUCAÇÃO LITERÁRIA
-   Ordem: teatro · epopeia · narrativa/conto · poesia
+   OBRAS / TEXTOS QUE SAEM NO EXAME NACIONAL · 9.º ANO
 ══════════════════════════════════════════════════════ */
 var PT_OBRAS = [
-  {
-    id: 'auto-barca',
-    titulo: 'Auto da Barca do Inferno',
-    autor: 'Gil Vicente',
-    ano: '1517',
-    genero: 'Teatro (auto / moralidade)',
-    icon: '⛵',
-    cor: '#7a3b2e',
-    disponivel: false,
-    nota: 'Obra integral. Figuras alegóricas: Diabo, Anjo, Onzeneiro, Frade, Sapateiro, Fidalgo…'
-  },
   {
     id: 'lusiadas',
     titulo: 'Os Lusíadas',
     autor: 'Luís de Camões',
     ano: '1572',
-    genero: 'Epopeia (poesia épica)',
+    genero: 'Epopeia · Educação Literária',
     icon: '🛡️',
     cor: '#b07030',
     disponivel: true,
     render: 'lusiadas',           // usa o guia existente (ptLusRenderMenu)
-    nota: 'Excertos: Proposição, Invocação, Inês de Castro, Adamastor, Ilha dos Amores…'
+    badge: 'Sai no exame',
+    nota: 'Texto de análise literária em quase todos os exames (2019–2024). Excertos: Proposição, Inês de Castro, Adamastor, Consílio dos Deuses…'
   },
   {
-    id: 'a-aia',
-    titulo: 'A Aia',
-    autor: 'Eça de Queirós',
-    ano: '1885',
-    genero: 'Conto',
+    id: 'leitura-contos',
+    titulo: 'Leitura de Contos e Excertos',
+    autor: 'Eça de Queirós · Saramago · Vergílio Ferreira · outros',
+    ano: 'varia',
+    genero: 'Texto narrativo · Leitura',
     icon: '📖',
     cor: '#5c4e8a',
     disponivel: false,
-    nota: 'Conto sobre lealdade e sacrifício. Texto narrativo.'
-  },
-  {
-    id: 'um-dia-destes',
-    titulo: 'Um Dia Destes',
-    autor: 'Gabriel García Márquez',
-    ano: '1962',
-    genero: 'Conto',
-    icon: '🦷',
-    cor: '#4a7c6f',
-    disponivel: false,
-    nota: 'Conto sobre poder, dignidade e tensão social.'
-  },
-  {
-    id: 'canterville',
-    titulo: 'O Fantasma de Canterville',
-    autor: 'Oscar Wilde',
-    ano: '1887',
-    genero: 'Conto',
-    icon: '👻',
-    cor: '#4d6a8a',
-    disponivel: false,
-    nota: 'Conto de humor e crítica social.'
-  },
-  {
-    id: 'poesia-pessoa',
-    titulo: 'Poesia de Fernando Pessoa',
-    autor: 'Fernando Pessoa',
-    ano: 'séc. XX',
-    genero: 'Poesia',
-    icon: '🎭',
-    cor: '#8a4a6a',
-    disponivel: false,
-    nota: 'Poemas ortónimos e dos heterónimos (ex.: «Mar Português»).'
-  },
-  {
-    id: 'poesia-sophia',
-    titulo: 'Poesia de Sophia de M. B. Andresen',
-    autor: 'Sophia de Mello Breyner Andresen',
-    ano: 'séc. XX',
-    genero: 'Poesia',
-    icon: '🌊',
-    cor: '#3a7ca5',
-    disponivel: false,
-    nota: 'Poemas sobre o mar, a Grécia, a justiça e a beleza.'
-  },
-  {
-    id: 'poesia-outros',
-    titulo: 'Outros poetas',
-    autor: 'Camilo Pessanha · Irene Lisboa · Florbela Espanca · Cesário Verde',
-    ano: 'séc. XIX–XX',
-    genero: 'Poesia',
-    icon: '✒️',
-    cor: '#9a7b4f',
-    disponivel: false,
-    nota: 'Seleção de poemas líricos do programa.'
+    badge: 'Sai no exame',
+    nota: 'O exame inclui sempre textos de leitura (contos/excertos) que MUDAM de ano para ano. Não é uma obra fixa — treina-se a compreensão de texto.'
   }
 ];
 
@@ -112,18 +50,20 @@ function ptObrasRenderGrid() {
 
   var h = '';
   h += '<div class="ex-sec-head" style="margin-bottom:1rem">';
-  h += '<div class="ex-sec-sub">Educação Literária do 9.º ano · ' + PT_OBRAS.length + ' obras do programa · ' + disp + ' já disponível' + (disp === 1 ? '' : 's') + '.</div>';
+  h += '<div class="ex-sec-sub">O que sai mesmo no exame nacional do 9.º ano (provas 2019–2024). <strong>Os Lusíadas</strong> é o texto de análise literária; a leitura usa contos/excertos que variam de ano para ano.</div>';
   h += '</div>';
 
   h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem">';
   PT_OBRAS.forEach(function (o) {
     var onclick = o.disponivel ? ' onclick="ptObrasOpen(\'' + o.id + '\')"' : '';
     var cursor = o.disponivel ? 'pointer' : 'default';
-    var opacity = o.disponivel ? '1' : '.62';
+    var opacity = o.disponivel ? '1' : '.72';
     h += '<button class="pt-topic-card"' + onclick + ' style="border-top:3px solid ' + o.cor + ';cursor:' + cursor + ';opacity:' + opacity + '">';
     h += '<div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem">';
     h += '<div style="font-size:1.7rem;line-height:1">' + o.icon + '</div>';
-    if (o.disponivel) h += '<span style="margin-left:auto;font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:' + o.cor + ';color:#fff;padding:.18rem .5rem;border-radius:999px">Disponível</span>';
+    // badge "Sai no exame" (verde) — todas nesta zona saem; + estado disponível/em breve
+    if (o.badge) h += '<span style="font-size:.58rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:#e7f6ec;color:#2e7d32;padding:.18rem .5rem;border-radius:999px;border:1px solid #bfe3c9">✓ ' + o.badge + '</span>';
+    if (o.disponivel) h += '<span style="margin-left:auto;font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:' + o.cor + ';color:#fff;padding:.18rem .5rem;border-radius:999px">Guia</span>';
     else h += '<span style="margin-left:auto;font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--surface);color:var(--ink3);padding:.18rem .5rem;border-radius:999px;border:1px solid var(--border)">Em breve</span>';
     h += '</div>';
     h += '<div style="font-family:Cormorant Garamond,serif;font-size:1.18rem;font-weight:700;color:var(--ink1);line-height:1.2">' + o.titulo + '</div>';
