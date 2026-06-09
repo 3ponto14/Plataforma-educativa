@@ -751,32 +751,16 @@ function port9TesteFinish() {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   SUB-MODO: JOGOS (reutiliza o motor genérico _j24AutoInit)
+   SUB-MODO: JOGOS (jogos de Português — pt-jogos.js)
+   Quiz Contra o Tempo · Forca · Correspondência. Nada de jogos
+   matemáticos (4 em linha, Sudoku…) — não fazem sentido em Português.
    ════════════════════════════════════════════════════════════════ */
-var _port9JogosInited = false;
 function port9JogosInit() {
-  _port9PM(_port9Prat.cap || 1, 'jogo');
-  if (_port9JogosInited) return;
-  if (typeof _j24AutoInit === 'function') {
-    // Regista o provedor de perguntas DESTE ano (matéria correta nos jogos)
-    if (typeof _gRegisterProvider === 'function') {
-      _gRegisterProvider('port9-jogos-app', function (level) {
-        var nCaps = _port9CapMeta.length;
-        for (var att = 0; att < 6; att++) {
-          var cap = 1 + Math.floor(Math.random() * nCaps);
-          var gen = _port9Gerador(cap);
-          var banco = (typeof _port9Banco !== 'undefined' && _port9Banco[cap]) ? _port9Banco[cap] : null;
-          var q = _jogoQFromGerador(gen, _port9TemasCount[cap], banco, level);
-          if (q) return q;
-        }
-        return null;
-      });
-    }
-    _j24AutoInit('port9-jogos-app', 'medio');
-    _port9JogosInited = true;
+  if (typeof ptJogosRender === 'function') {
+    ptJogosRender();
   } else {
     var app = document.getElementById('port9-jogos-app');
-    if (app) app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Jogos indisponíveis (motor não carregado).</p>';
+    if (app) app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Jogos indisponíveis (pt-jogos.js não carregado).</p>';
   }
 }
 
