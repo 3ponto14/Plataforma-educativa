@@ -277,7 +277,7 @@ function port9BuildPraticarNav() {
   var activeCap = _port9Prat.cap || 1;
   var h = '';
   _port9CapMeta.forEach(function(m) {
-    var hasGen = !!_port9Gerador(m.n);
+    var hasGen = _port9TemConteudo(m.n);
     var color = _port9CapColors[m.n] || '#516860';
     var isActive = activeCap === m.n;
     var activeStyle = isActive ? 'background:' + color + ';border-color:' + color + ';color:#fff' : '';
@@ -430,7 +430,7 @@ function _port9BuildCapRow(rowId, activeCap, onclickName) {
   if (!row) return;
   var h = '';
   _port9CapMeta.forEach(function(m) {
-    var hasGen = !!_port9Gerador(m.n);
+    var hasGen = _port9TemConteudo(m.n);
     var color = _port9CapColors[m.n] || '#516860';
     var isActive = activeCap === m.n;
     var activeStyle = isActive ? 'background:' + color + ';border-color:' + color + ';color:#fff' : '';
@@ -960,7 +960,7 @@ function port9FichasBuildNav() {
   for (var k in _port9gf.caps) { if (_port9gf.caps[k]) { temAlgum = true; break; } }
   var h = '';
   _port9CapMeta.forEach(function(m) {
-    var hasGen = !!_port9Gerador(m.n);
+    var hasGen = _port9TemConteudo(m.n);
     if (!hasGen) return;
     if (!temAlgum) { _port9gf.caps[m.n] = true; temAlgum = true; } // 1.º disponível
     var sel = !!_port9gf.caps[m.n];
