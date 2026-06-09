@@ -259,6 +259,10 @@ function port9RenderResumoInline() {
 function _port9Gerador(cap) {
   return null;
 }
+// Um domínio está "disponível" para prática se tiver questões no banco.
+function _port9TemConteudo(cap) {
+  return !!(_port9Banco[cap] && _port9Banco[cap].length);
+}
 // Nº de subtemas por domínio (espelha _port9Subtemas) — usado na seleção de prática.
 var _port9TemasCount = { 1: 4, 2: 4, 3: 3, 4: 3, 5: 3 };
 
@@ -302,7 +306,7 @@ function port9PraticarShowSts(cap) {
 }
 
 function port9PraticarSelectCap(cap, btn) {
-  if (!_port9Gerador(cap)) return;
+  if (!_port9TemConteudo(cap)) return;
   _port9Prat.cap = cap;
   _port9Prat.st = 0;
   var capRow = document.getElementById('port9-praticar-cap-row');
@@ -451,22 +455,18 @@ function _port9FillToMc(ex) {
   return (typeof _fillParaMc === 'function') ? _fillParaMc(ex) : null;
 }
 
+// Português: o Quiz tira questões de escolha múltipla do _port9Banco do domínio.
 function _port9BuildMcQuestion(cap) {
-  var gen = _port9Gerador(cap);
-  if (!gen) return null;
-  var nTemas = _port9TemasCount[cap] || 1;
-  for (var i = 0; i < 10; i++) {
-    var tema = String(rnd_m81(1, nTemas));
-    var ex = gen(tema, 'mc', 'medio');
-    if (ex && ex.tipo === 'mc' && ex.opcoes && ex.opcoes.length >= 2) return ex;
-  }
-  // Sem MC nativo: converte uma questão de resposta aberta em MC.
-  for (var k = 0; k < 12; k++) {
-    var tema2 = String(rnd_m81(1, nTemas));
-    var mc = _port9FillToMc(gen(tema2, 'fill', 'medio'));
-    if (mc && mc.opcoes && mc.opcoes.length >= 2) return mc;
-  }
-  return null;
+  var qs = (_port9Banco[cap] || []).filter(function (q) {
+    return q.tipo === 'mc' && q.opcoes && q.opcoes.length >= 2 && q.opcoes.indexOf(q.resposta) >= 0;
+  });
+  if (!qs.length) return null;
+  var ex = qs[Math.floor(Math.random() * qs.length)];
+  // devolve uma cópia com as opções baralhadas
+  return {
+    enun: ex.enun, tipo: 'mc', opcoes: shuffle_m81(ex.opcoes.slice()),
+    resposta: ex.resposta, expl: ex.expl, tema: ex.tema
+  };
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -475,13 +475,13 @@ function _port9BuildMcQuestion(cap) {
 var _port9Quiz = { cap: 1, lives: 3, streak: 0, maxStreak: 0, score: 0, total: 0, answered: false, current: null };
 
 function port9QuizBuildNav() {
-  if (!_port9Gerador(_port9Quiz.cap)) _port9Quiz.cap = 1;
+  if (!_port9TemConteudo(_port9Quiz.cap)) _port9Quiz.cap = 1;
   _port9BuildCapRow('port9-quiz-cap-row', _port9Quiz.cap, 'port9QuizSelectCap');
   port9QuizStart();
 }
 
 function port9QuizSelectCap(cap, btn) {
-  if (!_port9Gerador(cap)) return;
+  if (!_port9TemConteudo(cap)) return;
   _port9SetActiveCapBtn('port9-quiz-cap-row', btn, cap);
   _port9Quiz.cap = cap;
   port9QuizStart();
@@ -636,13 +636,13 @@ function port9FcPrev() { _port9Fc.idx = (_port9Fc.idx - 1 + (_port9Fc.cards.leng
 var _port9Teste = { cap: 1, nivel: 'medio', qtd: 10, tempo: 600, exs: [], answered: {}, score: { correct: 0, total: 0 }, timer: null, restante: 0 };
 
 function port9TesteBuildNav() {
-  if (!_port9Gerador(_port9Teste.cap)) _port9Teste.cap = 1;
+  if (!_port9TemConteudo(_port9Teste.cap)) _port9Teste.cap = 1;
   _port9BuildCapRow('port9-teste-cap-row', _port9Teste.cap, 'port9TesteSelectCap');
   port9TesteRenderConfig();
 }
 
 function port9TesteSelectCap(cap, btn) {
-  if (!_port9Gerador(cap)) return;
+  if (!_port9TemConteudo(cap)) return;
   _port9SetActiveCapBtn('port9-teste-cap-row', btn, cap);
   _port9Teste.cap = cap;
   port9TesteRenderConfig();

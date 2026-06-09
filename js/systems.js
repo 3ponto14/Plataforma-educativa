@@ -1,9 +1,9 @@
 /* ── Block 2 (from line 4431) ── */
 // Lazy loader for game scripts
 function lazyLoad(src, callback) {
-  // Páginas de curso vivem num subdiretório (mat7/, mat8/, …) e precisam de '../js/'.
+  // Páginas de curso vivem num subdiretório (mat7/, …, port9/) e precisam de '../js/'.
   var _p = window.location.pathname;
-  var _inCourseDir = /\/mat\d+(\/|$)/.test(_p);
+  var _inCourseDir = /\/(mat\d+|port\d+)(\/|$)/.test(_p);
   var _jsPrefix = _inCourseDir ? '../js/' : 'js/';
   var fullSrc = _jsPrefix + src;
   var existing = document.querySelector('script[src="' + fullSrc + '"]');
