@@ -3470,49 +3470,94 @@ body.dark-mode .portal-card:hover {
   letter-spacing: .08em;
 }
 
-/* ── Portal: cards de ano compactos ── */
-.portal-year-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: .75rem;
+/* ── Portal: catálogo agrupado por ciclo de ensino ──
+   Secção (.portal-ciclo) → grelha de cartões-ano (.portal-ano-card) →
+   uma linha por oferta (.portal-ano-link: curso ou zona de exames). */
+.portal-ciclo { margin-bottom: 2rem; }
+.portal-ciclo-head {
+  display: flex; align-items: baseline; gap: .65rem;
+  margin-bottom: .85rem; padding-bottom: .45rem;
+  border-bottom: 1.5px solid var(--border);
 }
-.portal-year-card {
-  display: flex;
-  align-items: center;
-  gap: .75rem;
+.portal-ciclo-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem; font-weight: 700; color: var(--ink1);
+}
+.portal-ciclo-range { font-size: .7rem; font-weight: 700; color: var(--ink4); text-transform: uppercase; letter-spacing: .07em; }
+
+.portal-ano-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: .85rem;
+  align-items: start;
+}
+.portal-ano-card {
   background: var(--white);
   border: 1.5px solid var(--border);
   border-left: 4px solid var(--ink4);
-  border-radius: 14px;
-  padding: .9rem 1rem;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color .2s, box-shadow .2s;
+}
+.portal-ano-card:hover { box-shadow: var(--shadow-md); }
+/* o cartão do 9.º (4 ofertas) ocupa a largura toda da secção */
+.portal-ano-card--wide { grid-column: 1 / -1; }
+.portal-ano-card--wide .portal-ano-links { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+
+.portal-ano-head { display: flex; align-items: center; gap: .45rem; padding: .8rem 1rem .55rem; }
+.portal-ano-num { font-size: 1.25rem; font-weight: 800; color: var(--ink1); line-height: 1; }
+.portal-ano-lbl { font-size: .78rem; font-weight: 700; color: var(--ink3); }
+.portal-exam-badge {
+  margin-left: auto;
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-size: .62rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
+  color: #5c4e8a; background: #f0edf7; border: 1px solid #ddd8f5;
+  border-radius: 999px; padding: 3px 9px; white-space: nowrap;
+}
+
+.portal-ano-links { display: flex; flex-direction: column; gap: .4rem; padding: 0 .65rem .7rem; }
+.portal-ano-link {
+  display: flex; align-items: center; gap: .55rem;
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: .55rem .7rem;
   text-align: left;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
-  transition: border-color .2s, box-shadow .2s, transform .2s;
+  transition: border-color .15s, background .15s, transform .15s;
 }
-.portal-year-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-.portal-year-icon {
-  width: 40px; height: 40px;
-  border-radius: 11px;
+.portal-ano-link:hover { transform: translateX(2px); background: var(--surface); }
+.portal-ano-link-icon {
+  width: 30px; height: 30px; border-radius: 9px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.2rem;
-  flex-shrink: 0;
+  font-size: 1rem; flex-shrink: 0;
+  background: var(--surface); color: var(--ink2);
 }
-.portal-year-body { flex: 1; min-width: 0; }
-.portal-year-title { font-size: .95rem; font-weight: 800; color: var(--ink1); line-height: 1.1; }
-.portal-year-meta { font-size: .7rem; color: var(--ink4); margin-top: .15rem; }
-.portal-year-arrow { color: var(--ink4); font-size: 1rem; flex-shrink: 0; transition: transform .2s; }
-.portal-year-card:hover .portal-year-arrow { transform: translateX(3px); }
+.portal-ano-link-name { font-size: .8rem; font-weight: 800; color: var(--ink1); white-space: nowrap; }
+.portal-ano-link-meta { font-size: .66rem; color: var(--ink4); margin-left: auto; text-align: right; line-height: 1.3; }
+.portal-ano-link-arrow { color: var(--ink4); font-size: .85rem; flex-shrink: 0; transition: transform .2s; }
+.portal-ano-link:hover .portal-ano-link-arrow { transform: translateX(2px); }
+/* ofertas de Português e de exames com identidade própria */
+.portal-ano-link--pt .portal-ano-link-icon { background: #ede8f5; color: #4a3f7a; }
+.portal-ano-link--pt:hover { border-color: #4a3f7a; }
+.portal-ano-link--exam { background: #faf9ff; border-style: dashed; border-color: #ddd8f5; }
+.portal-ano-link--exam .portal-ano-link-icon { background: #f0edf7; color: #5c4e8a; }
+.portal-ano-link--exam:hover { border-color: #5c4e8a; background: #f3f0fb; }
+
 /* cores por ano (reutilizam os tons de cada curso) */
-.portal-year-card.y5 { border-left-color: var(--m5c1-mid); } .y5 .portal-year-icon { background: var(--m5c1-base); color: var(--m5c1-deep); } .portal-year-card.y5:hover { border-color: var(--m5c1-mid); }
-.portal-year-card.y6 { border-left-color: var(--m6c1-mid); } .y6 .portal-year-icon { background: var(--m6c1-base); color: var(--m6c1-deep); } .portal-year-card.y6:hover { border-color: var(--m6c1-mid); }
-.portal-year-card.y7 { border-left-color: var(--c2-mid); } .y7 .portal-year-icon { background: var(--c2-base); color: var(--c2-deep); } .portal-year-card.y7:hover { border-color: var(--c2-mid); }
-.portal-year-card.y8 { border-left-color: var(--m8c1-mid); } .y8 .portal-year-icon { background: var(--m8c1-base); color: var(--m8c1-deep); } .portal-year-card.y8:hover { border-color: var(--m8c1-mid); }
-.portal-year-card.y9 { border-left-color: var(--m9c1-mid); } .y9 .portal-year-icon { background: var(--m9c1-base); color: var(--m9c1-deep); } .portal-year-card.y9:hover { border-color: var(--m9c1-mid); }
-.portal-year-card.y10 { border-left-color: var(--m10c1-mid); } .y10 .portal-year-icon { background: var(--m10c1-base); color: var(--m10c1-deep); } .portal-year-card.y10:hover { border-color: var(--m10c1-mid); }
-.portal-year-card.y11 { border-left-color: var(--m11c1-mid); } .y11 .portal-year-icon { background: var(--m11c1-base); color: var(--m11c1-deep); } .portal-year-card.y11:hover { border-color: var(--m11c1-mid); }
-.portal-year-card.yex { border-left-color: #5c4e8a; } .yex .portal-year-icon { background: #f0edf7; color: #5c4e8a; } .portal-year-card.yex:hover { border-color: #5c4e8a; }
-.portal-year-card.ypt { border-left-color: #4a3f7a; } .ypt .portal-year-icon { background: #ede8f5; color: #4a3f7a; } .portal-year-card.ypt:hover { border-color: #4a3f7a; }
+.portal-ano-card.y5  { border-left-color: var(--m5c1-mid); }  .y5  .portal-ano-num { color: var(--m5c1-deep); }  .y5  .portal-ano-link-icon { background: var(--m5c1-base); color: var(--m5c1-deep); }
+.portal-ano-card.y6  { border-left-color: var(--m6c1-mid); }  .y6  .portal-ano-num { color: var(--m6c1-deep); }  .y6  .portal-ano-link-icon { background: var(--m6c1-base); color: var(--m6c1-deep); }
+.portal-ano-card.y7  { border-left-color: var(--c2-mid); }    .y7  .portal-ano-num { color: var(--c2-deep); }    .y7  .portal-ano-link-icon { background: var(--c2-base); color: var(--c2-deep); }
+.portal-ano-card.y8  { border-left-color: var(--m8c1-mid); }  .y8  .portal-ano-num { color: var(--m8c1-deep); }  .y8  .portal-ano-link-icon { background: var(--m8c1-base); color: var(--m8c1-deep); }
+.portal-ano-card.y9  { border-left-color: var(--m9c1-mid); }  .y9  .portal-ano-num { color: var(--m9c1-deep); }  .y9  .portal-ano-link-icon { background: var(--m9c1-base); color: var(--m9c1-deep); }
+.portal-ano-card.y10 { border-left-color: var(--m10c1-mid); } .y10 .portal-ano-num { color: var(--m10c1-deep); } .y10 .portal-ano-link-icon { background: var(--m10c1-base); color: var(--m10c1-deep); }
+.portal-ano-card.y11 { border-left-color: var(--m11c1-mid); } .y11 .portal-ano-num { color: var(--m11c1-deep); } .y11 .portal-ano-link-icon { background: var(--m11c1-base); color: var(--m11c1-deep); }
+.portal-ano-card.y12 { border-left-color: #5c4e8a; }          .y12 .portal-ano-num { color: #5c4e8a; }
+/* nas linhas de PT/exames, a identidade própria ganha à cor do ano */
+.portal-ano-card .portal-ano-link--pt .portal-ano-link-icon { background: #ede8f5; color: #4a3f7a; }
+.portal-ano-card .portal-ano-link--exam .portal-ano-link-icon { background: #f0edf7; color: #5c4e8a; }
 /* estado "sem resultados" da pesquisa */
 .portal-no-results {
   display: none;

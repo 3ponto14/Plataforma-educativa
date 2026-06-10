@@ -197,23 +197,36 @@ function portalSetFilter(tipo, valor, btn) {
   portalSearch();
 }
 
-// Aplica pesquisa + filtros aos cards. Chamada pelo input e pelos chips.
+// Aplica pesquisa + filtros ao catálogo agrupado por ciclo.
+// Filtra oferta a oferta (.portal-ano-link); um cartão-ano esconde-se quando
+// fica sem ofertas visíveis e uma secção-ciclo quando fica sem cartões.
 function portalSearch() {
   var input = document.getElementById('portal-search-input');
   _portalFilters.q = input ? input.value.toLowerCase().trim() : '';
   var f = _portalFilters;
-  var cards = document.querySelectorAll('.portal-year-card');
   var visiveis = 0;
-  cards.forEach(function(card) {
-    var disc = card.getAttribute('data-disc') || '';
+  document.querySelectorAll('.portal-ano-card').forEach(function(card) {
     var ano = card.getAttribute('data-ano') || '';
-    var hay = ((card.getAttribute('data-search') || '') + ' ' + card.textContent).toLowerCase();
-    var okDisc = f.disc === '' || disc === f.disc;
     var okAno = f.ano === '' || ano === f.ano;
-    var okQ = f.q === '' || hay.indexOf(f.q) !== -1;
-    var match = okDisc && okAno && okQ;
-    card.style.display = match ? '' : 'none';
-    if (match) visiveis++;
+    var linksVisiveis = 0;
+    card.querySelectorAll('.portal-ano-link').forEach(function(link) {
+      var disc = link.getAttribute('data-disc') || '';
+      var hay = ((link.getAttribute('data-search') || '') + ' ' + link.textContent).toLowerCase();
+      var ok = okAno
+        && (f.disc === '' || disc === f.disc)
+        && (f.q === '' || hay.indexOf(f.q) !== -1);
+      link.style.display = ok ? '' : 'none';
+      if (ok) linksVisiveis++;
+    });
+    card.style.display = linksVisiveis ? '' : 'none';
+    visiveis += linksVisiveis;
+  });
+  document.querySelectorAll('.portal-ciclo').forEach(function(sec) {
+    var temCard = false;
+    sec.querySelectorAll('.portal-ano-card').forEach(function(c) {
+      if (c.style.display !== 'none') temCard = true;
+    });
+    sec.style.display = temCard ? '' : 'none';
   });
   var noRes = document.getElementById('portal-no-results');
   if (noRes) noRes.style.display = (visiveis === 0) ? 'block' : 'none';
