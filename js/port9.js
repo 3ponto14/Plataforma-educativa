@@ -524,19 +524,33 @@ function _port9FillToMc(ex) {
    expl, tema}. Alimenta as Fichas, o Teste Cronometrado e o Quiz.
    ════════════════════════════════════════════════════════════════ */
 
+// Nível de uma questão convertida: primeiro padrão do difMap que casar com
+// o texto (resposta + tipo + enunciado, em minúsculas) ganha; senão fallback.
+// A ordem do difMap importa: pôr os padrões mais longos primeiro
+// (ex.: 'predicativo do complemento direto' antes de 'complemento direto').
+function _port9DifDe(texto, difMap, fallback) {
+  if (difMap) {
+    for (var i = 0; i < difMap.length; i++) {
+      if (texto.indexOf(difMap[i][0]) !== -1) return difMap[i][1];
+    }
+  }
+  return fallback || 'medio';
+}
+
 // Bancos dos módulos com {frase, correct, opts, exp} (resposta = texto da opção).
-// `dif` marca o nível base do banco (a dificuldade que o módulo anunciava).
-function _port9ConvBancoMod(arr, prefixo, t, temaLabel, dif) {
+// `dif` é o nível por omissão; `difMap` afina questão a questão.
+function _port9ConvBancoMod(arr, prefixo, t, temaLabel, dif, difMap) {
   var out = [];
   (arr || []).forEach(function (q) {
     if (!q || !q.opts || !q.correct || q.opts.indexOf(q.correct) === -1) return;
-    out.push({ t: t, tipo: 'mc', enun: prefixo + q.frase, opcoes: q.opts.slice(), resposta: q.correct, expl: q.exp || '', tema: temaLabel, dif: dif || 'medio' });
+    var texto = (q.correct + ' ' + (q.tipo || '') + ' ' + q.frase).toLowerCase();
+    out.push({ t: t, tipo: 'mc', enun: prefixo + q.frase, opcoes: q.opts.slice(), resposta: q.correct, expl: q.exp || '', tema: temaLabel, dif: _port9DifDe(texto, difMap, dif) });
   });
   return out;
 }
 
 // Bancos dos guias de obras com opts "(A) …" e correct = letra (PT_LUS_BANCO…)
-function _port9ConvBancoLetra(arr, t, temaLabel) {
+function _port9ConvBancoLetra(arr, t, temaLabel, difMap) {
   var letras = ['A', 'B', 'C', 'D', 'E'];
   var out = [];
   (arr || []).forEach(function (q) {
@@ -544,49 +558,101 @@ function _port9ConvBancoLetra(arr, t, temaLabel) {
     var idx = letras.indexOf(q.correct);
     if (idx < 0 || idx >= q.opts.length) return;
     var ops = q.opts.map(function (o) { return String(o).replace(/^\([A-E]\)\s*/, ''); });
-    out.push({ t: t, tipo: 'mc', enun: q.enun, opcoes: ops, resposta: ops[idx], expl: q.exp || '', tema: temaLabel, dif: 'medio' });
+    out.push({ t: t, tipo: 'mc', enun: q.enun, opcoes: ops, resposta: ops[idx], expl: q.exp || '', tema: temaLabel, dif: _port9DifDe(q.enun.toLowerCase(), difMap, 'medio') });
   });
   return out;
 }
+
+/* Mapas de dificuldade por questão (afinados à mão, conteúdo do 9.º ano).
+   Padrões em minúsculas; primeiro match ganha. */
+var _P9_DIF_FUNCOES = [
+  ['predicativo do complemento direto', 'dificil'], ['modificador apositivo', 'dificil'],
+  ['complemento oblíquo', 'dificil'], ['modificador do grupo verbal', 'dificil'],
+  ['modificador do nome', 'medio'], ['predicativo do sujeito', 'medio'],
+  ['complemento indireto', 'medio'], ['vocativo', 'facil'],
+  ['complemento direto', 'facil'], ['sujeito', 'facil']
+];
+var _P9_DIF_TEMPOS = [
+  ['mais-que-perfeito', 'dificil'], ['perfeito do conjuntivo', 'dificil'],
+  ['futuro do conjuntivo', 'medio'], ['presente do conjuntivo', 'medio'],
+  ['imperfeito do conjuntivo', 'medio'], ['condicional', 'medio'],
+  ['perfeito simples', 'facil'], ['imperfeito do indicativo', 'facil']
+];
+var _P9_DIF_CLASSES = [
+  ['pronome relativo', 'dificil'], ['pronome indefinido', 'medio'],
+  ['determinante', 'medio'], ['imperativo', 'facil'], ['advérbio', 'facil']
+];
+var _P9_DIF_SUBORD = [
+  ['consecutiva', 'dificil'], ['completiva', 'dificil'], ['relativa', 'dificil'],
+  ['concessiva', 'medio'], ['final', 'medio'],
+  ['temporal', 'facil'], ['causal', 'facil'], ['condicional', 'facil']
+];
+var _P9_DIF_CONECT = [
+  ['concessão', 'medio'], ['condição', 'medio'], ['conclusão', 'medio'],
+  ['exemplificação', 'facil'], ['causa', 'facil'], ['adição', 'facil']
+];
+var _P9_DIF_FIGURAS = [
+  ['metonímia', 'dificil'], ['antítese', 'medio'], ['anáfora', 'medio'],
+  ['pleonasmo', 'medio'], ['eufemismo', 'medio'], ['ironia', 'medio'],
+  ['aliteração', 'medio'], ['assonância', 'medio'],
+  ['metáfora', 'facil'], ['comparação', 'facil'], ['personificação', 'facil'], ['hipérbole', 'facil']
+];
+var _P9_DIF_LUS = [
+  ['captatio', 'dificil'], ['plano mitológico', 'dificil'], ['sintetiza melhor', 'dificil'],
+  ['mares nunca dantes', 'facil'], ['vénus', 'facil'], ['no canto', 'facil'],
+  ['superiores a', 'medio'], ['velho do restelo', 'medio'], ['adamastor', 'medio'],
+  ['inês', 'medio'], ['ilha dos amores', 'medio'], ['glória de mandar', 'medio']
+];
+var _P9_DIF_BARCA = [
+  ['confessado e comungado', 'dificil'], ['cómico de linguagem', 'dificil'],
+  ['únicas figuras', 'facil'], ['objetos de cena', 'facil'], ['onzeneiro', 'facil'],
+  ['corregedor e o procurador', 'facil'], ['duas barcas', 'facil'],
+  ['parvo', 'medio'], ['frade', 'medio'], ['brísida', 'medio'], ['enforcado', 'medio'], ['pajem', 'medio']
+];
+var _P9_DIF_POESIA = [
+  ['contagem das sílabas', 'dificil'],
+  ['sujeito poético é', 'facil'], ['terceto e', 'facil'], ['abab', 'facil'], ['«eles não sabem»', 'facil'],
+  ['sete sílabas', 'medio'], ['métrica regular', 'medio']
+];
 
 function _port9FichaBanco(cap) {
   var out = (_port9Banco[cap] || []).slice();
   function add(a) { out = out.concat(a); }
   if (cap === 1) {
-    if (typeof PT_LUS_BANCO !== 'undefined') add(_port9ConvBancoLetra(PT_LUS_BANCO, '2', 'Os Lusíadas'));
-    if (typeof PT_BARCA_BANCO !== 'undefined') add(_port9ConvBancoLetra(PT_BARCA_BANCO, '1', 'Auto da Barca do Inferno'));
-    if (typeof PT_POESIA_BANCO !== 'undefined') add(_port9ConvBancoLetra(PT_POESIA_BANCO, '4', 'Poesia'));
+    if (typeof PT_LUS_BANCO !== 'undefined') add(_port9ConvBancoLetra(PT_LUS_BANCO, '2', 'Os Lusíadas', _P9_DIF_LUS));
+    if (typeof PT_BARCA_BANCO !== 'undefined') add(_port9ConvBancoLetra(PT_BARCA_BANCO, '1', 'Auto da Barca do Inferno', _P9_DIF_BARCA));
+    if (typeof PT_POESIA_BANCO !== 'undefined') add(_port9ConvBancoLetra(PT_POESIA_BANCO, '4', 'Poesia', _P9_DIF_POESIA));
   } else if (cap === 2) {
-    if (typeof PT_CLASSES_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_CLASSES_BANCO, 'Identifica a classe da palavra destacada: ', '1', 'Classes de palavras', 'facil'));
-    if (typeof PT_FUNCOES_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_FUNCOES_BANCO, 'Indica a função sintática do elemento destacado: ', '2', 'Funções sintáticas', 'dificil'));
-    if (typeof PT_SUBORDINADAS_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_SUBORDINADAS_BANCO, 'Classifica a oração destacada: ', '3', 'Orações subordinadas', 'medio'));
-    if (typeof PT_CONECTORES_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_CONECTORES_BANCO, 'Seleciona o conector que completa a frase: ', '3', 'Conectores', 'facil'));
-    if (typeof PT_TEMPOS_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_TEMPOS_BANCO, 'Identifica o tempo e o modo da forma verbal destacada: ', '4', 'Tempos verbais', 'medio'));
+    if (typeof PT_CLASSES_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_CLASSES_BANCO, 'Identifica a classe da palavra destacada: ', '1', 'Classes de palavras', 'facil', _P9_DIF_CLASSES));
+    if (typeof PT_FUNCOES_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_FUNCOES_BANCO, 'Indica a função sintática do elemento destacado: ', '2', 'Funções sintáticas', 'medio', _P9_DIF_FUNCOES));
+    if (typeof PT_SUBORDINADAS_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_SUBORDINADAS_BANCO, 'Classifica a oração destacada: ', '3', 'Orações subordinadas', 'medio', _P9_DIF_SUBORD));
+    if (typeof PT_CONECTORES_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_CONECTORES_BANCO, 'Seleciona o conector que completa a frase: ', '3', 'Conectores', 'facil', _P9_DIF_CONECT));
+    if (typeof PT_TEMPOS_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_TEMPOS_BANCO, 'Identifica o tempo e o modo da forma verbal destacada: ', '4', 'Tempos verbais', 'medio', _P9_DIF_TEMPOS));
   } else if (cap === 5) {
-    if (typeof PT_FIGURAS_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_FIGURAS_BANCO, 'Identifica a figura de estilo presente em: ', '1', 'Figuras de estilo', 'facil'));
+    if (typeof PT_FIGURAS_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_FIGURAS_BANCO, 'Identifica a figura de estilo presente em: ', '1', 'Figuras de estilo', 'facil', _P9_DIF_FIGURAS));
   }
   return out;
 }
 
 // Baralha e tira n questões do banco alargado, respeitando o nível pedido.
-// Se o nível pedido não tiver n questões, completa com as restantes.
+// Primeiro só questões DO nível; se não chegarem, completa com as do nível
+// mais próximo (médio→fácil→difícil; difícil→médio→fácil; fácil→médio→difícil),
+// para que Fácil, Médio e Difícil deem fichas realmente diferentes.
 function _port9FichaSlice(banco, n, dif) {
   var ordem = { facil: 0, medio: 1, dificil: 2 };
-  var fil = banco;
-  if (dif && typeof _nivelQuestao === 'function') {
-    fil = banco.filter(function (q) {
-      var nq = ordem[_nivelQuestao(q)];
-      if (dif === 'facil') return nq === 0;
-      if (dif === 'dificil') return nq >= 1;
-      return true;
-    });
-    if (!fil.length) fil = banco;
+  var alvo = ordem[dif];
+  if (alvo === undefined || typeof _nivelQuestao !== 'function') {
+    return shuffle_m81(banco.slice()).slice(0, n).map(function (e, i) { return Object.assign({}, e, { num: i + 1 }); });
   }
-  fil = shuffle_m81(fil.slice());
-  if (fil.length < n) {
-    var resto = banco.filter(function (q) { return fil.indexOf(q) === -1; });
-    fil = fil.concat(shuffle_m81(resto));
-  }
+  var porNivel = { 0: [], 1: [], 2: [] };
+  banco.forEach(function (q) { porNivel[ordem[_nivelQuestao(q)]].push(q); });
+  // níveis por ordem de proximidade ao pedido (em empate, prefere o mais fácil)
+  var niveis = [0, 1, 2].sort(function (a, b) {
+    var da = Math.abs(a - alvo), db = Math.abs(b - alvo);
+    return da !== db ? da - db : a - b;
+  });
+  var fil = [];
+  niveis.forEach(function (nv) { if (fil.length < n) fil = fil.concat(shuffle_m81(porNivel[nv].slice())); });
   return fil.slice(0, n).map(function (e, i) { return Object.assign({}, e, { num: i + 1 }); });
 }
 
@@ -1433,47 +1499,47 @@ var dynState_m81 = {
 var _port9Banco = {
   // ── Domínio 1 · Educação Literária ──
   1: [
-    { t: '1', tipo: 'mc', enun: 'No Auto da Barca do Inferno, que figura representa a usura (cobiça do dinheiro)?', opcoes: ['O Onzeneiro', 'O Frade', 'O Sapateiro', 'O Fidalgo'], resposta: 'O Onzeneiro', expl: 'O Onzeneiro é a figura-tipo do usurário, condenado pela sua avareza.', tema: 'T1 · Auto da Barca' },
-    { t: '1', tipo: 'mc', enun: 'Quem julga as almas que merecem a salvação no Auto da Barca do Inferno?', opcoes: ['O Anjo', 'O Diabo', 'O Parvo', 'O Fidalgo'], resposta: 'O Anjo', expl: 'O Anjo comanda a barca do Paraíso; o Diabo a do Inferno.', tema: 'T1 · Auto da Barca' },
-    { t: '2', tipo: 'mc', enun: 'Os Lusíadas narram sobretudo a viagem de:', opcoes: ['Vasco da Gama à Índia', 'Pedro Álvares Cabral ao Brasil', 'Colombo à América', 'Magalhães à volta ao mundo'], resposta: 'Vasco da Gama à Índia', expl: 'A epopeia celebra a viagem de Vasco da Gama (1497-98) como feito heroico português.', tema: 'T2 · Os Lusíadas' },
-    { t: '2', tipo: 'mc', enun: 'No episódio do Adamastor, esta figura simboliza:', opcoes: ['os perigos e o medo do mar desconhecido', 'o amor entre os marinheiros', 'a riqueza da Índia', 'a paz após a viagem'], resposta: 'os perigos e o medo do mar desconhecido', expl: 'O Adamastor, gigante do Cabo das Tormentas, personifica os perigos da navegação.', tema: 'T2 · Os Lusíadas' },
-    { t: '2', tipo: 'mc', enun: 'Que episódio de Os Lusíadas trata de um amor trágico que termina em morte?', opcoes: ['Inês de Castro', 'A Ilha dos Amores', 'A Proposição', 'O Consílio dos Deuses'], resposta: 'Inês de Castro', expl: 'O episódio de Inês de Castro narra o seu amor por D. Pedro e o seu assassínio.', tema: 'T2 · Os Lusíadas' },
-    { t: '3', tipo: 'mc', enun: 'Um conto é uma narrativa:', opcoes: ['curta, com uma só ação central', 'longa, com muitas personagens', 'sempre em verso', 'sem narrador'], resposta: 'curta, com uma só ação central', expl: 'O conto caracteriza-se pela brevidade e por concentrar-se numa única ação.', tema: 'T3 · Contos' },
-    { t: '4', tipo: 'mc', enun: 'A "voz" que exprime emoções num poema chama-se:', opcoes: ['sujeito poético', 'narrador', 'autor', 'personagem'], resposta: 'sujeito poético', expl: 'O sujeito poético é a entidade que fala no texto lírico — não se confunde com o autor.', tema: 'T4 · Poesia' }
+    { t: '1', tipo: 'mc', dif: 'facil', enun: 'No Auto da Barca do Inferno, que figura representa a usura (cobiça do dinheiro)?', opcoes: ['O Onzeneiro', 'O Frade', 'O Sapateiro', 'O Fidalgo'], resposta: 'O Onzeneiro', expl: 'O Onzeneiro é a figura-tipo do usurário, condenado pela sua avareza.', tema: 'T1 · Auto da Barca' },
+    { t: '1', tipo: 'mc', dif: 'facil', enun: 'Quem julga as almas que merecem a salvação no Auto da Barca do Inferno?', opcoes: ['O Anjo', 'O Diabo', 'O Parvo', 'O Fidalgo'], resposta: 'O Anjo', expl: 'O Anjo comanda a barca do Paraíso; o Diabo a do Inferno.', tema: 'T1 · Auto da Barca' },
+    { t: '2', tipo: 'mc', dif: 'facil', enun: 'Os Lusíadas narram sobretudo a viagem de:', opcoes: ['Vasco da Gama à Índia', 'Pedro Álvares Cabral ao Brasil', 'Colombo à América', 'Magalhães à volta ao mundo'], resposta: 'Vasco da Gama à Índia', expl: 'A epopeia celebra a viagem de Vasco da Gama (1497-98) como feito heroico português.', tema: 'T2 · Os Lusíadas' },
+    { t: '2', tipo: 'mc', dif: 'medio', enun: 'No episódio do Adamastor, esta figura simboliza:', opcoes: ['os perigos e o medo do mar desconhecido', 'o amor entre os marinheiros', 'a riqueza da Índia', 'a paz após a viagem'], resposta: 'os perigos e o medo do mar desconhecido', expl: 'O Adamastor, gigante do Cabo das Tormentas, personifica os perigos da navegação.', tema: 'T2 · Os Lusíadas' },
+    { t: '2', tipo: 'mc', dif: 'facil', enun: 'Que episódio de Os Lusíadas trata de um amor trágico que termina em morte?', opcoes: ['Inês de Castro', 'A Ilha dos Amores', 'A Proposição', 'O Consílio dos Deuses'], resposta: 'Inês de Castro', expl: 'O episódio de Inês de Castro narra o seu amor por D. Pedro e o seu assassínio.', tema: 'T2 · Os Lusíadas' },
+    { t: '3', tipo: 'mc', dif: 'facil', enun: 'Um conto é uma narrativa:', opcoes: ['curta, com uma só ação central', 'longa, com muitas personagens', 'sempre em verso', 'sem narrador'], resposta: 'curta, com uma só ação central', expl: 'O conto caracteriza-se pela brevidade e por concentrar-se numa única ação.', tema: 'T3 · Contos' },
+    { t: '4', tipo: 'mc', dif: 'medio', enun: 'A «voz» que exprime emoções num poema chama-se:', opcoes: ['sujeito poético', 'narrador', 'autor', 'personagem'], resposta: 'sujeito poético', expl: 'O sujeito poético é a entidade que fala no texto lírico — não se confunde com o autor.', tema: 'T4 · Poesia' }
   ],
   // ── Domínio 2 · Gramática ──
   2: [
-    { t: '1', tipo: 'mc', enun: 'Na frase "O João comprou um livro", qual é a classe de "livro"?', opcoes: ['nome', 'verbo', 'adjetivo', 'advérbio'], resposta: 'nome', expl: '"Livro" designa um ser/objeto → é um nome (substantivo).', tema: 'T1 · Classes de Palavras' },
-    { t: '2', tipo: 'mc', enun: 'Na frase "A Maria leu o livro", qual é a função sintática de "o livro"?', opcoes: ['complemento direto', 'sujeito', 'complemento indireto', 'predicativo do sujeito'], resposta: 'complemento direto', expl: 'Responde a "leu o quê?" sem preposição → complemento direto.', tema: 'T2 · Funções Sintáticas' },
-    { t: '2', tipo: 'mc', enun: 'Em "Ofereci flores à minha mãe", "à minha mãe" é:', opcoes: ['complemento indireto', 'complemento direto', 'sujeito', 'modificador'], resposta: 'complemento indireto', expl: 'Responde a "a quem?" com a preposição a → complemento indireto.', tema: 'T2 · Funções Sintáticas' },
-    { t: '3', tipo: 'mc', enun: 'A oração sublinhada em "Disse QUE VINHA" é:', opcoes: ['subordinada substantiva completiva', 'coordenada copulativa', 'subordinada adverbial', 'oração principal'], resposta: 'subordinada substantiva completiva', expl: 'Completa o sentido do verbo "disse" e funciona como complemento → completiva.', tema: 'T3 · Orações' },
-    { t: '4', tipo: 'mc', enun: 'Em "Espero que tu venhas", o verbo "venhas" está no modo:', opcoes: ['conjuntivo', 'indicativo', 'imperativo', 'condicional'], resposta: 'conjuntivo', expl: 'Exprime um desejo/hipótese dependente → conjuntivo (presente).', tema: 'T4 · Modos Verbais' },
-    { t: '1', tipo: 'mc', enun: 'Qual destas palavras é um determinante?', opcoes: ['aquele', 'correr', 'rapidamente', 'belo'], resposta: 'aquele', expl: '"Aquele" é determinante demonstrativo (acompanha o nome).', tema: 'T1 · Classes de Palavras' }
+    { t: '1', tipo: 'mc', dif: 'facil', enun: 'Na frase «O João comprou um livro», qual é a classe de «livro»?', opcoes: ['nome', 'verbo', 'adjetivo', 'advérbio'], resposta: 'nome', expl: '«Livro» designa um ser/objeto → é um nome (substantivo).', tema: 'T1 · Classes de Palavras' },
+    { t: '2', tipo: 'mc', dif: 'medio', enun: 'Na frase «A Maria leu o livro», qual é a função sintática de «o livro»?', opcoes: ['complemento direto', 'sujeito', 'complemento indireto', 'predicativo do sujeito'], resposta: 'complemento direto', expl: 'Responde a «leu o quê?» sem preposição → complemento direto.', tema: 'T2 · Funções Sintáticas' },
+    { t: '2', tipo: 'mc', dif: 'medio', enun: 'Em «Ofereci flores à minha mãe», «à minha mãe» é:', opcoes: ['complemento indireto', 'complemento direto', 'sujeito', 'modificador'], resposta: 'complemento indireto', expl: 'Responde a «a quem?» com a preposição a → complemento indireto.', tema: 'T2 · Funções Sintáticas' },
+    { t: '3', tipo: 'mc', dif: 'dificil', enun: 'A oração sublinhada em «Disse QUE VINHA» é:', opcoes: ['subordinada substantiva completiva', 'coordenada copulativa', 'subordinada adverbial', 'oração principal'], resposta: 'subordinada substantiva completiva', expl: 'Completa o sentido do verbo «disse» e funciona como complemento → completiva.', tema: 'T3 · Orações' },
+    { t: '4', tipo: 'mc', dif: 'medio', enun: 'Em «Espero que tu venhas», o verbo «venhas» está no modo:', opcoes: ['conjuntivo', 'indicativo', 'imperativo', 'condicional'], resposta: 'conjuntivo', expl: 'Exprime um desejo/hipótese dependente → conjuntivo (presente).', tema: 'T4 · Modos Verbais' },
+    { t: '1', tipo: 'mc', dif: 'facil', enun: 'Qual destas palavras é um determinante?', opcoes: ['aquele', 'correr', 'rapidamente', 'belo'], resposta: 'aquele', expl: '«Aquele» é determinante demonstrativo (acompanha o nome).', tema: 'T1 · Classes de Palavras' }
   ],
   // ── Domínio 3 · Leitura ──
   3: [
-    { t: '1', tipo: 'mc', enun: 'O assunto central de que um texto trata chama-se:', opcoes: ['tema', 'título', 'narrador', 'conclusão'], resposta: 'tema', expl: 'O tema é o assunto central; distingue-se da ideia principal (o que se afirma sobre ele).', tema: 'T1 · Compreensão' },
-    { t: '2', tipo: 'mc', enun: 'Um texto que defende uma tese com argumentos é predominantemente:', opcoes: ['argumentativo', 'narrativo', 'descritivo', 'dialogal'], resposta: 'argumentativo', expl: 'O texto argumentativo apresenta uma tese e fundamenta-a com argumentos.', tema: 'T2 · Tipologias' },
-    { t: '3', tipo: 'mc', enun: 'Deduzir informação que o texto não diz explicitamente é:', opcoes: ['inferir', 'resumir', 'citar', 'parafrasear'], resposta: 'inferir', expl: 'Inferir é tirar conclusões a partir de pistas do texto.', tema: 'T3 · Sentidos' },
-    { t: '3', tipo: 'mc', enun: 'Na expressão "a noite da sua vida", "noite" tem sentido:', opcoes: ['conotativo', 'denotativo', 'literal', 'objetivo'], resposta: 'conotativo', expl: 'Sentido figurado (tristeza/dificuldade), não o literal de período do dia.', tema: 'T3 · Sentidos' },
-    { t: '1', tipo: 'mc', enun: 'Um narrador que conta a história na 1.ª pessoa é:', opcoes: ['participante', 'omnisciente', 'ausente', 'não participante'], resposta: 'participante', expl: 'O narrador de 1.ª pessoa participa na ação que narra.', tema: 'T1 · Compreensão' }
+    { t: '1', tipo: 'mc', dif: 'facil', enun: 'O assunto central de que um texto trata chama-se:', opcoes: ['tema', 'título', 'narrador', 'conclusão'], resposta: 'tema', expl: 'O tema é o assunto central; distingue-se da ideia principal (o que se afirma sobre ele).', tema: 'T1 · Compreensão' },
+    { t: '2', tipo: 'mc', dif: 'medio', enun: 'Um texto que defende uma tese com argumentos é predominantemente:', opcoes: ['argumentativo', 'narrativo', 'descritivo', 'dialogal'], resposta: 'argumentativo', expl: 'O texto argumentativo apresenta uma tese e fundamenta-a com argumentos.', tema: 'T2 · Tipologias' },
+    { t: '3', tipo: 'mc', dif: 'medio', enun: 'Deduzir informação que o texto não diz explicitamente é:', opcoes: ['inferir', 'resumir', 'citar', 'parafrasear'], resposta: 'inferir', expl: 'Inferir é tirar conclusões a partir de pistas do texto.', tema: 'T3 · Sentidos' },
+    { t: '3', tipo: 'mc', dif: 'medio', enun: 'Na expressão «a noite da sua vida», «noite» tem sentido:', opcoes: ['conotativo', 'denotativo', 'literal', 'objetivo'], resposta: 'conotativo', expl: 'Sentido figurado (tristeza/dificuldade), não o literal de período do dia.', tema: 'T3 · Sentidos' },
+    { t: '1', tipo: 'mc', dif: 'facil', enun: 'Um narrador que conta a história na 1.ª pessoa é:', opcoes: ['participante', 'omnisciente', 'ausente', 'não participante'], resposta: 'participante', expl: 'O narrador de 1.ª pessoa participa na ação que narra.', tema: 'T1 · Compreensão' }
   ],
   // ── Domínio 4 · Escrita ──
   4: [
-    { t: '1', tipo: 'mc', enun: 'A estrutura típica de um texto de opinião é:', opcoes: ['introdução, desenvolvimento, conclusão', 'só desenvolvimento', 'título e lista', 'diálogo e desfecho'], resposta: 'introdução, desenvolvimento, conclusão', expl: 'Introdução (tese), desenvolvimento (argumentos), conclusão (reafirma a posição).', tema: 'T1 · Texto de Opinião' },
-    { t: '1', tipo: 'mc', enun: 'No exame, o texto de opinião deve ter:', opcoes: ['entre 160 e 260 palavras', 'no máximo 50 palavras', 'exatamente 100 palavras', 'sem limite'], resposta: 'entre 160 e 260 palavras', expl: 'O exame de 9.º pede um mínimo de 160 e um máximo de 260 palavras.', tema: 'T1 · Texto de Opinião' },
-    { t: '2', tipo: 'mc', enun: 'A sequência de um texto narrativo é, em geral:', opcoes: ['situação inicial, conflito, desenlace', 'tese, argumentos, conclusão', 'pergunta e resposta', 'introdução e índice'], resposta: 'situação inicial, conflito, desenlace', expl: 'A narrativa progride da situação inicial, pelo conflito, até ao desenlace.', tema: 'T2 · Texto Narrativo' },
-    { t: '1', tipo: 'mc', enun: 'Palavras como "além disso", "contudo", "portanto" são:', opcoes: ['conectores', 'adjetivos', 'nomes', 'interjeições'], resposta: 'conectores', expl: 'Conectores ligam ideias e dão coesão ao texto.', tema: 'T1 · Coesão' },
-    { t: '2', tipo: 'mc', enun: 'Um texto que apresenta e explica informação de forma objetiva é:', opcoes: ['expositivo', 'de opinião', 'lírico', 'dramático'], resposta: 'expositivo', expl: 'O texto expositivo informa de forma clara e objetiva.', tema: 'T2 · Texto Expositivo' }
+    { t: '1', tipo: 'mc', dif: 'facil', enun: 'A estrutura típica de um texto de opinião é:', opcoes: ['introdução, desenvolvimento, conclusão', 'só desenvolvimento', 'título e lista', 'diálogo e desfecho'], resposta: 'introdução, desenvolvimento, conclusão', expl: 'Introdução (tese), desenvolvimento (argumentos), conclusão (reafirma a posição).', tema: 'T1 · Texto de Opinião' },
+    { t: '1', tipo: 'mc', dif: 'facil', enun: 'No exame, o texto de opinião deve ter:', opcoes: ['entre 160 e 260 palavras', 'no máximo 50 palavras', 'exatamente 100 palavras', 'sem limite'], resposta: 'entre 160 e 260 palavras', expl: 'O exame de 9.º pede um mínimo de 160 e um máximo de 260 palavras.', tema: 'T1 · Texto de Opinião' },
+    { t: '2', tipo: 'mc', dif: 'medio', enun: 'A sequência de um texto narrativo é, em geral:', opcoes: ['situação inicial, conflito, desenlace', 'tese, argumentos, conclusão', 'pergunta e resposta', 'introdução e índice'], resposta: 'situação inicial, conflito, desenlace', expl: 'A narrativa progride da situação inicial, pelo conflito, até ao desenlace.', tema: 'T2 · Texto Narrativo' },
+    { t: '1', tipo: 'mc', dif: 'facil', enun: 'Palavras como «além disso», «contudo», «portanto» são:', opcoes: ['conectores', 'adjetivos', 'nomes', 'interjeições'], resposta: 'conectores', expl: 'Conectores ligam ideias e dão coesão ao texto.', tema: 'T1 · Coesão' },
+    { t: '2', tipo: 'mc', dif: 'medio', enun: 'Um texto que apresenta e explica informação de forma objetiva é:', opcoes: ['expositivo', 'de opinião', 'lírico', 'dramático'], resposta: 'expositivo', expl: 'O texto expositivo informa de forma clara e objetiva.', tema: 'T2 · Texto Expositivo' }
   ],
   // ── Domínio 5 · Recursos Expressivos ──
   5: [
-    { t: '1', tipo: 'mc', enun: 'Em "os teus olhos são duas estrelas", a figura de estilo é:', opcoes: ['metáfora', 'comparação', 'hipérbole', 'aliteração'], resposta: 'metáfora', expl: 'Identifica olhos e estrelas SEM palavra de ligação → metáfora.', tema: 'T1 · Figuras' },
-    { t: '1', tipo: 'mc', enun: 'Em "corre como o vento", a figura de estilo é:', opcoes: ['comparação', 'metáfora', 'personificação', 'eufemismo'], resposta: 'comparação', expl: 'Usa "como" para aproximar dois elementos → comparação.', tema: 'T1 · Figuras' },
-    { t: '1', tipo: 'mc', enun: 'Em "o vento gemia na noite", a figura é:', opcoes: ['personificação', 'hipérbole', 'antítese', 'ironia'], resposta: 'personificação', expl: 'Atribui uma ação humana (gemer) ao vento → personificação.', tema: 'T1 · Figuras' },
-    { t: '1', tipo: 'mc', enun: 'Em "chorei rios de lágrimas", a figura é:', opcoes: ['hipérbole', 'comparação', 'metáfora', 'anáfora'], resposta: 'hipérbole', expl: 'Exagero intencional para dar ênfase → hipérbole.', tema: 'T1 · Figuras' },
-    { t: '2', tipo: 'mc', enun: 'A repetição de sons consonânticos ("o rato roeu a rolha") é:', opcoes: ['aliteração', 'anáfora', 'enumeração', 'metáfora'], resposta: 'aliteração', expl: 'Repetição de sons (r) para musicalidade → aliteração.', tema: 'T2 · Recursos' },
-    { t: '3', tipo: 'mc', enun: 'Um verso de 10 sílabas métricas chama-se:', opcoes: ['decassílabo', 'redondilha maior', 'alexandrino', 'octossílabo'], resposta: 'decassílabo', expl: 'Dez sílabas métricas = decassílabo (a medida de Os Lusíadas).', tema: 'T3 · Versificação' }
+    { t: '1', tipo: 'mc', dif: 'facil', enun: 'Em «os teus olhos são duas estrelas», a figura de estilo é:', opcoes: ['metáfora', 'comparação', 'hipérbole', 'aliteração'], resposta: 'metáfora', expl: 'Identifica olhos e estrelas SEM palavra de ligação → metáfora.', tema: 'T1 · Figuras' },
+    { t: '1', tipo: 'mc', dif: 'facil', enun: 'Em «corre como o vento», a figura de estilo é:', opcoes: ['comparação', 'metáfora', 'personificação', 'eufemismo'], resposta: 'comparação', expl: 'Usa «como» para aproximar dois elementos → comparação.', tema: 'T1 · Figuras' },
+    { t: '1', tipo: 'mc', dif: 'facil', enun: 'Em «o vento gemia na noite», a figura é:', opcoes: ['personificação', 'hipérbole', 'antítese', 'ironia'], resposta: 'personificação', expl: 'Atribui uma ação humana (gemer) ao vento → personificação.', tema: 'T1 · Figuras' },
+    { t: '1', tipo: 'mc', dif: 'facil', enun: 'Em «chorei rios de lágrimas», a figura é:', opcoes: ['hipérbole', 'comparação', 'metáfora', 'anáfora'], resposta: 'hipérbole', expl: 'Exagero intencional para dar ênfase → hipérbole.', tema: 'T1 · Figuras' },
+    { t: '2', tipo: 'mc', dif: 'medio', enun: 'A repetição de sons consonânticos («o rato roeu a rolha») é:', opcoes: ['aliteração', 'anáfora', 'enumeração', 'metáfora'], resposta: 'aliteração', expl: 'Repetição de sons (r) para musicalidade → aliteração.', tema: 'T2 · Recursos' },
+    { t: '3', tipo: 'mc', dif: 'medio', enun: 'Um verso de 10 sílabas métricas chama-se:', opcoes: ['decassílabo', 'redondilha maior', 'alexandrino', 'octossílabo'], resposta: 'decassílabo', expl: 'Dez sílabas métricas = decassílabo (a medida de Os Lusíadas).', tema: 'T3 · Versificação' }
   ]
 };
 
@@ -1536,4 +1602,28 @@ _port9Banco[5] = _port9Banco[5].concat([
   { t: '1', tipo: 'mc', dif: 'dificil', enun: 'Em «Lisboa inteira aplaudiu a equipa», a figura presente é:', opcoes: ['metonímia (o lugar pelos seus habitantes)', 'personificação', 'comparação', 'eufemismo'], resposta: 'metonímia (o lugar pelos seus habitantes)', expl: 'Diz-se «Lisboa» em vez de «os habitantes de Lisboa» — substituição por contiguidade: metonímia.', tema: 'T1 · Figuras' },
   { t: '1', tipo: 'mc', dif: 'facil', enun: 'Em «Ele é um autêntico leão em campo», a figura é:', opcoes: ['metáfora', 'comparação', 'eufemismo', 'pleonasmo'], resposta: 'metáfora', expl: 'Identifica o jogador com um leão SEM palavra comparativa («como») — metáfora.', tema: 'T1 · Figuras' },
   { t: '3', tipo: 'mc', dif: 'dificil', enun: 'Quanto à forma, os versos de Os Lusíadas são:', opcoes: ['decassílabos, em oitavas com esquema ABABABCC', 'redondilhas, em quadras AABB', 'alexandrinos soltos', 'versos livres'], resposta: 'decassílabos, em oitavas com esquema ABABABCC', expl: 'A oitava camoniana (oitava rima): 8 versos decassílabos rimados ABABABCC.', tema: 'T3 · Versificação' }
+]);
+
+/* ── REFORÇO 2 · questões DIFÍCEIS de contexto (estilo exame: ler, inferir,
+   aplicar) — sobretudo Leitura e Escrita, que tinham défice no nível difícil. */
+_port9Banco[3] = _port9Banco[3].concat([
+  { t: '1', tipo: 'mc', dif: 'dificil', enun: 'Lê: «Apesar de a chuva ter parado, o jogo continuou adiado, pois o relvado permanecia impraticável.» O adiamento manteve-se porque:', opcoes: ['o relvado não tinha condições de jogo', 'continuava a chover', 'os jogadores não apareceram', 'o árbitro chegou atrasado'], resposta: 'o relvado não tinha condições de jogo', expl: 'O conector «pois» introduz a causa real: mesmo sem chuva, o relvado «permanecia impraticável».', tema: 'T1 · Compreensão' },
+  { t: '1', tipo: 'mc', dif: 'dificil', enun: 'Lê: «A Marta olhou para o relógio pela quinta vez e suspirou, enquanto o autocarro não aparecia.» Do comportamento da Marta pode inferir-se que:', opcoes: ['estava impaciente com a espera', 'estava atrasada para o autocarro', 'não sabia ver as horas', 'gostava de andar de autocarro'], resposta: 'estava impaciente com a espera', expl: 'Olhar repetidamente para o relógio e suspirar são sinais de impaciência — inferência apoiada nas ações descritas.', tema: 'T1 · Compreensão' },
+  { t: '3', tipo: 'mc', dif: 'dificil', enun: 'Lê: «O meu irmão é um “génio” a estacionar: precisou de seis tentativas.» As aspas em «génio» sugerem:', opcoes: ['ironia — quer dizer-se o contrário', 'admiração sincera', 'uma citação de outro autor', 'um termo técnico'], resposta: 'ironia — quer dizer-se o contrário', expl: 'O contexto (seis tentativas) mostra que «génio» é usado com sentido irónico: afirma-se o contrário do que se pensa.', tema: 'T3 · Sentidos' },
+  { t: '3', tipo: 'mc', dif: 'dificil', enun: 'Lê: «Naquela loja, as bicicletas vendem-se como pão quente.» Quer dizer-se que as bicicletas:', opcoes: ['se vendem muito e depressa', 'são vendidas junto à padaria', 'são baratas como o pão', 'se estragam com o calor'], resposta: 'se vendem muito e depressa', expl: '«Vender-se como pão quente» é uma expressão idiomática: sair rapidamente, ter muita procura.', tema: 'T3 · Sentidos' },
+  { t: '1', tipo: 'mc', dif: 'dificil', enun: 'Lê: «— Não vou desistir — repetiu, de punhos cerrados.» Os punhos cerrados reforçam, na personagem:', opcoes: ['a determinação', 'o medo', 'a alegria', 'o cansaço'], resposta: 'a determinação', expl: 'O gesto físico (punhos cerrados) intensifica a firmeza das palavras — caracterização indireta da personagem.', tema: 'T1 · Compreensão' }
+]);
+
+_port9Banco[4] = _port9Banco[4].concat([
+  { t: '1', tipo: 'mc', dif: 'dificil', enun: 'Qual é a sequência mais lógica para desenvolver um argumento num texto de opinião?', opcoes: ['afirmação → justificação → exemplo', 'exemplo → conclusão → afirmação', 'conclusão → afirmação → tese', 'justificação → tese → título'], resposta: 'afirmação → justificação → exemplo', expl: 'Primeiro afirma-se a ideia, depois justifica-se com uma razão e ilustra-se com um exemplo concreto.', tema: 'T1 · Texto de Opinião' },
+  { t: '1', tipo: 'mc', dif: 'dificil', enun: 'Em qual das frases o registo de língua é adequado a um texto de opinião escolar?', opcoes: ['Considero que o uso do telemóvel nas aulas deve ser regulado.', 'Acho que isso dos telemóveis é uma grande cena.', 'Os telemóveis? Nada a ver, fogo.', 'O pessoal não curte nada estas regras.'], resposta: 'Considero que o uso do telemóvel nas aulas deve ser regulado.', expl: 'Num texto de opinião escolar usa-se registo cuidado: sem calão («cena», «curte») nem marcas de oralidade.', tema: 'T1 · Texto de Opinião' },
+  { t: '1', tipo: 'mc', dif: 'dificil', enun: 'Qual das frases evita a repetição em «O João leu o livro. O João gostou muito do livro.»?', opcoes: ['O João leu o livro e gostou muito dele.', 'O João leu o livro. O João adorou o livro.', 'O livro foi lido pelo João. O João gostou do livro.', 'O João leu. O João gostou.'], resposta: 'O João leu o livro e gostou muito dele.', expl: 'A coordenação e o pronome «dele» eliminam as repetições sem perder informação — mecanismos de coesão.', tema: 'T1 · Coesão' },
+  { t: '1', tipo: 'mc', dif: 'dificil', enun: 'Num texto de opinião, refutar um contra-argumento significa:', opcoes: ['apresentá-lo e mostrar porque não invalida a tua tese', 'ignorá-lo para não dar ideias ao leitor', 'aceitá-lo e mudar de tese', 'repeti-lo várias vezes'], resposta: 'apresentá-lo e mostrar porque não invalida a tua tese', expl: 'Refutar é reconhecer a objeção e desmontá-la com razões — torna a argumentação mais forte e completa.', tema: 'T1 · Texto de Opinião' },
+  { t: '2', tipo: 'mc', dif: 'dificil', enun: 'Lê: «Cheguei. Vi a casa. Era velha. Tinha medo.» O principal problema deste excerto narrativo é:', opcoes: ['frases demasiado curtas e desligadas, sem conectores', 'erros de ortografia', 'excesso de conectores', 'tempo verbal errado'], resposta: 'frases demasiado curtas e desligadas, sem conectores', expl: 'O texto precisa de coesão: «Quando cheguei e vi a casa, percebi que era velha e senti medo.»', tema: 'T2 · Texto Narrativo' }
+]);
+
+_port9Banco[5] = _port9Banco[5].concat([
+  { t: '1', tipo: 'mc', dif: 'dificil', enun: 'Em «E vi claramente visto o lume vivo» (Os Lusíadas, Canto V), «claramente visto» é um exemplo de:', opcoes: ['pleonasmo expressivo', 'eufemismo', 'comparação', 'anáfora'], resposta: 'pleonasmo expressivo', expl: 'Camões reforça a ideia de ver com «claramente visto» — redundância intencional (pleonasmo) que dá credibilidade ao relato do fogo-de-santelmo.', tema: 'T1 · Figuras' },
+  { t: '1', tipo: 'mc', dif: 'dificil', enun: 'Lê: «Não sou nada. / Nunca serei nada. / Não posso querer ser nada.» (Álvaro de Campos). O recurso dominante é:', opcoes: ['anáfora (repetição em início de verso)', 'eufemismo', 'metonímia', 'comparação'], resposta: 'anáfora (repetição em início de verso)', expl: 'A repetição de «N...» no início dos três versos (não/nunca/não) martela a negação — anáfora.', tema: 'T1 · Figuras' },
+  { t: '3', tipo: 'mc', dif: 'dificil', enun: 'No verso «As armas e os barões assinalados», o número de sílabas métricas é:', opcoes: ['10', '12', '8', '11'], resposta: '10', expl: 'A-sar-ma-se os-ba-rões-as-si-na-LA(-dos): conta-se até à última tónica («la») — decassílabo, a medida de Os Lusíadas.', tema: 'T3 · Versificação' }
 ]);
