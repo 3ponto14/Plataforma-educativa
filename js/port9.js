@@ -1071,16 +1071,38 @@ function port9ProgDownloadPDF() {
    ════════════════════════════════════════════════════════════════ */
 var _port9gf = {
   caps: {},            // { cap: true } selecionados
+  sts: {},             // { cap: { stIdx(1..n): true } } tópicos por capítulo; vazio = todos
   tipos: { resumo: true, exercicios: true, teste: true, minitestes: false, solucoes: true },
   dif: 'facil',
   qty: 10
 };
 
-// Constrói a lista de capítulos selecionáveis (só os com gerador).
+// Tópicos (índices 1..n) escolhidos para um capítulo; null = todos.
+function _port9gfStsSel(cap) {
+  var sel = _port9gf.sts[cap];
+  if (!sel) return null;
+  var out = [];
+  Object.keys(sel).forEach(function (i) { if (sel[i]) out.push(parseInt(i)); });
+  return out.length ? out : null;
+}
+
+// Chaves t do banco correspondentes aos tópicos escolhidos; null = todos.
+function _port9gfTemasSel(cap) {
+  var sts = _port9gfStsSel(cap);
+  if (!sts) return null;
+  var mapa = _port9SubtemaTemas[cap] || {};
+  var temas = [];
+  sts.forEach(function (i) { (mapa[i] || [String(i)]).forEach(function (t) { if (temas.indexOf(t) === -1) temas.push(t); }); });
+  return temas.length ? temas : null;
+}
+
+// Constrói a lista de capítulos selecionáveis e, para cada capítulo
+// selecionado, os chips dos tópicos (subtemas) — a dona pediu para poder
+// gerar fichas só de um tópico (ex.: só Os Lusíadas, só Funções Sintáticas).
 function port9FichasBuildNav() {
   var el = document.getElementById('port9-fichas-caps');
   if (!el) return;
-  // por defeito, seleciona o primeiro capítulo com gerador
+  // por defeito, seleciona o primeiro capítulo com conteúdo
   var temAlgum = false;
   for (var k in _port9gf.caps) { if (_port9gf.caps[k]) { temAlgum = true; break; } }
   var h = '';
@@ -1092,15 +1114,48 @@ function port9FichasBuildNav() {
     var color = _port9CapColors[m.n] || '#516860';
     var style = sel ? 'background:' + color + ';border-color:' + color + ';color:#fff' : '';
     h += '<button class="gf-cap-btn' + (sel ? ' active' : '') + '" data-cap="' + m.n + '" onclick="port9gfToggleCap(' + m.n + ',this)" style="' + style + '">' + m.icon + ' ' + m.label + '</button>';
+    // tópicos do capítulo selecionado
+    if (sel) {
+      var sts = _port9Subtemas[m.n] || [];
+      if (sts.length) {
+        var escolhidos = _port9gf.sts[m.n] || {};
+        var algumSt = _port9gfStsSel(m.n) !== null;
+        h += '<div style="margin:.15rem 0 .55rem 1.1rem;display:flex;flex-wrap:wrap;gap:.3rem;align-items:center">';
+        h += '<span style="font-size:.66rem;font-weight:800;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-right:.2rem">Tópicos:</span>';
+        h += '<button onclick="port9gfToggleSt(' + m.n + ',0,this)" style="' + _port9gfStStyle(!algumSt, color) + '">Todos</button>';
+        sts.forEach(function (st, i) {
+          var on = !!escolhidos[i + 1];
+          h += '<button onclick="port9gfToggleSt(' + m.n + ',' + (i + 1) + ',this)" style="' + _port9gfStStyle(on, color) + '">' + st + '</button>';
+        });
+        h += '</div>';
+      }
+    }
   });
   el.innerHTML = h;
 }
 
+function _port9gfStStyle(on, color) {
+  return 'border-radius:999px;padding:3px 11px;font-size:.7rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s;'
+    + (on ? 'background:' + color + ';border:1.5px solid ' + color + ';color:#fff'
+          : 'background:var(--white);border:1.5px solid var(--border);color:var(--ink3)');
+}
+
 function port9gfToggleCap(cap, btn) {
   _port9gf.caps[cap] = !_port9gf.caps[cap];
-  var color = _port9CapColors[cap] || '#516860';
-  if (_port9gf.caps[cap]) { btn.classList.add('active'); btn.style.background = color; btn.style.borderColor = color; btn.style.color = '#fff'; }
-  else { btn.classList.remove('active'); btn.style.background = ''; btn.style.borderColor = ''; btn.style.color = ''; }
+  if (!_port9gf.caps[cap]) delete _port9gf.sts[cap]; // desmarcar cap limpa os tópicos
+  port9FichasBuildNav(); // re-render para mostrar/esconder a linha de tópicos
+}
+
+// idx 0 = «Todos» (limpa a seleção); idx 1..n alterna o tópico.
+function port9gfToggleSt(cap, idx, btn) {
+  if (idx === 0) {
+    delete _port9gf.sts[cap];
+  } else {
+    if (!_port9gf.sts[cap]) _port9gf.sts[cap] = {};
+    _port9gf.sts[cap][idx] = !_port9gf.sts[cap][idx];
+    if (_port9gfStsSel(cap) === null) delete _port9gf.sts[cap]; // tudo desmarcado = todos
+  }
+  port9FichasBuildNav();
 }
 
 function port9gfToggleType(btn) {
@@ -1156,8 +1211,15 @@ function _port9gfExBloco(exs, startNum) {
 function _port9gfGenExs(cap, n) {
   var gen = _port9Gerador(cap);
   if (!gen) {
-    // PT: a ficha vem toda do banco alargado (domínio + módulos realojados)
-    return _port9FichaSlice(_port9FichaBanco(cap), n, _port9gf.dif);
+    // PT: a ficha vem toda do banco alargado (domínio + módulos realojados),
+    // restringido aos tópicos escolhidos (se a dona/aluno escolheu algum)
+    var pool = _port9FichaBanco(cap);
+    var temasSel = _port9gfTemasSel(cap);
+    if (temasSel) {
+      var filtrado = pool.filter(function (q) { return temasSel.indexOf(q.t) !== -1; });
+      if (filtrado.length) pool = filtrado;
+    }
+    return _port9FichaSlice(pool, n, _port9gf.dif);
   }
   var nTemas = _port9TemasCount[cap] || 1;
   var tipos = ['mc', 'fill', 'vf', 'fill', 'mc', 'mc'];
@@ -1202,9 +1264,24 @@ function port9gfGerar(formato) {
     corpo += '<div style="' + (ci > 0 ? 'page-break-before:always;' : '') + 'margin-bottom:6px">'
       + '<h2 style="font-size:16px;color:' + color + ';border-bottom:2px solid ' + color + ';padding-bottom:4px;margin:0 0 10px">' + cap + '. ' + m.label + '</h2>';
 
-    // Resumo teórico (das flashcards)
+    // Resumo teórico (das flashcards), restringido aos tópicos escolhidos
+    // quando o filtro apanha cartões suficientes (senão mostra o domínio todo)
     if (_port9gf.tipos.resumo) {
       var cards = _port9Cards[cap] || [];
+      var stsR = _port9gfStsSel(cap);
+      if (stsR && cards.length) {
+        var palavras = [];
+        stsR.forEach(function (i) {
+          String((_port9Subtemas[cap] || [])[i - 1] || '').toLowerCase().split(/\s+/).forEach(function (w) {
+            if (w.length >= 5 && palavras.indexOf(w) === -1) palavras.push(w);
+          });
+        });
+        var filtrados = cards.filter(function (c) {
+          var txt = ((c.tag || '') + ' ' + (c.q || '') + ' ' + (c.a || '')).toLowerCase();
+          return palavras.some(function (w) { return txt.indexOf(w) !== -1; });
+        });
+        if (filtrados.length >= 2) cards = filtrados;
+      }
       if (cards.length) {
         corpo += '<div style="margin-bottom:12px"><h3 style="font-size:13px;color:#444;margin:0 0 5px">Resumo teórico</h3>';
         cards.slice(0, 8).forEach(function(c) {
@@ -1233,8 +1310,10 @@ function port9gfGerar(formato) {
       var mapa = _port9SubtemaTemas[cap] || {};
       var genM = _port9Gerador(cap);
       var bancoM = genM ? null : _port9FichaBanco(cap); // PT: sem gerador, usa o banco alargado
+      var stsSelM = _port9gfStsSel(cap); // só minitestes dos tópicos escolhidos
       corpo += '<div style="margin-bottom:12px"><h3 style="font-size:13px;color:#444;margin:0 0 5px">Minitestes</h3>';
       subt.forEach(function(st, si) {
+        if (stsSelM && stsSelM.indexOf(si + 1) === -1) return;
         var temas = mapa[si + 1] || [String(si + 1)];
         var exsM = [];
         if (genM) {
@@ -1270,7 +1349,16 @@ function port9gfGerar(formato) {
     solHTML = '<div style="page-break-before:always;padding-top:8px"><h2 style="font-size:16px;border-bottom:2px solid #36527a;padding-bottom:4px">Soluções</h2>' + lst + '</div>';
   }
 
-  var nomesCaps = capsSel.map(function(c) { return _port9CapMeta[c - 1].label; }).join(', ');
+  // nome dos capítulos no cabeçalho, com os tópicos escolhidos entre parêntesis
+  var nomesCaps = capsSel.map(function(c) {
+    var nome = _port9CapMeta[c - 1].label;
+    var sts = _port9gfStsSel(c);
+    if (sts) {
+      var nomes = sts.map(function (i) { return (_port9Subtemas[c] || [])[i - 1] || ''; }).filter(function (x) { return x; });
+      if (nomes.length) nome += ' (' + nomes.join(', ') + ')';
+    }
+    return nome;
+  }).join(', ');
   var html = '<div style="font-family:Arial,sans-serif;max-width:740px;margin:0 auto;padding:24px;color:#222">'
     + '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #36527a;padding-bottom:8px;margin-bottom:14px">'
     + '<div><h1 style="font-size:18px;margin:0">Ficha de Trabalho · Português 9.º Ano</h1>'
