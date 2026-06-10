@@ -517,9 +517,82 @@ function _port9FillToMc(ex) {
   return (typeof _fillParaMc === 'function') ? _fillParaMc(ex) : null;
 }
 
-// Português: o Quiz tira questões de escolha múltipla do _port9Banco do domínio.
+/* ════════════════════════════════════════════════════════════════
+   BANCO ALARGADO por domínio: junta o _port9Banco com os bancos dos
+   módulos realojados (pt-gramatica, pt-figuras, pt-lusiadas, guias),
+   convertidos para o formato comum {tipo:'mc', enun, opcoes, resposta,
+   expl, tema}. Alimenta as Fichas, o Teste Cronometrado e o Quiz.
+   ════════════════════════════════════════════════════════════════ */
+
+// Bancos dos módulos com {frase, correct, opts, exp} (resposta = texto da opção).
+// `dif` marca o nível base do banco (a dificuldade que o módulo anunciava).
+function _port9ConvBancoMod(arr, prefixo, t, temaLabel, dif) {
+  var out = [];
+  (arr || []).forEach(function (q) {
+    if (!q || !q.opts || !q.correct || q.opts.indexOf(q.correct) === -1) return;
+    out.push({ t: t, tipo: 'mc', enun: prefixo + q.frase, opcoes: q.opts.slice(), resposta: q.correct, expl: q.exp || '', tema: temaLabel, dif: dif || 'medio' });
+  });
+  return out;
+}
+
+// Bancos dos guias de obras com opts "(A) …" e correct = letra (PT_LUS_BANCO…)
+function _port9ConvBancoLetra(arr, t, temaLabel) {
+  var letras = ['A', 'B', 'C', 'D', 'E'];
+  var out = [];
+  (arr || []).forEach(function (q) {
+    if (!q || !q.opts || !q.correct) return;
+    var idx = letras.indexOf(q.correct);
+    if (idx < 0 || idx >= q.opts.length) return;
+    var ops = q.opts.map(function (o) { return String(o).replace(/^\([A-E]\)\s*/, ''); });
+    out.push({ t: t, tipo: 'mc', enun: q.enun, opcoes: ops, resposta: ops[idx], expl: q.exp || '', tema: temaLabel, dif: 'medio' });
+  });
+  return out;
+}
+
+function _port9FichaBanco(cap) {
+  var out = (_port9Banco[cap] || []).slice();
+  function add(a) { out = out.concat(a); }
+  if (cap === 1) {
+    if (typeof PT_LUS_BANCO !== 'undefined') add(_port9ConvBancoLetra(PT_LUS_BANCO, '2', 'Os Lusíadas'));
+    if (typeof PT_BARCA_BANCO !== 'undefined') add(_port9ConvBancoLetra(PT_BARCA_BANCO, '1', 'Auto da Barca do Inferno'));
+    if (typeof PT_POESIA_BANCO !== 'undefined') add(_port9ConvBancoLetra(PT_POESIA_BANCO, '4', 'Poesia'));
+  } else if (cap === 2) {
+    if (typeof PT_CLASSES_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_CLASSES_BANCO, 'Identifica a classe da palavra destacada: ', '1', 'Classes de palavras', 'facil'));
+    if (typeof PT_FUNCOES_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_FUNCOES_BANCO, 'Indica a função sintática do elemento destacado: ', '2', 'Funções sintáticas', 'dificil'));
+    if (typeof PT_SUBORDINADAS_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_SUBORDINADAS_BANCO, 'Classifica a oração destacada: ', '3', 'Orações subordinadas', 'medio'));
+    if (typeof PT_CONECTORES_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_CONECTORES_BANCO, 'Seleciona o conector que completa a frase: ', '3', 'Conectores', 'facil'));
+    if (typeof PT_TEMPOS_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_TEMPOS_BANCO, 'Identifica o tempo e o modo da forma verbal destacada: ', '4', 'Tempos verbais', 'medio'));
+  } else if (cap === 5) {
+    if (typeof PT_FIGURAS_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_FIGURAS_BANCO, 'Identifica a figura de estilo presente em: ', '1', 'Figuras de estilo', 'facil'));
+  }
+  return out;
+}
+
+// Baralha e tira n questões do banco alargado, respeitando o nível pedido.
+// Se o nível pedido não tiver n questões, completa com as restantes.
+function _port9FichaSlice(banco, n, dif) {
+  var ordem = { facil: 0, medio: 1, dificil: 2 };
+  var fil = banco;
+  if (dif && typeof _nivelQuestao === 'function') {
+    fil = banco.filter(function (q) {
+      var nq = ordem[_nivelQuestao(q)];
+      if (dif === 'facil') return nq === 0;
+      if (dif === 'dificil') return nq >= 1;
+      return true;
+    });
+    if (!fil.length) fil = banco;
+  }
+  fil = shuffle_m81(fil.slice());
+  if (fil.length < n) {
+    var resto = banco.filter(function (q) { return fil.indexOf(q) === -1; });
+    fil = fil.concat(shuffle_m81(resto));
+  }
+  return fil.slice(0, n).map(function (e, i) { return Object.assign({}, e, { num: i + 1 }); });
+}
+
+// Português: o Quiz tira questões de escolha múltipla do banco alargado do domínio.
 function _port9BuildMcQuestion(cap) {
-  var qs = (_port9Banco[cap] || []).filter(function (q) {
+  var qs = _port9FichaBanco(cap).filter(function (q) {
     return q.tipo === 'mc' && q.opcoes && q.opcoes.length >= 2 && q.opcoes.indexOf(q.resposta) >= 0;
   });
   if (!qs.length) return null;
@@ -741,17 +814,23 @@ function port9TesteSetNivel(nivel, btn) {
 }
 
 function port9TesteStart() {
-  var gen = _port9Gerador(_port9Teste.cap); if (!gen) return;
+  var gen = _port9Gerador(_port9Teste.cap);
   var qtdEl = document.getElementById('port9-teste-qtd'), tempoEl = document.getElementById('port9-teste-tempo');
   _port9Teste.qtd = qtdEl ? parseInt(qtdEl.value) : 10;
   _port9Teste.tempo = tempoEl ? parseInt(tempoEl.value) : 600;
-  var nTemas = _port9TemasCount[_port9Teste.cap] || 1;
-  var tipos = ['mc', 'fill', 'mc', 'vf', 'fill'];
   var exs = [];
-  for (var i = 0; i < _port9Teste.qtd; i++) {
-    var ex = gen(String((i % nTemas) + 1), tipos[i % tipos.length], _port9Teste.nivel);
-    if (ex) exs.push(Object.assign({}, ex, { num: i + 1 }));
+  if (gen) {
+    var nTemas = _port9TemasCount[_port9Teste.cap] || 1;
+    var tipos = ['mc', 'fill', 'mc', 'vf', 'fill'];
+    for (var i = 0; i < _port9Teste.qtd; i++) {
+      var ex = gen(String((i % nTemas) + 1), tipos[i % tipos.length], _port9Teste.nivel);
+      if (ex) exs.push(Object.assign({}, ex, { num: i + 1 }));
+    }
+  } else {
+    // PT: teste sai do banco alargado do domínio
+    exs = _port9FichaSlice(_port9FichaBanco(_port9Teste.cap), _port9Teste.qtd, _port9Teste.nivel);
   }
+  if (!exs.length) return;
   _port9Teste.exs = exs; _port9Teste.answered = {}; _port9Teste.score = { correct: 0, total: 0 };
   _port9Teste.restante = _port9Teste.tempo;
 
@@ -1075,7 +1154,11 @@ function _port9gfExBloco(exs, startNum) {
 }
 
 function _port9gfGenExs(cap, n) {
-  var gen = _port9Gerador(cap); if (!gen) return [];
+  var gen = _port9Gerador(cap);
+  if (!gen) {
+    // PT: a ficha vem toda do banco alargado (domínio + módulos realojados)
+    return _port9FichaSlice(_port9FichaBanco(cap), n, _port9gf.dif);
+  }
   var nTemas = _port9TemasCount[cap] || 1;
   var tipos = ['mc', 'fill', 'vf', 'fill', 'mc', 'mc'];
   var geradas = [], vistos = {};
@@ -1098,9 +1181,9 @@ function _port9gfGenExs(cap, n) {
 }
 
 function port9gfGerar(formato) {
-  // capítulos selecionados
+  // capítulos selecionados (conta o banco alargado — em PT não há geradores)
   var capsSel = [];
-  _port9CapMeta.forEach(function(m) { if (_port9gf.caps[m.n] && _port9Gerador(m.n)) capsSel.push(m.n); });
+  _port9CapMeta.forEach(function(m) { if (_port9gf.caps[m.n] && (_port9Gerador(m.n) || _port9FichaBanco(m.n).length)) capsSel.push(m.n); });
   var status = document.getElementById('port9-fichas-status');
   if (!capsSel.length) { if (status) status.textContent = 'Seleciona pelo menos um capítulo.'; return; }
   var algumTipo = _port9gf.tipos.resumo || _port9gf.tipos.exercicios || _port9gf.tipos.teste || _port9gf.tipos.minitestes;
@@ -1190,7 +1273,7 @@ function port9gfGerar(formato) {
     + corpo + solHTML + '</div>';
 
   var _temasNomes = capsSel.map(function(c){ return _port9CapMeta[c-1].label; });
-  var fname = (typeof _nomeFicha === 'function') ? _nomeFicha('9', 'matematica', _temasNomes, formato) : ('ficha-port9.' + (formato === 'html' ? 'html' : 'pdf'));
+  var fname = (typeof _nomeFicha === 'function') ? _nomeFicha('9', 'portugues', _temasNomes, formato) : ('ficha-port9.' + (formato === 'html' ? 'html' : 'pdf'));
   if (formato === 'html') {
     try {
       var blob = new Blob(['<!DOCTYPE html><meta charset="utf-8">' + html], { type: 'text/html' });
