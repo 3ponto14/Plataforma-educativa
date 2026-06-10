@@ -1231,15 +1231,22 @@ function port9gfGerar(formato) {
     if (_port9gf.tipos.minitestes) {
       var subt = _port9Subtemas[cap] || [];
       var mapa = _port9SubtemaTemas[cap] || {};
+      var genM = _port9Gerador(cap);
+      var bancoM = genM ? null : _port9FichaBanco(cap); // PT: sem gerador, usa o banco alargado
       corpo += '<div style="margin-bottom:12px"><h3 style="font-size:13px;color:#444;margin:0 0 5px">Minitestes</h3>';
       subt.forEach(function(st, si) {
         var temas = mapa[si + 1] || [String(si + 1)];
-        var gen = _port9Gerador(cap);
         var exsM = [];
-        for (var q = 0; q < 4; q++) {
-          var tema = temas[q % temas.length];
-          var ex = gen(tema, (q % 2 === 0) ? 'mc' : 'fill', _port9gf.dif);
-          if (ex) exsM.push(ex);
+        if (genM) {
+          for (var q = 0; q < 4; q++) {
+            var tema = temas[q % temas.length];
+            var ex = genM(tema, (q % 2 === 0) ? 'mc' : 'fill', _port9gf.dif);
+            if (ex) exsM.push(ex);
+          }
+        } else {
+          var poolM = bancoM.filter(function (qb) { return temas.indexOf(qb.t) !== -1; });
+          if (!poolM.length) poolM = bancoM;
+          exsM = _port9FichaSlice(poolM, 4, _port9gf.dif);
         }
         corpo += '<div style="margin-bottom:8px"><div style="font-size:12px;font-weight:700;color:#555">Mini ' + (si + 1) + ' · ' + st + '</div>'
           + _port9gfExBloco(exsM, solCounter + 1) + '</div>';
