@@ -47,8 +47,9 @@ var PT_OBRAS = [
     genero: 'Teatro · Educação Literária',
     icon: '⛵',
     cor: '#2e7d52',
-    disponivel: false,
-    nota: 'Obra do programa de 9.º ano (estudada nas aulas e nos testes da escola). Guia de estudo em preparação.'
+    disponivel: true,
+    render: 'barca',
+    nota: 'Obra do programa de 9.º ano (aulas e testes da escola). Guia completo: as 11 figuras com pecados e destinos, símbolos, crítica social, tipos de cómico + quiz.'
   },
   {
     id: 'poesia',
@@ -58,8 +59,9 @@ var PT_OBRAS = [
     genero: 'Texto lírico · Educação Literária',
     icon: '🪶',
     cor: '#9c5e80',
-    disponivel: false,
-    nota: 'Poemas do programa de 9.º ano. Guia de estudo em preparação.'
+    disponivel: true,
+    render: 'poesia',
+    nota: 'Ferramentas de análise (versificação, sujeito poético, recursos), mini-análises dos poemas mais comuns nos manuais + quiz.'
   }
 ];
 
@@ -124,11 +126,114 @@ function ptObrasOpen(id) {
   // botão de voltar à grelha (estilo claro, legível em fundo claro)
   var back = '<button class="pt-back-light" onclick="ptObrasRenderGrid()" style="margin-bottom:1rem"><i class="ph ph-arrow-left"></i> Todas as obras</button>';
 
+  // cada guia escreve no seu contentor próprio (criado aqui dentro do wrap),
+  // para que o botão «Todas as obras» persista durante o guia e o quiz
   if (obra.render === 'lusiadas' && typeof ptLusRenderMenu === 'function') {
-    // o guia de Os Lusíadas escreve em #pt-lus-content; garantimos que existe dentro do wrap
     wrap.innerHTML = back + '<div id="pt-lus-content"></div>';
     ptLusRenderMenu();
+  } else if (obra.render === 'barca' && typeof ptBarcaRenderMenu === 'function') {
+    wrap.innerHTML = back + '<div id="pt-barca-content"></div>';
+    ptBarcaRenderMenu();
+  } else if (obra.render === 'poesia' && typeof ptPoesiaRenderMenu === 'function') {
+    wrap.innerHTML = back + '<div id="pt-poesia-content"></div>';
+    ptPoesiaRenderMenu();
   } else {
     wrap.innerHTML = back + '<div style="padding:2rem;text-align:center;color:var(--ink3)">Guia em construção.</div>';
   }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   MOTOR DE QUIZ PARTILHADO dos guias de obras (Auto da Barca, Poesia…).
+   Recebe uma config e corre um quiz de escolha múltipla com o mesmo
+   aspeto do quiz d'Os Lusíadas (que mantém o seu motor próprio).
+   Formato do banco: { enun, opts: ['(A) …', …], correct: 'B', exp }.
+   cfg = { banco, titulo, icone, cor1, cor2, voltar (nome de função global) }
+   ════════════════════════════════════════════════════════════════ */
+var _ptObraQz = { cfg: null, banco: [], idx: 0, score: 0, total: 0, answered: false };
+
+function ptObraQuizStart(cfg) {
+  if (cfg) _ptObraQz.cfg = cfg;
+  cfg = _ptObraQz.cfg;
+  if (!cfg || !cfg.banco || !cfg.banco.length) return;
+  _ptObraQz.banco = cfg.banco.slice().sort(function () { return Math.random() - .5; });
+  _ptObraQz.idx = 0; _ptObraQz.score = 0; _ptObraQz.total = 0; _ptObraQz.answered = false;
+  _ptObraQzRender();
+}
+
+function _ptObraQzWrap() {
+  var id = (_ptObraQz.cfg && _ptObraQz.cfg.containerId) || 'pt-obras-content';
+  return document.getElementById(id);
+}
+
+function _ptObraQzRender() {
+  var wrap = _ptObraQzWrap();
+  if (!wrap) return;
+  var cfg = _ptObraQz.cfg, banco = _ptObraQz.banco, idx = _ptObraQz.idx;
+  if (idx >= banco.length) { _ptObraQzFinish(); return; }
+  var q = banco[idx];
+  var pct = Math.round(idx / banco.length * 100);
+
+  var h = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.5rem">';
+  h += '<button onclick="' + cfg.voltar + '()" style="background:none;border:none;font-size:.78rem;font-weight:700;color:' + cfg.cor2 + ';cursor:pointer;display:flex;align-items:center;gap:.3rem;padding:0;font-family:Montserrat,sans-serif"><i class="ph ph-arrow-left"></i> ' + cfg.titulo + '</button>';
+  h += '<span style="font-size:.72rem;color:var(--ink4);font-weight:700">' + (idx + 1) + '/' + banco.length + ' · ✓ ' + _ptObraQz.score + '/' + _ptObraQz.total + '</span>';
+  h += '</div>';
+  h += '<div style="height:5px;background:var(--border);border-radius:99px;margin-bottom:1.5rem;overflow:hidden"><div style="height:100%;width:' + pct + '%;background:linear-gradient(90deg,' + cfg.cor1 + ',' + cfg.cor2 + ');border-radius:99px"></div></div>';
+
+  h += '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:1.75rem">';
+  h += '<div style="font-size:.68rem;font-weight:800;color:' + cfg.cor1 + ';text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem"><i class="ph ' + (cfg.icone || 'ph-book-open-text') + '"></i> ' + cfg.titulo + ' - Questão</div>';
+  h += '<div style="font-size:.96rem;font-weight:700;color:var(--ink1);line-height:1.65;margin-bottom:1.25rem">' + q.enun + '</div>';
+  h += '<div id="pt-obraqz-opts">';
+  q.opts.forEach(function (opt, i) {
+    var letter = ['A', 'B', 'C', 'D', 'E'][i];
+    h += '<button onclick="ptObraQzSelect(this)" data-letter="' + letter + '" style="display:block;width:100%;text-align:left;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:.8rem 1.1rem;margin-bottom:.5rem;font-family:Montserrat,sans-serif;font-size:.86rem;font-weight:600;color:var(--ink1);cursor:pointer;transition:all .15s">' + opt + '</button>';
+  });
+  h += '</div>';
+  h += '<div id="pt-obraqz-feedback" style="display:none;margin-top:.75rem"></div>';
+  h += '<button id="pt-obraqz-next" onclick="ptObraQzNext()" style="display:none;width:100%;margin-top:.75rem;background:linear-gradient(135deg,' + cfg.cor1 + ',' + cfg.cor2 + ');color:#fff;border:none;border-radius:12px;padding:.85rem;font-weight:800;font-size:.88rem;cursor:pointer;font-family:Montserrat,sans-serif">Próxima <i class="ph ph-arrow-right"></i></button>';
+  h += '</div>';
+  wrap.innerHTML = h;
+  _ptObraQz.answered = false;
+}
+
+function ptObraQzSelect(btn) {
+  if (_ptObraQz.answered) return;
+  var letter = btn.getAttribute('data-letter');
+  _ptObraQz.answered = true;
+  _ptObraQz.total++;
+  var q = _ptObraQz.banco[_ptObraQz.idx];
+  var correct = letter === q.correct;
+  if (correct) _ptObraQz.score++;
+
+  document.querySelectorAll('#pt-obraqz-opts button').forEach(function (b) {
+    var l = b.getAttribute('data-letter');
+    b.style.cursor = 'default'; b.onclick = null;
+    if (l === q.correct) { b.style.borderColor = '#2e7d52'; b.style.background = '#e8f5ee'; b.style.color = '#1a5c38'; b.style.fontWeight = '800'; }
+    else if (l === letter && !correct) { b.style.borderColor = '#c0392b'; b.style.background = '#fdecea'; b.style.color = '#922b21'; }
+  });
+
+  var fb = document.getElementById('pt-obraqz-feedback');
+  if (fb) {
+    var cor = correct ? '#2e7d52' : '#922b21', bg = correct ? '#e8f5ee' : '#fdecea', brd = correct ? '#2e7d52' : '#c0392b';
+    fb.innerHTML = '<div style="background:' + bg + ';border:1.5px solid ' + brd + ';border-radius:12px;padding:.85rem 1rem;font-size:.83rem;color:' + cor + '"><strong>' + (correct ? '✓ Correto!' : '✗ Era: ' + q.correct) + '</strong>' + (q.exp ? '<br><span style="margin-top:.3rem;display:block;line-height:1.6">' + q.exp + '</span>' : '') + '</div>';
+    fb.style.display = 'block';
+  }
+  var nxt = document.getElementById('pt-obraqz-next');
+  if (nxt) nxt.style.display = 'block';
+}
+
+function ptObraQzNext() { _ptObraQz.idx++; _ptObraQzRender(); }
+
+function _ptObraQzFinish() {
+  var cfg = _ptObraQz.cfg;
+  var s = _ptObraQz.score, t = _ptObraQz.total, pct = t ? Math.round(s / t * 100) : 0;
+  var wrap = _ptObraQzWrap();
+  if (!wrap) return;
+  wrap.innerHTML = '<div style="background:linear-gradient(135deg,' + cfg.cor1 + ',' + cfg.cor2 + ');border-radius:20px;padding:2.5rem 2rem;text-align:center;color:#fff">' +
+    '<div style="font-size:2.5rem;margin-bottom:.5rem">' + (pct >= 80 ? '🏆' : pct >= 60 ? '🎯' : '📚') + '</div>' +
+    '<div style="font-family:JetBrains Mono,monospace;font-size:3rem;font-weight:700;line-height:1">' + s + '<span style="font-size:1.3rem;opacity:.5">/' + t + '</span></div>' +
+    '<div style="font-size:.82rem;color:rgba(255,255,255,.6);margin:.4rem 0">' + pct + '% corretas</div>' +
+    '<div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem">' +
+    '<button onclick="ptObraQuizStart()" style="background:#fff;color:' + cfg.cor1 + ';border:none;border-radius:12px;padding:.75rem 1.5rem;font-weight:800;font-size:.85rem;cursor:pointer;font-family:Montserrat,sans-serif">Repetir quiz</button>' +
+    '<button onclick="' + cfg.voltar + '()" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:.75rem 1.5rem;font-weight:800;font-size:.85rem;cursor:pointer;font-family:Montserrat,sans-serif">Guia de estudo</button>' +
+    '</div></div>';
 }
