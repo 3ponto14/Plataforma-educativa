@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><title>tmp fichas</title></head>
+<body>
+<div id="port9-fichas-caps"></div><span id="port9-fichas-status"></span>
+<div id="port9-teste-app"></div>
+<select id="port9-teste-qtd" style="display:none"><option value="10" selected>10</option></select>
+<select id="port9-teste-tempo" style="display:none"><option value="600" selected>600</option></select>
+<div id="resultado"></div>
+<script src="../js/shared.js"></script>
+<script src="../js/chapter-engine.js"></script>
+<script src="../js/port9.js"></script>
+<script src="../js/pt-gramatica.js"></script>
+<script src="../js/pt-figuras.js"></script>
+<script src="../js/pt-lusiadas.js"></script>
+<script src="../js/pt-obras.js"></script>
+<script src="../js/pt-escrita.js"></script>
+<script>
+var R = [];
+function T(nome, cond, detalhe) { R.push((cond ? 'PASS ' : 'FAIL ') + nome + (detalhe ? ' [' + detalhe + ']' : '')); }
+// 1. banco alargado
+T('banco cap1 >= 15', _port9FichaBanco(1).length >= 15, _port9FichaBanco(1).length);
+T('banco cap2 >= 80', _port9FichaBanco(2).length >= 80, _port9FichaBanco(2).length);
+T('banco cap5 >= 20', _port9FichaBanco(5).length >= 20, _port9FichaBanco(5).length);
+// validade das conversões: resposta pertence às opções
+var invalidas = 0;
+[1,2,3,4,5].forEach(function(c){ _port9FichaBanco(c).forEach(function(q){ if (q.opcoes.indexOf(q.resposta) === -1) invalidas++; }); });
+T('todas resposta ∈ opções', invalidas === 0, invalidas + ' inválidas');
+// 2. fichas: selecionar caps todos e gerar (stub do download PDF)
+var _pdfHtml = null;
+window.htmlToPdfDownload = function(html) { _pdfHtml = html; };
+port9FichasBuildNav();
+[1,2,3,4,5].forEach(function(c){ _port9gf.caps[c] = true; });
+port9gfGerar('pdf');
+var st = document.getElementById('port9-fichas-status').textContent;
+T('fichas: sem erro de capítulo', st.indexOf('Seleciona') === -1, st);
+T('fichas: PDF gerado', _pdfHtml !== null && _pdfHtml.indexOf('Ficha de Trabalho') !== -1, st);
+T('fichas fácil: tem gramática fácil', _pdfHtml !== null && (_pdfHtml.indexOf('classe da palavra') !== -1 || _pdfHtml.indexOf('conector') !== -1));
+_pdfHtml = null; _port9gf.dif = 'dificil';
+port9gfGerar('pdf');
+T('fichas difícil: tem funções sintáticas', _pdfHtml !== null && _pdfHtml.indexOf('função sintática') !== -1);
+_port9gf.dif = 'facil';
+T('fichas: tem soluções', _pdfHtml !== null && _pdfHtml.indexOf('Soluções') !== -1);
+// 3. teste cronometrado
+_port9Teste.cap = 2; _port9Teste.nivel = 'medio';
+port9TesteStart();
+T('teste: 10 questões', _port9Teste.exs.length === 10, _port9Teste.exs.length);
+T('teste: HTML renderizado', document.getElementById('port9-teste-questions') !== null && document.getElementById('port9-teste-questions').innerHTML.length > 500);
+if (_port9Teste.timer) clearInterval(_port9Teste.timer);
+// 4. quiz usa banco alargado
+var q5 = _port9BuildMcQuestion(5);
+T('quiz cap5 questão válida', q5 !== null && q5.opcoes.indexOf(q5.resposta) !== -1);
+// 5. níveis: fácil vs difícil dão conjuntos
+T('slice fácil 10', _port9FichaSlice(_port9FichaBanco(2), 10, 'facil').length === 10);
+T('slice difícil 10', _port9FichaSlice(_port9FichaBanco(2), 10, 'dificil').length === 10);
+document.getElementById('resultado').textContent = 'RESULTADO|' + R.join('|');
+</script>
+</body></html>
