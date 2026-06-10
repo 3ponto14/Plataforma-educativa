@@ -295,3 +295,57 @@ function ptGramFinish() {
     '<button onclick="ptGramBack()" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:.75rem 1.5rem;font-weight:800;font-size:.85rem;cursor:pointer;font-family:Montserrat,sans-serif">Outro tema</button>' +
     '</div></div>';
 }
+
+/* ════════════════════════════════════════════════════════════════
+   MOUNT PARA O CURSO port9/ (realojado da antiga tab "Gramática"
+   de exames-pt.html). Injeta o menu de módulos + cheatsheet + engine;
+   ptGramStart/ptGramBack funcionam sem alterações porque os IDs
+   pt-gram-menu/pt-gram-engine são recriados aqui.
+   ════════════════════════════════════════════════════════════════ */
+function ptGramMount(containerId) {
+  var wrap = document.getElementById(containerId);
+  if (!wrap) return;
+
+  function card(modo, cor, bg, icon, titulo, sub, nEx, tempo, dif, difCor, difBg) {
+    var c = '<button onclick="ptGramStart(\'' + modo + '\')" class="pt-gram-card" style="border-top:3px solid ' + cor + '">';
+    c += '<div class="pt-gram-card-icon">' + icon + '</div>';
+    c += '<div class="pt-gram-card-title">' + titulo + '</div>';
+    c += '<div class="pt-gram-card-sub">' + sub + '</div>';
+    c += '<div class="pt-gram-card-meta">';
+    c += '<span style="font-size:.68rem;font-weight:700;color:' + cor + ';background:' + bg + ';border-radius:999px;padding:2px 8px">' + nEx + ' exercícios</span>';
+    c += '<span style="font-size:.68rem;color:var(--ink4)">' + tempo + '</span>';
+    c += '<span style="font-size:.68rem;font-weight:700;color:' + difCor + ';background:' + difBg + ';border-radius:999px;padding:2px 8px">' + dif + '</span>';
+    c += '</div></button>';
+    return c;
+  }
+
+  var h = '';
+  h += '<div class="ex-sec-head">';
+  h += '<div class="ex-sec-title">Gramática Interativa</div>';
+  h += '<div class="ex-sec-sub">Treina funções sintáticas, tempos verbais, classes de palavras e orações subordinadas os temas que mais saem nos exames.</div>';
+  h += '</div>';
+  h += '<div id="pt-gram-menu">';
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.85rem;margin-bottom:1.25rem">';
+  h += card('funcoes', '#2a7db5', '#e8f4fd', '🔍', 'Funções Sintáticas', 'Sujeito, CD, CI, CO, predicativo, modificador...', PT_FUNCOES_BANCO.length, '~10 min', '★★★ Difícil', '#c0392b', '#fdecea');
+  h += card('tempos', '#6b52a8', '#f0edf7', '⏱️', 'Tempos Verbais', 'Conjuntivo, condicional, mais-que-perfeito...', PT_TEMPOS_BANCO.length, '~5 min', '★★☆ Médio', '#b07030', '#fef3e2');
+  h += card('classes', '#b07030', '#fef3e2', '🏷️', 'Classes de Palavras', 'Advérbios, determinantes, pronomes, verbos...', PT_CLASSES_BANCO.length, '~4 min', '★☆☆ Fácil', '#2e7d52', '#e8f5ee');
+  h += card('subordinadas', '#2e7d52', '#e8f5ee', '🌿', 'Orações Subordinadas', 'Causal, concessiva, temporal, completiva...', PT_SUBORDINADAS_BANCO.length, '~5 min', '★★☆ Médio', '#b07030', '#fef3e2');
+  h += '</div>';
+  // Cheatsheet rápida
+  h += '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem 1.5rem">';
+  h += '<div style="font-size:.75rem;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem">⚡ Cheatsheet Funções Sintáticas</div>';
+  h += '<div style="display:grid;gap:.4rem;font-size:.8rem">';
+  function cheat(cor, sigla, txt) {
+    return '<div style="display:flex;gap:.5rem"><span style="font-weight:800;color:' + cor + ';min-width:60px">' + sigla + '</span><span style="color:var(--ink2)">' + txt + '</span></div>';
+  }
+  h += cheat('#2a7db5', 'Sujeito', 'Quem realiza ou sofre a ação. Concorda com o verbo.');
+  h += cheat('#c0392b', 'CD', 'Responde a "o quê?" após verbo transitivo. Substituível por o/a/os/as.');
+  h += cheat('#2e7d52', 'CI', 'Destinatário da ação. Substituível por lhe/lhes.');
+  h += cheat('#b07030', 'CO', 'Exigido pelo verbo com preposição. Não é destinatário.');
+  h += cheat('#6b52a8', 'PS', 'Predicativo do sujeito atributo através de verbo copulativo (ser, estar, ficar...).');
+  h += cheat('#5c4e8a', 'Mod.GV', 'Modificador do grupo verbal facultativo, modifica a ação (tempo, modo, lugar).');
+  h += '</div></div>';
+  h += '</div>';
+  h += '<div id="pt-gram-engine" style="display:none"></div>';
+  wrap.innerHTML = h;
+}

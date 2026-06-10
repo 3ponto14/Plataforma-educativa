@@ -566,3 +566,116 @@ function ptConFinish() {
     '<button onclick="ptConBack()" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:.75rem 1.5rem;font-weight:800;font-size:.85rem;cursor:pointer;font-family:Montserrat,sans-serif">Ficha</button>' +
     '</div></div>';
 }
+
+/* ════════════════════════════════════════════════════════════════
+   MOUNTS PARA O CURSO port9/ (realojados da antiga zona de exame)
+   Cada mount injeta o menu + engine no contentor indicado; os motores
+   acima (ptFigStart, ptDiscStart, ptConStart) funcionam sem alterações
+   porque os IDs pt-fig-…, pt-disc-… e pt-con-… são recriados aqui.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Cards de teoria das figuras (era ptRenderFigCards inline em exames-pt) ── */
+function ptRenderFigCards() {
+  var wrap = document.getElementById('pt-fig-cards');
+  if (!wrap || typeof PT_FIGURAS_INFO === 'undefined') return;
+  var h = '';
+  PT_FIGURAS_INFO.forEach(function(f) {
+    h += '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:1.1rem 1.25rem">';
+    h += '<div style="font-size:.9rem;font-weight:800;color:var(--ink1);margin-bottom:.35rem">' + f.nome + '</div>';
+    h += '<div style="font-size:.8rem;color:var(--ink2);line-height:1.6;margin-bottom:.5rem">' + f.def + '</div>';
+    h += '<div style="font-family:Cormorant Garamond,serif;font-size:.9rem;color:#b07030;font-style:italic;background:#fefbf0;border-radius:8px;padding:.4rem .7rem;margin-bottom:.35rem">' + f.ex[0] + '</div>';
+    h += '<div style="font-size:.7rem;font-weight:700;color:#6b52a8;background:#f0edf7;border-radius:999px;padding:3px 9px;display:inline-block"><i class="ph ph-lightbulb"></i> ' + f.dica + '</div>';
+    h += '</div>';
+  });
+  wrap.innerHTML = h;
+}
+
+/* ── Fichas dos conectores por tipo (era ptRenderConFichas inline) ── */
+function ptRenderConFichas() {
+  var wrap = document.getElementById('pt-con-fichas');
+  if (!wrap || typeof PT_CONECTORES_INFO === 'undefined') return;
+  var h = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.6rem">';
+  PT_CONECTORES_INFO.forEach(function(c) {
+    h += '<div style="background:' + c.bg + ';border:1.5px solid ' + c.cor + '33;border-radius:12px;padding:.85rem 1rem">';
+    h += '<div style="font-size:.8rem;font-weight:800;color:' + c.cor + ';margin-bottom:.4rem">' + c.tipo + '</div>';
+    h += '<div style="font-size:.8rem;color:var(--ink2)">' + c.exemplos.join(' · ') + '</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  wrap.innerHTML = h;
+}
+
+/* ── Figuras de Estilo: cards + exercícios de identificação ── */
+function ptFigMount(containerId) {
+  var wrap = document.getElementById(containerId);
+  if (!wrap) return;
+  var h = '';
+  h += '<div class="ex-sec-head">';
+  h += '<div class="ex-sec-title">Figuras de Estilo</div>';
+  h += '<div class="ex-sec-sub">Aprende e identifica as figuras de estilo mais frequentes nos exames com exemplos reais e exercícios de identificação.</div>';
+  h += '</div>';
+  h += '<div id="pt-fig-menu">';
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.75rem;margin-bottom:1.25rem" id="pt-fig-cards"></div>';
+  h += '<button onclick="ptFigStart()" style="width:100%;background:linear-gradient(135deg,#b07030,#c9a84c);color:#fff;border:none;border-radius:14px;padding:1rem 2rem;font-family:Montserrat,sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem">';
+  h += '<i class="ph ph-play"></i> Iniciar exercícios de identificação (' + (typeof PT_FIGURAS_BANCO !== 'undefined' ? PT_FIGURAS_BANCO.length : 18) + ' questões)';
+  h += '</button>';
+  h += '</div>';
+  h += '<div id="pt-fig-engine" style="display:none"></div>';
+  wrap.innerHTML = h;
+  ptRenderFigCards();
+}
+
+/* ── Discurso Direto ↔ Indireto: tabela de regras + prática ── */
+function ptDiscMount(containerId) {
+  var wrap = document.getElementById(containerId);
+  if (!wrap) return;
+  var td = 'padding:.4rem .75rem;border-bottom:1px solid var(--border)';
+  var tdR = td + ';color:#5c4e8a;font-weight:700';
+  var h = '';
+  h += '<div class="ex-sec-head">';
+  h += '<div class="ex-sec-title">Discurso Direto ↔ Indireto</div>';
+  h += '<div class="ex-sec-sub">Um dos temas mais frequentes no exame pratica a transformação com exemplos reais e aprende as regras de transformação.</div>';
+  h += '</div>';
+  h += '<div id="pt-disc-menu">';
+  h += '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem 1.5rem;margin-bottom:1rem;overflow-x:auto">';
+  h += '<div style="font-size:.75rem;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem">📋 Regras de Transformação de Tempos Verbais</div>';
+  h += '<table style="width:100%;border-collapse:collapse;font-size:.82rem">';
+  h += '<thead><tr style="background:#f8f6ff">';
+  h += '<th style="padding:.5rem .75rem;text-align:left;font-weight:800;color:#4a3f7a;border-bottom:2px solid #d4cdf0">Discurso Direto</th>';
+  h += '<th style="padding:.5rem .75rem;text-align:left;font-weight:800;color:#4a3f7a;border-bottom:2px solid #d4cdf0">→ Discurso Indireto</th>';
+  h += '</tr></thead><tbody>';
+  h += '<tr><td style="' + td + '">Presente do indicativo</td><td style="' + tdR + '">Pretérito imperfeito do indicativo</td></tr>';
+  h += '<tr style="background:#fdfcff"><td style="' + td + '">Pretérito perfeito simples</td><td style="' + tdR + '">Pretérito mais-que-perfeito</td></tr>';
+  h += '<tr><td style="' + td + '">Futuro do indicativo</td><td style="' + tdR + '">Condicional</td></tr>';
+  h += '<tr style="background:#fdfcff"><td style="' + td + '">Imperativo</td><td style="' + tdR + '">Imperfeito do conjuntivo</td></tr>';
+  h += '<tr><td style="padding:.4rem .75rem">Presente do conjuntivo</td><td style="padding:.4rem .75rem;color:#5c4e8a;font-weight:700">Imperfeito do conjuntivo</td></tr>';
+  h += '</tbody></table>';
+  h += '<div style="margin-top:.75rem;font-size:.75rem;color:var(--ink3);background:#f8f6ff;border-radius:8px;padding:.5rem .75rem"><strong>Dêiticos:</strong> hoje → naquele dia · amanhã → no dia seguinte · aqui → ali · agora → naquele momento · este → aquele</div>';
+  h += '</div>';
+  h += '<button onclick="ptDiscStart()" style="width:100%;background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:14px;padding:1rem 2rem;font-family:Montserrat,sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem">';
+  h += '<i class="ph ph-play"></i> Praticar transformações';
+  h += '</button>';
+  h += '</div>';
+  h += '<div id="pt-disc-engine" style="display:none"></div>';
+  wrap.innerHTML = h;
+}
+
+/* ── Conectores: fichas por tipo + preencher os espaços ── */
+function ptConMount(containerId) {
+  var wrap = document.getElementById(containerId);
+  if (!wrap) return;
+  var h = '';
+  h += '<div class="ex-sec-head">';
+  h += '<div class="ex-sec-title">Conectores do Discurso</div>';
+  h += '<div class="ex-sec-sub">Aprende os conectores por tipo e pratica a escolha correta em contexto essencial para a composição e para as questões de gramática.</div>';
+  h += '</div>';
+  h += '<div id="pt-con-menu">';
+  h += '<div id="pt-con-fichas" style="margin-bottom:1.25rem"></div>';
+  h += '<button onclick="ptConStart()" style="width:100%;background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:14px;padding:1rem 2rem;font-family:Montserrat,sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem">';
+  h += '<i class="ph ph-play"></i> Preencher os espaços (' + (typeof PT_CONECTORES_BANCO !== 'undefined' ? PT_CONECTORES_BANCO.length : 15) + ' exercícios)';
+  h += '</button>';
+  h += '</div>';
+  h += '<div id="pt-con-engine" style="display:none"></div>';
+  wrap.innerHTML = h;
+  ptRenderConFichas();
+}

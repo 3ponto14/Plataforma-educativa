@@ -57,21 +57,9 @@
 .ex-panel.active{display:block;animation:fadeUp .25s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-/* Section headers */
-.ex-sec-head{margin-bottom:1.5rem}
-.ex-sec-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--ink1);margin-bottom:.2rem}
-.ex-sec-sub{font-size:.83rem;color:var(--ink3);line-height:1.5}
+/* (movido para css/styles.css secção "PT componentes partilhados") */
 
-/* ═══════════════
-   PAINEL TEMAS
-═══════════════ */
-.pt-topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-bottom:1.5rem}
-.pt-topic-card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.4rem 1.5rem;cursor:pointer;transition:all .22s;text-align:left;width:100%;position:relative;overflow:hidden}
-.pt-topic-card:hover{border-color:#8b7cc0;transform:translateY(-3px);box-shadow:0 12px 32px rgba(92,78,138,.14)}
-.pt-topic-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:.9rem;font-size:1.3rem}
-.pt-topic-label{font-size:.95rem;font-weight:800;color:var(--ink1);margin-bottom:.25rem;line-height:1.2}
-.pt-topic-sub{font-size:.74rem;color:var(--ink4);line-height:1.45;margin-bottom:.9rem}
-.pt-topic-count{font-size:.7rem;font-weight:700;color:var(--ink4)}
+/* (movido para css/styles.css secção "PT componentes partilhados") */
 
 /* ═══════════════════
    PAINEL POR PROVA
@@ -161,23 +149,7 @@
 .pt-overlay-close:hover{background:rgba(255,255,255,.2)}
 .pt-overlay-pg{width:100%;border-radius:8px;margin-bottom:.75rem;display:block;box-shadow:0 4px 24px rgba(0,0,0,.5)}
 
-/* Info card Composição */
-.pt-composicao-card{background:linear-gradient(135deg,#1e1640,#3a2d6e);border-radius:20px;padding:2rem;color:#fff;margin-bottom:1rem}
-.pt-composicao-card h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;margin-bottom:.5rem}
-.pt-composicao-card p{font-size:.85rem;color:rgba(255,255,255,.7);line-height:1.7;margin-bottom:1rem}
-.pt-crit-item{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.6rem}
-.pt-crit-icon{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
-.pt-crit-text{font-size:.81rem;color:rgba(255,255,255,.8);line-height:1.5}
-.pt-crit-text strong{color:#fff}
-.pt-counter-wrap{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:1rem 1.25rem;margin-top:1rem}
-.pt-counter-num{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:700;color:#fff}
-.pt-counter-label{font-size:.68rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.1em}
-.pt-themes-composicao{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1rem}
-.pt-theme-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:1rem;cursor:pointer;transition:all .18s;text-align:left}
-.pt-theme-btn:hover{background:rgba(255,255,255,.14)}
-.pt-theme-btn-icon{font-size:1.4rem;margin-bottom:.4rem}
-.pt-theme-btn-title{font-size:.82rem;font-weight:700;color:#fff;margin-bottom:.15rem}
-.pt-theme-btn-sub{font-size:.68rem;color:rgba(255,255,255,.5)}
+/* (movido para css/styles.css secção "PT componentes partilhados") */
 
 /* Responsivo */
 @media(max-width:640px){
@@ -186,7 +158,6 @@
   .pt-sim-opts{grid-template-columns:1fr}
   .ex-tab .tab-lbl{display:none}
   .pt-year-actions{flex-direction:column}
-  .pt-themes-composicao{grid-template-columns:1fr}
 }
 @media(max-width:400px){
   .pt-topic-grid{grid-template-columns:1fr}
@@ -214,66 +185,59 @@
   <div class="page-header-inner">
     <div class="page-header-eyebrow"><i class="ph ph-book-open-text"></i> Provas Finais Nacionais 2019-2024</div>
     <h1>Português <em>9.º Ano</em></h1>
-    <p class="page-header-sub">Questões reais, gramática, figuras de estilo, obras de educação literária e composição tudo para o exame.</p>
+    <p class="page-header-sub">Questões reais dos exames nacionais pratica por tema ou por prova, treina no simulador cronometrado e acompanha o teu progresso.</p>
   </div>
 </header>
 
 <!-- Conteúdo -->
 <div class="ex-page">
 
-  <!-- TABS -->
-  <!-- TABS ordenadas por frequência de uso e lógica pedagógica -->
-  <div class="ex-tabs-wrap" role="tablist" style="overflow-x:auto;flex-wrap:nowrap">
+  <!-- TABS 3 tabs, como exames.html de Matemática -->
+  <div class="ex-tabs-wrap" role="tablist">
     <button class="ex-tab active" onclick="ptSwitchMode('temas',this)" role="tab">
-      <i class="ph ph-exam"></i> <span class="tab-lbl">Questões</span>
+      <i class="ph ph-pencil-simple"></i> <span class="tab-lbl">Praticar</span>
     </button>
-    <button class="ex-tab" onclick="ptSwitchMode('gramatica',this)" role="tab">
-      <i class="ph ph-text-t"></i> <span class="tab-lbl">Gramática</span>
+    <button class="ex-tab" onclick="ptSwitchMode('simulador',this)" role="tab">
+      <i class="ph ph-timer"></i> <span class="tab-lbl">Simulador</span>
     </button>
-    <button class="ex-tab" onclick="ptSwitchMode('figuras',this)" role="tab">
-      <i class="ph ph-sparkle"></i> <span class="tab-lbl">Figuras</span>
-    </button>
-    <button class="ex-tab" onclick="ptSwitchMode('discurso',this)" role="tab">
-      <i class="ph ph-chat-circle-text"></i> <span class="tab-lbl">Discurso</span>
-    </button>
-    <button class="ex-tab" onclick="ptSwitchMode('conectores',this)" role="tab">
-      <i class="ph ph-link"></i> <span class="tab-lbl">Conectores</span>
-    </button>
-    <button class="ex-tab" onclick="ptSwitchMode('obras',this)" role="tab">
-      <i class="ph ph-book-open-text"></i> <span class="tab-lbl">Obras</span>
-    </button>
-    <button class="ex-tab" onclick="ptSwitchMode('composicao',this)" role="tab">
-      <i class="ph ph-pencil-line"></i> <span class="tab-lbl">Composição</span>
+    <button class="ex-tab" onclick="ptSwitchMode('progresso',this)" role="tab">
+      <i class="ph ph-chart-bar"></i> <span class="tab-lbl">Progresso</span>
     </button>
   </div>
 
   <!-- ENGINE INLINE (partilhado entre todos os painéis) -->
   <div id="pt-inline-engine"></div>
 
-  <!-- ══ PAINEL: QUESTÕES (antigo Temas) ══ -->
+  <!-- ══ PAINEL: PRATICAR ══ -->
   <div id="pt-panel-temas" class="ex-panel active">
 
-    <div class="ex-sec-head">
-      <div class="ex-sec-title">Questões de Exame</div>
-      <div class="ex-sec-sub">Treina questões reais dos exames nacionais de Português 9.º ano (2019-2024) com explicação detalhada de cada resposta.</div>
+    <!-- Sub-selector: Por Tema / Por Prova -->
+    <div style="display:flex;gap:.4rem;margin-bottom:1.25rem;border-bottom:2px solid var(--border);padding-bottom:.75rem">
+      <button id="pt-sub-tema" onclick="ptSubMode('tema')" style="background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:999px;padding:7px 20px;font-size:.8rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s"><i class="ph ph-books"></i> Por Tema</button>
+      <button id="pt-sub-prova" onclick="ptSubMode('prova')" style="background:transparent;color:var(--ink3);border:1.5px solid var(--border);border-radius:999px;padding:7px 20px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s"><i class="ph ph-calendar-blank"></i> Por Prova</button>
     </div>
-    <div class="pt-topic-grid" id="pt-topic-grid"></div>
 
-    <div style="margin-top:1.5rem">
-      <div class="ex-sec-head" style="margin-bottom:.75rem">
-        <div class="ex-sec-title" style="font-size:1.1rem">Por Prova</div>
+    <!-- Modo Por Tema -->
+    <div id="pt-sub-panel-tema">
+      <div class="ex-sec-head">
+        <div class="ex-sec-title">Prática por Tema</div>
+        <div class="ex-sec-sub">Treina questões reais dos exames nacionais de Português 9.º ano (2019-2024) com explicação detalhada de cada resposta.</div>
       </div>
-      <div class="pt-year-grid" id="pt-year-grid-mini"></div>
+      <div class="pt-topic-grid" id="pt-topic-grid"></div>
+      <div style="background:#f8f6ff;border:1.5px solid #ddd8f5;border-radius:14px;padding:.85rem 1.1rem;display:flex;align-items:center;gap:.65rem;margin-top:.5rem">
+        <span style="font-size:1.2rem">📚</span>
+        <div style="font-size:.78rem;color:var(--ink2);line-height:1.55">Para <strong>estudar a matéria</strong> (gramática interativa, figuras de estilo, obras e composição), vai ao curso <a href="port9/index.html" style="color:#5c4e8a;font-weight:800;text-decoration:underline">Português 9.º Ano</a> aqui treinas só com questões reais de exame.</div>
+      </div>
     </div>
-  </div>
 
-  <!-- ══ PAINEL: POR PROVA ══ -->
-  <div id="pt-panel-provas" class="ex-panel">
-    <div class="ex-sec-head">
-      <div class="ex-sec-title">Por Prova</div>
-      <div class="ex-sec-sub">Navega as questões de cada exame nacional, com o texto da prova visível ao lado.</div>
+    <!-- Modo Por Prova -->
+    <div id="pt-sub-panel-prova" style="display:none">
+      <div class="ex-sec-head">
+        <div class="ex-sec-title">Por Prova</div>
+        <div class="ex-sec-sub">Navega as questões de cada exame nacional, com o texto da prova visível ao lado.</div>
+      </div>
+      <div class="pt-year-grid" id="pt-year-grid"></div>
     </div>
-    <div class="pt-year-grid" id="pt-year-grid"></div>
   </div>
 
   <!-- ══ PAINEL: SIMULADOR ══ -->
@@ -323,195 +287,10 @@
     <div id="pt-sim-running" style="display:none"></div>
   </div>
 
-  <!-- ══ PAINEL: GRAMÁTICA ══ -->
-  <div id="pt-panel-gramatica" class="ex-panel">
-    <div class="ex-sec-head">
-      <div class="ex-sec-title">Gramática Interativa</div>
-      <div class="ex-sec-sub">Treina funções sintáticas, tempos verbais, classes de palavras e orações subordinadas os temas que mais saem nos exames.</div>
-    </div>
-    <div id="pt-gram-menu">
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.85rem;margin-bottom:1.25rem">
-        <button onclick="ptGramStart('funcoes')" class="pt-gram-card" style="border-top:3px solid #2a7db5">
-          <div class="pt-gram-card-icon">🔍</div>
-          <div class="pt-gram-card-title">Funções Sintáticas</div>
-          <div class="pt-gram-card-sub">Sujeito, CD, CI, CO, predicativo, modificador...</div>
-          <div class="pt-gram-card-meta">
-            <span style="font-size:.68rem;font-weight:700;color:#2a7db5;background:#e8f4fd;border-radius:999px;padding:2px 8px">32 exercícios</span>
-            <span style="font-size:.68rem;color:var(--ink4)">~10 min</span>
-            <span style="font-size:.68rem;font-weight:700;color:#c0392b;background:#fdecea;border-radius:999px;padding:2px 8px">★★★ Difícil</span>
-          </div>
-        </button>
-        <button onclick="ptGramStart('tempos')" class="pt-gram-card" style="border-top:3px solid #6b52a8">
-          <div class="pt-gram-card-icon">⏱️</div>
-          <div class="pt-gram-card-title">Tempos Verbais</div>
-          <div class="pt-gram-card-sub">Conjuntivo, condicional, mais-que-perfeito...</div>
-          <div class="pt-gram-card-meta">
-            <span style="font-size:.68rem;font-weight:700;color:#6b52a8;background:#f0edf7;border-radius:999px;padding:2px 8px">12 exercícios</span>
-            <span style="font-size:.68rem;color:var(--ink4)">~5 min</span>
-            <span style="font-size:.68rem;font-weight:700;color:#b07030;background:#fef3e2;border-radius:999px;padding:2px 8px">★★☆ Médio</span>
-          </div>
-        </button>
-        <button onclick="ptGramStart('classes')" class="pt-gram-card" style="border-top:3px solid #b07030">
-          <div class="pt-gram-card-icon">🏷️</div>
-          <div class="pt-gram-card-title">Classes de Palavras</div>
-          <div class="pt-gram-card-sub">Advérbios, determinantes, pronomes, verbos...</div>
-          <div class="pt-gram-card-meta">
-            <span style="font-size:.68rem;font-weight:700;color:#b07030;background:#fef3e2;border-radius:999px;padding:2px 8px">10 exercícios</span>
-            <span style="font-size:.68rem;color:var(--ink4)">~4 min</span>
-            <span style="font-size:.68rem;font-weight:700;color:#2e7d52;background:#e8f5ee;border-radius:999px;padding:2px 8px">★☆☆ Fácil</span>
-          </div>
-        </button>
-        <button onclick="ptGramStart('subordinadas')" class="pt-gram-card" style="border-top:3px solid #2e7d52">
-          <div class="pt-gram-card-icon">🌿</div>
-          <div class="pt-gram-card-title">Orações Subordinadas</div>
-          <div class="pt-gram-card-sub">Causal, concessiva, temporal, completiva...</div>
-          <div class="pt-gram-card-meta">
-            <span style="font-size:.68rem;font-weight:700;color:#2e7d52;background:#e8f5ee;border-radius:999px;padding:2px 8px">12 exercícios</span>
-            <span style="font-size:.68rem;color:var(--ink4)">~5 min</span>
-            <span style="font-size:.68rem;font-weight:700;color:#b07030;background:#fef3e2;border-radius:999px;padding:2px 8px">★★☆ Médio</span>
-          </div>
-        </button>
-      </div>
-      <!-- Cheatsheet rápida -->
-      <div style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem 1.5rem">
-        <div style="font-size:.75rem;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem">⚡ Cheatsheet Funções Sintáticas</div>
-        <div style="display:grid;gap:.4rem;font-size:.8rem">
-          <div style="display:flex;gap:.5rem"><span style="font-weight:800;color:#2a7db5;min-width:60px">Sujeito</span><span style="color:var(--ink2)">Quem realiza ou sofre a ação. Concorda com o verbo.</span></div>
-          <div style="display:flex;gap:.5rem"><span style="font-weight:800;color:#c0392b;min-width:60px">CD</span><span style="color:var(--ink2)">Responde a "o quê?" após verbo transitivo. Substituível por o/a/os/as.</span></div>
-          <div style="display:flex;gap:.5rem"><span style="font-weight:800;color:#2e7d52;min-width:60px">CI</span><span style="color:var(--ink2)">Destinatário da ação. Substituível por lhe/lhes.</span></div>
-          <div style="display:flex;gap:.5rem"><span style="font-weight:800;color:#b07030;min-width:60px">CO</span><span style="color:var(--ink2)">Exigido pelo verbo com preposição. Não é destinatário.</span></div>
-          <div style="display:flex;gap:.5rem"><span style="font-weight:800;color:#6b52a8;min-width:60px">PS</span><span style="color:var(--ink2)">Predicativo do sujeito atributo através de verbo copulativo (ser, estar, ficar...).</span></div>
-          <div style="display:flex;gap:.5rem"><span style="font-weight:800;color:#5c4e8a;min-width:60px">Mod.GV</span><span style="color:var(--ink2)">Modificador do grupo verbal facultativo, modifica a ação (tempo, modo, lugar).</span></div>
-        </div>
-      </div>
-    </div>
-    <div id="pt-gram-engine" style="display:none"></div>
-  </div>
-
-  <!-- ══ PAINEL: FIGURAS DE ESTILO ══ -->
-  <div id="pt-panel-figuras" class="ex-panel">
-    <div class="ex-sec-head">
-      <div class="ex-sec-title">Figuras de Estilo</div>
-      <div class="ex-sec-sub">Aprende e identifica as figuras de estilo mais frequentes nos exames com exemplos reais e exercícios de identificação.</div>
-    </div>
-    <div id="pt-fig-menu">
-      <!-- Fichas das figuras -->
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.75rem;margin-bottom:1.25rem" id="pt-fig-cards"></div>
-      <button onclick="ptFigStart()" style="width:100%;background:linear-gradient(135deg,#b07030,#c9a84c);color:#fff;border:none;border-radius:14px;padding:1rem 2rem;font-family:Montserrat,sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem">
-        <i class="ph ph-play"></i> Iniciar exercícios de identificação (18 questões)
-      </button>
-    </div>
-    <div id="pt-fig-engine" style="display:none"></div>
-  </div>
-
-  <!-- ══ PAINEL: OS LUSÍADAS ══ -->
-  <div id="pt-panel-obras" class="ex-panel">
-    <div class="ex-sec-head">
-      <div class="ex-sec-title">Obras · Educação Literária</div>
-      <div class="ex-sec-sub">As obras do programa de Português do 9.º ano. Escolhe uma obra para o guia de estudo, personagens, temas e quiz.</div>
-    </div>
-    <div id="pt-obras-content"></div>
-  </div>
-
-  <!-- ══ PAINEL: DISCURSO DIRETO/INDIRETO ══ -->
-  <div id="pt-panel-discurso" class="ex-panel">
-    <div class="ex-sec-head">
-      <div class="ex-sec-title">Discurso Direto ↔ Indireto</div>
-      <div class="ex-sec-sub">Um dos temas mais frequentes no exame pratica a transformação com exemplos reais e aprende as regras de transformação.</div>
-    </div>
-    <div id="pt-disc-menu">
-      <!-- Tabela de regras -->
-      <div style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem 1.5rem;margin-bottom:1rem;overflow-x:auto">
-        <div style="font-size:.75rem;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem">📋 Regras de Transformação de Tempos Verbais</div>
-        <table style="width:100%;border-collapse:collapse;font-size:.82rem">
-          <thead>
-            <tr style="background:#f8f6ff">
-              <th style="padding:.5rem .75rem;text-align:left;font-weight:800;color:#4a3f7a;border-bottom:2px solid #d4cdf0">Discurso Direto</th>
-              <th style="padding:.5rem .75rem;text-align:left;font-weight:800;color:#4a3f7a;border-bottom:2px solid #d4cdf0">→ Discurso Indireto</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td style="padding:.4rem .75rem;border-bottom:1px solid var(--border)">Presente do indicativo</td><td style="padding:.4rem .75rem;border-bottom:1px solid var(--border);color:#5c4e8a;font-weight:700">Pretérito imperfeito do indicativo</td></tr>
-            <tr style="background:#fdfcff"><td style="padding:.4rem .75rem;border-bottom:1px solid var(--border)">Pretérito perfeito simples</td><td style="padding:.4rem .75rem;border-bottom:1px solid var(--border);color:#5c4e8a;font-weight:700">Pretérito mais-que-perfeito</td></tr>
-            <tr><td style="padding:.4rem .75rem;border-bottom:1px solid var(--border)">Futuro do indicativo</td><td style="padding:.4rem .75rem;border-bottom:1px solid var(--border);color:#5c4e8a;font-weight:700">Condicional</td></tr>
-            <tr style="background:#fdfcff"><td style="padding:.4rem .75rem;border-bottom:1px solid var(--border)">Imperativo</td><td style="padding:.4rem .75rem;border-bottom:1px solid var(--border);color:#5c4e8a;font-weight:700">Imperfeito do conjuntivo</td></tr>
-            <tr><td style="padding:.4rem .75rem">Presente do conjuntivo</td><td style="padding:.4rem .75rem;color:#5c4e8a;font-weight:700">Imperfeito do conjuntivo</td></tr>
-          </tbody>
-        </table>
-        <div style="margin-top:.75rem;font-size:.75rem;color:var(--ink3);background:#f8f6ff;border-radius:8px;padding:.5rem .75rem"><strong>Dêiticos:</strong> hoje → naquele dia · amanhã → no dia seguinte · aqui → ali · agora → naquele momento · este → aquele</div>
-      </div>
-      <button onclick="ptDiscStart()" style="width:100%;background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:14px;padding:1rem 2rem;font-family:Montserrat,sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem">
-        <i class="ph ph-play"></i> Praticar transformações (7 exercícios)
-      </button>
-    </div>
-    <div id="pt-disc-engine" style="display:none"></div>
-  </div>
-
-  <!-- ══ PAINEL: CONECTORES ══ -->
-  <div id="pt-panel-conectores" class="ex-panel">
-    <div class="ex-sec-head">
-      <div class="ex-sec-title">Conectores do Discurso</div>
-      <div class="ex-sec-sub">Aprende os conectores por tipo e pratica a escolha correta em contexto essencial para a composição e para as questões de gramática.</div>
-    </div>
-    <div id="pt-con-menu">
-      <div id="pt-con-fichas" style="margin-bottom:1.25rem"></div>
-      <button onclick="ptConStart()" style="width:100%;background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:14px;padding:1rem 2rem;font-family:Montserrat,sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem">
-        <i class="ph ph-play"></i> Preencher os espaços (15 exercícios)
-      </button>
-    </div>
-    <div id="pt-con-engine" style="display:none"></div>
-  </div>
-
-  <!-- ══ PAINEL: COMPOSIÇÃO ══ -->
-  <div id="pt-panel-composicao" class="ex-panel">
-    <div class="ex-sec-head">
-      <div class="ex-sec-title">Composição Escrita</div>
-      <div class="ex-sec-sub">A composição não tem correção automática mas podes escrever aqui com os critérios sempre visíveis.</div>
-    </div>
-
-    <div class="pt-composicao-card">
-      <h3><i class="ph ph-pencil-line"></i> Como funciona</h3>
-      <p>Nos exames de Português, a composição vale <strong>20 pontos</strong> (em 100). É avaliada em três dimensões:</p>
-      <div class="pt-crit-item">
-        <div class="pt-crit-icon">📝</div>
-        <div class="pt-crit-text"><strong>Tema e estrutura (8 pts):</strong> Defendes um ponto de vista claro? Apresentas pelo menos duas razões? Tens introdução, desenvolvimento e conclusão?</div>
-      </div>
-      <div class="pt-crit-item">
-        <div class="pt-crit-icon">✍️</div>
-        <div class="pt-crit-text"><strong>Coerência e coesão (6 pts):</strong> O texto tem sentido lógico? As frases e parágrafos estão bem ligados com conectores?</div>
-      </div>
-      <div class="pt-crit-item">
-        <div class="pt-crit-icon">📖</div>
-        <div class="pt-crit-text"><strong>Correção linguística (6 pts):</strong> Ortografia, pontuação, vocabulário variado e estrutura frásica correta.</div>
-      </div>
-      <div class="pt-crit-item">
-        <div class="pt-crit-icon">📏</div>
-        <div class="pt-crit-text"><strong>Extensão obrigatória:</strong> <strong>mínimo 160 palavras, máximo 260 palavras.</strong> Abaixo de 55 palavras = 0 pontos.</div>
-      </div>
-    </div>
-
-    <div class="pt-themes-composicao" id="pt-comp-temas"></div>
-
-    <div id="pt-comp-editor" style="display:none;margin-top:1.5rem">
-      <div style="background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:1.75rem">
-        <div id="pt-comp-enun" style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.8;color:var(--ink1);margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border)"></div>
-        <textarea id="pt-comp-textarea" rows="14" placeholder="Escreve o teu texto aqui..." style="width:100%;border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;font-family:'Montserrat',sans-serif;font-size:.9rem;line-height:1.8;color:var(--ink1);resize:vertical;outline:none;transition:border-color .15s;box-sizing:border-box" oninput="ptCompCount()"></textarea>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.75rem;flex-wrap:wrap;gap:.5rem">
-          <div>
-            <span id="pt-comp-count" style="font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;color:#5c4e8a">0</span>
-            <span style="font-size:.75rem;color:var(--ink4);margin-left:.3rem">palavras</span>
-            <span id="pt-comp-status" style="margin-left:.75rem;font-size:.73rem;font-weight:700;padding:3px 10px;border-radius:999px"></span>
-          </div>
-          <div style="display:flex;gap:.5rem">
-            <button onclick="ptCompAutocheck()" style="font-size:.73rem;font-weight:800;color:#fff;background:#5c4e8a;border:none;border-radius:999px;padding:6px 14px;cursor:pointer">✓ Verificar</button>
-            <button onclick="ptCompReset()" style="font-size:.73rem;font-weight:700;color:var(--ink4);background:none;border:1px solid var(--border);border-radius:999px;padding:5px 13px;cursor:pointer">Limpar</button>
-          </div>
-        </div>
-      </div>
-      <!-- Autocorreção por checklist -->
-      <div id="pt-comp-check-result" style="display:none;margin-top:1rem"></div>
-    </div>
-  </div>
+  <!-- Os painéis de ESTUDO (Gramática, Figuras, Obras, Discurso, Conectores,
+       Composição) foram REALOJADOS no curso port9/ (tab Praticar → Exercícios),
+       o sítio certo para estudar a matéria. Esta página fica só com a prática
+       de exame: Praticar · Simulador · Progresso, como exames.html de Mat. -->
 
   <!-- ══ PAINEL: PROGRESSO ══ -->
   <div id="pt-panel-progresso" class="ex-panel">
@@ -538,10 +317,7 @@
 <!-- SCRIPTS -->
 <script src="js/shared.js"></script>
 <script src="js/provas-pt-exames.js"></script>
-<script src="js/pt-gramatica.js"></script>
-<script src="js/pt-figuras.js"></script>
-<script src="js/pt-lusiadas.js"></script>
-<script src="js/pt-obras.js"></script>
+<!-- pt-gramatica/pt-figuras/pt-lusiadas/pt-obras/pt-escrita carregam agora no curso port9/ -->
 <script src="js/ux-improvements.js"></script>
 <script src="js/nav.js"></script>
 <script>
@@ -645,11 +421,22 @@ function ptSwitchMode(mode, btn) {
     clearInterval(_ptSimTimer); _ptSimTimer = null;
   }
   if (mode === 'progresso') ptRenderProgresso();
-  if (mode === 'composicao') { ptRenderComposicaoTemas(); ptOpenComposicao('opiniao'); }
-  if (mode === 'obras') { if (typeof ptObrasRenderGrid === 'function') ptObrasRenderGrid(); }
-  if (mode === 'figuras') ptRenderFigCards();
-  if (mode === 'conectores') ptRenderConFichas();
   window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── Sub-modos do painel Praticar: Por Tema / Por Prova ── */
+function ptSubMode(m) {
+  var tema = document.getElementById('pt-sub-panel-tema');
+  var prova = document.getElementById('pt-sub-panel-prova');
+  var btnT = document.getElementById('pt-sub-tema');
+  var btnP = document.getElementById('pt-sub-prova');
+  if (!tema || !prova) return;
+  var on = 'background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:999px;padding:7px 20px;font-size:.8rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s';
+  var off = 'background:transparent;color:var(--ink3);border:1.5px solid var(--border);border-radius:999px;padding:7px 20px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s';
+  tema.style.display = m === 'tema' ? '' : 'none';
+  prova.style.display = m === 'prova' ? '' : 'none';
+  if (btnT) btnT.style.cssText = m === 'tema' ? on : off;
+  if (btnP) btnP.style.cssText = m === 'prova' ? on : off;
 }
 
 /* ══ PAINEL TEMAS ══ */
@@ -861,27 +648,7 @@ function ptConfirm(qId) {
   if (next) next.style.display = 'block';
 }
 
-/* ══ MINI GRID DE PROVAS (na tab de Questões) ══ */
-function ptRenderYearGridMini() {
-  var grid = document.getElementById('pt-year-grid-mini');
-  if (!grid) return;
-  var h = '';
-  var keys = Object.keys(EXAMES_PT_BANCO).sort(function(a,b){ return b.localeCompare(a); });
-  keys.forEach(function(key) {
-    var exam = EXAMES_PT_BANCO[key];
-    h += '<div class="pt-year-row" style="padding:.75rem 1rem">';
-    h += '<div class="pt-year-pill" style="font-size:.62rem;padding:3px 9px">' + exam.ano + '</div>';
-    h += '<div class="pt-year-label" style="font-size:.82rem">' + exam.label + '</div>';
-    h += '<div class="pt-year-actions">';
-    h += '<button class="pt-year-btn pt-year-btn-practice" onclick="ptStartYear(\'' + key + '\')" style="padding:5px 11px;font-size:.68rem"><i class="ph ph-play"></i> Praticar</button>';
-    h += '<button class="pt-year-btn pt-year-btn-view" onclick="ptViewProva(\'' + key + '\')" style="padding:5px 11px;font-size:.68rem"><i class="ph ph-eye"></i> Ver</button>';
-    h += '</div>';
-    h += '</div>';
-  });
-  grid.innerHTML = h;
-}
-
-/* ══ PAINEL POR PROVA ══ */
+/* ══ PAINEL POR PROVA (sub-modo do Praticar) ══ */
 function ptRenderYearGrid() {
   var grid = document.getElementById('pt-year-grid');
   if (!grid) return;
@@ -905,15 +672,16 @@ function ptRenderYearGrid() {
 function ptStartYear(examKey) {
   var exam = EXAMES_PT_BANCO[examKey];
   if (!exam) return;
-  _ptCurrentMode = 'provas';
+  _ptCurrentMode = 'temas'; // o painel "Por Prova" vive dentro de pt-panel-temas
   ptRunInline(exam.questoes.slice(), '_ptYearBack()', exam.label);
 }
 
 function _ptYearBack() {
   var eng = document.getElementById('pt-inline-engine');
   if (eng) { eng.innerHTML = ''; eng.style.display = 'none'; }
-  // Voltar à tab 'Questões' (temas) com o mini grid de provas visível
+  // Voltar ao painel Praticar, sub-modo Por Prova
   ptSwitchMode('temas', null);
+  ptSubMode('prova');
 }
 
 function ptViewProva(examKey) {
@@ -1152,100 +920,7 @@ function ptSimRestart() {
   _ptSimSecs = 0;
 }
 
-/* ══ COMPOSIÇÃO ══ */
-var PT_COMPOSICAO_TEMAS = [
-  {
-    id: 'opiniao',
-    icon: '💬',
-    title: 'Texto de Opinião',
-    sub: '2024, 2023, 2022, 2021',
-    temas_recentes: [
-      { ano: '2024 1.ª F.', enun: 'Na tua perspetiva, deverão os meios tecnológicos, como o computador ou os telemóveis, ocupar um lugar central nas nossas vidas?\n\nEscreve um texto de opinião bem estruturado, com um mínimo de 160 e um máximo de 260 palavras, em que defendas o teu ponto de vista.' },
-      { ano: '2024 2.ª F.', enun: 'Na tua perspetiva, devem as pessoas dedicar tempo à leitura de obras literárias como a Ilíada e a Odisseia?\n\nEscreve um texto de opinião bem estruturado, com um mínimo de 160 e um máximo de 260 palavras, em que defendas o teu ponto de vista.' },
-      { ano: '2023 1.ª F.', enun: 'Na tua perspetiva, deve a leitura em voz alta ter um lugar na escola e na família?\n\nEscreve um texto de opinião bem estruturado, com um mínimo de 160 e um máximo de 260 palavras, em que defendas o teu ponto de vista.' },
-      { ano: '2022 1.ª F.', enun: 'Na tua perspetiva, deve a escola promover mais atividades na natureza e ao ar livre?\n\nEscreve um texto de opinião bem estruturado, com um mínimo de 160 e um máximo de 260 palavras, em que defendas o teu ponto de vista.' }
-    ]
-  },
-  {
-    id: 'analise',
-    icon: '🔍',
-    title: 'Análise de Texto',
-    sub: 'Os Lusíadas e outras obras',
-    temas_recentes: [
-      { ano: '2024 1.ª F.', enun: 'Faz uma análise da estância apresentada (Canto X, est. 154 de Os Lusíadas), recorrendo aos teus conhecimentos sobre a obra.\n\nNa tua resposta, deves explicitar:\n- o conteúdo dos versos 1 a 4, estabelecendo a relação com a figura retratada;\n- o sentido do verso 8, referindo o que são as «Cousas que juntas se acham raramente» e onde se encontram presentes.' },
-      { ano: '2023 2.ª F.', enun: 'Faz uma análise do excerto de Os Lusíadas apresentado, recorrendo aos teus conhecimentos sobre a obra.\n\nNa tua resposta, deves explicitar o conteúdo e o seu significado no contexto da obra.' }
-    ]
-  }
-];
-
-function ptRenderComposicaoTemas() {
-  var wrap = document.getElementById('pt-comp-temas');
-  if (!wrap) return;
-  var h = '';
-  PT_COMPOSICAO_TEMAS.forEach(function(t) {
-    h += '<button class="pt-theme-btn" onclick="ptOpenComposicao(\'' + t.id + '\')">';
-    h += '<div class="pt-theme-btn-icon">' + t.icon + '</div>';
-    h += '<div class="pt-theme-btn-title">' + t.title + '</div>';
-    h += '<div class="pt-theme-btn-sub">' + t.sub + '</div>';
-    h += '</button>';
-  });
-  wrap.innerHTML = h;
-}
-
-function ptOpenComposicao(id) {
-  var tema = null;
-  PT_COMPOSICAO_TEMAS.forEach(function(t){ if(t.id === id) tema = t; });
-  if (!tema) return;
-
-  // Escolher enunciado aleatório
-  var enun = tema.temas_recentes[Math.floor(Math.random() * tema.temas_recentes.length)];
-
-  var editor = document.getElementById('pt-comp-editor');
-  var enunDiv = document.getElementById('pt-comp-enun');
-  var ta = document.getElementById('pt-comp-textarea');
-
-  enunDiv.innerHTML = '<div style="font-size:.68rem;font-weight:800;color:#7c6fa0;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem">' + tema.title + ' · ' + enun.ano + '</div>' + enun.enun.replace(/\n/g,'<br>');
-  ta.value = '';
-  editor.style.display = 'block';
-  ptCompCount();
-  editor.scrollIntoView({behavior:'smooth', block:'start'});
-}
-
-function ptCompCount() {
-  var ta = document.getElementById('pt-comp-textarea');
-  var cnt = document.getElementById('pt-comp-count');
-  var status = document.getElementById('pt-comp-status');
-  if (!ta || !cnt || !status) return;
-  var words = ta.value.trim() === '' ? 0 : ta.value.trim().split(/\s+/).length;
-  cnt.textContent = words;
-  if (words < 55) {
-    cnt.style.color = '#c0392b';
-    status.textContent = 'Muito curto (0 pts)';
-    status.style.background = '#fdecea';
-    status.style.color = '#c0392b';
-  } else if (words < 160) {
-    cnt.style.color = '#e67e22';
-    status.textContent = 'Abaixo do mínimo';
-    status.style.background = '#fef3e2';
-    status.style.color = '#b07030';
-  } else if (words <= 260) {
-    cnt.style.color = '#2e7d52';
-    status.textContent = '✓ Extensão válida';
-    status.style.background = '#e8f5ee';
-    status.style.color = '#2e7d52';
-  } else {
-    cnt.style.color = '#c0392b';
-    status.textContent = 'Acima do máximo';
-    status.style.background = '#fdecea';
-    status.style.color = '#c0392b';
-  }
-}
-
-function ptCompReset() {
-  var ta = document.getElementById('pt-comp-textarea');
-  if (ta) ta.value = '';
-  ptCompCount();
-}
+/* (Composição realojada no curso port9 → js/pt-escrita.js) */
 
 /* ══ PROGRESSO ══ */
 function ptRenderProgresso() {
@@ -1268,10 +943,10 @@ function ptRenderProgresso() {
     h += '<div style="text-align:center;padding:3rem 1.5rem;background:var(--white);border:1.5px dashed var(--border);border-radius:20px">';
     h += '<div style="font-size:3rem;margin-bottom:1rem">📚</div>';
     h += '<div style="font-family:Cormorant Garamond,serif;font-size:1.4rem;font-weight:700;color:var(--ink1);margin-bottom:.5rem">Ainda não fizeste nenhum exercício</div>';
-    h += '<div style="font-size:.85rem;color:var(--ink3);line-height:1.7;max-width:380px;margin:0 auto 1.5rem">Começa pelos <strong>Exames</strong> para treinar questões reais, ou experimenta a <strong>Gramática</strong> para preparar este tema específico.</div>';
+    h += '<div style="font-size:.85rem;color:var(--ink3);line-height:1.7;max-width:380px;margin:0 auto 1.5rem">Começa por <strong>Praticar</strong> questões reais de exame, ou estuda a matéria no curso <strong>Português 9.º</strong>.</div>';
     h += '<div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">';
     h += '<button onclick="ptSwitchMode(\'temas\',document.querySelector(\'.ex-tab\'))" style="background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:12px;padding:.75rem 1.5rem;font-weight:800;font-size:.85rem;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-play"></i> Começar agora</button>';
-    h += '<button onclick="ptSwitchMode(\'gramatica\',null)" style="background:var(--white);color:#4a3f7a;border:1.5px solid #d4cdf0;border-radius:12px;padding:.75rem 1.5rem;font-weight:700;font-size:.85rem;cursor:pointer;font-family:Montserrat,sans-serif">Ir para Gramática</button>';
+    h += '<button onclick="location.href=\'port9/index.html\'" style="background:var(--white);color:#4a3f7a;border:1.5px solid #d4cdf0;border-radius:12px;padding:.75rem 1.5rem;font-weight:700;font-size:.85rem;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-book-open-text"></i> Estudar no curso</button>';
     h += '</div></div>';
     wrap.innerHTML = h;
     return;
@@ -1390,117 +1065,14 @@ function ptResetProgress() {
   ptRenderProgresso();
 }
 
-/* ══ FIGURAS Render cards ══ */
-function ptRenderFigCards() {
-  var wrap = document.getElementById('pt-fig-cards');
-  if (!wrap || typeof PT_FIGURAS_INFO === 'undefined') return;
-  var h = '';
-  PT_FIGURAS_INFO.forEach(function(f) {
-    h += '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:1.1rem 1.25rem">';
-    h += '<div style="font-size:.9rem;font-weight:800;color:var(--ink1);margin-bottom:.35rem">' + f.nome + '</div>';
-    h += '<div style="font-size:.8rem;color:var(--ink2);line-height:1.6;margin-bottom:.5rem">' + f.def + '</div>';
-    h += '<div style="font-family:Cormorant Garamond,serif;font-size:.9rem;color:#b07030;font-style:italic;background:#fefbf0;border-radius:8px;padding:.4rem .7rem;margin-bottom:.35rem">' + f.ex[0] + '</div>';
-    h += '<div style="font-size:.7rem;font-weight:700;color:#6b52a8;background:#f0edf7;border-radius:999px;padding:3px 9px;display:inline-block"><i class="ph ph-lightbulb"></i> ' + f.dica + '</div>';
-    h += '</div>';
-  });
-  wrap.innerHTML = h;
-}
-
-/* ══ CONECTORES Render fichas ══ */
-function ptRenderConFichas() {
-  var wrap = document.getElementById('pt-con-fichas');
-  if (!wrap || typeof PT_CONECTORES_INFO === 'undefined') return;
-  var h = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.6rem">';
-  PT_CONECTORES_INFO.forEach(function(c) {
-    h += '<div style="background:' + c.bg + ';border:1.5px solid ' + c.cor + '33;border-radius:12px;padding:.85rem 1rem">';
-    h += '<div style="font-size:.8rem;font-weight:800;color:' + c.cor + ';margin-bottom:.4rem">' + c.tipo + '</div>';
-    h += '<div style="font-size:.8rem;color:var(--ink2)">' + c.exemplos.join(' · ') + '</div>';
-    h += '</div>';
-  });
-  h += '</div>';
-  wrap.innerHTML = h;
-}
-
-/* ══ COMPOSIÇÃO Autocorreção por checklist ══ */
-function ptCompAutocheck() {
-  var ta = document.getElementById('pt-comp-textarea');
-  var result = document.getElementById('pt-comp-check-result');
-  if (!ta || !result) return;
-  var texto = ta.value.trim();
-  if (!texto) { alert('Escreve o teu texto primeiro!'); return; }
-
-  var words = texto.split(/\s+/).filter(function(w){ return w.length > 0; }).length;
-  // Aceitar um único \n ou dois \n\n como separador de parágrafo
-  var paragrafos = texto.split(/\n+/).filter(function(p){ return p.trim().length > 30; }).length;
-  if (paragrafos < 1) paragrafos = 1; // se não há newlines, o próprio texto é 1 parágrafo
-  var frases = texto.split(/[.!?]+/).filter(function(f){ return f.trim().length > 10; }).length;
-
-  // Detectar conectores
-  var conectoresUsados = [];
-  var conectoresLista = ['porque','portanto','contudo','no entanto','embora','ainda que','além disso','por outro lado','em conclusão','em suma','por exemplo','todavia','porém','assim','desta forma','nomeadamente'];
-  var textoLower = texto.toLowerCase();
-  conectoresLista.forEach(function(c) {
-    if (textoLower.indexOf(c) !== -1) conectoresUsados.push(c);
-  });
-
-  // Verificar estrutura
-  var temIntroducao = paragrafos >= 1;
-  var temDesenvolvimento = paragrafos >= 2;
-  var temConclusao = paragrafos >= 3 || /conclus|suma|portanto|assim sendo|em suma|concluindo/.test(textoLower);
-
-  var checks = [
-    { ok: words >= 160 && words <= 260, label: 'Extensão válida (160-260 palavras)', detalhe: words + ' palavras' },
-    { ok: words >= 55, label: 'Mínimo de 55 palavras (≥ 0 pontos)', detalhe: words < 55 ? '⚠️ Abaixo de 55 = 0 pontos!' : '' },
-    { ok: temIntroducao, label: 'Tem introdução (pelo menos 1 parágrafo)', detalhe: '' },
-    { ok: temDesenvolvimento, label: 'Tem desenvolvimento (≥ 2 parágrafos)', detalhe: paragrafos + ' parágrafos detetados' },
-    { ok: temConclusao, label: 'Tem conclusão (palavra ou parágrafo de conclusão)', detalhe: '' },
-    { ok: conectoresUsados.length >= 2, label: 'Usa conectores do discurso (≥ 2)', detalhe: conectoresUsados.length > 0 ? 'Detetados: ' + conectoresUsados.join(', ') : 'Nenhum detetado usa «portanto», «contudo», «além disso»...' },
-    { ok: frases >= 5, label: 'Texto com variedade frásica (≥ 5 frases)', detalhe: frases + ' frases detetadas' }
-  ];
-
-  var pontos = 0;
-  var pesos = [3, 2, 1, 2, 2, 2, 1]; // peso de cada critério
-  checks.forEach(function(c, i) { if (c.ok) pontos += pesos[i]; });
-  var max = pesos.reduce(function(a,b){ return a+b; }, 0);
-
-  var cor = pontos >= max * .8 ? '#2e7d52' : pontos >= max * .5 ? '#b07030' : '#c0392b';
-  var bg = pontos >= max * .8 ? '#e8f5ee' : pontos >= max * .5 ? '#fef3e2' : '#fdecea';
-
-  var h = '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:1.75rem">';
-  h += '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap">';
-  h += '<div style="background:' + bg + ';border-radius:14px;padding:.85rem 1.25rem;text-align:center">';
-  h += '<div style="font-family:JetBrains Mono,monospace;font-size:1.8rem;font-weight:700;color:' + cor + '">' + pontos + '<span style="font-size:1rem;opacity:.5">/' + max + '</span></div>';
-  h += '<div style="font-size:.68rem;font-weight:700;color:' + cor + ';text-transform:uppercase;letter-spacing:.08em">Checklist</div>';
-  h += '</div>';
-  h += '<div><div style="font-size:.82rem;font-weight:700;color:var(--ink1)">Verificação automática</div><div style="font-size:.75rem;color:var(--ink3);margin-top:.2rem">Baseada em critérios objetivos não substitui a correção do professor.</div></div>';
-  h += '</div>';
-  h += '<div style="display:flex;flex-direction:column;gap:.5rem">';
-  checks.forEach(function(c) {
-    h += '<div style="display:flex;align-items:flex-start;gap:.6rem;padding:.5rem .6rem;border-radius:8px;background:' + (c.ok ? '#f0faf4' : '#fff8f8') + '">';
-    h += '<span style="font-size:1rem;flex-shrink:0">' + (c.ok ? '✅' : '❌') + '</span>';
-    h += '<div><div style="font-size:.82rem;font-weight:' + (c.ok ? '600' : '700') + ';color:' + (c.ok ? '#2e7d52' : '#c0392b') + '">' + c.label + '</div>';
-    if (c.detalhe) h += '<div style="font-size:.74rem;color:var(--ink4);margin-top:.1rem">' + c.detalhe + '</div>';
-    h += '</div></div>';
-  });
-  h += '</div>';
-  // Nota: critérios qualitativos
-  h += '<div style="margin-top:1rem;padding:.75rem 1rem;background:#f8f6ff;border-radius:10px;font-size:.78rem;color:var(--ink3);line-height:1.6"><strong>Não verificável automaticamente:</strong> coerência e coesão do texto, qualidade do vocabulário, correção ortográfica e gramática estes são avaliados pelo professor.</div>';
-  h += '</div>';
-  result.innerHTML = h;
-  result.style.display = 'block';
-  result.scrollIntoView({behavior:'smooth', block:'nearest'});
-}
+/* (Render de figuras/conectores realojado em js/pt-figuras.js;
+   autocorreção da composição em js/pt-escrita.js) */
 
 /* ══ INIT ══ */
 document.addEventListener('DOMContentLoaded', function() {
   ptRenderTopicGrid();
   ptRenderYearGrid();
-  ptRenderYearGridMini();  // mini grid na tab de questões
-  ptRenderComposicaoTemas();
   ptUpdateStatFeitas();
-  // Inicializar Os Lusíadas (será renderizado quando o painel abrir)
-  // Os outros painéis renderizam ao clicar na tab
-
 
   // Fechar overlay com Escape
   document.addEventListener('keydown', function(e) {

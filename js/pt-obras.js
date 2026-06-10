@@ -1,16 +1,17 @@
-// pt-obras.js — Educação Literária NA ZONA DO EXAME (exames-pt.html).
+// pt-obras.js — Educação Literária do CURSO port9/ (realojado da antiga
+// tab "Obras" de exames-pt.html quando a zona de exame passou a 3 tabs).
 //
-// IMPORTANTE: esta é a zona de PREPARAÇÃO PARA O EXAME, por isso lista apenas
-// o que SAI MESMO no exame nacional do 9.º ano. Verificado nas provas finais
-// 2019–2024 (PDFs em "Exames nacionais português 9º ano/"):
+// O curso mostra o PROGRAMA TODO do 9.º ano; as obras avaliadas no exame
+// nacional levam a marca «Sai no exame» (verificado nas provas 2019–2024,
+// PDFs em "Exames nacionais português 9º ano/"):
 //   • Os Lusíadas é o texto de ANÁLISE LITERÁRIA em 7 dos 8 exames — é A obra.
 //   • Os outros textos do exame são de LEITURA: contos/excertos que MUDAM
 //     todos os anos (Eça, Vergílio Ferreira, Saramago…) — não são obras fixas.
-// O programa completo do 9.º (Auto da Barca, poesia, etc.) vive no CURSO
-// port9/, não aqui — essas obras não são avaliadas no exame.
+//
+// API: ptObrasMount(containerId) — injeta a grelha no contentor indicado.
 
 /* ══════════════════════════════════════════════════════
-   OBRAS / TEXTOS QUE SAEM NO EXAME NACIONAL · 9.º ANO
+   OBRAS DO PROGRAMA · 9.º ANO (curso completo)
 ══════════════════════════════════════════════════════ */
 var PT_OBRAS = [
   {
@@ -37,8 +38,42 @@ var PT_OBRAS = [
     disponivel: false,
     badge: 'Sai no exame',
     nota: 'O exame inclui sempre textos de leitura (contos/excertos) que MUDAM de ano para ano. Não é uma obra fixa — treina-se a compreensão de texto.'
+  },
+  {
+    id: 'auto-barca',
+    titulo: 'Auto da Barca do Inferno',
+    autor: 'Gil Vicente',
+    ano: '1517',
+    genero: 'Teatro · Educação Literária',
+    icon: '⛵',
+    cor: '#2e7d52',
+    disponivel: false,
+    nota: 'Obra do programa de 9.º ano (estudada nas aulas e nos testes da escola). Guia de estudo em preparação.'
+  },
+  {
+    id: 'poesia',
+    titulo: 'Poesia (antologia do 9.º ano)',
+    autor: 'Vários autores',
+    ano: 'varia',
+    genero: 'Texto lírico · Educação Literária',
+    icon: '🪶',
+    cor: '#9c5e80',
+    disponivel: false,
+    nota: 'Poemas do programa de 9.º ano. Guia de estudo em preparação.'
   }
 ];
+
+/* Mount para o curso port9/ — injeta a grelha de obras no contentor. */
+function ptObrasMount(containerId) {
+  var wrap = document.getElementById(containerId);
+  if (!wrap) return;
+  wrap.innerHTML = '<div class="ex-sec-head">'
+    + '<div class="ex-sec-title">Obras · Educação Literária</div>'
+    + '<div class="ex-sec-sub">As obras do programa de Português do 9.º ano. Escolhe uma obra para o guia de estudo, personagens, temas e quiz.</div>'
+    + '</div>'
+    + '<div id="pt-obras-content"></div>';
+  ptObrasRenderGrid();
+}
 
 /* ══════════════════════════════════════════════════════
    GRELHA DE OBRAS (renderizada na tab "Obras")
@@ -50,7 +85,7 @@ function ptObrasRenderGrid() {
 
   var h = '';
   h += '<div class="ex-sec-head" style="margin-bottom:1rem">';
-  h += '<div class="ex-sec-sub">O que sai mesmo no exame nacional do 9.º ano (provas 2019–2024). <strong>Os Lusíadas</strong> é o texto de análise literária; a leitura usa contos/excertos que variam de ano para ano.</div>';
+  h += '<div class="ex-sec-sub">Programa completo do 9.º ano. As obras com a marca <strong>«Sai no exame»</strong> são as avaliadas na prova final (2019–2024): <strong>Os Lusíadas</strong> na análise literária e contos/excertos na leitura.</div>';
   h += '</div>';
 
   h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem">';
@@ -86,8 +121,8 @@ function ptObrasOpen(id) {
   var wrap = document.getElementById('pt-obras-content');
   if (!wrap) return;
 
-  // botão de voltar à grelha
-  var back = '<button class="pt-theme-btn" onclick="ptObrasRenderGrid()" style="display:inline-flex;align-items:center;gap:.4rem;width:auto;padding:.5rem .9rem;margin-bottom:1rem"><i class="ph ph-arrow-left"></i> Todas as obras</button>';
+  // botão de voltar à grelha (estilo claro, legível em fundo claro)
+  var back = '<button class="pt-back-light" onclick="ptObrasRenderGrid()" style="margin-bottom:1rem"><i class="ph ph-arrow-left"></i> Todas as obras</button>';
 
   if (obra.render === 'lusiadas' && typeof ptLusRenderMenu === 'function') {
     // o guia de Os Lusíadas escreve em #pt-lus-content; garantimos que existe dentro do wrap

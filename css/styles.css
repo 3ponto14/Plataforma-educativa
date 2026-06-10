@@ -3708,3 +3708,46 @@ body.dark-mode .resumo-st-btn.active {
 .edu-rules b{color:var(--ink,#2c2418)}
 .edu-help{background:none;border:none;color:var(--ink3,#6b6357);cursor:pointer;font-size:.82rem;padding:.2rem .5rem;text-decoration:underline}
 @media(max-width:480px){.edu-mem-grid{gap:.4rem}.edu-card{font-size:1rem}.edu-card-txt{font-size:.58rem}.edu-card.isr.up .edu-card-txt{font-size:.8rem}}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   PT · COMPONENTES PARTILHADOS (zona de exame exames-pt.html + curso port9/)
+   Realojados do <style> de exames-pt.html quando o conteúdo de estudo
+   (gramática, figuras, obras, composição) passou para o curso port9.
+   ═══════════════════════════════════════════════════════════════════ */
+.ex-sec-head{margin-bottom:1.5rem}
+.ex-sec-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--ink1);margin-bottom:.2rem}
+.ex-sec-sub{font-size:.83rem;color:var(--ink3);line-height:1.5}
+
+.pt-topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-bottom:1.5rem}
+.pt-topic-card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.4rem 1.5rem;cursor:pointer;transition:all .22s;text-align:left;width:100%;position:relative;overflow:hidden}
+.pt-topic-card:hover{border-color:#8b7cc0;transform:translateY(-3px);box-shadow:0 12px 32px rgba(92,78,138,.14)}
+.pt-topic-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:.9rem;font-size:1.3rem}
+.pt-topic-label{font-size:.95rem;font-weight:800;color:var(--ink1);margin-bottom:.25rem;line-height:1.2}
+.pt-topic-sub{font-size:.74rem;color:var(--ink4);line-height:1.45;margin-bottom:.9rem}
+.pt-topic-count{font-size:.7rem;font-weight:700;color:var(--ink4)}
+@media(max-width:640px){.pt-topic-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:400px){.pt-topic-grid{grid-template-columns:1fr}}
+
+/* Composição (curso port9 · domínio Escrita) */
+.pt-composicao-card{background:linear-gradient(135deg,#1e1640,#3a2d6e);border-radius:20px;padding:2rem;color:#fff;margin-bottom:1rem}
+.pt-composicao-card h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;margin-bottom:.5rem}
+.pt-composicao-card p{font-size:.85rem;color:rgba(255,255,255,.7);line-height:1.7;margin-bottom:1rem}
+.pt-crit-item{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.6rem}
+.pt-crit-icon{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.pt-crit-text{font-size:.81rem;color:rgba(255,255,255,.8);line-height:1.5}
+.pt-crit-text strong{color:#fff}
+.pt-counter-wrap{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:1rem 1.25rem;margin-top:1rem}
+.pt-counter-num{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:700;color:#fff}
+.pt-counter-label{font-size:.68rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.1em}
+.pt-themes-composicao{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1rem}
+.pt-theme-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:1rem;cursor:pointer;transition:all .18s;text-align:left}
+.pt-theme-btn:hover{background:rgba(255,255,255,.14)}
+.pt-theme-btn-icon{font-size:1.4rem;margin-bottom:.4rem}
+.pt-theme-btn-title{font-size:.82rem;font-weight:700;color:#fff;margin-bottom:.15rem}
+.pt-theme-btn-sub{font-size:.68rem;color:rgba(255,255,255,.5)}
+@media(max-width:640px){.pt-themes-composicao{grid-template-columns:1fr}}
+
+/* Botão "voltar" claro (obras/composição em fundo claro do curso) */
+.pt-back-light{display:inline-flex;align-items:center;gap:.4rem;background:var(--white);border:1.5px solid var(--border);border-radius:999px;padding:.5rem .9rem;font-size:.76rem;font-weight:700;color:var(--ink2);cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s}
+.pt-back-light:hover{border-color:#8b7cc0;color:#5c4e8a}

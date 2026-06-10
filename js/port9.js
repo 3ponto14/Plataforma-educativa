@@ -289,6 +289,7 @@ function port9BuildPraticarNav() {
   });
   capRow.innerHTML = h;
   port9PraticarShowSts(activeCap);
+  port9GerarExercicios(); // renderiza logo o domínio ativo (módulo ou banco)
 }
 
 function port9PraticarShowSts(cap) {
@@ -342,11 +343,63 @@ var _port9SubtemaTemas = {
   5: { 1: ['1'], 2: ['2'], 3: ['3'] }            // Recursos Expressivos
 };
 
+/* ════════════════════════════════════════════════════════════════
+   MÓDULOS REALOJADOS da antiga zona de exame (exames-pt.html, 7 tabs):
+   cada domínio com módulo próprio renderiza-o no painel de Exercícios.
+   Os mounts vivem nos ficheiros dos módulos (pt-gramatica, pt-figuras,
+   pt-obras, pt-escrita) — aqui só se monta o esqueleto e despacha.
+   Devolve true se o domínio tem módulo (e já foi renderizado).
+   ════════════════════════════════════════════════════════════════ */
+function _port9PratModulo(cap, dest) {
+  if (cap === 1 && typeof ptObrasMount === 'function') {
+    // Educação Literária: guias das obras (Os Lusíadas com quiz incluído)
+    dest.innerHTML = '<div id="port9-mod-obras"></div>';
+    ptObrasMount('port9-mod-obras');
+    return true;
+  }
+  if (cap === 2 && typeof ptGramMount === 'function') {
+    // Gramática: módulos interativos + discurso direto/indireto + conectores
+    dest.innerHTML = '<div id="port9-mod-gram"></div>'
+      + '<div id="port9-mod-disc" style="margin-top:2rem"></div>'
+      + '<div id="port9-mod-con" style="margin-top:2rem"></div>';
+    ptGramMount('port9-mod-gram');
+    if (typeof ptDiscMount === 'function') ptDiscMount('port9-mod-disc');
+    if (typeof ptConMount === 'function') ptConMount('port9-mod-con');
+    return true;
+  }
+  if (cap === 4 && typeof ptEscritaMount === 'function') {
+    // Escrita: composição com critérios do exame, editor e autocorreção
+    dest.innerHTML = '<div id="port9-mod-escrita"></div>';
+    ptEscritaMount('port9-mod-escrita');
+    return true;
+  }
+  if (cap === 5 && typeof ptFigMount === 'function') {
+    // Recursos Expressivos: figuras de estilo (teoria + identificação)
+    dest.innerHTML = '<div id="port9-mod-fig"></div>';
+    ptFigMount('port9-mod-fig');
+    return true;
+  }
+  return false;
+}
+
 function port9GerarExercicios() {
   var dest = document.getElementById('port9-praticar-content');
   if (!dest) return;
   var cap = _port9Prat.cap, gen = _port9Gerador(cap);
-  if (!gen) { dest.innerHTML = ''; return; }
+
+  // Domínios com módulos próprios (realojados da antiga zona de exame):
+  // escondem nível/subtemas/gerar e renderizam o módulo no painel.
+  var lvlBar = document.getElementById('port9-praticar-levelbar');
+  var stRow = document.getElementById('port9-praticar-st-row');
+  if (_port9PratModulo(cap, dest)) {
+    if (lvlBar) lvlBar.style.display = 'none';
+    if (stRow) stRow.style.display = 'none';
+    return;
+  }
+  if (lvlBar) lvlBar.style.display = '';
+
+  // Sem gerador procedural nem banco → nada a mostrar
+  if (!gen && !(_port9Banco[cap] && _port9Banco[cap].length)) { dest.innerHTML = ''; return; }
 
   // Que temas usar?
   var temas;
@@ -360,14 +413,23 @@ function port9GerarExercicios() {
   var QTD = 8;
   var tipos = ['mc', 'fill', 'mc', 'vf', 'fill', 'mc', 'fill', 'mc'];
   var geradas = [];
-  for (var i = 0; i < QTD; i++) {
-    var tema = temas[i % temas.length];
-    var ex = gen(tema, tipos[i % tipos.length], _port9Prat.nivel);
-    if (ex) geradas.push(ex);
+  if (gen) {
+    for (var i = 0; i < QTD; i++) {
+      var tema = temas[i % temas.length];
+      var ex = gen(tema, tipos[i % tipos.length], _port9Prat.nivel);
+      if (ex) geradas.push(ex);
+    }
   }
   var banco = (typeof _port9Banco !== 'undefined' && _port9Banco[cap]) ? _port9Banco[cap].filter(function (q) { return temas.indexOf(q.t) !== -1; }) : [];
-  var exs = (typeof _mixBancoGeradas === 'function') ? _mixBancoGeradas(banco, geradas, QTD, 3, _port9Prat.nivel)
-    : geradas.map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
+  var exs;
+  if (!gen) {
+    // Sem gerador (PT): usa o banco todo, baralhado
+    exs = banco.slice().sort(function () { return Math.random() - .5; })
+      .map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
+  } else {
+    exs = (typeof _mixBancoGeradas === 'function') ? _mixBancoGeradas(banco, geradas, QTD, 3, _port9Prat.nivel)
+      : geradas.map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
+  }
   _port9Prat.exs = exs;
   _port9Prat.answered = {};
   _port9Prat.score = { correct: 0, total: 0 };
