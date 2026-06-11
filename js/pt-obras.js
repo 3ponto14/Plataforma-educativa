@@ -35,9 +35,10 @@ var PT_OBRAS = [
     genero: 'Texto narrativo · Leitura',
     icon: '📖',
     cor: '#5c4e8a',
-    disponivel: false,
+    disponivel: true,
+    render: 'contos',
     badge: 'Sai no exame',
-    nota: 'O exame usa contos/excertos que mudam de ano para ano. No manual Mensagens 9 trabalham-se: «A Aia», «A Galinha», «A Palavra Mágica», «A Consequência dos Semáforos», «O Fantasma de Canterville», «Aventuras de João Sem Medo» e «Um Dia Destes». Guia em preparação.'
+    nota: 'Os 7 textos do manual Mensagens 9 analisados (A Aia, A Galinha, A Palavra Mágica, O Fantasma de Canterville, João Sem Medo, Um Dia Destes, e a crónica de Lobo Antunes) + estratégias para o exame + quiz.'
   },
   {
     id: 'auto-barca',
@@ -137,6 +138,9 @@ function ptObrasOpen(id) {
   } else if (obra.render === 'poesia' && typeof ptPoesiaRenderMenu === 'function') {
     wrap.innerHTML = back + '<div id="pt-poesia-content"></div>';
     ptPoesiaRenderMenu();
+  } else if (obra.render === 'contos' && typeof ptContosRenderMenu === 'function') {
+    wrap.innerHTML = back + '<div id="pt-contos-content"></div>';
+    ptContosRenderMenu();
   } else {
     wrap.innerHTML = back + '<div style="padding:2rem;text-align:center;color:var(--ink3)">Guia em construção.</div>';
   }

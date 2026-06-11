@@ -601,6 +601,11 @@ var _P9_DIF_FIGURAS = [
   ['aliteração', 'medio'], ['assonância', 'medio'],
   ['metáfora', 'facil'], ['comparação', 'facil'], ['personificação', 'facil'], ['hipérbole', 'facil']
 ];
+var _P9_DIF_CONTOS = [
+  ['conclusão de «a palavra mágica»', 'dificil'], ['critica sobretudo', 'dificil'], ['recusa de joão', 'dificil'],
+  ['significado de «inócuo»', 'facil'], ['conflito familiar', 'facil'], ['«o mesmo saco»', 'facil'],
+  ['caracterizam-se', 'facil']
+];
 var _P9_DIF_LUS = [
   ['captatio', 'dificil'], ['plano mitológico', 'dificil'], ['sintetiza melhor', 'dificil'],
   ['mares nunca dantes', 'facil'], ['vénus', 'facil'], ['no canto', 'facil'],
@@ -628,6 +633,7 @@ function _port9FichaBanco(cap) {
     if (typeof PT_LUS_BANCO !== 'undefined') add(_port9ConvBancoLetra(PT_LUS_BANCO, '2', 'Os Lusíadas', _P9_DIF_LUS));
     if (typeof PT_BARCA_BANCO !== 'undefined') add(_port9ConvBancoLetra(PT_BARCA_BANCO, '1', 'Auto da Barca do Inferno', _P9_DIF_BARCA));
     if (typeof PT_POESIA_BANCO !== 'undefined') add(_port9ConvBancoLetra(PT_POESIA_BANCO, '4', 'Poesia', _P9_DIF_POESIA));
+    if (typeof PT_CONTOS_BANCO !== 'undefined') add(_port9ConvBancoLetra(PT_CONTOS_BANCO, '3', 'Leitura de Contos', _P9_DIF_CONTOS));
   } else if (cap === 2) {
     if (typeof PT_CLASSES_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_CLASSES_BANCO, 'Identifica a classe da palavra destacada: ', '1', 'Classes de palavras', 'facil', _P9_DIF_CLASSES));
     if (typeof PT_FUNCOES_BANCO !== 'undefined') add(_port9ConvBancoMod(PT_FUNCOES_BANCO, 'Indica a função sintática do elemento destacado: ', '2', 'Funções sintáticas', 'medio', _P9_DIF_FUNCOES));
