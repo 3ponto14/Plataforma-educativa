@@ -610,9 +610,11 @@ var _P9_DIF_BARCA = [
   ['parvo', 'medio'], ['frade', 'medio'], ['brísida', 'medio'], ['enforcado', 'medio'], ['pajem', 'medio']
 ];
 var _P9_DIF_POESIA = [
-  ['contagem das sílabas', 'dificil'],
+  ['contagem das sílabas', 'dificil'], ['malhas que o império', 'dificil'],
   ['sujeito poético é', 'facil'], ['terceto e', 'facil'], ['abab', 'facil'], ['«eles não sabem»', 'facil'],
-  ['sete sílabas', 'medio'], ['métrica regular', 'medio']
+  ['duas quadras e dois tercetos', 'facil'],
+  ['sete sílabas', 'medio'], ['métrica regular', 'medio'],
+  ['menino da sua mãe', 'medio'], ['camões e a tença', 'medio'], ['pedradas', 'medio']
 ];
 
 function _port9FichaBanco(cap) {

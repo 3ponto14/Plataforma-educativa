@@ -37,7 +37,7 @@ var PT_OBRAS = [
     cor: '#5c4e8a',
     disponivel: false,
     badge: 'Sai no exame',
-    nota: 'O exame inclui sempre textos de leitura (contos/excertos) que MUDAM de ano para ano. Não é uma obra fixa — treina-se a compreensão de texto.'
+    nota: 'O exame usa contos/excertos que mudam de ano para ano. No manual Mensagens 9 trabalham-se: «A Aia», «A Galinha», «A Palavra Mágica», «A Consequência dos Semáforos», «O Fantasma de Canterville», «Aventuras de João Sem Medo» e «Um Dia Destes». Guia em preparação.'
   },
   {
     id: 'auto-barca',
@@ -61,7 +61,7 @@ var PT_OBRAS = [
     cor: '#9c5e80',
     disponivel: true,
     render: 'poesia',
-    nota: 'Ferramentas de análise (versificação, sujeito poético, recursos), mini-análises dos poemas mais comuns nos manuais + quiz.'
+    nota: 'Os 4 poemas do manual Mensagens 9 analisados (Pessanha, Pessoa, Irene Lisboa, Sophia) + ferramentas de análise (versificação, sujeito poético, recursos) + quiz.'
   }
 ];
 

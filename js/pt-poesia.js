@@ -28,7 +28,42 @@ var PT_POESIA_PASSOS = [
 ];
 
 /* ══════════════════════════════════════════════════════
-   POEMAS FREQUENTES NOS MANUAIS DO 9.º ANO (mini-análises)
+   POEMAS DO MANUAL «MENSAGENS 9» (mini-análises fiéis às
+   fichas do manual, em "9º ano_portugues/Mensagens 9/")
+══════════════════════════════════════════════════════ */
+var PT_POESIA_MANUAL = [
+  {
+    titulo: 'Quando voltei encontrei os meus passos',
+    autor: 'Camilo Pessanha (Clepsidra)',
+    verso: '«Quando voltei encontrei os meus passos / Ainda frescos sobre a húmida areia.»',
+    tema: 'O regresso e o confronto melancólico com o passado: os passos na areia são os vestígios de uma vida errante e sem rumo, que a maré (o tempo) acabará por apagar.',
+    recursos: 'É um soneto (2 quadras + 2 tercetos). Apóstrofe e personificação dos passos («Mesquinhos passos, porque doidejastes…»), interrogações retóricas, comparação «como as aves num aviário», símbolo da maré = passagem do tempo.'
+  },
+  {
+    titulo: 'O menino da sua mãe',
+    autor: 'Fernando Pessoa',
+    verso: '«(Malhas que o Império tece!) / Jaz morto, e apodrece, / O menino da sua mãe.»',
+    tema: 'A morte de um jovem soldado, anónimo, longe de casa - o contraste entre a ternura do título e dos objetos (a cigarreira, o lenço dados pela ama e pela mãe) e a brutalidade fria da guerra.',
+    recursos: 'Contraste ternura/violência, ironia trágica do parêntesis «(Malhas que o Império tece!)» - crítica ao Império que sacrifica os jovens -, gradação «arrefece… apodrece», tom comovido e contido.'
+  },
+  {
+    titulo: 'Escrever',
+    autor: 'Irene Lisboa',
+    verso: '«Gostava de atirar palavras. / Rápidas, secas e bárbaras, pedradas!»',
+    tema: 'Uma reflexão sobre o próprio ato de escrever: entre as palavras-pedrada (diretas, sem artifícios) e o «fio de água» (delicado, quase invisível) para dizer as «infinitamente delicadas coisas do espírito».',
+    recursos: 'Verso livre e tom coloquial, interrogações retóricas, metáforas opostas (clava/pedrada vs. fio de água), recusa do «artifício da composição sintáctica e métrica».'
+  },
+  {
+    titulo: 'Camões e a tença',
+    autor: 'Sophia de Mello Breyner Andresen (Dual)',
+    verso: '«Irás ao paço. Irás pedir que a tença / Seja paga na data combinada. / Este país te mata lentamente»',
+    tema: 'Sophia fala com Camões através dos séculos: a pátria ingrata paga tarde a pensão (tença) ao maior dos seus poetas, e persegue «quem ousou ser mais que a outra gente».',
+    recursos: 'Apóstrofe (o «tu» dirigido a Camões), o verso-refrão «Este país te mata lentamente», intertextualidade com a vida de Camões, antítese entre o canto e a paciência.'
+  }
+];
+
+/* ══════════════════════════════════════════════════════
+   OUTROS POEMAS FREQUENTES NOS MANUAIS (mini-análises)
 ══════════════════════════════════════════════════════ */
 var PT_POESIA_POEMAS = [
   {
@@ -131,6 +166,36 @@ var PT_POESIA_BANCO = [
     opts: ['(A) o eufemismo.', '(B) a anáfora, que cria um tom de urgência.', '(C) a ironia.', '(D) o pleonasmo.'],
     correct: 'B',
     exp: 'A repetição de «É urgente» no início dos versos (anáfora) imprime ritmo e insistência ao apelo do poema.'
+  },
+  {
+    enun: 'Em «O menino da sua mãe», de Fernando Pessoa, o tema central é',
+    opts: ['(A) a alegria do regresso de um soldado a casa.', '(B) a morte de um jovem soldado, longe de casa, e a guerra que o sacrificou.', '(C) a infância feliz do sujeito poético.', '(D) o amor entre mãe e filho em tempo de paz.'],
+    correct: 'B',
+    exp: 'O poema mostra um jovem soldado morto no campo de batalha - o contraste entre a ternura do título e a violência da guerra é o coração do poema.'
+  },
+  {
+    enun: 'No verso «(Malhas que o Império tece!)» («O menino da sua mãe»), o parêntesis sugere',
+    opts: ['(A) uma crítica ao Império, que sacrifica os jovens nas suas guerras.', '(B) um elogio à grandeza do Império Português.', '(C) uma indicação cénica para teatro.', '(D) uma referência à roupa do soldado.'],
+    correct: 'A',
+    exp: 'O comentário entre parêntesis, em tom irónico e amargo, responsabiliza o Império pela morte do «menino» - é a crítica social do poema.'
+  },
+  {
+    enun: 'Em «Camões e a tença», de Sophia, o verso repetido «Este país te mata lentamente» denuncia',
+    opts: ['(A) a ingratidão da pátria para com Camões, a quem pagavam a tença com atraso.', '(B) o clima frio de Lisboa no século XVI.', '(C) a doença que Camões trouxe da Índia.', '(D) o excesso de trabalho do poeta no paço.'],
+    correct: 'A',
+    exp: 'A tença (pensão) era paga tarde; o verso-refrão acusa o país de deixar morrer na pobreza «quem ousou ser mais que a outra gente».'
+  },
+  {
+    enun: 'Pela estrutura (duas quadras e dois tercetos), o poema «Quando voltei encontrei os meus passos», de Camilo Pessanha, é',
+    opts: ['(A) um soneto.', '(B) uma ode.', '(C) uma balada.', '(D) um poema em verso livre.'],
+    correct: 'A',
+    exp: 'Soneto = forma fixa de 14 versos (2 quadras + 2 tercetos), a forma deste poema da Clepsidra.'
+  },
+  {
+    enun: 'Em «Escrever», de Irene Lisboa, «atirar palavras. / Rápidas, secas e bárbaras, pedradas!» é uma metáfora de',
+    opts: ['(A) uma escrita direta, sem artifícios nem enfeites.', '(B) uma discussão violenta entre escritores.', '(C) um jogo infantil de atirar pedras.', '(D) uma escrita lenta e muito trabalhada.'],
+    correct: 'A',
+    exp: 'As «pedradas» representam o desejo de uma escrita crua e direta, por oposição ao «artifício da composição sintáctica e métrica».'
   }
 ];
 
@@ -182,8 +247,23 @@ function ptPoesiaRenderMenu() {
   });
   h += '</div>';
 
-  // Poemas frequentes
-  h += '<div style="font-size:.78rem;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;margin-top:1.25rem">Poemas Frequentes nos Manuais do 9.º</div>';
+  // Poemas do manual Mensagens 9 (primeiro: é o manual usado nas aulas)
+  h += '<div style="font-size:.78rem;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;margin-top:1.25rem">Poemas do Manual «Mensagens 9»</div>';
+  PT_POESIA_MANUAL.forEach(function (p) {
+    h += '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:1.1rem 1.25rem;margin-bottom:.6rem;border-left:3px solid #6e3a56">';
+    h += '<div style="display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;margin-bottom:.35rem">';
+    h += '<div style="font-size:.9rem;font-weight:800;color:var(--ink1)">' + p.titulo + '</div>';
+    h += '<div style="font-size:.72rem;color:var(--ink4);font-weight:600">' + p.autor + '</div>';
+    h += '<span style="margin-left:auto;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:#faf2f6;color:#6e3a56;border:1px solid #e8cfe0;border-radius:999px;padding:2px 8px">No manual</span>';
+    h += '</div>';
+    h += '<div style="font-family:Cormorant Garamond,serif;font-size:.95rem;color:#6e3a56;font-style:italic;padding:.5rem .75rem;background:#faf2f6;border-radius:8px;margin-bottom:.45rem">' + p.verso + '</div>';
+    h += '<div style="font-size:.8rem;color:var(--ink2);line-height:1.6;margin-bottom:.3rem"><strong>Tema:</strong> ' + p.tema + '</div>';
+    h += '<div style="font-size:.76rem;color:#5c4e8a;line-height:1.55"><i class="ph ph-sparkle"></i> <strong>Recursos:</strong> ' + p.recursos + '</div>';
+    h += '</div>';
+  });
+
+  // Outros poemas frequentes
+  h += '<div style="font-size:.78rem;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;margin-top:1.25rem">Outros Poemas Frequentes nos Manuais</div>';
   PT_POESIA_POEMAS.forEach(function (p) {
     h += '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:1.1rem 1.25rem;margin-bottom:.6rem;border-left:3px solid #9c5e80">';
     h += '<div style="display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;margin-bottom:.35rem">';
