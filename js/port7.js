@@ -48,7 +48,10 @@ var _port7Cards = {
     { tag: 'Definição', q: 'Como se organiza o texto dramático?', a: 'Em atos e cenas, com as falas das personagens e as didascálias (indicações cénicas em itálico ou parênteses, que não são ditas).' },
     { tag: 'Poesia', q: 'O que é o sujeito poético?', a: 'A «voz» que fala no poema — não se confunde com o poeta, a pessoa real que o escreveu.' },
     { tag: 'Poesia', q: 'Verso, estrofe e refrão?', a: 'Verso = cada linha; estrofe = grupo de versos (quadra = 4); refrão = verso ou estrofe que se repete ao longo do poema.' },
-    { tag: 'Contexto', q: 'Poetas trabalhados no 7.º ano (manual Mensagens 7)?', a: 'José Régio, Vitorino Nemésio, Sebastião da Gama, Ruy Cinatti, David Mourão-Ferreira e Percy B. Shelley.' }
+    { tag: 'Contexto', q: 'Poetas trabalhados no 7.º ano (manual Mensagens 7)?', a: 'José Régio, Vitorino Nemésio, Sebastião da Gama, Ruy Cinatti, David Mourão-Ferreira e Percy B. Shelley.' },
+    { tag: 'Contexto', q: 'Que textos narrativos saem no manual Mensagens 7?', a: 'Contos tradicionais («Os dez anõezinhos da Tia Verde-Água»); narrativas de autor português (o touro Miura; a avó e o neto na praia; a caça à baleia nos Açores) e estrangeiro (A Ilha do Tesouro; Sexta-Feira).' },
+    { tag: 'Exemplo', q: '«Pelo sonho é que vamos», de Sebastião da Gama — qual é a mensagem?', a: 'O importante é SONHAR, mesmo sem garantia de êxito («chegamos ou não chegamos»). Verso hexassílabo (6 sílabas) e anáfora na repetição do verso-título.' },
+    { tag: 'Exemplo', q: 'O «Senhor Papão» no poema de José Régio — o que simboliza?', a: 'É uma metáfora do medo que mora dentro de cada um. Só quando o sujeito se rende consegue vê-lo sem disfarce.' }
   ],
   // ── Domínio 2 · Gramática (7.º) ──
   2: [
@@ -861,7 +864,10 @@ var PT7_FORCA = [
   { p: 'VOCATIVO', dica: 'Função sintática do chamamento (separa-se por vírgula).' },
   { p: 'ADVERBIO', dica: 'Classe de palavras invariável que modifica o verbo (ex.: rapidamente).' },
   { p: 'PRONOME', dica: 'Classe de palavras que substitui o nome.' },
-  { p: 'TORGA', dica: 'Autor de «Ladino» e dos contos de Bichos.' },
+  { p: 'SARAMAGO', dica: 'Único escritor português com o Prémio Nobel da Literatura.' },
+  { p: 'SLOGAN', dica: 'Frase curta e marcante de um anúncio publicitário.' },
+  { p: 'BIOGRAFIA', dica: 'Texto que relata a vida de uma pessoa real.' },
+  { p: 'HEXASSILABO', dica: 'Verso com seis sílabas métricas (ex.: «Pelo sonho é que vamos»).' },
   { p: 'COORDENACAO', dica: 'Ligação de orações independentes (e, mas, ou, logo).' }
 ];
 
@@ -1540,4 +1546,65 @@ _port7Banco[2] = _port7Banco[2].concat([
   { t: '2', tipo: 'mc', dif: 'dificil', enun: 'Em «O meu irmão tornou-se ator.», o predicativo do sujeito «ator» é realizado por um:', opcoes: ['nome', 'adjetivo', 'advérbio', 'pronome'], resposta: 'nome', expl: 'O predicativo pode ser um adjetivo («ficou feliz»), um nome («tornou-se ator») ou um advérbio («é assim»).', tema: 'T2 · Funções Sintáticas' },
   { t: '2', tipo: 'mc', dif: 'medio', enun: 'O modificador do nome APOSITIVO distingue-se do restritivo porque:', opcoes: ['surge entre vírgulas e pode retirar-se sem alterar o essencial da frase', 'é sempre um adjetivo', 'restringe o sentido do nome', 'vem sempre antes do nome'], resposta: 'surge entre vírgulas e pode retirar-se sem alterar o essencial da frase', expl: 'O apositivo acrescenta informação extra (entre vírgulas); o restritivo limita o sentido do nome (sem vírgulas).', tema: 'T2 · Funções Sintáticas' }
 ]);
+
+/* ════════════════════════════════════════════════════════════════
+   MANUAL «MENSAGENS 7» · Fichas de Educação Literária e Leitura — LOTE 2
+   14 fichas EL (narrativas tradicionais e de autor + 6 poemas) e 7 de
+   Leitura (publicidade, opinião, crítica, biografia), com os factos
+   conferidos no Solucoes.docx do manual.
+   ════════════════════════════════════════════════════════════════ */
+
+// ── Educação Literária: NARRATIVAS (t1 tradicionais, t2 de autor) ──
+_port7Banco[1] = _port7Banco[1].concat([
+  // F1-F2 · Narrativas tradicionais
+  { t: '1', tipo: 'mc', dif: 'medio', enun: 'No conto tradicional «Os dez anõezinhos da Tia Verde-Água», o que muda a vida da protagonista é:', opcoes: ['seguir os conselhos da vizinha e organizar-se', 'encontrar um tesouro escondido', 'casar com um príncipe', 'fugir de casa'], resposta: 'seguir os conselhos da vizinha e organizar-se', expl: 'A mulher, desorganizada e infeliz, torna-se organizada e passa a viver em harmonia depois de seguir os conselhos da Tia Verde-Água.', tema: 'T1 · Narrativas tradicionais' },
+  { t: '1', tipo: 'mc', dif: 'dificil', enun: 'São marcas típicas da narrativa tradicional:', opcoes: ['poucas personagens, tempo e espaço indefinidos e marcas de discurso oral', 'muitas personagens e datas exatas', 'narrador participante e linguagem técnica', 'ausência de personagens'], resposta: 'poucas personagens, tempo e espaço indefinidos e marcas de discurso oral', expl: 'Número reduzido de personagens, ação simples, tempo/espaço vagos («à boca da noite», «casa») e oralidade («Vossemecê»).', tema: 'T1 · Narrativas tradicionais' },
+  { t: '1', tipo: 'mc', dif: 'medio', enun: 'Expressões como «Era uma vez», «por esse mundo fora» e «debaixo de uma árvore» são marcas:', opcoes: ['de tempo e espaço indefinidos, próprias do conto tradicional', 'de um texto científico', 'de uma notícia', 'de uma biografia'], resposta: 'de tempo e espaço indefinidos, próprias do conto tradicional', expl: 'O conto tradicional não situa a ação com precisão — usa fórmulas vagas de tempo e lugar.', tema: 'T1 · Narrativas tradicionais' },
+  // F3 · Miura (o touro)
+  { t: '2', tipo: 'mc', dif: 'medio', enun: 'No conto sobre o touro Miura, o narrador apresenta a tourada como:', opcoes: ['uma luta injusta entre o animal corajoso e o homem', 'uma festa alegre e justa', 'um jogo entre iguais', 'um espetáculo sem violência'], resposta: 'uma luta injusta entre o animal corajoso e o homem', expl: 'Miura luta de frente, com lealdade; o toureiro esconde-se atrás da capa, foge e é ajudado — o narrador reconhece coragem ao animal e chama «palhaço» ao homem.', tema: 'T2 · Narrativas de autor' },
+  { t: '2', tipo: 'mc', dif: 'medio', enun: 'Nas recordações de Miura, a lezíria ribatejana simboliza:', opcoes: ['a liberdade e o espaço infinito onde nasceu', 'o medo da tourada', 'a fome que passou em pequeno', 'a praça de touros'], resposta: 'a liberdade e o espaço infinito onde nasceu', expl: 'A planície surge como um «paraíso fresco», sinónimo de liberdade — em contraste com a arena onde está preso.', tema: 'T2 · Narrativas de autor' },
+  // F4 · Avó e neto na praia
+  { t: '2', tipo: 'mc', dif: 'medio', enun: 'No conto da avó e do neto na praia, a relação entre os dois é de:', opcoes: ['ternura, afeto e cumplicidade — protegem-se um ao outro', 'conflito e distância', 'indiferença', 'rivalidade'], resposta: 'ternura, afeto e cumplicidade — protegem-se um ao outro', expl: 'Avó e neto gostam de estar juntos e protegem-se mutuamente; a presença do neto faz a avó sentir-se feliz e útil.', tema: 'T2 · Narrativas de autor' },
+  { t: '2', tipo: 'mc', dif: 'dificil', enun: 'A frase «Afinal atravessámos o vento e a areia» pode ler-se como metáfora:', opcoes: ['da própria vida, com obstáculos que se devem superar', 'de uma viagem de barco', 'de uma tempestade no mar', 'do trabalho na praia'], resposta: 'da própria vida, com obstáculos que se devem superar', expl: 'Como avó e neto venceram o vento e a areia até ao café, também a vida nos põe obstáculos que devemos superar.', tema: 'T2 · Narrativas de autor' },
+  { t: '2', tipo: 'mc', dif: 'facil', enun: 'Um narrador que conta a história na 3.ª pessoa, sem participar nela («Tinham ido à praia»), é:', opcoes: ['não participante', 'participante', 'personagem principal', 'inexistente'], resposta: 'não participante', expl: 'Conta de fora, na 3.ª pessoa, sem ser personagem — narrador não participante.', tema: 'T2 · Narrativas de autor' },
+  // F5 · Caça à baleia (Açores)
+  { t: '2', tipo: 'mc', dif: 'dificil', enun: 'No texto sobre a caça à baleia nos Açores, a coragem do baleeiro é realçada porque:', opcoes: ['é minúsculo e frágil perante a baleia, mas mantém-se de pé e destro', 'usa armas modernas e poderosas', 'tem a ajuda de muitos barcos', 'a baleia não oferece perigo'], resposta: 'é minúsculo e frágil perante a baleia, mas mantém-se de pé e destro', expl: 'O contraste entre o homem pequeno e a baleia enorme («cabeçorra») torna grandiosa a coragem e a destreza do baleeiro.', tema: 'T2 · Narrativas de autor' },
+  { t: '2', tipo: 'mc', dif: 'medio', enun: 'A caça à baleia foi importante para a economia açoriana porque:', opcoes: ['dela se extraía óleo (espermacete) e âmbar, que davam rendimento às famílias', 'servia apenas como desporto', 'alimentava os turistas', 'não tinha qualquer utilidade'], resposta: 'dela se extraía óleo (espermacete) e âmbar, que davam rendimento às famílias', expl: 'Grande parte da população dependia da baleia, aproveitada por inteiro para gerar rendimento.', tema: 'T2 · Narrativas de autor' }
+]);
+
+// ── Educação Literária: POESIA (t3) ──
+_port7Banco[1] = _port7Banco[1].concat([
+  // F9 · José Régio - «Cântico Negro»/o Papão
+  { t: '3', tipo: 'mc', dif: 'dificil', enun: 'No poema de José Régio, o «Senhor Papão» que persegue o sujeito poético pode entender-se como:', opcoes: ['uma metáfora do medo que mora dentro de cada um', 'um animal real', 'um amigo de infância', 'a morte'], resposta: 'uma metáfora do medo que mora dentro de cada um', expl: 'O «papão» representa o medo interior — só quando o sujeito se rende o consegue ver sem disfarce.', tema: 'T3 · Poesia' },
+  // F11 · Sebastião da Gama - «Pelo sonho é que vamos»
+  { t: '3', tipo: 'mc', dif: 'medio', enun: 'No poema «Pelo sonho é que vamos», de Sebastião da Gama, o tema central é:', opcoes: ['a importância de sonhar, mesmo sem garantia de êxito', 'a tristeza da despedida', 'o medo do futuro', 'a beleza do mar'], resposta: 'a importância de sonhar, mesmo sem garantia de êxito', expl: 'Não importa se «chegamos ou não chegamos»: ter a capacidade de sonhar já é, em si, uma vitória.', tema: 'T3 · Poesia' },
+  { t: '3', tipo: 'mc', dif: 'dificil', enun: 'O verso «Pelo sonho é que vamos» tem seis sílabas métricas; chama-se por isso:', opcoes: ['hexassílabo', 'redondilha maior', 'decassílabo', 'alexandrino'], resposta: 'hexassílabo', expl: 'Pe-lo-so-nho-é-que-va-mos → contam-se 6 sílabas métricas (até à última tónica): hexassílabo.', tema: 'T3 · Versificação' },
+  { t: '3', tipo: 'mc', dif: 'medio', enun: 'A repetição de «Pelo sonho é que vamos» ao longo do poema de Sebastião da Gama é um(a):', opcoes: ['anáfora', 'comparação', 'metáfora', 'onomatopeia'], resposta: 'anáfora', expl: 'Repetição de uma expressão no início de versos/estrofes — anáfora.', tema: 'T3 · Recursos' },
+  // F12 · Ruy Cinatti - Timor
+  { t: '3', tipo: 'mc', dif: 'dificil', enun: 'No poema de Ruy Cinatti, o verso final «O fogo é o mais obscuro» exprime:', opcoes: ['o desencanto perante o uso destrutivo que o ser humano faz do fogo', 'a alegria das fogueiras de festa', 'o medo do escuro', 'a beleza de Timor'], resposta: 'o desencanto perante o uso destrutivo que o ser humano faz do fogo', expl: 'O ser humano usa o fogo para forjar armas e destruir — daí o «lado negro» do fogo no poema.', tema: 'T3 · Poesia' },
+  // F13 · Percy Shelley - «Filosofia do Amor»
+  { t: '3', tipo: 'mc', dif: 'medio', enun: 'No poema de Percy B. Shelley, a Natureza («os montes adorando o vasto azul», «as vagas osculando-se») surge como:', opcoes: ['exemplo de harmonia e amor, em que cada elemento tem o seu par', 'um cenário de guerra', 'um lugar perigoso', 'algo indiferente ao ser humano'], resposta: 'exemplo de harmonia e amor, em que cada elemento tem o seu par', expl: '«Nada no mundo é sozinho»: o sujeito poético usa a Natureza para mostrar que tudo tem a sua «alma gémea».', tema: 'T3 · Poesia' },
+  { t: '3', tipo: 'mc', dif: 'dificil', enun: 'Em «os montes adorando / o vasto azul» e «as vagas uma a outra se osculando», o recurso expressivo é a:', opcoes: ['personificação', 'hipérbole', 'comparação', 'enumeração'], resposta: 'personificação', expl: 'Atribui ações humanas (adorar, beijar-se) aos montes e às vagas — personificação.', tema: 'T3 · Recursos' },
+  // F10 · Vitorino Nemésio
+  { t: '3', tipo: 'mc', dif: 'medio', enun: 'Em «sensações do tamanho de cinco oceanos», o recurso expressivo dominante é a:', opcoes: ['hipérbole', 'comparação', 'anáfora', 'onomatopeia'], resposta: 'hipérbole', expl: 'Exagero intencional para dar dimensão às sensações — hipérbole (também há comparação no «do tamanho de»).', tema: 'T3 · Recursos' }
+]);
+
+// ── Leitura: tipos de texto (t2) e sentidos (t1/t3) ──
+_port7Banco[3] = _port7Banco[3].concat([
+  // F1-F2 · Publicidade
+  { t: '2', tipo: 'mc', dif: 'medio', enun: 'Num anúncio publicitário, o slogan é:', opcoes: ['uma frase curta e marcante que fixa a mensagem', 'a imagem do produto', 'o símbolo da marca', 'o texto longo de argumentação'], resposta: 'uma frase curta e marcante que fixa a mensagem', expl: 'O slogan (ex.: «Compal. É mesmo natural.») resume a mensagem de forma memorável.', tema: 'T2 · Tipologias' },
+  { t: '2', tipo: 'mc', dif: 'facil', enun: 'O símbolo que identifica uma marca num anúncio chama-se:', opcoes: ['logótipo', 'slogan', 'argumento', 'parágrafo'], resposta: 'logótipo', expl: 'O logótipo é a marca gráfica (imagem/letras) que identifica a empresa.', tema: 'T2 · Tipologias' },
+  { t: '2', tipo: 'mc', dif: 'dificil', enun: 'Palavras inventadas num anúncio, como «laranjologia» e «frutologia» (laranja/fruta + -logia), servem para:', opcoes: ['dar um ar científico e credibilidade ao produto', 'confundir o público', 'preencher espaço', 'imitar sons'], resposta: 'dar um ar científico e credibilidade ao produto', expl: 'O sufixo -logia remete para áreas científicas — a invenção lexical reforça a ideia de seriedade do produto.', tema: 'T2 · Tipologias' },
+  // F3-F4 · Texto de opinião
+  { t: '2', tipo: 'mc', dif: 'medio', enun: 'Num texto de opinião, o autor:', opcoes: ['defende um ponto de vista com argumentos', 'relata factos sem tomar posição', 'inventa uma história', 'descreve uma paisagem'], resposta: 'defende um ponto de vista com argumentos', expl: 'O texto de opinião apresenta uma tese e fundamenta-a — é argumentativo.', tema: 'T2 · Tipologias' },
+  { t: '1', tipo: 'mc', dif: 'dificil', enun: 'Iniciar um texto com uma pergunta provocadora («Pode parar de comer vivo o nosso planeta?») serve, sobretudo, para:', opcoes: ['captar a atenção do leitor e alertá-lo para o tema', 'dar uma resposta imediata', 'mudar de assunto', 'terminar o texto'], resposta: 'captar a atenção do leitor e alertá-lo para o tema', expl: 'A interrogação inicial, em tom irónico, prende o leitor e prepara-o para o problema a discutir.', tema: 'T1 · Compreensão' },
+  // F5-F6 · Crítica
+  { t: '2', tipo: 'mc', dif: 'medio', enun: 'Numa crítica (de série, livro ou filme), encontramos:', opcoes: ['factos sobre a obra E a opinião fundamentada de quem escreve', 'apenas o resumo da história', 'só a opinião, sem dados', 'uma simples lista de personagens'], resposta: 'factos sobre a obra E a opinião fundamentada de quem escreve', expl: 'A crítica combina informação (autor, género, elenco) com avaliação — distingue facto de opinião.', tema: 'T2 · Tipologias' },
+  { t: '3', tipo: 'mc', dif: 'medio', enun: 'Numa crítica, a expressão «prima pela criatividade» é:', opcoes: ['uma opinião (juízo de valor)', 'um facto verificável', 'uma data', 'um nome próprio'], resposta: 'uma opinião (juízo de valor)', expl: 'É uma apreciação subjetiva do crítico, não um facto objetivo como «foi filmada em Itália».', tema: 'T3 · Sentidos' },
+  { t: '3', tipo: 'mc', dif: 'medio', enun: 'Quando o crítico diz que um livro «se lê de um fôlego», quer dizer que:', opcoes: ['se lê rapidamente, prende o leitor', 'é muito difícil de ler', 'é demasiado longo', 'não tem interesse'], resposta: 'se lê rapidamente, prende o leitor', expl: 'Expressão idiomática: um livro que «se lê de um fôlego» é cativante e de leitura rápida.', tema: 'T3 · Sentidos' },
+  // F7 · Biografia
+  { t: '2', tipo: 'mc', dif: 'facil', enun: 'A biografia de José Saramago destaca, entre os prémios, sobretudo:', opcoes: ['o Prémio Nobel da Literatura', 'um prémio de fotografia', 'uma medalha desportiva', 'um prémio de música'], resposta: 'o Prémio Nobel da Literatura', expl: 'Saramago é o único escritor português com o Nobel da Literatura — o prémio mais importante, que simboliza os restantes.', tema: 'T2 · Tipologias' },
+  { t: '2', tipo: 'mc', dif: 'medio', enun: 'Uma biografia organiza-se, normalmente:', opcoes: ['por ordem cronológica (nascimento, percurso, feitos)', 'por ordem alfabética', 'do fim para o início', 'sem qualquer ordem'], resposta: 'por ordem cronológica (nascimento, percurso, feitos)', expl: 'A biografia relata a vida de uma pessoa real seguindo a linha do tempo.', tema: 'T2 · Tipologias' }
+]);
+
 
