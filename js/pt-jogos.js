@@ -12,10 +12,20 @@
 var _ptJogoAtual = null;       // id do jogo aberto | null (menu)
 var _ptJogoTimer = null;
 
+/* Configuração por curso: o port9 usa as predefinições; outros cursos
+   (port7, port8…) chamam ptJogosConfig() antes de ptJogosRender(). */
+var _ptJogosCfg = { appId: 'port9-jogos-app', fonte: null, forca: null };
+function ptJogosConfig(cfg) {
+  _ptJogosCfg.appId = (cfg && cfg.appId) || 'port9-jogos-app';
+  _ptJogosCfg.fonte = (cfg && cfg.fonte) || null;
+  _ptJogosCfg.forca = (cfg && cfg.forca) || null;
+}
+function _ptJogosApp() { return document.getElementById(_ptJogosCfg.appId); }
+
 /* ── Entrada: menu de seleção dos jogos ── */
 function ptJogosRender() {
   if (_ptJogoTimer) { clearInterval(_ptJogoTimer); _ptJogoTimer = null; }
-  var wrap = document.getElementById('port9-jogos-app');
+  var wrap = _ptJogosApp();
   if (!wrap) return;
   var jogos = [
     { id: 'barca',   icon: '⛵', cor: '#2e7d52', nome: 'A Barca', desc: 'Salva a tua alma! Cada certa leva-te à Glória, cada erro ao Inferno. Morte súbita.' },
@@ -58,6 +68,10 @@ function _ptJogoHeader(titulo) {
 function _ptTodasQuestoesMc() {
   var out = [];
   function aceita(q) { return q.tipo === 'mc' && q.opcoes && q.opcoes.length >= 2 && q.opcoes.indexOf(q.resposta) >= 0; }
+  if (_ptJogosCfg.fonte) {
+    _ptJogosCfg.fonte().forEach(function (q) { if (aceita(q)) out.push(q); });
+    return out;
+  }
   if (typeof _port9FichaBanco === 'function') {
     [1, 2, 3, 4, 5].forEach(function (cap) {
       _port9FichaBanco(cap).forEach(function (q) { if (aceita(q)) out.push(q); });
@@ -84,7 +98,7 @@ function ptJogoQuizStart() {
   _ptQuiz.idx = 0; _ptQuiz.score = 0; _ptQuiz.certas = 0; _ptQuiz.total = 0;
   _ptQuiz.tempo = 60; _ptQuiz.respondido = false;
   if (!_ptQuiz.fila.length) {
-    var w = document.getElementById('port9-jogos-app');
+    var w = _ptJogosApp();
     if (w) w.innerHTML = _ptJogoHeader('Quiz Contra o Tempo') + '<p style="color:var(--ink4)">Sem questões disponíveis.</p>';
     return;
   }
@@ -100,7 +114,7 @@ function ptJogoQuizTick() {
 }
 
 function ptJogoQuizRender() {
-  var wrap = document.getElementById('port9-jogos-app');
+  var wrap = _ptJogosApp();
   if (!wrap) return;
   var q = _ptQuiz.fila[_ptQuiz.idx % _ptQuiz.fila.length];
   var opts = _ptShuffle(q.opcoes.slice());
@@ -145,7 +159,7 @@ function ptJogoQuizResp(btn, encOpt) {
 
 function ptJogoQuizFim() {
   if (typeof _port9PM === 'function') _port9PM(1, 'jogo', { xp: _ptQuiz.certas });
-  var wrap = document.getElementById('port9-jogos-app');
+  var wrap = _ptJogosApp();
   if (!wrap) return;
   var h = _ptJogoHeader('Quiz Contra o Tempo');
   h += '<div style="text-align:center;padding:1.5rem;background:linear-gradient(135deg,#4a3a20,#a8854d);border-radius:18px;color:#fff">';
@@ -188,13 +202,14 @@ var _ptForca = { palavra: '', dica: '', adivinhadas: [], erros: 0, max: 6, fim: 
 
 function ptJogoForcaStart() {
   if (_ptJogoTimer) { clearInterval(_ptJogoTimer); _ptJogoTimer = null; }
-  var item = _PT_FORCA[Math.floor(Math.random() * _PT_FORCA.length)];
+  var lista = _ptJogosCfg.forca || _PT_FORCA;
+  var item = lista[Math.floor(Math.random() * lista.length)];
   _ptForca = { palavra: item.p, dica: item.dica, adivinhadas: [], erros: 0, max: 6, fim: false };
   ptJogoForcaRender();
 }
 
 function ptJogoForcaRender() {
-  var wrap = document.getElementById('port9-jogos-app');
+  var wrap = _ptJogosApp();
   if (!wrap) return;
   var bonecos = ['😀', '🙂', '😐', '😟', '😣', '😵', '💀'];
   var mostrada = _ptForca.palavra.split('').map(function (l) {
@@ -266,7 +281,7 @@ function ptJogoCorrespStart() {
 }
 
 function ptJogoCorrespRender() {
-  var wrap = document.getElementById('port9-jogos-app');
+  var wrap = _ptJogosApp();
   if (!wrap) return;
   var c = _ptCorresp;
   var h = _ptJogoHeader('Correspondência');
@@ -361,7 +376,7 @@ function ptJogoBarcaStart(nivel) {
   _ptBarcaJogo.fim = false; _ptBarcaJogo.certas = 0; _ptBarcaJogo.erradas = 0;
   _ptBarcaJogo.fila = _ptBarcaFila(_ptBarcaJogo.nivel);
   if (!_ptBarcaJogo.fila.length) {
-    var w = document.getElementById('port9-jogos-app');
+    var w = _ptJogosApp();
     if (w) w.innerHTML = _ptJogoHeader('A Barca') + '<p style="color:var(--ink4)">Sem questões disponíveis.</p>';
     return;
   }
@@ -398,7 +413,7 @@ function _ptBarcaPista() {
 }
 
 function ptJogoBarcaRender() {
-  var wrap = document.getElementById('port9-jogos-app');
+  var wrap = _ptJogosApp();
   if (!wrap) return;
   var j = _ptBarcaJogo;
   var q = j.fila[j.idx % j.fila.length];
@@ -450,7 +465,7 @@ function ptJogoBarcaFim() {
   var j = _ptBarcaJogo;
   var ganhou = j.pos >= 3;
   if (typeof _port9PM === 'function') _port9PM(1, 'jogo', { xp: ganhou ? 6 : 1 });
-  var wrap = document.getElementById('port9-jogos-app');
+  var wrap = _ptJogosApp();
   if (!wrap) return;
   var h = _ptJogoHeader('⛵ A Barca — salva a tua alma');
   if (ganhou) {
@@ -515,7 +530,7 @@ function _ptSopaGerar(pool, nPalavras, N) {
 function ptJogoSopaStart() {
   if (_ptJogoTimer) { clearInterval(_ptJogoTimer); _ptJogoTimer = null; }
   var N = 12;
-  var ger = _ptSopaGerar(_PT_FORCA, 6, N);
+  var ger = _ptSopaGerar(_ptJogosCfg.forca || _PT_FORCA, 6, N);
   _ptSopa = { N: N, grid: ger.grid, palavras: ger.palavras, sel: null, marcadas: {}, erros: 0, seg: 0, fim: false };
   _ptJogoTimer = setInterval(function () {
     _ptSopa.seg++;
@@ -528,7 +543,7 @@ function ptJogoSopaStart() {
 function _ptSopaFmt(s) { var m = Math.floor(s / 60); return (m < 10 ? '0' : '') + m + ':' + (s % 60 < 10 ? '0' : '') + (s % 60); }
 
 function ptJogoSopaRender() {
-  var wrap = document.getElementById('port9-jogos-app');
+  var wrap = _ptJogosApp();
   if (!wrap) return;
   var s = _ptSopa;
   var h = _ptJogoHeader('🔎 Sopa de Letras');
@@ -606,7 +621,7 @@ function ptJogoSopaCel(r, c) {
 
 function ptJogoSopaFim() {
   var s = _ptSopa;
-  var wrap = document.getElementById('port9-jogos-app');
+  var wrap = _ptJogosApp();
   if (!wrap) return;
   var h = _ptJogoHeader('🔎 Sopa de Letras');
   h += '<div style="text-align:center;padding:1.6rem;background:linear-gradient(135deg,#1e2f4a,#36527a);border-radius:18px;color:#fff">';
