@@ -26,6 +26,7 @@ var _mat10Path = _inMat(10) ? '' : _coursePath('mat10');
 var _mat11Path = _inMat(11) ? '' : _coursePath('mat11');
 var _port9Path = _inPort(9) ? '' : _coursePath('port9');
 var _port7Path = _inPort(7) ? '' : _coursePath('port7');
+var _port8Path = _inPort(8) ? '' : _coursePath('port8');
 
 /* ── Portal (index.html at root) ── */
 function showPortalView() { window.location.href = _rootPath + 'index.html'; }
@@ -49,6 +50,8 @@ function showPort9View() { window.location.href = _port9Path + 'index.html'; }
 function showPortalFromPort9() { showPortalView(); }
 function showPort7View() { window.location.href = _port7Path + 'index.html'; }
 function showPortalFromPort7() { showPortalView(); }
+function showPort8View() { window.location.href = _port8Path + 'index.html'; }
+function showPortalFromPort8() { showPortalView(); }
 
 /* ── Mat5 e Mat6 hubs (2.º ciclo) ── */
 function showMat5View()  { window.location.href = _mat5Path + 'index.html'; }
