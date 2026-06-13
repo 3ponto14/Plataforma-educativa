@@ -39,7 +39,7 @@ var Cloud = (function () {
       // recupera sessão existente (aluno já tinha entrado neste dispositivo)
       sb.auth.getSession().then(function (res) {
         var s = res && res.data && res.data.session;
-        if (s && s.user) { user = s.user; _puxarDaNuvem().then(function () { _notifica(); if (onReady) onReady(); }); }
+        if (s && s.user) { user = s.user; _puxarDaNuvem().then(function () { if (typeof Turmas !== 'undefined' && Turmas.autoInscrever) { try { Turmas.autoInscrever(); } catch (e) {} } _notifica(); if (onReady) onReady(); }); }
         else { if (onReady) onReady(); }
       }).catch(function () { if (onReady) onReady(); });
       // reage a login/logout
@@ -80,9 +80,14 @@ var Cloud = (function () {
     return sb.auth.signOut().then(function () { user = null; _notifica(); });
   }
 
-  /* Ao entrar: funde o progresso da nuvem com o do dispositivo e guarda. */
+  /* Ao entrar: funde o progresso da nuvem com o do dispositivo, guarda,
+     e (se for aluno) inscreve-o no Apoio ao Estudo para os professores
+     o verem. A inscrição é "best-effort": se falhar, não bloqueia. */
   function _aoEntrar() {
-    return _puxarDaNuvem().then(function () { return enviarParaNuvem(); }).then(function () { _notifica(); });
+    return _puxarDaNuvem().then(function () { return enviarParaNuvem(); }).then(function () {
+      if (typeof Turmas !== 'undefined' && Turmas.autoInscrever) { try { Turmas.autoInscrever(); } catch (e) {} }
+      _notifica();
+    });
   }
 
   /* ── Sincronização ── */

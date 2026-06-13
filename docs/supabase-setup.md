@@ -56,57 +56,92 @@ create policy "atualizar o próprio progresso"
   using (auth.uid() = user_id);
 ```
 
-## 3b. SQL das TURMAS (área do professor) — colar no SQL Editor → Run
+## 3b. SQL do APOIO AO ESTUDO (espaço partilhado) — colar no SQL Editor → Run
+
+Modelo (decidido com a dona): **um único espaço partilhado**. Os alunos
+entram automaticamente ao criar conta; **todos os professores veem todos
+os alunos** (são colegas — um aluno pode ter vários professores). As
+fichas partilham-se por **link** (não se guardam ficheiros).
+
+A distinção professor/aluno vem dos metadados da conta (`tipo`), que o
+registo já grava. Nas políticas usamos `auth.jwt()` para ler esse tipo.
+
+> Se já tinhas corrido a versão antiga (tabelas `turmas`/`inscricoes`),
+> podes deixá-las — não são usadas. Para limpar:
+> `drop table if exists public.inscricoes; drop table if exists public.turmas;`
 
 ```sql
--- TURMAS: cada turma pertence a um professor e tem um código curto.
-create table if not exists public.turmas (
+-- Função auxiliar: a conta atual é de professor?
+create or replace function public.eh_professor() returns boolean
+  language sql stable as $$
+  select coalesce((auth.jwt() -> 'user_metadata' ->> 'tipo') = 'professor', false);
+$$;
+
+-- APOIO_ALUNOS: registo de cada aluno no espaço (auto-inscrição no login).
+create table if not exists public.apoio_alunos (
+  aluno      uuid primary key references auth.users(id) on delete cascade,
+  nome_aluno text,
+  email      text,
+  inscrito   timestamptz not null default now()
+);
+
+-- RECURSOS: fichas partilhadas por LINK (qualquer professor adiciona).
+create table if not exists public.recursos (
   id         uuid primary key default gen_random_uuid(),
-  professor  uuid not null references auth.users(id) on delete cascade,
-  nome       text not null,
-  codigo     text not null unique,           -- ex.: 7A-K3F9 (o aluno usa para entrar)
+  titulo     text not null,
+  url        text not null,
+  disciplina text,
+  autor      uuid not null references auth.users(id) on delete cascade,
+  autor_nome text,
   criado     timestamptz not null default now()
 );
 
--- INSCRIÇÕES: ligação aluno ↔ turma (um aluno pode estar em várias turmas).
-create table if not exists public.inscricoes (
-  turma_id   uuid not null references public.turmas(id) on delete cascade,
-  aluno      uuid not null references auth.users(id) on delete cascade,
-  nome_aluno text,                            -- nome/email mostrado ao professor
-  inscrito   timestamptz not null default now(),
-  primary key (turma_id, aluno)
-);
+alter table public.apoio_alunos enable row level security;
+alter table public.recursos     enable row level security;
 
-alter table public.turmas enable row level security;
-alter table public.inscricoes enable row level security;
-
--- TURMAS: o professor gere as suas; qualquer autenticado pode LER uma turma
--- pelo código (necessário para o aluno entrar). Escrita só do dono.
-create policy "prof gere turmas"      on public.turmas for all
-  using (auth.uid() = professor) with check (auth.uid() = professor);
-create policy "ler turma p/ entrar"   on public.turmas for select
-  using (auth.role() = 'authenticated');
-
--- INSCRIÇÕES:
---  • o aluno inscreve-se a si próprio e vê as suas inscrições;
---  • o professor vê as inscrições das SUAS turmas.
-create policy "aluno inscreve-se"     on public.inscricoes for insert
+-- APOIO_ALUNOS:
+--  • o aluno inscreve-se/atualiza a SI próprio;
+--  • qualquer PROFESSOR lê a lista toda (vê todos os alunos).
+create policy "aluno inscreve-se"     on public.apoio_alunos for insert
   with check (auth.uid() = aluno);
-create policy "aluno vê as suas"      on public.inscricoes for select
+create policy "aluno atualiza-se"     on public.apoio_alunos for update
+  using (auth.uid() = aluno) with check (auth.uid() = aluno);
+create policy "aluno vê o seu"        on public.apoio_alunos for select
   using (auth.uid() = aluno);
-create policy "aluno sai da turma"    on public.inscricoes for delete
-  using (auth.uid() = aluno);
-create policy "prof vê inscrições"    on public.inscricoes for select
-  using (exists (select 1 from public.turmas t where t.id = turma_id and t.professor = auth.uid()));
+create policy "prof vê alunos todos"  on public.apoio_alunos for select
+  using (public.eh_professor());
 
--- O professor precisa de ver o PROGRESSO dos alunos das suas turmas:
-create policy "prof vê progresso da turma" on public.progresso for select
-  using (exists (
-    select 1 from public.inscricoes i
-    join public.turmas t on t.id = i.turma_id
-    where i.aluno = progresso.user_id and t.professor = auth.uid()
+-- RECURSOS (fichas/links):
+--  • qualquer autenticado LÊ (alunos veem as fichas);
+--  • só PROFESSORES adicionam; cada professor remove o que adicionou.
+create policy "ler recursos"          on public.recursos for select
+  using (auth.role() = 'authenticated');
+create policy "prof adiciona"         on public.recursos for insert
+  with check (public.eh_professor() and auth.uid() = autor);
+create policy "autor remove"          on public.recursos for delete
+  using (auth.uid() = autor);
+
+-- PROGRESSO: qualquer PROFESSOR vê o progresso de qualquer aluno do
+-- Apoio ao Estudo (para ver "o que ele andou a fazer").
+create policy "prof vê progresso apoio" on public.progresso for select
+  using (public.eh_professor() and exists (
+    select 1 from public.apoio_alunos a where a.aluno = progresso.user_id
   ));
 ```
+
+### Nota de segurança (honesta)
+
+A distinção professor/aluno está nos metadados da conta (`tipo`), que
+tecnicamente o próprio utilizador pode alterar via API. Ou seja, um aluno
+com conhecimentos técnicos *poderia* marcar-se como "professor" e ver a
+lista de alunos (nomes + XP/ofensiva — não há dados sensíveis nem
+contactos privados além do email do registo). Para um espaço escolar de
+Apoio ao Estudo isto é aceitável.
+
+**Se um dia quiseres blindar isto a 100%:** cria uma tabela `professores`
+(uuid → true) gerida só por ti no Supabase, e troca a função
+`eh_professor()` para verificar essa tabela em vez do metadado. Fica para
+quando precisares — não é urgente.
 
 ## 4. Do lado do código (feito pelo assistente)
 
