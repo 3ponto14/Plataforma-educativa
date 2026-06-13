@@ -237,11 +237,21 @@ function desafioProx() {
 
 function _desafioFim() {
   var e = _desafioEstado;
-  _desafioSave({ dia: _desafioHoje(), ano: _desafioAno(), certas: e.certas });
+  // estatísticas acumuladas para as conquistas (totais que o ProgressManager não guarda)
+  var r = _desafioLoad();
+  r.dia = _desafioHoje(); r.ano = _desafioAno(); r.certas = e.certas;
+  r.feitos = (r.feitos || 0) + 1;                        // total de desafios completados
+  r.certasTotal = (r.certasTotal || 0) + e.certas;       // total de respostas certas
+  if (e.certas === 3) r.perfeitos = (r.perfeitos || 0) + 1; // total de 3/3
+  _desafioSave(r);
   if (typeof ProgressManager !== 'undefined') {
     ProgressManager.record('desafio', 'quiz', { pontuacao: e.certas, total: 3 });
   }
   var streak = (typeof ProgressManager !== 'undefined') ? (ProgressManager.getSummary().streak || 0) : 0;
+  // guarda o MAIOR streak já alcançado (para a conquista persistir mesmo que o fogo apague)
+  if (streak > (r.maxStreak || 0)) { r.maxStreak = streak; _desafioSave(r); }
+  // verifica novas conquistas e avisa
+  _desafioVerificaConquistas();
   var emoji = e.certas === 3 ? '🏆' : e.certas === 2 ? '🎯' : e.certas === 1 ? '👍' : '💪';
   document.getElementById('portal-desafio').innerHTML = _desafioCartao(
     '<div style="font-size:2.4rem;margin-bottom:.3rem">' + emoji + '</div>'
@@ -284,3 +294,91 @@ function pmUpdateTopbar() {
 // Atualiza a topbar ao carregar o portal e sempre que o progresso muda.
 document.addEventListener('DOMContentLoaded', function () { pmUpdateTopbar(); });
 document.addEventListener('edupt:progress', function () { pmUpdateTopbar(); });
+
+/* ════════════════════════════════════════════════════════════════
+   CONQUISTAS — metas concretas que reforçam o hábito ("faltam 3 dias
+   para os 10 seguidos!"). Lêem-se de ProgressManager (streak/XP) e do
+   estado do desafio (maxStreak, feitos, perfeitos, certasTotal).
+   Guardadas no dispositivo; cada uma desbloqueia uma vez.
+   ════════════════════════════════════════════════════════════════ */
+var DESAFIO_CONQUISTAS = [
+  { id: 'primeiro',  icon: '🎯', nome: 'Primeiro passo',     desc: 'Completa o teu primeiro desafio.',          meta: function (st) { return [st.feitos, 1]; } },
+  { id: 'streak3',   icon: '🔥', nome: 'Em chamas',          desc: '3 dias seguidos.',                          meta: function (st) { return [st.maxStreak, 3]; } },
+  { id: 'streak7',   icon: '🔥', nome: 'Semana perfeita',    desc: '7 dias seguidos.',                          meta: function (st) { return [st.maxStreak, 7]; } },
+  { id: 'streak30',  icon: '🏔️', nome: 'Imparável',          desc: '30 dias seguidos.',                         meta: function (st) { return [st.maxStreak, 30]; } },
+  { id: 'feitos10',  icon: '📅', nome: 'Habituado',          desc: 'Completa 10 desafios.',                     meta: function (st) { return [st.feitos, 10]; } },
+  { id: 'feitos50',  icon: '🎖️', nome: 'Veterano',           desc: 'Completa 50 desafios.',                     meta: function (st) { return [st.feitos, 50]; } },
+  { id: 'perfeito1', icon: '⭐', nome: 'Pontaria certeira',  desc: 'Acerta as 3 perguntas num desafio.',        meta: function (st) { return [st.perfeitos, 1]; } },
+  { id: 'perfeito10',icon: '💯', nome: 'Mestre',             desc: '10 desafios com 3 em 3.',                   meta: function (st) { return [st.perfeitos, 10]; } },
+  { id: 'xp100',     icon: '🌱', nome: 'A crescer',          desc: 'Junta 100 XP.',                             meta: function (st) { return [st.xp, 100]; } },
+  { id: 'xp500',     icon: '🚀', nome: 'Em órbita',          desc: 'Junta 500 XP.',                             meta: function (st) { return [st.xp, 500]; } }
+];
+
+function _desafioStats() {
+  var r = _desafioLoad();
+  var xp = (typeof ProgressManager !== 'undefined') ? (ProgressManager.getSummary().totalXp || 0) : 0;
+  return {
+    feitos: r.feitos || 0,
+    perfeitos: r.perfeitos || 0,
+    certasTotal: r.certasTotal || 0,
+    maxStreak: r.maxStreak || 0,
+    xp: xp,
+    desbloqueadas: r.conquistas || {}
+  };
+}
+
+/* Marca como desbloqueadas as conquistas atingidas; devolve as NOVAS. */
+function _desafioVerificaConquistas() {
+  var st = _desafioStats();
+  var r = _desafioLoad();
+  if (!r.conquistas) r.conquistas = {};
+  var novas = [];
+  DESAFIO_CONQUISTAS.forEach(function (c) {
+    var m = c.meta(st);
+    if (m[0] >= m[1] && !r.conquistas[c.id]) {
+      r.conquistas[c.id] = _desafioHoje();
+      novas.push(c);
+    }
+  });
+  if (novas.length) {
+    _desafioSave(r);
+    if (typeof eduToast === 'function') {
+      novas.forEach(function (c) { eduToast('Conquista desbloqueada: ' + c.icon + ' ' + c.nome + '!', 'success'); });
+    }
+  }
+  if (typeof desafioRenderConquistas === 'function') desafioRenderConquistas();
+  return novas;
+}
+
+/* Painel de conquistas no portal (#portal-conquistas). Mostra as
+   desbloqueadas a cores e as próximas a cinzento com o progresso. */
+function desafioRenderConquistas() {
+  var wrap = document.getElementById('portal-conquistas');
+  if (!wrap) return;
+  var st = _desafioStats();
+  var feitas = DESAFIO_CONQUISTAS.filter(function (c) { return st.desbloqueadas[c.id]; }).length;
+
+  var h = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">';
+  h += '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.25rem;font-weight:700;color:var(--ink1)">As tuas conquistas</div>';
+  h += '<div style="font-size:.78rem;font-weight:800;color:#4a3f7a;background:#f0edf7;border-radius:999px;padding:3px 11px">' + feitas + ' / ' + DESAFIO_CONQUISTAS.length + '</div>';
+  h += '</div>';
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.6rem">';
+  DESAFIO_CONQUISTAS.forEach(function (c) {
+    var on = !!st.desbloqueadas[c.id];
+    var m = c.meta(st);
+    var prog = Math.min(m[0], m[1]);
+    h += '<div style="background:var(--white);border:1.5px solid ' + (on ? '#bfa8e0' : 'var(--border)') + ';border-radius:14px;padding:.85rem;text-align:center;' + (on ? '' : 'opacity:.7') + '">';
+    h += '<div style="font-size:1.7rem;margin-bottom:.25rem;filter:' + (on ? 'none' : 'grayscale(1)') + '">' + c.icon + '</div>';
+    h += '<div style="font-size:.8rem;font-weight:800;color:var(--ink1)">' + c.nome + '</div>';
+    h += '<div style="font-size:.68rem;color:var(--ink4);line-height:1.4;margin-top:.15rem">' + c.desc + '</div>';
+    if (on) {
+      h += '<div style="font-size:.66rem;font-weight:800;color:#2e7d52;margin-top:.4rem">✓ Desbloqueada</div>';
+    } else {
+      h += '<div style="margin-top:.5rem"><div style="height:5px;background:var(--border);border-radius:999px;overflow:hidden"><div style="height:100%;width:' + Math.round(prog / m[1] * 100) + '%;background:#8b7cc0;border-radius:999px"></div></div>';
+      h += '<div style="font-size:.64rem;color:var(--ink4);margin-top:.2rem">' + prog + ' / ' + m[1] + '</div></div>';
+    }
+    h += '</div>';
+  });
+  h += '</div>';
+  wrap.innerHTML = h;
+}
