@@ -369,6 +369,16 @@ function _desafioFim() {
 function pmUpdateTopbar() {
   var slot = document.querySelector('.site-topbar-actions');
   if (!slot || typeof ProgressManager === 'undefined') return;
+  // Sem sessão (mas com o serviço disponível), os chips 🔥/⭐/🏆 não fazem
+  // sentido — são pontos sem dono e contradizem o convite a criar conta.
+  // Só os mostramos com sessão. Offline (sem Cloud) mantém-se como antes.
+  var temCloud = typeof Cloud !== 'undefined' && Cloud.disponivel && Cloud.disponivel();
+  var semSessao = temCloud && (!Cloud.utilizador || !Cloud.utilizador());
+  if (semSessao) {
+    var velho = document.getElementById('pm-portal-stats');
+    if (velho) velho.parentNode.removeChild(velho);
+    return;
+  }
   // contentor próprio dos chips, para NÃO apagar o bloco de auth (login)
   var box = document.getElementById('pm-portal-stats');
   if (!box) {
@@ -401,6 +411,10 @@ function pmUpdateTopbar() {
 // Atualiza a topbar ao carregar o portal e sempre que o progresso muda.
 document.addEventListener('DOMContentLoaded', function () { pmUpdateTopbar(); });
 document.addEventListener('edupt:progress', function () { pmUpdateTopbar(); });
+// login/logout: mostra (com sessão) ou esconde (sem sessão) os chips
+document.addEventListener('cloud:auth', function () { pmUpdateTopbar(); });
+// o Cloud resolve a sessão de forma assíncrona no arranque; reaplica
+document.addEventListener('DOMContentLoaded', function () { setTimeout(pmUpdateTopbar, 700); });
 
 /* ════════════════════════════════════════════════════════════════
    CONQUISTAS: metas concretas que reforçam o hábito ("faltam 3 dias
