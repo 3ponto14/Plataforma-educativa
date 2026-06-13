@@ -3558,6 +3558,16 @@ body.dark-mode .portal-card:hover {
 /* nas linhas de PT/exames, a identidade própria ganha à cor do ano */
 .portal-ano-card .portal-ano-link--pt .portal-ano-link-icon { background: #ede8f5; color: #4a3f7a; }
 .portal-ano-card .portal-ano-link--exam .portal-ano-link-icon { background: #f0edf7; color: #5c4e8a; }
+
+/* No telemóvel, o cartão de ano empilha (nome em cima, detalhe por baixo)
+   e o texto cresce para leitura confortável — alvos de toque maiores. */
+@media (max-width: 560px) {
+  .portal-ano-link { flex-wrap: wrap; padding: .7rem .8rem; }
+  .portal-ano-link-name { font-size: .9rem; white-space: normal; }
+  .portal-ano-link-meta { font-size: .76rem; margin-left: auto; flex-basis: 100%; text-align: left; margin-top: .1rem; padding-left: 2.5rem; }
+  .portal-ano-link-arrow { font-size: 1rem; }
+  .portal-ciclo-title { font-size: 1.5rem; }
+}
 /* estado "sem resultados" da pesquisa */
 .portal-no-results {
   display: none;
@@ -3629,6 +3639,14 @@ body.dark-mode .portal-main-card:hover { border-color: var(--c2-mid) !important;
 .resumo-cap-btn .resumo-cap-icon {
   font-size: .85rem;
   opacity: .85;
+}
+
+/* No telemóvel, os botões de domínio QUEBRAM em vez de scroll lateral
+   (o aluno vê logo todos os domínios) e encolhem para caber. */
+@media (max-width: 560px) {
+  .resumo-cap-row { flex-wrap: wrap; overflow-x: visible; }
+  .resumo-cap-btn { font-size: .72rem; padding: .45rem .7rem; flex: 0 1 auto; }
+  .resumo-cap-btn .resumo-cap-icon { font-size: .8rem; }
 }
 
 /* Subtemas */
