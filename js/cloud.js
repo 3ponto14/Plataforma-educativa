@@ -176,7 +176,8 @@ var Cloud = (function () {
     init: init, disponivel: disponivel, utilizador: utilizador,
     tipo: tipo, ehProfessor: ehProfessor,
     registar: registar, entrar: entrar, sair: sair,
-    enviarParaNuvem: enviarParaNuvem, enviarDebounce: enviarDebounce
+    enviarParaNuvem: enviarParaNuvem, enviarDebounce: enviarDebounce,
+    _sb: function () { return sb; }   // cliente Supabase (usado por turmas.js)
   };
 })();
 
