@@ -11,7 +11,7 @@ var PT_BARCA_ESTRUTURA = {
   ano: '1517',
   genero: 'Auto · teatro alegórico de crítica social',
   forma: 'Peça em verso (redondilha maior), num só ato',
-  tema_central: 'O julgamento das almas à chegada da morte: num cais estão duas barcas — a do Inferno (Diabo) e a da Glória (Anjo) — e cada figura embarca conforme a vida que levou.'
+  tema_central: 'O julgamento das almas à chegada da morte: num cais estão duas barcas, a do Inferno (Diabo) e a da Glória (Anjo): e cada figura embarca conforme a vida que levou.'
 };
 
 /* ══════════════════════════════════════════════════════
@@ -198,7 +198,7 @@ function ptBarcaRenderMenu() {
     h += '<div style="font-size:.76rem;color:#5c4e8a;line-height:1.5"><i class="ph ph-chat-circle-text"></i> <strong>Defesa:</strong> ' + f.defesa + '</div>';
     h += '</div>';
   });
-  h += '<div style="font-size:.72rem;color:var(--ink4);line-height:1.5;margin:.25rem 0 1rem">Nota: a figura do Judeu reflete a mentalidade intolerante do século XVI — hoje lê-se como documento da época, não como modelo.</div>';
+  h += '<div style="font-size:.72rem;color:var(--ink4);line-height:1.5;margin:.25rem 0 1rem">Nota: a figura do Judeu reflete a mentalidade intolerante do século XVI, hoje lê-se como documento da época, não como modelo.</div>';
 
   // Crítica social
   h += '<div style="font-size:.78rem;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;margin-top:1.5rem">A Crítica Social</div>';

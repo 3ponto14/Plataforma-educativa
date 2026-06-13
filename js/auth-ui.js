@@ -107,7 +107,7 @@ function authSubmeter(entrar) {
   }).catch(function (e) {
     var msg = (e && e.message) || 'Não foi possível entrar.';
     if (/Invalid login/i.test(msg)) msg = 'Email ou palavra-passe errados.';
-    else if (/already registered|already exists/i.test(msg)) msg = 'Este email já tem conta — tenta entrar.';
+    else if (/already registered|already exists/i.test(msg)) msg = 'Este email já tem conta. Tenta entrar.';
     else if (/rate limit/i.test(msg)) msg = 'Demasiadas tentativas. Espera um pouco.';
     _authErro(msg);
     if (btn) { btn.disabled = false; btn.textContent = entrar ? 'Entrar' : 'Criar conta e entrar'; }

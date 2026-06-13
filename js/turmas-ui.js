@@ -132,7 +132,7 @@ function _turmasPintaRecursos(podeGerir) {
 }
 
 function recursosAdicionarPrompt() {
-  var titulo = prompt('Nome da ficha/recurso (ex.: Ficha de revisões — Frações):');
+  var titulo = prompt('Nome da ficha/recurso (ex.: Ficha de revisões de Frações):');
   if (titulo === null) return;
   var url = prompt('Cola o link (Google Drive, etc.):');
   if (url === null) return;

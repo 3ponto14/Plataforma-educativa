@@ -341,7 +341,7 @@ function ptJogoCorrespSel(col, i) {
 var _ptBarcaJogo = { pos: 0, fila: [], idx: 0, nivel: 'medio', respondido: false, fim: false, certas: 0, erradas: 0 };
 
 var _PT_BARCA_DIABO = [
-  '«Hou da barca, hou!» — o Diabo esfrega as mãos…',
+  '«Hou da barca, hou!»: o Diabo esfrega as mãos…',
   'O Diabo ri-se: «Essa alma é minha!»',
   '«À barca, à barca! Para o Inferno remas tu!»',
   'O Diabo apronta o remo: «Mais um passinho para cá…»'
@@ -350,7 +350,7 @@ var _PT_BARCA_ANJO = [
   'O Anjo sorri: «Continua, alma justa.»',
   '«Bem respondido! A Glória espera-te.»',
   'O Anjo acena: «Mais um passo para a luz.»',
-  '«Sabedoria é virtude — avança!»'
+  '«Sabedoria é virtude: avança!»'
 ];
 
 function _ptBarcaFila(nivel) {
@@ -418,7 +418,7 @@ function ptJogoBarcaRender() {
   var j = _ptBarcaJogo;
   var q = j.fila[j.idx % j.fila.length];
   var opts = _ptShuffle(q.opcoes.slice());
-  var h = _ptJogoHeader('⛵ A Barca — salva a tua alma');
+  var h = _ptJogoHeader('⛵ A Barca: salva a tua alma');
   h += _ptBarcaNiveis();
   h += '<div style="font-size:.78rem;color:var(--ink3);text-align:center">Certa → um passo para a <strong style="color:#2e7d52">Glória</strong> · Errada → um passo para o <strong style="color:#c0392b">Inferno</strong></div>';
   h += _ptBarcaPista();
@@ -467,7 +467,7 @@ function ptJogoBarcaFim() {
   if (typeof _port9PM === 'function') _port9PM(1, 'jogo', { xp: ganhou ? 6 : 1 });
   var wrap = _ptJogosApp();
   if (!wrap) return;
-  var h = _ptJogoHeader('⛵ A Barca — salva a tua alma');
+  var h = _ptJogoHeader('⛵ A Barca: salva a tua alma');
   if (ganhou) {
     h += '<div style="text-align:center;padding:1.6rem;background:linear-gradient(135deg,#1a4a2e,#2e7d52);border-radius:18px;color:#fff">';
     h += '<div style="font-size:2.4rem;margin-bottom:.3rem">😇⛵</div>';
@@ -477,7 +477,7 @@ function ptJogoBarcaFim() {
     h += '<div style="text-align:center;padding:1.6rem;background:linear-gradient(135deg,#3a0f0f,#922b21);border-radius:18px;color:#fff">';
     h += '<div style="font-size:2.4rem;margin-bottom:.3rem">🔥⛵</div>';
     h += '<div style="font-size:1.4rem;font-weight:800">O Diabo levou-te!</div>';
-    h += '<div style="opacity:.85;margin-top:.4rem">«Hou da barca, hou!» — para a próxima, estuda a gramática…</div>';
+    h += '<div style="opacity:.85;margin-top:.4rem">«Hou da barca, hou!», para a próxima, estuda a gramática…</div>';
   }
   h += '<div style="opacity:.75;margin-top:.6rem;font-size:.85rem">' + j.certas + ' certas · ' + j.erradas + ' erradas</div>';
   h += '</div>';
@@ -568,10 +568,10 @@ function ptJogoSopaRender() {
 
   // pistas (definições)
   h += '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:1rem 1.25rem">';
-  h += '<div style="font-size:.72rem;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">Pistas — sabes de que termo se trata?</div>';
+  h += '<div style="font-size:.72rem;font-weight:800;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">Pistas, sabes de que termo se trata?</div>';
   s.palavras.forEach(function (p) {
     if (p.achada) {
-      h += '<div style="font-size:.8rem;padding:.3rem 0;color:#2e7d32;font-weight:700">✓ ' + p.p + ' <span style="color:var(--ink4);font-weight:400">— ' + p.dica + '</span></div>';
+      h += '<div style="font-size:.8rem;padding:.3rem 0;color:#2e7d32;font-weight:700">✓ ' + p.p + ' <span style="color:var(--ink4);font-weight:400">: ' + p.dica + '</span></div>';
     } else {
       h += '<div style="font-size:.8rem;padding:.3rem 0;color:var(--ink2)">▢ ' + p.dica + ' <span style="color:var(--ink4)">(' + p.p.length + ' letras)</span></div>';
     }
