@@ -362,23 +362,29 @@ function _desafioFim() {
 function pmUpdateTopbar() {
   var slot = document.querySelector('.site-topbar-actions');
   if (!slot || typeof ProgressManager === 'undefined') return;
+  // contentor próprio dos chips, para NÃO apagar o bloco de auth (login)
+  var box = document.getElementById('pm-portal-stats');
+  if (!box) {
+    box = document.createElement('div');
+    box.id = 'pm-portal-stats';
+    box.style.cssText = 'display:flex;align-items:center;gap:.5rem';
+    slot.insertBefore(box, slot.firstChild); // chips à esquerda, auth à direita
+  }
   var s = ProgressManager.getSummary();
   var streak = s.streak || 0, xp = s.totalXp || 0;
-  // só mostra streak se houver ofensiva ativa hoje ou ontem (não "fogo morto")
   var hoje = new Date().toISOString().slice(0, 10);
   var ontem = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
   var ofensivaViva = s.lastDay === hoje || s.lastDay === ontem;
 
-  var h = '<div class="pm-portal-stats" style="display:flex;align-items:center;gap:.5rem">';
+  var h = '';
   if (streak > 0 && ofensivaViva) {
-    var apagada = s.lastDay === ontem; // fogo prestes a apagar se não fizer hoje
+    var apagada = s.lastDay === ontem;
     h += '<span title="' + (apagada ? 'Faz o desafio de hoje para manteres a ofensiva!' : 'Dias seguidos a estudar') + '" style="display:inline-flex;align-items:center;gap:.25rem;background:' + (apagada ? '#fff3e0' : '#fdeede') + ';color:#c2410c;border:1px solid ' + (apagada ? '#ffd8a8' : '#f7d3a8') + ';border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800' + (apagada ? ';opacity:.75' : '') + '">🔥 ' + streak + '</span>';
   }
   if (xp > 0) {
     h += '<span title="Pontos de experiência" style="display:inline-flex;align-items:center;gap:.25rem;background:#f0edf7;color:#4a3f7a;border:1px solid #ddd8f5;border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800">⭐ ' + xp + '</span>';
   }
-  h += '</div>';
-  slot.innerHTML = (streak > 0 && ofensivaViva) || xp > 0 ? h : '';
+  box.innerHTML = h;
 }
 
 // Atualiza a topbar ao carregar o portal e sempre que o progresso muda.
