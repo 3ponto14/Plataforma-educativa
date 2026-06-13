@@ -386,10 +386,13 @@ function pmUpdateTopbar() {
   var h = '';
   if (streak > 0 && ofensivaViva) {
     var apagada = s.lastDay === ontem;
-    h += '<span title="' + (apagada ? 'Faz o desafio de hoje para manteres a ofensiva!' : 'Dias seguidos a estudar') + '" style="display:inline-flex;align-items:center;gap:.25rem;background:' + (apagada ? '#fff3e0' : '#fdeede') + ';color:#c2410c;border:1px solid ' + (apagada ? '#ffd8a8' : '#f7d3a8') + ';border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800' + (apagada ? ';opacity:.75' : '') + '">🔥 ' + streak + '</span>';
+    var tipFogo = apagada
+      ? 'Ofensiva 🔥 — fizeste o desafio ' + streak + ' dia(s) seguidos. Faz o de hoje para não a perderes!'
+      : 'Ofensiva 🔥 — ' + streak + ' dia(s) seguidos a estudar. Volta todos os dias para a aumentares!';
+    h += '<span title="' + tipFogo + '" style="display:inline-flex;align-items:center;gap:.25rem;background:' + (apagada ? '#fff3e0' : '#fdeede') + ';color:#c2410c;border:1px solid ' + (apagada ? '#ffd8a8' : '#f7d3a8') + ';border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800;cursor:help' + (apagada ? ';opacity:.75' : '') + '">🔥 ' + streak + '</span>';
   }
   if (xp > 0) {
-    h += '<span title="Pontos de experiência" style="display:inline-flex;align-items:center;gap:.25rem;background:#f0edf7;color:#4a3f7a;border:1px solid #ddd8f5;border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800">⭐ ' + xp + '</span>';
+    h += '<span title="Pontos de experiência (XP) ⭐ — ganhas pontos a praticar, a fazer o desafio e a jogar. Quanto mais estudas, mais sobem!" style="display:inline-flex;align-items:center;gap:.25rem;background:#f0edf7;color:#4a3f7a;border:1px solid #ddd8f5;border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800;cursor:help">⭐ ' + xp + '</span>';
   }
   box.innerHTML = h;            // chips de fogo/XP (recria o conteúdo)
   _desafioChipConquistas();     // (re)acrescenta o chip 🏆 com popover
@@ -469,7 +472,8 @@ function _desafioChipConquistas() {
   if (!chip) {
     chip = document.createElement('span');
     chip.id = 'pm-conq-chip';
-    chip.style.cssText = 'position:relative;display:inline-flex;align-items:center;gap:.25rem;background:#fbf3df;color:#9a6a10;border:1px solid #f0dca8;border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800;cursor:default';
+    chip.title = 'Conquistas 🏆 — medalhas que ganhas ao atingir metas (dias seguidos, desafios certos, XP). Passa o rato para veres todas.';
+    chip.style.cssText = 'position:relative;display:inline-flex;align-items:center;gap:.25rem;background:#fbf3df;color:#9a6a10;border:1px solid #f0dca8;border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800;cursor:help';
     chip.onmouseenter = function () { var p = document.getElementById('pm-conq-pop'); if (p) p.style.display = 'block'; };
     chip.onmouseleave = function () { var p = document.getElementById('pm-conq-pop'); if (p) p.style.display = 'none'; };
     box.appendChild(chip);

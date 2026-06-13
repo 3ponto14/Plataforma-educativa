@@ -51,6 +51,13 @@ function authAbrir(modo) {
         + '</div>')
     + '<input id="auth-email" type="email" placeholder="O teu email" autocomplete="email" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin-bottom:.6rem;outline:none">'
     + '<input id="auth-pass" type="password" placeholder="Palavra-passe (mín. 6 letras)" autocomplete="' + (entrar ? 'current-password' : 'new-password') + '" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin-bottom:.9rem;outline:none" onkeydown="if(event.key===\'Enter\')authSubmeter(' + (entrar ? 'true' : 'false') + ')">'
+    + (entrar ? '' :
+        '<label style="display:flex;gap:.55rem;align-items:flex-start;font-size:.8rem;color:var(--ink3);line-height:1.45;margin-bottom:.6rem;cursor:pointer">'
+        + '<input type="checkbox" id="auth-termos" style="margin-top:.15rem;flex-shrink:0;width:16px;height:16px;cursor:pointer">'
+        + '<span>Li e aceito os <a href="termos.html" target="_blank" style="color:#4a3f7a;font-weight:700">Termos de Utilização</a> e a <a href="privacidade.html" target="_blank" style="color:#4a3f7a;font-weight:700">Política de Privacidade</a>.</span></label>'
+        + '<label style="display:flex;gap:.55rem;align-items:flex-start;font-size:.8rem;color:var(--ink3);line-height:1.45;margin-bottom:.9rem;cursor:pointer">'
+        + '<input type="checkbox" id="auth-marketing" style="margin-top:.15rem;flex-shrink:0;width:16px;height:16px;cursor:pointer">'
+        + '<span>Aceito receber novidades e dicas de estudo por email. <span style="color:var(--ink4)">(opcional)</span></span></label>')
     + '<button id="auth-btn" onclick="authSubmeter(' + (entrar ? 'true' : 'false') + ')" style="width:100%;background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:12px;padding:.8rem;font-family:Montserrat,sans-serif;font-size:.9rem;font-weight:800;cursor:pointer">' + (entrar ? 'Entrar' : 'Criar conta e entrar') + '</button>'
     + '<div style="text-align:center;margin-top:.9rem;font-size:.8rem;color:var(--ink4)">'
     + (entrar ? 'Ainda não tens conta? <a href="#" onclick="authAbrir(\'criar\');return false" style="color:#4a3f7a;font-weight:700">Cria uma</a>'
@@ -92,10 +99,18 @@ function authSubmeter(entrar) {
   email = email.trim();
   if (!email || email.indexOf('@') === -1) { _authErro('Escreve um email válido.'); return; }
   if (pass.length < 6) { _authErro('A palavra-passe precisa de pelo menos 6 letras.'); return; }
+  // no registo, é obrigatório aceitar os termos
+  var marketing = false;
+  if (!entrar) {
+    var cT = document.getElementById('auth-termos');
+    if (!cT || !cT.checked) { _authErro('Para criar conta, tens de aceitar os Termos e a Política de Privacidade.'); return; }
+    var cM = document.getElementById('auth-marketing');
+    marketing = !!(cM && cM.checked);
+  }
   var btn = document.getElementById('auth-btn');
   if (btn) { btn.disabled = true; btn.textContent = 'A entrar…'; }
 
-  var promessa = entrar ? Cloud.entrar(email, pass) : Cloud.registar(email, pass, _authTipo);
+  var promessa = entrar ? Cloud.entrar(email, pass) : Cloud.registar(email, pass, _authTipo, marketing);
   promessa.then(function () {
     authFechar();
     var prof = (typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor());

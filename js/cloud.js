@@ -55,10 +55,11 @@ var Cloud = (function () {
   }
 
   /* ── Registo / Entrada / Saída ── */
-  function registar(email, pass, tipoConta) {
+  function registar(email, pass, tipoConta, marketing) {
     if (!sb) return Promise.reject(new Error('Serviço indisponível.'));
     var t = tipoConta === 'professor' ? 'professor' : 'aluno';
-    return sb.auth.signUp({ email: email, password: pass, options: { data: { tipo: t } } }).then(function (res) {
+    var meta = { tipo: t, marketing: !!marketing, termos_aceites_em: new Date().toISOString() };
+    return sb.auth.signUp({ email: email, password: pass, options: { data: meta } }).then(function (res) {
       if (res.error) throw res.error;
       // com "Confirm email" OFF, a sessão vem logo; se não vier, faz login
       if (res.data && res.data.session) { user = res.data.session.user; return _aoEntrar(); }
