@@ -252,3 +252,35 @@ function _desafioFim() {
   );
   if (typeof eduToast === 'function' && e.certas === 3) eduToast('Boa! 3 em 3 no Desafio do Dia 🏆', 'success');
 }
+
+/* ════════════════════════════════════════════════════════════════
+   INDICADOR DE OFENSIVA — streak 🔥 + XP sempre visíveis na topbar do
+   portal. Lê o ProgressManager e atualiza-se sozinho quando o
+   progresso muda (evento edupt:progress). É o que faz o aluno ver a
+   ofensiva a crescer cada vez que entra.
+   ════════════════════════════════════════════════════════════════ */
+function pmUpdateTopbar() {
+  var slot = document.querySelector('.site-topbar-actions');
+  if (!slot || typeof ProgressManager === 'undefined') return;
+  var s = ProgressManager.getSummary();
+  var streak = s.streak || 0, xp = s.totalXp || 0;
+  // só mostra streak se houver ofensiva ativa hoje ou ontem (não "fogo morto")
+  var hoje = new Date().toISOString().slice(0, 10);
+  var ontem = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  var ofensivaViva = s.lastDay === hoje || s.lastDay === ontem;
+
+  var h = '<div class="pm-portal-stats" style="display:flex;align-items:center;gap:.5rem">';
+  if (streak > 0 && ofensivaViva) {
+    var apagada = s.lastDay === ontem; // fogo prestes a apagar se não fizer hoje
+    h += '<span title="' + (apagada ? 'Faz o desafio de hoje para manteres a ofensiva!' : 'Dias seguidos a estudar') + '" style="display:inline-flex;align-items:center;gap:.25rem;background:' + (apagada ? '#fff3e0' : '#fdeede') + ';color:#c2410c;border:1px solid ' + (apagada ? '#ffd8a8' : '#f7d3a8') + ';border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800' + (apagada ? ';opacity:.75' : '') + '">🔥 ' + streak + '</span>';
+  }
+  if (xp > 0) {
+    h += '<span title="Pontos de experiência" style="display:inline-flex;align-items:center;gap:.25rem;background:#f0edf7;color:#4a3f7a;border:1px solid #ddd8f5;border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800">⭐ ' + xp + '</span>';
+  }
+  h += '</div>';
+  slot.innerHTML = (streak > 0 && ofensivaViva) || xp > 0 ? h : '';
+}
+
+// Atualiza a topbar ao carregar o portal e sempre que o progresso muda.
+document.addEventListener('DOMContentLoaded', function () { pmUpdateTopbar(); });
+document.addEventListener('edupt:progress', function () { pmUpdateTopbar(); });
