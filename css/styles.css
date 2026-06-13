@@ -3814,3 +3814,42 @@ body.dark-mode .resumo-st-btn.active {
 /* Botão "voltar" claro (obras/composição em fundo claro do curso) */
 .pt-back-light{display:inline-flex;align-items:center;gap:.4rem;background:var(--white);border:1.5px solid var(--border);border-radius:999px;padding:.5rem .9rem;font-size:.76rem;font-weight:700;color:var(--ink2);cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s}
 .pt-back-light:hover{border-color:#8b7cc0;color:#5c4e8a}
+
+/* ════════════════════════════════════════════════════════════════
+   Menu lateral (gaveta ☰) do portal — Apoio ao Estudo
+   ════════════════════════════════════════════════════════════════ */
+#ml-burger{display:none;align-items:center;justify-content:center;width:38px;height:38px;border:1.5px solid var(--border);background:var(--white);border-radius:11px;color:var(--ink2);font-size:1.15rem;cursor:pointer;transition:background .15s,border-color .15s}
+#ml-burger:hover{background:var(--cream);border-color:var(--border2)}
+
+#ml-overlay{position:fixed;inset:0;background:rgba(20,16,40,.45);backdrop-filter:blur(2px);opacity:0;visibility:hidden;transition:opacity .25s;z-index:9990}
+#ml-overlay.on{opacity:1;visibility:visible}
+
+#ml-drawer{position:fixed;top:0;left:0;height:100%;width:360px;max-width:86vw;background:var(--cream);border-right:1px solid var(--border);box-shadow:6px 0 28px rgba(0,0,0,.16);transform:translateX(-104%);transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:9991;display:flex;flex-direction:column}
+#ml-drawer.on{transform:translateX(0)}
+
+.ml-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.1rem;border-bottom:1px solid var(--border);background:var(--white)}
+.ml-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--ink1);display:flex;align-items:center;gap:.5rem}
+.ml-title i{color:var(--sage-dark)}
+.ml-close{width:34px;height:34px;border:none;background:var(--cream);border-radius:9px;color:var(--ink3);font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.ml-close:hover{background:var(--cream2)}
+
+.ml-nav{display:flex;flex-direction:column;padding:.6rem .7rem;gap:.25rem;border-bottom:1px solid var(--border)}
+.ml-link{display:flex;align-items:center;gap:.6rem;width:100%;text-align:left;background:none;border:none;padding:.62rem .8rem;border-radius:10px;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;color:var(--ink2);cursor:pointer;transition:background .15s}
+.ml-link:hover{background:var(--white)}
+.ml-link i{font-size:1.1rem;color:var(--sage-dark)}
+
+.ml-body{flex:1;overflow-y:auto;padding:.9rem .8rem}
+/* o painel do Apoio (#portal-turmas) vive aqui dentro: tira margens/larguras do portal */
+.ml-body #portal-turmas{max-width:none;margin:0}
+
+.ml-foot{border-top:1px solid var(--border);background:var(--white);padding:.7rem 1.1rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.ml-user{font-size:.82rem;font-weight:700;color:var(--ink2);display:flex;align-items:center;gap:.35rem;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ml-user i{color:var(--sage-dark);font-size:1.05rem}
+.ml-tag{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;background:#e8f5ee;color:#2e7d52;border:1px solid #bfe3c9;border-radius:999px;padding:1px 7px}
+.ml-sair{font-size:.74rem;font-weight:700;color:var(--ink4);background:none;border:1px solid var(--border);border-radius:999px;padding:4px 12px;cursor:pointer;font-family:'Montserrat',sans-serif;flex-shrink:0}
+.ml-sair:hover{color:var(--ink2);border-color:var(--border2)}
+
+@media(max-width:560px){
+  #ml-drawer{width:340px}
+  .ml-body{padding:.7rem .6rem}
+}

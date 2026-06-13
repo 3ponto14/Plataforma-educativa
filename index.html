@@ -65,10 +65,10 @@
 <!-- Cards de acesso -->
 <div class="portal-section" id="portal-catalogo">
 
-  <!-- Apoio ao Estudo (painel principal; só com sessão).
-       Professor: lista de todos os alunos + fichas por link.
-       Aluno: fichas partilhadas pelos professores. -->
-  <div id="portal-turmas" style="max-width:820px;margin:0 auto 1.5rem"></div>
+  <!-- Apoio ao Estudo vive agora na GAVETA LATERAL (☰), não aqui no
+       meio do portal — ver js/menu-lateral.js. O #portal-turmas é
+       movido para dentro da gaveta pelo menu-lateral no arranque. -->
+  <div id="portal-turmas" style="display:none"></div>
 
   <!-- Desafio do Dia (cria hábito: 3 perguntas/dia, streak 🔥 + XP) -->
   <div id="portal-desafio" style="max-width:540px;margin:0 auto 1.75rem"></div>
@@ -266,6 +266,7 @@
 <script src="js/auth-ui.js"></script>
 <script src="js/turmas.js"></script>
 <script src="js/turmas-ui.js"></script>
+<script src="js/menu-lateral.js"></script>
 <script src="js/desafio.js"></script>
 <script src="js/portal.js"></script>
 <script src="js/ux-improvements.js"></script>
