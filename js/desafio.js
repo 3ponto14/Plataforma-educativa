@@ -220,8 +220,11 @@ function _desafioFeitoHoje() { var r = _desafioLoad(); return r.dia === _desafio
 
 var _desafioEstado = { idx: 0, certas: 0, respondido: false, qs: [] };
 
-/* Barra de seleção de ano (sempre visível no topo do cartão). */
+/* Barra de seleção de ano. Só aparece COM sessão — para o visitante da
+   porta de entrada o Desafio é apenas uma amostra, sem pedir o ano. */
 function _desafioBarraAno() {
+  var semSessao = typeof Cloud !== 'undefined' && Cloud.disponivel && Cloud.disponivel() && (!Cloud.utilizador || !Cloud.utilizador());
+  if (semSessao) return '';
   var ano = _desafioAno();
   var h = '<div style="display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;justify-content:center;margin-bottom:.9rem">';
   h += '<span style="font-size:.68rem;font-weight:800;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.06em;margin-right:.15rem">O teu ano:</span>';
@@ -251,12 +254,16 @@ function desafioRender() {
   }
 
   if (!_desafioEstado.qs.length) {
+    var semSessao = typeof Cloud !== 'undefined' && Cloud.disponivel && Cloud.disponivel() && (!Cloud.utilizador || !Cloud.utilizador());
     var discHoje = _desafioDisciplina(_desafioAno()) === 'PT' ? 'Português' : 'Matemática';
+    var titulo = semSessao ? 'Desafio do Dia' : 'Desafio do Dia · ' + _desafioAno() + '.º ano';
+    var sub = semSessao
+      ? '3 perguntas rápidas para experimentares. Cria conta para guardares a tua ofensiva 🔥 e teres perguntas do teu ano.'
+      : 'Hoje são 3 perguntas de <strong>' + discHoje + '</strong>.' + (streak > 1 ? ' Estás em <strong>' + streak + ' dias</strong> seguidos 🔥 — não percas a ofensiva!' : ' Começa a tua ofensiva 🔥');
     wrap.innerHTML = _desafioCartao(_desafioBarraAno()
       + '<div style="font-size:2.2rem;margin-bottom:.3rem">🎯</div>'
-      + '<div style="font-size:1.15rem;font-weight:800;color:#fff">Desafio do Dia · ' + _desafioAno() + '.º ano</div>'
-      + '<div style="font-size:.85rem;color:rgba(255,255,255,.85);margin-top:.25rem">Hoje são 3 perguntas de <strong>' + discHoje + '</strong>.'
-      + (streak > 1 ? ' Estás em <strong>' + streak + ' dias</strong> seguidos 🔥 — não percas a ofensiva!' : ' Começa a tua ofensiva 🔥') + '</div>'
+      + '<div style="font-size:1.15rem;font-weight:800;color:#fff">' + titulo + '</div>'
+      + '<div style="font-size:.85rem;color:rgba(255,255,255,.85);margin-top:.25rem">' + sub + '</div>'
       + '<button onclick="desafioStart()" style="margin-top:.9rem;background:#fff;color:#4a3f7a;border:none;border-radius:999px;padding:.65rem 1.6rem;font-family:Montserrat,sans-serif;font-size:.9rem;font-weight:800;cursor:pointer">Começar</button>');
     return;
   }

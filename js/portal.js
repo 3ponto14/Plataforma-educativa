@@ -250,12 +250,24 @@ function portalAplicarSessao() {
     for (var i = 0; i < els.length; i++) els[i].style.display = on ? '' : 'none';
   }
 
-  mostra('portal-gate', fechado);          // cartão de convite só quando fechado
+  // ação de entrar dentro do hero (só quando fechado)
+  var cta = document.getElementById('portal-hero-cta');
+  if (cta) {
+    cta.style.display = fechado ? '' : 'none';
+    if (fechado && !cta.innerHTML) {
+      cta.innerHTML =
+        '<button class="portal-hero-btn" onclick="if(typeof authAbrir===\'function\')authAbrir(\'criar\')"><i class="ph ph-user-plus"></i> Criar conta e entrar</button>'
+        + '<a href="#" class="portal-hero-login" onclick="if(typeof authAbrir===\'function\')authAbrir(\'entrar\');return false">Já tenho conta — entrar</a>';
+    }
+  }
+
   mostra('portal-grid', !fechado);         // montra de cursos
   mostraCls('portal-search', !fechado);    // pesquisa
   mostraCls('portal-filters', !fechado);   // filtros
   mostra('portal-no-results', false);      // nunca mostrar "sem resultados" na porta
   if (fechado) { var pw = document.getElementById('portal-progress-widget'); if (pw) pw.style.display = 'none'; }
+  // o cartão do Desafio adapta-se à sessão (esconde seletor de ano sem login)
+  if (typeof desafioRender === 'function') desafioRender();
 }
 
 document.addEventListener('DOMContentLoaded', function(){

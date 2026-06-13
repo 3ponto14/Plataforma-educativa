@@ -3110,6 +3110,38 @@ body.dark-mode .portal-card:hover {
   max-width: 460px;
   margin: 0 auto;
 }
+/* Ação do hero (porta de entrada, sem sessão) */
+.portal-hero-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .7rem;
+  margin-top: 1.5rem;
+}
+.portal-hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  background: linear-gradient(135deg, #4a3f7a, #6b5fa0);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: .85rem 1.8rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .95rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(74,63,122,.28);
+  transition: transform .15s, box-shadow .15s;
+}
+.portal-hero-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(74,63,122,.34); }
+.portal-hero-login {
+  font-size: .84rem;
+  font-weight: 700;
+  color: var(--ink3);
+  text-decoration: none;
+}
+.portal-hero-login:hover { color: #4a3f7a; }
 
 /* ── Section wrapper ── */
 .portal-section {
