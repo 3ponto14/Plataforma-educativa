@@ -3923,3 +3923,22 @@ body.dark-mode .resumo-st-btn.active {
   #ml-drawer{width:340px}
   .ml-body{padding:.7rem .6rem}
 }
+
+/* ── MODO FIXO (computador ≥900px): barra sempre visível à esquerda ──
+   A topbar (sticky, 56px, z-index 200) fica por cima a toda a largura.
+   A barra começa abaixo da topbar (z-index menor). O conteúdo do portal
+   é empurrado para a direita; a topbar fica full-width (não é empurrada,
+   por ser sticky e ter padding próprio). */
+#ml-drawer.fixed{
+  position:fixed;top:56px;left:0;        /* abaixo da topbar */
+  height:calc(100% - 56px);
+  transform:none;                        /* sempre aberta */
+  box-shadow:none;
+  border-right:1px solid var(--border);
+  z-index:120;                           /* abaixo da topbar (200) */
+  width:268px;
+}
+#ml-drawer.fixed .ml-close{display:none;}  /* não há "fechar" no modo fixo */
+/* conteúdo do portal dá lugar à barra (a topbar NÃO é empurrada) */
+body.ml-fixed-on #view-portal > *:not(.site-topbar){margin-left:268px;}
+body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
