@@ -44,6 +44,11 @@ function authAbrir(modo) {
     + '<div style="font-size:.8rem;color:var(--ink4);line-height:1.5;margin-top:.2rem">Guarda o teu progresso e a tua ofensiva 🔥 em qualquer dispositivo.</div>'
     + '</div>'
     + '<div id="auth-erro" style="display:none;background:#fdecea;color:#922b21;border:1px solid #f0b8b0;border-radius:10px;padding:.6rem .8rem;font-size:.8rem;margin-bottom:.75rem"></div>'
+    + (entrar ? '' :
+        '<div style="display:flex;gap:.5rem;margin-bottom:.75rem">'
+        + '<button type="button" id="auth-tipo-aluno" onclick="authSetTipo(\'aluno\')" style="flex:1;border:1.5px solid #4a3f7a;background:#f0edf7;color:#4a3f7a;border-radius:12px;padding:.6rem;font-family:Montserrat,sans-serif;font-size:.85rem;font-weight:800;cursor:pointer"><i class="ph ph-student"></i> Sou aluno</button>'
+        + '<button type="button" id="auth-tipo-prof" onclick="authSetTipo(\'professor\')" style="flex:1;border:1.5px solid var(--border);background:var(--white);color:var(--ink3);border-radius:12px;padding:.6rem;font-family:Montserrat,sans-serif;font-size:.85rem;font-weight:700;cursor:pointer"><i class="ph ph-chalkboard-teacher"></i> Sou professor</button>'
+        + '</div>')
     + '<input id="auth-email" type="email" placeholder="O teu email" autocomplete="email" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin-bottom:.6rem;outline:none">'
     + '<input id="auth-pass" type="password" placeholder="Palavra-passe (mín. 6 letras)" autocomplete="' + (entrar ? 'current-password' : 'new-password') + '" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin-bottom:.9rem;outline:none" onkeydown="if(event.key===\'Enter\')authSubmeter(' + (entrar ? 'true' : 'false') + ')">'
     + '<button id="auth-btn" onclick="authSubmeter(' + (entrar ? 'true' : 'false') + ')" style="width:100%;background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:12px;padding:.8rem;font-family:Montserrat,sans-serif;font-size:.9rem;font-weight:800;cursor:pointer">' + (entrar ? 'Entrar' : 'Criar conta e entrar') + '</button>'
@@ -63,6 +68,19 @@ function authFechar() {
   if (ov) ov.remove();
 }
 
+/* Tipo escolhido no registo (aluno por defeito). */
+var _authTipo = 'aluno';
+function authSetTipo(t) {
+  _authTipo = t;
+  var bA = document.getElementById('auth-tipo-aluno');
+  var bP = document.getElementById('auth-tipo-prof');
+  if (!bA || !bP) return;
+  var on = 'border:1.5px solid #4a3f7a;background:#f0edf7;color:#4a3f7a;border-radius:12px;padding:.6rem;font-family:Montserrat,sans-serif;font-size:.85rem;font-weight:800;cursor:pointer;flex:1';
+  var off = 'border:1.5px solid var(--border);background:var(--white);color:var(--ink3);border-radius:12px;padding:.6rem;font-family:Montserrat,sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;flex:1';
+  bA.style.cssText = t === 'aluno' ? on : off;
+  bP.style.cssText = t === 'professor' ? on.replace('#4a3f7a', '#2e7d52').replace('#f0edf7', '#e8f5ee') : off;
+}
+
 function _authErro(msg) {
   var el = document.getElementById('auth-erro');
   if (el) { el.textContent = msg; el.style.display = 'block'; }
@@ -77,12 +95,15 @@ function authSubmeter(entrar) {
   var btn = document.getElementById('auth-btn');
   if (btn) { btn.disabled = true; btn.textContent = 'A entrar…'; }
 
-  var promessa = entrar ? Cloud.entrar(email, pass) : Cloud.registar(email, pass);
+  var promessa = entrar ? Cloud.entrar(email, pass) : Cloud.registar(email, pass, _authTipo);
   promessa.then(function () {
     authFechar();
-    if (typeof eduToast === 'function') eduToast('Sessão iniciada! O teu progresso está guardado na nuvem ☁️', 'success');
+    var prof = (typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor());
+    if (typeof eduToast === 'function') eduToast(prof ? 'Bem-vindo, professor! ☁️' : 'Sessão iniciada! O teu progresso está guardado na nuvem ☁️', 'success');
     authRenderBotao();
     if (typeof pmUpdateTopbar === 'function') pmUpdateTopbar();
+    // se ficou pendente abrir um curso após login, abre-o agora
+    if (window._authAposLogin) { var fn = window._authAposLogin; window._authAposLogin = null; try { fn(); } catch (e) {} }
   }).catch(function (e) {
     var msg = (e && e.message) || 'Não foi possível entrar.';
     if (/Invalid login/i.test(msg)) msg = 'Email ou palavra-passe errados.';
@@ -100,9 +121,60 @@ function authSair() {
   });
 }
 
-/* Arranque: liga o Cloud e desenha o botão quando estiver pronto. */
+/* ── Muro de login dos CURSOS ──────────────────────────────────────
+   Decisão de produto: o portal e o Desafio do Dia são LIVRES (vitrina);
+   entrar num curso para praticar exige conta. Envolvemos as funções
+   showMatNView/showPortNView: sem sessão, mostram um convite amigável
+   (e abrem o curso automaticamente após o login). Se o Cloud estiver
+   indisponível (offline), NÃO bloqueia — deixa entrar como antes. */
+function _authMuroCursos() {
+  if (typeof Cloud === 'undefined') return;
+  var nomes = ['showMat5View', 'showMat6View', 'showMat7View', 'showMat8View', 'showMat9View',
+               'showMat10View', 'showMat11View', 'showPort7View', 'showPort8View', 'showPort9View'];
+  nomes.forEach(function (nome) {
+    var orig = window[nome];
+    if (typeof orig !== 'function' || orig._comMuro) return;
+    var guardada = function () {
+      // sem cloud (offline) ou com sessão → segue direto
+      if (!Cloud.disponivel() || Cloud.utilizador()) return orig.apply(this, arguments);
+      // sem sessão → convite, e abre o curso após login
+      window._authAposLogin = function () { orig(); };
+      authConvidarParaCurso();
+    };
+    guardada._comMuro = true;
+    window[nome] = guardada;
+  });
+}
+
+/* Convite (não bloqueante) a criar conta antes de entrar num curso. */
+function authConvidarParaCurso() {
+  authFechar();
+  var ov = document.createElement('div');
+  ov.id = 'auth-overlay';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(20,16,40,.55);z-index:9998;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(3px)';
+  ov.onclick = function (e) { if (e.target === ov) authFechar(); };
+  ov.innerHTML =
+    '<div style="background:var(--white);border-radius:20px;max-width:380px;width:100%;padding:1.75rem;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)">'
+    + '<div style="font-size:2rem">📚</div>'
+    + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.5rem;font-weight:700;color:var(--ink1);margin-top:.2rem">Entra para estudar</div>'
+    + '<div style="font-size:.85rem;color:var(--ink3);line-height:1.6;margin-top:.4rem">Para praticar e guardares o teu progresso, cria uma conta (é rápido e grátis). O <strong>Desafio do Dia</strong> aqui no portal continua livre!</div>'
+    + '<button onclick="authAbrir(\'criar\')" style="width:100%;margin-top:1.1rem;background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:12px;padding:.8rem;font-family:Montserrat,sans-serif;font-size:.9rem;font-weight:800;cursor:pointer">Criar conta e entrar</button>'
+    + '<div style="margin-top:.7rem;font-size:.8rem;color:var(--ink4)">Já tens conta? <a href="#" onclick="authAbrir(\'entrar\');return false" style="color:#4a3f7a;font-weight:700">Entra</a></div>'
+    + '<div style="margin-top:.5rem"><a href="#" onclick="authFechar();return false" style="font-size:.74rem;color:var(--ink4)">Agora não</a></div>'
+    + '</div>';
+  document.body.appendChild(ov);
+}
+
+/* Arranque: liga o Cloud, desenha o botão e arma o muro dos cursos.
+   O muro é (re)aplicado algumas vezes porque o nav.js (que define os
+   showXxxView) carrega depois — garante que as funções já existem. */
 document.addEventListener('DOMContentLoaded', function () {
   if (typeof Cloud === 'undefined') return;
   Cloud.init(function () { authRenderBotao(); });
+  var tentativas = 0;
+  var arma = setInterval(function () {
+    _authMuroCursos();
+    if (++tentativas >= 10 || (typeof showPort9View === 'function' && showPort9View._comMuro)) clearInterval(arma);
+  }, 150);
 });
 document.addEventListener('cloud:auth', function () { authRenderBotao(); });

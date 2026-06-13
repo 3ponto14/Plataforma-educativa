@@ -24,6 +24,9 @@ var Cloud = (function () {
 
   function disponivel() { return !!sb; }
   function utilizador() { return user; }
+  /* Tipo de conta: 'professor' ou 'aluno' (guardado nos metadados). */
+  function tipo() { return (user && user.user_metadata && user.user_metadata.tipo) || 'aluno'; }
+  function ehProfessor() { return tipo() === 'professor'; }
 
   /* ── Arranque: cria o cliente se a lib do Supabase estiver carregada ── */
   function init(onReady) {
@@ -52,9 +55,10 @@ var Cloud = (function () {
   }
 
   /* ── Registo / Entrada / Saída ── */
-  function registar(email, pass) {
+  function registar(email, pass, tipoConta) {
     if (!sb) return Promise.reject(new Error('Serviço indisponível.'));
-    return sb.auth.signUp({ email: email, password: pass }).then(function (res) {
+    var t = tipoConta === 'professor' ? 'professor' : 'aluno';
+    return sb.auth.signUp({ email: email, password: pass, options: { data: { tipo: t } } }).then(function (res) {
       if (res.error) throw res.error;
       // com "Confirm email" OFF, a sessão vem logo; se não vier, faz login
       if (res.data && res.data.session) { user = res.data.session.user; return _aoEntrar(); }
@@ -170,6 +174,7 @@ var Cloud = (function () {
 
   return {
     init: init, disponivel: disponivel, utilizador: utilizador,
+    tipo: tipo, ehProfessor: ehProfessor,
     registar: registar, entrar: entrar, sair: sair,
     enviarParaNuvem: enviarParaNuvem, enviarDebounce: enviarDebounce
   };
