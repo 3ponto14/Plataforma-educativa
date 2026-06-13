@@ -237,7 +237,6 @@ document.addEventListener('DOMContentLoaded', function(){
   if(document.getElementById('portal-main')) portalRender();
   portalRenderProgress();
   if(typeof desafioRender === 'function') desafioRender();
-  if(typeof desafioRenderConquistas === 'function') desafioRenderConquistas();
 });
 
 /* Visual effects loaded from fx.js */

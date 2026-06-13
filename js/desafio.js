@@ -384,7 +384,8 @@ function pmUpdateTopbar() {
   if (xp > 0) {
     h += '<span title="Pontos de experiência" style="display:inline-flex;align-items:center;gap:.25rem;background:#f0edf7;color:#4a3f7a;border:1px solid #ddd8f5;border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800">⭐ ' + xp + '</span>';
   }
-  box.innerHTML = h;
+  box.innerHTML = h;            // chips de fogo/XP (recria o conteúdo)
+  _desafioChipConquistas();     // (re)acrescenta o chip 🏆 com popover
 }
 
 // Atualiza a topbar ao carregar o portal e sempre que o progresso muda.
@@ -446,35 +447,46 @@ function _desafioVerificaConquistas() {
   return novas;
 }
 
-/* Painel de conquistas no portal (#portal-conquistas). Mostra as
-   desbloqueadas a cores e as próximas a cinzento com o progresso. */
-function desafioRenderConquistas() {
-  var wrap = document.getElementById('portal-conquistas');
-  if (!wrap) return;
+/* Conquistas: chip 🏆 discreto na topbar (ao lado do 🔥 e ⭐), com um
+   popover que aparece ao passar o rato. Simples e não invasivo —
+   chamado por pmUpdateTopbar. */
+function _desafioChipConquistas() {
+  var box = document.getElementById('pm-portal-stats');
+  if (!box) return;
   var st = _desafioStats();
   var feitas = DESAFIO_CONQUISTAS.filter(function (c) { return st.desbloqueadas[c.id]; }).length;
+  // só mostra o chip quando o aluno já tem alguma atividade (XP ou desafios)
+  if (st.xp <= 0 && st.feitos <= 0) { var c0 = document.getElementById('pm-conq-chip'); if (c0) c0.remove(); return; }
 
-  var h = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">';
-  h += '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.25rem;font-weight:700;color:var(--ink1)">As tuas conquistas</div>';
-  h += '<div style="font-size:.78rem;font-weight:800;color:#4a3f7a;background:#f0edf7;border-radius:999px;padding:3px 11px">' + feitas + ' / ' + DESAFIO_CONQUISTAS.length + '</div>';
-  h += '</div>';
-  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.6rem">';
+  var chip = document.getElementById('pm-conq-chip');
+  if (!chip) {
+    chip = document.createElement('span');
+    chip.id = 'pm-conq-chip';
+    chip.style.cssText = 'position:relative;display:inline-flex;align-items:center;gap:.25rem;background:#fbf3df;color:#9a6a10;border:1px solid #f0dca8;border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800;cursor:default';
+    chip.onmouseenter = function () { var p = document.getElementById('pm-conq-pop'); if (p) p.style.display = 'block'; };
+    chip.onmouseleave = function () { var p = document.getElementById('pm-conq-pop'); if (p) p.style.display = 'none'; };
+    box.appendChild(chip);
+  }
+  // conteúdo do chip + popover
+  var pop = '<div id="pm-conq-pop" style="display:none;position:absolute;top:130%;right:0;width:300px;max-height:60vh;overflow-y:auto;background:var(--white);border:1.5px solid var(--border);border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:.85rem;z-index:200;text-align:left;cursor:default">';
+  pop += '<div style="font-weight:800;color:var(--ink1);font-size:.85rem;margin-bottom:.5rem">As tuas conquistas · ' + feitas + '/' + DESAFIO_CONQUISTAS.length + '</div>';
   DESAFIO_CONQUISTAS.forEach(function (c) {
     var on = !!st.desbloqueadas[c.id];
     var m = c.meta(st);
     var prog = Math.min(m[0], m[1]);
-    h += '<div style="background:var(--white);border:1.5px solid ' + (on ? '#bfa8e0' : 'var(--border)') + ';border-radius:14px;padding:.85rem;text-align:center;' + (on ? '' : 'opacity:.7') + '">';
-    h += '<div style="font-size:1.7rem;margin-bottom:.25rem;filter:' + (on ? 'none' : 'grayscale(1)') + '">' + c.icon + '</div>';
-    h += '<div style="font-size:.8rem;font-weight:800;color:var(--ink1)">' + c.nome + '</div>';
-    h += '<div style="font-size:.68rem;color:var(--ink4);line-height:1.4;margin-top:.15rem">' + c.desc + '</div>';
-    if (on) {
-      h += '<div style="font-size:.66rem;font-weight:800;color:#2e7d52;margin-top:.4rem">✓ Desbloqueada</div>';
-    } else {
-      h += '<div style="margin-top:.5rem"><div style="height:5px;background:var(--border);border-radius:999px;overflow:hidden"><div style="height:100%;width:' + Math.round(prog / m[1] * 100) + '%;background:#8b7cc0;border-radius:999px"></div></div>';
-      h += '<div style="font-size:.64rem;color:var(--ink4);margin-top:.2rem">' + prog + ' / ' + m[1] + '</div></div>';
-    }
-    h += '</div>';
+    pop += '<div style="display:flex;align-items:center;gap:.55rem;padding:.3rem 0;' + (on ? '' : 'opacity:.6') + '">';
+    pop += '<span style="font-size:1.15rem;filter:' + (on ? 'none' : 'grayscale(1)') + '">' + c.icon + '</span>';
+    pop += '<div style="flex:1;min-width:0">';
+    pop += '<div style="font-size:.76rem;font-weight:700;color:var(--ink1)">' + c.nome + (on ? ' <span style="color:#2e7d52">✓</span>' : '') + '</div>';
+    if (!on) pop += '<div style="height:4px;background:var(--border);border-radius:999px;overflow:hidden;margin-top:.2rem"><div style="height:100%;width:' + Math.round(prog / m[1] * 100) + '%;background:#c9a84c;border-radius:999px"></div></div>';
+    pop += '</div>';
+    if (!on) pop += '<span style="font-size:.66rem;color:var(--ink4);white-space:nowrap">' + prog + '/' + m[1] + '</span>';
+    pop += '</div>';
   });
-  h += '</div>';
-  wrap.innerHTML = h;
+  pop += '</div>';
+  chip.innerHTML = '🏆 ' + feitas + pop;
 }
+
+/* Compatibilidade: chamadas antigas a desafioRenderConquistas redirigem
+   para o chip (já não há painel grande no portal). */
+function desafioRenderConquistas() { _desafioChipConquistas(); }
