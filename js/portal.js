@@ -233,10 +233,41 @@ function portalSearch() {
 }
 
 // ═══ AUTO-INIT ═══
+/* ── Porta de entrada: sem sessão, esconde a montra (cursos, pesquisa,
+   filtros, progresso) e mostra o cartão de convite. O Desafio do Dia
+   fica sempre livre. Se o Cloud estiver indisponível (offline), NÃO
+   tranca — mostra tudo, para nunca deixar ninguém fechado por falha de
+   rede. ──────────────────────────────────────────────────────────── */
+function portalAplicarSessao() {
+  // sem Cloud disponível → comporta-se como dantes (tudo visível)
+  var temCloud = typeof Cloud !== 'undefined' && Cloud.disponivel && Cloud.disponivel();
+  var sessao = temCloud && Cloud.utilizador && Cloud.utilizador();
+  var fechado = temCloud && !sessao; // só fecha se o serviço existe e não há sessão
+
+  function mostra(id, on) { var el = document.getElementById(id); if (el) el.style.display = on ? '' : 'none'; }
+  function mostraCls(cls, on) {
+    var els = document.querySelectorAll('.' + cls);
+    for (var i = 0; i < els.length; i++) els[i].style.display = on ? '' : 'none';
+  }
+
+  mostra('portal-gate', fechado);          // cartão de convite só quando fechado
+  mostra('portal-grid', !fechado);         // montra de cursos
+  mostraCls('portal-search', !fechado);    // pesquisa
+  mostraCls('portal-filters', !fechado);   // filtros
+  mostra('portal-no-results', false);      // nunca mostrar "sem resultados" na porta
+  if (fechado) { var pw = document.getElementById('portal-progress-widget'); if (pw) pw.style.display = 'none'; }
+}
+
 document.addEventListener('DOMContentLoaded', function(){
   if(document.getElementById('portal-main')) portalRender();
   portalRenderProgress();
   if(typeof desafioRender === 'function') desafioRender();
+  portalAplicarSessao();
+  // o Cloud arranca de forma assíncrona; reaplica quando a sessão resolver
+  setTimeout(portalAplicarSessao, 600);
+  setTimeout(portalAplicarSessao, 1400);
 });
+/* reage a login/logout */
+document.addEventListener('cloud:auth', function(){ portalAplicarSessao(); });
 
 /* Visual effects loaded from fx.js */
