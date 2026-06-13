@@ -236,6 +236,7 @@ function portalSearch() {
 document.addEventListener('DOMContentLoaded', function(){
   if(document.getElementById('portal-main')) portalRender();
   portalRenderProgress();
+  if(typeof desafioRender === 'function') desafioRender();
 });
 
 /* Visual effects loaded from fx.js */
