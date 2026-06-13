@@ -59,9 +59,6 @@
     <div class="portal-hero-brand">3ponto<em>14</em></div>
     <h1 class="portal-hero-title">Estuda melhor.<br>Vai mais longe.</h1>
     <p class="portal-hero-sub">Exercícios interativos, fichas, jogos e preparação para os exames nacionais de Matemática e Português, tudo num só lugar.</p>
-    <!-- Ação do hero: SEM sessão, botões de entrar (preenchido por
-         portalAplicarSessao em portal.js). Com sessão fica vazio. -->
-    <div id="portal-hero-cta" class="portal-hero-cta" style="display:none"></div>
   </div>
 </section>
 
@@ -73,9 +70,26 @@
        movido para dentro da gaveta pelo menu-lateral no arranque. -->
   <div id="portal-turmas" style="display:none"></div>
 
-  <!-- Desafio do Dia (cria hábito: 3 perguntas/dia, streak 🔥 + XP).
-       SEM sessão aparece como amostra (sem seletor de ano); a ação de
-       entrar está no hero acima. -->
+  <!-- Porta de entrada CLEAN (só SEM sessão): um único cartão central
+       que junta o convite a entrar + o Desafio do Dia (amostra). O
+       #portal-desafio é movido para dentro de #portal-entrada-desafio
+       por portalAplicarSessao(); com sessão volta ao sítio normal. -->
+  <div id="portal-entrada" style="display:none;max-width:480px;margin:0 auto 1.75rem">
+    <div class="portal-entrada-card">
+      <div class="portal-entrada-top">
+        <div class="portal-entrada-emoji">📚</div>
+        <div class="portal-entrada-h">Bem-vindo!</div>
+        <div class="portal-entrada-p">Entra para acederes a todos os cursos, fichas e ao teu progresso.</div>
+        <button class="portal-entrada-btn" onclick="if(typeof authAbrir==='function')authAbrir('criar')"><i class="ph ph-user-plus"></i> Criar conta e entrar</button>
+        <a href="#" class="portal-entrada-login" onclick="if(typeof authAbrir==='function')authAbrir('entrar');return false">Já tenho conta — entrar</a>
+      </div>
+      <div class="portal-entrada-sep"><span>experimenta sem conta</span></div>
+      <div id="portal-entrada-desafio"></div>
+    </div>
+  </div>
+
+  <!-- Desafio do Dia (com sessão fica aqui; sem sessão é movido para o
+       cartão de entrada acima). -->
   <div id="portal-desafio" style="max-width:540px;margin:0 auto 1.75rem"></div>
 
   <!-- Pesquisa -->

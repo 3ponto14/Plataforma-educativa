@@ -250,14 +250,20 @@ function portalAplicarSessao() {
     for (var i = 0; i < els.length; i++) els[i].style.display = on ? '' : 'none';
   }
 
-  // ação de entrar dentro do hero (só quando fechado)
-  var cta = document.getElementById('portal-hero-cta');
-  if (cta) {
-    cta.style.display = fechado ? '' : 'none';
-    if (fechado && !cta.innerHTML) {
-      cta.innerHTML =
-        '<button class="portal-hero-btn" onclick="if(typeof authAbrir===\'function\')authAbrir(\'criar\')"><i class="ph ph-user-plus"></i> Criar conta e entrar</button>'
-        + '<a href="#" class="portal-hero-login" onclick="if(typeof authAbrir===\'function\')authAbrir(\'entrar\');return false">Já tenho conta — entrar</a>';
+  // cartão de entrada CLEAN (entrar + Desafio) só quando fechado; o
+  // Desafio é movido para dentro dele e reposto quando há sessão.
+  var entrada = document.getElementById('portal-entrada');
+  var desafio = document.getElementById('portal-desafio');
+  var dentro = document.getElementById('portal-entrada-desafio');
+  if (entrada) entrada.style.display = fechado ? '' : 'none';
+  if (desafio && dentro) {
+    if (fechado && desafio.parentNode !== dentro) {
+      desafio.style.maxWidth = 'none'; desafio.style.margin = '0';
+      dentro.appendChild(desafio);
+    } else if (!fechado && desafio.parentNode === dentro) {
+      desafio.style.maxWidth = '540px'; desafio.style.margin = '0 auto 1.75rem';
+      var cat = document.getElementById('portal-catalogo');
+      if (cat) cat.insertBefore(desafio, entrada.nextSibling); // de volta ao lugar
     }
   }
 
