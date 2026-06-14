@@ -4045,3 +4045,7 @@ body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
 .acc-caret{color:var(--ink4);transition:transform .15s}
 .acc-extra{display:flex;gap:.35rem;flex-shrink:0}
 .acc-body{padding:.2rem 1rem 1rem 1rem}
+
+/* Botão «Atribuir a aluno/grupo» (gerador/quiz/jogos, vista do professor) */
+.atr-btn{display:inline-flex;align-items:center;gap:.4rem;background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:7px 15px;font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(46,125,82,.2)}
+.atr-btn:hover{filter:brightness(1.05)}
