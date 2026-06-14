@@ -3948,7 +3948,7 @@ body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
 /* A secção Turmas usa toda a largura disponível (até um máximo confortável)
    e fica centrada, com algum respiro lateral. Antes ficava espremida. */
 #sec-apoio{padding:1.5rem 2.5rem 4rem}
-#sec-apoio #portal-turmas{max-width:1400px;margin:0 auto}
+#sec-apoio #portal-turmas{max-width:none;margin:0;width:100%}
 @media (max-width:900px){ #sec-apoio{padding:1rem 1rem 3rem} }
 
 /* ════════════════════════════════════════════════════════════════
