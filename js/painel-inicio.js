@@ -28,6 +28,29 @@
   }
   function _esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
+  /* ── Momento do Professor: cartão rotativo (1 por dia), mistura dica de
+     ensino, destaque da turma e curiosidade. Determinístico por dia. ── */
+  var MOMENTOS_PROF = [
+    { tipo: 'Dica de ensino', icon: '💡', txt: 'Ao explicar frações, parte de algo concreto (uma pizza, uma barra de chocolate) antes de passar aos números. O significado vem primeiro, o símbolo depois.' },
+    { tipo: 'Dica de ensino', icon: '💡', txt: 'Erros mais comuns nas equações: trocar o sinal ao passar termos para o outro lado. Peça aos alunos para verificarem a solução substituindo o valor encontrado.' },
+    { tipo: 'Curiosidade', icon: '✨', txt: 'O número π já foi calculado com mais de 60 biliões de casas decimais — mas para a maioria dos cálculos do 3.º ciclo bastam 3,14. Boa para partilhar com a turma!' },
+    { tipo: 'Dica de ensino', icon: '💡', txt: 'Na interpretação de textos, ensine os alunos a sublinhar as palavras-chave da pergunta antes de procurarem a resposta. Metade dos erros é ler mal o que se pede.' },
+    { tipo: 'Curiosidade', icon: '✨', txt: '«Os Lusíadas» têm 1102 estrofes e 8816 versos. Camões terá levado mais de 20 anos a escrevê-los. Um bom mote para falar de persistência.' },
+    { tipo: 'Dica de ensino', icon: '💡', txt: 'Comece a aula com uma pergunta em vez de uma definição. A curiosidade prende mais do que a regra — a regra explica-se melhor quando já há vontade de saber.' },
+    { tipo: 'Curiosidade', icon: '✨', txt: 'A palavra «álgebra» vem do árabe «al-jabr», que significa «reunião de partes partidas». Matemática e história de mãos dadas.' },
+    { tipo: 'Dica de ensino', icon: '💡', txt: 'Nos problemas com enunciado, peça aos alunos para escreverem primeiro «o que sei» e «o que quero descobrir». Organiza o pensamento antes das contas.' },
+    { tipo: 'Curiosidade', icon: '✨', txt: 'O sinal de igual (=) foi inventado em 1557 por Robert Recorde, que escolheu duas linhas paralelas «porque nada é mais igual do que duas retas gémeas».' },
+    { tipo: 'Dica de ensino', icon: '💡', txt: 'Elogie o esforço, não só o resultado. «Trabalhaste bem este problema» motiva mais a longo prazo do que «és muito inteligente».' }
+  ];
+
+  function _hojeISO() { return new Date().toISOString().slice(0, 10); }
+  function _seedDoDia() {
+    var d = _hojeISO(); var s = 0;
+    for (var i = 0; i < d.length; i++) s = (s * 31 + d.charCodeAt(i)) % 100000;
+    return s;
+  }
+  function _momentoDeHoje() { return MOMENTOS_PROF[_seedDoDia() % MOMENTOS_PROF.length]; }
+
   function render() {
     var sec = document.getElementById('portal-saudacao');
     if (!sec) return;
@@ -50,12 +73,17 @@
       + '<div class="pi-dia">' + _dataExtenso() + '</div>'
       + '<h1 class="pi-ola">' + _saudacaoHora() + ', ' + _esc(nome) + ' 👋</h1>'
       + '<div class="pi-sub">' + (prof
-          ? 'Acompanha aqui os teus alunos do Apoio ao Estudo.'
+          ? 'O teu momento de hoje. Os alunos estão na barra Apoio ao Estudo.'
           : 'Pronto para estudar? Começa pelo desafio de hoje.') + '</div>'
       + '</div>';
 
     if (prof) {
-      h += '<div id="pi-prof" class="pi-card"><div class="pi-card-load">A carregar alunos…</div></div>';
+      var m = _momentoDeHoje();
+      h += '<div class="pi-prof-card">'
+        + '<div class="pi-prof-tag"><span class="pi-prof-icon">' + m.icon + '</span> Momento do Professor · ' + _esc(m.tipo) + '</div>'
+        + '<div class="pi-prof-txt">' + _esc(m.txt) + '</div>'
+        + '<div class="pi-prof-foot">Volta amanhã para um novo. Para veres os alunos, abre <strong>Apoio ao Estudo</strong> na barra.</div>'
+        + '</div>';
     } else {
       // o Desafio do Dia é movido para aqui (ver moverDesafio())
       h += '<div id="pi-desafio-slot" class="pi-desafio-slot"></div>';
@@ -73,10 +101,9 @@
     // navegação por secções (portal-nav.js). Aqui só se preenche.
 
     if (prof) {
-      // o Desafio não faz parte do painel do professor: esconde-o
+      // o Desafio (dos alunos) não faz parte do painel do professor
       var des = document.getElementById('portal-desafio');
       if (des) des.style.display = 'none';
-      _pintarProf();
     } else {
       var des2 = document.getElementById('portal-desafio');
       if (des2) des2.style.display = '';
@@ -93,31 +120,6 @@
       slot.appendChild(des);
     }
     if (typeof desafioRender === 'function') desafioRender();
-  }
-
-  /* Professor: resumo rápido dos alunos (nº + top 3 por XP). */
-  function _pintarProf() {
-    var box = document.getElementById('pi-prof');
-    if (!box || typeof Turmas === 'undefined' || !Turmas.todosOsAlunos) return;
-    Turmas.todosOsAlunos().then(function (alunos) {
-      if (!box) return;
-      if (!alunos.length) {
-        box.innerHTML = '<div class="pi-card-h">Apoio ao Estudo</div>'
-          + '<div class="pi-vazio">Ainda nenhum aluno com conta. Assim que se registarem, aparecem aqui e na barra ao lado.</div>';
-        return;
-      }
-      var ativos = alunos.filter(function (a) { return a.xp > 0; }).length;
-      var top = alunos.slice(0, 3);
-      var h = '<div class="pi-card-h"><span><i class="ph ph-users-three"></i> Apoio ao Estudo</span>'
-        + '<span class="pi-num">' + alunos.length + ' aluno' + (alunos.length === 1 ? '' : 's') + '</span></div>'
-        + '<div class="pi-stat">' + ativos + ' já praticaram na plataforma.</div>'
-        + '<div class="pi-top-h">Mais ativos</div><div class="pi-top">';
-      top.forEach(function (a) {
-        h += '<div class="pi-top-row"><span>' + _esc(a.nome) + '</span><span class="pi-top-xp">⭐ ' + a.xp + '</span></div>';
-      });
-      h += '</div><div class="pi-card-foot">Vê a lista completa e o detalhe de cada aluno na barra <strong>Apoio ao Estudo</strong>.</div>';
-      box.innerHTML = h;
-    });
   }
 
   window.painelInicioRender = render;

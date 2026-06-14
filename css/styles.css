@@ -3956,6 +3956,14 @@ body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
 .pi-sub{font-size:.9rem;color:var(--ink3)}
 .pi-desafio-slot{max-width:540px;margin:0 auto}
 
+/* Momento do Professor (cartão rotativo no Início do professor) */
+.pi-prof-card{max-width:540px;margin:0 auto;background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border-radius:20px;padding:1.5rem 1.6rem;box-shadow:0 10px 28px rgba(46,125,82,.22)}
+.pi-prof-tag{display:inline-flex;align-items:center;gap:.4rem;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.85);background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:3px 11px;margin-bottom:.8rem}
+.pi-prof-icon{font-size:.95rem}
+.pi-prof-txt{font-size:1.02rem;line-height:1.55;font-weight:600;color:#fff}
+.pi-prof-foot{font-size:.78rem;color:rgba(255,255,255,.75);line-height:1.5;border-top:1px solid rgba(255,255,255,.2);margin-top:1rem;padding-top:.8rem}
+.pi-prof-foot strong{color:#fff}
+
 /* Cartão do resumo do professor */
 .pi-card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.25rem 1.4rem;box-shadow:0 8px 24px rgba(0,0,0,.05)}
 .pi-card-load{color:var(--ink4);font-size:.85rem}
