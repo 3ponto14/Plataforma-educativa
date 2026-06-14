@@ -4074,3 +4074,23 @@ body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
 .grp-ic.is-msg:hover,.grp-ic.is-add:hover{border-color:#bfe3c9;color:#2e7d52}
 .grp-ic.is-rem:hover{border-color:#e8a8a0;color:#c0392b}
 .grp-procura{width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:8px;padding:6px 12px;font-size:.84rem;font-family:'Montserrat',sans-serif;margin-bottom:.6rem}
+
+/* ── Tooltip leve (qualquer elemento com data-tip) ── */
+[data-tip]{position:relative}
+[data-tip]::after{
+  content:attr(data-tip);
+  position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%) translateY(4px);
+  background:#2a2620;color:#fff;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:600;
+  line-height:1.2;white-space:nowrap;padding:5px 9px;border-radius:7px;
+  opacity:0;pointer-events:none;transition:opacity .14s,transform .14s;z-index:50;
+  box-shadow:0 4px 14px rgba(0,0,0,.18)}
+[data-tip]::before{
+  content:'';position:absolute;bottom:calc(100% + 2px);left:50%;transform:translateX(-50%) translateY(4px);
+  border:5px solid transparent;border-top-color:#2a2620;
+  opacity:0;pointer-events:none;transition:opacity .14s,transform .14s;z-index:50}
+[data-tip]:hover::after,[data-tip]:focus-visible::after,
+[data-tip]:hover::before,[data-tip]:focus-visible::before{
+  opacity:1;transform:translateX(-50%) translateY(0)}
+/* variante para ícones encostados à direita: tooltip alinhado à direita (não corta) */
+[data-tip].tip-end::after{left:auto;right:0;transform:translateX(0) translateY(4px)}
+[data-tip].tip-end:hover::after,[data-tip].tip-end:focus-visible::after{transform:translateX(0) translateY(0)}
