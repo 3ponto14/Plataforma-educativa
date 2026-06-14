@@ -22,7 +22,7 @@ function turmasRender() {
 function _turmasRenderProfessor(wrap) {
   wrap.innerHTML =
     '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.25rem 1.4rem">'
-    + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.45rem;font-weight:700;color:var(--ink1);margin-bottom:.15rem"><i class="ph ph-chalkboard-teacher" style="color:#2e7d52"></i> Apoio ao Estudo</div>'
+    + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.45rem;font-weight:700;color:var(--ink1);margin-bottom:.15rem"><i class="ph ph-chalkboard-teacher" style="color:#2e7d52"></i> Turmas</div>'
     + '<div style="font-size:.82rem;color:var(--ink4);margin-bottom:1rem">Todos os alunos com conta aparecem aqui. Vê o que cada um andou a fazer e partilha fichas com a turma toda.</div>'
     // alunos
     + '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem">'
@@ -152,7 +152,7 @@ function recursosApagar(id, titulo) {
 function _turmasRenderAluno(wrap) {
   wrap.innerHTML =
     '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.25rem 1.4rem">'
-    + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.45rem;font-weight:700;color:var(--ink1);margin-bottom:.15rem"><i class="ph ph-folder-open" style="color:#4a3f7a"></i> Fichas do Apoio ao Estudo</div>'
+    + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.45rem;font-weight:700;color:var(--ink1);margin-bottom:.15rem"><i class="ph ph-folder-open" style="color:#4a3f7a"></i> Fichas da Turma</div>'
     + '<div style="font-size:.82rem;color:var(--ink4);margin-bottom:1rem">Fichas e materiais partilhados pelos teus professores. Clica para abrir/descarregar.</div>'
     + '<div id="turmas-recursos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
     + '</div>';

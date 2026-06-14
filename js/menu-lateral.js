@@ -50,7 +50,7 @@
       + '<nav class="ml-nav" id="ml-nav">'
       + '<button class="ml-link" data-sec="inicio" onclick="menuLateralIr(\'inicio\')"><i class="ph ph-house"></i> <span>Início</span></button>'
       + '<button class="ml-link" data-sec="cursos" onclick="menuLateralIr(\'cursos\')"><i class="ph ph-books"></i> <span>Cursos</span></button>'
-      + '<button class="ml-link" data-sec="apoio" onclick="menuLateralIr(\'apoio\')"><i class="ph ph-users-three"></i> <span>Apoio ao Estudo</span></button>'
+      + '<button class="ml-link" data-sec="apoio" onclick="menuLateralIr(\'apoio\')"><i class="ph ph-users-three"></i> <span>Turmas</span></button>'
       + '</nav>'
       + '<div class="ml-foot" id="ml-foot"></div>';
     document.body.appendChild(d);

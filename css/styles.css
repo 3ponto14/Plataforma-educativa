@@ -3956,13 +3956,28 @@ body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
 .pi-sub{font-size:.9rem;color:var(--ink3)}
 .pi-desafio-slot{max-width:540px;margin:0 auto}
 
-/* Momento do Professor (cartão rotativo no Início do professor) */
-.pi-prof-card{max-width:540px;margin:0 auto;background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border-radius:20px;padding:1.5rem 1.6rem;box-shadow:0 10px 28px rgba(46,125,82,.22)}
-.pi-prof-tag{display:inline-flex;align-items:center;gap:.4rem;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.85);background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:3px 11px;margin-bottom:.8rem}
-.pi-prof-icon{font-size:.95rem}
-.pi-prof-txt{font-size:1.02rem;line-height:1.55;font-weight:600;color:#fff}
-.pi-prof-foot{font-size:.78rem;color:rgba(255,255,255,.75);line-height:1.5;border-top:1px solid rgba(255,255,255,.2);margin-top:1rem;padding-top:.8rem}
-.pi-prof-foot strong{color:#fff}
+/* Momento do Professor: 3 cartões para revelar (gamificado) */
+.pi-prof-wrap{max-width:600px;margin:0 auto}
+.pi-prof-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem}
+.pi-prof-titulo{font-weight:800;color:var(--ink1);font-size:1rem}
+.pi-prof-pts{font-size:.8rem;font-weight:800;color:#2e7d52;background:#e8f5ee;border:1px solid #bfe3c9;border-radius:999px;padding:3px 11px}
+.pi-prof-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem}
+@media(max-width:620px){ .pi-prof-grid{grid-template-columns:1fr} }
+
+/* cada cartão vira (flip) ao tocar */
+.pi-flip{position:relative;border:none;background:none;padding:0;cursor:pointer;min-height:170px;text-align:left;font-family:'Montserrat',sans-serif;perspective:800px}
+.pi-flip .pi-flip-frente,.pi-flip .pi-flip-verso{position:absolute;inset:0;border-radius:16px;padding:1rem;display:flex;flex-direction:column;backface-visibility:hidden;transition:transform .45s cubic-bezier(.4,0,.2,1);overflow:hidden}
+.pi-flip .pi-flip-frente{background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;align-items:center;justify-content:center;text-align:center;gap:.4rem;box-shadow:0 8px 20px rgba(46,125,82,.2)}
+.pi-flip .pi-flip-verso{background:var(--white);border:1.5px solid var(--border);color:var(--ink2);transform:rotateY(180deg);box-shadow:0 8px 22px rgba(0,0,0,.07)}
+.pi-flip.aberto .pi-flip-frente{transform:rotateY(180deg)}
+.pi-flip.aberto .pi-flip-verso{transform:rotateY(360deg)}
+.pi-flip-ic{font-size:1.9rem}
+.pi-flip-lbl{font-weight:800;font-size:.9rem}
+.pi-flip-hint{font-size:.7rem;color:rgba(255,255,255,.8);text-transform:uppercase;letter-spacing:.05em}
+.pi-flip-tag{display:inline-flex;align-items:center;gap:.3rem;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:#2e7d52;margin-bottom:.5rem}
+.pi-flip-txt{font-size:.84rem;line-height:1.5;font-weight:500;overflow-y:auto}
+.pi-prof-foot{text-align:center;font-size:.82rem;color:var(--ink3);margin-top:1rem;line-height:1.5}
+.pi-prof-foot strong{color:var(--ink1)}
 
 /* Cartão do resumo do professor */
 .pi-card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.25rem 1.4rem;box-shadow:0 8px 24px rgba(0,0,0,.05)}
