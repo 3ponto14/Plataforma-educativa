@@ -108,7 +108,8 @@ function duvidaResponder(msgId, alunoId, nome) {
   if (texto === null || !texto.trim()) return;
   Turmas.enviarMensagem({ texto: texto, alcance: 'aluno', paraAluno: alunoId, respostaA: msgId }).then(function () {
     if (typeof eduToast === 'function') eduToast('Resposta enviada a ' + nome + '! 💬', 'success');
-    _turmasPintaDuvidas(); // repinta para mostrar "✓ Respondido"
+    _turmasPintaDuvidas();
+    if (typeof notificacoesRender === 'function') notificacoesRender(); // repinta para mostrar "✓ Respondido"
   }).catch(function (e) { alert(e.message || 'Não foi possível responder.'); });
 }
 
@@ -153,6 +154,7 @@ function avisoNovoPrompt() {
     }
     Turmas.enviarMensagem({ texto: texto, alcance: alcance, grupoId: grupoId }).then(function () {
       if (typeof eduToast === 'function') eduToast('Aviso enviado! 📣', 'success');
+    if (typeof notificacoesRender === 'function') notificacoesRender();
       _turmasPintaAvisos();
     }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
   });
@@ -717,6 +719,7 @@ function alunoResponderTurmas(msgId) {
     Turmas.responder(m, txt).then(function () {
       if (typeof eduToast === 'function') eduToast('Resposta enviada! 💬', 'success');
       _alunoPintaMensagens();
+      if (typeof notificacoesRender === 'function') notificacoesRender();
     }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
   });
 }
@@ -751,6 +754,7 @@ function alunoTirarDuvida() {
   Turmas.criarDuvida(txt).then(function () {
     if (typeof eduToast === 'function') eduToast('Dúvida enviada ao professor! ❓', 'success');
     if (typeof _alunoPintaMensagens === 'function') _alunoPintaMensagens();
+    if (typeof notificacoesRender === 'function') notificacoesRender();
   }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
 }
 
