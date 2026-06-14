@@ -387,25 +387,38 @@ function pmUpdateTopbar() {
     box.style.cssText = 'display:flex;align-items:center;gap:.5rem';
     slot.insertBefore(box, slot.firstChild); // chips à esquerda, auth à direita
   }
-  var s = ProgressManager.getSummary();
-  var streak = s.streak || 0, xp = s.totalXp || 0;
   var hoje = new Date().toISOString().slice(0, 10);
   var ontem = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-  var ofensivaViva = s.lastDay === hoje || s.lastDay === ontem;
+  var ehProf = typeof Cloud !== 'undefined' && Cloud.ehProfessor && Cloud.ehProfessor();
+
+  // Professor e aluno têm contas SEPARADAS: o professor lê de edupt_prof
+  // (Momento do Professor); o aluno do ProgressManager (Desafio/prática).
+  var streak, xp, lastDay, tipFogo, tipXp;
+  if (ehProf) {
+    var p = {}; try { p = JSON.parse(localStorage.getItem('edupt_prof')) || {}; } catch (e) { p = {}; }
+    streak = p.streak || 0; xp = p.xp || 0; lastDay = p.dia || null;
+    tipFogo = 'A tua ofensiva 🔥 — dias seguidos a ver o Momento do Professor. Volta todos os dias!';
+    tipXp = 'Os teus pontos ⭐ — ganhas XP ao completar o Momento do Professor de cada dia.';
+  } else {
+    var s = ProgressManager.getSummary();
+    streak = s.streak || 0; xp = s.totalXp || 0; lastDay = s.lastDay;
+    tipFogo = 'Ofensiva 🔥 — dias seguidos a estudar. Volta todos os dias para a aumentares!';
+    tipXp = 'Pontos de experiência (XP) ⭐ — ganhas a praticar, no desafio e a jogar. Quanto mais estudas, mais sobem!';
+  }
+  var ofensivaViva = lastDay === hoje || lastDay === ontem;
 
   var h = '';
   if (streak > 0 && ofensivaViva) {
-    var apagada = s.lastDay === ontem;
-    var tipFogo = apagada
-      ? 'Ofensiva 🔥 — fizeste o desafio ' + streak + ' dia(s) seguidos. Faz o de hoje para não a perderes!'
-      : 'Ofensiva 🔥 — ' + streak + ' dia(s) seguidos a estudar. Volta todos os dias para a aumentares!';
+    var apagada = lastDay === ontem;
     h += '<span title="' + tipFogo + '" style="display:inline-flex;align-items:center;gap:.25rem;background:' + (apagada ? '#fff3e0' : '#fdeede') + ';color:#c2410c;border:1px solid ' + (apagada ? '#ffd8a8' : '#f7d3a8') + ';border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800;cursor:help' + (apagada ? ';opacity:.75' : '') + '">🔥 ' + streak + '</span>';
   }
   if (xp > 0) {
-    h += '<span title="Pontos de experiência (XP) ⭐ — ganhas pontos a praticar, a fazer o desafio e a jogar. Quanto mais estudas, mais sobem!" style="display:inline-flex;align-items:center;gap:.25rem;background:#f0edf7;color:#4a3f7a;border:1px solid #ddd8f5;border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800;cursor:help">⭐ ' + xp + '</span>';
+    h += '<span title="' + tipXp + '" style="display:inline-flex;align-items:center;gap:.25rem;background:#f0edf7;color:#4a3f7a;border:1px solid #ddd8f5;border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800;cursor:help">⭐ ' + xp + '</span>';
   }
   box.innerHTML = h;            // chips de fogo/XP (recria o conteúdo)
-  _desafioChipConquistas();     // (re)acrescenta o chip 🏆 com popover
+  // 🏆 conquistas é só do aluno (desafio); não mostrar a professores
+  if (ehProf) { var cq = document.getElementById('pm-conq-chip'); if (cq) cq.remove(); }
+  else _desafioChipConquistas();
 }
 
 // Atualiza a topbar ao carregar o portal e sempre que o progresso muda.

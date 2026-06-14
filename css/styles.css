@@ -3956,28 +3956,32 @@ body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
 .pi-sub{font-size:.9rem;color:var(--ink3)}
 .pi-desafio-slot{max-width:540px;margin:0 auto}
 
-/* Momento do Professor: 3 cartões para revelar (gamificado) */
-.pi-prof-wrap{max-width:600px;margin:0 auto}
-.pi-prof-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem}
+/* Momento do Professor: JOGO de 3 perguntas (V/F + escolha) */
+.pi-prof-wrap{max-width:560px;margin:0 auto;background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:1.4rem 1.5rem;box-shadow:0 10px 28px rgba(0,0,0,.06)}
+.pi-prof-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
 .pi-prof-titulo{font-weight:800;color:var(--ink1);font-size:1rem}
 .pi-prof-pts{font-size:.8rem;font-weight:800;color:#2e7d52;background:#e8f5ee;border:1px solid #bfe3c9;border-radius:999px;padding:3px 11px}
-.pi-prof-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem}
-@media(max-width:620px){ .pi-prof-grid{grid-template-columns:1fr} }
 
-/* cada cartão vira (flip) ao tocar */
-.pi-flip{position:relative;border:none;background:none;padding:0;cursor:pointer;min-height:170px;text-align:left;font-family:'Montserrat',sans-serif;perspective:800px}
-.pi-flip .pi-flip-frente,.pi-flip .pi-flip-verso{position:absolute;inset:0;border-radius:16px;padding:1rem;display:flex;flex-direction:column;backface-visibility:hidden;transition:transform .45s cubic-bezier(.4,0,.2,1);overflow:hidden}
-.pi-flip .pi-flip-frente{background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;align-items:center;justify-content:center;text-align:center;gap:.4rem;box-shadow:0 8px 20px rgba(46,125,82,.2)}
-.pi-flip .pi-flip-verso{background:var(--white);border:1.5px solid var(--border);color:var(--ink2);transform:rotateY(180deg);box-shadow:0 8px 22px rgba(0,0,0,.07)}
-.pi-flip.aberto .pi-flip-frente{transform:rotateY(180deg)}
-.pi-flip.aberto .pi-flip-verso{transform:rotateY(360deg)}
-.pi-flip-ic{font-size:1.9rem}
-.pi-flip-lbl{font-weight:800;font-size:.9rem}
-.pi-flip-hint{font-size:.7rem;color:rgba(255,255,255,.8);text-transform:uppercase;letter-spacing:.05em}
-.pi-flip-tag{display:inline-flex;align-items:center;gap:.3rem;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:#2e7d52;margin-bottom:.5rem}
-.pi-flip-txt{font-size:.84rem;line-height:1.5;font-weight:500;overflow-y:auto}
-.pi-prof-foot{text-align:center;font-size:.82rem;color:var(--ink3);margin-top:1rem;line-height:1.5}
-.pi-prof-foot strong{color:var(--ink1)}
+.pj-prog{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink4);margin-bottom:.5rem}
+.pj-q{font-size:1.05rem;font-weight:700;color:var(--ink1);line-height:1.5;margin-bottom:1rem}
+.pj-opts{display:flex;flex-direction:column;gap:.55rem}
+.pj-opt{text-align:left;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:.8rem 1rem;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:600;color:var(--ink2);cursor:pointer;transition:border-color .15s,background .15s}
+.pj-opt:hover:not(:disabled){border-color:#2e7d52;background:#f3faf5}
+.pj-opt:disabled{cursor:default}
+.pj-opt.certa{border-color:#2e7d52;background:#e8f5ee;color:#1a4a2e;font-weight:800}
+.pj-opt.errada{border-color:#e0a8a0;background:#fdecea;color:#922b21}
+.pj-fb{margin-top:.9rem}
+.pj-fb-in{font-size:.86rem;line-height:1.55;color:var(--ink2);border-radius:12px;padding:.8rem 1rem}
+.pj-fb-in.ok{background:#e8f5ee;border:1px solid #bfe3c9}
+.pj-fb-in.no{background:#fff5ec;border:1px solid #f3d6b3}
+.pj-fb-in strong{color:var(--ink1)}
+.pj-next{margin-top:.8rem;width:100%;background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:12px;padding:.75rem;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer}
+.pj-fim{text-align:center;padding:.8rem 0}
+.pj-fim-ic{font-size:2.4rem}
+.pj-fim-h{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--ink1);margin-top:.2rem}
+.pj-fim-sub{font-size:.9rem;color:var(--ink3);margin-top:.3rem}
+.pj-fim-sub strong{color:var(--ink1)}
+.pj-fim-foot{font-size:.8rem;color:var(--ink4);margin-top:.7rem}
 
 /* Cartão do resumo do professor */
 .pi-card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.25rem 1.4rem;box-shadow:0 8px 24px rgba(0,0,0,.05)}
