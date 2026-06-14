@@ -19,53 +19,49 @@ function turmasRender() {
 }
 
 /* ════════════════════ PROFESSOR ════════════════════ */
+/* Secção colapsável (accordion). Fechada por defeito. `extra` = HTML de
+   um botão de ação à direita do título (opcional). */
+function _acc(key, icon, cor, titulo, extra, conteudo) {
+  return '<div class="acc">'
+    + '<button class="acc-head" onclick="accToggle(\'' + key + '\')">'
+    + '<span class="acc-tit"><i class="ph ph-caret-right acc-caret" id="acc-cx-' + key + '"></i> <i class="ph ' + icon + '" style="color:' + cor + '"></i> ' + titulo + '</span>'
+    + (extra ? '<span class="acc-extra" onclick="event.stopPropagation()">' + extra + '</span>' : '')
+    + '</button>'
+    + '<div class="acc-body" id="acc-body-' + key + '" style="display:none">' + conteudo + '</div>'
+    + '</div>';
+}
+
+function accToggle(key) {
+  var b = document.getElementById('acc-body-' + key);
+  var cx = document.getElementById('acc-cx-' + key);
+  if (!b) return;
+  var abrir = b.style.display === 'none';
+  b.style.display = abrir ? 'block' : 'none';
+  if (cx) cx.style.transform = abrir ? 'rotate(90deg)' : '';
+}
+
 function _turmasRenderProfessor(wrap) {
+  var btnGrupos = '<button onclick="grupoEntrarComoProf()" style="background:var(--white);color:#2e7d52;border:1.5px solid #bfe3c9;border-radius:999px;padding:5px 11px;font-size:.74rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">+ código</button>'
+    + ' <button onclick="grupoCriarPrompt()" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:5px 12px;font-size:.74rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">+ grupo</button>';
+  var btnTarefa = '<button onclick="tarefaAtribuirPrompt()" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:5px 12px;font-size:.74rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">+ trabalho</button>';
+  var btnAviso = '<button onclick="avisoNovoPrompt()" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:5px 12px;font-size:.74rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">+ aviso</button>';
+  var btnFicha = '<button onclick="recursosAdicionarPrompt()" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:5px 12px;font-size:.74rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">+ ficha</button>';
+
+  var alunosBody = '<input id="turmas-pesquisa" oninput="turmasFiltrar()" placeholder="🔎 Procurar aluno…" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:999px;padding:6px 14px;font-size:.82rem;font-family:Montserrat,sans-serif;outline:none;margin-bottom:.6rem">'
+    + '<div id="turmas-lista"><div style="color:var(--ink4);font-size:.85rem">A carregar alunos…</div></div>';
+  var avisosBody = '<div id="turmas-avisos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
+    + '<div style="font-weight:800;color:var(--ink1);font-size:.86rem;margin:1rem 0 .5rem"><i class="ph ph-chats-circle" style="color:#4a3f7a"></i> Dúvidas e respostas dos alunos</div>'
+    + '<div id="turmas-duvidas"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>';
+
   wrap.innerHTML =
     '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.25rem 1.4rem">'
     + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.45rem;font-weight:700;color:var(--ink1);margin-bottom:.15rem"><i class="ph ph-chalkboard-teacher" style="color:#2e7d52"></i> Turmas</div>'
-    + '<div style="font-size:.82rem;color:var(--ink4);margin-bottom:1rem">Todos os alunos com conta aparecem aqui. Organiza-os em grupos, atribui trabalho e partilha fichas.</div>'
-    // grupos
-    + '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem">'
-    + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem"><i class="ph ph-users-four" style="color:#2e7d52"></i> Grupos</div>'
-    + '<div style="display:flex;gap:.4rem;flex-wrap:wrap">'
-    + '<button onclick="grupoEntrarComoProf()" style="background:var(--white);color:#2e7d52;border:1.5px solid #bfe3c9;border-radius:999px;padding:6px 13px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-sign-in"></i> Entrar c/ código</button>'
-    + '<button onclick="grupoCriarPrompt()" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:6px 15px;font-size:.78rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-plus"></i> Novo grupo</button>'
-    + '</div>'
-    + '</div>'
-    + '<div id="turmas-grupos" style="margin-bottom:1.2rem"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
-    // alunos
-    + '<div style="border-top:1px solid var(--border);padding-top:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem">'
-    + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem"><i class="ph ph-users-three" style="color:#2e7d52"></i> Todos os alunos</div>'
-    + '<input id="turmas-pesquisa" oninput="turmasFiltrar()" placeholder="🔎 Procurar aluno…" style="border:1.5px solid var(--border);border-radius:999px;padding:5px 14px;font-size:.82rem;font-family:Montserrat,sans-serif;outline:none;min-width:180px">'
-    + '</div>'
-    + '<div id="turmas-lista"><div style="color:var(--ink4);font-size:.85rem">A carregar alunos…</div></div>'
-    // trabalho atribuído
-    + '<div style="border-top:1px solid var(--border);margin-top:1.2rem;padding-top:1rem">'
-    + '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem">'
-    + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem"><i class="ph ph-clipboard-text" style="color:#2e7d52"></i> Trabalho atribuído</div>'
-    + '<button onclick="tarefaAtribuirPrompt()" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:6px 15px;font-size:.78rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-plus"></i> Atribuir trabalho</button>'
-    + '</div>'
-    + '<div id="turmas-tarefas"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
-    + '</div>'
-    // avisos e mensagens
-    + '<div style="border-top:1px solid var(--border);margin-top:1.2rem;padding-top:1rem">'
-    + '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem">'
-    + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem"><i class="ph ph-megaphone" style="color:#2e7d52"></i> Avisos</div>'
-    + '<button onclick="avisoNovoPrompt()" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:6px 15px;font-size:.78rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-plus"></i> Novo aviso</button>'
-    + '</div>'
-    + '<div id="turmas-avisos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
-    // dúvidas e respostas dos alunos
-    + '<div style="font-weight:800;color:var(--ink1);font-size:.9rem;margin:1rem 0 .5rem"><i class="ph ph-chats-circle" style="color:#4a3f7a"></i> Dúvidas e respostas dos alunos</div>'
-    + '<div id="turmas-duvidas"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
-    + '</div>'
-    // recursos
-    + '<div style="border-top:1px solid var(--border);margin-top:1.2rem;padding-top:1rem">'
-    + '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem">'
-    + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem"><i class="ph ph-link-simple" style="color:#2e7d52"></i> Fichas e recursos</div>'
-    + '<button onclick="recursosAdicionarPrompt()" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:6px 15px;font-size:.78rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-plus"></i> Adicionar link</button>'
-    + '</div>'
-    + '<div id="turmas-recursos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
-    + '</div>'
+    + '<div style="font-size:.82rem;color:var(--ink4);margin-bottom:1rem">Toca em cada secção para abrir. Organiza alunos em grupos, atribui trabalho e comunica.</div>'
+    + _acc('grupos', 'ph-users-four', '#2e7d52', 'Grupos', btnGrupos, '<div id="turmas-grupos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
+    + _acc('alunos', 'ph-users-three', '#2e7d52', 'Todos os alunos', '', alunosBody)
+    + _acc('tarefas', 'ph-clipboard-text', '#2e7d52', 'Trabalho atribuído', btnTarefa, '<div id="turmas-tarefas"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
+    + _acc('avisos', 'ph-megaphone', '#2e7d52', 'Avisos e dúvidas', btnAviso, avisosBody)
+    + _acc('fichas', 'ph-link-simple', '#2e7d52', 'Fichas e recursos', btnFicha, '<div id="turmas-recursos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
     + '</div>';
 
   Turmas.todosOsAlunos().then(function (alunos) {

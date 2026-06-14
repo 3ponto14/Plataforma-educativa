@@ -4036,3 +4036,12 @@ body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
 .al-linha{font-size:.8rem;color:var(--ink3);background:var(--cream);border-radius:8px;padding:.4rem .7rem;margin-bottom:.7rem}
 .al-sec{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink4);margin:.7rem 0 .4rem}
 .al-tarefas{font-size:.82rem;color:var(--ink2)}
+
+/* Accordion das secções das Turmas (professor) */
+.acc{border:1.5px solid var(--border);border-radius:12px;margin-bottom:.6rem;overflow:hidden}
+.acc-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;width:100%;background:var(--white);border:none;padding:.8rem 1rem;cursor:pointer;font-family:'Montserrat',sans-serif}
+.acc-head:hover{background:var(--cream)}
+.acc-tit{display:flex;align-items:center;gap:.5rem;font-weight:800;color:var(--ink1);font-size:.92rem}
+.acc-caret{color:var(--ink4);transition:transform .15s}
+.acc-extra{display:flex;gap:.35rem;flex-shrink:0}
+.acc-body{padding:.2rem 1rem 1rem 1rem}
