@@ -539,12 +539,22 @@ var Turmas = (function () {
   }
 
   /* PROFESSOR: respostas e dúvidas escritas por alunos (para si ou
-     livres). Mais recentes primeiro. */
+     livres). Mais recentes primeiro. Cada uma traz `respondido` = true
+     se já existe uma resposta do professor a ela (resposta_a = id). */
   function respostasDeAlunos() {
     var sb = _sb();
     if (!sb) return Promise.resolve([]);
-    return sb.from('mensagens').select('*').eq('autor_tipo', 'aluno').order('criado', { ascending: false })
-      .then(function (res) { return res.error ? [] : (res.data || []); });
+    return sb.from('mensagens').select('*').order('criado', { ascending: false }).then(function (res) {
+      var todas = res.error ? [] : (res.data || []);
+      // ids de mensagens de aluno que JÁ têm uma resposta do professor
+      var respondidos = {};
+      todas.forEach(function (m) {
+        if (m.autor_tipo !== 'aluno' && m.resposta_a) respondidos[m.resposta_a] = true;
+      });
+      var doAluno = todas.filter(function (m) { return m.autor_tipo === 'aluno'; });
+      doAluno.forEach(function (m) { m.respondido = !!respondidos[m.id]; });
+      return doAluno;
+    });
   }
 
   return {
