@@ -173,17 +173,39 @@ function _escolherDestino(prefere, cb) {
   if (prefere && (prefere.grupoId || prefere.paraAluno)) { cb(prefere); return; }
   Turmas.todosOsGrupos().then(function (gs) {
     var alunos = _turmasAlunosCache || [];
-    var opc = 'Para quem?\n';
     var idx = [];
     gs.forEach(function (g) { idx.push({ grupoId: g.id, label: 'Grupo: ' + g.nome }); });
     alunos.forEach(function (a) { idx.push({ paraAluno: a.aluno, label: 'Aluno: ' + _rotuloDoAluno(a) }); });
     if (!idx.length) { alert('Cria primeiro um grupo ou espera que alunos se registem.'); return; }
-    idx.forEach(function (o, i) { opc += (i + 1) + ' = ' + o.label + '\n'; });
-    var esc = prompt(opc, '1');
-    if (esc === null) return;
-    var n = parseInt(esc, 10);
-    if (!(n >= 1 && n <= idx.length)) { alert('Opção inválida.'); return; }
-    cb(idx[n - 1]);
+
+    // Poucas opções: lista numerada simples (rápido).
+    if (idx.length <= 12) {
+      var opc = 'Para quem?\n';
+      idx.forEach(function (o, i) { opc += (i + 1) + ' = ' + o.label + '\n'; });
+      var esc = prompt(opc, '1');
+      if (esc === null) return;
+      var n = parseInt(esc, 10);
+      if (!(n >= 1 && n <= idx.length)) { alert('Opção inválida.'); return; }
+      cb(idx[n - 1]);
+      return;
+    }
+
+    // Muitas opções: pesquisar por nome/email (ou nome do grupo).
+    var termo = prompt('Para quem? Escreve parte do nome do aluno (ou do grupo), ou o email:\n(' + idx.length + ' destinos disponíveis)');
+    if (termo === null) return;
+    termo = termo.trim().toLowerCase();
+    if (!termo) { alert('Escreve algo para procurar.'); return; }
+    var hits = idx.filter(function (o) { return o.label.toLowerCase().indexOf(termo) !== -1; });
+    if (!hits.length) { alert('Ninguém corresponde a «' + termo + '». Tenta outra vez.'); _escolherDestino(prefere, cb); return; }
+    if (hits.length === 1) { cb(hits[0]); return; }
+    if (hits.length > 20) { alert(hits.length + ' correspondem a «' + termo + '». Escreve mais letras para afinar.'); _escolherDestino(prefere, cb); return; }
+    var opc2 = hits.length + ' correspondem. Escolhe o número:\n';
+    hits.forEach(function (o, i) { opc2 += (i + 1) + ' = ' + o.label + '\n'; });
+    var esc2 = prompt(opc2, '1');
+    if (esc2 === null) return;
+    var m = parseInt(esc2, 10);
+    if (!(m >= 1 && m <= hits.length)) { alert('Opção inválida.'); return; }
+    cb(hits[m - 1]);
   });
 }
 
@@ -586,14 +608,20 @@ function tarefaApagar(id, titulo) {
   Turmas.apagarTarefa(id).then(function () { _turmasPintaTarefas(); });
 }
 
-function _turmasPintaAlunos(alunos) {
+var _TURMAS_LISTA_PASSO = 50; // quantos alunos mostrar de cada vez
+var _turmasListaLimite = _TURMAS_LISTA_PASSO;
+
+function _turmasPintaAlunos(alunos, limite) {
   var el = document.getElementById('turmas-lista');
   if (!el) return;
   if (!alunos.length) {
     el.innerHTML = '<div style="color:var(--ink4);font-size:.85rem;padding:.4rem 0">Ainda nenhum aluno com conta. Assim que se registarem, aparecem aqui.</div>';
     return;
   }
-  el.innerHTML = alunos.map(function (a) {
+  var lim = limite || _turmasListaLimite;
+  var totalN = alunos.length;
+  var mostrados = alunos.slice(0, lim);
+  el.innerHTML = mostrados.map(function (a) {
     return '<div style="border:1.5px solid var(--border);border-radius:12px;margin-bottom:.5rem;overflow:hidden">'
       + '<div onclick="turmasToggleAluno(\'' + a.aluno + '\')" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.4rem;padding:.7rem 1rem;cursor:pointer">'
       + '<div style="font-weight:800;color:var(--ink1)"><i class="ph ph-caret-right" id="cx-' + a.aluno + '" style="color:var(--ink4);transition:transform .15s"></i> ' + _esc(a.nome)
@@ -607,16 +635,33 @@ function _turmasPintaAlunos(alunos) {
       + '<div id="det-' + a.aluno + '" style="display:none;padding:0 1rem .8rem 1rem"></div>'
       + '</div>';
   }).join('');
+  // rodapé: contagem + «mostrar mais» quando há mais do que o limite
+  if (totalN > lim) {
+    el.innerHTML += '<div style="text-align:center;margin-top:.3rem">'
+      + '<button onclick="turmasMostrarMais()" style="background:var(--white);color:#2e7d52;border:1.5px solid #bfe3c9;border-radius:999px;padding:6px 16px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">Mostrar mais (' + (totalN - lim) + ' por ver)</button>'
+      + '<div style="font-size:.72rem;color:var(--ink4);margin-top:.35rem">A mostrar ' + lim + ' de ' + totalN + ' · usa a pesquisa para encontrar um aluno</div>'
+      + '</div>';
+  } else if (totalN > _TURMAS_LISTA_PASSO) {
+    el.innerHTML += '<div style="font-size:.72rem;color:var(--ink4);text-align:center;margin-top:.35rem">' + totalN + ' alunos</div>';
+  }
 }
 
+/* Filtra a lista de alunos por nome/email. O limite só se aplica sem
+   pesquisa (com pesquisa os resultados costumam ser poucos). */
 function turmasFiltrar() {
   var q = (document.getElementById('turmas-pesquisa') || {}).value || '';
   q = q.trim().toLowerCase();
   if (!_turmasAlunosCache) return;
-  var fil = !q ? _turmasAlunosCache : _turmasAlunosCache.filter(function (a) {
+  if (!q) { _turmasListaLimite = _TURMAS_LISTA_PASSO; _turmasPintaAlunos(_turmasAlunosCache); return; }
+  var fil = _turmasAlunosCache.filter(function (a) {
     return (a.nome || '').toLowerCase().indexOf(q) !== -1 || (a.email || '').toLowerCase().indexOf(q) !== -1;
   });
-  _turmasPintaAlunos(fil);
+  _turmasPintaAlunos(fil, fil.length); // mostra todos os resultados da pesquisa
+}
+
+function turmasMostrarMais() {
+  _turmasListaLimite += _TURMAS_LISTA_PASSO;
+  _turmasPintaAlunos(_turmasAlunosCache);
 }
 
 function turmasToggleAluno(id) {
