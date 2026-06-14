@@ -503,9 +503,26 @@ function _turmasRenderAluno(wrap) {
     + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.6rem"><i class="ph ph-folder-open" style="color:#4a3f7a"></i> Fichas e materiais</div>'
     + '<div id="turmas-recursos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
     + '</div>'
+    // tirar dúvidas
+    + '<div style="border-top:1px solid var(--border);padding-top:1rem;margin-top:1.2rem">'
+    + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.4rem"><i class="ph ph-question" style="color:#4a3f7a"></i> Tirar dúvidas</div>'
+    + '<div style="font-size:.82rem;color:var(--ink4);margin-bottom:.7rem">Tens uma dúvida? Manda-a ao teu professor. A resposta aparece no teu <strong>Início</strong>, em «Avisos e mensagens».</div>'
+    + '<button onclick="alunoTirarDuvida()" style="background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:999px;padding:8px 18px;font-size:.84rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-paper-plane-tilt"></i> Mandar dúvida ao professor</button>'
+    + '</div>'
     + '</div>';
   _alunoPintaGrupos();
   _turmasPintaRecursos(false);
+}
+
+/* Mandar dúvida a partir da secção Turmas (reusa a função do painel). */
+function alunoTirarDuvida() {
+  if (typeof alunoNovaDuvida === 'function') { alunoNovaDuvida(); return; }
+  // fallback: chama diretamente o Turmas se a função do painel não existir
+  var txt = prompt('Escreve a tua dúvida para o professor:');
+  if (txt === null || !txt.trim()) return;
+  Turmas.criarDuvida(txt).then(function () {
+    if (typeof eduToast === 'function') eduToast('Dúvida enviada ao professor! ❓', 'success');
+  }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
 }
 
 /* ── Os meus grupos (vista do aluno) ── */
