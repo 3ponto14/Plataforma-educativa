@@ -4049,3 +4049,28 @@ body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
 /* Botão «Atribuir a aluno/grupo» (gerador/quiz/jogos, vista do professor) */
 .atr-btn{display:inline-flex;align-items:center;gap:.4rem;background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:7px 15px;font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(46,125,82,.2)}
 .atr-btn:hover{filter:brightness(1.05)}
+
+/* ── Grupos das Turmas (vista do professor) ── */
+.grp{border:1.5px solid var(--border);border-radius:12px;margin-bottom:.5rem;overflow:hidden}
+.grp-head{display:flex;align-items:center;gap:.5rem;padding:.7rem 1rem}
+.grp-head-main{display:flex;align-items:center;gap:.45rem;cursor:pointer;min-width:0;flex:1}
+.grp-caret{color:var(--ink4);transition:transform .15s;flex-shrink:0}
+.grp-nome{font-weight:800;color:var(--ink1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.grp-count{font-size:.74rem;font-weight:700;color:var(--ink4);flex-shrink:0}
+.grp-x{color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;width:26px;height:26px;font-size:.78rem;cursor:pointer;font-family:'Montserrat',sans-serif;flex-shrink:0;line-height:1}
+.grp-body{padding:0 1rem .8rem 1rem}
+.grp-meta{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;border-top:1px dashed var(--border);padding-top:.6rem;margin-bottom:.5rem;font-size:.74rem;color:var(--ink4)}
+.grp-code{font-family:'JetBrains Mono',monospace;font-size:.74rem;font-weight:800;color:#2e7d52;background:#e8f5ee;border:1px solid #bfe3c9;border-radius:6px;padding:1px 7px}
+.grp-send{font-size:.74rem;font-weight:700;color:#1a4a2e;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:3px 11px;cursor:pointer;font-family:'Montserrat',sans-serif}
+.grp-send:hover{background:#e8f5ee}
+/* linha de aluno dentro do grupo */
+.grp-aluno{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;border-bottom:1px dashed var(--border);padding:.45rem 0}
+.grp-aluno-nome{flex:1;min-width:0;font-weight:700;color:var(--ink1);font-size:.86rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.grp-aluno-mail{font-weight:500;font-size:.74rem;color:var(--ink4)}
+.grp-acts{display:flex;gap:.25rem;flex-shrink:0}
+.grp-ic{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;background:var(--white);border:1.5px solid var(--border);color:var(--ink3);font-size:1rem;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .12s}
+.grp-ic:hover{background:var(--cream);color:var(--ink1)}
+.grp-ic.is-reg:hover{border-color:#ddd8f5;color:#4a3f7a}
+.grp-ic.is-msg:hover,.grp-ic.is-add:hover{border-color:#bfe3c9;color:#2e7d52}
+.grp-ic.is-rem:hover{border-color:#e8a8a0;color:#c0392b}
+.grp-procura{width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:8px;padding:6px 12px;font-size:.84rem;font-family:'Montserrat',sans-serif;margin-bottom:.6rem}

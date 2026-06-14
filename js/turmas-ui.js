@@ -266,18 +266,18 @@ function _turmasPintaGrupos() {
       el.innerHTML = '<div style="color:var(--ink4);font-size:.85rem;padding:.3rem 0">Ainda não há grupos. Cria um (ex.: «9.º A» ou «Apoio Mat») e adiciona alunos ou partilha o código para entrarem.</div>';
       return;
     }
-    el.innerHTML = gs.map(function (g) {
-      return '<div style="border:1.5px solid var(--border);border-radius:12px;margin-bottom:.5rem;overflow:hidden">'
-        + '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.4rem;padding:.7rem 1rem">'
-        + '<div onclick="grupoToggle(\'' + g.id + '\',\'' + _escAttr(g.nome) + '\')" style="cursor:pointer;min-width:0">'
-        + '<span style="font-weight:800;color:var(--ink1)"><i class="ph ph-caret-right" id="gx-' + g.id + '" style="color:var(--ink4);transition:transform .15s"></i> ' + _esc(g.nome) + '</span>'
-        + ' <span style="margin-left:.3rem;font-family:JetBrains Mono,monospace;font-size:.76rem;font-weight:800;color:#2e7d52;background:#e8f5ee;border:1px solid #bfe3c9;border-radius:6px;padding:1px 7px">' + _esc(g.codigo) + '</span></div>'
-        + '<span style="display:flex;gap:.35rem;flex-shrink:0">'
-        + '<button onclick="grupoEnviarPrompt(\'' + g.id + '\',\'' + _escAttr(g.nome) + '\')" title="Enviar ao grupo" style="font-size:.72rem;font-weight:700;color:#1a4a2e;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:3px 10px;cursor:pointer;font-family:Montserrat,sans-serif">＋ enviar</button>'
-        + '<button onclick="grupoApagar(\'' + g.id + '\',\'' + _escAttr(g.nome) + '\')" title="Apagar grupo" style="color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;padding:3px 9px;font-size:.72rem;cursor:pointer;font-family:Montserrat,sans-serif">✕</button>'
-        + '</span>'
+    el.innerHTML = (gs.length > 1 ? '<div style="font-size:.74rem;color:var(--ink4);margin-bottom:.5rem">' + gs.length + ' grupos</div>' : '')
+      + gs.map(function (g) {
+      return '<div class="grp">'
+        + '<div class="grp-head">'
+        + '<div class="grp-head-main" onclick="grupoToggle(\'' + g.id + '\',\'' + _escAttr(g.nome) + '\')">'
+        + '<i class="ph ph-caret-right grp-caret" id="gx-' + g.id + '"></i>'
+        + '<span class="grp-nome">' + _esc(g.nome) + '</span>'
+        + '<span class="grp-count" id="grupo-n-' + g.id + '"></span>'
         + '</div>'
-        + '<div id="grupo-det-' + g.id + '" style="display:none;padding:0 1rem .8rem 1rem"></div>'
+        + '<button class="grp-x" onclick="grupoApagar(\'' + g.id + '\',\'' + _escAttr(g.nome) + '\')" title="Apagar grupo">✕</button>'
+        + '</div>'
+        + '<div class="grp-body" id="grupo-det-' + g.id + '" style="display:none"></div>'
         + '</div>';
     }).join('');
   });
@@ -304,31 +304,45 @@ function _grupoPintaDet(id, nome) {
   }
   det.innerHTML = '<div style="color:var(--ink4);font-size:.8rem;padding:.4rem 0">A carregar…</div>';
   Turmas.alunosDoGrupo(id).then(function (membros) {
-    var h = '<div style="border-top:1px dashed var(--border);padding-top:.6rem">';
-    // convidar outro professor
-    h += '<div style="font-size:.74rem;color:var(--ink4);margin-bottom:.5rem">Outros professores entram com o código <strong>' + _esc((_turmasGruposCache.filter(function(x){return x.id===id;})[0]||{}).codigo || '') + '</strong> (botão «Sou professor, entrar em grupo» no topo).</div>';
+    var codigo = (_turmasGruposCache.filter(function (x) { return x.id === id; })[0] || {}).codigo || '';
+    // atualiza a contagem no cabeçalho
+    var nEl = document.getElementById('grupo-n-' + id);
+    if (nEl) nEl.textContent = '· ' + membros.length + (membros.length === 1 ? ' aluno' : ' alunos');
+
+    // linha de meta: nº alunos · código · enviar a todos
+    var h = '<div class="grp-meta">'
+      + '<span>' + membros.length + (membros.length === 1 ? ' aluno' : ' alunos') + '</span>'
+      + '<span>código <span class="grp-code">' + _esc(codigo) + '</span></span>'
+      + '<button class="grp-send" onclick="grupoEnviarPrompt(\'' + id + '\',\'' + _escAttr(nome) + '\')"><i class="ph ph-paper-plane-tilt"></i> enviar a todos</button>'
+      + '</div>';
+
     if (!membros.length) {
       h += '<div style="color:var(--ink4);font-size:.8rem;margin-bottom:.5rem">Ainda sem alunos. Adiciona abaixo ou partilha o código.</div>';
     } else {
       // pesquisa de alunos (só vale a pena a partir de alguns alunos)
       if (membros.length > 5) {
-        h += '<input type="search" id="grupo-procura-' + id + '" oninput="grupoFiltrarAlunos(\'' + id + '\')" placeholder="🔍 Procurar aluno…" '
-          + 'style="width:100%;border:1.5px solid var(--border);border-radius:8px;padding:6px 12px;font-size:.84rem;font-family:Montserrat,sans-serif;margin-bottom:.6rem">';
+        h += '<input type="search" id="grupo-procura-' + id + '" oninput="grupoFiltrarAlunos(\'' + id + '\')" placeholder="🔍 Procurar aluno…" class="grp-procura">';
       }
       h += '<div id="grupo-lista-' + id + '">';
       membros.forEach(function (m) {
         var sid = id + '_' + m.aluno;
-        h += '<div class="grupo-aluno-row" data-nome="' + _escAttr((m.nome_aluno || '').toLowerCase()) + '" style="border-bottom:1px dashed var(--border);padding:.4rem 0">'
-          + '<div style="display:flex;align-items:center;justify-content:space-between;font-size:.84rem">'
-          + '<span style="font-weight:700;color:var(--ink1)">' + _esc(_rotuloDoAluno(m.aluno) || m.nome_aluno || '(aluno)') + '</span>'
-          + '<span style="display:flex;gap:.35rem">'
-          + '<button onclick="sessaoToggle(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(m.nome_aluno || 'aluno') + '\')" style="font-size:.72rem;font-weight:700;color:#4a3f7a;background:var(--white);border:1.5px solid #ddd8f5;border-radius:999px;padding:2px 10px;cursor:pointer;font-family:Montserrat,sans-serif">📓 Registo</button>'
-          + '<button onclick="conversaToggle(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(m.nome_aluno || 'aluno') + '\')" style="font-size:.72rem;font-weight:700;color:#2e7d52;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:2px 10px;cursor:pointer;font-family:Montserrat,sans-serif">💬 Mensagens</button>'
-          + '<button onclick="alunoEnviarPrompt(\'' + m.aluno + '\',\'' + _escAttr(m.nome_aluno || 'aluno') + '\')" title="Enviar a este aluno" style="font-size:.72rem;font-weight:700;color:#1a4a2e;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:2px 10px;cursor:pointer;font-family:Montserrat,sans-serif">＋ enviar</button>'
-          + '<button onclick="grupoRemover(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(nome) + '\')" style="font-size:.72rem;color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;padding:2px 9px;cursor:pointer;font-family:Montserrat,sans-serif">remover</button>'
-          + '</span></div>'
-          + '<div id="sessao-' + sid + '" style="display:none"></div>'
-          + '<div id="conversa-' + sid + '" style="display:none"></div>'
+        var nm = m.nome_aluno || 'aluno';
+        // nome + email só quando há nome repetido (desambiguação), email encurtado
+        var temMail = _nomeRepetido(nm);
+        var a = (_turmasAlunosCache || []).filter(function (x) { return x.aluno === m.aluno; })[0];
+        var mail = (temMail && a && a.email) ? a.email : '';
+        h += '<div class="grupo-aluno-row grp-aluno" data-nome="' + _escAttr((nm || '').toLowerCase()) + '">'
+          + '<span class="grp-aluno-nome">' + _esc(nm)
+          + (mail ? ' <span class="grp-aluno-mail">· ' + _esc(mail) + '</span>' : '')
+          + '</span>'
+          + '<span class="grp-acts">'
+          + '<button class="grp-ic is-reg" title="Registo de sessões" onclick="sessaoToggle(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(nm) + '\')">📓</button>'
+          + '<button class="grp-ic is-msg" title="Mensagens" onclick="conversaToggle(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(nm) + '\')">💬</button>'
+          + '<button class="grp-ic is-add" title="Enviar a este aluno" onclick="alunoEnviarPrompt(\'' + m.aluno + '\',\'' + _escAttr(nm) + '\')">＋</button>'
+          + '<button class="grp-ic is-rem" title="Remover do grupo" onclick="grupoRemover(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(nome) + '\')">✕</button>'
+          + '</span>'
+          + '<div id="sessao-' + sid + '" style="display:none;flex-basis:100%"></div>'
+          + '<div id="conversa-' + sid + '" style="display:none;flex-basis:100%"></div>'
           + '</div>';
       });
       h += '</div>'; // fim grupo-lista
@@ -346,7 +360,6 @@ function _grupoPintaDet(id, nome) {
         + '<button onclick="grupoAdicionar(\'' + id + '\',\'' + _escAttr(nome) + '\')" style="font-size:.78rem;font-weight:700;color:#2e7d52;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:5px 12px;cursor:pointer;font-family:Montserrat,sans-serif">Adicionar</button>'
         + '</div>';
     }
-    h += '</div>';
     det.innerHTML = h;
   });
 }
