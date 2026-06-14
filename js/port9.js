@@ -272,6 +272,8 @@ var _port9TemasCount = { 1: 4, 2: 5, 3: 3, 4: 3, 5: 3 };
 
 // Estado da prática
 var _port9Prat = { cap: 1, st: 0, nivel: 'medio', score: { correct: 0, total: 0 }, answered: {}, exs: [] };
+var _port9TarefaAtiva = null;   // id da tarefa, se veio por deep-link
+var _port9TarefaResp = {};      // qid -> certo (modo-tarefa)
 
 function _port9PratStorageKey(cap) { return 'edupt_port9_cap' + cap; }
 
@@ -444,7 +446,9 @@ function port9GerarExercicios() {
     + '<div><div class="score-num" id="port9-prat-total">/ 0</div><div class="score-label">respondidas</div></div>'
     + '<div class="progress-track"><div class="progress-fill" id="port9-prat-prog" style="width:0%"></div></div>'
     + '<button class="btn btn-ghost ml-auto" onclick="port9GerarExercicios()">↺ Novas questões</button>'
-    + '</div>';
+    + (_port9TarefaAtiva ? '<button class="btn" style="background:#2e7d52;color:#fff;border:none;border-radius:999px;padding:6px 14px;font-weight:800;cursor:pointer;margin-left:.4rem" onclick="port9EntregarTarefa()">✓ Terminar e entregar</button>' : '')
+    + '</div>'
+    + (_port9TarefaAtiva ? '<div style="font-size:.8rem;color:#2e7d52;background:#e8f5ee;border:1px solid #bfe3c9;border-radius:10px;padding:.5rem .8rem;margin-bottom:.6rem">📋 Estás a fazer um trabalho atribuído pelo professor. Responde e carrega em <strong>Terminar e entregar</strong>.</div>' : '');
   var quizHTML = (typeof _capBuildQuizHTML === 'function')
     ? _capBuildQuizHTML(exs, 'm8ex', 'port9CheckEx')
     : '<p style="color:var(--ink4)">Motor de exercícios indisponível.</p>';
@@ -464,6 +468,26 @@ function port9GerarExercicios() {
   }
 }
 
+/* Entrega o trabalho atribuído: regista nota + detalhe (onde acertou/errou). */
+function port9EntregarTarefa() {
+  if (!_port9TarefaAtiva || typeof Turmas === 'undefined' || !Turmas.guardarResultado) return;
+  var qids = Object.keys(_port9TarefaResp || {});
+  if (!qids.length) { alert('Responde a pelo menos uma pergunta antes de entregar.'); return; }
+  var certas = 0, detalhe = [];
+  qids.forEach(function (qid, i) {
+    var ok = !!_port9TarefaResp[qid];
+    if (ok) certas++;
+    var ex = _port9Prat.exs[i] || {};
+    detalhe.push({ q: (ex.enun || ex.pergunta || ('Pergunta ' + (i + 1))), certo: ok });
+  });
+  Turmas.guardarResultado(_port9TarefaAtiva, certas, qids.length, detalhe).then(function () {
+    if (typeof eduToast === 'function') eduToast('Trabalho entregue! Acertaste ' + certas + ' de ' + qids.length + '. ✅', 'success');
+    else alert('Trabalho entregue! ' + certas + '/' + qids.length);
+    _port9TarefaAtiva = null; _port9TarefaResp = {};
+    port9GerarExercicios(); // remove o botão de entregar
+  }).catch(function (e) { alert(e.message || 'Não foi possível entregar.'); });
+}
+
 function port9CheckEx(qid, tipo, val, btn) {
   if (_port9Prat.answered[qid]) return;
   if (typeof _capCheckAnswer !== 'function') return;
@@ -472,6 +496,8 @@ function port9CheckEx(qid, tipo, val, btn) {
   _port9Prat.answered[qid] = true;
   if (r.correct) _port9Prat.score.correct++;
   _port9Prat.score.total++;
+  // modo-tarefa: guarda acerto/erro por questão (resolve enunciado depois)
+  if (_port9TarefaAtiva) { _port9TarefaResp = _port9TarefaResp || {}; _port9TarefaResp[qid] = !!r.correct; }
   if (typeof _capShowFeedback === 'function') _capShowFeedback(qid, r.correct, r.expl, val, btn);
   var se = document.getElementById('port9-prat-score'); if (se) se.textContent = _port9Prat.score.correct;
   var te = document.getElementById('port9-prat-total'); if (te) te.textContent = '/ ' + _port9Prat.score.total;
@@ -1494,6 +1520,7 @@ function _port9DeepLink() {
     var cap = parseInt(p.get('cap'), 10) || 1;
     var st = parseInt(p.get('st'), 10) || 0;
     var nivel = p.get('nivel') || 'medio';
+    if (p.get('tarefa')) { _port9TarefaAtiva = p.get('tarefa'); _port9TarefaResp = {}; }
     _port9Prat.cap = cap; _port9Prat.st = st; _port9Prat.nivel = nivel;
     setTimeout(function () {
       // switchTab('exercicios') já chama port9BuildPraticarNav, que gera

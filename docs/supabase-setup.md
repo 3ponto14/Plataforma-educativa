@@ -186,6 +186,35 @@ create policy "prof vê estados"       on public.tarefas_estado for select
   using (public.eh_professor());
 ```
 
+## 3j. SQL dos RESULTADOS de tarefa (nota + onde errou) — Run
+
+Guarda o desempenho do aluno numa tarefa: pontuação e o detalhe pergunta
+a pergunta. Fica a MELHOR tentativa (mais acertos). O professor vê.
+
+```sql
+create table if not exists public.tarefa_resultado (
+  tarefa_id  uuid not null references public.tarefas(id) on delete cascade,
+  aluno      uuid not null references auth.users(id) on delete cascade,
+  aluno_nome text,
+  certas     int  not null default 0,
+  total      int  not null default 0,
+  detalhe    jsonb,                         -- [{q, certo, resposta, correta}]
+  entregue   timestamptz not null default now(),
+  primary key (tarefa_id, aluno)
+);
+alter table public.tarefa_resultado enable row level security;
+
+-- ALUNO grava/atualiza o SEU resultado e vê-o; PROFESSOR vê todos.
+create policy "aluno grava resultado"  on public.tarefa_resultado for insert
+  with check (auth.uid() = aluno);
+create policy "aluno atualiza result"  on public.tarefa_resultado for update
+  using (auth.uid() = aluno) with check (auth.uid() = aluno);
+create policy "aluno vê o seu result"  on public.tarefa_resultado for select
+  using (auth.uid() = aluno);
+create policy "prof vê resultados"     on public.tarefa_resultado for select
+  using (public.eh_professor());
+```
+
 ## 3d. SQL dos GRUPOS (turmas a sério) — colar no SQL Editor → Run
 
 Fase 2: o professor cria grupos ("9.º A", "Apoio Mat"); organiza alunos

@@ -172,6 +172,13 @@ var Turmas = (function () {
     }).select().single().then(function (r) { if (r.error) throw r.error; return r.data; });
   }
 
+  /* Atualiza o url de uma tarefa (usado p/ juntar &tarefa=<id> ao link). */
+  function atualizarUrlTarefa(id, url) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve();
+    return sb.from('tarefas').update({ url: url }).eq('id', id);
+  }
+
   function apagarTarefa(id) {
     var sb = _sb();
     if (!sb) return Promise.reject(new Error('Sem ligação.'));
@@ -191,6 +198,41 @@ var Turmas = (function () {
     var sb = _sb();
     if (!sb) return Promise.resolve([]);
     return sb.from('tarefas_estado').select('aluno, feito_em').eq('tarefa_id', tarefaId).eq('feito', true)
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* ALUNO grava o resultado de uma tarefa (nota + detalhe). Fica a MELHOR
+     tentativa (mais acertos). Também marca a tarefa como feita. */
+  function guardarResultado(tarefaId, certas, total, detalhe) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+    // lê o resultado atual para manter a melhor tentativa
+    return sb.from('tarefa_resultado').select('certas').eq('tarefa_id', tarefaId).eq('aluno', u.id).maybeSingle().then(function (r) {
+      var anterior = (r.data && typeof r.data.certas === 'number') ? r.data.certas : -1;
+      var p = Promise.resolve();
+      if (certas >= anterior) {
+        p = sb.from('tarefa_resultado').upsert({
+          tarefa_id: tarefaId, aluno: u.id, aluno_nome: nome,
+          certas: certas, total: total, detalhe: detalhe || null,
+          entregue: new Date().toISOString()
+        }, { onConflict: 'tarefa_id,aluno' });
+      }
+      // marca também como feita (estado)
+      return p.then(function () {
+        return sb.from('tarefas_estado').upsert(
+          { tarefa_id: tarefaId, aluno: u.id, feito: true, feito_em: new Date().toISOString() },
+          { onConflict: 'tarefa_id,aluno' }
+        );
+      });
+    });
+  }
+
+  /* PROFESSOR: resultados de uma tarefa (todos os alunos que entregaram). */
+  function resultadosDaTarefa(tarefaId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('tarefa_resultado').select('*').eq('tarefa_id', tarefaId).order('certas', { ascending: false })
       .then(function (res) { return res.error ? [] : (res.data || []); });
   }
 
@@ -576,10 +618,11 @@ var Turmas = (function () {
     entrarComoProf: entrarComoProf, gruposDoProf: gruposDoProf,
     criarSessao: criarSessao, apagarSessao: apagarSessao,
     sessoesDoAluno: sessoesDoAluno, minhasSessoes: minhasSessoes,
-    criarTarefa: criarTarefa, apagarTarefa: apagarTarefa,
+    criarTarefa: criarTarefa, apagarTarefa: apagarTarefa, atualizarUrlTarefa: atualizarUrlTarefa,
     tarefasDoProf: tarefasDoProf, quemFez: quemFez,
     tarefasDoAluno: tarefasDoAluno, marcarTarefa: marcarTarefa,
     tarefasPendentes: tarefasPendentes, resumoTarefasAluno: resumoTarefasAluno,
+    guardarResultado: guardarResultado, resultadosDaTarefa: resultadosDaTarefa,
     autoInscrever: autoInscrever,
     todosOsAlunos: todosOsAlunos,
     recursos: recursos,

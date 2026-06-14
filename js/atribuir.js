@@ -184,7 +184,12 @@ var Atribuir = (function () {
       cursoNome: _label(ctx),
       prazo: prazo || null,
       grupoId: grupoId, paraAluno: paraAluno
-    }).then(function () {
+    }).then(function (tarefa) {
+      // acrescenta &tarefa=<id> ao link, para o aluno entrar em "modo-tarefa"
+      if (tarefa && tarefa.id && tarefa.url && Turmas.atualizarUrlTarefa) {
+        var sep = tarefa.url.indexOf('?') === -1 ? '?' : '&';
+        Turmas.atualizarUrlTarefa(tarefa.id, tarefa.url + sep + 'tarefa=' + tarefa.id);
+      }
       _fechar();
       if (typeof eduToast === 'function') eduToast('Trabalho atribuído! O aluno vê-o nas Turmas.', 'success');
       else alert('Trabalho atribuído!');

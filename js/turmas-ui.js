@@ -452,9 +452,34 @@ function tarefaVerQuemFez(id, total) {
   var box = document.getElementById('tarefa-fez-' + id);
   if (!box) return;
   box.innerHTML = 'A carregar…';
-  Turmas.quemFez(id).then(function (lista) {
-    var n = lista.length;
-    box.innerHTML = '<span style="font-weight:700;color:' + (n > 0 ? '#2e7d52' : 'var(--ink4)') + '">✅ ' + n + (total ? ' de ' + total : '') + ' já fizeram</span>';
+  // Resultados (nota + detalhe) de quem entregou
+  Turmas.resultadosDaTarefa(id).then(function (res) {
+    Turmas.quemFez(id).then(function (feitos) {
+      var comNota = {}; res.forEach(function (r) { comNota[r.aluno] = true; });
+      var h = '<div style="font-weight:700;color:' + (feitos.length ? '#2e7d52' : 'var(--ink4)') + ';margin-bottom:.3rem">✅ ' + feitos.length + (total ? ' de ' + total : '') + ' já fizeram</div>';
+      if (res.length) {
+        res.forEach(function (r) {
+          var pct = r.total ? Math.round(r.certas / r.total * 100) : 0;
+          var cor = pct >= 70 ? '#2e7d52' : (pct >= 50 ? '#b8860b' : '#c0392b');
+          h += '<div style="border-top:1px dashed var(--border);padding:.35rem 0">'
+            + '<div style="display:flex;justify-content:space-between;font-size:.8rem">'
+            + '<span style="font-weight:700;color:var(--ink1)">' + _esc(r.aluno_nome || 'aluno') + '</span>'
+            + '<span style="font-weight:800;color:' + cor + '">' + r.certas + '/' + r.total + ' · ' + pct + '%</span></div>';
+          // detalhe: onde errou/acertou
+          if (r.detalhe && r.detalhe.length) {
+            h += '<div style="margin-top:.2rem">';
+            r.detalhe.forEach(function (d) {
+              h += '<div style="font-size:.74rem;color:var(--ink3);line-height:1.4">' + (d.certo ? '✅' : '❌') + ' ' + _esc((d.q || '').slice(0, 80)) + '</div>';
+            });
+            h += '</div>';
+          }
+          h += '</div>';
+        });
+      } else if (feitos.length) {
+        h += '<div style="font-size:.76rem;color:var(--ink4)">Marcaram como feito, mas sem pontuação registada (trabalho sem quiz).</div>';
+      }
+      box.innerHTML = h;
+    });
   });
 }
 
