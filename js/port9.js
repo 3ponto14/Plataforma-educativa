@@ -988,6 +988,7 @@ function port9TesteFinish() {
    matemáticos (4 em linha, Sudoku…) — não fazem sentido em Português.
    ════════════════════════════════════════════════════════════════ */
 function port9JogosInit() {
+  (function(){ var pj=document.getElementById('port9p-jogos'); if(pj && !document.getElementById('port9-jogos-atr')){ var d=document.createElement('div'); d.id='port9-jogos-atr'; d.style.margin='0 0 .8rem'; if(pj.firstChild) pj.insertBefore(d,pj.firstChild); else pj.appendChild(d); } if(typeof Atribuir!=='undefined'&&Atribuir.montar) Atribuir.montar('port9-jogos-atr',{curso:'port9',cursoNome:'Português 9.º',tema:'',temaNome:'',sub:'',subNome:'',tipo:'jogo',nivel:''}); })();
   if (typeof ptJogosRender === 'function') {
     ptJogosRender();
   } else {
@@ -1486,6 +1487,7 @@ function _port9Init() {
 function _port9DeepLink() {
   try {
     var p = new URLSearchParams(window.location.search);
+    if (p.get('abrir') === 'jogos') { setTimeout(function(){ port9SwitchTab('jogos', null); }, 250); return; }
     if (p.get('abrir') !== 'praticar') return;
     var cap = parseInt(p.get('cap'), 10) || 1;
     var st = parseInt(p.get('st'), 10) || 0;

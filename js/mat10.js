@@ -806,6 +806,7 @@ function mat10TesteFinish() {
    ════════════════════════════════════════════════════════════════ */
 var _mat10JogosInited = false;
 function mat10JogosInit() {
+  (function(){ var pj=document.getElementById('mat10p-jogos'); if(pj && !document.getElementById('mat10-jogos-atr')){ var d=document.createElement('div'); d.id='mat10-jogos-atr'; d.style.margin='0 0 .8rem'; if(pj.firstChild) pj.insertBefore(d,pj.firstChild); else pj.appendChild(d); } if(typeof Atribuir!=='undefined'&&Atribuir.montar) Atribuir.montar('mat10-jogos-atr',{curso:'mat10',cursoNome:'Matemática 10.º',tema:'',temaNome:'',sub:'',subNome:'',tipo:'jogo',nivel:''}); })();
   _mat10PM(_mat10Prat.cap || 1, 'jogo');
   if (_mat10JogosInited) return;
   if (typeof _j24AutoInit === 'function') {
@@ -1699,5 +1700,6 @@ var _mat10Banco = {
   ]
 };
 /* atribuir: deep-link mat10 */
-function _mat10DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat10Prat.cap=cap; _mat10Prat.st=st; _mat10Prat.nivel=nivel; setTimeout(function(){ mat10SwitchTab('exercicios',null); if(typeof mat10GerarExercicios==='function') mat10GerarExercicios(); },350); }catch(e){} }
+function _mat10DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='jogos'){ setTimeout(function(){ mat10SwitchTab('jogos',null); },350); return; }
+    if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat10Prat.cap=cap; _mat10Prat.st=st; _mat10Prat.nivel=nivel; setTimeout(function(){ mat10SwitchTab('exercicios',null); if(typeof mat10GerarExercicios==='function') mat10GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat10DeepLinkAuto,300);});else setTimeout(_mat10DeepLinkAuto,300);

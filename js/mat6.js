@@ -829,6 +829,7 @@ function mat6TesteFinish() {
    ════════════════════════════════════════════════════════════════ */
 var _mat6JogosInited = false;
 function mat6JogosInit() {
+  (function(){ var pj=document.getElementById('mat6p-jogos'); if(pj && !document.getElementById('mat6-jogos-atr')){ var d=document.createElement('div'); d.id='mat6-jogos-atr'; d.style.margin='0 0 .8rem'; if(pj.firstChild) pj.insertBefore(d,pj.firstChild); else pj.appendChild(d); } if(typeof Atribuir!=='undefined'&&Atribuir.montar) Atribuir.montar('mat6-jogos-atr',{curso:'mat6',cursoNome:'Matemática 6.º',tema:'',temaNome:'',sub:'',subNome:'',tipo:'jogo',nivel:''}); })();
   _mat6PM(_mat6Prat.cap || 1, 'jogo');
   if (_mat6JogosInited) return;
   if (typeof _j24AutoInit === 'function') {
@@ -1663,5 +1664,6 @@ var _mat6Banco = {
   ]
 };
 /* atribuir: deep-link mat6 */
-function _mat6DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat6Prat.cap=cap; _mat6Prat.st=st; _mat6Prat.nivel=nivel; setTimeout(function(){ mat6SwitchTab('exercicios',null); if(typeof mat6GerarExercicios==='function') mat6GerarExercicios(); },350); }catch(e){} }
+function _mat6DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='jogos'){ setTimeout(function(){ mat6SwitchTab('jogos',null); },350); return; }
+    if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat6Prat.cap=cap; _mat6Prat.st=st; _mat6Prat.nivel=nivel; setTimeout(function(){ mat6SwitchTab('exercicios',null); if(typeof mat6GerarExercicios==='function') mat6GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat6DeepLinkAuto,300);});else setTimeout(_mat6DeepLinkAuto,300);

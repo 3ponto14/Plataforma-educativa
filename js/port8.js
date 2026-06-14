@@ -828,6 +828,7 @@ function port8TesteFinish() {
    matemáticos (4 em linha, Sudoku…) — não fazem sentido em Português.
    ════════════════════════════════════════════════════════════════ */
 function port8JogosInit() {
+  (function(){ var pj=document.getElementById('port8p-jogos'); if(pj && !document.getElementById('port8-jogos-atr')){ var d=document.createElement('div'); d.id='port8-jogos-atr'; d.style.margin='0 0 .8rem'; if(pj.firstChild) pj.insertBefore(d,pj.firstChild); else pj.appendChild(d); } if(typeof Atribuir!=='undefined'&&Atribuir.montar) Atribuir.montar('port8-jogos-atr',{curso:'port8',cursoNome:'Português 8.º',tema:'',temaNome:'',sub:'',subNome:'',tipo:'jogo',nivel:''}); })();
   if (typeof ptJogosRender === 'function') {
     if (typeof ptJogosConfig === 'function') {
       ptJogosConfig({
@@ -1523,5 +1524,6 @@ _port8Banco[2] = _port8Banco[2].concat([
 
 
 /* atribuir: deep-link port8 */
-function _port8DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _port8Prat.cap=cap; _port8Prat.st=st; _port8Prat.nivel=nivel; setTimeout(function(){ port8SwitchTab('exercicios',null); if(typeof port8GerarExercicios==='function') port8GerarExercicios(); },350); }catch(e){} }
+function _port8DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='jogos'){ setTimeout(function(){ port8SwitchTab('jogos',null); },350); return; }
+    if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _port8Prat.cap=cap; _port8Prat.st=st; _port8Prat.nivel=nivel; setTimeout(function(){ port8SwitchTab('exercicios',null); if(typeof port8GerarExercicios==='function') port8GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_port8DeepLinkAuto,300);});else setTimeout(_port8DeepLinkAuto,300);

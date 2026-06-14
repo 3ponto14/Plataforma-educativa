@@ -47,7 +47,9 @@ var Atribuir = (function () {
       if (ctx.nivel) q.push('nivel=' + encodeURIComponent(ctx.nivel));
       return origin + '?' + q.join('&');
     }
-    // jogo (ou outros): hash genérico (tratado por quem implementar)
+    // jogos: abre a tab Jogos do curso.
+    if (ctx.tipo === 'jogo') return origin + '?abrir=jogos';
+    // outros: hash genérico
     return origin + '#abrir=' + encodeURIComponent([ctx.tipo || '', ctx.tema || '', ctx.sub || '', ctx.nivel || ''].join(':'));
   }
 
@@ -59,8 +61,8 @@ var Atribuir = (function () {
     return p.join(' · ');
   }
   function _tituloTipo(ctx) {
-    if (ctx.tipo === 'quiz') return 'Quiz: ';
-    if (ctx.tipo === 'jogo') return 'Jogo: ';
+    if (ctx.tipo === 'quiz' || ctx.tipo === 'exercicios') return 'Praticar: ';
+    if (ctx.tipo === 'jogo') return 'Jogos: ';
     return 'Ficha: ';
   }
 

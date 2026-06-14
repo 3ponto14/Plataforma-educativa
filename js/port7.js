@@ -830,6 +830,7 @@ function port7TesteFinish() {
    matemáticos (4 em linha, Sudoku…) — não fazem sentido em Português.
    ════════════════════════════════════════════════════════════════ */
 function port7JogosInit() {
+  (function(){ var pj=document.getElementById('port7p-jogos'); if(pj && !document.getElementById('port7-jogos-atr')){ var d=document.createElement('div'); d.id='port7-jogos-atr'; d.style.margin='0 0 .8rem'; if(pj.firstChild) pj.insertBefore(d,pj.firstChild); else pj.appendChild(d); } if(typeof Atribuir!=='undefined'&&Atribuir.montar) Atribuir.montar('port7-jogos-atr',{curso:'port7',cursoNome:'Português 7.º',tema:'',temaNome:'',sub:'',subNome:'',tipo:'jogo',nivel:''}); })();
   if (typeof ptJogosRender === 'function') {
     if (typeof ptJogosConfig === 'function') {
       ptJogosConfig({
@@ -1614,5 +1615,6 @@ _port7Banco[3] = _port7Banco[3].concat([
 
 
 /* atribuir: deep-link port7 */
-function _port7DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _port7Prat.cap=cap; _port7Prat.st=st; _port7Prat.nivel=nivel; setTimeout(function(){ port7SwitchTab('exercicios',null); if(typeof port7GerarExercicios==='function') port7GerarExercicios(); },350); }catch(e){} }
+function _port7DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='jogos'){ setTimeout(function(){ port7SwitchTab('jogos',null); },350); return; }
+    if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _port7Prat.cap=cap; _port7Prat.st=st; _port7Prat.nivel=nivel; setTimeout(function(){ port7SwitchTab('exercicios',null); if(typeof port7GerarExercicios==='function') port7GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_port7DeepLinkAuto,300);});else setTimeout(_port7DeepLinkAuto,300);
