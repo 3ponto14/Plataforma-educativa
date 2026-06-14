@@ -238,9 +238,15 @@ function _grupoPintaDet(id, nome) {
     if (!membros.length) {
       h += '<div style="color:var(--ink4);font-size:.8rem;margin-bottom:.5rem">Ainda sem alunos. Adiciona abaixo ou partilha o código.</div>';
     } else {
+      // pesquisa de alunos (só vale a pena a partir de alguns alunos)
+      if (membros.length > 5) {
+        h += '<input type="search" id="grupo-procura-' + id + '" oninput="grupoFiltrarAlunos(\'' + id + '\')" placeholder="🔍 Procurar aluno…" '
+          + 'style="width:100%;border:1.5px solid var(--border);border-radius:8px;padding:6px 12px;font-size:.84rem;font-family:Montserrat,sans-serif;margin-bottom:.6rem">';
+      }
+      h += '<div id="grupo-lista-' + id + '">';
       membros.forEach(function (m) {
         var sid = id + '_' + m.aluno;
-        h += '<div style="border-bottom:1px dashed var(--border);padding:.4rem 0">'
+        h += '<div class="grupo-aluno-row" data-nome="' + _escAttr((m.nome_aluno || '').toLowerCase()) + '" style="border-bottom:1px dashed var(--border);padding:.4rem 0">'
           + '<div style="display:flex;align-items:center;justify-content:space-between;font-size:.84rem">'
           + '<span style="font-weight:700;color:var(--ink1)">' + _esc(m.nome_aluno || '(aluno)') + '</span>'
           + '<span style="display:flex;gap:.35rem">'
@@ -253,6 +259,8 @@ function _grupoPintaDet(id, nome) {
           + '<div id="conversa-' + sid + '" style="display:none"></div>'
           + '</div>';
       });
+      h += '</div>'; // fim grupo-lista
+      h += '<div id="grupo-procura-vazio-' + id + '" style="display:none;color:var(--ink4);font-size:.8rem;padding:.4rem 0">Nenhum aluno corresponde à pesquisa.</div>';
     }
     // seletor para adicionar alunos da lista geral que ainda não estão no grupo
     var jaIds = {}; membros.forEach(function (m) { jaIds[m.aluno] = 1; });
@@ -269,6 +277,24 @@ function _grupoPintaDet(id, nome) {
     h += '</div>';
     det.innerHTML = h;
   });
+}
+
+/* Filtra os alunos de um grupo pelo nome, à medida que se escreve. */
+function grupoFiltrarAlunos(id) {
+  var inp = document.getElementById('grupo-procura-' + id);
+  var lista = document.getElementById('grupo-lista-' + id);
+  if (!inp || !lista) return;
+  var termo = (inp.value || '').trim().toLowerCase();
+  var rows = lista.querySelectorAll('.grupo-aluno-row');
+  var visiveis = 0;
+  for (var i = 0; i < rows.length; i++) {
+    var nome = rows[i].getAttribute('data-nome') || '';
+    var ok = !termo || nome.indexOf(termo) !== -1;
+    rows[i].style.display = ok ? '' : 'none';
+    if (ok) visiveis++;
+  }
+  var vazio = document.getElementById('grupo-procura-vazio-' + id);
+  if (vazio) vazio.style.display = visiveis ? 'none' : 'block';
 }
 
 function grupoCriarPrompt() {
