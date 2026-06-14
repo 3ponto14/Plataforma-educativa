@@ -113,7 +113,9 @@ function _turmasRenderProfessor(wrap) {
     + _acc('fichas', 'ph-link-simple', '#2e7d52', 'Fichas e recursos', btnFicha, '<div id="turmas-recursos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
     + '</div>'
     // Página dedicada de UM grupo (escondida até se clicar num grupo)
-    + '<div id="turmas-grupo-pagina" style="display:none"></div>';
+    + '<div id="turmas-grupo-pagina" style="display:none"></div>'
+    // Página dedicada de UM aluno
+    + '<div id="turmas-aluno-pagina" style="display:none"></div>';
 
   Turmas.todosOsAlunos().then(function (alunos) {
     _turmasAlunosCache = alunos;
@@ -400,7 +402,7 @@ function _grupoMembroRowHTML(id, nome, m) {
   var a = (_turmasAlunosCache || []).filter(function (x) { return x.aluno === m.aluno; })[0];
   var mail = (temMail && a && a.email) ? a.email : '';
   return '<div class="grupo-aluno-row grp-aluno" data-nome="' + _escAttr((nm || '').toLowerCase()) + '">'
-    + '<span class="grp-aluno-nome">' + _esc(nm)
+    + '<span class="grp-aluno-nome" onclick="abrirPaginaAluno(\'' + m.aluno + '\',\'' + id + '\')" style="cursor:pointer">' + _esc(nm)
     + (mail ? ' <span class="grp-aluno-mail">· ' + _esc(mail) + '</span>' : '')
     + '</span>'
     + '<span class="grp-acts">'
@@ -760,16 +762,16 @@ function _turmasPintaAlunos(alunos, limite) {
   var mostrados = alunos.slice(0, lim);
   el.innerHTML = mostrados.map(function (a) {
     return '<div style="border:1.5px solid var(--border);border-radius:12px;margin-bottom:.5rem;overflow:hidden">'
-      + '<div onclick="turmasToggleAluno(\'' + a.aluno + '\')" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.4rem;padding:.7rem 1rem;cursor:pointer">'
-      + '<div style="font-weight:800;color:var(--ink1)"><i class="ph ph-caret-right" id="cx-' + a.aluno + '" style="color:var(--ink4);transition:transform .15s"></i> ' + _esc(a.nome)
+      + '<div onclick="abrirPaginaAluno(\'' + a.aluno + '\')" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.4rem;padding:.7rem 1rem;cursor:pointer">'
+      + '<div style="font-weight:800;color:var(--ink1)"><i class="ph ph-user-circle" style="color:#2e7d52"></i> ' + _esc(a.nome)
       + (a.email && _nomeRepetido(a.nome) ? ' <span style="font-weight:600;font-size:.74rem;color:var(--ink4)">· ' + _esc(a.email) + '</span>' : '')
       + '</div>'
       + '<div style="display:flex;gap:.7rem;font-size:.8rem;color:var(--ink3);align-items:center">'
       + '<span>⭐ ' + a.xp + '</span>'
       + '<span>' + (a.streak > 0 ? '🔥 ' + a.streak : '<span style="color:var(--ink4)">🔥 0</span>') + '</span>'
       + '<span title="Desafios feitos">🎯 ' + a.desafios + '</span>'
+      + '<i class="ph ph-caret-right" style="color:var(--ink4)"></i>'
       + '</div></div>'
-      + '<div id="det-' + a.aluno + '" style="display:none;padding:0 1rem .8rem 1rem"></div>'
       + '</div>';
   }).join('');
   // rodapé: contagem + «mostrar mais» quando há mais do que o limite
@@ -801,29 +803,20 @@ function turmasMostrarMais() {
   _turmasPintaAlunos(_turmasAlunosCache);
 }
 
-function turmasToggleAluno(id) {
-  var det = document.getElementById('det-' + id);
-  var cx = document.getElementById('cx-' + id);
-  if (!det) return;
-  var aberto = det.style.display !== 'none';
-  if (aberto) { det.style.display = 'none'; if (cx) cx.style.transform = ''; return; }
-  det.style.display = 'block';
-  if (cx) cx.style.transform = 'rotate(90deg)';
-  var a = (_turmasAlunosCache || []).filter(function (x) { return x.aluno === id; })[0];
-  if (!a) { det.innerHTML = ''; return; }
+/* Clicar num aluno abre uma PÁGINA dedicada só dele (como a do grupo).
+   Funciona a partir da lista «Todos os alunos». */
+function turmasToggleAluno(id) { abrirPaginaAluno(id); }
 
-  var h = '<div style="border-top:1px dashed var(--border);padding-top:.6rem">'
-    + (a.email ? '<div style="font-size:.74rem;color:var(--ink4);margin-bottom:.5rem">' + _esc(a.email) + '</div>' : '');
-
-  // ── Atividade recente + ação de feedback ──
+/* Constrói o corpo do detalhe do aluno (reutilizado na página). */
+function _alunoDetalheHTML(a) {
+  var id = a.aluno;
+  var h = '';
   h += '<div class="al-linha">' + _esc(_alunoAtividade(a)) + '</div>';
-  h += '<button onclick="alunoFeedbackPrompt(\'' + id + '\',\'' + _escAttr(a.nome) + '\')" style="font-size:.76rem;font-weight:700;color:#4a3f7a;background:var(--white);border:1.5px solid #ddd8f5;border-radius:999px;padding:4px 12px;cursor:pointer;font-family:Montserrat,sans-serif;margin-bottom:.5rem"><i class="ph ph-chat-circle-text"></i> Deixar feedback</button>';
+  h += '<button onclick="alunoFeedbackPrompt(\'' + id + '\',\'' + _escAttr(a.nome) + '\')" style="font-size:.78rem;font-weight:700;color:#4a3f7a;background:var(--white);border:1.5px solid #ddd8f5;border-radius:999px;padding:5px 13px;cursor:pointer;font-family:Montserrat,sans-serif;margin-bottom:.5rem"><i class="ph ph-chat-circle-text"></i> Deixar feedback</button>';
 
-  // ── Trabalho atribuído (carregado a seguir) ──
   h += '<div class="al-sec">Trabalho atribuído</div>'
     + '<div id="al-tarefas-' + id + '" class="al-tarefas">a carregar…</div>';
 
-  // ── Progresso por disciplina ──
   if (a.disciplinas.length) {
     var maxXp = a.disciplinas[0].xp || 1;
     h += '<div class="al-sec">Progresso por disciplina</div>';
@@ -840,7 +833,6 @@ function turmasToggleAluno(id) {
     h += '<div class="al-sec">Progresso por disciplina</div><div style="font-size:.8rem;color:var(--ink4)">Ainda não praticou nada na plataforma.</div>';
   }
 
-  // ── Onde erra mais ──
   h += '<div class="al-sec">Onde erra mais</div>';
   if (a.dificuldades && a.dificuldades.length) {
     a.dificuldades.forEach(function (f) {
@@ -851,22 +843,113 @@ function turmasToggleAluno(id) {
   } else {
     h += '<div style="font-size:.8rem;color:var(--ink4)">Sem pontos fracos detetados nos quizzes (ou ainda não fez quizzes).</div>';
   }
+  return h;
+}
 
-  h += '</div>';
-  det.innerHTML = h;
+/* Carrega o resumo de tarefas (feitas/por fazer) no slot do aluno. */
+function _alunoCarregaTarefas(id) {
+  if (!Turmas.resumoTarefasAluno) return;
+  Turmas.resumoTarefasAluno(id).then(function (r) {
+    var box = document.getElementById('al-tarefas-' + id);
+    if (!box) return;
+    if (!r.total) { box.innerHTML = '<span style="color:var(--ink4)">Sem trabalho atribuído.</span>'; return; }
+    var falta = r.total - r.feitas;
+    box.innerHTML = '<span style="font-weight:800;color:' + (falta === 0 ? '#2e7d52' : (falta > 0 ? '#b8860b' : 'var(--ink2)')) + '">'
+      + r.feitas + ' de ' + r.total + ' feitas</span>'
+      + (falta > 0 ? ' <span style="color:var(--ink4)">· ' + falta + ' por fazer</span>' : ' ✅');
+  });
+}
 
-  // carrega o resumo de tarefas deste aluno
-  if (Turmas.resumoTarefasAluno) {
-    Turmas.resumoTarefasAluno(id).then(function (r) {
-      var box = document.getElementById('al-tarefas-' + id);
-      if (!box) return;
-      if (!r.total) { box.innerHTML = '<span style="color:var(--ink4)">Sem trabalho atribuído.</span>'; return; }
-      var falta = r.total - r.feitas;
-      box.innerHTML = '<span style="font-weight:800;color:' + (falta === 0 ? '#2e7d52' : (falta > 0 ? '#b8860b' : 'var(--ink2)')) + '">'
-        + r.feitas + ' de ' + r.total + ' feitas</span>'
-        + (falta > 0 ? ' <span style="color:var(--ink4)">· ' + falta + ' por fazer</span>' : ' ✅');
-    });
-  }
+/* Página dedicada de UM aluno: progresso, pontos fracos, trabalho,
+   mensagens e registo de sessões. `grupoId` opcional (de onde veio, para
+   o botão Voltar regressar ao grupo). */
+function abrirPaginaAluno(id, grupoId) {
+  var a = (_turmasAlunosCache || []).filter(function (x) { return x.aluno === id; })[0];
+  if (!a) return;
+  var home = document.getElementById('turmas-home');
+  var pagG = document.getElementById('turmas-grupo-pagina');
+  var pag = document.getElementById('turmas-aluno-pagina');
+  if (!pag) return;
+  var voltarFn = grupoId ? ('grupoToggle(\'' + grupoId + '\',\'' + _escAttr((((_turmasGruposCache || []).filter(function (x) { return x.id === grupoId; })[0]) || {}).nome || '') + '\')') : 'alunoVoltar()';
+  var voltarTxt = grupoId ? 'Voltar ao grupo' : 'Voltar aos alunos';
+  pag.innerHTML =
+    '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.1rem 1.4rem 1.4rem">'
+    + '<button onclick="' + voltarFn + '" style="display:inline-flex;align-items:center;gap:.4rem;background:none;border:none;color:#2e7d52;font-weight:700;font-size:.85rem;cursor:pointer;font-family:Montserrat,sans-serif;padding:0;margin-bottom:.8rem"><i class="ph ph-arrow-left"></i> ' + voltarTxt + '</button>'
+    + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.5rem;font-weight:700;color:var(--ink1);line-height:1.15"><i class="ph ph-user-circle" style="color:#2e7d52"></i> ' + _esc(a.nome) + '</div>'
+    + (a.email ? '<div style="font-size:.76rem;color:var(--ink4);margin-bottom:.4rem">' + _esc(a.email) + '</div>' : '')
+    + '<div style="display:flex;gap:.6rem;font-size:.82rem;color:var(--ink3);margin:.3rem 0 .8rem"><span>⭐ ' + a.xp + '</span><span>' + (a.streak > 0 ? '🔥 ' + a.streak : '🔥 0') + '</span><span title="Desafios">🎯 ' + a.desafios + '</span></div>'
+    + '<div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">'
+    + '<button onclick="alunoEnviarPrompt(\'' + id + '\',\'' + _escAttr(a.nome) + '\')" style="font-size:.78rem;font-weight:700;color:#1a4a2e;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:5px 13px;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-paper-plane-tilt"></i> Enviar (ficha/trabalho/aviso)</button>'
+    + '</div>'
+    + '<div id="aluno-pag-det">' + _alunoDetalheHTML(a) + '</div>'
+    // Mensagens
+    + '<div class="al-sec">Mensagens</div><div id="aluno-pag-msg"></div>'
+    + '<div style="display:flex;gap:.4rem;margin-top:.4rem"><input id="aluno-pag-txt" placeholder="Escrever a ' + _escAttr(a.nome) + '…" style="flex:1;border:1.5px solid var(--border);border-radius:999px;padding:6px 12px;font-size:.82rem;font-family:Montserrat,sans-serif" onkeydown="if(event.key===\'Enter\')alunoPagEnviarMsg(\'' + id + '\',\'' + _escAttr(a.nome) + '\')"><button onclick="alunoPagEnviarMsg(\'' + id + '\',\'' + _escAttr(a.nome) + '\')" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:6px 14px;font-size:.8rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">Enviar</button></div>'
+    // Registo de sessões
+    + '<div class="al-sec">Registo de sessões</div><div id="aluno-pag-reg"></div>'
+    + '</div>';
+  if (home) home.style.display = 'none';
+  if (pagG) pagG.style.display = 'none';
+  pag.style.display = 'block';
+  try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
+  _alunoCarregaTarefas(id);
+  _alunoPagPintaMsg(id, a.nome);
+  _alunoPagPintaReg(id, a.nome, grupoId);
+}
+
+function alunoVoltar() {
+  var home = document.getElementById('turmas-home');
+  var pag = document.getElementById('turmas-aluno-pagina');
+  if (pag) { pag.style.display = 'none'; pag.innerHTML = ''; }
+  if (home) home.style.display = '';
+  var b = document.getElementById('acc-body-alunos');
+  if (b && b.style.display === 'none') accToggle('alunos');
+}
+
+/* Mensagens do aluno (conversa prof↔aluno) na página. */
+function _alunoPagPintaMsg(id, nome) {
+  var box = document.getElementById('aluno-pag-msg');
+  if (!box || !Turmas.conversaComAluno) return;
+  Turmas.conversaComAluno(id).then(function (ms) {
+    if (!box) return;
+    if (!ms.length) { box.innerHTML = '<div style="font-size:.8rem;color:var(--ink4)">Sem mensagens. Escreve a primeira abaixo.</div>'; return; }
+    box.innerHTML = ms.map(function (m) {
+      var meu = m.autor_tipo !== 'aluno';
+      return '<div style="display:flex;justify-content:' + (meu ? 'flex-end' : 'flex-start') + ';margin:.2rem 0">'
+        + '<div style="max-width:80%;background:' + (meu ? '#e8f5ee' : 'var(--cream)') + ';border-radius:12px;padding:.4rem .7rem;font-size:.82rem;color:var(--ink1)">' + _esc(m.texto)
+        + '<div style="font-size:.66rem;color:var(--ink4);margin-top:.15rem">' + _esc(meu ? (m.prof_nome || 'eu') : nome) + '</div></div></div>';
+    }).join('');
+  });
+}
+
+function alunoPagEnviarMsg(id, nome) {
+  var inp = document.getElementById('aluno-pag-txt');
+  if (!inp || !inp.value.trim()) return;
+  var txt = inp.value.trim(); inp.value = '';
+  Turmas.enviarMensagem({ texto: txt, alcance: 'aluno', paraAluno: id }).then(function () {
+    _alunoPagPintaMsg(id, nome);
+    if (typeof notificacoesRender === 'function') notificacoesRender();
+  }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
+}
+
+/* Registo de sessões do aluno na página (lê de todos os grupos). */
+function _alunoPagPintaReg(id, nome, grupoId) {
+  var box = document.getElementById('aluno-pag-reg');
+  if (!box || !Turmas.sessoesDoAluno) return;
+  Turmas.sessoesDoAluno(id, grupoId || null).then(function (ss) {
+    if (!box) return;
+    var h = '';
+    if (!ss.length) h += '<div style="font-size:.8rem;color:var(--ink4)">Ainda sem sessões registadas.</div>';
+    else h += ss.map(function (s) {
+      var d = (s.quando || '').slice(0, 10);
+      return '<div style="border:1.5px solid var(--border);border-radius:10px;padding:.5rem .8rem;margin-bottom:.4rem">'
+        + '<div style="font-size:.74rem;font-weight:800;color:#4a3f7a">' + _esc(d) + (s.disciplina ? ' · ' + _esc(s.disciplina) : '') + '</div>'
+        + (s.material ? '<div style="font-size:.8rem;color:var(--ink2);margin-top:.15rem">📄 ' + _esc(s.material) + '</div>' : '')
+        + (s.notas ? '<div style="font-size:.8rem;color:var(--ink3);margin-top:.15rem">' + _esc(s.notas) + '</div>' : '')
+        + '<div style="font-size:.7rem;color:var(--ink4);margin-top:.15rem">por ' + _esc(s.prof_nome || 'professor') + '</div></div>';
+    }).join('');
+    box.innerHTML = h;
+  });
 }
 
 /* Texto de atividade recente a partir do lastDay. */
