@@ -278,11 +278,26 @@ function portalAplicarSessao() {
     // com sessão: o painel-inicio.js move o Desafio para o painel (aluno)
   }
 
-  mostra('portal-grid', !fechado);         // montra de cursos
-  mostraCls('portal-search', !fechado);    // pesquisa
-  mostraCls('portal-filters', !fechado);   // filtros
-  mostra('portal-no-results', false);      // nunca mostrar "sem resultados" na porta
+  // Conteúdo interno da montra: visível exceto na porta de entrada.
+  // (A secção #sec-cursos como um todo é mostrada/escondida pela
+  //  navegação por secções — portal-nav.js — quando há sessão.)
+  mostra('portal-grid', !fechado);
+  mostraCls('portal-search', !fechado);
+  mostraCls('portal-filters', !fechado);
+  mostra('portal-no-results', false);
   if (fechado) { var pw = document.getElementById('portal-progress-widget'); if (pw) pw.style.display = 'none'; }
+
+  var secCursos = document.getElementById('sec-cursos');
+  var secApoio = document.getElementById('sec-apoio');
+  if (fechado) {
+    // porta de entrada: esconde as secções "com sessão"
+    if (secCursos) secCursos.style.display = 'none';
+    if (secApoio) secApoio.style.display = 'none';
+  } else if (!sessao) {
+    // offline (sem Cloud): mostra a montra como dantes
+    if (secCursos) secCursos.style.display = '';
+  }
+  // com sessão: quem decide a secção visível é portal-nav.js (portalIrPara)
 
   // painel de boas-vindas (com sessão) e cartão do Desafio adaptam-se
   if (typeof painelInicioRender === 'function') painelInicioRender();

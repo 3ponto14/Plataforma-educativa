@@ -44,20 +44,16 @@
     d.setAttribute('role', 'navigation');
     d.innerHTML =
       '<div class="ml-head">'
-      + '<span class="ml-title"><i class="ph ph-graduation-cap"></i> Apoio ao Estudo</span>'
+      + '<span class="ml-title"><i class="ph ph-graduation-cap"></i> 3ponto14</span>'
       + '<button class="ml-close" aria-label="Fechar" onclick="menuLateralFechar()"><i class="ph ph-x"></i></button>'
       + '</div>'
-      + '<nav class="ml-nav">'
-      + '<button class="ml-link" onclick="menuLateralIr(\'portal-desafio\')"><i class="ph ph-target"></i> <span>Desafio do Dia</span></button>'
-      + '<button class="ml-link" onclick="menuLateralIr(\'portal-grid\')"><i class="ph ph-books"></i> <span>Cursos</span></button>'
+      + '<nav class="ml-nav" id="ml-nav">'
+      + '<button class="ml-link" data-sec="inicio" onclick="menuLateralIr(\'inicio\')"><i class="ph ph-house"></i> <span>Início</span></button>'
+      + '<button class="ml-link" data-sec="cursos" onclick="menuLateralIr(\'cursos\')"><i class="ph ph-books"></i> <span>Cursos</span></button>'
+      + '<button class="ml-link" data-sec="apoio" onclick="menuLateralIr(\'apoio\')"><i class="ph ph-users-three"></i> <span>Apoio ao Estudo</span></button>'
       + '</nav>'
-      + '<div class="ml-body" id="ml-body"></div>'
       + '<div class="ml-foot" id="ml-foot"></div>';
     document.body.appendChild(d);
-
-    var apoio = document.getElementById('portal-turmas');
-    var body = document.getElementById('ml-body');
-    if (apoio && body) { apoio.style.display = ''; body.appendChild(apoio); }
   }
 
   function _pintarRodape() {
@@ -76,7 +72,6 @@
   /* Abrir/fechar só fazem sentido no modo gaveta (telemóvel). */
   function abrir() {
     montar();
-    if (typeof turmasRender === 'function') turmasRender();
     _pintarRodape();
     document.getElementById('ml-overlay').classList.add('on');
     document.getElementById('ml-drawer').classList.add('on');
@@ -91,11 +86,25 @@
     ABERTA = false;
   }
 
-  function ir(id) {
-    if (!_fixo()) fechar();                  // em gaveta, fecha ao navegar
-    var el = document.getElementById(id);
-    if (el) setTimeout(function () { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150);
+  /* Navega para uma SECÇÃO (inicio | cursos | apoio): troca o que está no
+     centro (não faz scroll). A gaveta fecha-se ao navegar em telemóvel. */
+  function ir(sec) {
+    if (!_fixo()) fechar();
+    if (typeof portalIrPara === 'function') portalIrPara(sec);
+    marcarAtivo(sec);
   }
+
+  /* Realça o link ativo na barra. */
+  function marcarAtivo(sec) {
+    var nav = document.getElementById('ml-nav');
+    if (!nav) return;
+    var bs = nav.querySelectorAll('.ml-link');
+    for (var i = 0; i < bs.length; i++) {
+      if (bs[i].getAttribute('data-sec') === sec) bs[i].classList.add('ativo');
+      else bs[i].classList.remove('ativo');
+    }
+  }
+  window.menuLateralMarcar = marcarAtivo;
 
   /* Decide o estado conforme sessão + tamanho de ecrã. */
   function aplicar() {
@@ -119,7 +128,6 @@
       if (burger) burger.style.display = 'none';
       if (drawer) drawer.classList.add('fixed');
       document.body.classList.add('ml-fixed-on');
-      if (typeof turmasRender === 'function') turmasRender();
       _pintarRodape();
     } else {
       // telemóvel: gaveta com ☰

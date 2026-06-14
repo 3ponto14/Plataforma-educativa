@@ -45,9 +45,6 @@
     var nome = (u.email || '').split('@')[0];
     var prof = (typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor());
 
-    var nome = (u.email || '').split('@')[0];
-    var prof = (typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor());
-
     var h = '<div class="pi-wrap">'
       + '<div class="pi-cab">'
       + '<div class="pi-dia">' + _dataExtenso() + '</div>'
@@ -72,10 +69,19 @@
     if (desafioOrf && sec.contains(desafioOrf) && catalogo) catalogo.appendChild(desafioOrf);
 
     sec.innerHTML = h;
-    sec.style.display = '';
+    // NÃO força display: a visibilidade da secção é decidida pela
+    // navegação por secções (portal-nav.js). Aqui só se preenche.
 
-    if (prof) _pintarProf();
-    else _moverDesafio();
+    if (prof) {
+      // o Desafio não faz parte do painel do professor: esconde-o
+      var des = document.getElementById('portal-desafio');
+      if (des) des.style.display = 'none';
+      _pintarProf();
+    } else {
+      var des2 = document.getElementById('portal-desafio');
+      if (des2) des2.style.display = '';
+      _moverDesafio();
+    }
   }
 
   /* Aluno: traz o cartão do Desafio (#portal-desafio) para o painel. */
