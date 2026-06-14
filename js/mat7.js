@@ -641,7 +641,44 @@ function mat7SwitchTab(tab, btn) {
   else if (tab === 'progresso') { if (typeof renderProgressoUnificado === 'function') renderProgressoUnificado(); }
   else if (tab === 'exercicios') { mat7LoadInline('exercicios'); }
   else if (_mat7SecMap[tab]) mat7LoadInline(tab);
+
+  // Botão fixo «Atribuir» (só professores) nas tabs Exercícios e Jogos
+  if (tab === 'exercicios' && typeof Atribuir !== 'undefined' && Atribuir.fixo) Atribuir.fixo('mat7-ex-atr', 'mat7AtribuirEx');
+  if (tab === 'jogos' && typeof Atribuir !== 'undefined' && Atribuir.fixo) Atribuir.fixo('mat7-jogos-atr', 'mat7AtribuirJogo');
 }
+
+/* Contexto p/ atribuir EXERCÍCIOS do mat7 (lê o capítulo ativo). */
+function mat7AtribuirEx() {
+  var cap = _mat7Sel['exercicios'] || 1;
+  return { curso: 'mat7', cursoNome: 'Matemática 7.º', tema: String(cap),
+    temaNome: _mat7CapNames[cap] || ('Cap. ' + cap), sub: '', subNome: '', tipo: 'quiz', nivel: 'medio' };
+}
+/* Contexto p/ atribuir JOGOS do mat7 (escolhe-se o tema no overlay). */
+function mat7AtribuirJogo() {
+  var caps = [];
+  for (var n = 1; n <= 8; n++) caps.push({ n: n, label: _mat7CapNames[n] || ('Cap. ' + n) });
+  return { curso: 'mat7', cursoNome: 'Matemática 7.º', tipo: 'jogo', nivel: '', caps: caps };
+}
+
+/* Deep-link do mat7: ?abrir=praticar|jogos&cap=N abre a tab e o capítulo. */
+function _mat7DeepLink() {
+  try {
+    var p = new URLSearchParams(window.location.search);
+    var abrir = p.get('abrir');
+    if (abrir !== 'praticar' && abrir !== 'jogos') return;
+    var cap = parseInt(p.get('cap'), 10) || 1;
+    var tab = abrir === 'jogos' ? 'jogos' : 'exercicios';
+    _mat7Sel[tab] = cap;
+    setTimeout(function () {
+      mat7SwitchTab(tab, null);
+      // seleciona o capítulo no seletor desta tab
+      var capBtn = document.querySelector('#mat7-caps-' + tab + ' .gf-cap-btn[data-cap="' + cap + '"]');
+      if (capBtn) mat7TabCapClick(tab, cap, capBtn);
+    }, 300);
+  } catch (e) {}
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(_mat7DeepLink, 350); });
+else setTimeout(_mat7DeepLink, 350);
 
 // mat7SwitchHub activa uma tab de "hub" (como Praticar) sem despacho adicional
 function mat7SwitchHub(tab, btn) {
