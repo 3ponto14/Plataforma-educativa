@@ -202,7 +202,8 @@
     if (prof) {
       h += _profMomentoHTML();
     } else {
-      // "O que tenho para fazer" (tarefas do professor) + Desafio do Dia
+      // Mural (avisos/feedback) + "O que tenho para fazer" + Desafio
+      h += '<div id="pi-mural" class="pi-mural-slot"></div>';
       h += '<div id="pi-tarefas" class="pi-tarefas-slot"></div>';
       h += '<div id="pi-desafio-slot" class="pi-desafio-slot"></div>';
     }
@@ -227,8 +228,32 @@
       var des2 = document.getElementById('portal-desafio');
       if (des2) des2.style.display = '';
       _moverDesafio();
+      _pintarMuralAluno();
       _pintarTarefasAluno();
     }
+  }
+
+  /* Aluno: mural de avisos do professor + feedback dirigido a si. */
+  function _pintarMuralAluno() {
+    var box = document.getElementById('pi-mural');
+    if (!box || typeof Turmas === 'undefined' || !Turmas.muralDoAluno) return;
+    Turmas.muralDoAluno().then(function (ms) {
+      if (!box) return;
+      if (!ms.length) { box.innerHTML = ''; return; } // sem mensagens: não ocupa espaço
+      var h = '<div class="pi-mural-card">'
+        + '<div class="pi-mural-h"><i class="ph ph-megaphone"></i> Avisos e mensagens</div>';
+      ms.slice(0, 5).forEach(function (m) {
+        var feedback = m.alcance === 'aluno';
+        var etiqueta = feedback ? '💬 Para ti' : (m.alcance === 'grupo' ? '👥 ' + ((m.grupos && m.grupos.nome) || 'Grupo') : '📣 Aviso');
+        h += '<div class="pi-mural-msg' + (feedback ? ' fb' : '') + '">'
+          + '<div class="pi-mural-tag">' + _esc(etiqueta) + '</div>'
+          + '<div class="pi-mural-txt">' + _esc(m.texto) + '</div>'
+          + '<div class="pi-mural-de">' + _esc(m.prof_nome || 'professor') + '</div>'
+          + '</div>';
+      });
+      h += '</div>';
+      box.innerHTML = h;
+    });
   }
 
   /* Aluno: "O que tenho para fazer" (tarefas do professor). */

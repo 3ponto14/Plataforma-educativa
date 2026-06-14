@@ -349,7 +349,52 @@ var Turmas = (function () {
     return sb.from('grupo_membros').delete().eq('grupo_id', grupoId).eq('aluno', u.id);
   }
 
+  /* ════════════ MENSAGENS (avisos + feedback) ════════════ */
+
+  /* PROFESSOR envia. opts: {texto, alcance:'geral'|'grupo'|'aluno',
+     grupoId, paraAluno}. */
+  function enviarMensagem(opts) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    opts = opts || {};
+    var texto = (opts.texto || '').trim();
+    if (!texto) return Promise.reject(new Error('Escreve a mensagem.'));
+    var alcance = opts.alcance || 'geral';
+    var profNome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+    return sb.from('mensagens').insert({
+      professor: u.id, prof_nome: profNome, alcance: alcance,
+      grupo_id: alcance === 'grupo' ? (opts.grupoId || null) : null,
+      para_aluno: alcance === 'aluno' ? (opts.paraAluno || null) : null,
+      texto: texto
+    }).select().single().then(function (r) { if (r.error) throw r.error; return r.data; });
+  }
+
+  function apagarMensagem(id) {
+    var sb = _sb();
+    if (!sb) return Promise.reject(new Error('Sem ligação.'));
+    return sb.from('mensagens').delete().eq('id', id);
+  }
+
+  /* PROFESSOR: as mensagens que enviou (mais recentes primeiro). */
+  function mensagensDoProf() {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('mensagens').select('*, grupos(nome)').order('criado', { ascending: false })
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* ALUNO: o seu mural (avisos gerais + dos seus grupos + feedback a si).
+     A RLS já filtra; aqui só ordena por data. */
+  function muralDoAluno() {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.resolve([]);
+    return sb.from('mensagens').select('*, grupos(nome)').order('criado', { ascending: false })
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
   return {
+    enviarMensagem: enviarMensagem, apagarMensagem: apagarMensagem,
+    mensagensDoProf: mensagensDoProf, muralDoAluno: muralDoAluno,
     criarGrupo: criarGrupo, apagarGrupo: apagarGrupo, todosOsGrupos: todosOsGrupos,
     alunosDoGrupo: alunosDoGrupo, adicionarAoGrupo: adicionarAoGrupo, removerDoGrupo: removerDoGrupo,
     entrarPorCodigo: entrarPorCodigo, gruposDoAluno: gruposDoAluno, sairDoGrupo: sairDoGrupo,

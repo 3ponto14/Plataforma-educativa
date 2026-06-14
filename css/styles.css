@@ -3956,6 +3956,17 @@ body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
 .pi-sub{font-size:.9rem;color:var(--ink3)}
 .pi-desafio-slot{max-width:540px;margin:0 auto}
 
+/* Mural de avisos/feedback (aluno no Início) */
+.pi-mural-slot{max-width:540px;margin:0 auto 1rem}
+.pi-mural-card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.1rem 1.3rem;box-shadow:0 8px 24px rgba(0,0,0,.05)}
+.pi-mural-h{font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.7rem}
+.pi-mural-h i{color:#2e7d52}
+.pi-mural-msg{border-left:3px solid #2e7d52;background:var(--cream);border-radius:0 10px 10px 0;padding:.55rem .8rem;margin-bottom:.5rem}
+.pi-mural-msg.fb{border-left-color:#4a3f7a;background:#f4f2fa}
+.pi-mural-tag{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink4);margin-bottom:.15rem}
+.pi-mural-txt{font-size:.88rem;color:var(--ink1);line-height:1.5}
+.pi-mural-de{font-size:.72rem;color:var(--ink4);margin-top:.2rem}
+
 /* "O que tenho para fazer" (tarefas do aluno no Início) */
 .pi-tarefas-slot{max-width:540px;margin:0 auto 1rem}
 .pi-tar-card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.1rem 1.3rem;box-shadow:0 8px 24px rgba(0,0,0,.05)}

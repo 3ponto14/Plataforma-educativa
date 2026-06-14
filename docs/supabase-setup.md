@@ -238,6 +238,45 @@ create policy "aluno vê os seus"      on public.grupo_membros for select
   using (auth.uid() = aluno);
 ```
 
+## 3e. SQL das MENSAGENS (avisos + feedback) — colar no SQL Editor → Run
+
+Fase 4a: o professor manda avisos (a todos ou a um grupo) e feedback a um
+aluno; o aluno vê no mural do Início.
+
+```sql
+-- MENSAGENS: aviso (geral/grupo) ou feedback a um aluno.
+--   alcance = 'geral'  → para todos os alunos
+--   alcance = 'grupo'  → grupo_id preenchido
+--   alcance = 'aluno'  → para_aluno preenchido (feedback privado)
+create table if not exists public.mensagens (
+  id         uuid primary key default gen_random_uuid(),
+  professor  uuid not null references auth.users(id) on delete cascade,
+  prof_nome  text,
+  alcance    text not null default 'geral',
+  grupo_id   uuid references public.grupos(id) on delete cascade,
+  para_aluno uuid references auth.users(id) on delete cascade,
+  texto      text not null,
+  criado     timestamptz not null default now()
+);
+
+alter table public.mensagens enable row level security;
+
+-- MENSAGENS:
+--  • qualquer PROFESSOR cria e gere (espaço partilhado);
+--  • o ALUNO vê: avisos gerais; avisos dos grupos a que pertence; e o
+--    feedback dirigido a si.
+create policy "prof gere mensagens"   on public.mensagens for all
+  using (public.eh_professor()) with check (public.eh_professor() and auth.uid() = professor);
+create policy "aluno vê mensagens"    on public.mensagens for select
+  using (
+    alcance = 'geral'
+    or (alcance = 'aluno' and para_aluno = auth.uid())
+    or (alcance = 'grupo' and exists (
+          select 1 from public.grupo_membros m
+          where m.grupo_id = mensagens.grupo_id and m.aluno = auth.uid()))
+  );
+```
+
 ### Nota de segurança (honesta)
 
 A distinção professor/aluno está nos metadados da conta (`tipo`), que
