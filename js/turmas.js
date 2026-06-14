@@ -525,6 +525,19 @@ var Turmas = (function () {
     }).then(function (r) { if (r.error) throw r.error; return r; });
   }
 
+  /* PROFESSOR: a conversa com UM aluno específico — o feedback que lhe
+     deu (para_aluno = aluno) + as respostas/dúvidas que o aluno escreveu
+     (de_aluno = aluno). A RLS garante que só vê o que lhe diz respeito.
+     Ordem cronológica (antigas primeiro), para ler como conversa. */
+  function conversaComAluno(alunoId) {
+    var sb = _sb();
+    if (!sb || !alunoId) return Promise.resolve([]);
+    return sb.from('mensagens').select('*')
+      .or('para_aluno.eq.' + alunoId + ',de_aluno.eq.' + alunoId)
+      .order('criado', { ascending: true })
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
   /* PROFESSOR: respostas e dúvidas escritas por alunos (para si ou
      livres). Mais recentes primeiro. */
   function respostasDeAlunos() {
@@ -538,6 +551,7 @@ var Turmas = (function () {
     enviarMensagem: enviarMensagem, apagarMensagem: apagarMensagem,
     mensagensDoProf: mensagensDoProf, muralDoAluno: muralDoAluno,
     responder: responder, criarDuvida: criarDuvida, respostasDeAlunos: respostasDeAlunos,
+    conversaComAluno: conversaComAluno,
     criarGrupo: criarGrupo, apagarGrupo: apagarGrupo, todosOsGrupos: todosOsGrupos,
     alunosDoGrupo: alunosDoGrupo, adicionarAoGrupo: adicionarAoGrupo, removerDoGrupo: removerDoGrupo,
     entrarPorCodigo: entrarPorCodigo, gruposDoAluno: gruposDoAluno, sairDoGrupo: sairDoGrupo,

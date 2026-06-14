@@ -202,8 +202,8 @@
     if (prof) {
       h += _profMomentoHTML();
     } else {
-      // Mural (avisos/feedback) + "O que tenho para fazer" + Desafio
-      h += '<div id="pi-mural" class="pi-mural-slot"></div>';
+      // "O que tenho para fazer" + Desafio. (As mensagens do professor
+      // vivem agora na secção Turmas, junto ao registo do aluno.)
       h += '<div id="pi-tarefas" class="pi-tarefas-slot"></div>';
       h += '<div id="pi-desafio-slot" class="pi-desafio-slot"></div>';
     }
@@ -228,82 +228,12 @@
       var des2 = document.getElementById('portal-desafio');
       if (des2) des2.style.display = '';
       _moverDesafio();
-      _pintarMuralAluno();
       _pintarTarefasAluno();
     }
   }
 
-  /* Aluno: mural de avisos/feedback + conversa (responder / mandar dúvida). */
-  function _pintarMuralAluno() {
-    var box = document.getElementById('pi-mural');
-    if (!box || typeof Turmas === 'undefined' || !Turmas.muralDoAluno) return;
-    Turmas.muralDoAluno().then(function (ms) {
-      if (!box) return;
-      // separa: mensagens-mãe (do prof ou dúvidas do aluno) e respostas (por resposta_a)
-      var respostas = {}; // resposta_a -> [msgs]
-      var topo = [];
-      ms.forEach(function (m) {
-        if (m.resposta_a) { (respostas[m.resposta_a] = respostas[m.resposta_a] || []).push(m); }
-        else topo.push(m);
-      });
-      var h = '<div class="pi-mural-card">'
-        + '<div class="pi-mural-h"><i class="ph ph-megaphone"></i> Avisos e mensagens</div>';
-      if (!topo.length) {
-        h += '<div style="font-size:.82rem;color:var(--ink4);margin-bottom:.6rem">Sem avisos por agora. Tens uma dúvida? Manda-a ao teu professor.</div>';
-      }
-      topo.forEach(function (m) {
-        h += _muralMsgHTML(m, false);
-        // fio de respostas a esta mensagem
-        (respostas[m.id] || []).forEach(function (r) { h += _muralMsgHTML(r, true); });
-        // o aluno pode responder a mensagens DO PROFESSOR
-        if (m.autor_tipo !== 'aluno') {
-          h += '<div class="pi-resp-acao"><a href="#" onclick="alunoResponder(\'' + m.id + '\');return false">↩ Responder</a></div>';
-        }
-      });
-      h += '<button class="pi-duvida-btn" onclick="alunoNovaDuvida()"><i class="ph ph-question"></i> Mandar dúvida ao professor</button>';
-      h += '</div>';
-      box.innerHTML = h;
-    });
-  }
-
-  function _muralMsgHTML(m, ehResposta) {
-    var doAluno = m.autor_tipo === 'aluno';
-    var etiqueta;
-    if (doAluno) etiqueta = m.alcance === 'duvida' ? '❓ A tua dúvida' : '↩ A tua resposta';
-    else if (m.alcance === 'aluno') etiqueta = '💬 Para ti';
-    else if (m.alcance === 'grupo') etiqueta = '👥 ' + ((m.grupos && m.grupos.nome) || 'Grupo');
-    else etiqueta = '📣 Aviso';
-    var cls = 'pi-mural-msg' + (m.alcance === 'aluno' && !doAluno ? ' fb' : '') + (doAluno ? ' meu' : '') + (ehResposta ? ' resp' : '');
-    return '<div class="' + cls + '">'
-      + '<div class="pi-mural-tag">' + _esc(etiqueta) + '</div>'
-      + '<div class="pi-mural-txt">' + _esc(m.texto) + '</div>'
-      + '<div class="pi-mural-de">' + _esc(doAluno ? 'tu' : (m.prof_nome || 'professor')) + '</div>'
-      + '</div>';
-  }
-
-  /* Guarda a mensagem-mãe para a resposta (id + professor). */
-  var _muralCache = null;
-  window.alunoResponder = function (msgId) {
-    Turmas.muralDoAluno().then(function (ms) {
-      var m = ms.filter(function (x) { return x.id === msgId; })[0];
-      if (!m) return;
-      var txt = prompt('Responder a esta mensagem:');
-      if (txt === null || !txt.trim()) return;
-      Turmas.responder(m, txt).then(function () {
-        if (typeof eduToast === 'function') eduToast('Resposta enviada! 💬', 'success');
-        _pintarMuralAluno();
-      }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
-    });
-  };
-
-  window.alunoNovaDuvida = function () {
-    var txt = prompt('Escreve a tua dúvida para o professor:');
-    if (txt === null || !txt.trim()) return;
-    Turmas.criarDuvida(txt).then(function () {
-      if (typeof eduToast === 'function') eduToast('Dúvida enviada ao professor! ❓', 'success');
-      _pintarMuralAluno();
-    }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
-  };
+  /* (As mensagens do professor passaram para a secção Turmas —
+     ver turmas-ui.js _alunoPintaMensagens.) */
 
   /* Aluno: "O que tenho para fazer" (tarefas do professor). */
   function _pintarTarefasAluno() {

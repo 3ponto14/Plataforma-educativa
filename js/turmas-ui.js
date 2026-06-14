@@ -230,9 +230,11 @@ function _grupoPintaDet(id, nome) {
           + '<span style="font-weight:700;color:var(--ink1)">' + _esc(m.nome_aluno || '(aluno)') + '</span>'
           + '<span style="display:flex;gap:.35rem">'
           + '<button onclick="sessaoToggle(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(m.nome_aluno || 'aluno') + '\')" style="font-size:.72rem;font-weight:700;color:#4a3f7a;background:var(--white);border:1.5px solid #ddd8f5;border-radius:999px;padding:2px 10px;cursor:pointer;font-family:Montserrat,sans-serif">📓 Registo</button>'
+          + '<button onclick="conversaToggle(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(m.nome_aluno || 'aluno') + '\')" style="font-size:.72rem;font-weight:700;color:#2e7d52;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:2px 10px;cursor:pointer;font-family:Montserrat,sans-serif">💬 Mensagens</button>'
           + '<button onclick="grupoRemover(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(nome) + '\')" style="font-size:.72rem;color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;padding:2px 9px;cursor:pointer;font-family:Montserrat,sans-serif">remover</button>'
           + '</span></div>'
           + '<div id="sessao-' + sid + '" style="display:none"></div>'
+          + '<div id="conversa-' + sid + '" style="display:none"></div>'
           + '</div>';
       });
     }
@@ -347,6 +349,51 @@ function sessaoGuardar(grupoId, alunoId, nome) {
 function sessaoApagar(id, grupoId, alunoId, nome) {
   if (!confirm('Apagar este registo de sessão?')) return;
   Turmas.apagarSessao(id).then(function () { _sessaoPinta(grupoId, alunoId, nome); });
+}
+
+/* ── Conversa com um aluno (dentro do detalhe do aluno, no grupo) ── */
+function conversaToggle(grupoId, alunoId, nome) {
+  var box = document.getElementById('conversa-' + grupoId + '_' + alunoId);
+  if (!box) return;
+  if (box.style.display !== 'none') { box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  _conversaPinta(grupoId, alunoId, nome);
+}
+
+function _conversaPinta(grupoId, alunoId, nome) {
+  var box = document.getElementById('conversa-' + grupoId + '_' + alunoId);
+  if (!box) return;
+  box.innerHTML = '<div style="color:var(--ink4);font-size:.78rem;padding:.4rem 0">A carregar conversa…</div>';
+  Turmas.conversaComAluno(alunoId).then(function (ms) {
+    var h = '<div style="background:#f3faf5;border-radius:10px;padding:.7rem .8rem;margin:.4rem 0 .2rem">'
+      + '<div style="font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink4);margin-bottom:.5rem">💬 Conversa com ' + _esc(nome) + '</div>';
+    if (!ms.length) {
+      h += '<div style="font-size:.78rem;color:var(--ink4);margin-bottom:.5rem">Ainda sem mensagens. Escreve abaixo um feedback ou recado para ' + _esc(nome) + '.</div>';
+    } else {
+      ms.forEach(function (m) {
+        var doAluno = m.autor_tipo === 'aluno';
+        h += '<div style="display:flex;justify-content:' + (doAluno ? 'flex-start' : 'flex-end') + ';margin-bottom:.35rem">'
+          + '<div style="max-width:85%;background:' + (doAluno ? 'var(--white)' : '#e8f5ee') + ';border:1px solid ' + (doAluno ? 'var(--border)' : '#bfe3c9') + ';border-radius:10px;padding:.4rem .6rem">'
+          + '<div style="font-size:.8rem;color:var(--ink1)">' + _esc(m.texto) + '</div>'
+          + '<div style="font-size:.66rem;color:var(--ink4);margin-top:.15rem">' + _esc(doAluno ? (m.de_nome || nome) : (m.prof_nome || 'eu')) + '</div>'
+          + '</div></div>';
+      });
+    }
+    h += '<div style="display:flex;gap:.4rem;margin-top:.5rem">'
+      + '<input id="conv-txt-' + alunoId + '" placeholder="Escrever para ' + _esc(nome) + '…" style="flex:1;border:1.5px solid var(--border);border-radius:999px;padding:6px 12px;font-size:.8rem;font-family:Montserrat,sans-serif" onkeydown="if(event.key===\'Enter\')conversaEnviar(\'' + grupoId + '\',\'' + alunoId + '\',\'' + _escAttr(nome) + '\')">'
+      + '<button onclick="conversaEnviar(\'' + grupoId + '\',\'' + alunoId + '\',\'' + _escAttr(nome) + '\')" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:6px 14px;font-size:.78rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">Enviar</button>'
+      + '</div></div>';
+    box.innerHTML = h;
+  });
+}
+
+function conversaEnviar(grupoId, alunoId, nome) {
+  var inp = document.getElementById('conv-txt-' + alunoId);
+  var texto = inp ? inp.value : '';
+  if (!texto || !texto.trim()) return;
+  Turmas.enviarMensagem({ texto: texto, alcance: 'aluno', paraAluno: alunoId }).then(function () {
+    _conversaPinta(grupoId, alunoId, nome);
+  }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
 }
 
 /* ── Trabalho atribuído (vista do professor) ── */
@@ -584,6 +631,11 @@ function _turmasRenderAluno(wrap) {
     + '</div>'
     + '<div style="font-size:.82rem;color:var(--ink4);margin-bottom:1rem">Os grupos a que pertences. Pede o código ao teu professor para entrares.</div>'
     + '<div id="turmas-meus-grupos" style="margin-bottom:1.2rem"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
+    // mensagens do professor
+    + '<div style="border-top:1px solid var(--border);padding-top:1rem;margin-bottom:1.2rem">'
+    + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.6rem"><i class="ph ph-chats-circle" style="color:#2e7d52"></i> Mensagens do professor</div>'
+    + '<div id="turmas-mensagens-aluno"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
+    + '</div>'
     // o meu registo de sessões
     + '<div style="border-top:1px solid var(--border);padding-top:1rem;margin-bottom:1.2rem">'
     + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.6rem"><i class="ph ph-notebook" style="color:#4a3f7a"></i> O meu registo de sessões</div>'
@@ -602,8 +654,68 @@ function _turmasRenderAluno(wrap) {
     + '</div>'
     + '</div>';
   _alunoPintaGrupos();
+  _alunoPintaMensagens();
   _alunoPintaRegisto();
   _turmasPintaRecursos(false);
+}
+
+/* O aluno vê as mensagens do professor (avisos gerais/grupo + feedback a
+   si) e pode responder / mandar dúvida. (Veio do Início p/ as Turmas.) */
+function _alunoPintaMensagens() {
+  var el = document.getElementById('turmas-mensagens-aluno');
+  if (!el || !Turmas.muralDoAluno) return;
+  Turmas.muralDoAluno().then(function (ms) {
+    if (!el) return;
+    var respostas = {}, topo = [];
+    ms.forEach(function (m) {
+      if (m.resposta_a) { (respostas[m.resposta_a] = respostas[m.resposta_a] || []).push(m); }
+      else topo.push(m);
+    });
+    var h = '';
+    if (!topo.length) {
+      h += '<div style="font-size:.85rem;color:var(--ink4);margin-bottom:.6rem">Sem mensagens por agora. Tens uma dúvida? Manda-a ao teu professor.</div>';
+    } else {
+      topo.forEach(function (m) {
+        h += _alunoMsgHTML(m, false);
+        (respostas[m.id] || []).forEach(function (r) { h += _alunoMsgHTML(r, true); });
+        if (m.autor_tipo !== 'aluno') {
+          h += '<div style="margin:-.2rem 0 .6rem 0"><a href="#" onclick="alunoResponderTurmas(\'' + m.id + '\');return false" style="font-size:.76rem;font-weight:700;color:#4a3f7a;text-decoration:none">↩ Responder</a></div>';
+        }
+      });
+    }
+    h += '<button onclick="alunoTirarDuvida()" style="width:100%;margin-top:.3rem;background:var(--white);border:1.5px dashed #b9b1d6;color:#4a3f7a;border-radius:12px;padding:.6rem;font-family:Montserrat,sans-serif;font-size:.84rem;font-weight:800;cursor:pointer"><i class="ph ph-question"></i> Mandar dúvida ao professor</button>';
+    el.innerHTML = h;
+  });
+}
+
+function _alunoMsgHTML(m, ehResp) {
+  var doAluno = m.autor_tipo === 'aluno';
+  var et;
+  if (doAluno) et = m.alcance === 'duvida' ? '❓ A tua dúvida' : '↩ A tua resposta';
+  else if (m.alcance === 'aluno') et = '💬 Para ti';
+  else if (m.alcance === 'grupo') et = '👥 ' + ((m.grupos && m.grupos.nome) || 'Grupo');
+  else et = '📣 Aviso';
+  var cor = doAluno ? '#a8854d' : (m.alcance === 'aluno' ? '#4a3f7a' : '#2e7d52');
+  var fundo = doAluno ? '#faf6ee' : (m.alcance === 'aluno' ? '#f4f2fa' : 'var(--cream)');
+  return '<div style="border-left:3px solid ' + cor + ';background:' + fundo + ';border-radius:0 10px 10px 0;padding:.5rem .8rem;margin-bottom:.45rem' + (ehResp ? ';margin-left:1.2rem' : '') + '">'
+    + '<div style="font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink4);margin-bottom:.15rem">' + _esc(et) + '</div>'
+    + '<div style="font-size:.86rem;color:var(--ink1);line-height:1.5">' + _esc(m.texto) + '</div>'
+    + '<div style="font-size:.7rem;color:var(--ink4);margin-top:.2rem">' + _esc(doAluno ? 'tu' : (m.prof_nome || 'professor')) + '</div>'
+    + '</div>';
+}
+
+/* Aluno responde a uma mensagem do professor (a partir das Turmas). */
+function alunoResponderTurmas(msgId) {
+  Turmas.muralDoAluno().then(function (ms) {
+    var m = ms.filter(function (x) { return x.id === msgId; })[0];
+    if (!m) return;
+    var txt = prompt('Responder a esta mensagem:');
+    if (txt === null || !txt.trim()) return;
+    Turmas.responder(m, txt).then(function () {
+      if (typeof eduToast === 'function') eduToast('Resposta enviada! 💬', 'success');
+      _alunoPintaMensagens();
+    }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
+  });
 }
 
 /* O aluno vê o seu próprio registo de sessões (só leitura). */
@@ -629,14 +741,13 @@ function _alunoPintaRegisto() {
   });
 }
 
-/* Mandar dúvida a partir da secção Turmas (reusa a função do painel). */
+/* Mandar dúvida a partir da secção Turmas. */
 function alunoTirarDuvida() {
-  if (typeof alunoNovaDuvida === 'function') { alunoNovaDuvida(); return; }
-  // fallback: chama diretamente o Turmas se a função do painel não existir
   var txt = prompt('Escreve a tua dúvida para o professor:');
   if (txt === null || !txt.trim()) return;
   Turmas.criarDuvida(txt).then(function () {
     if (typeof eduToast === 'function') eduToast('Dúvida enviada ao professor! ❓', 'success');
+    if (typeof _alunoPintaMensagens === 'function') _alunoPintaMensagens();
   }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
 }
 
