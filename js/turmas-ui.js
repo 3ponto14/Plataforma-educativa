@@ -391,7 +391,7 @@ function _grupoPintaDet(id, nome) {
    sobre TODOS os membros e mostra os resultados todos. */
 var _grupoMembrosCache = {};   // grupoId -> [membros]
 var _grupoLimite = {};         // grupoId -> quantos mostrar
-var _GRUPO_PASSO = 50;
+var _GRUPO_PASSO = 10;
 
 function _grupoMembroRowHTML(id, nome, m) {
   var sid = id + '_' + m.aluno;
@@ -406,7 +406,6 @@ function _grupoMembroRowHTML(id, nome, m) {
     + '<span class="grp-acts">'
     + '<button class="grp-ic is-reg" title="Registo de sessões" data-tip="Registo de sessões" onclick="sessaoToggle(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(nm) + '\')">📓</button>'
     + '<button class="grp-ic is-msg" title="Mensagens" data-tip="Mensagens" onclick="conversaToggle(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(nm) + '\')">💬</button>'
-    + '<button class="grp-ic is-add" title="Enviar a este aluno" data-tip="Enviar a este aluno" onclick="alunoEnviarPrompt(\'' + m.aluno + '\',\'' + _escAttr(nm) + '\')">＋</button>'
     + '<button class="grp-ic is-rem tip-end" title="Remover do grupo" data-tip="Remover do grupo" onclick="grupoRemover(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(nome) + '\')">✕</button>'
     + '</span>'
     + '<div id="sessao-' + sid + '" style="display:none;flex-basis:100%"></div>'
