@@ -418,7 +418,12 @@ function port7GerarExercicios() {
   var quizHTML = (typeof _capBuildQuizHTML === 'function')
     ? _capBuildQuizHTML(exs, 'm8ex', 'port7CheckEx')
     : '<p style="color:var(--ink4)">Motor de exercícios indisponível.</p>';
-  dest.innerHTML = scoreBar + quizHTML;
+  dest.innerHTML = scoreBar + '<div id="port7-atribuir" style="margin:.2rem 0 .8rem"></div>' + quizHTML;
+  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
+    var _cm = _port7CapMeta.filter(function (m) { return m.n === cap; })[0] || {};
+    var _sn = (_port7Subtemas[cap] && _port7Prat.st > 0) ? (_port7Subtemas[cap][_port7Prat.st - 1] || '') : '';
+    Atribuir.montar('port7-atribuir', { curso: 'port7', cursoNome: 'Português 7.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_port7Prat.st || ''), subNome: _sn, tipo: 'quiz', nivel: _port7Prat.nivel });
+  }
 }
 
 function port7CheckEx(qid, tipo, val, btn) {
@@ -1607,3 +1612,7 @@ _port7Banco[3] = _port7Banco[3].concat([
   { t: '2', tipo: 'mc', dif: 'medio', enun: 'Uma biografia organiza-se, normalmente:', opcoes: ['por ordem cronológica (nascimento, percurso, feitos)', 'por ordem alfabética', 'do fim para o início', 'sem qualquer ordem'], resposta: 'por ordem cronológica (nascimento, percurso, feitos)', expl: 'A biografia relata a vida de uma pessoa real seguindo a linha do tempo.', tema: 'T2 · Tipologias' }
 ]);
 
+
+/* atribuir: deep-link port7 */
+function _port7DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _port7Prat.cap=cap; _port7Prat.st=st; _port7Prat.nivel=nivel; setTimeout(function(){ port7SwitchTab('exercicios',null); if(typeof port7GerarExercicios==='function') port7GerarExercicios(); },350); }catch(e){} }
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_port7DeepLinkAuto,300);});else setTimeout(_port7DeepLinkAuto,300);

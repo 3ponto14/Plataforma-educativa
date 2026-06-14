@@ -416,7 +416,12 @@ function port8GerarExercicios() {
   var quizHTML = (typeof _capBuildQuizHTML === 'function')
     ? _capBuildQuizHTML(exs, 'm8ex', 'port8CheckEx')
     : '<p style="color:var(--ink4)">Motor de exercícios indisponível.</p>';
-  dest.innerHTML = scoreBar + quizHTML;
+  dest.innerHTML = scoreBar + '<div id="port8-atribuir" style="margin:.2rem 0 .8rem"></div>' + quizHTML;
+  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
+    var _cm = _port8CapMeta.filter(function (m) { return m.n === cap; })[0] || {};
+    var _sn = (_port8Subtemas[cap] && _port8Prat.st > 0) ? (_port8Subtemas[cap][_port8Prat.st - 1] || '') : '';
+    Atribuir.montar('port8-atribuir', { curso: 'port8', cursoNome: 'Português 8.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_port8Prat.st || ''), subNome: _sn, tipo: 'quiz', nivel: _port8Prat.nivel });
+  }
 }
 
 function port8CheckEx(qid, tipo, val, btn) {
@@ -1516,3 +1521,7 @@ _port8Banco[2] = _port8Banco[2].concat([
   { t: '4', tipo: 'mc', dif: 'medio', enun: 'Em «Disseram que o filme estreará em breve.», «estreará» está no:', opcoes: ['futuro do indicativo', 'condicional', 'presente do conjuntivo', 'futuro do conjuntivo'], resposta: 'futuro do indicativo', expl: 'Exprime um facto futuro tido como certo: futuro do indicativo.', tema: 'T4 · Modos Verbais' }
 ]);
 
+
+/* atribuir: deep-link port8 */
+function _port8DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _port8Prat.cap=cap; _port8Prat.st=st; _port8Prat.nivel=nivel; setTimeout(function(){ port8SwitchTab('exercicios',null); if(typeof port8GerarExercicios==='function') port8GerarExercicios(); },350); }catch(e){} }
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_port8DeepLinkAuto,300);});else setTimeout(_port8DeepLinkAuto,300);

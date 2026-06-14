@@ -451,7 +451,12 @@ function mat9GerarExercicios() {
   var quizHTML = (typeof _capBuildQuizHTML === 'function')
     ? _capBuildQuizHTML(exs, 'm8ex', 'mat9CheckEx')
     : '<p style="color:var(--ink4)">Motor de exercícios indisponível.</p>';
-  dest.innerHTML = scoreBar + quizHTML;
+  dest.innerHTML = scoreBar + '<div id="mat9-atribuir" style="margin:.2rem 0 .8rem"></div>' + quizHTML;
+  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
+    var _cm = _mat9CapMeta.filter(function (m) { return m.n === cap; })[0] || {};
+    var _sn = (_mat9Subtemas[cap] && _mat9Prat.st > 0) ? (_mat9Subtemas[cap][_mat9Prat.st - 1] || '') : '';
+    Atribuir.montar('mat9-atribuir', { curso: 'mat9', cursoNome: 'Matemática 9.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_mat9Prat.st || ''), subNome: _sn, tipo: 'quiz', nivel: _mat9Prat.nivel });
+  }
 }
 
 function mat9CheckEx(qid, tipo, val, btn) {
@@ -1833,3 +1838,6 @@ var _mat9Banco = {
     { t: '4', tipo: 'fill', enun: 'Qual é a amplitude do conjunto 3, 17, 8, 25, 12?', resposta: '22', expl: 'Amplitude = máximo − mínimo = 25 − 3 = 22.', tema: 'T4 · Amplitude' }
   ]
 };
+/* atribuir: deep-link mat9 */
+function _mat9DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat9Prat.cap=cap; _mat9Prat.st=st; _mat9Prat.nivel=nivel; setTimeout(function(){ mat9SwitchTab('exercicios',null); if(typeof mat9GerarExercicios==='function') mat9GerarExercicios(); },350); }catch(e){} }
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat9DeepLinkAuto,300);});else setTimeout(_mat9DeepLinkAuto,300);

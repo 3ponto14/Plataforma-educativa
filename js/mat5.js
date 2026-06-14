@@ -445,7 +445,12 @@ function mat5GerarExercicios() {
   var quizHTML = (typeof _capBuildQuizHTML === 'function')
     ? _capBuildQuizHTML(exs, 'm8ex', 'mat5CheckEx')
     : '<p style="color:var(--ink4)">Motor de exercícios indisponível.</p>';
-  dest.innerHTML = scoreBar + quizHTML;
+  dest.innerHTML = scoreBar + '<div id="mat5-atribuir" style="margin:.2rem 0 .8rem"></div>' + quizHTML;
+  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
+    var _cm = _mat5CapMeta.filter(function (m) { return m.n === cap; })[0] || {};
+    var _sn = (_mat5Subtemas[cap] && _mat5Prat.st > 0) ? (_mat5Subtemas[cap][_mat5Prat.st - 1] || '') : '';
+    Atribuir.montar('mat5-atribuir', { curso: 'mat5', cursoNome: 'Matemática 5.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_mat5Prat.st || ''), subNome: _sn, tipo: 'quiz', nivel: _mat5Prat.nivel });
+  }
 }
 
 function mat5CheckEx(qid, tipo, val, btn) {
@@ -1716,3 +1721,6 @@ var _mat5Banco = {
     { t: '2', tipo: 'fill_frac', enun: 'Num inquérito a 20 alunos, 8 preferem futebol. Que fração (irredutível) representa?', resposta: '2/5', expl: '8/20 = 2/5.', tema: 'T2 · Frequência' }
   ]
 };
+/* atribuir: deep-link mat5 */
+function _mat5DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat5Prat.cap=cap; _mat5Prat.st=st; _mat5Prat.nivel=nivel; setTimeout(function(){ mat5SwitchTab('exercicios',null); if(typeof mat5GerarExercicios==='function') mat5GerarExercicios(); },350); }catch(e){} }
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat5DeepLinkAuto,300);});else setTimeout(_mat5DeepLinkAuto,300);

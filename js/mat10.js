@@ -424,7 +424,12 @@ function mat10GerarExercicios() {
   var quizHTML = (typeof _capBuildQuizHTML === 'function')
     ? _capBuildQuizHTML(exs, 'm8ex', 'mat10CheckEx')
     : '<p style="color:var(--ink4)">Motor de exercícios indisponível.</p>';
-  dest.innerHTML = scoreBar + quizHTML;
+  dest.innerHTML = scoreBar + '<div id="mat10-atribuir" style="margin:.2rem 0 .8rem"></div>' + quizHTML;
+  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
+    var _cm = _mat10CapMeta.filter(function (m) { return m.n === cap; })[0] || {};
+    var _sn = (_mat10Subtemas[cap] && _mat10Prat.st > 0) ? (_mat10Subtemas[cap][_mat10Prat.st - 1] || '') : '';
+    Atribuir.montar('mat10-atribuir', { curso: 'mat10', cursoNome: 'Matemática 10.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_mat10Prat.st || ''), subNome: _sn, tipo: 'quiz', nivel: _mat10Prat.nivel });
+  }
 }
 
 function mat10CheckEx(qid, tipo, val, btn) {
@@ -1693,3 +1698,6 @@ var _mat10Banco = {
     { t: '2', tipo: 'mc', enun: 'O valor de sen²(40°) + cos²(40°) é:', opcoes: ['1', '0', '40', 'sen(80°)'], resposta: '1', expl: 'Pela fórmula fundamental, sen²α + cos²α = 1 para qualquer α.', tema: 'T2 · Fórmula Fundamental' }
   ]
 };
+/* atribuir: deep-link mat10 */
+function _mat10DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat10Prat.cap=cap; _mat10Prat.st=st; _mat10Prat.nivel=nivel; setTimeout(function(){ mat10SwitchTab('exercicios',null); if(typeof mat10GerarExercicios==='function') mat10GerarExercicios(); },350); }catch(e){} }
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat10DeepLinkAuto,300);});else setTimeout(_mat10DeepLinkAuto,300);

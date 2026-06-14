@@ -446,7 +446,12 @@ function mat6GerarExercicios() {
   var quizHTML = (typeof _capBuildQuizHTML === 'function')
     ? _capBuildQuizHTML(exs, 'm8ex', 'mat6CheckEx')
     : '<p style="color:var(--ink4)">Motor de exercícios indisponível.</p>';
-  dest.innerHTML = scoreBar + quizHTML;
+  dest.innerHTML = scoreBar + '<div id="mat6-atribuir" style="margin:.2rem 0 .8rem"></div>' + quizHTML;
+  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
+    var _cm = _mat6CapMeta.filter(function (m) { return m.n === cap; })[0] || {};
+    var _sn = (_mat6Subtemas[cap] && _mat6Prat.st > 0) ? (_mat6Subtemas[cap][_mat6Prat.st - 1] || '') : '';
+    Atribuir.montar('mat6-atribuir', { curso: 'mat6', cursoNome: 'Matemática 6.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_mat6Prat.st || ''), subNome: _sn, tipo: 'quiz', nivel: _mat6Prat.nivel });
+  }
 }
 
 function mat6CheckEx(qid, tipo, val, btn) {
@@ -1657,3 +1662,6 @@ var _mat6Banco = {
     { t: '2', tipo: 'fill', enun: 'Num inquérito a 50 pessoas, 30 preferem café. Qual é a frequência relativa (em %)?', resposta: '60', expl: '30/50 × 100 = 60%.', tema: 'T2 · Frequência' }
   ]
 };
+/* atribuir: deep-link mat6 */
+function _mat6DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat6Prat.cap=cap; _mat6Prat.st=st; _mat6Prat.nivel=nivel; setTimeout(function(){ mat6SwitchTab('exercicios',null); if(typeof mat6GerarExercicios==='function') mat6GerarExercicios(); },350); }catch(e){} }
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat6DeepLinkAuto,300);});else setTimeout(_mat6DeepLinkAuto,300);

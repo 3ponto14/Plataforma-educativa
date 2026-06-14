@@ -517,7 +517,12 @@ function mat8GerarExercicios() {
   var quizHTML = (typeof _capBuildQuizHTML === 'function')
     ? _capBuildQuizHTML(exs, 'm8ex', 'mat8CheckEx')
     : '<p style="color:var(--ink4)">Motor de exercícios indisponível.</p>';
-  dest.innerHTML = scoreBar + quizHTML;
+  dest.innerHTML = scoreBar + '<div id="mat8-atribuir" style="margin:.2rem 0 .8rem"></div>' + quizHTML;
+  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
+    var _cm = _mat8CapMeta.filter(function (m) { return m.n === cap; })[0] || {};
+    var _sn = (_mat8Subtemas[cap] && _mat8Prat.st > 0) ? (_mat8Subtemas[cap][_mat8Prat.st - 1] || '') : '';
+    Atribuir.montar('mat8-atribuir', { curso: 'mat8', cursoNome: 'Matemática 8.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_mat8Prat.st || ''), subNome: _sn, tipo: 'quiz', nivel: _mat8Prat.nivel });
+  }
 }
 
 function mat8CheckEx(qid, tipo, val, btn) {
@@ -2818,3 +2823,6 @@ var _mat8Banco = {
     { t: '5', tipo: 'fill_frac', enun: 'Num saco há 4 bolas verdes e 6 vermelhas. Qual a probabilidade de tirar uma verde? (fração irredutível)', resposta: '2/5', expl: 'P = 4/(4+6) = 4/10 = 2/5.', tema: 'T5 · Probabilidade' }
   ]
 };
+/* atribuir: deep-link mat8 */
+function _mat8DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat8Prat.cap=cap; _mat8Prat.st=st; _mat8Prat.nivel=nivel; setTimeout(function(){ mat8SwitchTab('exercicios',null); if(typeof mat8GerarExercicios==='function') mat8GerarExercicios(); },350); }catch(e){} }
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat8DeepLinkAuto,300);});else setTimeout(_mat8DeepLinkAuto,300);

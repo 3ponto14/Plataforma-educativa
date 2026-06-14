@@ -424,7 +424,12 @@ function mat11GerarExercicios() {
   var quizHTML = (typeof _capBuildQuizHTML === 'function')
     ? _capBuildQuizHTML(exs, 'm8ex', 'mat11CheckEx')
     : '<p style="color:var(--ink4)">Motor de exercícios indisponível.</p>';
-  dest.innerHTML = scoreBar + quizHTML;
+  dest.innerHTML = scoreBar + '<div id="mat11-atribuir" style="margin:.2rem 0 .8rem"></div>' + quizHTML;
+  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
+    var _cm = _mat11CapMeta.filter(function (m) { return m.n === cap; })[0] || {};
+    var _sn = (_mat11Subtemas[cap] && _mat11Prat.st > 0) ? (_mat11Subtemas[cap][_mat11Prat.st - 1] || '') : '';
+    Atribuir.montar('mat11-atribuir', { curso: 'mat11', cursoNome: 'Matemática 11.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_mat11Prat.st || ''), subNome: _sn, tipo: 'quiz', nivel: _mat11Prat.nivel });
+  }
 }
 
 function mat11CheckEx(qid, tipo, val, btn) {
@@ -1596,3 +1601,6 @@ var _mat11Banco = {
     { t: '1', tipo: 'fill', enun: 'Quantos números de 3 algarismos DIFERENTES se podem formar com os algarismos 1, 2, 3, 4 e 5?', resposta: '60', expl: 'Passo 1: ordem conta e sem repetir → arranjos de 5, 3 a 3. Passo 2: ⁵A₃ = 5×4×3 = 60.', tema: 'T1 · Combinatória' }
   ]
 };
+/* atribuir: deep-link mat11 */
+function _mat11DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat11Prat.cap=cap; _mat11Prat.st=st; _mat11Prat.nivel=nivel; setTimeout(function(){ mat11SwitchTab('exercicios',null); if(typeof mat11GerarExercicios==='function') mat11GerarExercicios(); },350); }catch(e){} }
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat11DeepLinkAuto,300);});else setTimeout(_mat11DeepLinkAuto,300);
