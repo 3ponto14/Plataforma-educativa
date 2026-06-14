@@ -246,6 +246,7 @@ function qzInit(containerId, exercicios, sec, onFinish) {
     score: { correct: 0, total: 0 },
     answered: false,
     sec: sec,
+    detalhe: [], // por-pergunta: { q: enunciado, certo: bool } — usado no modo-tarefa das Turmas
     onFinish: onFinish || null
   };
   _qzState[containerId] = st;
@@ -353,6 +354,9 @@ function _qzShowFeedback(cid, correct, correctVal) {
   st.answered = true;
   st.score.total++;
   if (correct) st.score.correct++;
+  // Registar resultado por-pergunta (modo-tarefa das Turmas)
+  var _exNow = st.exercises[st.current];
+  st.detalhe.push({ q: (_exNow && (_exNow.enun || _exNow.en)) || ('Pergunta ' + (st.current + 1)), certo: !!correct });
 
   // Update live score
   var sl = document.getElementById(cid + '-scorelive');

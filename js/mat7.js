@@ -517,7 +517,10 @@ function mat7RenderUnifiedExercicios(caps, inlineEl) {
         });
         // modo-tarefa: entrega automática do resultado ao terminar o quiz
         if (_mat7TarefaAtiva && typeof Turmas !== 'undefined' && Turmas.guardarResultado) {
-          var det = exercicios.map(function (ex, i) { return { q: (ex.enun || ('Pergunta ' + (i + 1))), certo: null }; });
+          var _st = (typeof _qzState !== 'undefined') ? _qzState['uq-container'] : null;
+          var det = (_st && _st.detalhe && _st.detalhe.length)
+            ? _st.detalhe
+            : exercicios.map(function (ex, i) { return { q: (ex.enun || ('Pergunta ' + (i + 1))), certo: null }; });
           Turmas.guardarResultado(_mat7TarefaAtiva, correct, total, det).then(function () {
             if (typeof eduToast === 'function') eduToast('Trabalho entregue! Acertaste ' + correct + ' de ' + total + '. ✅', 'success');
             _mat7TarefaAtiva = null;
