@@ -90,9 +90,7 @@ function irParaAluno(id) {
 function _turmasRenderProfessor(wrap) {
   var btnGrupos = '<button onclick="grupoEntrarComoProf()" style="background:var(--white);color:#2e7d52;border:1.5px solid #bfe3c9;border-radius:999px;padding:5px 11px;font-size:.74rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">+ código</button>'
     + ' <button onclick="grupoCriarPrompt()" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:5px 12px;font-size:.74rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">+ grupo</button>';
-  var btnTarefa = '<button onclick="tarefaAtribuirPrompt()" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:5px 12px;font-size:.74rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">+ trabalho</button>';
   var btnAviso = '<button onclick="avisoNovoPrompt()" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:5px 12px;font-size:.74rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">+ aviso</button>';
-  var btnFicha = '<button onclick="recursosAdicionarPrompt()" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:5px 12px;font-size:.74rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">+ ficha</button>';
 
   var alunosBody = '<input id="turmas-pesquisa" oninput="turmasFiltrar()" placeholder="🔎 Procurar aluno…" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:999px;padding:6px 14px;font-size:.82rem;font-family:Montserrat,sans-serif;outline:none;margin-bottom:.6rem">'
     + '<div id="turmas-lista"><div style="color:var(--ink4);font-size:.85rem">A carregar alunos…</div></div>';
@@ -102,15 +100,17 @@ function _turmasRenderProfessor(wrap) {
     + '<div id="turmas-duvidas"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>';
 
   wrap.innerHTML =
-    // Vista normal das Turmas (lista de secções)
+    // Vista normal das Turmas — estrutura simples: onde trabalhas (Grupos,
+    // Alunos) + responder a dúvidas. O trabalho/fichas vê-se DENTRO de cada
+    // grupo e aluno (não há listas globais a duplicar).
     '<div id="turmas-home" style="background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.25rem 1.4rem">'
     + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.45rem;font-weight:700;color:var(--ink1);margin-bottom:.15rem"><i class="ph ph-chalkboard-teacher" style="color:#2e7d52"></i> Turmas</div>'
-    + '<div style="font-size:.82rem;color:var(--ink4);margin-bottom:1rem">Toca em cada secção para abrir. Organiza alunos em grupos, atribui trabalho e comunica.</div>'
+    + '<div style="font-size:.82rem;color:var(--ink4);margin-bottom:1rem">Abre um grupo ou um aluno para ver e atribuir trabalho, fichas e mensagens.</div>'
+    // barra de «dúvidas por responder» (só aparece se houver)
+    + '<div id="turmas-alerta-duvidas"></div>'
     + _acc('grupos', 'ph-users-four', '#2e7d52', 'Grupos', btnGrupos, '<div id="turmas-grupos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
     + _acc('alunos', 'ph-users-three', '#2e7d52', 'Todos os alunos', '', alunosBody)
-    + _acc('tarefas', 'ph-clipboard-text', '#2e7d52', 'Trabalho atribuído', btnTarefa, '<div id="turmas-tarefas"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
     + _acc('avisos', 'ph-chats-circle', '#4a3f7a', 'Dúvidas dos alunos', btnAviso, avisosBody)
-    + _acc('fichas', 'ph-link-simple', '#2e7d52', 'Fichas e recursos', btnFicha, '<div id="turmas-recursos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
     + '</div>'
     // Página dedicada de UM grupo (escondida até se clicar num grupo)
     + '<div id="turmas-grupo-pagina" style="display:none"></div>'
@@ -120,12 +120,8 @@ function _turmasRenderProfessor(wrap) {
   Turmas.todosOsAlunos().then(function (alunos) {
     _turmasAlunosCache = alunos;
     _turmasPintaAlunos(alunos);
-    // repintar cartões que mostram o nome do aluno destinatário (cache agora disponível)
-    _turmasPintaTarefas();
-    _turmasPintaRecursos(true);
   });
   _turmasPintaGrupos();
-  _turmasPintaTarefas();
   _turmasPintaDuvidas();
   _turmasPintaRecursos(true);
 }
@@ -136,6 +132,18 @@ function _turmasPintaDuvidas() {
   if (!el || !Turmas.respostasDeAlunos) return;
   Turmas.respostasDeAlunos().then(function (ms) {
     if (!el) return;
+    // barra de alerta no topo: nº de dúvidas por responder
+    var porResp = ms.filter(function (m) { return m.alcance === 'duvida' && !m.respondido; }).length;
+    var alerta = document.getElementById('turmas-alerta-duvidas');
+    if (alerta) {
+      alerta.innerHTML = porResp
+        ? '<button onclick="(function(){var b=document.getElementById(\'acc-body-avisos\');if(b&&b.style.display===\'none\')accToggle(\'avisos\');var a=document.getElementById(\'acc-cx-avisos\');if(a)a.scrollIntoView({behavior:\'smooth\',block:\'center\'});})()" '
+          + 'style="width:100%;text-align:left;display:flex;align-items:center;gap:.6rem;background:#fdf3e7;border:1.5px solid #f0d2a6;border-radius:12px;padding:.7rem 1rem;margin-bottom:.8rem;cursor:pointer;font-family:Montserrat,sans-serif">'
+          + '<span style="font-size:1.2rem">⚠️</span>'
+          + '<span style="font-weight:800;color:#9a6a1a;font-size:.88rem">' + porResp + (porResp === 1 ? ' dúvida por responder' : ' dúvidas por responder') + '</span>'
+          + '<i class="ph ph-arrow-right" style="margin-left:auto;color:#9a6a1a"></i></button>'
+        : '';
+    }
     if (!ms.length) {
       el.innerHTML = '<div style="color:var(--ink4);font-size:.85rem;padding:.3rem 0">Sem dúvidas nem respostas dos alunos por agora.</div>';
       return;
@@ -460,13 +468,18 @@ function _grupoPintaConteudo(id, nome) {
     }
     var destFn = "{grupoId:'" + id + "',label:'grupo " + _escAttr(nome) + "'}";
     var h = '';
-    // Trabalho
+    // Trabalho (com «Ver quem fez»: notas + onde errou/acertou)
+    var nMembros = (r.alunos || []).length;
     h += bloco('Trabalho atribuído', 'ph-clipboard-text', r.tarefas,
       'Ainda não atribuíste trabalho a este grupo.', 'trabalho', 'tarefaAtribuirPrompt(' + destFn + ')',
       function (t) {
-        return '<div class="grp-item"><span class="grp-item-tit">' + _esc(t.titulo)
+        var total = t.para_aluno ? 1 : nMembros;
+        return '<div class="grp-item-wrap">'
+          + '<div class="grp-item"><span class="grp-item-tit">' + _esc(t.titulo)
           + (t.curso_nome ? ' <span class="grp-item-tag">' + _esc(t.curso_nome) + '</span>' : '') + '</span>'
-          + '<button class="grp-item-x" title="Apagar" onclick="tarefaApagar(\'' + t.id + '\',\'' + _escAttr(t.titulo) + '\')">✕</button></div>';
+          + '<button class="grp-item-x" title="Apagar" onclick="tarefaApagar(\'' + t.id + '\',\'' + _escAttr(t.titulo) + '\')">✕</button></div>'
+          + '<div id="tarefa-fez-' + t.id + '" style="font-size:.76rem;margin:.1rem 0 .3rem"><a href="#" onclick="tarefaVerQuemFez(\'' + t.id + '\',' + total + ');return false" style="color:#2e7d52;font-weight:700">Ver quem fez ›</a></div>'
+          + '</div>';
       });
     // Avisos enviados (o que faltava!)
     h += bloco('Avisos enviados', 'ph-megaphone', r.avisos,
