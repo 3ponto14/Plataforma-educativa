@@ -341,6 +341,68 @@ create policy "prof lê o que lhe toca" on public.mensagens for select
   ));
 ```
 
+## 3h. SQL do REGISTO DE SESSÕES (diário por aluno) — colar no SQL Editor → Run
+
+Centra as turmas no ALUNO: o professor regista o que trabalhou com cada
+aluno (data/hora, disciplina, ficha, notas para o próximo prof). O
+registo fica ligado a (aluno + grupo); só professores DO GRUPO (dono +
+convidados) e o próprio aluno o veem.
+
+```sql
+-- PROFESSORES DE CADA GRUPO (dono + convidados).
+create table if not exists public.grupo_professores (
+  grupo_id  uuid not null references public.grupos(id) on delete cascade,
+  prof      uuid not null references auth.users(id) on delete cascade,
+  prof_nome text,
+  papel     text not null default 'convidado',  -- 'dono' | 'convidado'
+  desde     timestamptz not null default now(),
+  primary key (grupo_id, prof)
+);
+alter table public.grupo_professores enable row level security;
+
+-- Helper: o utilizador atual é professor deste grupo?
+create or replace function public.e_prof_do_grupo(gid uuid) returns boolean
+  language sql stable security definer set search_path = public as $$
+  select exists (select 1 from public.grupo_professores gp
+                 where gp.grupo_id = gid and gp.prof = auth.uid());
+$$;
+
+-- grupo_professores: um professor do grupo gere a lista; cada prof vê as
+-- linhas dos grupos onde está.
+create policy "prof do grupo gere profs" on public.grupo_professores for all
+  using (public.eh_professor() and public.e_prof_do_grupo(grupo_id))
+  with check (public.eh_professor());
+create policy "prof vê os seus grupos"   on public.grupo_professores for select
+  using (prof = auth.uid());
+
+-- SESSÕES: o diário de trabalho com cada aluno, dentro de um grupo.
+create table if not exists public.sessoes (
+  id         uuid primary key default gen_random_uuid(),
+  grupo_id   uuid not null references public.grupos(id) on delete cascade,
+  aluno      uuid not null references auth.users(id) on delete cascade,
+  prof       uuid not null references auth.users(id) on delete cascade,
+  prof_nome  text,
+  quando     timestamptz not null default now(),
+  disciplina text,
+  material   text,
+  notas      text,
+  criado     timestamptz not null default now()
+);
+alter table public.sessoes enable row level security;
+
+-- SESSÕES: professores DO GRUPO criam/editam/apagam e veem; o ALUNO vê
+-- (só leitura) as suas sessões.
+create policy "prof do grupo gere sessoes" on public.sessoes for all
+  using (public.eh_professor() and public.e_prof_do_grupo(grupo_id))
+  with check (public.eh_professor() and public.e_prof_do_grupo(grupo_id) and auth.uid() = prof);
+create policy "aluno vê as suas sessoes"   on public.sessoes for select
+  using (auth.uid() = aluno);
+```
+
+> Nota: grupos criados ANTES desta secção não têm o dono em
+> `grupo_professores`. Ao abrir o grupo, o código garante a inscrição do
+> criador como dono (auto-correção), por isso não é preciso mexer à mão.
+
 ### Nota de segurança (honesta)
 
 A distinção professor/aluno está nos metadados da conta (`tipo`), que

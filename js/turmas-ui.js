@@ -27,7 +27,10 @@ function _turmasRenderProfessor(wrap) {
     // grupos
     + '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem">'
     + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem"><i class="ph ph-users-four" style="color:#2e7d52"></i> Grupos</div>'
+    + '<div style="display:flex;gap:.4rem;flex-wrap:wrap">'
+    + '<button onclick="grupoEntrarComoProf()" style="background:var(--white);color:#2e7d52;border:1.5px solid #bfe3c9;border-radius:999px;padding:6px 13px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-sign-in"></i> Entrar c/ código</button>'
     + '<button onclick="grupoCriarPrompt()" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:6px 15px;font-size:.78rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-plus"></i> Novo grupo</button>'
+    + '</div>'
     + '</div>'
     + '<div id="turmas-grupos" style="margin-bottom:1.2rem"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
     // alunos
@@ -168,11 +171,13 @@ function alunoFeedbackPrompt(alunoId, nome) {
 }
 
 /* ── Grupos (vista do professor) ── */
+var _turmasGruposCache = [];
 function _turmasPintaGrupos() {
   var el = document.getElementById('turmas-grupos');
   if (!el) return;
   Turmas.todosOsGrupos().then(function (gs) {
     if (!el) return;
+    _turmasGruposCache = gs;
     if (!gs.length) {
       el.innerHTML = '<div style="color:var(--ink4);font-size:.85rem;padding:.3rem 0">Ainda não há grupos. Cria um (ex.: «9.º A» ou «Apoio Mat») e adiciona alunos ou partilha o código para entrarem.</div>';
       return;
@@ -205,16 +210,29 @@ function grupoToggle(id, nome) {
 function _grupoPintaDet(id, nome) {
   var det = document.getElementById('grupo-det-' + id);
   if (!det) return;
+  // garante que sou professor deste grupo (auto-corrige grupos antigos)
+  if (Turmas.garantirProfDoGrupo) {
+    var g = (_turmasGruposCache || []).filter(function (x) { return x.id === id; })[0];
+    if (g) Turmas.garantirProfDoGrupo(g);
+  }
   det.innerHTML = '<div style="color:var(--ink4);font-size:.8rem;padding:.4rem 0">A carregar…</div>';
   Turmas.alunosDoGrupo(id).then(function (membros) {
     var h = '<div style="border-top:1px dashed var(--border);padding-top:.6rem">';
+    // convidar outro professor
+    h += '<div style="font-size:.74rem;color:var(--ink4);margin-bottom:.5rem">Outros professores entram com o código <strong>' + _esc((_turmasGruposCache.filter(function(x){return x.id===id;})[0]||{}).codigo || '') + '</strong> (botão «Sou professor, entrar em grupo» no topo).</div>';
     if (!membros.length) {
       h += '<div style="color:var(--ink4);font-size:.8rem;margin-bottom:.5rem">Ainda sem alunos. Adiciona abaixo ou partilha o código.</div>';
     } else {
       membros.forEach(function (m) {
-        h += '<div style="display:flex;align-items:center;justify-content:space-between;font-size:.84rem;padding:.3rem 0;border-bottom:1px dashed var(--border)">'
+        var sid = id + '_' + m.aluno;
+        h += '<div style="border-bottom:1px dashed var(--border);padding:.4rem 0">'
+          + '<div style="display:flex;align-items:center;justify-content:space-between;font-size:.84rem">'
           + '<span style="font-weight:700;color:var(--ink1)">' + _esc(m.nome_aluno || '(aluno)') + '</span>'
+          + '<span style="display:flex;gap:.35rem">'
+          + '<button onclick="sessaoToggle(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(m.nome_aluno || 'aluno') + '\')" style="font-size:.72rem;font-weight:700;color:#4a3f7a;background:var(--white);border:1.5px solid #ddd8f5;border-radius:999px;padding:2px 10px;cursor:pointer;font-family:Montserrat,sans-serif">📓 Registo</button>'
           + '<button onclick="grupoRemover(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(nome) + '\')" style="font-size:.72rem;color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;padding:2px 9px;cursor:pointer;font-family:Montserrat,sans-serif">remover</button>'
+          + '</span></div>'
+          + '<div id="sessao-' + sid + '" style="display:none"></div>'
           + '</div>';
       });
     }
@@ -249,6 +267,16 @@ function grupoApagar(id, nome) {
   Turmas.apagarGrupo(id).then(function () { _turmasPintaGrupos(); });
 }
 
+/* Professor entra num grupo de outro professor (pelo código) para ajudar. */
+function grupoEntrarComoProf() {
+  var cod = prompt('Código do grupo a que queres juntar-te como professor:');
+  if (cod === null || !cod.trim()) return;
+  Turmas.entrarComoProf(cod.trim()).then(function (g) {
+    if (typeof eduToast === 'function') eduToast('Entraste no grupo «' + g.nome + '» como professor.', 'success');
+    _turmasPintaGrupos();
+  }).catch(function (e) { alert(e.message || 'Não foi possível entrar.'); });
+}
+
 function grupoAdicionar(grupoId, nome) {
   var sel = document.getElementById('grupo-add-' + grupoId);
   if (!sel || !sel.value) return;
@@ -261,6 +289,64 @@ function grupoAdicionar(grupoId, nome) {
 
 function grupoRemover(grupoId, alunoId, nome) {
   Turmas.removerDoGrupo(grupoId, alunoId).then(function () { _grupoPintaDet(grupoId, nome); });
+}
+
+/* ── Registo de sessões com um aluno (dentro de um grupo) ── */
+function sessaoToggle(grupoId, alunoId, nome) {
+  var box = document.getElementById('sessao-' + grupoId + '_' + alunoId);
+  if (!box) return;
+  if (box.style.display !== 'none') { box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  _sessaoPinta(grupoId, alunoId, nome);
+}
+
+function _sessaoPinta(grupoId, alunoId, nome) {
+  var box = document.getElementById('sessao-' + grupoId + '_' + alunoId);
+  if (!box) return;
+  box.innerHTML = '<div style="color:var(--ink4);font-size:.78rem;padding:.4rem 0">A carregar registo…</div>';
+  Turmas.sessoesDoAluno(alunoId, grupoId).then(function (ss) {
+    var h = '<div style="background:var(--cream);border-radius:10px;padding:.7rem .8rem;margin:.4rem 0 .2rem">'
+      + '<div style="font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink4);margin-bottom:.5rem">📓 Registo de ' + _esc(nome) + '</div>';
+    // formulário rápido de nova sessão
+    h += '<div style="display:flex;flex-direction:column;gap:.35rem;margin-bottom:.6rem">'
+      + '<input id="ses-disc-' + alunoId + '" placeholder="Disciplina / tema (ex.: Matemática — Frações)" style="border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;font-size:.8rem;font-family:Montserrat,sans-serif">'
+      + '<input id="ses-mat-' + alunoId + '" placeholder="Ficha / material usado (texto ou link)" style="border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;font-size:.8rem;font-family:Montserrat,sans-serif">'
+      + '<textarea id="ses-not-' + alunoId + '" placeholder="Notas para o próximo professor (o que fez, o que falta…)" rows="2" style="border:1.5px solid var(--border);border-radius:8px;padding:6px 10px;font-size:.8rem;font-family:Montserrat,sans-serif;resize:vertical"></textarea>'
+      + '<button onclick="sessaoGuardar(\'' + grupoId + '\',\'' + alunoId + '\',\'' + _escAttr(nome) + '\')" style="align-self:flex-start;background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:999px;padding:6px 16px;font-size:.78rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">Guardar sessão de hoje</button>'
+      + '</div>';
+    // histórico
+    if (!ss.length) {
+      h += '<div style="font-size:.78rem;color:var(--ink4)">Sem sessões registadas ainda.</div>';
+    } else {
+      ss.forEach(function (s) {
+        var d = (s.quando || '').slice(0, 16).replace('T', ' ');
+        h += '<div style="background:var(--white);border:1px solid var(--border);border-radius:8px;padding:.5rem .7rem;margin-bottom:.4rem">'
+          + '<div style="display:flex;justify-content:space-between;gap:.5rem"><span style="font-size:.74rem;font-weight:800;color:#4a3f7a">' + _esc(d) + (s.disciplina ? ' · ' + _esc(s.disciplina) : '') + '</span>'
+          + '<button onclick="sessaoApagar(\'' + s.id + '\',\'' + grupoId + '\',\'' + alunoId + '\',\'' + _escAttr(nome) + '\')" title="Apagar" style="color:#c0392b;background:none;border:none;font-size:.72rem;cursor:pointer">✕</button></div>'
+          + (s.material ? '<div style="font-size:.78rem;color:var(--ink2);margin-top:.2rem">📄 ' + _esc(s.material) + '</div>' : '')
+          + (s.notas ? '<div style="font-size:.78rem;color:var(--ink3);margin-top:.2rem">' + _esc(s.notas) + '</div>' : '')
+          + '<div style="font-size:.7rem;color:var(--ink4);margin-top:.2rem">por ' + _esc(s.prof_nome || 'professor') + '</div>'
+          + '</div>';
+      });
+    }
+    h += '</div>';
+    box.innerHTML = h;
+  });
+}
+
+function sessaoGuardar(grupoId, alunoId, nome) {
+  var disc = (document.getElementById('ses-disc-' + alunoId) || {}).value || '';
+  var mat = (document.getElementById('ses-mat-' + alunoId) || {}).value || '';
+  var not = (document.getElementById('ses-not-' + alunoId) || {}).value || '';
+  Turmas.criarSessao({ grupoId: grupoId, aluno: alunoId, disciplina: disc, material: mat, notas: not }).then(function () {
+    if (typeof eduToast === 'function') eduToast('Sessão registada! 📓', 'success');
+    _sessaoPinta(grupoId, alunoId, nome);
+  }).catch(function (e) { alert(e.message || 'Não foi possível guardar.'); });
+}
+
+function sessaoApagar(id, grupoId, alunoId, nome) {
+  if (!confirm('Apagar este registo de sessão?')) return;
+  Turmas.apagarSessao(id).then(function () { _sessaoPinta(grupoId, alunoId, nome); });
 }
 
 /* ── Trabalho atribuído (vista do professor) ── */
@@ -498,6 +584,11 @@ function _turmasRenderAluno(wrap) {
     + '</div>'
     + '<div style="font-size:.82rem;color:var(--ink4);margin-bottom:1rem">Os grupos a que pertences. Pede o código ao teu professor para entrares.</div>'
     + '<div id="turmas-meus-grupos" style="margin-bottom:1.2rem"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
+    // o meu registo de sessões
+    + '<div style="border-top:1px solid var(--border);padding-top:1rem;margin-bottom:1.2rem">'
+    + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.6rem"><i class="ph ph-notebook" style="color:#4a3f7a"></i> O meu registo de sessões</div>'
+    + '<div id="turmas-meu-registo"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
+    + '</div>'
     // fichas
     + '<div style="border-top:1px solid var(--border);padding-top:1rem">'
     + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.6rem"><i class="ph ph-folder-open" style="color:#4a3f7a"></i> Fichas e materiais</div>'
@@ -511,7 +602,31 @@ function _turmasRenderAluno(wrap) {
     + '</div>'
     + '</div>';
   _alunoPintaGrupos();
+  _alunoPintaRegisto();
   _turmasPintaRecursos(false);
+}
+
+/* O aluno vê o seu próprio registo de sessões (só leitura). */
+function _alunoPintaRegisto() {
+  var el = document.getElementById('turmas-meu-registo');
+  if (!el || !Turmas.minhasSessoes) return;
+  Turmas.minhasSessoes().then(function (ss) {
+    if (!el) return;
+    if (!ss.length) {
+      el.innerHTML = '<div style="color:var(--ink4);font-size:.85rem;padding:.3rem 0">Ainda não há sessões registadas. Quando trabalhares com um professor, fica aqui o resumo do que fizeram.</div>';
+      return;
+    }
+    el.innerHTML = ss.map(function (s) {
+      var d = (s.quando || '').slice(0, 16).replace('T', ' ');
+      var grupo = (s.grupos && s.grupos.nome) || '';
+      return '<div style="border:1.5px solid var(--border);border-radius:12px;padding:.6rem .9rem;margin-bottom:.45rem">'
+        + '<div style="font-size:.76rem;font-weight:800;color:#4a3f7a">' + _esc(d) + (s.disciplina ? ' · ' + _esc(s.disciplina) : '') + (grupo ? ' · ' + _esc(grupo) : '') + '</div>'
+        + (s.material ? '<div style="font-size:.8rem;color:var(--ink2);margin-top:.2rem">📄 ' + _esc(s.material) + '</div>' : '')
+        + (s.notas ? '<div style="font-size:.8rem;color:var(--ink3);margin-top:.2rem">' + _esc(s.notas) + '</div>' : '')
+        + '<div style="font-size:.72rem;color:var(--ink4);margin-top:.2rem">por ' + _esc(s.prof_nome || 'professor') + '</div>'
+        + '</div>';
+    }).join('');
+  });
 }
 
 /* Mandar dúvida a partir da secção Turmas (reusa a função do painel). */

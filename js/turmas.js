@@ -259,13 +259,19 @@ var Turmas = (function () {
     return base + '-' + s;
   }
 
-  /* PROFESSOR cria um grupo (com código automático). */
+  function _meuNome() {
+    var u = Cloud.utilizador();
+    return (typeof Cloud.nome === 'function' ? Cloud.nome() : ((u && u.email) || '').split('@')[0]);
+  }
+
+  /* PROFESSOR cria um grupo (com código automático). Fica como DONO em
+     grupo_professores. */
   function criarGrupo(nome) {
     var sb = _sb(); var u = Cloud.utilizador();
     if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
     nome = (nome || '').trim();
     if (!nome) return Promise.reject(new Error('Dá um nome ao grupo.'));
-    var profNome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+    var profNome = _meuNome();
     var codigo = _gerarCodigo(nome);
     return sb.from('grupos').insert({ professor: u.id, prof_nome: profNome, nome: nome, codigo: codigo })
       .select().single().then(function (r) {
@@ -273,7 +279,11 @@ var Turmas = (function () {
           if (/duplicate|unique/i.test(r.error.message || '')) return criarGrupo(nome); // colisão rara
           throw r.error;
         }
-        return r.data;
+        // regista o criador como professor-dono do grupo (best-effort)
+        return sb.from('grupo_professores').upsert(
+          { grupo_id: r.data.id, prof: u.id, prof_nome: profNome, papel: 'dono' },
+          { onConflict: 'grupo_id,prof' }
+        ).then(function () { return r.data; }).catch(function () { return r.data; });
       });
   }
 
@@ -347,6 +357,98 @@ var Turmas = (function () {
     var sb = _sb(); var u = Cloud.utilizador();
     if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
     return sb.from('grupo_membros').delete().eq('grupo_id', grupoId).eq('aluno', u.id);
+  }
+
+  /* ════════ PROFESSORES DO GRUPO + REGISTO DE SESSÕES ════════ */
+
+  /* Garante que o utilizador atual está em grupo_professores deste grupo
+     (auto-corrige grupos antigos: quem o criou entra como dono). */
+  function garantirProfDoGrupo(grupo) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u || !grupo) return Promise.resolve();
+    var papel = (grupo.professor === u.id) ? 'dono' : 'convidado';
+    return sb.from('grupo_professores').upsert(
+      { grupo_id: grupo.id, prof: u.id, prof_nome: _meuNome(), papel: papel },
+      { onConflict: 'grupo_id,prof' }
+    ).then(function (r) { return r; }).catch(function () {});
+  }
+
+  /* Lista de professores de um grupo. */
+  function profsDoGrupo(grupoId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('grupo_professores').select('prof, prof_nome, papel').eq('grupo_id', grupoId)
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* Convidar outro professor para o grupo, pelo email. Procura o aluno/
+     conta? Não temos lookup por email no client — por isso o convite é
+     feito com o ID. Em alternativa simples: o professor convidado entra
+     pelo CÓDIGO do grupo (ver entrarComoProf). Mantém-se esta função para
+     quando houver lookup. */
+  function entrarComoProf(codigo) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    codigo = (codigo || '').trim().toUpperCase();
+    if (!codigo) return Promise.reject(new Error('Escreve o código do grupo.'));
+    return sb.from('grupos').select('id, nome, professor').eq('codigo', codigo).maybeSingle().then(function (res) {
+      if (res.error) throw res.error;
+      if (!res.data) throw new Error('Não existe nenhum grupo com esse código.');
+      var g = res.data;
+      return sb.from('grupo_professores').upsert(
+        { grupo_id: g.id, prof: u.id, prof_nome: _meuNome(), papel: 'convidado' },
+        { onConflict: 'grupo_id,prof' }
+      ).then(function (r2) { if (r2.error) throw r2.error; return g; });
+    });
+  }
+
+  /* Grupos onde o utilizador é PROFESSOR (para a vista do professor). */
+  function gruposDoProf() {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.resolve([]);
+    return sb.from('grupo_professores').select('grupo_id, papel, grupos(id, nome, codigo, professor, prof_nome)').eq('prof', u.id)
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* Criar um registo de sessão com um aluno (dentro de um grupo).
+     opts: {grupoId, aluno, quando(ISO), disciplina, material, notas}. */
+  function criarSessao(opts) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    opts = opts || {};
+    if (!opts.grupoId) return Promise.reject(new Error('Falta o grupo.'));
+    if (!opts.aluno) return Promise.reject(new Error('Falta o aluno.'));
+    if (!(opts.disciplina || opts.material || opts.notas)) return Promise.reject(new Error('Escreve pelo menos a disciplina, o material ou as notas.'));
+    return sb.from('sessoes').insert({
+      grupo_id: opts.grupoId, aluno: opts.aluno, prof: u.id, prof_nome: _meuNome(),
+      quando: opts.quando || new Date().toISOString(),
+      disciplina: (opts.disciplina || '').trim() || null,
+      material: (opts.material || '').trim() || null,
+      notas: (opts.notas || '').trim() || null
+    }).select().single().then(function (r) { if (r.error) throw r.error; return r.data; });
+  }
+
+  function apagarSessao(id) {
+    var sb = _sb();
+    if (!sb) return Promise.reject(new Error('Sem ligação.'));
+    return sb.from('sessoes').delete().eq('id', id);
+  }
+
+  /* Histórico de sessões de um aluno (mais recentes primeiro). Opcional:
+     filtrar por grupo. Funciona para professor (do grupo) e para o aluno. */
+  function sessoesDoAluno(alunoId, grupoId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    var q = sb.from('sessoes').select('*, grupos(nome)').eq('aluno', alunoId);
+    if (grupoId) q = q.eq('grupo_id', grupoId);
+    return q.order('quando', { ascending: false }).then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* ALUNO: as suas próprias sessões (para o seu registo). */
+  function minhasSessoes() {
+    var u = Cloud.utilizador();
+    if (!u) return Promise.resolve([]);
+    return sessoesDoAluno(u.id, null);
   }
 
   /* ════════════ MENSAGENS (avisos + feedback) ════════════ */
@@ -439,6 +541,10 @@ var Turmas = (function () {
     criarGrupo: criarGrupo, apagarGrupo: apagarGrupo, todosOsGrupos: todosOsGrupos,
     alunosDoGrupo: alunosDoGrupo, adicionarAoGrupo: adicionarAoGrupo, removerDoGrupo: removerDoGrupo,
     entrarPorCodigo: entrarPorCodigo, gruposDoAluno: gruposDoAluno, sairDoGrupo: sairDoGrupo,
+    garantirProfDoGrupo: garantirProfDoGrupo, profsDoGrupo: profsDoGrupo,
+    entrarComoProf: entrarComoProf, gruposDoProf: gruposDoProf,
+    criarSessao: criarSessao, apagarSessao: apagarSessao,
+    sessoesDoAluno: sessoesDoAluno, minhasSessoes: minhasSessoes,
     criarTarefa: criarTarefa, apagarTarefa: apagarTarefa,
     tarefasDoProf: tarefasDoProf, quemFez: quemFez,
     tarefasDoAluno: tarefasDoAluno, marcarTarefa: marcarTarefa,
