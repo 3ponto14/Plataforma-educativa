@@ -403,6 +403,50 @@ create policy "aluno vê as suas sessoes"   on public.sessoes for select
 > `grupo_professores`. Ao abrir o grupo, o código garante a inscrição do
 > criador como dono (auto-correção), por isso não é preciso mexer à mão.
 
+## 3i. SQL dos DESTINATÁRIOS (ficha/trabalho para grupo ou aluno) — Run
+
+Permite escolher PARA QUEM vai cada ficha e cada trabalho: um grupo ou um
+aluno específico. As fichas passam a ser PRIVADAS ao destinatário (como
+os avisos). Acaba o envio "para todos".
+
+```sql
+-- RECURSOS (fichas): destino por grupo ou aluno.
+alter table public.recursos add column if not exists grupo_id   uuid references public.grupos(id) on delete cascade;
+alter table public.recursos add column if not exists para_aluno uuid references auth.users(id) on delete cascade;
+
+-- Substitui a leitura aberta dos recursos (era: qualquer autenticado vê).
+drop policy if exists "ler recursos" on public.recursos;
+-- Professor vê as suas fichas (cria/gere); aluno vê as fichas que são
+-- para ele OU para um grupo a que pertence.
+create policy "prof vê recursos"   on public.recursos for select
+  using (public.eh_professor());
+create policy "aluno vê recursos"  on public.recursos for select
+  using (
+    para_aluno = auth.uid()
+    or (grupo_id is not null and exists (
+          select 1 from public.grupo_membros m
+          where m.grupo_id = recursos.grupo_id and m.aluno = auth.uid()))
+  );
+
+-- TAREFAS: já tem para_aluno; juntar grupo_id.
+alter table public.tarefas add column if not exists grupo_id uuid references public.grupos(id) on delete cascade;
+
+-- Atualiza a leitura do aluno: vê tarefa que é para ele OU para um grupo
+-- a que pertence. (Substitui a regra antiga "para_aluno is null = todos".)
+drop policy if exists "aluno vê as suas" on public.tarefas;
+create policy "aluno vê tarefas" on public.tarefas for select
+  using (
+    para_aluno = auth.uid()
+    or (grupo_id is not null and exists (
+          select 1 from public.grupo_membros m
+          where m.grupo_id = tarefas.grupo_id and m.aluno = auth.uid()))
+  );
+```
+
+> Tarefas/avisos antigos com `para_aluno is null` e sem `grupo_id`
+> deixam de ser visíveis aos alunos (já não há "para todos"). Se tiveres
+> alguns de teste, podes apagá-los; os novos passam sempre com destino.
+
 ### Nota de segurança (honesta)
 
 A distinção professor/aluno está nos metadados da conta (`tipo`), que

@@ -116,25 +116,60 @@ function duvidaResponder(msgId, alunoId, nome) {
 /* (Os avisos enviados aparecem no sino 🔔 — ver notificacoes.js. A gestão
    aqui é só das dúvidas dos alunos.) */
 
-function avisoNovoPrompt() {
+/* Escolhe o destinatário (grupo OU aluno) por prompt numerado. Chama
+   cb({grupoId, paraAluno, label}) ou nada se cancelar. Se `prefere` for
+   {grupoId} ou {paraAluno}, salta a pergunta e usa esse destino. */
+function _escolherDestino(prefere, cb) {
+  if (prefere && (prefere.grupoId || prefere.paraAluno)) { cb(prefere); return; }
+  Turmas.todosOsGrupos().then(function (gs) {
+    var alunos = _turmasAlunosCache || [];
+    var opc = 'Para quem?\n';
+    var idx = [];
+    gs.forEach(function (g) { idx.push({ grupoId: g.id, label: 'Grupo: ' + g.nome }); });
+    alunos.forEach(function (a) { idx.push({ paraAluno: a.aluno, label: 'Aluno: ' + a.nome }); });
+    if (!idx.length) { alert('Cria primeiro um grupo ou espera que alunos se registem.'); return; }
+    idx.forEach(function (o, i) { opc += (i + 1) + ' = ' + o.label + '\n'; });
+    var esc = prompt(opc, '1');
+    if (esc === null) return;
+    var n = parseInt(esc, 10);
+    if (!(n >= 1 && n <= idx.length)) { alert('Opção inválida.'); return; }
+    cb(idx[n - 1]);
+  });
+}
+
+function avisoNovoPrompt(prefere) {
   var texto = prompt('Escreve o aviso (ex.: Teste de Matemática na próxima 6.ª feira):');
   if (texto === null || !texto.trim()) return;
-  // alcance: todos ou um grupo
-  Turmas.todosOsGrupos().then(function (gs) {
-    var alcance = 'geral', grupoId = null;
-    if (gs.length) {
-      var opc = 'Para quem é o aviso?\n0 = Todos os alunos';
-      gs.forEach(function (g, i) { opc += '\n' + (i + 1) + ' = ' + g.nome; });
-      var esc = prompt(opc, '0');
-      if (esc === null) return;
-      var n = parseInt(esc, 10);
-      if (n >= 1 && n <= gs.length) { alcance = 'grupo'; grupoId = gs[n - 1].id; }
-    }
-    Turmas.enviarMensagem({ texto: texto, alcance: alcance, grupoId: grupoId }).then(function () {
-      if (typeof eduToast === 'function') eduToast('Aviso enviado! Os alunos veem-no no sino 🔔', 'success');
+  _escolherDestino(prefere, function (dest) {
+    var opts = dest.paraAluno
+      ? { texto: texto, alcance: 'aluno', paraAluno: dest.paraAluno }
+      : { texto: texto, alcance: 'grupo', grupoId: dest.grupoId };
+    Turmas.enviarMensagem(opts).then(function () {
+      if (typeof eduToast === 'function') eduToast('Aviso enviado! Aparece no sino 🔔 de ' + (dest.label || 'destinatário') + '.', 'success');
       if (typeof notificacoesRender === 'function') notificacoesRender();
     }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
   });
+}
+
+/* Atalho «enviar» a um ALUNO específico: escolhe o quê e já vai com o
+   destino preenchido. */
+function alunoEnviarPrompt(alunoId, nome) {
+  var o = prompt('Enviar a ' + nome + ':\n1 = Ficha/recurso\n2 = Trabalho\n3 = Aviso', '1');
+  if (o === null) return;
+  var dest = { paraAluno: alunoId, label: 'aluno ' + nome };
+  if (o.trim() === '1') recursosAdicionarPrompt(dest);
+  else if (o.trim() === '2') tarefaAtribuirPrompt(dest);
+  else if (o.trim() === '3') avisoNovoPrompt(dest);
+}
+
+/* Atalho «enviar» a um GRUPO específico. */
+function grupoEnviarPrompt(grupoId, nome) {
+  var o = prompt('Enviar ao grupo ' + nome + ':\n1 = Ficha/recurso\n2 = Trabalho\n3 = Aviso', '1');
+  if (o === null) return;
+  var dest = { grupoId: grupoId, label: 'grupo ' + nome };
+  if (o.trim() === '1') recursosAdicionarPrompt(dest);
+  else if (o.trim() === '2') tarefaAtribuirPrompt(dest);
+  else if (o.trim() === '3') avisoNovoPrompt(dest);
 }
 
 /* Feedback a um aluno (chamado do detalhe do aluno). */
@@ -165,7 +200,10 @@ function _turmasPintaGrupos() {
         + '<div onclick="grupoToggle(\'' + g.id + '\',\'' + _escAttr(g.nome) + '\')" style="cursor:pointer;min-width:0">'
         + '<span style="font-weight:800;color:var(--ink1)"><i class="ph ph-caret-right" id="gx-' + g.id + '" style="color:var(--ink4);transition:transform .15s"></i> ' + _esc(g.nome) + '</span>'
         + ' <span style="margin-left:.3rem;font-family:JetBrains Mono,monospace;font-size:.76rem;font-weight:800;color:#2e7d52;background:#e8f5ee;border:1px solid #bfe3c9;border-radius:6px;padding:1px 7px">' + _esc(g.codigo) + '</span></div>'
-        + '<button onclick="grupoApagar(\'' + g.id + '\',\'' + _escAttr(g.nome) + '\')" title="Apagar grupo" style="color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;padding:3px 9px;font-size:.72rem;cursor:pointer;font-family:Montserrat,sans-serif;flex-shrink:0">✕</button>'
+        + '<span style="display:flex;gap:.35rem;flex-shrink:0">'
+        + '<button onclick="grupoEnviarPrompt(\'' + g.id + '\',\'' + _escAttr(g.nome) + '\')" title="Enviar ao grupo" style="font-size:.72rem;font-weight:700;color:#1a4a2e;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:3px 10px;cursor:pointer;font-family:Montserrat,sans-serif">＋ enviar</button>'
+        + '<button onclick="grupoApagar(\'' + g.id + '\',\'' + _escAttr(g.nome) + '\')" title="Apagar grupo" style="color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;padding:3px 9px;font-size:.72rem;cursor:pointer;font-family:Montserrat,sans-serif">✕</button>'
+        + '</span>'
         + '</div>'
         + '<div id="grupo-det-' + g.id + '" style="display:none;padding:0 1rem .8rem 1rem"></div>'
         + '</div>';
@@ -208,6 +246,7 @@ function _grupoPintaDet(id, nome) {
           + '<span style="display:flex;gap:.35rem">'
           + '<button onclick="sessaoToggle(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(m.nome_aluno || 'aluno') + '\')" style="font-size:.72rem;font-weight:700;color:#4a3f7a;background:var(--white);border:1.5px solid #ddd8f5;border-radius:999px;padding:2px 10px;cursor:pointer;font-family:Montserrat,sans-serif">📓 Registo</button>'
           + '<button onclick="conversaToggle(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(m.nome_aluno || 'aluno') + '\')" style="font-size:.72rem;font-weight:700;color:#2e7d52;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:2px 10px;cursor:pointer;font-family:Montserrat,sans-serif">💬 Mensagens</button>'
+          + '<button onclick="alunoEnviarPrompt(\'' + m.aluno + '\',\'' + _escAttr(m.nome_aluno || 'aluno') + '\')" title="Enviar a este aluno" style="font-size:.72rem;font-weight:700;color:#1a4a2e;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:2px 10px;cursor:pointer;font-family:Montserrat,sans-serif">＋ enviar</button>'
           + '<button onclick="grupoRemover(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(nome) + '\')" style="font-size:.72rem;color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;padding:2px 9px;cursor:pointer;font-family:Montserrat,sans-serif">remover</button>'
           + '</span></div>'
           + '<div id="sessao-' + sid + '" style="display:none"></div>'
@@ -419,18 +458,20 @@ function tarefaVerQuemFez(id, total) {
   });
 }
 
-function tarefaAtribuirPrompt() {
+function tarefaAtribuirPrompt(prefere) {
   var titulo = prompt('Título do trabalho (ex.: Ficha de revisões de Frações):');
   if (titulo === null || !titulo.trim()) return;
   var instrucoes = prompt('Instruções (opcional):') || '';
   var url = prompt('Link de uma ficha (opcional, Google Drive, etc.):') || '';
   var cursoNome = prompt('Tópico/curso da plataforma a praticar (opcional, ex.: Matemática 7.º):') || '';
   var prazo = prompt('Prazo (opcional, no formato AAAA-MM-DD, ex.: 2026-06-20):') || '';
-  Turmas.criarTarefa({ titulo: titulo, instrucoes: instrucoes, url: url, cursoNome: cursoNome, prazo: prazo.trim() || null })
-    .then(function () {
-      if (typeof eduToast === 'function') eduToast('Trabalho atribuído à turma! 📋', 'success');
-      _turmasPintaTarefas();
-    }).catch(function (e) { alert(e.message || 'Não foi possível atribuir.'); });
+  _escolherDestino(prefere, function (dest) {
+    Turmas.criarTarefa({ titulo: titulo, instrucoes: instrucoes, url: url, cursoNome: cursoNome, prazo: prazo.trim() || null, grupoId: dest.grupoId, paraAluno: dest.paraAluno })
+      .then(function () {
+        if (typeof eduToast === 'function') eduToast('Trabalho atribuído a ' + (dest.label || 'destinatário') + '! 📋', 'success');
+        _turmasPintaTarefas();
+      }).catch(function (e) { alert(e.message || 'Não foi possível atribuir.'); });
+  });
 }
 
 function tarefaApagar(id, titulo) {
@@ -570,27 +611,30 @@ function _turmasPintaRecursos(podeGerir) {
       return;
     }
     el.innerHTML = rs.map(function (r) {
+      var destino = r.grupo_id ? ('grupo ' + ((r.grupos && r.grupos.nome) || '')) : (r.para_aluno ? '1 aluno' : '');
       return '<div style="display:flex;align-items:center;justify-content:space-between;gap:.6rem;border:1.5px solid var(--border);border-radius:12px;padding:.6rem .9rem;margin-bottom:.45rem">'
         + '<a href="' + _escAttr(r.url) + '" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.6rem;text-decoration:none;flex:1;min-width:0">'
         + '<span style="font-size:1.1rem">📄</span>'
         + '<span style="min-width:0"><span style="font-weight:700;color:var(--ink1);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + _esc(r.titulo) + '</span>'
-        + '<span style="font-size:.72rem;color:var(--ink4)">' + (r.disciplina ? _esc(r.disciplina) + ' · ' : '') + 'por ' + _esc(r.autor_nome || 'professor') + '</span></span></a>'
+        + '<span style="font-size:.72rem;color:var(--ink4)">' + (r.disciplina ? _esc(r.disciplina) + ' · ' : '') + (podeGerir && destino ? 'para ' + _esc(destino) + ' · ' : '') + 'por ' + _esc(r.autor_nome || 'professor') + '</span></span></a>'
         + (podeGerir ? '<button onclick="recursosApagar(\'' + r.id + '\',\'' + _escAttr(r.titulo) + '\')" title="Remover" style="color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;padding:3px 9px;font-size:.72rem;cursor:pointer;font-family:Montserrat,sans-serif">✕</button>' : '')
         + '</div>';
     }).join('');
   });
 }
 
-function recursosAdicionarPrompt() {
+function recursosAdicionarPrompt(prefere) {
   var titulo = prompt('Nome da ficha/recurso (ex.: Ficha de revisões de Frações):');
   if (titulo === null) return;
   var url = prompt('Cola o link (Google Drive, etc.):');
   if (url === null) return;
   var disc = prompt('Disciplina (opcional, ex.: Matemática 7.º):') || '';
-  Turmas.adicionarRecurso(titulo, url, disc).then(function () {
-    if (typeof eduToast === 'function') eduToast('Ficha partilhada com a turma! 📄', 'success');
-    _turmasPintaRecursos(true);
-  }).catch(function (e) { alert(e.message || 'Não foi possível adicionar.'); });
+  _escolherDestino(prefere, function (dest) {
+    Turmas.adicionarRecurso(titulo, url, disc, { grupoId: dest.grupoId, paraAluno: dest.paraAluno }).then(function () {
+      if (typeof eduToast === 'function') eduToast('Ficha partilhada com ' + (dest.label || 'destinatário') + '! 📄', 'success');
+      _turmasPintaRecursos(true);
+    }).catch(function (e) { alert(e.message || 'Não foi possível adicionar.'); });
+  });
 }
 
 function recursosApagar(id, titulo) {

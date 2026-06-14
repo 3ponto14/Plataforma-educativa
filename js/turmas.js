@@ -110,25 +110,30 @@ var Turmas = (function () {
     });
   }
 
-  /* ── RECURSOS (fichas por link), partilhados por todos ── */
+  /* ── RECURSOS (fichas por link), por grupo ou aluno ── */
   function recursos() {
     var sb = _sb();
     if (!sb) return Promise.resolve([]);
-    return sb.from('recursos').select('*').order('criado', { ascending: false })
+    return sb.from('recursos').select('*, grupos(nome)').order('criado', { ascending: false })
       .then(function (res) { return res.error ? [] : (res.data || []); });
   }
 
-  function adicionarRecurso(titulo, url, disciplina) {
+  /* Adiciona uma ficha. dest = {grupoId, paraAluno} — obrigatório um dos
+     dois (a ficha é privada ao destinatário). */
+  function adicionarRecurso(titulo, url, disciplina, dest) {
     var sb = _sb(); var u = Cloud.utilizador();
     if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
     titulo = (titulo || '').trim();
     url = (url || '').trim();
+    dest = dest || {};
     if (!titulo) return Promise.reject(new Error('Dá um nome à ficha.'));
     if (!/^https?:\/\//i.test(url)) return Promise.reject(new Error('O link tem de começar por http:// ou https://'));
+    if (!dest.grupoId && !dest.paraAluno) return Promise.reject(new Error('Escolhe para quem é a ficha (um grupo ou um aluno).'));
     var autor = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
     return sb.from('recursos').insert({
       titulo: titulo, url: url, disciplina: (disciplina || '').trim() || null,
-      autor: u.id, autor_nome: autor
+      autor: u.id, autor_nome: autor,
+      grupo_id: dest.grupoId || null, para_aluno: dest.paraAluno || null
     }).select().single().then(function (r) {
       if (r.error) throw r.error;
       return r.data;
@@ -153,6 +158,7 @@ var Turmas = (function () {
     if (!titulo) return Promise.reject(new Error('Dá um título à tarefa.'));
     var url = (opts.url || '').trim();
     if (url && !/^https?:\/\//i.test(url)) return Promise.reject(new Error('O link tem de começar por http:// ou https://'));
+    if (!opts.grupoId && !opts.paraAluno) return Promise.reject(new Error('Escolhe para quem é o trabalho (um grupo ou um aluno).'));
     var profNome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
     return sb.from('tarefas').insert({
       professor: u.id, prof_nome: profNome, titulo: titulo,
@@ -161,6 +167,7 @@ var Turmas = (function () {
       curso: (opts.curso || '').trim() || null,
       curso_nome: (opts.cursoNome || '').trim() || null,
       prazo: opts.prazo || null,
+      grupo_id: opts.grupoId || null,
       para_aluno: opts.paraAluno || null
     }).select().single().then(function (r) { if (r.error) throw r.error; return r.data; });
   }
