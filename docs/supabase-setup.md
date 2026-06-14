@@ -311,6 +311,36 @@ create policy "prof vê respostas/dúvidas" on public.mensagens for select
          and (professor = auth.uid() or professor is null));
 ```
 
+## 3g. CORREÇÃO de privacidade das mensagens — colar no SQL Editor → Run
+
+A política `prof gere mensagens` (3e) usava `for all`, o que dava a
+QUALQUER professor o direito de LER tudo — incluindo feedback privado e
+respostas dirigidas a OUTRO professor. Esta correção separa a gestão
+(escrita) da leitura, para um professor só ver o que lhe diz respeito.
+
+```sql
+-- Remove a política demasiado aberta.
+drop policy if exists "prof gere mensagens" on public.mensagens;
+
+-- Gestão (criar/editar/apagar): cada professor só mexe no que é seu.
+create policy "prof cria mensagens"   on public.mensagens for insert
+  with check (public.eh_professor() and auth.uid() = professor);
+create policy "prof edita as suas"    on public.mensagens for update
+  using (public.eh_professor() and auth.uid() = professor);
+create policy "prof apaga as suas"    on public.mensagens for delete
+  using (public.eh_professor() and auth.uid() = professor);
+
+-- Leitura do professor: avisos gerais e de grupo (mural partilhado) +
+-- tudo o que ENVOLVE este professor (criou, é o destinatário) + dúvidas
+-- livres dos alunos. NÃO vê feedback/respostas privados de outro prof.
+create policy "prof lê o que lhe toca" on public.mensagens for select
+  using (public.eh_professor() and (
+    alcance in ('geral','grupo')
+    or professor = auth.uid()
+    or (autor_tipo = 'aluno' and professor is null)
+  ));
+```
+
 ### Nota de segurança (honesta)
 
 A distinção professor/aluno está nos metadados da conta (`tipo`), que
