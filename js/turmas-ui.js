@@ -356,33 +356,14 @@ function _grupoPintaDet(id, nome) {
     if (!membros.length) {
       h += '<div style="color:var(--ink4);font-size:.8rem;margin-bottom:.5rem">Ainda sem alunos. Adiciona abaixo ou partilha o código.</div>';
     } else {
-      // pesquisa de alunos (só vale a pena a partir de alguns alunos)
-      if (membros.length > 5) {
-        h += '<input type="search" id="grupo-procura-' + id + '" oninput="grupoFiltrarAlunos(\'' + id + '\')" placeholder="🔍 Procurar aluno…" class="grp-procura">';
+      // guarda os membros deste grupo para a pesquisa/paginação (aguenta 300+)
+      _grupoMembrosCache[id] = membros;
+      _grupoLimite[id] = _GRUPO_PASSO;
+      // pesquisa por nome (sempre que vale a pena)
+      if (membros.length > 3) {
+        h += '<input type="search" id="grupo-procura-' + id + '" oninput="grupoFiltrarAlunos(\'' + id + '\')" placeholder="🔍 Procurar aluno pelo nome…" class="grp-procura">';
       }
-      h += '<div id="grupo-lista-' + id + '">';
-      membros.forEach(function (m) {
-        var sid = id + '_' + m.aluno;
-        var nm = m.nome_aluno || 'aluno';
-        // nome + email só quando há nome repetido (desambiguação), email encurtado
-        var temMail = _nomeRepetido(nm);
-        var a = (_turmasAlunosCache || []).filter(function (x) { return x.aluno === m.aluno; })[0];
-        var mail = (temMail && a && a.email) ? a.email : '';
-        h += '<div class="grupo-aluno-row grp-aluno" data-nome="' + _escAttr((nm || '').toLowerCase()) + '">'
-          + '<span class="grp-aluno-nome">' + _esc(nm)
-          + (mail ? ' <span class="grp-aluno-mail">· ' + _esc(mail) + '</span>' : '')
-          + '</span>'
-          + '<span class="grp-acts">'
-          + '<button class="grp-ic is-reg" title="Registo de sessões" data-tip="Registo de sessões" onclick="sessaoToggle(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(nm) + '\')">📓</button>'
-          + '<button class="grp-ic is-msg" title="Mensagens" data-tip="Mensagens" onclick="conversaToggle(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(nm) + '\')">💬</button>'
-          + '<button class="grp-ic is-add" title="Enviar a este aluno" data-tip="Enviar a este aluno" onclick="alunoEnviarPrompt(\'' + m.aluno + '\',\'' + _escAttr(nm) + '\')">＋</button>'
-          + '<button class="grp-ic is-rem tip-end" title="Remover do grupo" data-tip="Remover do grupo" onclick="grupoRemover(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(nome) + '\')">✕</button>'
-          + '</span>'
-          + '<div id="sessao-' + sid + '" style="display:none;flex-basis:100%"></div>'
-          + '<div id="conversa-' + sid + '" style="display:none;flex-basis:100%"></div>'
-          + '</div>';
-      });
-      h += '</div>'; // fim grupo-lista
+      h += '<div id="grupo-lista-' + id + '"></div>'; // preenchido por _grupoPintaLista
       h += '<div id="grupo-procura-vazio-' + id + '" style="display:none;color:var(--ink4);font-size:.8rem;padding:.4rem 0">Nenhum aluno corresponde à pesquisa.</div>';
     }
     // seletor para adicionar alunos da lista geral que ainda não estão no grupo
@@ -400,8 +381,64 @@ function _grupoPintaDet(id, nome) {
     // ── Trabalho · Avisos · Fichas deste grupo (com histórico do que já foi enviado) ──
     h += '<div id="grupo-conteudo-' + id + '" style="margin-top:.8rem"><div style="color:var(--ink4);font-size:.8rem">A carregar…</div></div>';
     det.innerHTML = h;
+    if (membros.length) _grupoPintaLista(id, nome);
     _grupoPintaConteudo(id, nome);
   });
+}
+
+/* ── Lista de alunos do grupo: paginada (aguenta 300+) + pesquisa ──
+   Mostra _GRUPO_PASSO de cada vez com «mostrar mais»; a pesquisa filtra
+   sobre TODOS os membros e mostra os resultados todos. */
+var _grupoMembrosCache = {};   // grupoId -> [membros]
+var _grupoLimite = {};         // grupoId -> quantos mostrar
+var _GRUPO_PASSO = 50;
+
+function _grupoMembroRowHTML(id, nome, m) {
+  var sid = id + '_' + m.aluno;
+  var nm = m.nome_aluno || 'aluno';
+  var temMail = _nomeRepetido(nm);
+  var a = (_turmasAlunosCache || []).filter(function (x) { return x.aluno === m.aluno; })[0];
+  var mail = (temMail && a && a.email) ? a.email : '';
+  return '<div class="grupo-aluno-row grp-aluno" data-nome="' + _escAttr((nm || '').toLowerCase()) + '">'
+    + '<span class="grp-aluno-nome">' + _esc(nm)
+    + (mail ? ' <span class="grp-aluno-mail">· ' + _esc(mail) + '</span>' : '')
+    + '</span>'
+    + '<span class="grp-acts">'
+    + '<button class="grp-ic is-reg" title="Registo de sessões" data-tip="Registo de sessões" onclick="sessaoToggle(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(nm) + '\')">📓</button>'
+    + '<button class="grp-ic is-msg" title="Mensagens" data-tip="Mensagens" onclick="conversaToggle(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(nm) + '\')">💬</button>'
+    + '<button class="grp-ic is-add" title="Enviar a este aluno" data-tip="Enviar a este aluno" onclick="alunoEnviarPrompt(\'' + m.aluno + '\',\'' + _escAttr(nm) + '\')">＋</button>'
+    + '<button class="grp-ic is-rem tip-end" title="Remover do grupo" data-tip="Remover do grupo" onclick="grupoRemover(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(nome) + '\')">✕</button>'
+    + '</span>'
+    + '<div id="sessao-' + sid + '" style="display:none;flex-basis:100%"></div>'
+    + '<div id="conversa-' + sid + '" style="display:none;flex-basis:100%"></div>'
+    + '</div>';
+}
+
+function _grupoPintaLista(id, nome, termo) {
+  var lista = document.getElementById('grupo-lista-' + id);
+  if (!lista) return;
+  var todos = _grupoMembrosCache[id] || [];
+  termo = (termo || '').trim().toLowerCase();
+  var filtrados = !termo ? todos : todos.filter(function (m) {
+    return ((m.nome_aluno || '').toLowerCase().indexOf(termo) !== -1);
+  });
+  var vazio = document.getElementById('grupo-procura-vazio-' + id);
+  if (vazio) vazio.style.display = filtrados.length ? 'none' : 'block';
+  // com pesquisa: mostra todos os resultados; sem pesquisa: respeita o limite
+  var lim = termo ? filtrados.length : (_grupoLimite[id] || _GRUPO_PASSO);
+  var mostra = filtrados.slice(0, lim);
+  var h = mostra.map(function (m) { return _grupoMembroRowHTML(id, nome, m); }).join('');
+  if (!termo && filtrados.length > lim) {
+    h += '<div style="text-align:center;margin-top:.4rem">'
+      + '<button onclick="grupoMostrarMais(\'' + id + '\',\'' + _escAttr(nome) + '\')" style="background:var(--white);color:#2e7d52;border:1.5px solid #bfe3c9;border-radius:999px;padding:5px 14px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">Mostrar mais (' + (filtrados.length - lim) + ')</button>'
+      + '<div style="font-size:.72rem;color:var(--ink4);margin-top:.3rem">A mostrar ' + lim + ' de ' + filtrados.length + ' · usa a pesquisa para encontrar</div></div>';
+  }
+  lista.innerHTML = h;
+}
+
+function grupoMostrarMais(id, nome) {
+  _grupoLimite[id] = (_grupoLimite[id] || _GRUPO_PASSO) + _GRUPO_PASSO;
+  _grupoPintaLista(id, nome);
 }
 
 /* Mostra, dentro da página do grupo, o que já foi enviado a este grupo:
@@ -462,19 +499,11 @@ function _grupoRepinta(grupoId) {
 /* Filtra os alunos de um grupo pelo nome, à medida que se escreve. */
 function grupoFiltrarAlunos(id) {
   var inp = document.getElementById('grupo-procura-' + id);
-  var lista = document.getElementById('grupo-lista-' + id);
-  if (!inp || !lista) return;
-  var termo = (inp.value || '').trim().toLowerCase();
-  var rows = lista.querySelectorAll('.grupo-aluno-row');
-  var visiveis = 0;
-  for (var i = 0; i < rows.length; i++) {
-    var nome = rows[i].getAttribute('data-nome') || '';
-    var ok = !termo || nome.indexOf(termo) !== -1;
-    rows[i].style.display = ok ? '' : 'none';
-    if (ok) visiveis++;
-  }
-  var vazio = document.getElementById('grupo-procura-vazio-' + id);
-  if (vazio) vazio.style.display = visiveis ? 'none' : 'block';
+  if (!inp) return;
+  var g = (_turmasGruposCache || []).filter(function (x) { return x.id === id; })[0];
+  // re-renderiza a lista a partir de TODOS os membros (não só os visíveis),
+  // para a pesquisa encontrar mesmo quando há centenas paginadas.
+  _grupoPintaLista(id, (g && g.nome) || '', inp.value);
 }
 
 function grupoCriarPrompt() {
