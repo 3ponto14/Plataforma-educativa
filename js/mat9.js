@@ -1139,6 +1139,11 @@ function mat9gfGerar(formato) {
   var algumTipo = _mat9gf.tipos.resumo || _mat9gf.tipos.exercicios || _mat9gf.tipos.teste || _mat9gf.tipos.minitestes;
   if (!algumTipo) { if (status) status.textContent = 'Seleciona pelo menos um tipo de conteúdo.'; return; }
   if (status) status.textContent = 'A gerar…';
+  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
+    var _capsF = []; _mat9CapMeta.forEach(function(m){ if (_mat9gf.caps[m.n]) _capsF.push(m.n); });
+    var _capsNomes = _capsF.map(function(n){ var mm=_mat9CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
+    Atribuir.montar('mat9-fichas-atr', { curso:'mat9', cursoNome:'Matemática 9.º', tema:_capsF.join('.'), temaNome:_capsNomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_mat9gf.dif });
+  }
 
   var difLabel = { facil: 'Fácil', medio: 'Médio', dificil: 'Difícil' }[_mat9gf.dif];
   var solucoes = []; // {num, ex} acumuladas para a secção final
@@ -1840,6 +1845,7 @@ var _mat9Banco = {
   ]
 };
 /* atribuir: deep-link mat9 */
-function _mat9DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='jogos'){ setTimeout(function(){ mat9SwitchTab('jogos',null); },350); return; }
+function _mat9DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_mat9gf){ _mat9gf.caps={}; cs.forEach(function(n){ _mat9gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _mat9gf.dif=p.get('dif'); } setTimeout(function(){ mat9SwitchTab('fichas',null); },350); return; }
+    if(p.get('abrir')==='jogos'){ setTimeout(function(){ mat9SwitchTab('jogos',null); },350); return; }
     if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat9Prat.cap=cap; _mat9Prat.st=st; _mat9Prat.nivel=nivel; setTimeout(function(){ mat9SwitchTab('exercicios',null); if(typeof mat9GerarExercicios==='function') mat9GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat9DeepLinkAuto,300);});else setTimeout(_mat9DeepLinkAuto,300);

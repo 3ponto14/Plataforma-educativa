@@ -1112,6 +1112,11 @@ function mat10gfGerar(formato) {
   var algumTipo = _mat10gf.tipos.resumo || _mat10gf.tipos.exercicios || _mat10gf.tipos.teste || _mat10gf.tipos.minitestes;
   if (!algumTipo) { if (status) status.textContent = 'Seleciona pelo menos um tipo de conteúdo.'; return; }
   if (status) status.textContent = 'A gerar…';
+  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
+    var _capsF = []; _mat10CapMeta.forEach(function(m){ if (_mat10gf.caps[m.n]) _capsF.push(m.n); });
+    var _capsNomes = _capsF.map(function(n){ var mm=_mat10CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
+    Atribuir.montar('mat10-fichas-atr', { curso:'mat10', cursoNome:'Matemática 10.º', tema:_capsF.join('.'), temaNome:_capsNomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_mat10gf.dif });
+  }
 
   var difLabel = { facil: 'Fácil', medio: 'Médio', dificil: 'Difícil' }[_mat10gf.dif];
   var solucoes = []; // {num, ex} acumuladas para a secção final
@@ -1700,6 +1705,7 @@ var _mat10Banco = {
   ]
 };
 /* atribuir: deep-link mat10 */
-function _mat10DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='jogos'){ setTimeout(function(){ mat10SwitchTab('jogos',null); },350); return; }
+function _mat10DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_mat10gf){ _mat10gf.caps={}; cs.forEach(function(n){ _mat10gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _mat10gf.dif=p.get('dif'); } setTimeout(function(){ mat10SwitchTab('fichas',null); },350); return; }
+    if(p.get('abrir')==='jogos'){ setTimeout(function(){ mat10SwitchTab('jogos',null); },350); return; }
     if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat10Prat.cap=cap; _mat10Prat.st=st; _mat10Prat.nivel=nivel; setTimeout(function(){ mat10SwitchTab('exercicios',null); if(typeof mat10GerarExercicios==='function') mat10GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat10DeepLinkAuto,300);});else setTimeout(_mat10DeepLinkAuto,300);

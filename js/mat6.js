@@ -1135,6 +1135,11 @@ function mat6gfGerar(formato) {
   var algumTipo = _mat6gf.tipos.resumo || _mat6gf.tipos.exercicios || _mat6gf.tipos.teste || _mat6gf.tipos.minitestes;
   if (!algumTipo) { if (status) status.textContent = 'Seleciona pelo menos um tipo de conteúdo.'; return; }
   if (status) status.textContent = 'A gerar…';
+  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
+    var _capsF = []; _mat6CapMeta.forEach(function(m){ if (_mat6gf.caps[m.n]) _capsF.push(m.n); });
+    var _capsNomes = _capsF.map(function(n){ var mm=_mat6CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
+    Atribuir.montar('mat6-fichas-atr', { curso:'mat6', cursoNome:'Matemática 6.º', tema:_capsF.join('.'), temaNome:_capsNomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_mat6gf.dif });
+  }
 
   var difLabel = { facil: 'Fácil', medio: 'Médio', dificil: 'Difícil' }[_mat6gf.dif];
   var solucoes = []; // {num, ex} acumuladas para a secção final
@@ -1664,6 +1669,7 @@ var _mat6Banco = {
   ]
 };
 /* atribuir: deep-link mat6 */
-function _mat6DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='jogos'){ setTimeout(function(){ mat6SwitchTab('jogos',null); },350); return; }
+function _mat6DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_mat6gf){ _mat6gf.caps={}; cs.forEach(function(n){ _mat6gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _mat6gf.dif=p.get('dif'); } setTimeout(function(){ mat6SwitchTab('fichas',null); },350); return; }
+    if(p.get('abrir')==='jogos'){ setTimeout(function(){ mat6SwitchTab('jogos',null); },350); return; }
     if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat6Prat.cap=cap; _mat6Prat.st=st; _mat6Prat.nivel=nivel; setTimeout(function(){ mat6SwitchTab('exercicios',null); if(typeof mat6GerarExercicios==='function') mat6GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat6DeepLinkAuto,300);});else setTimeout(_mat6DeepLinkAuto,300);

@@ -1343,6 +1343,11 @@ function port9gfGerar(formato) {
   var algumTipo = _port9gf.tipos.resumo || _port9gf.tipos.exercicios || _port9gf.tipos.teste || _port9gf.tipos.minitestes;
   if (!algumTipo) { if (status) status.textContent = 'Seleciona pelo menos um tipo de conteúdo.'; return; }
   if (status) status.textContent = 'A gerar…';
+  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
+    var _capsF = []; _port9CapMeta.forEach(function(m){ if (_port9gf.caps[m.n]) _capsF.push(m.n); });
+    var _capsNomes = _capsF.map(function(n){ var mm=_port9CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
+    Atribuir.montar('port9-fichas-atr', { curso:'port9', cursoNome:'Português 9.º', tema:_capsF.join('.'), temaNome:_capsNomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_port9gf.dif });
+  }
 
   var difLabel = { facil: 'Fácil', medio: 'Médio', dificil: 'Difícil' }[_port9gf.dif];
   var solucoes = []; // {num, ex} acumuladas para a secção final
@@ -1487,6 +1492,7 @@ function _port9Init() {
 function _port9DeepLink() {
   try {
     var p = new URLSearchParams(window.location.search);
+    if (p.get('abrir') === 'fichas') { var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_port9gf){ _port9gf.caps={}; cs.forEach(function(n){ _port9gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _port9gf.dif=p.get('dif'); } setTimeout(function(){ port9SwitchTab('fichas', null); }, 250); return; }
     if (p.get('abrir') === 'jogos') { setTimeout(function(){ port9SwitchTab('jogos', null); }, 250); return; }
     if (p.get('abrir') !== 'praticar') return;
     var cap = parseInt(p.get('cap'), 10) || 1;

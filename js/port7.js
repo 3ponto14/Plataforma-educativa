@@ -1223,6 +1223,11 @@ function port7gfGerar(formato) {
   var algumTipo = _port7gf.tipos.resumo || _port7gf.tipos.exercicios || _port7gf.tipos.teste || _port7gf.tipos.minitestes;
   if (!algumTipo) { if (status) status.textContent = 'Seleciona pelo menos um tipo de conteúdo.'; return; }
   if (status) status.textContent = 'A gerar…';
+  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
+    var _capsF = []; _port7CapMeta.forEach(function(m){ if (_port7gf.caps[m.n]) _capsF.push(m.n); });
+    var _capsNomes = _capsF.map(function(n){ var mm=_port7CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
+    Atribuir.montar('port7-fichas-atr', { curso:'port7', cursoNome:'Português 7.º', tema:_capsF.join('.'), temaNome:_capsNomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_port7gf.dif });
+  }
 
   var difLabel = { facil: 'Fácil', medio: 'Médio', dificil: 'Difícil' }[_port7gf.dif];
   var solucoes = []; // {num, ex} acumuladas para a secção final
@@ -1615,6 +1620,7 @@ _port7Banco[3] = _port7Banco[3].concat([
 
 
 /* atribuir: deep-link port7 */
-function _port7DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='jogos'){ setTimeout(function(){ port7SwitchTab('jogos',null); },350); return; }
+function _port7DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_port7gf){ _port7gf.caps={}; cs.forEach(function(n){ _port7gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _port7gf.dif=p.get('dif'); } setTimeout(function(){ port7SwitchTab('fichas',null); },350); return; }
+    if(p.get('abrir')==='jogos'){ setTimeout(function(){ port7SwitchTab('jogos',null); },350); return; }
     if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _port7Prat.cap=cap; _port7Prat.st=st; _port7Prat.nivel=nivel; setTimeout(function(){ port7SwitchTab('exercicios',null); if(typeof port7GerarExercicios==='function') port7GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_port7DeepLinkAuto,300);});else setTimeout(_port7DeepLinkAuto,300);
