@@ -18,6 +18,7 @@ var Cloud = (function () {
   var PROG_KEY = 'edupt_progress_v2';   // mesmo do ProgressManager
   var DESAFIO_KEY = 'edupt_desafio';
   var ANO_KEY = 'edupt_desafio_ano';
+  var PROF_KEY = 'edupt_prof';          // gamificação do "Momento do Professor"
 
   var sb = null;       // cliente supabase (null se indisponível)
   var user = null;     // utilizador atual (null = anónimo)
@@ -142,18 +143,33 @@ var Cloud = (function () {
     return out;
   }
 
+  /* Funde a gamificação do professor (Momento do Professor): maior XP,
+     maior ofensiva, e o "dia" mais recente (para não recontar o de hoje). */
+  function _fundeProf(local, nuvem) {
+    local = local || {}; nuvem = nuvem || {};
+    var out = {};
+    out.xp = Math.max(local.xp || 0, nuvem.xp || 0);
+    out.maxStreak = Math.max(local.maxStreak || 0, nuvem.maxStreak || 0);
+    // streak viva: fica a do "dia" mais recente
+    if ((local.dia || '') >= (nuvem.dia || '')) { out.streak = local.streak || 0; out.dia = local.dia; }
+    else { out.streak = nuvem.streak || 0; out.dia = nuvem.dia; }
+    return out;
+  }
+
   /* Puxa o que está na nuvem e funde com o local (deixa o resultado no
      localStorage, para o resto da plataforma ver). */
   function _puxarDaNuvem() {
     if (!sb || !user) return Promise.resolve();
-    return sb.from('progresso').select('dados, desafio, ano').eq('user_id', user.id).maybeSingle().then(function (res) {
+    return sb.from('progresso').select('dados, desafio, ano, prof').eq('user_id', user.id).maybeSingle().then(function (res) {
       if (res.error) return;
       var linha = res.data;
       if (!linha) return; // ainda não tem linha; será criada no primeiro envio
       _guardarLocal(PROG_KEY, _fundeProgresso(_lerLocal(PROG_KEY), linha.dados));
       _guardarLocal(DESAFIO_KEY, _fundeDesafio(_lerLocal(DESAFIO_KEY), linha.desafio));
+      if (typeof linha.prof !== 'undefined') _guardarLocal(PROF_KEY, _fundeProf(_lerLocal(PROF_KEY), linha.prof));
       if (linha.ano && !localStorage.getItem(ANO_KEY)) _guardarLocal(ANO_KEY, linha.ano);
       // refresca a topbar/conquistas se as funções existirem
+      if (typeof painelInicioRender === 'function') { try { painelInicioRender(); } catch (e) {} }
       if (typeof pmUpdateTopbar === 'function') pmUpdateTopbar();
       if (typeof desafioRender === 'function') desafioRender();
       if (typeof desafioRenderConquistas === 'function') desafioRenderConquistas();
@@ -168,6 +184,7 @@ var Cloud = (function () {
       user_id: user.id,
       dados: _lerLocal(PROG_KEY) || {},
       desafio: _lerLocal(DESAFIO_KEY) || {},
+      prof: _lerLocal(PROF_KEY) || {},
       ano: parseInt(localStorage.getItem(ANO_KEY)) || null,
       atualizado: new Date().toISOString()
     };

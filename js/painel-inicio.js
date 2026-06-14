@@ -69,7 +69,11 @@
   /* ── Gamificação própria do professor (separada dos alunos) ── */
   var PROF_KEY = 'edupt_prof';
   function _profLoad() { try { return JSON.parse(localStorage.getItem(PROF_KEY)) || {}; } catch (e) { return {}; } }
-  function _profSave(o) { try { localStorage.setItem(PROF_KEY, JSON.stringify(o)); } catch (e) {} }
+  function _profSave(o) {
+    try { localStorage.setItem(PROF_KEY, JSON.stringify(o)); } catch (e) {}
+    // sincroniza com a conta (nuvem), para não se perder ao limpar a cache
+    if (typeof Cloud !== 'undefined' && Cloud.enviarDebounce) { try { Cloud.enviarDebounce(); } catch (e) {} }
+  }
   function _profFeitoHoje() { return _profLoad().dia === _hojeISO(); }
   /* Marca o momento de hoje como concluído: +XP (conforme acertos) e
      atualiza a ofensiva. certas = nº de respostas certas (0..3). */

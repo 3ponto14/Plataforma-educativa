@@ -54,6 +54,10 @@ create policy "inserir o próprio progresso"
 create policy "atualizar o próprio progresso"
   on public.progresso for update
   using (auth.uid() = user_id);
+
+-- Coluna p/ a gamificação do "Momento do Professor" (🔥 ofensiva / ⭐ XP).
+-- Segura e não destrutiva: só acrescenta a coluna se ainda não existir.
+alter table public.progresso add column if not exists prof jsonb not null default '{}'::jsonb;
 ```
 
 ## 3b. SQL do APOIO AO ESTUDO (espaço partilhado) — colar no SQL Editor → Run
