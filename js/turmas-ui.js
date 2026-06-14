@@ -219,6 +219,7 @@ function avisoNovoPrompt(prefere) {
     Turmas.enviarMensagem(opts).then(function () {
       if (typeof eduToast === 'function') eduToast('Aviso enviado! Aparece no sino 🔔 de ' + (dest.label || 'destinatário') + '.', 'success');
       if (typeof notificacoesRender === 'function') notificacoesRender();
+      _grupoRepinta(dest.grupoId); // mostra o aviso já na página do grupo
     }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
   });
 }
@@ -360,8 +361,66 @@ function _grupoPintaDet(id, nome) {
         + '<button onclick="grupoAdicionar(\'' + id + '\',\'' + _escAttr(nome) + '\')" style="font-size:.78rem;font-weight:700;color:#2e7d52;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:5px 12px;cursor:pointer;font-family:Montserrat,sans-serif">Adicionar</button>'
         + '</div>';
     }
+    // ── Trabalho · Avisos · Fichas deste grupo (com histórico do que já foi enviado) ──
+    h += '<div id="grupo-conteudo-' + id + '" style="margin-top:.8rem"><div style="color:var(--ink4);font-size:.8rem">A carregar…</div></div>';
     det.innerHTML = h;
+    _grupoPintaConteudo(id, nome);
   });
+}
+
+/* Mostra, dentro da página do grupo, o que já foi enviado a este grupo:
+   trabalho atribuído, avisos enviados e fichas — cada um com "+ novo".
+   Resolve o «enviei um aviso e não vejo nada no grupo». */
+function _grupoPintaConteudo(id, nome) {
+  var box = document.getElementById('grupo-conteudo-' + id);
+  if (!box || !Turmas.resumoDoGrupo) return;
+  Turmas.resumoDoGrupo(id).then(function (r) {
+    if (!box) return;
+    function bloco(titulo, icon, lista, vazio, btnLabel, btnFn, render) {
+      var h = '<div class="grp-bloco">'
+        + '<div class="grp-bloco-h"><span><i class="ph ' + icon + '"></i> ' + titulo + ' <span class="grp-bloco-n">' + lista.length + '</span></span>'
+        + '<button class="grp-bloco-add" onclick="' + btnFn + '">＋ ' + btnLabel + '</button></div>';
+      if (!lista.length) h += '<div class="grp-bloco-vazio">' + vazio + '</div>';
+      else h += lista.map(render).join('');
+      return h + '</div>';
+    }
+    var destFn = "{grupoId:'" + id + "',label:'grupo " + _escAttr(nome) + "'}";
+    var h = '';
+    // Trabalho
+    h += bloco('Trabalho atribuído', 'ph-clipboard-text', r.tarefas,
+      'Ainda não atribuíste trabalho a este grupo.', 'trabalho', 'tarefaAtribuirPrompt(' + destFn + ')',
+      function (t) {
+        return '<div class="grp-item"><span class="grp-item-tit">' + _esc(t.titulo)
+          + (t.curso_nome ? ' <span class="grp-item-tag">' + _esc(t.curso_nome) + '</span>' : '') + '</span>'
+          + '<button class="grp-item-x" title="Apagar" onclick="tarefaApagar(\'' + t.id + '\',\'' + _escAttr(t.titulo) + '\')">✕</button></div>';
+      });
+    // Avisos enviados (o que faltava!)
+    h += bloco('Avisos enviados', 'ph-megaphone', r.avisos,
+      'Ainda não enviaste avisos a este grupo.', 'aviso', 'avisoNovoPrompt({grupoId:\'' + id + '\',label:\'grupo ' + _escAttr(nome) + '\'})',
+      function (a) {
+        var d = (a.criado || '').slice(0, 10);
+        return '<div class="grp-item"><span class="grp-item-tit">📣 ' + _esc(a.texto) + '</span>'
+          + '<span class="grp-item-data">' + _esc(d) + '</span></div>';
+      });
+    // Fichas
+    h += bloco('Fichas e recursos', 'ph-link-simple', r.recursos,
+      'Ainda não partilhaste fichas com este grupo.', 'ficha', 'recursosAdicionarPrompt({grupoId:\'' + id + '\',label:\'grupo ' + _escAttr(nome) + '\'})',
+      function (rc) {
+        return '<div class="grp-item"><a class="grp-item-tit" href="' + _escAttr(rc.url) + '" target="_blank" rel="noopener">📄 ' + _esc(rc.titulo) + '</a>'
+          + '<button class="grp-item-x" title="Remover" onclick="recursosApagar(\'' + rc.id + '\',\'' + _escAttr(rc.titulo) + '\')">✕</button></div>';
+      });
+    box.innerHTML = h;
+  });
+}
+
+/* Repinta o conteúdo (trabalho/avisos/fichas) de um grupo, se estiver
+   aberto. Chamado após enviar algo, para o item aparecer logo. */
+function _grupoRepinta(grupoId) {
+  if (!grupoId) return;
+  var det = document.getElementById('grupo-det-' + grupoId);
+  if (!det || det.style.display === 'none') return;
+  var g = (_turmasGruposCache || []).filter(function (x) { return x.id === grupoId; })[0];
+  _grupoPintaConteudo(grupoId, (g && g.nome) || '');
 }
 
 /* Filtra os alunos de um grupo pelo nome, à medida que se escreve. */
@@ -612,6 +671,7 @@ function tarefaAtribuirPrompt(prefere) {
       .then(function () {
         if (typeof eduToast === 'function') eduToast('Trabalho atribuído a ' + (dest.label || 'destinatário') + '! 📋', 'success');
         _turmasPintaTarefas();
+        _grupoRepinta(dest.grupoId);
       }).catch(function (e) { alert(e.message || 'Não foi possível atribuir.'); });
   });
 }
@@ -814,6 +874,7 @@ function recursosAdicionarPrompt(prefere) {
     Turmas.adicionarRecurso(titulo, url, disc, { grupoId: dest.grupoId, paraAluno: dest.paraAluno }).then(function () {
       if (typeof eduToast === 'function') eduToast('Ficha partilhada com ' + (dest.label || 'destinatário') + '! 📄', 'success');
       _turmasPintaRecursos(true);
+      _grupoRepinta(dest.grupoId);
     }).catch(function (e) { alert(e.message || 'Não foi possível adicionar.'); });
   });
 }

@@ -4088,6 +4088,22 @@ body.ml-fixed-on #sec-cursos .portal-filters{margin-left:0;margin-right:0;max-wi
 .grp-ic.is-msg:hover,.grp-ic.is-add:hover{border-color:#bfe3c9;color:#2e7d52}
 .grp-ic.is-rem:hover{border-color:#e8a8a0;color:#c0392b}
 .grp-procura{width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:8px;padding:6px 12px;font-size:.84rem;font-family:'Montserrat',sans-serif;margin-bottom:.6rem}
+/* blocos da página do grupo: trabalho / avisos / fichas */
+.grp-bloco{border-top:1px dashed var(--border);padding-top:.6rem;margin-top:.6rem}
+.grp-bloco-h{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:.4rem}
+.grp-bloco-h>span{font-weight:800;color:var(--ink1);font-size:.84rem;display:flex;align-items:center;gap:.4rem}
+.grp-bloco-h i{color:#2e7d52}
+.grp-bloco-n{font-size:.72rem;font-weight:700;color:var(--ink4);background:var(--cream);border-radius:999px;padding:0 7px;min-width:18px;text-align:center}
+.grp-bloco-add{font-size:.74rem;font-weight:700;color:#1a4a2e;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:3px 11px;cursor:pointer;font-family:'Montserrat',sans-serif}
+.grp-bloco-add:hover{background:#e8f5ee}
+.grp-bloco-vazio{font-size:.78rem;color:var(--ink4);padding:.2rem 0 .4rem}
+.grp-item{display:flex;align-items:center;gap:.5rem;justify-content:space-between;padding:.35rem 0;border-bottom:1px dashed var(--border)}
+.grp-item:last-child{border-bottom:none}
+.grp-item-tit{font-size:.82rem;color:var(--ink1);font-weight:600;text-decoration:none;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+a.grp-item-tit:hover{color:#2e7d52;text-decoration:underline}
+.grp-item-tag{font-size:.68rem;color:#2e7d52;background:#e8f5ee;border:1px solid #bfe3c9;border-radius:6px;padding:0 6px;font-weight:700}
+.grp-item-data{font-size:.72rem;color:var(--ink4);flex-shrink:0}
+.grp-item-x{color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;width:24px;height:24px;font-size:.72rem;cursor:pointer;font-family:'Montserrat',sans-serif;flex-shrink:0;line-height:1}
 
 /* ── Tooltip leve (qualquer elemento com data-tip) ── */
 [data-tip]{position:relative}

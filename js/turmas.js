@@ -358,6 +358,25 @@ var Turmas = (function () {
       .then(function (res) { return res.error ? [] : (res.data || []); });
   }
 
+  /* PROFESSOR: tudo o que toca a um grupo, para a página do grupo:
+     alunos + trabalho atribuído + fichas + avisos enviados. Faz os
+     pedidos em paralelo e filtra por grupo_id. */
+  function resumoDoGrupo(grupoId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve({ alunos: [], tarefas: [], recursos: [], avisos: [] });
+    var pAlunos = alunosDoGrupo(grupoId);
+    var pTarefas = sb.from('tarefas').select('*').eq('grupo_id', grupoId).order('criado', { ascending: false })
+      .then(function (r) { return r.error ? [] : (r.data || []); });
+    var pRecursos = sb.from('recursos').select('*').eq('grupo_id', grupoId).order('criado', { ascending: false })
+      .then(function (r) { return r.error ? [] : (r.data || []); });
+    var pAvisos = sb.from('mensagens').select('*').eq('grupo_id', grupoId).eq('alcance', 'grupo')
+      .order('criado', { ascending: false })
+      .then(function (r) { return r.error ? [] : (r.data || []); });
+    return Promise.all([pAlunos, pTarefas, pRecursos, pAvisos]).then(function (r) {
+      return { alunos: r[0], tarefas: r[1], recursos: r[2], avisos: r[3] };
+    });
+  }
+
   /* PROFESSOR adiciona um aluno (da lista) a um grupo. */
   function adicionarAoGrupo(grupoId, alunoId, nomeAluno) {
     var sb = _sb();
@@ -612,7 +631,7 @@ var Turmas = (function () {
     responder: responder, criarDuvida: criarDuvida, respostasDeAlunos: respostasDeAlunos,
     conversaComAluno: conversaComAluno,
     criarGrupo: criarGrupo, apagarGrupo: apagarGrupo, todosOsGrupos: todosOsGrupos,
-    alunosDoGrupo: alunosDoGrupo, adicionarAoGrupo: adicionarAoGrupo, removerDoGrupo: removerDoGrupo,
+    alunosDoGrupo: alunosDoGrupo, resumoDoGrupo: resumoDoGrupo, adicionarAoGrupo: adicionarAoGrupo, removerDoGrupo: removerDoGrupo,
     entrarPorCodigo: entrarPorCodigo, gruposDoAluno: gruposDoAluno, sairDoGrupo: sairDoGrupo,
     garantirProfDoGrupo: garantirProfDoGrupo, profsDoGrupo: profsDoGrupo,
     entrarComoProf: entrarComoProf, gruposDoProf: gruposDoProf,
