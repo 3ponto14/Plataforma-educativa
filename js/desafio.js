@@ -175,6 +175,7 @@ function _desafioAno() {
 }
 function desafioSetAno(ano) {
   localStorage.setItem(DESAFIO_ANO_KEY, ano);
+  if (typeof Cloud !== 'undefined' && Cloud.enviarDebounce) { try { Cloud.enviarDebounce(); } catch (e) {} }
   _desafioEstado = { idx: 0, certas: 0, respondido: false, qs: [] }; // reinicia
   desafioRender();
 }
@@ -215,7 +216,11 @@ function _desafioPerguntas() {
 /* Estado: registo de "feito hoje" é POR ANO (mudar de ano dá novo desafio). */
 var DESAFIO_KEY = 'edupt_desafio';
 function _desafioLoad() { try { return JSON.parse(localStorage.getItem(DESAFIO_KEY)) || {}; } catch (e) { return {}; } }
-function _desafioSave(d) { try { localStorage.setItem(DESAFIO_KEY, JSON.stringify(d)); } catch (e) {} }
+function _desafioSave(d) {
+  try { localStorage.setItem(DESAFIO_KEY, JSON.stringify(d)); } catch (e) {}
+  // sincroniza com a conta (nuvem), para o desafio/conquistas não se perderem ao limpar a cache
+  if (typeof Cloud !== 'undefined' && Cloud.enviarDebounce) { try { Cloud.enviarDebounce(); } catch (e) {} }
+}
 function _desafioFeitoHoje() { var r = _desafioLoad(); return r.dia === _desafioHoje() && r.ano === _desafioAno(); }
 
 var _desafioEstado = { idx: 0, certas: 0, respondido: false, qs: [] };
