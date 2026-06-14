@@ -268,6 +268,7 @@ var _port8TemasCount = { 1: 4, 2: 5, 3: 3, 4: 3, 5: 3 };
 
 // Estado da prática
 var _port8Prat = { cap: 1, st: 0, nivel: 'medio', score: { correct: 0, total: 0 }, answered: {}, exs: [] };
+var _port8TarefaAtiva=null, _port8TarefaResp={};
 
 function _port8PratStorageKey(cap) { return 'edupt_port8_cap' + cap; }
 
@@ -412,6 +413,7 @@ function port8GerarExercicios() {
     + '<div><div class="score-num" id="port8-prat-total">/ 0</div><div class="score-label">respondidas</div></div>'
     + '<div class="progress-track"><div class="progress-fill" id="port8-prat-prog" style="width:0%"></div></div>'
     + '<button class="btn btn-ghost ml-auto" onclick="port8GerarExercicios()">↺ Novas questões</button>'
+    + (_port8TarefaAtiva ? '<button class="btn" style="background:#2e7d52;color:#fff;border:none;border-radius:999px;padding:6px 14px;font-weight:800;cursor:pointer;margin-left:.4rem" onclick="port8EntregarTarefa()">\u2713 Terminar e entregar</button>' : '')
     + '</div>';
   var quizHTML = (typeof _capBuildQuizHTML === 'function')
     ? _capBuildQuizHTML(exs, 'm8ex', 'port8CheckEx')
@@ -431,7 +433,7 @@ function port8CheckEx(qid, tipo, val, btn) {
   if (!r) return; // resposta vazia
   _port8Prat.answered[qid] = true;
   if (r.correct) _port8Prat.score.correct++;
-  _port8Prat.score.total++;
+  _port8Prat.score.total++; if(_port8TarefaAtiva){_port8TarefaResp[qid]=!!r.correct;}
   if (typeof _capShowFeedback === 'function') _capShowFeedback(qid, r.correct, r.expl, val, btn);
   var se = document.getElementById('port8-prat-score'); if (se) se.textContent = _port8Prat.score.correct;
   var te = document.getElementById('port8-prat-total'); if (te) te.textContent = '/ ' + _port8Prat.score.total;
@@ -1527,7 +1529,7 @@ _port8Banco[2] = _port8Banco[2].concat([
 /* atribuir: deep-link port8 */
 function _port8DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_port8gf){ _port8gf.caps={}; cs.forEach(function(n){ _port8gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _port8gf.dif=p.get('dif'); } setTimeout(function(){ port8SwitchTab('fichas',null); },350); return; }
     if(p.get('abrir')==='jogos'){ var jc=parseInt(p.get('cap'),10); if(jc&&_port8Prat) _port8Prat.cap=jc; setTimeout(function(){ port8SwitchTab('jogos',null); },350); return; }
-    if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _port8Prat.cap=cap; _port8Prat.st=st; _port8Prat.nivel=nivel; setTimeout(function(){ port8SwitchTab('exercicios',null); if(typeof port8GerarExercicios==='function') port8GerarExercicios(); },350); }catch(e){} }
+    if(p.get('abrir')!=='praticar')return; if(p.get('tarefa')){_port8TarefaAtiva=p.get('tarefa');_port8TarefaResp={};} var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _port8Prat.cap=cap; _port8Prat.st=st; _port8Prat.nivel=nivel; setTimeout(function(){ port8SwitchTab('exercicios',null); if(typeof port8GerarExercicios==='function') port8GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_port8DeepLinkAuto,300);});else setTimeout(_port8DeepLinkAuto,300);
 
 function port8AtribuirFicha(){
@@ -1535,4 +1537,16 @@ function port8AtribuirFicha(){
   if(!caps.length){ var st=document.getElementById('port8-fichas-status'); if(st) st.textContent='Escolhe pelo menos um capítulo para atribuir.'; return null; }
   var nomes=caps.map(function(n){ var mm=_port8CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
   return { curso:'port8', cursoNome:'Português 8.º', tema:caps.join('.'), temaNome:nomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_port8gf.dif };
+}
+
+function port8EntregarTarefa(){
+  if(!_port8TarefaAtiva||typeof Turmas==='undefined'||!Turmas.guardarResultado)return;
+  var qids=Object.keys(_port8TarefaResp||{});
+  if(!qids.length){alert('Responde a pelo menos uma pergunta antes de entregar.');return;}
+  var certas=0,detalhe=[];
+  qids.forEach(function(qid,i){ var ok=!!_port8TarefaResp[qid]; if(ok)certas++; var ex=_port8Prat.exs[i]||{}; detalhe.push({q:(ex.enun||ex.pergunta||('Pergunta '+(i+1))),certo:ok}); });
+  Turmas.guardarResultado(_port8TarefaAtiva,certas,qids.length,detalhe).then(function(){
+    if(typeof eduToast==='function')eduToast('Trabalho entregue! Acertaste '+certas+' de '+qids.length+'. \u2705','success'); else alert('Entregue! '+certas+'/'+qids.length);
+    _port8TarefaAtiva=null; _port8TarefaResp={}; port8GerarExercicios();
+  }).catch(function(e){alert(e.message||'Não foi possível entregar.');});
 }

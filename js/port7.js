@@ -270,6 +270,7 @@ var _port7TemasCount = { 1: 4, 2: 5, 3: 3, 4: 3, 5: 3 };
 
 // Estado da prática
 var _port7Prat = { cap: 1, st: 0, nivel: 'medio', score: { correct: 0, total: 0 }, answered: {}, exs: [] };
+var _port7TarefaAtiva=null, _port7TarefaResp={};
 
 function _port7PratStorageKey(cap) { return 'edupt_port7_cap' + cap; }
 
@@ -414,6 +415,7 @@ function port7GerarExercicios() {
     + '<div><div class="score-num" id="port7-prat-total">/ 0</div><div class="score-label">respondidas</div></div>'
     + '<div class="progress-track"><div class="progress-fill" id="port7-prat-prog" style="width:0%"></div></div>'
     + '<button class="btn btn-ghost ml-auto" onclick="port7GerarExercicios()">↺ Novas questões</button>'
+    + (_port7TarefaAtiva ? '<button class="btn" style="background:#2e7d52;color:#fff;border:none;border-radius:999px;padding:6px 14px;font-weight:800;cursor:pointer;margin-left:.4rem" onclick="port7EntregarTarefa()">\u2713 Terminar e entregar</button>' : '')
     + '</div>';
   var quizHTML = (typeof _capBuildQuizHTML === 'function')
     ? _capBuildQuizHTML(exs, 'm8ex', 'port7CheckEx')
@@ -433,7 +435,7 @@ function port7CheckEx(qid, tipo, val, btn) {
   if (!r) return; // resposta vazia
   _port7Prat.answered[qid] = true;
   if (r.correct) _port7Prat.score.correct++;
-  _port7Prat.score.total++;
+  _port7Prat.score.total++; if(_port7TarefaAtiva){_port7TarefaResp[qid]=!!r.correct;}
   if (typeof _capShowFeedback === 'function') _capShowFeedback(qid, r.correct, r.expl, val, btn);
   var se = document.getElementById('port7-prat-score'); if (se) se.textContent = _port7Prat.score.correct;
   var te = document.getElementById('port7-prat-total'); if (te) te.textContent = '/ ' + _port7Prat.score.total;
@@ -1618,7 +1620,7 @@ _port7Banco[3] = _port7Banco[3].concat([
 /* atribuir: deep-link port7 */
 function _port7DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_port7gf){ _port7gf.caps={}; cs.forEach(function(n){ _port7gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _port7gf.dif=p.get('dif'); } setTimeout(function(){ port7SwitchTab('fichas',null); },350); return; }
     if(p.get('abrir')==='jogos'){ var jc=parseInt(p.get('cap'),10); if(jc&&_port7Prat) _port7Prat.cap=jc; setTimeout(function(){ port7SwitchTab('jogos',null); },350); return; }
-    if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _port7Prat.cap=cap; _port7Prat.st=st; _port7Prat.nivel=nivel; setTimeout(function(){ port7SwitchTab('exercicios',null); if(typeof port7GerarExercicios==='function') port7GerarExercicios(); },350); }catch(e){} }
+    if(p.get('abrir')!=='praticar')return; if(p.get('tarefa')){_port7TarefaAtiva=p.get('tarefa');_port7TarefaResp={};} var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _port7Prat.cap=cap; _port7Prat.st=st; _port7Prat.nivel=nivel; setTimeout(function(){ port7SwitchTab('exercicios',null); if(typeof port7GerarExercicios==='function') port7GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_port7DeepLinkAuto,300);});else setTimeout(_port7DeepLinkAuto,300);
 
 function port7AtribuirFicha(){
@@ -1626,4 +1628,16 @@ function port7AtribuirFicha(){
   if(!caps.length){ var st=document.getElementById('port7-fichas-status'); if(st) st.textContent='Escolhe pelo menos um capítulo para atribuir.'; return null; }
   var nomes=caps.map(function(n){ var mm=_port7CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
   return { curso:'port7', cursoNome:'Português 7.º', tema:caps.join('.'), temaNome:nomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_port7gf.dif };
+}
+
+function port7EntregarTarefa(){
+  if(!_port7TarefaAtiva||typeof Turmas==='undefined'||!Turmas.guardarResultado)return;
+  var qids=Object.keys(_port7TarefaResp||{});
+  if(!qids.length){alert('Responde a pelo menos uma pergunta antes de entregar.');return;}
+  var certas=0,detalhe=[];
+  qids.forEach(function(qid,i){ var ok=!!_port7TarefaResp[qid]; if(ok)certas++; var ex=_port7Prat.exs[i]||{}; detalhe.push({q:(ex.enun||ex.pergunta||('Pergunta '+(i+1))),certo:ok}); });
+  Turmas.guardarResultado(_port7TarefaAtiva,certas,qids.length,detalhe).then(function(){
+    if(typeof eduToast==='function')eduToast('Trabalho entregue! Acertaste '+certas+' de '+qids.length+'. \u2705','success'); else alert('Entregue! '+certas+'/'+qids.length);
+    _port7TarefaAtiva=null; _port7TarefaResp={}; port7GerarExercicios();
+  }).catch(function(e){alert(e.message||'Não foi possível entregar.');});
 }

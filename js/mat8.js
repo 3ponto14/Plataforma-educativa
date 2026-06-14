@@ -380,6 +380,7 @@ var _mat8TemasCount = { 1: 11, 2: 4, 3: 6, 4: 4, 5: 4, 6: 4, 7: 6, 8: 6 };
 
 // Estado da prática
 var _mat8Prat = { cap: 1, st: 0, nivel: 'medio', score: { correct: 0, total: 0 }, answered: {}, exs: [] };
+var _mat8TarefaAtiva=null, _mat8TarefaResp={};
 
 function _mat8PratStorageKey(cap) { return 'edupt_mat8_cap' + cap; }
 
@@ -513,6 +514,7 @@ function mat8GerarExercicios() {
     + '<div><div class="score-num" id="mat8-prat-total">/ 0</div><div class="score-label">respondidas</div></div>'
     + '<div class="progress-track"><div class="progress-fill" id="mat8-prat-prog" style="width:0%"></div></div>'
     + '<button class="btn btn-ghost ml-auto" onclick="mat8GerarExercicios()">↺ Novas questões</button>'
+    + (_mat8TarefaAtiva ? '<button class="btn" style="background:#2e7d52;color:#fff;border:none;border-radius:999px;padding:6px 14px;font-weight:800;cursor:pointer;margin-left:.4rem" onclick="mat8EntregarTarefa()">\u2713 Terminar e entregar</button>' : '')
     + '</div>';
   var quizHTML = (typeof _capBuildQuizHTML === 'function')
     ? _capBuildQuizHTML(exs, 'm8ex', 'mat8CheckEx')
@@ -532,7 +534,7 @@ function mat8CheckEx(qid, tipo, val, btn) {
   if (!r) return; // resposta vazia
   _mat8Prat.answered[qid] = true;
   if (r.correct) _mat8Prat.score.correct++;
-  _mat8Prat.score.total++;
+  _mat8Prat.score.total++; if(_mat8TarefaAtiva){_mat8TarefaResp[qid]=!!r.correct;}
   if (typeof _capShowFeedback === 'function') _capShowFeedback(qid, r.correct, r.expl, val, btn);
   var se = document.getElementById('mat8-prat-score'); if (se) se.textContent = _mat8Prat.score.correct;
   var te = document.getElementById('mat8-prat-total'); if (te) te.textContent = '/ ' + _mat8Prat.score.total;
@@ -2828,7 +2830,7 @@ var _mat8Banco = {
 /* atribuir: deep-link mat8 */
 function _mat8DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_mat8gf){ _mat8gf.caps={}; cs.forEach(function(n){ _mat8gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _mat8gf.dif=p.get('dif'); } setTimeout(function(){ mat8SwitchTab('fichas',null); },350); return; }
     if(p.get('abrir')==='jogos'){ var jc=parseInt(p.get('cap'),10); if(jc&&_mat8Prat) _mat8Prat.cap=jc; setTimeout(function(){ mat8SwitchTab('jogos',null); },350); return; }
-    if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat8Prat.cap=cap; _mat8Prat.st=st; _mat8Prat.nivel=nivel; setTimeout(function(){ mat8SwitchTab('exercicios',null); if(typeof mat8GerarExercicios==='function') mat8GerarExercicios(); },350); }catch(e){} }
+    if(p.get('abrir')!=='praticar')return; if(p.get('tarefa')){_mat8TarefaAtiva=p.get('tarefa');_mat8TarefaResp={};} var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat8Prat.cap=cap; _mat8Prat.st=st; _mat8Prat.nivel=nivel; setTimeout(function(){ mat8SwitchTab('exercicios',null); if(typeof mat8GerarExercicios==='function') mat8GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat8DeepLinkAuto,300);});else setTimeout(_mat8DeepLinkAuto,300);
 
 function mat8AtribuirFicha(){
@@ -2836,4 +2838,16 @@ function mat8AtribuirFicha(){
   if(!caps.length){ var st=document.getElementById('mat8-fichas-status'); if(st) st.textContent='Escolhe pelo menos um capítulo para atribuir.'; return null; }
   var nomes=caps.map(function(n){ var mm=_mat8CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
   return { curso:'mat8', cursoNome:'Matemática 8.º', tema:caps.join('.'), temaNome:nomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_mat8gf.dif };
+}
+
+function mat8EntregarTarefa(){
+  if(!_mat8TarefaAtiva||typeof Turmas==='undefined'||!Turmas.guardarResultado)return;
+  var qids=Object.keys(_mat8TarefaResp||{});
+  if(!qids.length){alert('Responde a pelo menos uma pergunta antes de entregar.');return;}
+  var certas=0,detalhe=[];
+  qids.forEach(function(qid,i){ var ok=!!_mat8TarefaResp[qid]; if(ok)certas++; var ex=_mat8Prat.exs[i]||{}; detalhe.push({q:(ex.enun||ex.pergunta||('Pergunta '+(i+1))),certo:ok}); });
+  Turmas.guardarResultado(_mat8TarefaAtiva,certas,qids.length,detalhe).then(function(){
+    if(typeof eduToast==='function')eduToast('Trabalho entregue! Acertaste '+certas+' de '+qids.length+'. \u2705','success'); else alert('Entregue! '+certas+'/'+qids.length);
+    _mat8TarefaAtiva=null; _mat8TarefaResp={}; mat8GerarExercicios();
+  }).catch(function(e){alert(e.message||'Não foi possível entregar.');});
 }

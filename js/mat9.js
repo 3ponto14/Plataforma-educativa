@@ -309,6 +309,7 @@ var _mat9TemasCount = { 1: 3, 2: 4, 3: 4, 4: 3, 5: 4, 6: 4 };
 
 // Estado da prática
 var _mat9Prat = { cap: 1, st: 0, nivel: 'medio', score: { correct: 0, total: 0 }, answered: {}, exs: [] };
+var _mat9TarefaAtiva=null, _mat9TarefaResp={};
 
 function _mat9PratStorageKey(cap) { return 'edupt_mat9_cap' + cap; }
 
@@ -447,6 +448,7 @@ function mat9GerarExercicios() {
     + '<div><div class="score-num" id="mat9-prat-total">/ 0</div><div class="score-label">respondidas</div></div>'
     + '<div class="progress-track"><div class="progress-fill" id="mat9-prat-prog" style="width:0%"></div></div>'
     + '<button class="btn btn-ghost ml-auto" onclick="mat9GerarExercicios()">↺ Novas questões</button>'
+    + (_mat9TarefaAtiva ? '<button class="btn" style="background:#2e7d52;color:#fff;border:none;border-radius:999px;padding:6px 14px;font-weight:800;cursor:pointer;margin-left:.4rem" onclick="mat9EntregarTarefa()">\u2713 Terminar e entregar</button>' : '')
     + '</div>';
   var quizHTML = (typeof _capBuildQuizHTML === 'function')
     ? _capBuildQuizHTML(exs, 'm8ex', 'mat9CheckEx')
@@ -466,7 +468,7 @@ function mat9CheckEx(qid, tipo, val, btn) {
   if (!r) return; // resposta vazia
   _mat9Prat.answered[qid] = true;
   if (r.correct) _mat9Prat.score.correct++;
-  _mat9Prat.score.total++;
+  _mat9Prat.score.total++; if(_mat9TarefaAtiva){_mat9TarefaResp[qid]=!!r.correct;}
   if (typeof _capShowFeedback === 'function') _capShowFeedback(qid, r.correct, r.expl, val, btn);
   var se = document.getElementById('mat9-prat-score'); if (se) se.textContent = _mat9Prat.score.correct;
   var te = document.getElementById('mat9-prat-total'); if (te) te.textContent = '/ ' + _mat9Prat.score.total;
@@ -1843,7 +1845,7 @@ var _mat9Banco = {
 /* atribuir: deep-link mat9 */
 function _mat9DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_mat9gf){ _mat9gf.caps={}; cs.forEach(function(n){ _mat9gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _mat9gf.dif=p.get('dif'); } setTimeout(function(){ mat9SwitchTab('fichas',null); },350); return; }
     if(p.get('abrir')==='jogos'){ var jc=parseInt(p.get('cap'),10); if(jc&&_mat9Prat) _mat9Prat.cap=jc; setTimeout(function(){ mat9SwitchTab('jogos',null); },350); return; }
-    if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat9Prat.cap=cap; _mat9Prat.st=st; _mat9Prat.nivel=nivel; setTimeout(function(){ mat9SwitchTab('exercicios',null); if(typeof mat9GerarExercicios==='function') mat9GerarExercicios(); },350); }catch(e){} }
+    if(p.get('abrir')!=='praticar')return; if(p.get('tarefa')){_mat9TarefaAtiva=p.get('tarefa');_mat9TarefaResp={};} var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat9Prat.cap=cap; _mat9Prat.st=st; _mat9Prat.nivel=nivel; setTimeout(function(){ mat9SwitchTab('exercicios',null); if(typeof mat9GerarExercicios==='function') mat9GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat9DeepLinkAuto,300);});else setTimeout(_mat9DeepLinkAuto,300);
 
 function mat9AtribuirFicha(){
@@ -1851,4 +1853,16 @@ function mat9AtribuirFicha(){
   if(!caps.length){ var st=document.getElementById('mat9-fichas-status'); if(st) st.textContent='Escolhe pelo menos um capítulo para atribuir.'; return null; }
   var nomes=caps.map(function(n){ var mm=_mat9CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
   return { curso:'mat9', cursoNome:'Matemática 9.º', tema:caps.join('.'), temaNome:nomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_mat9gf.dif };
+}
+
+function mat9EntregarTarefa(){
+  if(!_mat9TarefaAtiva||typeof Turmas==='undefined'||!Turmas.guardarResultado)return;
+  var qids=Object.keys(_mat9TarefaResp||{});
+  if(!qids.length){alert('Responde a pelo menos uma pergunta antes de entregar.');return;}
+  var certas=0,detalhe=[];
+  qids.forEach(function(qid,i){ var ok=!!_mat9TarefaResp[qid]; if(ok)certas++; var ex=_mat9Prat.exs[i]||{}; detalhe.push({q:(ex.enun||ex.pergunta||('Pergunta '+(i+1))),certo:ok}); });
+  Turmas.guardarResultado(_mat9TarefaAtiva,certas,qids.length,detalhe).then(function(){
+    if(typeof eduToast==='function')eduToast('Trabalho entregue! Acertaste '+certas+' de '+qids.length+'. \u2705','success'); else alert('Entregue! '+certas+'/'+qids.length);
+    _mat9TarefaAtiva=null; _mat9TarefaResp={}; mat9GerarExercicios();
+  }).catch(function(e){alert(e.message||'Não foi possível entregar.');});
 }

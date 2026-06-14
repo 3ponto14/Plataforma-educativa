@@ -309,6 +309,7 @@ var _mat10TemasCount = { 1: 3, 2: 3, 3: 4, 4: 3, 5: 3, 6: 3 };
 
 // Estado da prática
 var _mat10Prat = { cap: 1, st: 0, nivel: 'medio', score: { correct: 0, total: 0 }, answered: {}, exs: [] };
+var _mat10TarefaAtiva=null, _mat10TarefaResp={};
 
 function _mat10PratStorageKey(cap) { return 'edupt_mat10_cap' + cap; }
 
@@ -420,6 +421,7 @@ function mat10GerarExercicios() {
     + '<div><div class="score-num" id="mat10-prat-total">/ 0</div><div class="score-label">respondidas</div></div>'
     + '<div class="progress-track"><div class="progress-fill" id="mat10-prat-prog" style="width:0%"></div></div>'
     + '<button class="btn btn-ghost ml-auto" onclick="mat10GerarExercicios()">↺ Novas questões</button>'
+    + (_mat10TarefaAtiva ? '<button class="btn" style="background:#2e7d52;color:#fff;border:none;border-radius:999px;padding:6px 14px;font-weight:800;cursor:pointer;margin-left:.4rem" onclick="mat10EntregarTarefa()">\u2713 Terminar e entregar</button>' : '')
     + '</div>';
   var quizHTML = (typeof _capBuildQuizHTML === 'function')
     ? _capBuildQuizHTML(exs, 'm8ex', 'mat10CheckEx')
@@ -439,7 +441,7 @@ function mat10CheckEx(qid, tipo, val, btn) {
   if (!r) return; // resposta vazia
   _mat10Prat.answered[qid] = true;
   if (r.correct) _mat10Prat.score.correct++;
-  _mat10Prat.score.total++;
+  _mat10Prat.score.total++; if(_mat10TarefaAtiva){_mat10TarefaResp[qid]=!!r.correct;}
   if (typeof _capShowFeedback === 'function') _capShowFeedback(qid, r.correct, r.expl, val, btn);
   var se = document.getElementById('mat10-prat-score'); if (se) se.textContent = _mat10Prat.score.correct;
   var te = document.getElementById('mat10-prat-total'); if (te) te.textContent = '/ ' + _mat10Prat.score.total;
@@ -1703,7 +1705,7 @@ var _mat10Banco = {
 /* atribuir: deep-link mat10 */
 function _mat10DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_mat10gf){ _mat10gf.caps={}; cs.forEach(function(n){ _mat10gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _mat10gf.dif=p.get('dif'); } setTimeout(function(){ mat10SwitchTab('fichas',null); },350); return; }
     if(p.get('abrir')==='jogos'){ var jc=parseInt(p.get('cap'),10); if(jc&&_mat10Prat) _mat10Prat.cap=jc; setTimeout(function(){ mat10SwitchTab('jogos',null); },350); return; }
-    if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat10Prat.cap=cap; _mat10Prat.st=st; _mat10Prat.nivel=nivel; setTimeout(function(){ mat10SwitchTab('exercicios',null); if(typeof mat10GerarExercicios==='function') mat10GerarExercicios(); },350); }catch(e){} }
+    if(p.get('abrir')!=='praticar')return; if(p.get('tarefa')){_mat10TarefaAtiva=p.get('tarefa');_mat10TarefaResp={};} var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat10Prat.cap=cap; _mat10Prat.st=st; _mat10Prat.nivel=nivel; setTimeout(function(){ mat10SwitchTab('exercicios',null); if(typeof mat10GerarExercicios==='function') mat10GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat10DeepLinkAuto,300);});else setTimeout(_mat10DeepLinkAuto,300);
 
 function mat10AtribuirFicha(){
@@ -1711,4 +1713,16 @@ function mat10AtribuirFicha(){
   if(!caps.length){ var st=document.getElementById('mat10-fichas-status'); if(st) st.textContent='Escolhe pelo menos um capítulo para atribuir.'; return null; }
   var nomes=caps.map(function(n){ var mm=_mat10CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
   return { curso:'mat10', cursoNome:'Matemática 10.º', tema:caps.join('.'), temaNome:nomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_mat10gf.dif };
+}
+
+function mat10EntregarTarefa(){
+  if(!_mat10TarefaAtiva||typeof Turmas==='undefined'||!Turmas.guardarResultado)return;
+  var qids=Object.keys(_mat10TarefaResp||{});
+  if(!qids.length){alert('Responde a pelo menos uma pergunta antes de entregar.');return;}
+  var certas=0,detalhe=[];
+  qids.forEach(function(qid,i){ var ok=!!_mat10TarefaResp[qid]; if(ok)certas++; var ex=_mat10Prat.exs[i]||{}; detalhe.push({q:(ex.enun||ex.pergunta||('Pergunta '+(i+1))),certo:ok}); });
+  Turmas.guardarResultado(_mat10TarefaAtiva,certas,qids.length,detalhe).then(function(){
+    if(typeof eduToast==='function')eduToast('Trabalho entregue! Acertaste '+certas+' de '+qids.length+'. \u2705','success'); else alert('Entregue! '+certas+'/'+qids.length);
+    _mat10TarefaAtiva=null; _mat10TarefaResp={}; mat10GerarExercicios();
+  }).catch(function(e){alert(e.message||'Não foi possível entregar.');});
 }

@@ -164,6 +164,7 @@ var _mat7Targets = {
 
 // Current selections per tab
 var _mat7Sel = { resumo:1, exercicios:1, testes:1, jogos:1, flashcards:1, exame:1 };
+var _mat7TarefaAtiva = null; // id da tarefa, em modo-tarefa (deep-link)
 
 // ── Map: which section ID to grab from which view, per cap ──
 var _mat7SecMap = {
@@ -514,6 +515,14 @@ function mat7RenderUnifiedExercicios(caps, inlineEl) {
           else if (cap===4 && typeof progLog4==='function') progLog4('questoes', capCorrect > 0);
           if (typeof ProgressManager !== 'undefined') _pmRecord('cap'+cap, 'quiz', {pontuacao:capCorrect, total:capTotal});
         });
+        // modo-tarefa: entrega automática do resultado ao terminar o quiz
+        if (_mat7TarefaAtiva && typeof Turmas !== 'undefined' && Turmas.guardarResultado) {
+          var det = exercicios.map(function (ex, i) { return { q: (ex.enun || ('Pergunta ' + (i + 1))), certo: null }; });
+          Turmas.guardarResultado(_mat7TarefaAtiva, correct, total, det).then(function () {
+            if (typeof eduToast === 'function') eduToast('Trabalho entregue! Acertaste ' + correct + ' de ' + total + '. ✅', 'success');
+            _mat7TarefaAtiva = null;
+          });
+        }
       });
     }
   }
@@ -668,6 +677,7 @@ function _mat7DeepLink() {
     if (abrir !== 'praticar' && abrir !== 'jogos') return;
     var cap = parseInt(p.get('cap'), 10) || 1;
     var tab = abrir === 'jogos' ? 'jogos' : 'exercicios';
+    if (abrir === 'praticar' && p.get('tarefa')) _mat7TarefaAtiva = p.get('tarefa');
     _mat7Sel[tab] = cap;
     setTimeout(function () {
       mat7SwitchTab(tab, null);
