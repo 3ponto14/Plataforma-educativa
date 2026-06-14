@@ -202,7 +202,8 @@
     if (prof) {
       h += _profMomentoHTML();
     } else {
-      // o Desafio do Dia é movido para aqui (ver moverDesafio())
+      // "O que tenho para fazer" (tarefas do professor) + Desafio do Dia
+      h += '<div id="pi-tarefas" class="pi-tarefas-slot"></div>';
       h += '<div id="pi-desafio-slot" class="pi-desafio-slot"></div>';
     }
     h += '</div>';
@@ -226,8 +227,52 @@
       var des2 = document.getElementById('portal-desafio');
       if (des2) des2.style.display = '';
       _moverDesafio();
+      _pintarTarefasAluno();
     }
   }
+
+  /* Aluno: "O que tenho para fazer" (tarefas do professor). */
+  function _pintarTarefasAluno() {
+    var box = document.getElementById('pi-tarefas');
+    if (!box || typeof Turmas === 'undefined' || !Turmas.tarefasDoAluno) return;
+    Turmas.tarefasDoAluno().then(function (ts) {
+      if (!box) return;
+      var pend = ts.filter(function (t) { return !t.feito; });
+      if (!ts.length) { box.innerHTML = ''; return; } // sem tarefas: não ocupa espaço
+      var h = '<div class="pi-tar-card">'
+        + '<div class="pi-tar-h"><span><i class="ph ph-clipboard-text"></i> O que tenho para fazer</span>'
+        + '<span class="pi-tar-num">' + (pend.length ? pend.length + ' por fazer' : 'tudo feito ✅') + '</span></div>';
+      ts.forEach(function (t) {
+        var prazo = t.prazo ? _esc(_tarPrazo(t.prazo)) : '';
+        h += '<div class="pi-tar-row' + (t.feito ? ' feita' : '') + '">'
+          + '<button class="pi-tar-chk" onclick="alunoMarcarTarefa(\'' + t.id + '\',' + (t.feito ? 'false' : 'true') + ')" title="' + (t.feito ? 'Marcar por fazer' : 'Marcar como feito') + '">' + (t.feito ? '✅' : '⬜') + '</button>'
+          + '<div class="pi-tar-info">'
+          + '<div class="pi-tar-tit">' + _esc(t.titulo) + (t.curso_nome ? ' <span class="pi-tar-tag">' + _esc(t.curso_nome) + '</span>' : '') + '</div>'
+          + (t.instrucoes ? '<div class="pi-tar-desc">' + _esc(t.instrucoes) + '</div>' : '')
+          + '<div class="pi-tar-meta">' + (prazo ? prazo + ' · ' : '') + 'por ' + _esc(t.prof_nome || 'professor')
+          + (t.url ? ' · <a href="' + _escAttr(t.url) + '" target="_blank" rel="noopener">abrir ficha</a>' : '') + '</div>'
+          + '</div></div>';
+      });
+      h += '</div>';
+      box.innerHTML = h;
+    });
+  }
+  function _tarPrazo(p) {
+    var hoje = new Date().toISOString().slice(0, 10);
+    if (p < hoje) return '⚠️ prazo passou';
+    if (p === hoje) return '⏰ entrega hoje';
+    return 'até ' + p;
+  }
+  function _escAttr(s) { return _esc(s).replace(/"/g, '&quot;'); }
+
+  /* Aluno marca/desmarca uma tarefa e repinta. */
+  window.alunoMarcarTarefa = function (id, feita) {
+    if (typeof Turmas === 'undefined' || !Turmas.marcarTarefa) return;
+    Turmas.marcarTarefa(id, feita).then(function () {
+      _pintarTarefasAluno();
+      if (feita && typeof eduToast === 'function') eduToast('Trabalho marcado como feito! ✅', 'success');
+    });
+  };
 
   /* Aluno: traz o cartão do Desafio (#portal-desafio) para o painel. */
   function _moverDesafio() {

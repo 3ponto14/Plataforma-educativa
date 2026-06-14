@@ -3956,6 +3956,22 @@ body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
 .pi-sub{font-size:.9rem;color:var(--ink3)}
 .pi-desafio-slot{max-width:540px;margin:0 auto}
 
+/* "O que tenho para fazer" (tarefas do aluno no Início) */
+.pi-tarefas-slot{max-width:540px;margin:0 auto 1rem}
+.pi-tar-card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.1rem 1.3rem;box-shadow:0 8px 24px rgba(0,0,0,.05)}
+.pi-tar-h{display:flex;align-items:center;justify-content:space-between;font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.6rem}
+.pi-tar-h i{color:#4a3f7a}
+.pi-tar-num{font-size:.74rem;font-weight:800;color:#4a3f7a;background:#f0edf7;border:1px solid #ddd8f5;border-radius:999px;padding:2px 10px}
+.pi-tar-row{display:flex;align-items:flex-start;gap:.6rem;padding:.55rem 0;border-top:1px dashed var(--border)}
+.pi-tar-row.feita .pi-tar-tit{text-decoration:line-through;color:var(--ink4)}
+.pi-tar-chk{background:none;border:none;font-size:1.15rem;cursor:pointer;line-height:1;padding:0;flex-shrink:0}
+.pi-tar-info{min-width:0}
+.pi-tar-tit{font-weight:700;color:var(--ink1);font-size:.9rem}
+.pi-tar-tag{font-size:.68rem;font-weight:800;color:#2e7d52;background:#e8f5ee;border:1px solid #bfe3c9;border-radius:6px;padding:1px 6px}
+.pi-tar-desc{font-size:.8rem;color:var(--ink3);line-height:1.45;margin-top:.15rem}
+.pi-tar-meta{font-size:.72rem;color:var(--ink4);margin-top:.15rem}
+.pi-tar-meta a{color:#4a3f7a;font-weight:700}
+
 /* Momento do Professor: JOGO de 3 perguntas (V/F + escolha) */
 .pi-prof-wrap{max-width:560px;margin:0 auto;background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:1.4rem 1.5rem;box-shadow:0 10px 28px rgba(0,0,0,.06)}
 .pi-prof-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}

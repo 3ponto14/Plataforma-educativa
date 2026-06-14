@@ -30,6 +30,14 @@ function _turmasRenderProfessor(wrap) {
     + '<input id="turmas-pesquisa" oninput="turmasFiltrar()" placeholder="🔎 Procurar aluno…" style="border:1.5px solid var(--border);border-radius:999px;padding:5px 14px;font-size:.82rem;font-family:Montserrat,sans-serif;outline:none;min-width:180px">'
     + '</div>'
     + '<div id="turmas-lista"><div style="color:var(--ink4);font-size:.85rem">A carregar alunos…</div></div>'
+    // trabalho atribuído
+    + '<div style="border-top:1px solid var(--border);margin-top:1.2rem;padding-top:1rem">'
+    + '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem">'
+    + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem"><i class="ph ph-clipboard-text" style="color:#2e7d52"></i> Trabalho atribuído</div>'
+    + '<button onclick="tarefaAtribuirPrompt()" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:6px 15px;font-size:.78rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-plus"></i> Atribuir trabalho</button>'
+    + '</div>'
+    + '<div id="turmas-tarefas"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
+    + '</div>'
     // recursos
     + '<div style="border-top:1px solid var(--border);margin-top:1.2rem;padding-top:1rem">'
     + '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem">'
@@ -44,7 +52,73 @@ function _turmasRenderProfessor(wrap) {
     _turmasAlunosCache = alunos;
     _turmasPintaAlunos(alunos);
   });
+  _turmasPintaTarefas();
   _turmasPintaRecursos(true);
+}
+
+/* ── Trabalho atribuído (vista do professor) ── */
+function _turmasPintaTarefas() {
+  var el = document.getElementById('turmas-tarefas');
+  if (!el) return;
+  Turmas.tarefasDoProf().then(function (ts) {
+    if (!el) return;
+    if (!ts.length) {
+      el.innerHTML = '<div style="color:var(--ink4);font-size:.85rem;padding:.3rem 0">Ainda não atribuíste trabalho. Carrega em «Atribuir trabalho» para mandares uma ficha ou um tópico para praticar, com prazo.</div>';
+      return;
+    }
+    var nAlunos = (_turmasAlunosCache || []).length;
+    el.innerHTML = ts.map(function (t) {
+      var alvo = t.para_aluno ? 'a 1 aluno' : 'à turma';
+      var prazo = t.prazo ? _tarefaPrazoTxt(t.prazo) : '';
+      return '<div style="border:1.5px solid var(--border);border-radius:12px;padding:.7rem 1rem;margin-bottom:.5rem">'
+        + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem">'
+        + '<div style="min-width:0">'
+        + '<span style="font-weight:800;color:var(--ink1)">' + _esc(t.titulo) + '</span>'
+        + (t.curso_nome ? ' <span style="font-size:.72rem;color:#2e7d52;background:#e8f5ee;border:1px solid #bfe3c9;border-radius:6px;padding:1px 7px">' + _esc(t.curso_nome) + '</span>' : '')
+        + '<div style="font-size:.74rem;color:var(--ink4);margin-top:.15rem">Para ' + alvo + (prazo ? ' · ' + prazo : '') + '</div>'
+        + '</div>'
+        + '<button onclick="tarefaApagar(\'' + t.id + '\',\'' + _escAttr(t.titulo) + '\')" title="Apagar" style="color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;padding:3px 9px;font-size:.72rem;cursor:pointer;font-family:Montserrat,sans-serif;flex-shrink:0">✕</button>'
+        + '</div>'
+        + '<div id="tarefa-fez-' + t.id + '" style="font-size:.76rem;color:var(--ink3);margin-top:.45rem"><a href="#" onclick="tarefaVerQuemFez(\'' + t.id + '\',' + (t.para_aluno ? 1 : nAlunos) + ');return false" style="color:#2e7d52;font-weight:700">Ver quem fez</a></div>'
+        + '</div>';
+    }).join('');
+  });
+}
+
+function _tarefaPrazoTxt(prazo) {
+  var hoje = new Date().toISOString().slice(0, 10);
+  if (prazo < hoje) return 'prazo passou (' + prazo + ')';
+  if (prazo === hoje) return 'entrega hoje';
+  return 'até ' + prazo;
+}
+
+function tarefaVerQuemFez(id, total) {
+  var box = document.getElementById('tarefa-fez-' + id);
+  if (!box) return;
+  box.innerHTML = 'A carregar…';
+  Turmas.quemFez(id).then(function (lista) {
+    var n = lista.length;
+    box.innerHTML = '<span style="font-weight:700;color:' + (n > 0 ? '#2e7d52' : 'var(--ink4)') + '">✅ ' + n + (total ? ' de ' + total : '') + ' já fizeram</span>';
+  });
+}
+
+function tarefaAtribuirPrompt() {
+  var titulo = prompt('Título do trabalho (ex.: Ficha de revisões de Frações):');
+  if (titulo === null || !titulo.trim()) return;
+  var instrucoes = prompt('Instruções (opcional):') || '';
+  var url = prompt('Link de uma ficha (opcional, Google Drive, etc.):') || '';
+  var cursoNome = prompt('Tópico/curso da plataforma a praticar (opcional, ex.: Matemática 7.º):') || '';
+  var prazo = prompt('Prazo (opcional, no formato AAAA-MM-DD, ex.: 2026-06-20):') || '';
+  Turmas.criarTarefa({ titulo: titulo, instrucoes: instrucoes, url: url, cursoNome: cursoNome, prazo: prazo.trim() || null })
+    .then(function () {
+      if (typeof eduToast === 'function') eduToast('Trabalho atribuído à turma! 📋', 'success');
+      _turmasPintaTarefas();
+    }).catch(function (e) { alert(e.message || 'Não foi possível atribuir.'); });
+}
+
+function tarefaApagar(id, titulo) {
+  if (!confirm('Apagar o trabalho «' + titulo + '»?')) return;
+  Turmas.apagarTarefa(id).then(function () { _turmasPintaTarefas(); });
 }
 
 function _turmasPintaAlunos(alunos) {

@@ -121,7 +121,99 @@ var Turmas = (function () {
     return sb.from('recursos').delete().eq('id', id);
   }
 
+  /* ════════════ TAREFAS (trabalho atribuído) ════════════ */
+
+  /* PROFESSOR cria uma tarefa. opts: {titulo, instrucoes, url, curso,
+     cursoNome, prazo, paraAluno}. paraAluno null/undefined = turma toda. */
+  function criarTarefa(opts) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    opts = opts || {};
+    var titulo = (opts.titulo || '').trim();
+    if (!titulo) return Promise.reject(new Error('Dá um título à tarefa.'));
+    var url = (opts.url || '').trim();
+    if (url && !/^https?:\/\//i.test(url)) return Promise.reject(new Error('O link tem de começar por http:// ou https://'));
+    var profNome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+    return sb.from('tarefas').insert({
+      professor: u.id, prof_nome: profNome, titulo: titulo,
+      instrucoes: (opts.instrucoes || '').trim() || null,
+      url: url || null,
+      curso: (opts.curso || '').trim() || null,
+      curso_nome: (opts.cursoNome || '').trim() || null,
+      prazo: opts.prazo || null,
+      para_aluno: opts.paraAluno || null
+    }).select().single().then(function (r) { if (r.error) throw r.error; return r.data; });
+  }
+
+  function apagarTarefa(id) {
+    var sb = _sb();
+    if (!sb) return Promise.reject(new Error('Sem ligação.'));
+    return sb.from('tarefas').delete().eq('id', id);
+  }
+
+  /* PROFESSOR: todas as tarefas (mais recentes primeiro). */
+  function tarefasDoProf() {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('tarefas').select('*').order('criado', { ascending: false })
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* PROFESSOR: quem já marcou uma tarefa como feita (lista de alunos). */
+  function quemFez(tarefaId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('tarefas_estado').select('aluno, feito_em').eq('tarefa_id', tarefaId).eq('feito', true)
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* ALUNO: as tarefas que lhe dizem respeito (dele + da turma), já com o
+     estado "feito". Ordenadas por prazo (as com prazo primeiro). */
+  function tarefasDoAluno() {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.resolve([]);
+    return sb.from('tarefas').select('*').order('criado', { ascending: false }).then(function (res) {
+      var ts = res.error ? [] : (res.data || []);
+      if (!ts.length) return [];
+      return sb.from('tarefas_estado').select('tarefa_id, feito').eq('aluno', u.id).then(function (e) {
+        var feito = {};
+        (e.data || []).forEach(function (row) { if (row.feito) feito[row.tarefa_id] = true; });
+        ts.forEach(function (t) { t.feito = !!feito[t.id]; });
+        // ordena: por fazer primeiro, depois por prazo
+        ts.sort(function (a, b) {
+          if (a.feito !== b.feito) return a.feito ? 1 : -1;
+          return (a.prazo || '9999') < (b.prazo || '9999') ? -1 : 1;
+        });
+        return ts;
+      });
+    });
+  }
+
+  /* ALUNO marca/desmarca uma tarefa como feita. */
+  function marcarTarefa(tarefaId, feita) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    if (feita === false) {
+      return sb.from('tarefas_estado').delete().eq('tarefa_id', tarefaId).eq('aluno', u.id);
+    }
+    return sb.from('tarefas_estado').upsert(
+      { tarefa_id: tarefaId, aluno: u.id, feito: true, feito_em: new Date().toISOString() },
+      { onConflict: 'tarefa_id,aluno' }
+    );
+  }
+
+  /* Nº de tarefas por fazer do aluno (para o badge no Início). */
+  function tarefasPendentes() {
+    return tarefasDoAluno().then(function (ts) {
+      var n = 0; ts.forEach(function (t) { if (!t.feito) n++; }); return n;
+    });
+  }
+
   return {
+    criarTarefa: criarTarefa, apagarTarefa: apagarTarefa,
+    tarefasDoProf: tarefasDoProf, quemFez: quemFez,
+    tarefasDoAluno: tarefasDoAluno, marcarTarefa: marcarTarefa,
+    tarefasPendentes: tarefasPendentes,
     autoInscrever: autoInscrever,
     todosOsAlunos: todosOsAlunos,
     recursos: recursos,

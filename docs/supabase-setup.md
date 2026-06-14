@@ -129,6 +129,63 @@ create policy "prof vê progresso apoio" on public.progresso for select
   ));
 ```
 
+## 3c. SQL das TAREFAS (trabalho atribuído) — colar no SQL Editor → Run
+
+Fase 1 das "turmas robustas": o professor atribui trabalho (com prazo) a
+um aluno ou a todos; o aluno vê o que tem para fazer e marca como feito.
+
+```sql
+-- TAREFAS: cada tarefa é criada por um professor.
+create table if not exists public.tarefas (
+  id         uuid primary key default gen_random_uuid(),
+  professor  uuid not null references auth.users(id) on delete cascade,
+  prof_nome  text,
+  titulo     text not null,
+  instrucoes text,
+  url        text,                 -- link opcional (ficha Drive, etc.)
+  curso      text,                 -- atalho opcional p/ curso da plataforma (ex.: "mat7")
+  curso_nome text,                 -- rótulo legível (ex.: "Matemática 7.º")
+  prazo      date,                 -- prazo opcional
+  para_aluno uuid references auth.users(id) on delete cascade, -- null = turma toda
+  criado     timestamptz not null default now()
+);
+
+-- ESTADO por aluno (marca "concluído"). 1 linha por (tarefa, aluno).
+create table if not exists public.tarefas_estado (
+  tarefa_id  uuid not null references public.tarefas(id) on delete cascade,
+  aluno      uuid not null references auth.users(id) on delete cascade,
+  feito      boolean not null default true,
+  feito_em   timestamptz not null default now(),
+  primary key (tarefa_id, aluno)
+);
+
+alter table public.tarefas        enable row level security;
+alter table public.tarefas_estado enable row level security;
+
+-- TAREFAS:
+--  • qualquer PROFESSOR cria e vê/gere as tarefas (espaço partilhado);
+--  • o ALUNO vê as tarefas que são para ele (para_aluno = ele) OU para a
+--    turma toda (para_aluno is null).
+create policy "prof gere tarefas"     on public.tarefas for all
+  using (public.eh_professor()) with check (public.eh_professor() and auth.uid() = professor);
+create policy "aluno vê as suas"      on public.tarefas for select
+  using (para_aluno is null or para_aluno = auth.uid());
+
+-- ESTADO:
+--  • o aluno marca/desmarca o SEU estado;
+--  • o professor lê o estado de todos (para ver quem fez).
+create policy "aluno marca o seu"     on public.tarefas_estado for insert
+  with check (auth.uid() = aluno);
+create policy "aluno atualiza o seu"  on public.tarefas_estado for update
+  using (auth.uid() = aluno) with check (auth.uid() = aluno);
+create policy "aluno apaga o seu"     on public.tarefas_estado for delete
+  using (auth.uid() = aluno);
+create policy "aluno vê o seu estado" on public.tarefas_estado for select
+  using (auth.uid() = aluno);
+create policy "prof vê estados"       on public.tarefas_estado for select
+  using (public.eh_professor());
+```
+
 ### Nota de segurança (honesta)
 
 A distinção professor/aluno está nos metadados da conta (`tipo`), que
