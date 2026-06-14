@@ -73,13 +73,13 @@
       } else {
         itens.slice(0, 12).forEach(function (i) {
           var ehNovo = (i.quando || '') > ls;
-          h += '<div style="border-radius:10px;padding:.45rem .55rem;margin-bottom:.3rem;background:' + (ehNovo ? '#f0edf7' : 'var(--cream)') + '">'
+          h += '<div onclick="notifAbrir()" style="border-radius:10px;padding:.45rem .55rem;margin-bottom:.3rem;background:' + (ehNovo ? '#f0edf7' : 'var(--cream)') + ';cursor:pointer">'
             + '<div style="font-size:.68rem;font-weight:800;color:var(--ink4)">' + _esc(i.etiqueta) + ' · ' + _esc(i.autor) + (ehNovo ? ' <span style="color:#e23b3b">•</span>' : '') + '</div>'
             + '<div style="font-size:.82rem;color:var(--ink1);line-height:1.4;margin-top:.1rem">' + _esc(i.texto) + '</div>'
             + '</div>';
         });
       }
-      h += '<div style="font-size:.72rem;color:var(--ink4);text-align:center;padding:.4rem .3rem 0;border-top:1px solid var(--border);margin-top:.3rem">Vê e responde na secção <strong>Turmas</strong>.</div>';
+      h += '<div style="font-size:.72rem;color:var(--ink4);text-align:center;padding:.4rem .3rem 0;border-top:1px solid var(--border);margin-top:.3rem"><a href="#" onclick="notifAbrir();return false" style="color:#4a3f7a;font-weight:700">Ir para as Turmas →</a></div>';
       h += '</div>';
       bell.innerHTML = h;
 
@@ -102,6 +102,31 @@
       if (pop) pop.style.display = 'none';
     }
   });
+
+  /* Clicar numa notificação → vai à secção Turmas e abre o sítio certo. */
+  window.notifAbrir = function () {
+    var pop = document.getElementById('notif-pop');
+    if (pop) pop.style.display = 'none';
+    _marcarVisto();
+    var prof = typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor();
+    if (typeof portalIrPara === 'function') portalIrPara('apoio');
+    // a vista re-renderiza; espera e depois abre/realça o destino
+    setTimeout(function () {
+      if (prof) {
+        // abre a secção "Dúvidas dos alunos" (accordion key 'avisos')
+        if (typeof accToggle === 'function') {
+          var body = document.getElementById('acc-body-avisos');
+          if (body && body.style.display === 'none') accToggle('avisos');
+        }
+        var alvo = document.getElementById('turmas-duvidas');
+        if (alvo) alvo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        var msgs = document.getElementById('turmas-mensagens-aluno');
+        if (msgs) msgs.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      render(); // atualiza o badge (já visto)
+    }, 450);
+  };
 
   window.notificacoesRender = render;
   document.addEventListener('cloud:auth', function () { setTimeout(render, 300); });
