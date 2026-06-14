@@ -102,7 +102,8 @@ function _turmasRenderProfessor(wrap) {
     + '<div id="turmas-duvidas"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>';
 
   wrap.innerHTML =
-    '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.25rem 1.4rem">'
+    // Vista normal das Turmas (lista de secções)
+    '<div id="turmas-home" style="background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.25rem 1.4rem">'
     + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.45rem;font-weight:700;color:var(--ink1);margin-bottom:.15rem"><i class="ph ph-chalkboard-teacher" style="color:#2e7d52"></i> Turmas</div>'
     + '<div style="font-size:.82rem;color:var(--ink4);margin-bottom:1rem">Toca em cada secção para abrir. Organiza alunos em grupos, atribui trabalho e comunica.</div>'
     + _acc('grupos', 'ph-users-four', '#2e7d52', 'Grupos', btnGrupos, '<div id="turmas-grupos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
@@ -110,7 +111,9 @@ function _turmasRenderProfessor(wrap) {
     + _acc('tarefas', 'ph-clipboard-text', '#2e7d52', 'Trabalho atribuído', btnTarefa, '<div id="turmas-tarefas"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
     + _acc('avisos', 'ph-chats-circle', '#4a3f7a', 'Dúvidas dos alunos', btnAviso, avisosBody)
     + _acc('fichas', 'ph-link-simple', '#2e7d52', 'Fichas e recursos', btnFicha, '<div id="turmas-recursos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
-    + '</div>';
+    + '</div>'
+    // Página dedicada de UM grupo (escondida até se clicar num grupo)
+    + '<div id="turmas-grupo-pagina" style="display:none"></div>';
 
   Turmas.todosOsAlunos().then(function (alunos) {
     _turmasAlunosCache = alunos;
@@ -271,27 +274,60 @@ function _turmasPintaGrupos() {
       + gs.map(function (g) {
       return '<div class="grp">'
         + '<div class="grp-head">'
-        + '<div class="grp-head-main" onclick="grupoToggle(\'' + g.id + '\',\'' + _escAttr(g.nome) + '\')">'
-        + '<i class="ph ph-caret-right grp-caret" id="gx-' + g.id + '"></i>'
+        + '<div class="grp-head-main" onclick="grupoToggle(\'' + g.id + '\',\'' + _escAttr(g.nome) + '\')" style="cursor:pointer">'
+        + '<i class="ph ph-users-three grp-caret" style="color:#2e7d52"></i>'
         + '<span class="grp-nome">' + _esc(g.nome) + '</span>'
         + '<span class="grp-count" id="grupo-n-' + g.id + '"></span>'
+        + '<i class="ph ph-caret-right" style="color:var(--ink4);margin-left:auto"></i>'
         + '</div>'
-        + '<button class="grp-x" onclick="grupoApagar(\'' + g.id + '\',\'' + _escAttr(g.nome) + '\')" title="Apagar grupo">✕</button>'
+        + '<button class="grp-x" onclick="grupoApagar(\'' + g.id + '\',\'' + _escAttr(g.nome) + '\')" title="Apagar grupo" style="margin-left:.4rem">✕</button>'
         + '</div>'
-        + '<div class="grp-body" id="grupo-det-' + g.id + '" style="display:none"></div>'
         + '</div>';
     }).join('');
+    // contagem de alunos em cada cartão (pedidos leves, em paralelo)
+    gs.forEach(function (g) {
+      if (!Turmas.alunosDoGrupo) return;
+      Turmas.alunosDoGrupo(g.id).then(function (ms) {
+        var el = document.getElementById('grupo-n-' + g.id);
+        if (el) el.textContent = '· ' + ms.length + (ms.length === 1 ? ' aluno' : ' alunos');
+      });
+    });
   });
 }
 
+/* Clicar num grupo abre uma PÁGINA dedicada só desse grupo (em vez de
+   expandir no meio dos outros). Esconde a vista normal das Turmas. */
 function grupoToggle(id, nome) {
-  var det = document.getElementById('grupo-det-' + id);
-  var gx = document.getElementById('gx-' + id);
-  if (!det) return;
-  if (det.style.display !== 'none') { det.style.display = 'none'; if (gx) gx.style.transform = ''; return; }
-  det.style.display = 'block';
-  if (gx) gx.style.transform = 'rotate(90deg)';
+  var home = document.getElementById('turmas-home');
+  var pag = document.getElementById('turmas-grupo-pagina');
+  if (!pag) return;
+  var g = (_turmasGruposCache || []).filter(function (x) { return x.id === id; })[0];
+  var codigo = (g && g.codigo) || '';
+  pag.innerHTML =
+    '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.1rem 1.4rem 1.4rem">'
+    + '<button onclick="grupoVoltar()" style="display:inline-flex;align-items:center;gap:.4rem;background:none;border:none;color:#2e7d52;font-weight:700;font-size:.85rem;cursor:pointer;font-family:Montserrat,sans-serif;padding:0;margin-bottom:.8rem"><i class="ph ph-arrow-left"></i> Voltar aos grupos</button>'
+    + '<div style="display:flex;align-items:center;justify-content:space-between;gap:.6rem;flex-wrap:wrap;margin-bottom:.2rem">'
+    + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.5rem;font-weight:700;color:var(--ink1);min-width:0"><i class="ph ph-users-four" style="color:#2e7d52"></i> ' + _esc(nome) + '</div>'
+    + '<button class="grp-x" onclick="grupoApagar(\'' + id + '\',\'' + _escAttr(nome) + '\')" title="Apagar grupo">✕</button>'
+    + '</div>'
+    + '<div id="grupo-det-' + id + '"></div>'
+    + '</div>';
+  if (home) home.style.display = 'none';
+  pag.style.display = 'block';
+  try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
   _grupoPintaDet(id, nome);
+}
+
+/* Volta da página do grupo à lista de grupos. */
+function grupoVoltar() {
+  var home = document.getElementById('turmas-home');
+  var pag = document.getElementById('turmas-grupo-pagina');
+  if (pag) { pag.style.display = 'none'; pag.innerHTML = ''; }
+  if (home) home.style.display = '';
+  // garante a secção Grupos aberta ao voltar
+  var b = document.getElementById('acc-body-grupos');
+  if (b && b.style.display === 'none') accToggle('grupos');
+  _turmasPintaGrupos();
 }
 
 /* (Re)desenha o detalhe de um grupo aberto. */
