@@ -209,7 +209,111 @@ var Turmas = (function () {
     });
   }
 
+  /* ════════════ GRUPOS (turmas a sério) ════════════ */
+
+  /* Código curto e legível: 2-3 letras do nome + 4 carateres aleatórios. */
+  function _gerarCodigo(nome) {
+    var base = (nome || 'G').replace(/[^A-Za-zÀ-ÿ0-9]/g, '').toUpperCase().slice(0, 3) || 'G';
+    var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // sem 0/O/1/I
+    var s = '';
+    for (var i = 0; i < 4; i++) s += chars.charAt(Math.floor(Math.random() * chars.length));
+    return base + '-' + s;
+  }
+
+  /* PROFESSOR cria um grupo (com código automático). */
+  function criarGrupo(nome) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    nome = (nome || '').trim();
+    if (!nome) return Promise.reject(new Error('Dá um nome ao grupo.'));
+    var profNome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+    var codigo = _gerarCodigo(nome);
+    return sb.from('grupos').insert({ professor: u.id, prof_nome: profNome, nome: nome, codigo: codigo })
+      .select().single().then(function (r) {
+        if (r.error) {
+          if (/duplicate|unique/i.test(r.error.message || '')) return criarGrupo(nome); // colisão rara
+          throw r.error;
+        }
+        return r.data;
+      });
+  }
+
+  function apagarGrupo(id) {
+    var sb = _sb();
+    if (!sb) return Promise.reject(new Error('Sem ligação.'));
+    return sb.from('grupos').delete().eq('id', id);
+  }
+
+  /* PROFESSOR: todos os grupos (espaço partilhado). */
+  function todosOsGrupos() {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('grupos').select('*').order('criado', { ascending: false })
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* Membros de um grupo (com nome). */
+  function alunosDoGrupo(grupoId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('grupo_membros').select('aluno, nome_aluno, entrou').eq('grupo_id', grupoId)
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* PROFESSOR adiciona um aluno (da lista) a um grupo. */
+  function adicionarAoGrupo(grupoId, alunoId, nomeAluno) {
+    var sb = _sb();
+    if (!sb) return Promise.reject(new Error('Sem ligação.'));
+    return sb.from('grupo_membros').upsert(
+      { grupo_id: grupoId, aluno: alunoId, nome_aluno: nomeAluno || null },
+      { onConflict: 'grupo_id,aluno' }
+    );
+  }
+
+  /* PROFESSOR remove um aluno de um grupo. */
+  function removerDoGrupo(grupoId, alunoId) {
+    var sb = _sb();
+    if (!sb) return Promise.reject(new Error('Sem ligação.'));
+    return sb.from('grupo_membros').delete().eq('grupo_id', grupoId).eq('aluno', alunoId);
+  }
+
+  /* ALUNO entra num grupo pelo código. */
+  function entrarPorCodigo(codigo) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    codigo = (codigo || '').trim().toUpperCase();
+    if (!codigo) return Promise.reject(new Error('Escreve o código do grupo.'));
+    return sb.from('grupos').select('id, nome').eq('codigo', codigo).maybeSingle().then(function (res) {
+      if (res.error) throw res.error;
+      if (!res.data) throw new Error('Não existe nenhum grupo com esse código.');
+      var g = res.data;
+      var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+      return sb.from('grupo_membros').upsert(
+        { grupo_id: g.id, aluno: u.id, nome_aluno: nome },
+        { onConflict: 'grupo_id,aluno' }
+      ).then(function (r2) { if (r2.error) throw r2.error; return g; });
+    });
+  }
+
+  /* ALUNO: os grupos a que pertence (com nome do grupo). */
+  function gruposDoAluno() {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.resolve([]);
+    return sb.from('grupo_membros').select('grupo_id, grupos(nome, codigo, prof_nome)').eq('aluno', u.id)
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* ALUNO sai de um grupo. */
+  function sairDoGrupo(grupoId) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    return sb.from('grupo_membros').delete().eq('grupo_id', grupoId).eq('aluno', u.id);
+  }
+
   return {
+    criarGrupo: criarGrupo, apagarGrupo: apagarGrupo, todosOsGrupos: todosOsGrupos,
+    alunosDoGrupo: alunosDoGrupo, adicionarAoGrupo: adicionarAoGrupo, removerDoGrupo: removerDoGrupo,
+    entrarPorCodigo: entrarPorCodigo, gruposDoAluno: gruposDoAluno, sairDoGrupo: sairDoGrupo,
     criarTarefa: criarTarefa, apagarTarefa: apagarTarefa,
     tarefasDoProf: tarefasDoProf, quemFez: quemFez,
     tarefasDoAluno: tarefasDoAluno, marcarTarefa: marcarTarefa,

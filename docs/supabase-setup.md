@@ -186,6 +186,58 @@ create policy "prof vê estados"       on public.tarefas_estado for select
   using (public.eh_professor());
 ```
 
+## 3d. SQL dos GRUPOS (turmas a sério) — colar no SQL Editor → Run
+
+Fase 2: o professor cria grupos ("9.º A", "Apoio Mat"); organiza alunos
+(adiciona da lista) e/ou partilha um código para entrarem sozinhos. Um
+aluno pode estar em vários grupos.
+
+```sql
+-- GRUPOS: criados por um professor, com um código curto para os alunos.
+create table if not exists public.grupos (
+  id         uuid primary key default gen_random_uuid(),
+  professor  uuid not null references auth.users(id) on delete cascade,
+  prof_nome  text,
+  nome       text not null,
+  codigo     text not null unique,    -- ex.: 9A-K3F9 (o aluno usa para entrar)
+  criado     timestamptz not null default now()
+);
+
+-- MEMBROS: ligação aluno ↔ grupo (um aluno pode estar em vários grupos).
+create table if not exists public.grupo_membros (
+  grupo_id   uuid not null references public.grupos(id) on delete cascade,
+  aluno      uuid not null references auth.users(id) on delete cascade,
+  nome_aluno text,
+  entrou     timestamptz not null default now(),
+  primary key (grupo_id, aluno)
+);
+
+alter table public.grupos        enable row level security;
+alter table public.grupo_membros enable row level security;
+
+-- GRUPOS:
+--  • qualquer PROFESSOR cria e gere os grupos (espaço partilhado);
+--  • qualquer AUTENTICADO pode LER um grupo (preciso p/ o aluno entrar
+--    pelo código e para ver o nome do grupo a que pertence).
+create policy "prof gere grupos"      on public.grupos for all
+  using (public.eh_professor()) with check (public.eh_professor() and auth.uid() = professor);
+create policy "ler grupos"            on public.grupos for select
+  using (auth.role() = 'authenticated');
+
+-- MEMBROS:
+--  • o PROFESSOR adiciona/remove e vê todos os membros;
+--  • o ALUNO inscreve-se a si próprio (entrar por código), sai, e vê os
+--    seus.
+create policy "prof gere membros"     on public.grupo_membros for all
+  using (public.eh_professor()) with check (public.eh_professor());
+create policy "aluno entra"           on public.grupo_membros for insert
+  with check (auth.uid() = aluno);
+create policy "aluno sai"             on public.grupo_membros for delete
+  using (auth.uid() = aluno);
+create policy "aluno vê os seus"      on public.grupo_membros for select
+  using (auth.uid() = aluno);
+```
+
 ### Nota de segurança (honesta)
 
 A distinção professor/aluno está nos metadados da conta (`tipo`), que
