@@ -49,8 +49,9 @@ function _turmasRenderProfessor(wrap) {
 
   var alunosBody = '<input id="turmas-pesquisa" oninput="turmasFiltrar()" placeholder="🔎 Procurar aluno…" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:999px;padding:6px 14px;font-size:.82rem;font-family:Montserrat,sans-serif;outline:none;margin-bottom:.6rem">'
     + '<div id="turmas-lista"><div style="color:var(--ink4);font-size:.85rem">A carregar alunos…</div></div>';
-  var avisosBody = '<div id="turmas-avisos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
-    + '<div style="font-weight:800;color:var(--ink1);font-size:.86rem;margin:1rem 0 .5rem"><i class="ph ph-chats-circle" style="color:#4a3f7a"></i> Dúvidas e respostas dos alunos</div>'
+  // Avisos enviados vivem no sino 🔔 (notificações). Aqui só se gerem as
+  // dúvidas/respostas dos alunos. O botão «+ aviso» continua no cabeçalho.
+  var avisosBody = '<div style="font-size:.78rem;color:var(--ink4);margin-bottom:.6rem">Os avisos que envias aparecem no sino 🔔 dos alunos (no topo). Aqui vês e respondes às dúvidas deles.</div>'
     + '<div id="turmas-duvidas"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>';
 
   wrap.innerHTML =
@@ -60,7 +61,7 @@ function _turmasRenderProfessor(wrap) {
     + _acc('grupos', 'ph-users-four', '#2e7d52', 'Grupos', btnGrupos, '<div id="turmas-grupos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
     + _acc('alunos', 'ph-users-three', '#2e7d52', 'Todos os alunos', '', alunosBody)
     + _acc('tarefas', 'ph-clipboard-text', '#2e7d52', 'Trabalho atribuído', btnTarefa, '<div id="turmas-tarefas"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
-    + _acc('avisos', 'ph-megaphone', '#2e7d52', 'Avisos e dúvidas', btnAviso, avisosBody)
+    + _acc('avisos', 'ph-chats-circle', '#4a3f7a', 'Dúvidas dos alunos', btnAviso, avisosBody)
     + _acc('fichas', 'ph-link-simple', '#2e7d52', 'Fichas e recursos', btnFicha, '<div id="turmas-recursos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
     + '</div>';
 
@@ -70,7 +71,6 @@ function _turmasRenderProfessor(wrap) {
   });
   _turmasPintaGrupos();
   _turmasPintaTarefas();
-  _turmasPintaAvisos();
   _turmasPintaDuvidas();
   _turmasPintaRecursos(true);
 }
@@ -113,30 +113,8 @@ function duvidaResponder(msgId, alunoId, nome) {
   }).catch(function (e) { alert(e.message || 'Não foi possível responder.'); });
 }
 
-/* ── Avisos e mensagens (vista do professor) ── */
-function _turmasPintaAvisos() {
-  var el = document.getElementById('turmas-avisos');
-  if (!el) return;
-  Turmas.mensagensDoProf().then(function (ms) {
-    if (!el) return;
-    if (!ms.length) {
-      el.innerHTML = '<div style="color:var(--ink4);font-size:.85rem;padding:.3rem 0">Sem avisos. Carrega em «Novo aviso» para mandares um recado a todos ou a um grupo. (Para feedback a um aluno, abre o aluno acima e usa «Deixar feedback».)</div>';
-      return;
-    }
-    el.innerHTML = ms.map(function (m) {
-      var alvo = m.alcance === 'geral' ? 'Todos' : (m.alcance === 'grupo' ? ((m.grupos && m.grupos.nome) || 'Grupo') : 'Feedback privado');
-      var cor = m.alcance === 'aluno' ? '#4a3f7a' : '#2e7d52';
-      var fundo = m.alcance === 'aluno' ? '#f0edf7' : '#e8f5ee';
-      var borda = m.alcance === 'aluno' ? '#ddd8f5' : '#bfe3c9';
-      return '<div style="border:1.5px solid var(--border);border-radius:12px;padding:.7rem 1rem;margin-bottom:.5rem">'
-        + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem">'
-        + '<div style="min-width:0"><span style="font-size:.7rem;font-weight:800;color:' + cor + ';background:' + fundo + ';border:1px solid ' + borda + ';border-radius:6px;padding:1px 8px">' + _esc(alvo) + '</span>'
-        + '<div style="font-size:.86rem;color:var(--ink2);line-height:1.5;margin-top:.35rem">' + _esc(m.texto) + '</div></div>'
-        + '<button onclick="avisoApagar(\'' + m.id + '\')" title="Apagar" style="color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;padding:3px 9px;font-size:.72rem;cursor:pointer;font-family:Montserrat,sans-serif;flex-shrink:0">✕</button>'
-        + '</div></div>';
-    }).join('');
-  });
-}
+/* (Os avisos enviados aparecem no sino 🔔 — ver notificacoes.js. A gestão
+   aqui é só das dúvidas dos alunos.) */
 
 function avisoNovoPrompt() {
   var texto = prompt('Escreve o aviso (ex.: Teste de Matemática na próxima 6.ª feira):');
@@ -153,16 +131,10 @@ function avisoNovoPrompt() {
       if (n >= 1 && n <= gs.length) { alcance = 'grupo'; grupoId = gs[n - 1].id; }
     }
     Turmas.enviarMensagem({ texto: texto, alcance: alcance, grupoId: grupoId }).then(function () {
-      if (typeof eduToast === 'function') eduToast('Aviso enviado! 📣', 'success');
-    if (typeof notificacoesRender === 'function') notificacoesRender();
-      _turmasPintaAvisos();
+      if (typeof eduToast === 'function') eduToast('Aviso enviado! Os alunos veem-no no sino 🔔', 'success');
+      if (typeof notificacoesRender === 'function') notificacoesRender();
     }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
   });
-}
-
-function avisoApagar(id) {
-  if (!confirm('Apagar este aviso?')) return;
-  Turmas.apagarMensagem(id).then(function () { _turmasPintaAvisos(); });
 }
 
 /* Feedback a um aluno (chamado do detalhe do aluno). */
@@ -171,7 +143,7 @@ function alunoFeedbackPrompt(alunoId, nome) {
   if (texto === null || !texto.trim()) return;
   Turmas.enviarMensagem({ texto: texto, alcance: 'aluno', paraAluno: alunoId }).then(function () {
     if (typeof eduToast === 'function') eduToast('Feedback enviado a ' + nome + '! 💬', 'success');
-    _turmasPintaAvisos();
+    if (typeof notificacoesRender === 'function') notificacoesRender();
   }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
 }
 
