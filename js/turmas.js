@@ -44,6 +44,23 @@ var Turmas = (function () {
       .sort(function (a, b) { return b.xp - a.xp; });
   }
 
+  /* "Onde erra mais": capítulos onde o aluno já tentou quizzes mas tem a
+     melhor pontuação mais baixa (< 70%). Devolve até 3, do pior para o
+     melhor, com a disciplina a que pertencem. */
+  function _pontosFracos(caps) {
+    caps = caps || {};
+    var lista = [];
+    Object.keys(caps).forEach(function (id) {
+      var c = caps[id] || {};
+      var q = c.quiz || {};
+      if ((q.tentativas || 0) > 0 && (q.melhorPct || 0) < 70) {
+        lista.push({ cap: id, disciplina: _disciplinaDeCap(id), pct: q.melhorPct || 0, tentativas: q.tentativas });
+      }
+    });
+    lista.sort(function (a, b) { return a.pct - b.pct; });
+    return lista.slice(0, 3);
+  }
+
   /* ── ALUNO: auto-inscrição no Apoio ao Estudo ──
      Chamado no login. Idempotente (upsert). Guarda o nome/email para o
      professor identificar o aluno. Só inscreve contas de ALUNO. */
@@ -81,9 +98,12 @@ var Turmas = (function () {
             email: a.email || '',
             xp: d.totalXp || 0,
             streak: d.streak || 0,
+            lastDay: d.lastDay || null,
             desafios: des.feitos || 0,
             topicos: Object.keys(caps).length,
-            disciplinas: _resumoPorDisciplina(caps)
+            disciplinas: _resumoPorDisciplina(caps),
+            caps: caps,                          // bruto, para "onde erra mais"
+            dificuldades: _pontosFracos(caps)    // capítulos com pior quiz
           };
         }).sort(function (a, b) { return b.xp - a.xp; }); // ranking por XP
       });
@@ -202,6 +222,25 @@ var Turmas = (function () {
     );
   }
 
+  /* PROFESSOR: resumo de tarefas de um aluno {total, feitas}. Conta as
+     tarefas que lhe dizem respeito (turma toda + dele) e quantas marcou. */
+  function resumoTarefasAluno(alunoId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve({ total: 0, feitas: 0 });
+    return sb.from('tarefas').select('id, para_aluno').then(function (res) {
+      var ts = (res.error ? [] : (res.data || [])).filter(function (t) {
+        return !t.para_aluno || t.para_aluno === alunoId;
+      });
+      var total = ts.length;
+      if (!total) return { total: 0, feitas: 0 };
+      return sb.from('tarefas_estado').select('tarefa_id').eq('aluno', alunoId).eq('feito', true).then(function (e) {
+        var ids = {}; (e.data || []).forEach(function (r) { ids[r.tarefa_id] = 1; });
+        var feitas = 0; ts.forEach(function (t) { if (ids[t.id]) feitas++; });
+        return { total: total, feitas: feitas };
+      });
+    });
+  }
+
   /* Nº de tarefas por fazer do aluno (para o badge no Início). */
   function tarefasPendentes() {
     return tarefasDoAluno().then(function (ts) {
@@ -317,7 +356,7 @@ var Turmas = (function () {
     criarTarefa: criarTarefa, apagarTarefa: apagarTarefa,
     tarefasDoProf: tarefasDoProf, quemFez: quemFez,
     tarefasDoAluno: tarefasDoAluno, marcarTarefa: marcarTarefa,
-    tarefasPendentes: tarefasPendentes,
+    tarefasPendentes: tarefasPendentes, resumoTarefasAluno: resumoTarefasAluno,
     autoInscrever: autoInscrever,
     todosOsAlunos: todosOsAlunos,
     recursos: recursos,

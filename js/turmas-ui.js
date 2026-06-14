@@ -265,25 +265,83 @@ function turmasToggleAluno(id) {
   if (cx) cx.style.transform = 'rotate(90deg)';
   var a = (_turmasAlunosCache || []).filter(function (x) { return x.aluno === id; })[0];
   if (!a) { det.innerHTML = ''; return; }
-  if (!a.disciplinas.length) {
-    det.innerHTML = '<div style="color:var(--ink4);font-size:.8rem;border-top:1px dashed var(--border);padding-top:.6rem">Ainda não praticou nada na plataforma.</div>';
-    return;
-  }
-  var maxXp = a.disciplinas[0].xp || 1;
+
   var h = '<div style="border-top:1px dashed var(--border);padding-top:.6rem">'
-    + (a.email ? '<div style="font-size:.74rem;color:var(--ink4);margin-bottom:.5rem">' + _esc(a.email) + '</div>' : '')
-    + '<div style="font-size:.72rem;color:var(--ink4);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.4rem">O que andou a fazer</div>';
-  a.disciplinas.forEach(function (d) {
-    var pct = Math.round((d.xp / maxXp) * 100);
-    h += '<div style="margin-bottom:.45rem">'
-      + '<div style="display:flex;justify-content:space-between;font-size:.8rem;color:var(--ink2);margin-bottom:.15rem">'
-      + '<span style="font-weight:700">' + _esc(d.disciplina) + '</span>'
-      + '<span style="color:var(--ink4)">⭐ ' + d.xp + ' · ' + d.topicos + ' tópico' + (d.topicos === 1 ? '' : 's') + '</span></div>'
-      + '<div style="height:6px;background:var(--cream);border-radius:6px;overflow:hidden"><div style="height:100%;width:' + Math.max(pct, 6) + '%;background:linear-gradient(90deg,#2e7d52,#5cb085)"></div></div>'
-      + '</div>';
-  });
+    + (a.email ? '<div style="font-size:.74rem;color:var(--ink4);margin-bottom:.5rem">' + _esc(a.email) + '</div>' : '');
+
+  // ── Atividade recente ──
+  h += '<div class="al-linha">' + _esc(_alunoAtividade(a)) + '</div>';
+
+  // ── Trabalho atribuído (carregado a seguir) ──
+  h += '<div class="al-sec">Trabalho atribuído</div>'
+    + '<div id="al-tarefas-' + id + '" class="al-tarefas">a carregar…</div>';
+
+  // ── Progresso por disciplina ──
+  if (a.disciplinas.length) {
+    var maxXp = a.disciplinas[0].xp || 1;
+    h += '<div class="al-sec">Progresso por disciplina</div>';
+    a.disciplinas.forEach(function (d) {
+      var pct = Math.round((d.xp / maxXp) * 100);
+      h += '<div style="margin-bottom:.45rem">'
+        + '<div style="display:flex;justify-content:space-between;font-size:.8rem;color:var(--ink2);margin-bottom:.15rem">'
+        + '<span style="font-weight:700">' + _esc(d.disciplina) + '</span>'
+        + '<span style="color:var(--ink4)">⭐ ' + d.xp + ' · ' + d.topicos + ' tópico' + (d.topicos === 1 ? '' : 's') + '</span></div>'
+        + '<div style="height:6px;background:var(--cream);border-radius:6px;overflow:hidden"><div style="height:100%;width:' + Math.max(pct, 6) + '%;background:linear-gradient(90deg,#2e7d52,#5cb085)"></div></div>'
+        + '</div>';
+    });
+  } else {
+    h += '<div class="al-sec">Progresso por disciplina</div><div style="font-size:.8rem;color:var(--ink4)">Ainda não praticou nada na plataforma.</div>';
+  }
+
+  // ── Onde erra mais ──
+  h += '<div class="al-sec">Onde erra mais</div>';
+  if (a.dificuldades && a.dificuldades.length) {
+    a.dificuldades.forEach(function (f) {
+      h += '<div style="display:flex;justify-content:space-between;font-size:.8rem;color:var(--ink2);padding:.2rem 0">'
+        + '<span>' + _esc(_capLabel(f.cap, f.disciplina)) + '</span>'
+        + '<span style="font-weight:800;color:' + (f.pct < 50 ? '#c0392b' : '#b8860b') + '">' + f.pct + '%</span></div>';
+    });
+  } else {
+    h += '<div style="font-size:.8rem;color:var(--ink4)">Sem pontos fracos detetados nos quizzes (ou ainda não fez quizzes).</div>';
+  }
+
   h += '</div>';
   det.innerHTML = h;
+
+  // carrega o resumo de tarefas deste aluno
+  if (Turmas.resumoTarefasAluno) {
+    Turmas.resumoTarefasAluno(id).then(function (r) {
+      var box = document.getElementById('al-tarefas-' + id);
+      if (!box) return;
+      if (!r.total) { box.innerHTML = '<span style="color:var(--ink4)">Sem trabalho atribuído.</span>'; return; }
+      var falta = r.total - r.feitas;
+      box.innerHTML = '<span style="font-weight:800;color:' + (falta === 0 ? '#2e7d52' : (falta > 0 ? '#b8860b' : 'var(--ink2)')) + '">'
+        + r.feitas + ' de ' + r.total + ' feitas</span>'
+        + (falta > 0 ? ' <span style="color:var(--ink4)">· ' + falta + ' por fazer</span>' : ' ✅');
+    });
+  }
+}
+
+/* Texto de atividade recente a partir do lastDay. */
+function _alunoAtividade(a) {
+  var pre = 'Ofensiva ' + (a.streak > 0 ? '🔥 ' + a.streak + ' dias' : '—') + ' · 🎯 ' + (a.desafios || 0) + ' desafios';
+  if (!a.lastDay) return pre + ' · nunca praticou';
+  var hoje = new Date(); var ld = new Date(a.lastDay + 'T00:00:00');
+  var dias = Math.round((hoje - ld) / 86400000);
+  var quando;
+  if (dias <= 0) quando = 'ativo hoje';
+  else if (dias === 1) quando = 'ativo ontem';
+  else if (dias <= 7) quando = 'ativo há ' + dias + ' dias';
+  else quando = '⚠️ não aparece há ' + dias + ' dias';
+  return pre + ' · ' + quando;
+}
+
+/* Rótulo legível de um capId (usa a disciplina + o número do cap). */
+function _capLabel(capId, disciplina) {
+  var m = String(capId).match(/cap(\d+)/i) || String(capId).match(/(\d+)$/);
+  var n = m ? m[1] : '';
+  if (/^cap\d|mat|m\d/i.test(capId) && n) return disciplina + ' · cap. ' + n;
+  return disciplina + (n ? ' · ' + n : '');
 }
 
 /* ── Recursos (visíveis a profs e alunos) ── */

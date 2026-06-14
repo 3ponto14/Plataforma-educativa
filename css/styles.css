@@ -4014,3 +4014,8 @@ body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
 .pi-card-foot{font-size:.8rem;color:var(--ink4);line-height:1.5;border-top:1px solid var(--border);padding-top:.7rem}
 .pi-vazio{font-size:.85rem;color:var(--ink4);line-height:1.55}
 @media(max-width:560px){ .pi-ola{font-size:1.7rem} #portal-saudacao{padding:1.4rem 1rem .3rem} }
+
+/* Detalhe rico do aluno (Turmas, vista do professor) */
+.al-linha{font-size:.8rem;color:var(--ink3);background:var(--cream);border-radius:8px;padding:.4rem .7rem;margin-bottom:.7rem}
+.al-sec{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink4);margin:.7rem 0 .4rem}
+.al-tarefas{font-size:.82rem;color:var(--ink2)}
