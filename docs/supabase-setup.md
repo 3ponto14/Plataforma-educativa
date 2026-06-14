@@ -277,6 +277,40 @@ create policy "aluno vê mensagens"    on public.mensagens for select
   );
 ```
 
+## 3f. SQL da CONVERSA (Fase 4b: aluno responde / manda dúvida) — Run
+
+Acrescenta a possibilidade de o aluno responder a uma mensagem e abrir
+dúvidas novas. As respostas/dúvidas vivem na MESMA tabela `mensagens`,
+com `autor_tipo='aluno'`, `de_aluno` = quem escreveu e (quando é resposta)
+`resposta_a` a apontar à mensagem-mãe. Por defeito vão para o professor da
+mensagem original; uma dúvida livre (sem mãe) fica visível a todos os
+professores.
+
+```sql
+-- Novas colunas (corre uma vez; "if not exists" evita erro se repetires).
+alter table public.mensagens add column if not exists autor_tipo text not null default 'professor';
+alter table public.mensagens add column if not exists de_aluno   uuid references auth.users(id) on delete cascade;
+alter table public.mensagens add column if not exists de_nome    text;
+alter table public.mensagens add column if not exists resposta_a uuid references public.mensagens(id) on delete cascade;
+-- 'professor' deixa de ser obrigatório (dúvida livre não tem prof alvo).
+alter table public.mensagens alter column professor drop not null;
+
+-- ALUNO insere a SUA resposta/dúvida (autor_tipo='aluno' e de_aluno=ele).
+create policy "aluno escreve" on public.mensagens for insert
+  with check (auth.uid() = de_aluno and autor_tipo = 'aluno');
+
+-- ALUNO vê também o que ELE escreveu (além do que já via).
+create policy "aluno vê o que escreveu" on public.mensagens for select
+  using (auth.uid() = de_aluno);
+
+-- PROFESSOR vê as mensagens de alunos dirigidas a si OU as dúvidas
+-- livres (sem professor alvo). (As que o próprio prof criou já as vê
+-- pela policy "prof gere mensagens".)
+create policy "prof vê respostas/dúvidas" on public.mensagens for select
+  using (public.eh_professor() and autor_tipo = 'aluno'
+         and (professor = auth.uid() or professor is null));
+```
+
 ### Nota de segurança (honesta)
 
 A distinção professor/aluno está nos metadados da conta (`tipo`), que

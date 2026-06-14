@@ -51,6 +51,9 @@ function _turmasRenderProfessor(wrap) {
     + '<button onclick="avisoNovoPrompt()" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:6px 15px;font-size:.78rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-plus"></i> Novo aviso</button>'
     + '</div>'
     + '<div id="turmas-avisos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
+    // dúvidas e respostas dos alunos
+    + '<div style="font-weight:800;color:var(--ink1);font-size:.9rem;margin:1rem 0 .5rem"><i class="ph ph-chats-circle" style="color:#4a3f7a"></i> Dúvidas e respostas dos alunos</div>'
+    + '<div id="turmas-duvidas"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
     + '</div>'
     // recursos
     + '<div style="border-top:1px solid var(--border);margin-top:1.2rem;padding-top:1rem">'
@@ -69,7 +72,38 @@ function _turmasRenderProfessor(wrap) {
   _turmasPintaGrupos();
   _turmasPintaTarefas();
   _turmasPintaAvisos();
+  _turmasPintaDuvidas();
   _turmasPintaRecursos(true);
+}
+
+/* ── Dúvidas e respostas dos alunos (vista do professor) ── */
+function _turmasPintaDuvidas() {
+  var el = document.getElementById('turmas-duvidas');
+  if (!el || !Turmas.respostasDeAlunos) return;
+  Turmas.respostasDeAlunos().then(function (ms) {
+    if (!el) return;
+    if (!ms.length) {
+      el.innerHTML = '<div style="color:var(--ink4);font-size:.85rem;padding:.3rem 0">Sem dúvidas nem respostas dos alunos por agora.</div>';
+      return;
+    }
+    el.innerHTML = ms.map(function (m) {
+      var tipo = m.alcance === 'duvida' ? '❓ Dúvida' : '↩ Resposta';
+      return '<div style="border:1.5px solid var(--border);border-radius:12px;padding:.7rem 1rem;margin-bottom:.5rem;background:#f4f2fa">'
+        + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem">'
+        + '<div style="min-width:0"><span style="font-size:.7rem;font-weight:800;color:#4a3f7a">' + tipo + ' · ' + _esc(m.de_nome || 'aluno') + '</span>'
+        + '<div style="font-size:.86rem;color:var(--ink2);line-height:1.5;margin-top:.3rem">' + _esc(m.texto) + '</div></div>'
+        + '<button onclick="duvidaResponder(\'' + m.id + '\',\'' + (m.de_aluno || '') + '\',\'' + _escAttr(m.de_nome || 'aluno') + '\')" style="font-size:.74rem;font-weight:700;color:#fff;background:#4a3f7a;border:none;border-radius:999px;padding:4px 12px;cursor:pointer;font-family:Montserrat,sans-serif;flex-shrink:0">Responder</button>'
+        + '</div></div>';
+    }).join('');
+  });
+}
+
+function duvidaResponder(msgId, alunoId, nome) {
+  var texto = prompt('Responder a ' + nome + ':');
+  if (texto === null || !texto.trim()) return;
+  Turmas.enviarMensagem({ texto: texto, alcance: 'aluno', paraAluno: alunoId, respostaA: msgId }).then(function () {
+    if (typeof eduToast === 'function') eduToast('Resposta enviada a ' + nome + '! 💬', 'success');
+  }).catch(function (e) { alert(e.message || 'Não foi possível responder.'); });
 }
 
 /* ── Avisos e mensagens (vista do professor) ── */

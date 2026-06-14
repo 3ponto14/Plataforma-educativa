@@ -352,7 +352,8 @@ var Turmas = (function () {
   /* ════════════ MENSAGENS (avisos + feedback) ════════════ */
 
   /* PROFESSOR envia. opts: {texto, alcance:'geral'|'grupo'|'aluno',
-     grupoId, paraAluno}. */
+     grupoId, paraAluno, respostaA}. respostaA liga a resposta do prof à
+     mensagem do aluno (conversa). */
   function enviarMensagem(opts) {
     var sb = _sb(); var u = Cloud.utilizador();
     if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
@@ -362,9 +363,10 @@ var Turmas = (function () {
     var alcance = opts.alcance || 'geral';
     var profNome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
     return sb.from('mensagens').insert({
-      professor: u.id, prof_nome: profNome, alcance: alcance,
+      professor: u.id, prof_nome: profNome, alcance: alcance, autor_tipo: 'professor',
       grupo_id: alcance === 'grupo' ? (opts.grupoId || null) : null,
       para_aluno: alcance === 'aluno' ? (opts.paraAluno || null) : null,
+      resposta_a: opts.respostaA || null,
       texto: texto
     }).select().single().then(function (r) { if (r.error) throw r.error; return r.data; });
   }
@@ -383,18 +385,57 @@ var Turmas = (function () {
       .then(function (res) { return res.error ? [] : (res.data || []); });
   }
 
-  /* ALUNO: o seu mural (avisos gerais + dos seus grupos + feedback a si).
-     A RLS já filtra; aqui só ordena por data. */
+  /* ALUNO: o seu mural (avisos gerais + dos seus grupos + feedback a si +
+     o que ele próprio escreveu). A RLS filtra; aqui só ordena. */
   function muralDoAluno() {
     var sb = _sb(); var u = Cloud.utilizador();
     if (!sb || !u) return Promise.resolve([]);
-    return sb.from('mensagens').select('*, grupos(nome)').order('criado', { ascending: false })
+    return sb.from('mensagens').select('*, grupos(nome)').order('criado', { ascending: true })
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* ALUNO responde a uma mensagem do professor. Vai para o professor
+     dessa mensagem (msg.professor). */
+  function responder(msg, texto) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    texto = (texto || '').trim();
+    if (!texto) return Promise.reject(new Error('Escreve a resposta.'));
+    var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+    return sb.from('mensagens').insert({
+      autor_tipo: 'aluno', de_aluno: u.id, de_nome: nome,
+      professor: msg.professor || null, resposta_a: msg.id,
+      alcance: 'resposta', texto: texto
+    }).then(function (r) { if (r.error) throw r.error; return r; });
+  }
+
+  /* ALUNO abre uma dúvida nova (sem mensagem-mãe → visível a todos os
+     professores). */
+  function criarDuvida(texto) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    texto = (texto || '').trim();
+    if (!texto) return Promise.reject(new Error('Escreve a dúvida.'));
+    var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+    return sb.from('mensagens').insert({
+      autor_tipo: 'aluno', de_aluno: u.id, de_nome: nome,
+      professor: null, resposta_a: null, alcance: 'duvida', texto: texto
+    }).then(function (r) { if (r.error) throw r.error; return r; });
+  }
+
+  /* PROFESSOR: respostas e dúvidas escritas por alunos (para si ou
+     livres). Mais recentes primeiro. */
+  function respostasDeAlunos() {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('mensagens').select('*').eq('autor_tipo', 'aluno').order('criado', { ascending: false })
       .then(function (res) { return res.error ? [] : (res.data || []); });
   }
 
   return {
     enviarMensagem: enviarMensagem, apagarMensagem: apagarMensagem,
     mensagensDoProf: mensagensDoProf, muralDoAluno: muralDoAluno,
+    responder: responder, criarDuvida: criarDuvida, respostasDeAlunos: respostasDeAlunos,
     criarGrupo: criarGrupo, apagarGrupo: apagarGrupo, todosOsGrupos: todosOsGrupos,
     alunosDoGrupo: alunosDoGrupo, adicionarAoGrupo: adicionarAoGrupo, removerDoGrupo: removerDoGrupo,
     entrarPorCodigo: entrarPorCodigo, gruposDoAluno: gruposDoAluno, sairDoGrupo: sairDoGrupo,

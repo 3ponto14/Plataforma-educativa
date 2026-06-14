@@ -3966,6 +3966,12 @@ body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
 .pi-mural-tag{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink4);margin-bottom:.15rem}
 .pi-mural-txt{font-size:.88rem;color:var(--ink1);line-height:1.5}
 .pi-mural-de{font-size:.72rem;color:var(--ink4);margin-top:.2rem}
+.pi-mural-msg.meu{border-left-color:#a8854d;background:#faf6ee}
+.pi-mural-msg.resp{margin-left:1.2rem}
+.pi-resp-acao{margin:-.2rem 0 .6rem 0}
+.pi-resp-acao a{font-size:.76rem;font-weight:700;color:#4a3f7a;text-decoration:none}
+.pi-duvida-btn{width:100%;margin-top:.5rem;background:var(--white);border:1.5px dashed #b9b1d6;color:#4a3f7a;border-radius:12px;padding:.65rem;font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:800;cursor:pointer}
+.pi-duvida-btn:hover{background:#f4f2fa}
 
 /* "O que tenho para fazer" (tarefas do aluno no Início) */
 .pi-tarefas-slot{max-width:540px;margin:0 auto 1rem}
