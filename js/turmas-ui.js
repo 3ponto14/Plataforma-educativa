@@ -40,6 +40,30 @@ function accToggle(key) {
   if (cx) cx.style.transform = abrir ? 'rotate(90deg)' : '';
 }
 
+/* Nome de um aluno a partir do id (usa a cache já carregada). */
+function _nomeDoAluno(id) {
+  var a = (_turmasAlunosCache || []).filter(function (x) { return x.aluno === id; })[0];
+  return a ? a.nome : null;
+}
+
+/* Abre a secção «Todos os alunos», expande o aluno e faz scroll até ele.
+   Usado nos cartões de trabalho/fichas dirigidos a um aluno. */
+function irParaAluno(id) {
+  var body = document.getElementById('acc-body-alunos');
+  var cx = document.getElementById('acc-cx-alunos');
+  if (body && body.style.display === 'none') {
+    body.style.display = 'block';
+    if (cx) cx.style.transform = 'rotate(90deg)';
+  }
+  // limpa qualquer filtro de pesquisa para garantir que o aluno está na lista
+  var pesq = document.getElementById('turmas-pesquisa');
+  if (pesq && pesq.value) { pesq.value = ''; turmasFiltrar(); }
+  var det = document.getElementById('det-' + id);
+  if (det && det.style.display === 'none') turmasToggleAluno(id);
+  var alvo = document.getElementById('det-' + id) || document.getElementById('cx-' + id);
+  if (alvo && alvo.scrollIntoView) alvo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
 function _turmasRenderProfessor(wrap) {
   var btnGrupos = '<button onclick="grupoEntrarComoProf()" style="background:var(--white);color:#2e7d52;border:1.5px solid #bfe3c9;border-radius:999px;padding:5px 11px;font-size:.74rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">+ código</button>'
     + ' <button onclick="grupoCriarPrompt()" style="background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:5px 12px;font-size:.74rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">+ grupo</button>';
@@ -68,6 +92,9 @@ function _turmasRenderProfessor(wrap) {
   Turmas.todosOsAlunos().then(function (alunos) {
     _turmasAlunosCache = alunos;
     _turmasPintaAlunos(alunos);
+    // repintar cartões que mostram o nome do aluno destinatário (cache agora disponível)
+    _turmasPintaTarefas();
+    _turmasPintaRecursos(true);
   });
   _turmasPintaGrupos();
   _turmasPintaTarefas();
@@ -450,8 +477,14 @@ function _turmasPintaTarefas() {
     }
     var nAlunos = (_turmasAlunosCache || []).length;
     el.innerHTML = ts.map(function (t) {
-      var alvo = t.para_aluno ? 'a 1 aluno' : 'à turma';
       var prazo = t.prazo ? _tarefaPrazoTxt(t.prazo) : '';
+      var alvo;
+      if (t.para_aluno) {
+        var nm = _nomeDoAluno(t.para_aluno) || 'aluno';
+        alvo = '<a href="#" onclick="irParaAluno(\'' + t.para_aluno + '\');return false" style="color:#2e7d52;font-weight:700;text-decoration:none">' + _esc(nm) + ' ↗</a>';
+      } else {
+        alvo = 'à turma';
+      }
       return '<div style="border:1.5px solid var(--border);border-radius:12px;padding:.7rem 1rem;margin-bottom:.5rem">'
         + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem">'
         + '<div style="min-width:0">'
@@ -662,13 +695,27 @@ function _turmasPintaRecursos(podeGerir) {
       return;
     }
     el.innerHTML = rs.map(function (r) {
-      var destino = r.grupo_id ? ('grupo ' + ((r.grupos && r.grupos.nome) || '')) : (r.para_aluno ? '1 aluno' : '');
-      return '<div style="display:flex;align-items:center;justify-content:space-between;gap:.6rem;border:1.5px solid var(--border);border-radius:12px;padding:.6rem .9rem;margin-bottom:.45rem">'
+      // destino legível: grupo (nome), aluno (nome clicável) ou turma
+      var destinoTxt = '';      // texto simples para a linha de metadados
+      var alunoLink = '';       // linha clicável quando é dirigido a um aluno
+      if (r.grupo_id) {
+        destinoTxt = 'grupo ' + ((r.grupos && r.grupos.nome) || '');
+      } else if (r.para_aluno) {
+        var nm = _nomeDoAluno(r.para_aluno) || 'aluno';
+        destinoTxt = nm;
+        if (podeGerir) {
+          alunoLink = '<div style="font-size:.72rem;margin-top:.15rem"><a href="#" onclick="irParaAluno(\'' + r.para_aluno + '\');return false" style="color:#2e7d52;font-weight:700;text-decoration:none">👤 ' + _esc(nm) + ' ↗</a></div>';
+        }
+      }
+      return '<div style="border:1.5px solid var(--border);border-radius:12px;padding:.6rem .9rem;margin-bottom:.45rem">'
+        + '<div style="display:flex;align-items:center;justify-content:space-between;gap:.6rem">'
         + '<a href="' + _escAttr(r.url) + '" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.6rem;text-decoration:none;flex:1;min-width:0">'
         + '<span style="font-size:1.1rem">📄</span>'
         + '<span style="min-width:0"><span style="font-weight:700;color:var(--ink1);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + _esc(r.titulo) + '</span>'
-        + '<span style="font-size:.72rem;color:var(--ink4)">' + (r.disciplina ? _esc(r.disciplina) + ' · ' : '') + (podeGerir && destino ? 'para ' + _esc(destino) + ' · ' : '') + 'por ' + _esc(r.autor_nome || 'professor') + '</span></span></a>'
-        + (podeGerir ? '<button onclick="recursosApagar(\'' + r.id + '\',\'' + _escAttr(r.titulo) + '\')" title="Remover" style="color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;padding:3px 9px;font-size:.72rem;cursor:pointer;font-family:Montserrat,sans-serif">✕</button>' : '')
+        + '<span style="font-size:.72rem;color:var(--ink4)">' + (r.disciplina ? _esc(r.disciplina) + ' · ' : '') + (podeGerir && destinoTxt ? 'para ' + _esc(destinoTxt) + ' · ' : '') + 'por ' + _esc(r.autor_nome || 'professor') + '</span></span></a>'
+        + (podeGerir ? '<button onclick="recursosApagar(\'' + r.id + '\',\'' + _escAttr(r.titulo) + '\')" title="Remover" style="color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;padding:3px 9px;font-size:.72rem;cursor:pointer;font-family:Montserrat,sans-serif;flex-shrink:0">✕</button>' : '')
+        + '</div>'
+        + alunoLink
         + '</div>';
     }).join('');
   });
