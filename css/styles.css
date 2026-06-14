@@ -3945,6 +3945,12 @@ body.dark-mode .resumo-st-btn.active {
 body.ml-fixed-on #view-portal > *:not(.site-topbar){margin-left:268px;}
 body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
 
+/* A secção Turmas usa toda a largura disponível (até um máximo confortável)
+   e fica centrada, com algum respiro lateral. Antes ficava espremida. */
+#sec-apoio{padding:1.5rem 2rem 4rem}
+#sec-apoio #portal-turmas{max-width:1100px;margin:0 auto}
+@media (max-width:900px){ #sec-apoio{padding:1rem 1rem 3rem} }
+
 /* ════════════════════════════════════════════════════════════════
    Painel de boas-vindas (com sessão) — js/painel-inicio.js
    ════════════════════════════════════════════════════════════════ */
