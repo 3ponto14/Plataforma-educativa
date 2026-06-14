@@ -46,6 +46,29 @@ function _nomeDoAluno(id) {
   return a ? a.nome : null;
 }
 
+/* Há mais do que um aluno com este nome na cache? (desambiguação) */
+function _nomeRepetido(nome) {
+  if (!nome) return false;
+  var n = 0, alvo = ('' + nome).trim().toLowerCase();
+  (_turmasAlunosCache || []).forEach(function (a) {
+    if (('' + (a.nome || '')).trim().toLowerCase() === alvo) n++;
+  });
+  return n > 1;
+}
+
+/* Rótulo de um aluno: só o nome quando é único; nome + email quando há
+   outro aluno com o mesmo nome (para os distinguir). `obj` pode ser o id
+   ou um objeto {nome,email}. */
+function _rotuloDoAluno(obj) {
+  var a = (typeof obj === 'string')
+    ? (_turmasAlunosCache || []).filter(function (x) { return x.aluno === obj; })[0]
+    : obj;
+  if (!a) return null;
+  var nome = a.nome || 'aluno';
+  if (a.email && _nomeRepetido(nome)) return nome + ' · ' + a.email;
+  return nome;
+}
+
 /* Abre a secção «Todos os alunos», expande o aluno e faz scroll até ele.
    Usado nos cartões de trabalho/fichas dirigidos a um aluno. */
 function irParaAluno(id) {
@@ -153,7 +176,7 @@ function _escolherDestino(prefere, cb) {
     var opc = 'Para quem?\n';
     var idx = [];
     gs.forEach(function (g) { idx.push({ grupoId: g.id, label: 'Grupo: ' + g.nome }); });
-    alunos.forEach(function (a) { idx.push({ paraAluno: a.aluno, label: 'Aluno: ' + a.nome }); });
+    alunos.forEach(function (a) { idx.push({ paraAluno: a.aluno, label: 'Aluno: ' + _rotuloDoAluno(a) }); });
     if (!idx.length) { alert('Cria primeiro um grupo ou espera que alunos se registem.'); return; }
     idx.forEach(function (o, i) { opc += (i + 1) + ' = ' + o.label + '\n'; });
     var esc = prompt(opc, '1');
@@ -275,7 +298,7 @@ function _grupoPintaDet(id, nome) {
         var sid = id + '_' + m.aluno;
         h += '<div class="grupo-aluno-row" data-nome="' + _escAttr((m.nome_aluno || '').toLowerCase()) + '" style="border-bottom:1px dashed var(--border);padding:.4rem 0">'
           + '<div style="display:flex;align-items:center;justify-content:space-between;font-size:.84rem">'
-          + '<span style="font-weight:700;color:var(--ink1)">' + _esc(m.nome_aluno || '(aluno)') + '</span>'
+          + '<span style="font-weight:700;color:var(--ink1)">' + _esc(_rotuloDoAluno(m.aluno) || m.nome_aluno || '(aluno)') + '</span>'
           + '<span style="display:flex;gap:.35rem">'
           + '<button onclick="sessaoToggle(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(m.nome_aluno || 'aluno') + '\')" style="font-size:.72rem;font-weight:700;color:#4a3f7a;background:var(--white);border:1.5px solid #ddd8f5;border-radius:999px;padding:2px 10px;cursor:pointer;font-family:Montserrat,sans-serif">📓 Registo</button>'
           + '<button onclick="conversaToggle(\'' + id + '\',\'' + m.aluno + '\',\'' + _escAttr(m.nome_aluno || 'aluno') + '\')" style="font-size:.72rem;font-weight:700;color:#2e7d52;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:2px 10px;cursor:pointer;font-family:Montserrat,sans-serif">💬 Mensagens</button>'
@@ -296,7 +319,7 @@ function _grupoPintaDet(id, nome) {
       h += '<div style="margin-top:.6rem;display:flex;gap:.4rem;flex-wrap:wrap;align-items:center">'
         + '<select id="grupo-add-' + id + '" style="border:1.5px solid var(--border);border-radius:8px;padding:5px 10px;font-size:.82rem;font-family:Montserrat,sans-serif;max-width:200px">'
         + '<option value="">+ Adicionar aluno…</option>'
-        + disp.map(function (a) { return '<option value="' + a.aluno + '|' + _escAttr(a.nome) + '">' + _esc(a.nome) + '</option>'; }).join('')
+        + disp.map(function (a) { return '<option value="' + a.aluno + '|' + _escAttr(a.nome) + '">' + _esc(_rotuloDoAluno(a) || a.nome) + '</option>'; }).join('')
         + '</select>'
         + '<button onclick="grupoAdicionar(\'' + id + '\',\'' + _escAttr(nome) + '\')" style="font-size:.78rem;font-weight:700;color:#2e7d52;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:5px 12px;cursor:pointer;font-family:Montserrat,sans-serif">Adicionar</button>'
         + '</div>';
@@ -480,7 +503,7 @@ function _turmasPintaTarefas() {
       var prazo = t.prazo ? _tarefaPrazoTxt(t.prazo) : '';
       var alvo;
       if (t.para_aluno) {
-        var nm = _nomeDoAluno(t.para_aluno) || 'aluno';
+        var nm = _rotuloDoAluno(t.para_aluno) || 'aluno';
         alvo = '<a href="#" onclick="irParaAluno(\'' + t.para_aluno + '\');return false" style="color:#2e7d52;font-weight:700;text-decoration:none">' + _esc(nm) + ' ↗</a>';
       } else {
         alvo = 'à turma';
@@ -573,7 +596,9 @@ function _turmasPintaAlunos(alunos) {
   el.innerHTML = alunos.map(function (a) {
     return '<div style="border:1.5px solid var(--border);border-radius:12px;margin-bottom:.5rem;overflow:hidden">'
       + '<div onclick="turmasToggleAluno(\'' + a.aluno + '\')" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.4rem;padding:.7rem 1rem;cursor:pointer">'
-      + '<div style="font-weight:800;color:var(--ink1)"><i class="ph ph-caret-right" id="cx-' + a.aluno + '" style="color:var(--ink4);transition:transform .15s"></i> ' + _esc(a.nome) + '</div>'
+      + '<div style="font-weight:800;color:var(--ink1)"><i class="ph ph-caret-right" id="cx-' + a.aluno + '" style="color:var(--ink4);transition:transform .15s"></i> ' + _esc(a.nome)
+      + (a.email && _nomeRepetido(a.nome) ? ' <span style="font-weight:600;font-size:.74rem;color:var(--ink4)">· ' + _esc(a.email) + '</span>' : '')
+      + '</div>'
       + '<div style="display:flex;gap:.7rem;font-size:.8rem;color:var(--ink3);align-items:center">'
       + '<span>⭐ ' + a.xp + '</span>'
       + '<span>' + (a.streak > 0 ? '🔥 ' + a.streak : '<span style="color:var(--ink4)">🔥 0</span>') + '</span>'
@@ -701,7 +726,7 @@ function _turmasPintaRecursos(podeGerir) {
       if (r.grupo_id) {
         destinoTxt = 'grupo ' + ((r.grupos && r.grupos.nome) || '');
       } else if (r.para_aluno) {
-        var nm = _nomeDoAluno(r.para_aluno) || 'aluno';
+        var nm = _rotuloDoAluno(r.para_aluno) || 'aluno';
         destinoTxt = nm;
         if (podeGerir) {
           alunoLink = '<div style="font-size:.72rem;margin-top:.15rem"><a href="#" onclick="irParaAluno(\'' + r.para_aluno + '\');return false" style="color:#2e7d52;font-weight:700;text-decoration:none">👤 ' + _esc(nm) + ' ↗</a></div>';
