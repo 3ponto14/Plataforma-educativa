@@ -187,7 +187,7 @@
       return; // fica o hero / cartão de entrada (tratado por portalAplicarSessao)
     }
 
-    var nome = (u.email || '').split('@')[0];
+    var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
     var prof = (typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor());
 
     var h = '<div class="pi-wrap">'

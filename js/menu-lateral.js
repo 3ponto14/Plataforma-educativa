@@ -61,7 +61,7 @@
     if (!foot) return;
     var u = _temSessao();
     if (!u) { foot.innerHTML = ''; return; }
-    var nome = (u.email || '').split('@')[0];
+    var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
     var prof = (typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor());
     foot.innerHTML =
       '<div class="ml-user"><i class="ph ph-user-circle"></i> <span>' + _esc(nome)

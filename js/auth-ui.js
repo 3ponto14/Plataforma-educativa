@@ -16,7 +16,7 @@ function authRenderBotao() {
   div.id = 'auth-bloco';
   div.style.cssText = 'display:inline-flex;align-items:center;gap:.5rem;margin-left:.5rem';
   if (u) {
-    var nome = (u.email || '').split('@')[0];
+    var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
     div.innerHTML =
       '<span title="' + (u.email || '') + '" style="font-size:.78rem;font-weight:700;color:var(--ink3);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><i class="ph ph-user-circle" style="color:#4a3f7a"></i> ' + nome + '</span>'
       + '<button onclick="authSair()" style="font-size:.72rem;font-weight:700;color:var(--ink4);background:none;border:1px solid var(--border);border-radius:999px;padding:3px 11px;cursor:pointer;font-family:Montserrat,sans-serif">Sair</button>';
@@ -49,6 +49,7 @@ function authAbrir(modo) {
         + '<button type="button" id="auth-tipo-aluno" onclick="authSetTipo(\'aluno\')" style="flex:1;border:1.5px solid #4a3f7a;background:#f0edf7;color:#4a3f7a;border-radius:12px;padding:.6rem;font-family:Montserrat,sans-serif;font-size:.85rem;font-weight:800;cursor:pointer"><i class="ph ph-student"></i> Sou aluno</button>'
         + '<button type="button" id="auth-tipo-prof" onclick="authSetTipo(\'professor\')" style="flex:1;border:1.5px solid var(--border);background:var(--white);color:var(--ink3);border-radius:12px;padding:.6rem;font-family:Montserrat,sans-serif;font-size:.85rem;font-weight:700;cursor:pointer"><i class="ph ph-chalkboard-teacher"></i> Sou professor</button>'
         + '</div>')
+    + (entrar ? '' : '<input id="auth-nome" type="text" placeholder="O teu primeiro nome" autocomplete="given-name" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin-bottom:.6rem;outline:none">')
     + '<input id="auth-email" type="email" placeholder="O teu email" autocomplete="email" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin-bottom:.6rem;outline:none">'
     + '<input id="auth-pass" type="password" placeholder="Palavra-passe (mín. 6 letras)" autocomplete="' + (entrar ? 'current-password' : 'new-password') + '" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin-bottom:.9rem;outline:none" onkeydown="if(event.key===\'Enter\')authSubmeter(' + (entrar ? 'true' : 'false') + ')">'
     + (entrar ? '' :
@@ -99,9 +100,11 @@ function authSubmeter(entrar) {
   email = email.trim();
   if (!email || email.indexOf('@') === -1) { _authErro('Escreve um email válido.'); return; }
   if (pass.length < 6) { _authErro('A palavra-passe precisa de pelo menos 6 letras.'); return; }
-  // no registo, é obrigatório aceitar os termos
-  var marketing = false;
+  // no registo, é obrigatório o nome e aceitar os termos
+  var marketing = false, nome = '';
   if (!entrar) {
+    nome = ((document.getElementById('auth-nome') || {}).value || '').trim();
+    if (nome.length < 2) { _authErro('Escreve o teu primeiro nome.'); return; }
     var cT = document.getElementById('auth-termos');
     if (!cT || !cT.checked) { _authErro('Para criar conta, tens de aceitar os Termos e a Política de Privacidade.'); return; }
     var cM = document.getElementById('auth-marketing');
@@ -110,7 +113,7 @@ function authSubmeter(entrar) {
   var btn = document.getElementById('auth-btn');
   if (btn) { btn.disabled = true; btn.textContent = 'A entrar…'; }
 
-  var promessa = entrar ? Cloud.entrar(email, pass) : Cloud.registar(email, pass, _authTipo, marketing);
+  var promessa = entrar ? Cloud.entrar(email, pass) : Cloud.registar(email, pass, _authTipo, marketing, nome);
   promessa.then(function () {
     authFechar();
     var prof = (typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor());

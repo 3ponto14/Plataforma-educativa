@@ -27,6 +27,13 @@ var Cloud = (function () {
   /* Tipo de conta: 'professor' ou 'aluno' (guardado nos metadados). */
   function tipo() { return (user && user.user_metadata && user.user_metadata.tipo) || 'aluno'; }
   function ehProfessor() { return tipo() === 'professor'; }
+  /* Primeiro nome (dado no registo). Recua para o início do email se a
+     conta for antiga e não tiver nome guardado. */
+  function nome() {
+    var n = user && user.user_metadata && user.user_metadata.nome;
+    if (n && String(n).trim()) return String(n).trim();
+    return ((user && user.email) || '').split('@')[0];
+  }
 
   /* ── Arranque: cria o cliente se a lib do Supabase estiver carregada ── */
   function init(onReady) {
@@ -55,10 +62,10 @@ var Cloud = (function () {
   }
 
   /* ── Registo / Entrada / Saída ── */
-  function registar(email, pass, tipoConta, marketing) {
+  function registar(email, pass, tipoConta, marketing, nomeProprio) {
     if (!sb) return Promise.reject(new Error('Serviço indisponível.'));
     var t = tipoConta === 'professor' ? 'professor' : 'aluno';
-    var meta = { tipo: t, marketing: !!marketing, termos_aceites_em: new Date().toISOString() };
+    var meta = { tipo: t, marketing: !!marketing, nome: (nomeProprio || '').trim(), termos_aceites_em: new Date().toISOString() };
     return sb.auth.signUp({ email: email, password: pass, options: { data: meta } }).then(function (res) {
       if (res.error) throw res.error;
       // com "Confirm email" OFF, a sessão vem logo; se não vier, faz login
@@ -180,7 +187,7 @@ var Cloud = (function () {
 
   return {
     init: init, disponivel: disponivel, utilizador: utilizador,
-    tipo: tipo, ehProfessor: ehProfessor,
+    tipo: tipo, ehProfessor: ehProfessor, nome: nome,
     registar: registar, entrar: entrar, sair: sair,
     enviarParaNuvem: enviarParaNuvem, enviarDebounce: enviarDebounce,
     _sb: function () { return sb; }   // cliente Supabase (usado por turmas.js)

@@ -51,7 +51,7 @@ var Turmas = (function () {
     var sb = _sb(); var u = Cloud.utilizador();
     if (!sb || !u) return Promise.resolve();
     if (typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor()) return Promise.resolve();
-    var nome = (u.email || '').split('@')[0];
+    var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
     return sb.from('apoio_alunos').upsert(
       { aluno: u.id, nome_aluno: nome, email: u.email || null },
       { onConflict: 'aluno' }
@@ -105,7 +105,7 @@ var Turmas = (function () {
     url = (url || '').trim();
     if (!titulo) return Promise.reject(new Error('Dá um nome à ficha.'));
     if (!/^https?:\/\//i.test(url)) return Promise.reject(new Error('O link tem de começar por http:// ou https://'));
-    var autor = (u.email || '').split('@')[0];
+    var autor = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
     return sb.from('recursos').insert({
       titulo: titulo, url: url, disciplina: (disciplina || '').trim() || null,
       autor: u.id, autor_nome: autor
