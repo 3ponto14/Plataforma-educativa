@@ -828,7 +828,7 @@ function port8TesteFinish() {
    matemáticos (4 em linha, Sudoku…) — não fazem sentido em Português.
    ════════════════════════════════════════════════════════════════ */
 function port8JogosInit() {
-  (function(){ var pj=document.getElementById('port8p-jogos'); if(pj && !document.getElementById('port8-jogos-atr')){ var d=document.createElement('div'); d.id='port8-jogos-atr'; d.style.margin='0 0 .8rem'; if(pj.firstChild) pj.insertBefore(d,pj.firstChild); else pj.appendChild(d); } if(typeof Atribuir!=='undefined'&&Atribuir.montar) Atribuir.montar('port8-jogos-atr',{curso:'port8',cursoNome:'Português 8.º',tema:'',temaNome:'',sub:'',subNome:'',tipo:'jogo',nivel:''}); })();
+  (function(){ var pj=document.getElementById('port8p-jogos'); if(pj && !document.getElementById('port8-jogos-atr')){ var d=document.createElement('div'); d.id='port8-jogos-atr'; d.style.margin='0 0 .8rem'; if(pj.firstChild) pj.insertBefore(d,pj.firstChild); else pj.appendChild(d); } if(typeof Atribuir!=='undefined'&&Atribuir.montar) Atribuir.montar('port8-jogos-atr',{curso:'port8',cursoNome:'Português 8.º',tipo:'jogo',nivel:'',caps:_port8CapMeta.map(function(mm){return {n:mm.n,label:mm.label};})}); })();
   if (typeof ptJogosRender === 'function') {
     if (typeof ptJogosConfig === 'function') {
       ptJogosConfig({
@@ -1067,6 +1067,7 @@ function _port8gfTemasSel(cap) {
 // selecionado, os chips dos tópicos (subtemas) — a dona pediu para poder
 // gerar fichas só de um tópico (ex.: só Os Lusíadas, só Funções Sintáticas).
 function port8FichasBuildNav() {
+  if(typeof Atribuir!=='undefined'&&Atribuir.fixo) Atribuir.fixo('port8-fichas-atr','port8AtribuirFicha');
   var el = document.getElementById('port8-fichas-caps');
   if (!el) return;
   // por defeito, seleciona o primeiro capítulo com conteúdo
@@ -1218,11 +1219,6 @@ function port8gfGerar(formato) {
   var algumTipo = _port8gf.tipos.resumo || _port8gf.tipos.exercicios || _port8gf.tipos.teste || _port8gf.tipos.minitestes;
   if (!algumTipo) { if (status) status.textContent = 'Seleciona pelo menos um tipo de conteúdo.'; return; }
   if (status) status.textContent = 'A gerar…';
-  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
-    var _capsF = []; _port8CapMeta.forEach(function(m){ if (_port8gf.caps[m.n]) _capsF.push(m.n); });
-    var _capsNomes = _capsF.map(function(n){ var mm=_port8CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
-    Atribuir.montar('port8-fichas-atr', { curso:'port8', cursoNome:'Português 8.º', tema:_capsF.join('.'), temaNome:_capsNomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_port8gf.dif });
-  }
 
   var difLabel = { facil: 'Fácil', medio: 'Médio', dificil: 'Difícil' }[_port8gf.dif];
   var solucoes = []; // {num, ex} acumuladas para a secção final
@@ -1530,6 +1526,13 @@ _port8Banco[2] = _port8Banco[2].concat([
 
 /* atribuir: deep-link port8 */
 function _port8DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_port8gf){ _port8gf.caps={}; cs.forEach(function(n){ _port8gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _port8gf.dif=p.get('dif'); } setTimeout(function(){ port8SwitchTab('fichas',null); },350); return; }
-    if(p.get('abrir')==='jogos'){ setTimeout(function(){ port8SwitchTab('jogos',null); },350); return; }
+    if(p.get('abrir')==='jogos'){ var jc=parseInt(p.get('cap'),10); if(jc&&_port8Prat) _port8Prat.cap=jc; setTimeout(function(){ port8SwitchTab('jogos',null); },350); return; }
     if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _port8Prat.cap=cap; _port8Prat.st=st; _port8Prat.nivel=nivel; setTimeout(function(){ port8SwitchTab('exercicios',null); if(typeof port8GerarExercicios==='function') port8GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_port8DeepLinkAuto,300);});else setTimeout(_port8DeepLinkAuto,300);
+
+function port8AtribuirFicha(){
+  var caps=[]; _port8CapMeta.forEach(function(m){ if(_port8gf.caps[m.n]) caps.push(m.n); });
+  if(!caps.length){ var st=document.getElementById('port8-fichas-status'); if(st) st.textContent='Escolhe pelo menos um capítulo para atribuir.'; return null; }
+  var nomes=caps.map(function(n){ var mm=_port8CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
+  return { curso:'port8', cursoNome:'Português 8.º', tema:caps.join('.'), temaNome:nomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_port8gf.dif };
+}

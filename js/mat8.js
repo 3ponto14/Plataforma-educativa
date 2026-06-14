@@ -889,7 +889,7 @@ function mat8TesteFinish() {
    ════════════════════════════════════════════════════════════════ */
 var _mat8JogosInited = false;
 function mat8JogosInit() {
-  (function(){ var pj=document.getElementById('mat8p-jogos'); if(pj && !document.getElementById('mat8-jogos-atr')){ var d=document.createElement('div'); d.id='mat8-jogos-atr'; d.style.margin='0 0 .8rem'; if(pj.firstChild) pj.insertBefore(d,pj.firstChild); else pj.appendChild(d); } if(typeof Atribuir!=='undefined'&&Atribuir.montar) Atribuir.montar('mat8-jogos-atr',{curso:'mat8',cursoNome:'Matemática 8.º',tema:'',temaNome:'',sub:'',subNome:'',tipo:'jogo',nivel:''}); })();
+  (function(){ var pj=document.getElementById('mat8p-jogos'); if(pj && !document.getElementById('mat8-jogos-atr')){ var d=document.createElement('div'); d.id='mat8-jogos-atr'; d.style.margin='0 0 .8rem'; if(pj.firstChild) pj.insertBefore(d,pj.firstChild); else pj.appendChild(d); } if(typeof Atribuir!=='undefined'&&Atribuir.montar) Atribuir.montar('mat8-jogos-atr',{curso:'mat8',cursoNome:'Matemática 8.º',tipo:'jogo',nivel:'',caps:_mat8CapMeta.map(function(mm){return {n:mm.n,label:mm.label};})}); })();
   _mat8PM(_mat8Prat.cap || 1, 'jogo');
   if (_mat8JogosInited) return;
   if (typeof _j24AutoInit === 'function') {
@@ -1087,6 +1087,7 @@ var _mat8gf = {
 
 // Constrói a lista de capítulos selecionáveis (só os com gerador).
 function mat8FichasBuildNav() {
+  if(typeof Atribuir!=='undefined'&&Atribuir.fixo) Atribuir.fixo('mat8-fichas-atr','mat8AtribuirFicha');
   var el = document.getElementById('mat8-fichas-caps');
   if (!el) return;
   // por defeito, seleciona o primeiro capítulo com gerador
@@ -1194,11 +1195,6 @@ function mat8gfGerar(formato) {
   var algumTipo = _mat8gf.tipos.resumo || _mat8gf.tipos.exercicios || _mat8gf.tipos.teste || _mat8gf.tipos.minitestes;
   if (!algumTipo) { if (status) status.textContent = 'Seleciona pelo menos um tipo de conteúdo.'; return; }
   if (status) status.textContent = 'A gerar…';
-  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
-    var _capsF = []; _mat8CapMeta.forEach(function(m){ if (_mat8gf.caps[m.n]) _capsF.push(m.n); });
-    var _capsNomes = _capsF.map(function(n){ var mm=_mat8CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
-    Atribuir.montar('mat8-fichas-atr', { curso:'mat8', cursoNome:'Matemática 8.º', tema:_capsF.join('.'), temaNome:_capsNomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_mat8gf.dif });
-  }
 
   var difLabel = { facil: 'Fácil', medio: 'Médio', dificil: 'Difícil' }[_mat8gf.dif];
   var solucoes = []; // {num, ex} acumuladas para a secção final
@@ -2831,6 +2827,13 @@ var _mat8Banco = {
 };
 /* atribuir: deep-link mat8 */
 function _mat8DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_mat8gf){ _mat8gf.caps={}; cs.forEach(function(n){ _mat8gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _mat8gf.dif=p.get('dif'); } setTimeout(function(){ mat8SwitchTab('fichas',null); },350); return; }
-    if(p.get('abrir')==='jogos'){ setTimeout(function(){ mat8SwitchTab('jogos',null); },350); return; }
+    if(p.get('abrir')==='jogos'){ var jc=parseInt(p.get('cap'),10); if(jc&&_mat8Prat) _mat8Prat.cap=jc; setTimeout(function(){ mat8SwitchTab('jogos',null); },350); return; }
     if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat8Prat.cap=cap; _mat8Prat.st=st; _mat8Prat.nivel=nivel; setTimeout(function(){ mat8SwitchTab('exercicios',null); if(typeof mat8GerarExercicios==='function') mat8GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat8DeepLinkAuto,300);});else setTimeout(_mat8DeepLinkAuto,300);
+
+function mat8AtribuirFicha(){
+  var caps=[]; _mat8CapMeta.forEach(function(m){ if(_mat8gf.caps[m.n]) caps.push(m.n); });
+  if(!caps.length){ var st=document.getElementById('mat8-fichas-status'); if(st) st.textContent='Escolhe pelo menos um capítulo para atribuir.'; return null; }
+  var nomes=caps.map(function(n){ var mm=_mat8CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
+  return { curso:'mat8', cursoNome:'Matemática 8.º', tema:caps.join('.'), temaNome:nomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_mat8gf.dif };
+}

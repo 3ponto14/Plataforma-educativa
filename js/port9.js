@@ -988,7 +988,7 @@ function port9TesteFinish() {
    matemáticos (4 em linha, Sudoku…) — não fazem sentido em Português.
    ════════════════════════════════════════════════════════════════ */
 function port9JogosInit() {
-  (function(){ var pj=document.getElementById('port9p-jogos'); if(pj && !document.getElementById('port9-jogos-atr')){ var d=document.createElement('div'); d.id='port9-jogos-atr'; d.style.margin='0 0 .8rem'; if(pj.firstChild) pj.insertBefore(d,pj.firstChild); else pj.appendChild(d); } if(typeof Atribuir!=='undefined'&&Atribuir.montar) Atribuir.montar('port9-jogos-atr',{curso:'port9',cursoNome:'Português 9.º',tema:'',temaNome:'',sub:'',subNome:'',tipo:'jogo',nivel:''}); })();
+  (function(){ var pj=document.getElementById('port9p-jogos'); if(pj && !document.getElementById('port9-jogos-atr')){ var d=document.createElement('div'); d.id='port9-jogos-atr'; d.style.margin='0 0 .8rem'; if(pj.firstChild) pj.insertBefore(d,pj.firstChild); else pj.appendChild(d); } if(typeof Atribuir!=='undefined'&&Atribuir.montar) Atribuir.montar('port9-jogos-atr',{curso:'port9',cursoNome:'Português 9.º',tipo:'jogo',nivel:'',caps:_port9CapMeta.map(function(mm){return {n:mm.n,label:mm.label};})}); })();
   if (typeof ptJogosRender === 'function') {
     ptJogosRender();
   } else {
@@ -1192,6 +1192,7 @@ function _port9gfTemasSel(cap) {
 // selecionado, os chips dos tópicos (subtemas) — a dona pediu para poder
 // gerar fichas só de um tópico (ex.: só Os Lusíadas, só Funções Sintáticas).
 function port9FichasBuildNav() {
+  if(typeof Atribuir!=='undefined'&&Atribuir.fixo) Atribuir.fixo('port9-fichas-atr','port9AtribuirFicha');
   var el = document.getElementById('port9-fichas-caps');
   if (!el) return;
   // por defeito, seleciona o primeiro capítulo com conteúdo
@@ -1343,11 +1344,6 @@ function port9gfGerar(formato) {
   var algumTipo = _port9gf.tipos.resumo || _port9gf.tipos.exercicios || _port9gf.tipos.teste || _port9gf.tipos.minitestes;
   if (!algumTipo) { if (status) status.textContent = 'Seleciona pelo menos um tipo de conteúdo.'; return; }
   if (status) status.textContent = 'A gerar…';
-  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
-    var _capsF = []; _port9CapMeta.forEach(function(m){ if (_port9gf.caps[m.n]) _capsF.push(m.n); });
-    var _capsNomes = _capsF.map(function(n){ var mm=_port9CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
-    Atribuir.montar('port9-fichas-atr', { curso:'port9', cursoNome:'Português 9.º', tema:_capsF.join('.'), temaNome:_capsNomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_port9gf.dif });
-  }
 
   var difLabel = { facil: 'Fácil', medio: 'Médio', dificil: 'Difícil' }[_port9gf.dif];
   var solucoes = []; // {num, ex} acumuladas para a secção final
@@ -1493,7 +1489,7 @@ function _port9DeepLink() {
   try {
     var p = new URLSearchParams(window.location.search);
     if (p.get('abrir') === 'fichas') { var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_port9gf){ _port9gf.caps={}; cs.forEach(function(n){ _port9gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _port9gf.dif=p.get('dif'); } setTimeout(function(){ port9SwitchTab('fichas', null); }, 250); return; }
-    if (p.get('abrir') === 'jogos') { setTimeout(function(){ port9SwitchTab('jogos', null); }, 250); return; }
+    if (p.get('abrir') === 'jogos') { var jc=parseInt(p.get('cap'),10); if(jc&&_port9Prat) _port9Prat.cap=jc; setTimeout(function(){ port9SwitchTab('jogos', null); }, 250); return; }
     if (p.get('abrir') !== 'praticar') return;
     var cap = parseInt(p.get('cap'), 10) || 1;
     var st = parseInt(p.get('st'), 10) || 0;
@@ -1855,3 +1851,10 @@ _port9Banco[2] = _port9Banco[2].concat([
   { t: '4', tipo: 'mc', dif: 'dificil', enun: 'Em «Talvez a meteorologia se tenha enganado e amanhã não chova.», o valor modal é:', opcoes: ['epistémico com valor de probabilidade', 'epistémico com valor de certeza', 'deôntico com valor de permissão', 'apreciativo'], resposta: 'epistémico com valor de probabilidade', expl: '«Talvez» + conjuntivo exprime possibilidade/probabilidade: modalidade epistémica.', tema: 'T4 · Modos Verbais' }
 ]);
 
+
+function port9AtribuirFicha(){
+  var caps=[]; _port9CapMeta.forEach(function(m){ if(_port9gf.caps[m.n]) caps.push(m.n); });
+  if(!caps.length){ var st=document.getElementById('port9-fichas-status'); if(st) st.textContent='Escolhe pelo menos um capítulo para atribuir.'; return null; }
+  var nomes=caps.map(function(n){ var mm=_port9CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
+  return { curso:'port9', cursoNome:'Português 9.º', tema:caps.join('.'), temaNome:nomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_port9gf.dif };
+}

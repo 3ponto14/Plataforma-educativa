@@ -593,17 +593,25 @@ function _gfGenerarBase(secId, qty) {
     statusEl.style.color = 'var(--c1-mid)';
   }
 
-  // \u2500\u2500 Bot\u00e3o \u00abAtribuir a aluno/grupo\u00bb (s\u00f3 professores; reavalia no login) \u2500\u2500
-  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
-    var capLabels = selectedCaps.map(function (c) { return _CAP_NAMES_GF[c] || ('Cap. ' + c); });
-    Atribuir.montar('gf-atribuir-' + secId, {
-      curso: 'mat7', cursoNome: 'Matem\u00e1tica 7.\u00ba',
-      tema: selectedCaps.join('.'),                 // ex.: "1.3"
-      temaNome: capLabels.join(', '),
-      sub: '', subNome: '',
-      tipo: 'ficha', nivel: dif
-    });
-  }
+  // O bot\u00e3o \u00abAtribuir\u00bb \u00e9 fixo (ver mat7AtribuirFicha + Atribuir.fixo no
+  // arranque do gerador), por isso n\u00e3o \u00e9 preciso (re)montar aqui.
+}
+
+/* L\u00ea a sele\u00e7\u00e3o atual do gerador de fichas do mat7 e devolve o contexto
+   para atribuir (ou null se n\u00e3o houver cap\u00edtulos escolhidos). */
+function mat7AtribuirFicha() {
+  var secId = 'mat7-downloads';
+  var caps = [];
+  document.querySelectorAll('#gf-caps-' + secId + ' .gf-cap-btn.active').forEach(function (b) {
+    caps.push(b.getAttribute('data-cap'));
+  });
+  var status = document.getElementById('gf-status-' + secId);
+  if (!caps.length) { if (status) status.textContent = 'Escolhe pelo menos um cap\u00edtulo para atribuir.'; return null; }
+  var difBtn = document.querySelector('#gf-dif-' + secId + ' .gf-dif-btn.active');
+  var dif = difBtn ? difBtn.getAttribute('data-dif') : 'medio';
+  var nomes = caps.map(function (c) { return _CAP_NAMES_GF[parseInt(c, 10)] || ('Cap. ' + c); });
+  return { curso: 'mat7', cursoNome: 'Matem\u00e1tica 7.\u00ba', tema: caps.join('.'),
+    temaNome: nomes.join(', '), sub: '', subNome: '', tipo: 'ficha', nivel: dif };
 }
 
 var _RND = {
@@ -2718,5 +2726,9 @@ function gfRestaurarDeURL() {
 // Correr ao carregar a página
 document.addEventListener('DOMContentLoaded', function() {
   gfRestaurarDeURL();
+  // Botão fixo «Atribuir» no gerador de fichas do mat7 (só professores)
+  if (typeof Atribuir !== 'undefined' && Atribuir.fixo) {
+    Atribuir.fixo('gf-atribuir-mat7-downloads', 'mat7AtribuirFicha');
+  }
 });
 

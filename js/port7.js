@@ -830,7 +830,7 @@ function port7TesteFinish() {
    matemáticos (4 em linha, Sudoku…) — não fazem sentido em Português.
    ════════════════════════════════════════════════════════════════ */
 function port7JogosInit() {
-  (function(){ var pj=document.getElementById('port7p-jogos'); if(pj && !document.getElementById('port7-jogos-atr')){ var d=document.createElement('div'); d.id='port7-jogos-atr'; d.style.margin='0 0 .8rem'; if(pj.firstChild) pj.insertBefore(d,pj.firstChild); else pj.appendChild(d); } if(typeof Atribuir!=='undefined'&&Atribuir.montar) Atribuir.montar('port7-jogos-atr',{curso:'port7',cursoNome:'Português 7.º',tema:'',temaNome:'',sub:'',subNome:'',tipo:'jogo',nivel:''}); })();
+  (function(){ var pj=document.getElementById('port7p-jogos'); if(pj && !document.getElementById('port7-jogos-atr')){ var d=document.createElement('div'); d.id='port7-jogos-atr'; d.style.margin='0 0 .8rem'; if(pj.firstChild) pj.insertBefore(d,pj.firstChild); else pj.appendChild(d); } if(typeof Atribuir!=='undefined'&&Atribuir.montar) Atribuir.montar('port7-jogos-atr',{curso:'port7',cursoNome:'Português 7.º',tipo:'jogo',nivel:'',caps:_port7CapMeta.map(function(mm){return {n:mm.n,label:mm.label};})}); })();
   if (typeof ptJogosRender === 'function') {
     if (typeof ptJogosConfig === 'function') {
       ptJogosConfig({
@@ -1072,6 +1072,7 @@ function _port7gfTemasSel(cap) {
 // selecionado, os chips dos tópicos (subtemas) — a dona pediu para poder
 // gerar fichas só de um tópico (ex.: só Os Lusíadas, só Funções Sintáticas).
 function port7FichasBuildNav() {
+  if(typeof Atribuir!=='undefined'&&Atribuir.fixo) Atribuir.fixo('port7-fichas-atr','port7AtribuirFicha');
   var el = document.getElementById('port7-fichas-caps');
   if (!el) return;
   // por defeito, seleciona o primeiro capítulo com conteúdo
@@ -1223,11 +1224,6 @@ function port7gfGerar(formato) {
   var algumTipo = _port7gf.tipos.resumo || _port7gf.tipos.exercicios || _port7gf.tipos.teste || _port7gf.tipos.minitestes;
   if (!algumTipo) { if (status) status.textContent = 'Seleciona pelo menos um tipo de conteúdo.'; return; }
   if (status) status.textContent = 'A gerar…';
-  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
-    var _capsF = []; _port7CapMeta.forEach(function(m){ if (_port7gf.caps[m.n]) _capsF.push(m.n); });
-    var _capsNomes = _capsF.map(function(n){ var mm=_port7CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
-    Atribuir.montar('port7-fichas-atr', { curso:'port7', cursoNome:'Português 7.º', tema:_capsF.join('.'), temaNome:_capsNomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_port7gf.dif });
-  }
 
   var difLabel = { facil: 'Fácil', medio: 'Médio', dificil: 'Difícil' }[_port7gf.dif];
   var solucoes = []; // {num, ex} acumuladas para a secção final
@@ -1621,6 +1617,13 @@ _port7Banco[3] = _port7Banco[3].concat([
 
 /* atribuir: deep-link port7 */
 function _port7DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_port7gf){ _port7gf.caps={}; cs.forEach(function(n){ _port7gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _port7gf.dif=p.get('dif'); } setTimeout(function(){ port7SwitchTab('fichas',null); },350); return; }
-    if(p.get('abrir')==='jogos'){ setTimeout(function(){ port7SwitchTab('jogos',null); },350); return; }
+    if(p.get('abrir')==='jogos'){ var jc=parseInt(p.get('cap'),10); if(jc&&_port7Prat) _port7Prat.cap=jc; setTimeout(function(){ port7SwitchTab('jogos',null); },350); return; }
     if(p.get('abrir')!=='praticar')return; var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _port7Prat.cap=cap; _port7Prat.st=st; _port7Prat.nivel=nivel; setTimeout(function(){ port7SwitchTab('exercicios',null); if(typeof port7GerarExercicios==='function') port7GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_port7DeepLinkAuto,300);});else setTimeout(_port7DeepLinkAuto,300);
+
+function port7AtribuirFicha(){
+  var caps=[]; _port7CapMeta.forEach(function(m){ if(_port7gf.caps[m.n]) caps.push(m.n); });
+  if(!caps.length){ var st=document.getElementById('port7-fichas-status'); if(st) st.textContent='Escolhe pelo menos um capítulo para atribuir.'; return null; }
+  var nomes=caps.map(function(n){ var mm=_port7CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
+  return { curso:'port7', cursoNome:'Português 7.º', tema:caps.join('.'), temaNome:nomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_port7gf.dif };
+}

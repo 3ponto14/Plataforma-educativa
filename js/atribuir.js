@@ -25,6 +25,30 @@ var Atribuir = (function () {
       + '<i class="ph ph-paper-plane-tilt"></i> Atribuir a aluno/grupo</button>';
   }
 
+  /* Botão FIXO: visível sempre (a professores). `fnNome` é o nome de uma
+     função global que devolve o ctx no momento do clique (ou null/'' para
+     abortar com uma mensagem). Reaparece no login. */
+  function fixo(slotId, fnNome) {
+    function pinta() {
+      var el = document.getElementById(slotId);
+      if (!el) return;
+      el.innerHTML = _prof()
+        ? '<button type="button" class="atr-btn" onclick="Atribuir.abrirFn(\'' + fnNome + '\')"><i class="ph ph-paper-plane-tilt"></i> Atribuir a aluno/grupo</button>'
+        : '';
+    }
+    pinta();
+    document.addEventListener('cloud:auth', pinta);
+  }
+
+  /* Abre a partir de uma função que devolve o contexto agora. */
+  function abrirFn(fnNome) {
+    var fn = window[fnNome];
+    if (typeof fn !== 'function') return;
+    var ctx = fn();
+    if (!ctx) return; // a função já avisou o utilizador (ex.: sem temas)
+    _overlayCarregar(ctx);
+  }
+
   /* Constrói o deep-link para o hub abrir no sítio certo. Para fichas,
      usa os MESMOS parâmetros que o gerador já sabe restaurar
      (gfRestaurarDeURL): ?caps=..&dif=..&tipos=.. + abrir=fichas. */
@@ -47,8 +71,8 @@ var Atribuir = (function () {
       if (ctx.nivel) q.push('nivel=' + encodeURIComponent(ctx.nivel));
       return origin + '?' + q.join('&');
     }
-    // jogos: abre a tab Jogos do curso.
-    if (ctx.tipo === 'jogo') return origin + '?abrir=jogos';
+    // jogos: abre a tab Jogos do curso, no tema escolhido.
+    if (ctx.tipo === 'jogo') return origin + '?abrir=jogos' + (ctx.tema ? '&cap=' + encodeURIComponent(ctx.tema) : '');
     // outros: hash genérico
     return origin + '#abrir=' + encodeURIComponent([ctx.tipo || '', ctx.tema || '', ctx.sub || '', ctx.nivel || ''].join(':'));
   }
@@ -103,13 +127,24 @@ var Atribuir = (function () {
     }
     var semDestinos = !grupos.length && !alunos.length;
 
+    // Seletor de capítulo/tema — só para JOGOS (escolhido no momento).
+    var temaSel = '';
+    var precisaTema = ctx.tipo === 'jogo' && ctx.caps && ctx.caps.length && !ctx.tema;
+    if (precisaTema) {
+      temaSel = '<label style="font-size:.78rem;font-weight:700;color:#6b6560">Tema dos jogos</label>'
+        + '<select id="atr-tema" style="width:100%;box-sizing:border-box;border:1.5px solid #ddd8d2;border-radius:10px;padding:.6rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin:.3rem 0 .8rem">'
+        + ctx.caps.map(function (cp) { return '<option value="' + cp.n + '|' + _esc(cp.label) + '">' + _esc(cp.label) + '</option>'; }).join('')
+        + '</select>';
+    }
+
     ov.innerHTML =
       '<div style="background:var(--white,#fff);border-radius:18px;max-width:380px;width:100%;padding:1.5rem;box-shadow:0 20px 60px rgba(0,0,0,.3);font-family:Montserrat,sans-serif">'
       + '<div style="font-weight:800;font-size:1.05rem;color:#2a2724;margin-bottom:.2rem"><i class="ph ph-paper-plane-tilt" style="color:#2e7d52"></i> Atribuir trabalho</div>'
-      + '<div style="font-size:.82rem;color:#6b6560;margin-bottom:1rem">' + _esc(_tituloTipo(ctx) + _label(ctx)) + '</div>'
+      + '<div style="font-size:.82rem;color:#6b6560;margin-bottom:1rem">' + _esc(_tituloTipo(ctx) + (precisaTema ? ctx.cursoNome : _label(ctx))) + '</div>'
       + (semDestinos
           ? '<div style="font-size:.85rem;color:#922b21;background:#fdecea;border:1px solid #f0b8b0;border-radius:10px;padding:.7rem">Ainda não tens grupos nem alunos. Cria um grupo no portal (Turmas) primeiro.</div>'
-          : '<label style="font-size:.78rem;font-weight:700;color:#6b6560">Para quem</label>'
+          : temaSel
+            + '<label style="font-size:.78rem;font-weight:700;color:#6b6560">Para quem</label>'
             + '<select id="atr-dest" style="width:100%;box-sizing:border-box;border:1.5px solid #ddd8d2;border-radius:10px;padding:.6rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin:.3rem 0 .8rem">' + opc + '</select>'
             + '<label style="font-size:.78rem;font-weight:700;color:#6b6560">Instruções (opcional)</label>'
             + '<input id="atr-inst" placeholder="ex.: faz até 6.ª feira" style="width:100%;box-sizing:border-box;border:1.5px solid #ddd8d2;border-radius:10px;padding:.6rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin:.3rem 0 .8rem">'
@@ -131,6 +166,12 @@ var Atribuir = (function () {
     var dest = sel.value; // "g:<id>" ou "a:<id>"
     var grupoId = dest.charAt(0) === 'g' ? dest.slice(2) : null;
     var paraAluno = dest.charAt(0) === 'a' ? dest.slice(2) : null;
+    // jogo: aplica o tema escolhido no seletor
+    var temaSel = document.getElementById('atr-tema');
+    if (temaSel && temaSel.value) {
+      var pp = temaSel.value.split('|');
+      ctx.tema = pp[0]; ctx.temaNome = pp[1] || ('Cap. ' + pp[0]);
+    }
     var inst = (document.getElementById('atr-inst') || {}).value || '';
     var prazo = (document.getElementById('atr-prazo') || {}).value || '';
     var btn = document.getElementById('atr-enviar');
@@ -180,5 +221,5 @@ var Atribuir = (function () {
     }
   });
 
-  return { botaoHTML: botaoHTML, montar: montar, abrir: abrir, ehProf: _prof };
+  return { botaoHTML: botaoHTML, montar: montar, fixo: fixo, abrir: abrir, abrirFn: abrirFn, ehProf: _prof };
 })();
