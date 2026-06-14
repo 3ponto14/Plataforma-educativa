@@ -53,14 +53,20 @@
   <div class="site-topbar-actions"></div>
 </nav>
 
-<!-- Hero do portal -->
-<section class="portal-hero">
+<!-- Hero do portal (só SEM sessão; com sessão é substituído pelo painel
+     de boas-vindas #portal-saudacao). -->
+<section class="portal-hero" id="portal-hero">
   <div class="portal-hero-inner">
     <div class="portal-hero-brand">3ponto<em>14</em></div>
     <h1 class="portal-hero-title">Estuda melhor.<br>Vai mais longe.</h1>
     <p class="portal-hero-sub">Exercícios interativos, fichas, jogos e preparação para os exames nacionais de Matemática e Português, tudo num só lugar.</p>
   </div>
 </section>
+
+<!-- Painel de boas-vindas (só COM sessão): «Olá, Nome» + dia de hoje +
+     Desafio (aluno) ou resumo dos alunos (professor). Preenchido por
+     js/painel-inicio.js. -->
+<section id="portal-saudacao" style="display:none"></section>
 
 <!-- Cards de acesso -->
 <div class="portal-section" id="portal-catalogo">
@@ -288,6 +294,7 @@
 <script src="js/turmas-ui.js"></script>
 <script src="js/menu-lateral.js"></script>
 <script src="js/desafio.js"></script>
+<script src="js/painel-inicio.js"></script>
 <script src="js/portal.js"></script>
 <script src="js/ux-improvements.js"></script>
 <script src="js/fx.js"></script>

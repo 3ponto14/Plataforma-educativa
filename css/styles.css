@@ -3942,3 +3942,30 @@ body.dark-mode .resumo-st-btn.active {
 /* conteúdo do portal dá lugar à barra (a topbar NÃO é empurrada) */
 body.ml-fixed-on #view-portal > *:not(.site-topbar){margin-left:268px;}
 body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
+
+/* ════════════════════════════════════════════════════════════════
+   Painel de boas-vindas (com sessão) — js/painel-inicio.js
+   ════════════════════════════════════════════════════════════════ */
+#portal-saudacao{padding:2rem 1.5rem .5rem}
+.pi-wrap{max-width:620px;margin:0 auto}
+.pi-cab{text-align:center;margin-bottom:1.4rem}
+.pi-dia{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink4)}
+.pi-ola{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:700;color:var(--ink1);line-height:1.15;margin:.2rem 0 .15rem}
+.pi-sub{font-size:.9rem;color:var(--ink3)}
+.pi-desafio-slot{max-width:540px;margin:0 auto}
+
+/* Cartão do resumo do professor */
+.pi-card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.25rem 1.4rem;box-shadow:0 8px 24px rgba(0,0,0,.05)}
+.pi-card-load{color:var(--ink4);font-size:.85rem}
+.pi-card-h{display:flex;align-items:center;justify-content:space-between;font-weight:800;color:var(--ink1);font-size:1rem;margin-bottom:.5rem}
+.pi-card-h i{color:var(--sage-dark)}
+.pi-num{font-size:.78rem;font-weight:800;color:#2e7d52;background:#e8f5ee;border:1px solid #bfe3c9;border-radius:999px;padding:2px 10px}
+.pi-stat{font-size:.85rem;color:var(--ink3);margin-bottom:.9rem}
+.pi-top-h{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink4);margin-bottom:.4rem}
+.pi-top{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.9rem}
+.pi-top-row{display:flex;justify-content:space-between;font-size:.88rem;color:var(--ink2);border-bottom:1px dashed var(--border);padding-bottom:.3rem}
+.pi-top-row span:first-child{font-weight:700;color:var(--ink1)}
+.pi-top-xp{color:var(--ink3)}
+.pi-card-foot{font-size:.8rem;color:var(--ink4);line-height:1.5;border-top:1px solid var(--border);padding-top:.7rem}
+.pi-vazio{font-size:.85rem;color:var(--ink4);line-height:1.55}
+@media(max-width:560px){ .pi-ola{font-size:1.7rem} #portal-saudacao{padding:1.4rem 1rem .3rem} }

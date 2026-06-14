@@ -250,21 +250,32 @@ function portalAplicarSessao() {
     for (var i = 0; i < els.length; i++) els[i].style.display = on ? '' : 'none';
   }
 
-  // cartão de entrada CLEAN (entrar + Desafio) só quando fechado; o
-  // Desafio é movido para dentro dele e reposto quando há sessão.
+  // Três estados:
+  //  • fechado (Cloud ok, sem sessão): hero + cartão de entrada (com o
+  //    Desafio lá dentro). Montra escondida.
+  //  • com sessão: hero escondido, painel de boas-vindas visível (que
+  //    trata do Desafio, via painel-inicio.js). Montra visível.
+  //  • offline (sem Cloud): tudo visível, Desafio no lugar normal.
   var entrada = document.getElementById('portal-entrada');
   var desafio = document.getElementById('portal-desafio');
   var dentro = document.getElementById('portal-entrada-desafio');
+  var hero = document.getElementById('portal-hero');
+
   if (entrada) entrada.style.display = fechado ? '' : 'none';
+  if (hero) hero.style.display = sessao ? 'none' : ''; // com sessão é o painel que saúda
+
   if (desafio && dentro) {
     if (fechado && desafio.parentNode !== dentro) {
+      // sem sessão: Desafio dentro do cartão de entrada
       desafio.style.maxWidth = 'none'; desafio.style.margin = '0';
       dentro.appendChild(desafio);
-    } else if (!fechado && desafio.parentNode === dentro) {
+    } else if (!fechado && !sessao && desafio.parentNode === dentro) {
+      // offline: repõe o Desafio no lugar normal do portal
       desafio.style.maxWidth = '540px'; desafio.style.margin = '0 auto 1.75rem';
       var cat = document.getElementById('portal-catalogo');
-      if (cat) cat.insertBefore(desafio, entrada.nextSibling); // de volta ao lugar
+      if (cat) cat.insertBefore(desafio, entrada ? entrada.nextSibling : cat.firstChild);
     }
+    // com sessão: o painel-inicio.js move o Desafio para o painel (aluno)
   }
 
   mostra('portal-grid', !fechado);         // montra de cursos
@@ -272,7 +283,9 @@ function portalAplicarSessao() {
   mostraCls('portal-filters', !fechado);   // filtros
   mostra('portal-no-results', false);      // nunca mostrar "sem resultados" na porta
   if (fechado) { var pw = document.getElementById('portal-progress-widget'); if (pw) pw.style.display = 'none'; }
-  // o cartão do Desafio adapta-se à sessão (esconde seletor de ano sem login)
+
+  // painel de boas-vindas (com sessão) e cartão do Desafio adaptam-se
+  if (typeof painelInicioRender === 'function') painelInicioRender();
   if (typeof desafioRender === 'function') desafioRender();
 }
 
