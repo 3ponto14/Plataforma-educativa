@@ -145,10 +145,30 @@ var Atribuir = (function () {
 
   function _fechar() { var ov = document.getElementById('atr-overlay'); if (ov) ov.remove(); }
 
-  /* Liga o Cloud no arranque do hub (necessário para saber se é prof). */
+  /* Guarda o contexto do último gerador desenhado, para re-mostrar o
+     botão quando a sessão do professor chegar (Cloud arranca async). */
+  var _ultimoSlot = null, _ultimoCtx = null;
+  /* Coloca o botão num contentor (id) com um dado contexto; memoriza para
+     reavaliar quando a sessão mudar. */
+  function montar(slotId, ctx) {
+    _ultimoSlot = slotId; _ultimoCtx = ctx;
+    var el = document.getElementById(slotId);
+    if (!el) return;
+    el.innerHTML = botaoHTML(ctx); // '' se não for professor
+  }
+
+  /* Liga o Cloud no arranque do hub e reavalia o botão quando a sessão
+     ficar pronta (para aparecer mesmo que a ficha tenha sido gerada antes
+     de o login resolver). */
   document.addEventListener('DOMContentLoaded', function () {
     if (typeof Cloud !== 'undefined' && Cloud.init) Cloud.init(function () {});
   });
+  document.addEventListener('cloud:auth', function () {
+    if (_ultimoSlot && _ultimoCtx) {
+      var el = document.getElementById(_ultimoSlot);
+      if (el) el.innerHTML = botaoHTML(_ultimoCtx);
+    }
+  });
 
-  return { botaoHTML: botaoHTML, abrir: abrir, ehProf: _prof };
+  return { botaoHTML: botaoHTML, montar: montar, abrir: abrir, ehProf: _prof };
 })();

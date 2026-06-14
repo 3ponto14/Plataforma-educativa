@@ -593,20 +593,16 @@ function _gfGenerarBase(secId, qty) {
     statusEl.style.color = 'var(--c1-mid)';
   }
 
-  // \u2500\u2500 Bot\u00e3o \u00abAtribuir a aluno/grupo\u00bb (s\u00f3 professores) \u2500\u2500
-  var atrEl = document.getElementById('gf-atribuir-' + secId);
-  if (atrEl && typeof Atribuir !== 'undefined' && Atribuir.ehProf && Atribuir.ehProf()) {
+  // \u2500\u2500 Bot\u00e3o \u00abAtribuir a aluno/grupo\u00bb (s\u00f3 professores; reavalia no login) \u2500\u2500
+  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
     var capLabels = selectedCaps.map(function (c) { return _CAP_NAMES_GF[c] || ('Cap. ' + c); });
-    var ctx = {
+    Atribuir.montar('gf-atribuir-' + secId, {
       curso: 'mat7', cursoNome: 'Matem\u00e1tica 7.\u00ba',
       tema: selectedCaps.join('.'),                 // ex.: "1.3"
       temaNome: capLabels.join(', '),
       sub: '', subNome: '',
       tipo: 'ficha', nivel: dif
-    };
-    atrEl.innerHTML = Atribuir.botaoHTML(ctx);
-  } else if (atrEl) {
-    atrEl.innerHTML = '';
+    });
   }
 }
 
