@@ -3951,6 +3951,14 @@ body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
 #sec-apoio #portal-turmas{max-width:none;margin:0;width:100%}
 @media (max-width:900px){ #sec-apoio{padding:1rem 1rem 3rem} }
 
+/* No modo fixo (computador), a secção Cursos alinha a pesquisa e os filtros
+   à esquerda (em vez de centrados), para acompanharem a grelha e não ficarem
+   a flutuar no meio com branco à direita. */
+body.ml-fixed-on #sec-cursos{padding:1.5rem 2.5rem 0}
+body.ml-fixed-on #sec-cursos .portal-search{margin-left:0;margin-right:0;max-width:560px}
+body.ml-fixed-on #sec-cursos .portal-filters{margin-left:0;margin-right:0;max-width:none}
+@media (max-width:900px){ body.ml-fixed-on #sec-cursos{padding:1rem 1rem 0} }
+
 /* ════════════════════════════════════════════════════════════════
    Painel de boas-vindas (com sessão) — js/painel-inicio.js
    ════════════════════════════════════════════════════════════════ */
