@@ -448,7 +448,20 @@ function port9GerarExercicios() {
   var quizHTML = (typeof _capBuildQuizHTML === 'function')
     ? _capBuildQuizHTML(exs, 'm8ex', 'port9CheckEx')
     : '<p style="color:var(--ink4)">Motor de exercícios indisponível.</p>';
-  dest.innerHTML = scoreBar + quizHTML;
+  // contentor do botão «Atribuir» (só professores) por cima das questões
+  dest.innerHTML = scoreBar + '<div id="port9-atribuir" style="margin:.2rem 0 .8rem"></div>' + quizHTML;
+
+  // ── Atribuir a aluno/grupo (professor) ──
+  if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
+    var capM = _port9CapMeta.filter(function (m) { return m.n === cap; })[0] || {};
+    var subNome = (_port9Subtemas[cap] && _port9Prat.st > 0) ? (_port9Subtemas[cap][_port9Prat.st - 1] || '') : '';
+    Atribuir.montar('port9-atribuir', {
+      curso: 'port9', cursoNome: 'Português 9.º',
+      tema: String(cap), temaNome: capM.label || ('Cap. ' + cap),
+      sub: String(_port9Prat.st || ''), subNome: subNome,
+      tipo: 'quiz', nivel: _port9Prat.nivel
+    });
+  }
 }
 
 function port9CheckEx(qid, tipo, val, btn) {
@@ -1465,6 +1478,25 @@ function _port9Init() {
   if (typeof _addFuncTeoriaVisuais === 'function') _addFuncTeoriaVisuais(_port9Cards[3], '#4d8f87'); // cap3 Funções
   // arranca na tab Teoria com o cap 1 selecionado
   port9BuildResumoNav();
+  _port9DeepLink();
+}
+
+/* Deep-link de tarefa atribuída: ?abrir=praticar&cap=2&st=1&nivel=medio
+   abre a tab Exercícios já no capítulo/subtema/nível indicados. */
+function _port9DeepLink() {
+  try {
+    var p = new URLSearchParams(window.location.search);
+    if (p.get('abrir') !== 'praticar') return;
+    var cap = parseInt(p.get('cap'), 10) || 1;
+    var st = parseInt(p.get('st'), 10) || 0;
+    var nivel = p.get('nivel') || 'medio';
+    _port9Prat.cap = cap; _port9Prat.st = st; _port9Prat.nivel = nivel;
+    setTimeout(function () {
+      // switchTab('exercicios') já chama port9BuildPraticarNav, que gera
+      // os exercícios do cap/subtema/nível definidos acima.
+      port9SwitchTab('exercicios', null);
+    }, 250);
+  } catch (e) {}
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _port9Init);
 else _port9Init();

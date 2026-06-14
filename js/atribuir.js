@@ -39,7 +39,15 @@ var Atribuir = (function () {
       p.push('abrir=fichas');
       return origin + '?' + p.join('&');
     }
-    // quiz/jogo: hash genérico (tratado por quem implementar esses)
+    // quiz/exercícios: abre a tab Praticar no cap/subtema/nível.
+    if (ctx.tipo === 'quiz' || ctx.tipo === 'exercicios') {
+      var q = ['abrir=praticar'];
+      if (ctx.tema) q.push('cap=' + encodeURIComponent(ctx.tema));
+      if (ctx.sub) q.push('st=' + encodeURIComponent(ctx.sub));
+      if (ctx.nivel) q.push('nivel=' + encodeURIComponent(ctx.nivel));
+      return origin + '?' + q.join('&');
+    }
+    // jogo (ou outros): hash genérico (tratado por quem implementar)
     return origin + '#abrir=' + encodeURIComponent([ctx.tipo || '', ctx.tema || '', ctx.sub || '', ctx.nivel || ''].join(':'));
   }
 
