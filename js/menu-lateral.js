@@ -54,6 +54,20 @@
       + '</nav>'
       + '<div class="ml-foot" id="ml-foot"></div>';
     document.body.appendChild(d);
+
+    // Barra de navegação INFERIOR (telemóvel): Início · Cursos · Turmas
+    // sempre visíveis, em vez do ☰. Estilo app móvel.
+    if (!document.getElementById('ml-bottombar')) {
+      var bb = document.createElement('nav');
+      bb.id = 'ml-bottombar';
+      bb.setAttribute('role', 'navigation');
+      bb.setAttribute('aria-label', 'Navegação');
+      bb.innerHTML =
+        '<button class="mlb-link" data-sec="inicio" onclick="menuLateralIr(\'inicio\')"><i class="ph ph-house"></i><span>Início</span></button>'
+        + '<button class="mlb-link" data-sec="cursos" onclick="menuLateralIr(\'cursos\')"><i class="ph ph-books"></i><span>Cursos</span></button>'
+        + '<button class="mlb-link" data-sec="apoio" onclick="menuLateralIr(\'apoio\')"><i class="ph ph-users-three"></i><span>Turmas</span></button>';
+      document.body.appendChild(bb);
+    }
   }
 
   function _pintarRodape() {
@@ -96,15 +110,17 @@
     marcarAtivo(sec);
   }
 
-  /* Realça o link ativo na barra. */
+  /* Realça o link ativo na barra lateral E na barra inferior. */
   function marcarAtivo(sec) {
-    var nav = document.getElementById('ml-nav');
-    if (!nav) return;
-    var bs = nav.querySelectorAll('.ml-link');
-    for (var i = 0; i < bs.length; i++) {
-      if (bs[i].getAttribute('data-sec') === sec) bs[i].classList.add('ativo');
-      else bs[i].classList.remove('ativo');
-    }
+    var grupos = [document.getElementById('ml-nav'), document.getElementById('ml-bottombar')];
+    grupos.forEach(function (nav) {
+      if (!nav) return;
+      var bs = nav.querySelectorAll('.ml-link, .mlb-link');
+      for (var i = 0; i < bs.length; i++) {
+        if (bs[i].getAttribute('data-sec') === sec) bs[i].classList.add('ativo');
+        else bs[i].classList.remove('ativo');
+      }
+    });
   }
   window.menuLateralMarcar = marcarAtivo;
 
@@ -114,29 +130,37 @@
     var sessao = _temSessao();
     var burger = document.getElementById('ml-burger');
     var drawer = document.getElementById('ml-drawer');
+    var bottom = document.getElementById('ml-bottombar');
 
     if (!sessao) {
-      // sem sessão: nada de barra nem ☰; limpa tudo
+      // sem sessão: nada de barra, ☰ nem barra inferior; limpa tudo
       document.body.classList.remove('ml-fixed-on');
+      document.body.classList.remove('ml-bottom-on');
       if (drawer) drawer.classList.remove('fixed');
       if (burger) burger.style.display = 'none';
+      if (bottom) bottom.style.display = 'none';
       if (ABERTA) fechar();
       return;
     }
 
     if (_fixo()) {
-      // computador: barra FIXA sempre visível; sem ☰; sem overlay
+      // computador: barra lateral FIXA; sem ☰; sem barra inferior
       if (ABERTA) fechar();                  // garante que não fica em modo gaveta
       if (burger) burger.style.display = 'none';
+      if (bottom) bottom.style.display = 'none';
+      document.body.classList.remove('ml-bottom-on');
       if (drawer) drawer.classList.add('fixed');
       document.body.classList.add('ml-fixed-on');
       _pintarRodape();
     } else {
-      // telemóvel: gaveta com ☰
+      // telemóvel: barra de navegação INFERIOR sempre visível (sem ☰)
+      if (ABERTA) fechar();
       if (drawer) drawer.classList.remove('fixed');
       document.body.classList.remove('ml-fixed-on');
-      if (burger) burger.style.display = 'inline-flex';
-      if (ABERTA) _pintarRodape();
+      if (burger) burger.style.display = 'none';
+      if (bottom) bottom.style.display = 'flex';
+      document.body.classList.add('ml-bottom-on');
+      marcarAtivo(window._portalSec || 'inicio');
     }
   }
 

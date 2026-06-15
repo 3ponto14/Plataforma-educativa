@@ -3949,6 +3949,25 @@ body.dark-mode .resumo-st-btn.active {
 body.ml-fixed-on #view-portal > *:not(.site-topbar){margin-left:268px;}
 body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
 
+/* ── Barra de navegação INFERIOR (telemóvel) ── */
+#ml-bottombar{
+  display:none; position:fixed; left:0; right:0; bottom:0; z-index:9990;
+  background:var(--white); border-top:1px solid var(--border);
+  box-shadow:0 -2px 14px rgba(0,0,0,.06);
+  padding-bottom:env(safe-area-inset-bottom,0); /* iPhone com barra inferior */
+}
+.mlb-link{
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+  background:none; border:none; cursor:pointer; font-family:'Montserrat',sans-serif;
+  color:var(--ink4); font-size:.66rem; font-weight:700; padding:.5rem 0 .55rem;
+}
+.mlb-link i{font-size:1.35rem; line-height:1;}
+.mlb-link.ativo{color:var(--sage-dark);}
+.mlb-link.ativo i{color:var(--sage-dark);}
+/* conteúdo não fica tapado pela barra inferior */
+body.ml-bottom-on{padding-bottom:60px;}
+body.ml-bottom-on #ml-bottombar{display:flex;}
+
 /* A secção Turmas usa toda a largura disponível (até um máximo confortável)
    e fica centrada, com algum respiro lateral. Antes ficava espremida. */
 #sec-apoio{padding:1.5rem 2.5rem 4rem}
