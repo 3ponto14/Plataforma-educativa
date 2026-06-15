@@ -30,14 +30,27 @@
         });
       });
     }
-    // ALUNO: mensagens do professor (avisos + feedback + respostas). Exclui
-    // o que o próprio aluno escreveu.
-    if (!Turmas.muralDoAluno) return Promise.resolve([]);
-    return Turmas.muralDoAluno().then(function (ms) {
+    // ALUNO: mensagens do professor (avisos/feedback/respostas) + TRABALHO
+    // atribuído (tarefas por fazer). Exclui o que o próprio aluno escreveu.
+    var pMsgs = Turmas.muralDoAluno ? Turmas.muralDoAluno().then(function (ms) {
       return ms.filter(function (m) { return m.autor_tipo !== 'aluno'; }).map(function (m) {
         var et = m.alcance === 'aluno' ? '💬 Para ti' : (m.alcance === 'grupo' ? '👥 Grupo' : '📣 Aviso');
         return { texto: m.texto, quando: m.criado, autor: m.prof_nome || 'professor', etiqueta: et };
-      }).sort(function (a, b) { return (a.quando || '') < (b.quando || '') ? 1 : -1; });
+      });
+    }) : Promise.resolve([]);
+    // tarefas por fazer → notificação «Novo trabalho» (com prazo se houver)
+    var pTar = Turmas.tarefasDoAluno ? Turmas.tarefasDoAluno().then(function (ts) {
+      return ts.filter(function (t) { return !t.feito; }).map(function (t) {
+        var prazoTxt = '';
+        if (t.prazo) {
+          var hoje = new Date().toISOString().slice(0, 10);
+          prazoTxt = t.prazo < hoje ? ' (atrasado!)' : (t.prazo === hoje ? ' (entrega hoje)' : ' — até ' + t.prazo);
+        }
+        return { texto: t.titulo + prazoTxt, quando: t.criado, autor: t.prof_nome || 'professor', etiqueta: '📋 Novo trabalho' };
+      });
+    }) : Promise.resolve([]);
+    return Promise.all([pMsgs, pTar]).then(function (r) {
+      return r[0].concat(r[1]).sort(function (a, b) { return (a.quando || '') < (b.quando || '') ? 1 : -1; });
     });
   }
 
