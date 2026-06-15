@@ -441,6 +441,9 @@ function mat7RenderUnifiedExercicios(caps, inlineEl) {
           } else if (cap === 2) {
             var t2 = tipo === 'fill' ? 'fill_frac' : tipo;
             if (typeof buildEx2 === 'function') ex = buildEx2(tema, t2, dif);
+          } else if (cap === 1 && typeof buildEx_m7c1 === 'function') {
+            // Cap 1 (Inteiros): gerador leve próprio (substitui o legado)
+            ex = buildEx_m7c1(tema, tipo, dif) || buildEx_m7c1(tema, 'fill', dif);
           } else {
             if (typeof buildExercicio === 'function') {
               ex = buildExercicio(tema, tipo, min, max, capExs.length+1, dif)
@@ -1224,3 +1227,105 @@ function _qgHubGameOver(app) {
     '</div>';
 }
 
+
+/* ═══════════════════════════════════════════════════════════════════
+   GERADOR LEVE Cap 1 — Números Inteiros (7.º ano)
+   Substitui o legado buildExercicio (cap1.js) por geradores próprios,
+   no estilo dos outros cursos. Temas:
+     1 Conjunto ℤ · 2 Valor absoluto e simétrico · 3 Adição de inteiros
+     4 Subtração de inteiros · 5 Expressões com parênteses
+   Matemática validada por amostragem. tipo: 'mc' | 'fill' | 'vf'.
+   ═══════════════════════════════════════════════════════════════════ */
+function _m7rnd(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+function _m7rndNZ(a, b) { var v; do { v = _m7rnd(a, b); } while (v === 0); return v; }
+function _m7shuffle(arr) { for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; } return arr; }
+/* opções de escolha múltipla a partir da resposta certa + distratores */
+function _m7mc(correta, distratores) {
+  var opc = [String(correta)];
+  for (var i = 0; i < distratores.length && opc.length < 4; i++) {
+    var d = String(distratores[i]);
+    if (opc.indexOf(d) === -1) opc.push(d);
+  }
+  _m7shuffle(opc);
+  return { opcoes: opc, resposta: String(correta) };
+}
+
+function buildEx_m7c1(tema, tipo, dif) {
+  tema = String(tema);
+  var amp = (dif === 'facil') ? 9 : (dif === 'dificil' ? 30 : 15); // amplitude dos números
+
+  // ── TEMA 1: Conjunto dos Inteiros (ℤ, ℤ⁺, ℤ⁻, ℕ) ──
+  if (tema === '1') {
+    var n = _m7rndNZ(-amp, amp);
+    var ehNatural = n > 0;            // ℕ = {1,2,3,…}
+    if (tipo === 'vf') {
+      var afirmacoes = [
+        { txt: 'O número <strong>' + n + '</strong> pertence a ℤ (inteiros).', v: true },
+        { txt: 'O número <strong>' + n + '</strong> pertence a ℤ⁺ (inteiros positivos).', v: n > 0 },
+        { txt: 'O número <strong>' + n + '</strong> pertence a ℤ⁻ (inteiros negativos).', v: n < 0 },
+        { txt: 'O número <strong>' + n + '</strong> é um número natural (ℕ).', v: ehNatural }
+      ];
+      var a = afirmacoes[_m7rnd(0, afirmacoes.length - 1)];
+      return { enun: a.txt, tipo: 'vf', resposta: a.v ? 'Verdadeiro' : 'Falso', opcoes: ['Verdadeiro', 'Falso'], expl: 'ℤ inclui positivos, negativos e o zero. ℕ são só os positivos (1, 2, 3, …).' };
+    }
+    if (tipo === 'mc') {
+      var conj = n > 0 ? 'ℤ⁺' : 'ℤ⁻';
+      var mc = _m7mc(conj, ['ℤ⁺', 'ℤ⁻', 'ℕ₀']);
+      return { enun: 'A que conjunto pertence <strong>' + n + '</strong> (positivos ℤ⁺ ou negativos ℤ⁻)?', tipo: 'mc', opcoes: mc.opcoes, resposta: mc.resposta, expl: n + (n > 0 ? ' é positivo → ℤ⁺.' : ' é negativo → ℤ⁻.') };
+    }
+    return { enun: 'O número <strong>' + n + '</strong> é positivo ou negativo? (escreve «positivo» ou «negativo»)', tipo: 'fill', resposta: n > 0 ? 'positivo' : 'negativo', expl: 'Os números à direita do zero são positivos; à esquerda, negativos.' };
+  }
+
+  // ── TEMA 2: Valor absoluto e simétrico ──
+  if (tema === '2') {
+    var x = _m7rndNZ(-amp, amp);
+    var abs = Math.abs(x), sim = -x;
+    var modo = _m7rnd(0, 1);
+    if (tipo === 'mc') {
+      if (modo === 0) { var m1 = _m7mc(abs, [sim, x, abs + 1]); return { enun: 'Qual é o valor absoluto de <strong>' + x + '</strong>, ou seja |' + x + '|?', tipo: 'mc', opcoes: m1.opcoes, resposta: m1.resposta, expl: 'O valor absoluto é a distância ao zero: |' + x + '| = ' + abs + '.' }; }
+      var m2 = _m7mc(sim, [x, abs, -abs]); return { enun: 'Qual é o simétrico de <strong>' + x + '</strong>?', tipo: 'mc', opcoes: m2.opcoes, resposta: m2.resposta, expl: 'O simétrico troca o sinal: o simétrico de ' + x + ' é ' + sim + '.' };
+    }
+    if (tipo === 'vf') {
+      var op = _m7rnd(0, 1);
+      var txt2 = op === 0 ? ('|' + x + '| = ' + abs) : ('O simétrico de ' + x + ' é ' + (-x));
+      return { enun: '<strong>' + txt2 + '</strong> — verdadeiro ou falso?', tipo: 'vf', resposta: 'Verdadeiro', opcoes: ['Verdadeiro', 'Falso'], expl: '|' + x + '| = ' + abs + ' e o simétrico de ' + x + ' é ' + (-x) + '.' };
+    }
+    if (modo === 0) return { enun: 'Calcula o valor absoluto: |' + x + '| = ?', tipo: 'fill', resposta: String(abs), expl: 'A distância de ' + x + ' ao zero é ' + abs + '.' };
+    return { enun: 'Escreve o simétrico de <strong>' + x + '</strong>:', tipo: 'fill', resposta: String(sim), expl: 'Troca-se o sinal: ' + sim + '.' };
+  }
+
+  // ── TEMA 3: Adição de inteiros ──
+  if (tema === '3') {
+    var a3 = _m7rndNZ(-amp, amp), b3 = _m7rndNZ(-amp, amp);
+    var soma = a3 + b3;
+    var enun3 = '(' + a3 + ') + (' + b3 + ')';
+    if (tipo === 'mc') { var m3 = _m7mc(soma, [a3 - b3, soma + 1, -soma, soma - 2]); return { enun: 'Calcula: <strong>' + enun3 + '</strong>', tipo: 'mc', opcoes: m3.opcoes, resposta: m3.resposta, expl: enun3 + ' = ' + soma + '. (Sinais iguais: somam-se e mantém-se o sinal; sinais diferentes: subtrai-se e fica o sinal do maior em módulo.)' }; }
+    if (tipo === 'vf') { var errada = (Math.random() < .5); var mostrado = errada ? soma + _m7rndNZ(-3, 3) : soma; return { enun: '<strong>' + enun3 + ' = ' + mostrado + '</strong> — verdadeiro ou falso?', tipo: 'vf', resposta: (mostrado === soma) ? 'Verdadeiro' : 'Falso', opcoes: ['Verdadeiro', 'Falso'], expl: enun3 + ' = ' + soma + '.' }; }
+    return { enun: 'Calcula: <strong>' + enun3 + '</strong> =', tipo: 'fill', resposta: String(soma), expl: enun3 + ' = ' + soma + '.' };
+  }
+
+  // ── TEMA 4: Subtração de inteiros ──
+  if (tema === '4') {
+    var a4 = _m7rndNZ(-amp, amp), b4 = _m7rndNZ(-amp, amp);
+    var dif4 = a4 - b4;
+    var enun4 = '(' + a4 + ') − (' + b4 + ')';
+    if (tipo === 'mc') { var m4 = _m7mc(dif4, [a4 + b4, dif4 + 1, -dif4, dif4 - 2]); return { enun: 'Calcula: <strong>' + enun4 + '</strong>', tipo: 'mc', opcoes: m4.opcoes, resposta: m4.resposta, expl: 'Subtrair é somar o simétrico: ' + enun4 + ' = ' + a4 + ' + (' + (-b4) + ') = ' + dif4 + '.' }; }
+    if (tipo === 'vf') { var err4 = (Math.random() < .5); var mos4 = err4 ? dif4 + _m7rndNZ(-3, 3) : dif4; return { enun: '<strong>' + enun4 + ' = ' + mos4 + '</strong> — verdadeiro ou falso?', tipo: 'vf', resposta: (mos4 === dif4) ? 'Verdadeiro' : 'Falso', opcoes: ['Verdadeiro', 'Falso'], expl: enun4 + ' = ' + dif4 + '.' }; }
+    return { enun: 'Calcula: <strong>' + enun4 + '</strong> =', tipo: 'fill', resposta: String(dif4), expl: 'Subtrair é somar o simétrico: = ' + dif4 + '.' };
+  }
+
+  // ── TEMA 5: Expressões com parênteses ──
+  if (tema === '5') {
+    var a5 = _m7rndNZ(-amp, amp), b5 = _m7rndNZ(-amp, amp), c5 = _m7rndNZ(-amp, amp);
+    // a - (b - c)  ou  a + (b - c)
+    var maisOuMenos = _m7rnd(0, 1);
+    var val, enun5;
+    if (maisOuMenos === 0) { val = a5 - (b5 - c5); enun5 = a5 + ' − (' + b5 + ' − ' + c5 + ')'; }
+    else { val = a5 + (b5 - c5); enun5 = a5 + ' + (' + b5 + ' − ' + c5 + ')'; }
+    enun5 = enun5.replace(/− -/g, '+ ').replace(/\+ -/g, '− ');
+    if (tipo === 'mc') { var m5 = _m7mc(val, [val + _m7rndNZ(1, 4), val - _m7rndNZ(1, 4), -val]); return { enun: 'Calcula, tirando os parênteses: <strong>' + enun5 + '</strong>', tipo: 'mc', opcoes: m5.opcoes, resposta: m5.resposta, expl: 'Resolve primeiro os parênteses. = ' + val + '. (Um «−» antes do parênteses troca os sinais lá dentro.)' }; }
+    return { enun: 'Calcula: <strong>' + enun5 + '</strong> =', tipo: 'fill', resposta: String(val), expl: 'Primeiro os parênteses; atenção ao sinal antes deles. = ' + val + '.' };
+  }
+
+  return null;
+}
