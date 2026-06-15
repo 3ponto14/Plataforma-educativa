@@ -71,10 +71,38 @@ var Atribuir = (function () {
       if (ctx.nivel) q.push('nivel=' + encodeURIComponent(ctx.nivel));
       return origin + '?' + q.join('&');
     }
-    // jogos: abre a tab Jogos do curso, no tema escolhido.
-    if (ctx.tipo === 'jogo') return origin + '?abrir=jogos' + (ctx.tema ? '&cap=' + encodeURIComponent(ctx.tema) : '');
+    // jogos: abre a tab Jogos do curso, no tema E no jogo escolhidos.
+    if (ctx.tipo === 'jogo') return origin + '?abrir=jogos'
+      + (ctx.tema ? '&cap=' + encodeURIComponent(ctx.tema) : '')
+      + (ctx.jogo ? '&jogo=' + encodeURIComponent(ctx.jogo) : '');
     // outros: hash genérico
     return origin + '#abrir=' + encodeURIComponent([ctx.tipo || '', ctx.tema || '', ctx.sub || '', ctx.nivel || ''].join(':'));
+  }
+
+  /* Lista de jogos disponíveis no curso (id + label), conforme o ciclo.
+     Usa o catálogo do systems.js se carregado; senão, um conjunto base. */
+  function _jogosDoCurso(curso) {
+    // Português tem jogos próprios (pt-jogos.js), diferentes da Matemática.
+    if (/^port/.test(curso || '')) {
+      return [
+        { id: 'barca', label: 'A Barca' }, { id: 'quiz', label: 'Quiz Contra o Tempo' },
+        { id: 'sopa', label: 'Sopa de Letras' }, { id: 'forca', label: 'Forca' },
+        { id: 'corresp', label: 'Correspondência' }
+      ];
+    }
+    var cat = (typeof _gCatalogo !== 'undefined') ? _gCatalogo : {
+      j24: { label: '24' }, c4: { label: '4 em Linha' }, mine: { label: 'Campo Minado' },
+      sdk: { label: 'Sudoku' }, hanoi: { label: 'Hanói' }, escape: { label: 'Escape Room' },
+      corrida: { label: 'Corrida de Cálculo' }, pares: { label: 'Caça ao Par' }, vfrelampago: { label: 'V/F Relâmpago' }
+    };
+    var ids;
+    if (typeof _gSetFor === 'function') { try { ids = _gSetFor(curso || ''); } catch (e) {} }
+    if (!ids) {
+      if (/mat5|mat6/.test(curso || '')) ids = ['j24', 'corrida', 'pares', 'c4', 'mine', 'escape'];
+      else if (/mat10|mat11/.test(curso || '')) ids = ['vfrelampago', 'pares', 'c4', 'mine', 'corrida', 'escape'];
+      else ids = ['j24', 'pares', 'c4', 'mine', 'vfrelampago', 'escape'];
+    }
+    return ids.map(function (id) { return { id: id, label: (cat[id] && cat[id].label) || id }; });
   }
 
   function _label(ctx) {
@@ -136,6 +164,15 @@ var Atribuir = (function () {
         + ctx.caps.map(function (cp) { return '<option value="' + cp.n + '|' + _esc(cp.label) + '">' + _esc(cp.label) + '</option>'; }).join('')
         + '</select>';
     }
+    // Seletor de QUAL jogo — só para JOGOS (respeitar o jogo que o prof escolhe).
+    var jogoSel = '';
+    if (ctx.tipo === 'jogo') {
+      var jogos = _jogosDoCurso(ctx.curso);
+      jogoSel = '<label style="font-size:.78rem;font-weight:700;color:#6b6560">Qual jogo</label>'
+        + '<select id="atr-jogo" style="width:100%;box-sizing:border-box;border:1.5px solid #ddd8d2;border-radius:10px;padding:.6rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin:.3rem 0 .8rem">'
+        + jogos.map(function (j) { return '<option value="' + j.id + '|' + _esc(j.label) + '">' + _esc(j.label) + '</option>'; }).join('')
+        + '</select>';
+    }
 
     ov.innerHTML =
       '<div style="background:var(--white,#fff);border-radius:18px;max-width:380px;width:100%;padding:1.5rem;box-shadow:0 20px 60px rgba(0,0,0,.3);font-family:Montserrat,sans-serif">'
@@ -143,7 +180,7 @@ var Atribuir = (function () {
       + '<div style="font-size:.82rem;color:#6b6560;margin-bottom:1rem">' + _esc(_tituloTipo(ctx) + (precisaTema ? ctx.cursoNome : _label(ctx))) + '</div>'
       + (semDestinos
           ? '<div style="font-size:.85rem;color:#922b21;background:#fdecea;border:1px solid #f0b8b0;border-radius:10px;padding:.7rem">Ainda não tens grupos nem alunos. Cria um grupo no portal (Turmas) primeiro.</div>'
-          : temaSel
+          : temaSel + jogoSel
             + '<label style="font-size:.78rem;font-weight:700;color:#6b6560">Para quem</label>'
             + '<select id="atr-dest" style="width:100%;box-sizing:border-box;border:1.5px solid #ddd8d2;border-radius:10px;padding:.6rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin:.3rem 0 .8rem">' + opc + '</select>'
             + '<label style="font-size:.78rem;font-weight:700;color:#6b6560">Instruções (opcional)</label>'
@@ -171,6 +208,12 @@ var Atribuir = (function () {
     if (temaSel && temaSel.value) {
       var pp = temaSel.value.split('|');
       ctx.tema = pp[0]; ctx.temaNome = pp[1] || ('Cap. ' + pp[0]);
+    }
+    // jogo: aplica o jogo escolhido (id + nome) no rótulo e no link
+    var jogoSelEl = document.getElementById('atr-jogo');
+    if (jogoSelEl && jogoSelEl.value) {
+      var jj = jogoSelEl.value.split('|');
+      ctx.jogo = jj[0]; ctx.jogoNome = jj[1] || jj[0];
     }
     var inst = (document.getElementById('atr-inst') || {}).value || '';
     var prazo = (document.getElementById('atr-prazo') || {}).value || '';

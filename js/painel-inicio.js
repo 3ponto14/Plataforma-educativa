@@ -258,13 +258,23 @@
           + '<div class="pi-tar-tit">' + _esc(t.titulo) + (t.curso_nome ? ' <span class="pi-tar-tag">' + _esc(t.curso_nome) + '</span>' : '') + '</div>'
           + (t.instrucoes ? '<div class="pi-tar-desc">' + _esc(t.instrucoes) + '</div>' : '')
           + '<div class="pi-tar-meta">' + (prazo ? prazo + ' · ' : '') + 'por ' + _esc(t.prof_nome || 'professor')
-          + (t.url ? ' · <a href="' + _escAttr(t.url) + '" target="_blank" rel="noopener">abrir ficha</a>' : '') + '</div>'
+          + (t.url ? ' · <a href="' + _escAttr(_tarUrlComId(t.url, t.id)) + '" target="_blank" rel="noopener">abrir trabalho</a>' : '') + '</div>'
           + '</div></div>';
       });
       h += '</div>';
       box.innerHTML = h;
     });
   }
+  /* Garante que o link do trabalho leva &tarefa=<id>, para o aluno entrar
+     sempre em modo-tarefa (e poder entregar) — mesmo em tarefas antigas
+     cujo url foi guardado sem o tarefa=. Funciona em todos os anos. */
+  function _tarUrlComId(url, id) {
+    if (!url || !id) return url;
+    if (url.indexOf('tarefa=') !== -1) return url;            // já tem
+    var sep = url.indexOf('?') === -1 ? '?' : '&';
+    return url + sep + 'tarefa=' + id;
+  }
+
   function _tarPrazo(p) {
     var hoje = new Date().toISOString().slice(0, 10);
     if (p < hoje) return '⚠️ prazo passou';

@@ -1515,7 +1515,7 @@ function _port9DeepLink() {
   try {
     var p = new URLSearchParams(window.location.search);
     if (p.get('abrir') === 'fichas') { var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_port9gf){ _port9gf.caps={}; cs.forEach(function(n){ _port9gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _port9gf.dif=p.get('dif'); } if(p.get('tarefa'))setTimeout(function(){tarefaEntregaBar(p.get('tarefa'),'Ficha concluída');},400); setTimeout(function(){ port9SwitchTab('fichas', null); }, 250); return; }
-    if (p.get('abrir') === 'jogos') { var jc=parseInt(p.get('cap'),10); if(jc&&_port9Prat) _port9Prat.cap=jc; if(p.get('tarefa'))setTimeout(function(){tarefaEntregaBar(p.get('tarefa'),'Jogo concluído');},400); setTimeout(function(){ port9SwitchTab('jogos', null); }, 250); return; }
+    if (p.get('abrir') === 'jogos') { var jc=parseInt(p.get('cap'),10); if(jc&&_port9Prat) _port9Prat.cap=jc; if(p.get('tarefa'))setTimeout(function(){tarefaEntregaBar(p.get('tarefa'),'Jogo concluído');},400); setTimeout(function(){ port9SwitchTab('jogos', null); var jg=p.get('jogo'); if(jg&&typeof ptJogoAbrir==='function')setTimeout(function(){try{ptJogoAbrir(jg);}catch(e){}},250); }, 250); return; }
     if (p.get('abrir') !== 'praticar') return;
     var cap = parseInt(p.get('cap'), 10) || 1;
     var st = parseInt(p.get('st'), 10) || 0;
