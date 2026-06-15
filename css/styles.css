@@ -3920,6 +3920,8 @@ body.dark-mode .resumo-st-btn.active {
 .ml-tag{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;background:#e8f5ee;color:#2e7d52;border:1px solid #bfe3c9;border-radius:999px;padding:1px 7px}
 .ml-sair{font-size:.74rem;font-weight:700;color:var(--ink4);background:none;border:1px solid var(--border);border-radius:999px;padding:4px 12px;cursor:pointer;font-family:'Montserrat',sans-serif;flex-shrink:0}
 .ml-sair:hover{color:var(--ink2);border-color:var(--border2)}
+.ml-chave{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;font-size:1rem;color:var(--ink4);background:none;border:1px solid var(--border);border-radius:999px;cursor:pointer;flex-shrink:0;font-family:'Montserrat',sans-serif}
+.ml-chave:hover{color:#4a3f7a;border-color:#ddd8f5}
 
 @media(max-width:560px){
   #ml-drawer{width:340px}
