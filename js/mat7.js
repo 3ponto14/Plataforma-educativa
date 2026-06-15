@@ -397,31 +397,16 @@ function mat7RenderUnifiedExercicios(caps, inlineEl) {
     caps.forEach(function(cap) {
       var capExs = [];
 
-      // BANCO-based chapters (5 and 6): pick from pre-made question bank
-      if (cap === 5 && typeof BANCO5 !== 'undefined' && BANCO5.questoes) {
-        var pool5 = BANCO5.questoes.slice();
-        for (var _b5i = pool5.length-1; _b5i > 0; _b5i--) { var _b5j=Math.floor(Math.random()*(_b5i+1)); var _b5t=pool5[_b5i]; pool5[_b5i]=pool5[_b5j]; pool5[_b5j]=_b5t; }
-        pool5.slice(0, numPerCap).forEach(function(q) {
-          capExs.push({enun:q.enunciado||q.en||'',opcoes:q.opts||[],resposta:q.correct||q.c||'',tipo:'mc',expl:q.fb||'',_capId:5,_capLabel:capNames[5]||'Sequências'});
-        });
-      } else if (cap === 6 && typeof BANCO6 !== 'undefined' && BANCO6.questoes) {
-        var pool6 = BANCO6.questoes.slice();
-        for (var _b6i = pool6.length-1; _b6i > 0; _b6i--) { var _b6j=Math.floor(Math.random()*(_b6i+1)); var _b6t=pool6[_b6i]; pool6[_b6i]=pool6[_b6j]; pool6[_b6j]=_b6t; }
-        pool6.slice(0, numPerCap).forEach(function(q) {
-          capExs.push({enun:q.enunciado||q.en||'',opcoes:q.opts||[],resposta:q.correct||q.c||'',tipo:'mc',expl:q.fb||'',_capId:6,_capLabel:capNames[6]||'Funções'});
-        });
-      } else if (cap === 7 && typeof BANCO7 !== 'undefined' && BANCO7.questoes) {
-        var pool7 = BANCO7.questoes.slice();
-        for (var _b7i = pool7.length-1; _b7i > 0; _b7i--) { var _b7j=Math.floor(Math.random()*(_b7i+1)); var _b7t=pool7[_b7i]; pool7[_b7i]=pool7[_b7j]; pool7[_b7j]=_b7t; }
-        pool7.slice(0, numPerCap).forEach(function(q) {
-          capExs.push({enun:q.enunciado||q.en||'',opcoes:q.opts||[],resposta:q.correct||q.c||'',tipo:'mc',expl:q.fb||'',_capId:7,_capLabel:capNames[7]||'Figuras Semelhantes'});
-        });
-      } else if (cap === 8 && typeof BANCO8 !== 'undefined' && BANCO8.questoes) {
-        var pool8 = BANCO8.questoes.slice();
-        for (var _b8i = pool8.length-1; _b8i > 0; _b8i--) { var _b8j=Math.floor(Math.random()*(_b8i+1)); var _b8t=pool8[_b8i]; pool8[_b8i]=pool8[_b8j]; pool8[_b8j]=_b8t; }
-        pool8.slice(0, numPerCap).forEach(function(q) {
-          capExs.push({enun:q.enunciado||q.en||'',opcoes:q.opts||[],resposta:q.correct||q.c||'',tipo:'mc',expl:q.fb||'',_capId:8,_capLabel:capNames[8]||'Dados e Probabilidades'});
-        });
+      // Geradores próprios dos caps 5-8 (substituem os bancos BANCO5-8)
+      var _m7genCap = { 5: (typeof buildEx_m7c5 === 'function' ? buildEx_m7c5 : null), 6: (typeof buildEx_m7c6 === 'function' ? buildEx_m7c6 : null), 7: (typeof buildEx_m7c7 === 'function' ? buildEx_m7c7 : null), 8: (typeof buildEx_m7c8 === 'function' ? buildEx_m7c8 : null) };
+      var _m7nTemas = { 5: 2, 6: 6, 7: 6, 8: 5 };
+      if (cap >= 5 && cap <= 8 && _m7genCap[cap]) {
+        var gen58 = _m7genCap[cap], nT = _m7nTemas[cap];
+        var tipos58 = ['fill', 'mc', 'fill', 'vf', 'mc', 'fill', 'mc', 'fill', 'vf', 'mc'];
+        for (var _i58 = 0; _i58 < numPerCap; _i58++) {
+          var ex58 = gen58(String((_i58 % nT) + 1), tipos58[_i58 % tipos58.length], dif) || gen58(String((_i58 % nT) + 1), 'fill', dif);
+          if (ex58) { ex58._capId = cap; ex58._capLabel = capNames[cap]; ex58.num = allExs.length + capExs.length + 1; capExs.push(ex58); }
+        }
       } else {
         // Procedural generation for caps 1-4
         var temas = ['1','2','3','4','5'];
@@ -1530,6 +1515,217 @@ function buildEx_m7c3(tema, tipo, dif) {
     var distrA = String((+(3.14 * r).toFixed(2))).replace('.', ',');
     var mc5 = _m7mc(perim, [distrA, String(diam), String((+(2 * 3.14 * r * r).toFixed(2))).replace('.', ',')]);
     return { enun: 'Qual é o <strong>perímetro</strong> (comprimento) de uma circunferência de raio ' + r + '? (usa π ≈ 3,14)', tipo: 'mc', opcoes: mc5.opcoes, resposta: mc5.resposta, expl: 'Perímetro = 2 × π × r ≈ 2 × 3,14 × ' + r + ' = ' + perim + '.' };
+  }
+
+  return null;
+}
+
+/* ═══ GERADOR Cap 5 — Sequências e Regularidades (7.º ano) ═══
+   1 Termo geral · 2 Problemas com sequências */
+function buildEx_m7c5(tema, tipo, dif) {
+  tema = String(tema);
+  var m = _m7rndNZ(2, 7), b = _m7rnd(-4, 6); // termo geral an = m·n + b
+  function termo(n) { return m * n + b; }
+  var tgTxt = m + 'n ' + (b >= 0 ? '+ ' + b : '− ' + (-b));
+  if (b === 0) tgTxt = m + 'n';
+
+  // ── TEMA 1: Termo de uma certa ordem ──
+  if (tema === '1') {
+    var ordem = _m7rnd(3, 12);
+    var val = termo(ordem);
+    if (tipo === 'mc') { var mc = _m7mc(val, [val + m, val - m, m * ordem]); return { enun: 'O termo geral de uma sequência é <strong>a<sub>n</sub> = ' + tgTxt + '</strong>. Qual é o termo de ordem ' + ordem + '?', tipo: 'mc', opcoes: mc.opcoes, resposta: mc.resposta, expl: 'Substitui n = ' + ordem + ': ' + m + '×' + ordem + ' ' + (b >= 0 ? '+ ' + b : '− ' + (-b)) + ' = ' + val + '.' }; }
+    return { enun: 'Numa sequência, a<sub>n</sub> = <strong>' + tgTxt + '</strong>. Calcula o termo de ordem ' + ordem + ':', tipo: 'fill', resposta: String(val), expl: m + '×' + ordem + ' ' + (b >= 0 ? '+ ' + b : '− ' + (-b)) + ' = ' + val + '.' };
+  }
+
+  // ── TEMA 2: Problemas com sequências (contexto + qual a ordem dado o termo) ──
+  if (tema === '2') {
+    var coisas = ['segmentos', 'balões', 'quadrados', 'palitos', 'bolas'];
+    var coisa = coisas[_m7rnd(0, coisas.length - 1)];
+    if (Math.random() < .5) {
+      var ordem2 = _m7rnd(4, 10), val2 = termo(ordem2);
+      return { enun: 'Uma sequência de figuras tem termo geral <strong>a<sub>n</sub> = ' + tgTxt + '</strong> (' + coisa + '). Quantos ' + coisa + ' tem a figura ' + ordem2 + '?', tipo: 'fill', resposta: String(val2), expl: m + '×' + ordem2 + ' ' + (b >= 0 ? '+ ' + b : '− ' + (-b)) + ' = ' + val2 + ' ' + coisa + '.' };
+    }
+    // dado o valor, achar a ordem (garante inteiro)
+    var ord3 = _m7rnd(3, 9), val3 = termo(ord3);
+    return { enun: 'Numa sequência com a<sub>n</sub> = <strong>' + tgTxt + '</strong>, uma figura tem ' + val3 + ' ' + coisa + '. Qual é a sua ordem (n)?', tipo: 'fill', resposta: String(ord3), expl: 'Resolve ' + tgTxt + ' = ' + val3 + ' → n = ' + ord3 + '.' };
+  }
+
+  return null;
+}
+
+/* ═══ GERADOR Cap 6 — Funções (7.º ano) ═══
+   1 Referencial · 2 Conceito de função · 3 Representação gráfica
+   4 Formas de representar · 5 Proporcionalidade direta · 6 Gráficos em contexto */
+function buildEx_m7c6(tema, tipo, dif) {
+  tema = String(tema);
+
+  // ── TEMA 1: Referencial cartesiano (quadrante de um ponto) ──
+  if (tema === '1') {
+    var x = _m7rndNZ(-8, 8), y = _m7rndNZ(-8, 8);
+    var q = (x > 0 && y > 0) ? '1.º' : (x < 0 && y > 0) ? '2.º' : (x < 0 && y < 0) ? '3.º' : '4.º';
+    var mc = _m7mc(q + ' quadrante', ['1.º quadrante', '2.º quadrante', '3.º quadrante', '4.º quadrante']);
+    return { enun: 'Em que quadrante está o ponto <strong>(' + x + ', ' + y + ')</strong>?', tipo: 'mc', opcoes: mc.opcoes, resposta: mc.resposta, expl: 'x ' + (x > 0 ? '> 0' : '< 0') + ' e y ' + (y > 0 ? '> 0' : '< 0') + ' → ' + q + ' quadrante.' };
+  }
+
+  // ── TEMA 2/4: Conceito de função / formas de representar (imagem de um objeto) ──
+  if (tema === '2' || tema === '4') {
+    var a = _m7rndNZ(2, 5), bb = _m7rnd(-4, 6), obj = _m7rndNZ(-5, 6);
+    var img = a * obj + bb;
+    var lei = 'f(x) = ' + a + 'x ' + (bb >= 0 ? '+ ' + bb : '− ' + (-bb));
+    if (tipo === 'mc') { var mc2 = _m7mc(img, [a * obj, img + a, a + obj + bb]); return { enun: 'Dada a função <strong>' + lei + '</strong>, qual é a imagem de ' + obj + ', ou seja f(' + obj + ')?', tipo: 'mc', opcoes: mc2.opcoes, resposta: mc2.resposta, expl: 'f(' + obj + ') = ' + a + '×(' + obj + ') ' + (bb >= 0 ? '+ ' + bb : '− ' + (-bb)) + ' = ' + img + '.' }; }
+    return { enun: 'Considera <strong>' + lei + '</strong>. Calcula f(' + obj + '):', tipo: 'fill', resposta: String(img), expl: a + '×(' + obj + ') ' + (bb >= 0 ? '+ ' + bb : '− ' + (-bb)) + ' = ' + img + '.' };
+  }
+
+  // ── TEMA 3: Representação gráfica (pertença de um ponto à reta) ──
+  if (tema === '3') {
+    var k = _m7rndNZ(2, 5), px = _m7rndNZ(1, 6);
+    var py = k * px; // ponto na reta y = kx
+    var naReta = (Math.random() < .5);
+    var pyMostra = naReta ? py : py + _m7rndNZ(1, 4);
+    return { enun: 'A função é <strong>y = ' + k + 'x</strong>. O ponto (' + px + ', ' + pyMostra + ') pertence ao gráfico?', tipo: 'vf', resposta: (pyMostra === py) ? 'Verdadeiro' : 'Falso', opcoes: ['Verdadeiro', 'Falso'], expl: 'Para x = ' + px + ', y = ' + k + '×' + px + ' = ' + py + '. ' + (pyMostra === py ? 'Coincide → pertence.' : 'Mas o ponto tem y = ' + pyMostra + ' → não pertence.') };
+  }
+
+  // ── TEMA 5: Proporcionalidade direta (constante k = y/x) ──
+  if (tema === '5') {
+    var kk = _m7rnd(2, 9), xv = _m7rnd(2, 8), yv = kk * xv;
+    if (Math.random() < .5) {
+      if (tipo === 'mc') { var mc5 = _m7mc(kk, [yv, xv, kk + 1]); return { enun: 'Numa proporcionalidade direta, a ' + xv + ' corresponde ' + yv + '. Qual é a constante de proporcionalidade?', tipo: 'mc', opcoes: mc5.opcoes, resposta: mc5.resposta, expl: 'k = y ÷ x = ' + yv + ' ÷ ' + xv + ' = ' + kk + '.' }; }
+      return { enun: 'Numa proporcionalidade direta, a x = ' + xv + ' corresponde y = ' + yv + '. Qual é a constante (k = y/x)?', tipo: 'fill', resposta: String(kk), expl: yv + ' ÷ ' + xv + ' = ' + kk + '.' };
+    }
+    var xNovo = _m7rnd(2, 8), yNovo = kk * xNovo;
+    return { enun: 'y é diretamente proporcional a x, com constante ' + kk + '. Qual é y quando x = ' + xNovo + '?', tipo: 'fill', resposta: String(yNovo), expl: 'y = k × x = ' + kk + ' × ' + xNovo + ' = ' + yNovo + '.' };
+  }
+
+  // ── TEMA 6: Gráficos em contexto (velocidade/distância simples) ──
+  if (tema === '6') {
+    var vel = _m7rnd(2, 12), tempo = _m7rnd(2, 9), dist = vel * tempo;
+    if (Math.random() < .5) return { enun: 'Um carro anda a ' + vel + ' km por hora (proporcionalidade direta). Que distância percorre em ' + tempo + ' horas?', tipo: 'fill', resposta: String(dist), expl: 'distância = velocidade × tempo = ' + vel + ' × ' + tempo + ' = ' + dist + ' km.' };
+    return { enun: 'Num gráfico distância-tempo, a ' + tempo + ' h correspondem ' + dist + ' km. Qual é a velocidade (km/h)?', tipo: 'fill', resposta: String(vel), expl: 'velocidade = distância ÷ tempo = ' + dist + ' ÷ ' + tempo + ' = ' + vel + ' km/h.' };
+  }
+
+  return null;
+}
+
+/* ═══ GERADOR Cap 7 — Semelhança (7.º ano) ═══
+   1 Figuras semelhantes · 2 Polígonos · 3 Homotetia · 4 Semelhança triângulos
+   5 Perímetros e áreas · 6 Poliedros e Euler (V−A+F=2) */
+function buildEx_m7c7(tema, tipo, dif) {
+  tema = String(tema);
+
+  // ── TEMA 1/2/4: razão de semelhança e lado correspondente ──
+  if (tema === '1' || tema === '2' || tema === '4') {
+    var k = _m7rnd(2, 5), lado = _m7rnd(2, 9), grande = lado * k;
+    if (Math.random() < .5) {
+      if (tipo === 'mc') { var mc = _m7mc(grande, [lado + k, grande + k, lado * (k + 1)]); return { enun: 'Dois polígonos são semelhantes com razão <strong>' + k + '</strong>. Um lado do menor mede ' + lado + '. Quanto mede o lado correspondente do maior?', tipo: 'mc', opcoes: mc.opcoes, resposta: mc.resposta, expl: lado + ' × ' + k + ' = ' + grande + '.' }; }
+      return { enun: 'Figuras semelhantes de razão ' + k + ': um lado mede ' + lado + ' na menor. Quanto mede o correspondente na maior?', tipo: 'fill', resposta: String(grande), expl: lado + ' × ' + k + ' = ' + grande + '.' };
+    }
+    // dar os dois lados, pedir a razão
+    return { enun: 'Dois polígonos semelhantes têm lados correspondentes ' + lado + ' e ' + grande + '. Qual é a razão de semelhança (do maior para o menor)?', tipo: 'fill', resposta: String(k), expl: grande + ' ÷ ' + lado + ' = ' + k + '.' };
+  }
+
+  // ── TEMA 3: Homotetia (ampliar coordenadas por k) ──
+  if (tema === '3') {
+    var k3 = _m7rnd(2, 4), x = _m7rndNZ(1, 6), y = _m7rndNZ(1, 6);
+    return { enun: 'Uma homotetia de centro na origem e razão ' + k3 + ' transforma o ponto (' + x + ', ' + y + '). Qual é a imagem?', tipo: 'fill', resposta: '(' + (k3 * x) + ', ' + (k3 * y) + ')', expl: 'Multiplica cada coordenada por ' + k3 + ': (' + (k3 * x) + ', ' + (k3 * y) + ').' };
+  }
+
+  // ── TEMA 5: Perímetros e áreas em semelhança (perím ×k, área ×k²) ──
+  if (tema === '5') {
+    var k5 = _m7rnd(2, 4), per = _m7rnd(5, 20), are = _m7rnd(4, 30);
+    if (Math.random() < .5) { var mc5 = _m7mc(per * k5, [per + k5, per * k5 * k5, per + k5 * 2]); return { enun: 'Numa ampliação de razão ' + k5 + ', o perímetro fica multiplicado por quanto? (um polígono de perímetro ' + per + ' passa a…)', tipo: 'mc', opcoes: mc5.opcoes, resposta: mc5.resposta, expl: 'O perímetro multiplica pela razão: ' + per + ' × ' + k5 + ' = ' + (per * k5) + '.' }; }
+    var mc5b = _m7mc(are * k5 * k5, [are * k5, are + k5 * k5, are * k5 * k5 * k5]); return { enun: 'Numa ampliação de razão ' + k5 + ', a área fica multiplicada por k². Uma figura de área ' + are + ' passa a ter que área?', tipo: 'mc', opcoes: mc5b.opcoes, resposta: mc5b.resposta, expl: 'A área multiplica por k² = ' + k5 + '² = ' + (k5 * k5) + '. ' + are + ' × ' + (k5 * k5) + ' = ' + (are * k5 * k5) + '.' };
+  }
+
+  // ── TEMA 6: Relação de Euler (V − A + F = 2) ──
+  if (tema === '6') {
+    var solidos = [
+      { nome: 'cubo', V: 8, A: 12, F: 6 },
+      { nome: 'tetraedro', V: 4, A: 6, F: 4 },
+      { nome: 'prisma triangular', V: 6, A: 9, F: 5 },
+      { nome: 'pirâmide quadrangular', V: 5, A: 8, F: 5 },
+      { nome: 'octaedro', V: 6, A: 12, F: 8 }
+    ];
+    var s = solidos[_m7rnd(0, solidos.length - 1)];
+    var qual = _m7rnd(0, 2);
+    if (qual === 0) return { enun: 'Num <strong>' + s.nome + '</strong> há ' + s.A + ' arestas e ' + s.F + ' faces. Pela relação de Euler (V − A + F = 2), quantos vértices tem?', tipo: 'fill', resposta: String(s.V), expl: 'V = 2 + A − F = 2 + ' + s.A + ' − ' + s.F + ' = ' + s.V + '.' };
+    if (qual === 1) return { enun: 'Num <strong>' + s.nome + '</strong> há ' + s.V + ' vértices e ' + s.F + ' faces. Quantas arestas tem? (V − A + F = 2)', tipo: 'fill', resposta: String(s.A), expl: 'A = V + F − 2 = ' + s.V + ' + ' + s.F + ' − 2 = ' + s.A + '.' };
+    return { enun: 'Verifica a relação de Euler num <strong>' + s.nome + '</strong> (V=' + s.V + ', A=' + s.A + ', F=' + s.F + '): quanto dá V − A + F?', tipo: 'fill', resposta: '2', expl: s.V + ' − ' + s.A + ' + ' + s.F + ' = 2 (vale para todos os poliedros convexos).' };
+  }
+
+  return null;
+}
+
+/* ═══ GERADOR Cap 8 — Estatística e Probabilidade (7.º ano) ═══
+   1 População/amostra · 2 Média, mediana, moda · 3 Representações
+   4 Probabilidade · 5 Probabilidade composta */
+function buildEx_m7c8(tema, tipo, dif) {
+  tema = String(tema);
+
+  // ── TEMA 1: População e amostra (conceitos) ──
+  if (tema === '1') {
+    var cenarios = [
+      { txt: 'Para saber a altura média dos alunos de uma escola, mediram-se 50 alunos.', pop: 'todos os alunos da escola', am: 'os 50 alunos medidos' },
+      { txt: 'Numa fábrica testaram-se 100 lâmpadas de um lote de 10000.', pop: 'as 10000 lâmpadas do lote', am: 'as 100 lâmpadas testadas' }
+    ];
+    var c = cenarios[_m7rnd(0, cenarios.length - 1)];
+    var perguntaPop = (Math.random() < .5);
+    var mc = _m7mc(perguntaPop ? c.pop : c.am, [c.pop, c.am]);
+    return { enun: c.txt + ' Qual é a <strong>' + (perguntaPop ? 'população' : 'amostra') + '</strong>?', tipo: 'mc', opcoes: mc.opcoes, resposta: mc.resposta, expl: 'População = o conjunto todo; amostra = a parte estudada.' };
+  }
+
+  // ── TEMA 2: Média, mediana, moda ──
+  if (tema === '2') {
+    var n = 5, dados = [];
+    for (var i = 0; i < n; i++) dados.push(_m7rnd(1, 10));
+    var soma = dados.reduce(function (a, b) { return a + b; }, 0);
+    var media = soma / n;
+    var ord = dados.slice().sort(function (a, b) { return a - b; });
+    var mediana = ord[2];
+    // moda: valor mais frequente
+    var cont = {}; dados.forEach(function (d) { cont[d] = (cont[d] || 0) + 1; });
+    var moda = null, maxc = 0; for (var kk in cont) { if (cont[kk] > maxc) { maxc = cont[kk]; moda = +kk; } }
+    var dadosTxt = dados.join(', ');
+    var qual = _m7rnd(0, 2);
+    if (qual === 0) {
+      // garantir média inteira: ajustar último dado
+      var resto = soma % n;
+      if (resto !== 0) { dados[n - 1] = dados[n - 1] + (n - resto); soma = dados.reduce(function (a, b) { return a + b; }, 0); media = soma / n; dadosTxt = dados.join(', '); }
+      return { enun: 'Calcula a <strong>média</strong> dos dados: ' + dadosTxt, tipo: 'fill', resposta: String(media), expl: 'Soma ÷ quantidade = ' + soma + ' ÷ ' + n + ' = ' + media + '.' };
+    }
+    if (qual === 1) return { enun: 'Qual é a <strong>mediana</strong> de: ' + ord.join(', ') + '? (dados já ordenados)', tipo: 'fill', resposta: String(mediana), expl: 'A mediana é o valor do meio: ' + mediana + '.' };
+    return { enun: 'Qual é a <strong>moda</strong> de: ' + dadosTxt + '? (valor mais frequente)', tipo: 'fill', resposta: String(moda), expl: 'O valor que aparece mais vezes é ' + moda + '.' };
+  }
+
+  // ── TEMA 3: Representações (frequência absoluta) ──
+  if (tema === '3') {
+    var total = _m7rnd(20, 40), fa = _m7rnd(2, total - 2);
+    var fr = +(fa / total).toFixed(2);
+    return { enun: 'Num total de ' + total + ' alunos, ' + fa + ' escolheram futebol. Qual é a frequência absoluta do futebol?', tipo: 'fill', resposta: String(fa), expl: 'A frequência absoluta é a contagem: ' + fa + '.' };
+  }
+
+  // ── TEMA 4: Probabilidade simples (casos favoráveis / possíveis) ──
+  if (tema === '4') {
+    var contextos = [
+      { txt: 'lançar um dado e sair número par', fav: 3, pos: 6 },
+      { txt: 'lançar um dado e sair o 5', fav: 1, pos: 6 },
+      { txt: 'lançar uma moeda e sair cara', fav: 1, pos: 2 },
+      { txt: 'tirar uma bola vermelha de um saco com 2 vermelhas e 3 azuis', fav: 2, pos: 5 }
+    ];
+    var c4 = contextos[_m7rnd(0, contextos.length - 1)];
+    var resp = _m7frac(c4.fav, c4.pos);
+    return { enun: 'Qual é a probabilidade de <strong>' + c4.txt + '</strong>? (escreve em fração)', tipo: 'fill_frac', resposta: resp, expl: 'P = casos favoráveis ÷ casos possíveis = ' + c4.fav + '/' + c4.pos + (resp !== (c4.fav + '/' + c4.pos) ? ' = ' + resp : '') + '.' };
+  }
+
+  // ── TEMA 5: Probabilidade composta (dois eventos independentes) ──
+  if (tema === '5') {
+    // sair cara duas vezes, ou dois pares, etc. — multiplicar probabilidades simples
+    var casos = [
+      { txt: 'sair cara nas duas vezes ao lançar uma moeda 2 vezes', p1: '1/2', p2: '1/2', f: 1, q: 4 },
+      { txt: 'sair número par nos dois lançamentos de um dado', p1: '1/2', p2: '1/2', f: 1, q: 4 },
+      { txt: 'sair o 6 nos dois lançamentos de um dado', p1: '1/6', p2: '1/6', f: 1, q: 36 }
+    ];
+    var c5 = casos[_m7rnd(0, casos.length - 1)];
+    return { enun: 'Qual é a probabilidade de <strong>' + c5.txt + '</strong>? (eventos independentes — multiplica)', tipo: 'fill_frac', resposta: _m7frac(c5.f, c5.q), expl: 'P = ' + c5.p1 + ' × ' + c5.p2 + ' = ' + _m7frac(c5.f, c5.q) + '.' };
   }
 
   return null;
