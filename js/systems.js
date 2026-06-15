@@ -1287,11 +1287,8 @@ setTimeout(function(){
 
 // ISSUES 1-4: SELEÇÃO MULTI-CAPÍTULO + MEGAGERADOR
 // ── Actualiza o botão no topbar ──────────────
-function pmUpdateTopbar() {
-  var s = ProgressManager.getSummary();
-  var el = document.getElementById('pm-topbar-xp-label');
-  if (el) el.textContent = s.totalXp + ' XP';
-}
+// (pmUpdateTopbar vive em desafio.js — versão completa com chips 🔥/⭐/🏆.
+//  O stub antigo daqui foi removido: era código morto e escondia a versão boa.)
 
 // ── Widget de progresso inline por capítulo ──
 function pmRenderWidget(capId, containerEl) {
@@ -1415,7 +1412,7 @@ document.addEventListener('edupt:progress', function() {
 });
 
 // ── Init: actualiza topbar ao carregar ────────
-document.addEventListener('DOMContentLoaded', function() { pmUpdateTopbar(); });
+document.addEventListener('DOMContentLoaded', function() { if (typeof pmUpdateTopbar === 'function') pmUpdateTopbar(); });
 
 // ═══ TEACHER STRIP TOGGLE ═══
 function toggleTeacher(btn) {
