@@ -1618,8 +1618,8 @@ _port7Banco[3] = _port7Banco[3].concat([
 
 
 /* atribuir: deep-link port7 */
-function _port7DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_port7gf){ _port7gf.caps={}; cs.forEach(function(n){ _port7gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _port7gf.dif=p.get('dif'); } setTimeout(function(){ port7SwitchTab('fichas',null); },350); return; }
-    if(p.get('abrir')==='jogos'){ var jc=parseInt(p.get('cap'),10); if(jc&&_port7Prat) _port7Prat.cap=jc; setTimeout(function(){ port7SwitchTab('jogos',null); },350); return; }
+function _port7DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_port7gf){ _port7gf.caps={}; cs.forEach(function(n){ _port7gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _port7gf.dif=p.get('dif'); } if(p.get('tarefa'))setTimeout(function(){tarefaEntregaBar(p.get('tarefa'),'Ficha concluída');},400); setTimeout(function(){ port7SwitchTab('fichas',null); },350); return; }
+    if(p.get('abrir')==='jogos'){ var jc=parseInt(p.get('cap'),10); if(jc&&_port7Prat) _port7Prat.cap=jc; if(p.get('tarefa'))setTimeout(function(){tarefaEntregaBar(p.get('tarefa'),'Jogo concluído');},400); setTimeout(function(){ port7SwitchTab('jogos',null); },350); return; }
     if(p.get('abrir')!=='praticar')return; if(p.get('tarefa')){_port7TarefaAtiva=p.get('tarefa');_port7TarefaResp={};} var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _port7Prat.cap=cap; _port7Prat.st=st; _port7Prat.nivel=nivel; setTimeout(function(){ port7SwitchTab('exercicios',null); if(typeof port7GerarExercicios==='function') port7GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_port7DeepLinkAuto,300);});else setTimeout(_port7DeepLinkAuto,300);
 

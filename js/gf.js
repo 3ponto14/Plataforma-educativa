@@ -2647,6 +2647,10 @@ function gfRestaurarDeURL() {
   if (params.get('abrir') === 'fichas' && typeof mat7SwitchTab === 'function') {
     var fichasBtn = document.querySelector('[onclick*="mat7SwitchTab(\'fichas\'"]');
     try { mat7SwitchTab('fichas', fichasBtn); } catch (e) {}
+    // modo-tarefa: barra «✓ Já fiz — entregar» (ficha não dá nota)
+    if (params.get('tarefa') && typeof tarefaEntregaBar === 'function') {
+      setTimeout(function () { tarefaEntregaBar(params.get('tarefa'), 'Ficha concluída'); }, 400);
+    }
   }
 
   var secId = 'mat7-downloads';

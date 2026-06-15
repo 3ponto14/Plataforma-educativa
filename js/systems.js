@@ -1,3 +1,26 @@
+/* ── Entrega genérica de trabalho sem nota (fichas, jogos) ──
+   Mostra uma barra fixa «✓ Já fiz — entregar» quando o aluno abriu um
+   trabalho atribuído que não dá nota X/Y. Reutilizado por todos os cursos.
+   `tarefaId` vem do &tarefa= do link; `oque` é o rótulo (ex.: 'a ficha'). */
+function tarefaEntregaBar(tarefaId, oque) {
+  if (!tarefaId) return;
+  if (document.getElementById('edu-entrega-bar')) return;
+  var bar = document.createElement('div');
+  bar.id = 'edu-entrega-bar';
+  bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:9000;background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;padding:.7rem 1rem;display:flex;align-items:center;justify-content:center;gap:.8rem;flex-wrap:wrap;box-shadow:0 -4px 16px rgba(0,0,0,.18);font-family:Montserrat,sans-serif';
+  bar.innerHTML = '<span style="font-weight:700;font-size:.86rem">Trabalho atribuído pelo teu professor</span>'
+    + '<button id="edu-entrega-btn" style="background:#fff;color:#1a4a2e;border:none;border-radius:999px;padding:7px 16px;font-size:.84rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">✓ Já fiz — entregar</button>';
+  document.body.appendChild(bar);
+  bar.querySelector('#edu-entrega-btn').onclick = function () {
+    if (typeof Turmas === 'undefined' || !Turmas.guardarResultado) return;
+    var lbl = oque || 'Trabalho concluído';
+    Turmas.guardarResultado(tarefaId, 1, 1, [{ q: lbl, certo: true }]).then(function () {
+      if (typeof eduToast === 'function') eduToast('Entregue ao professor! ✅', 'success');
+      var b = document.getElementById('edu-entrega-bar'); if (b) b.parentNode.removeChild(b);
+    }).catch(function () { if (typeof eduToast === 'function') eduToast('Não foi possível entregar.', 'error'); });
+  };
+}
+
 /* ── Block 2 (from line 4431) ── */
 // Lazy loader for game scripts
 function lazyLoad(src, callback) {
