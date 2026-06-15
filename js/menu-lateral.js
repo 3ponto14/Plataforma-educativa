@@ -67,7 +67,8 @@
       '<div class="ml-user"><i class="ph ph-user-circle"></i> <span>' + _esc(nome)
       + (prof ? ' <span class="ml-tag">professor</span>' : '') + '</span></div>'
       + '<button class="ml-chave" title="Alterar palavra-passe" aria-label="Alterar palavra-passe" onclick="if(typeof authAlterarPassword===\'function\')authAlterarPassword()"><i class="ph ph-key"></i></button>'
-      + '<button class="ml-sair" onclick="if(typeof authSair===\'function\'){menuLateralFechar();authSair();}">Sair</button>';
+      + '<button class="ml-sair" onclick="if(typeof authSair===\'function\'){menuLateralFechar();authSair();}">Sair</button>'
+      + '<button class="ml-apagar" title="Apagar a minha conta" onclick="if(typeof authApagarConta===\'function\')authApagarConta()">Apagar conta</button>';
   }
 
   /* Abrir/fechar só fazem sentido no modo gaveta (telemóvel). */

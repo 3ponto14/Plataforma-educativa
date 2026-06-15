@@ -3914,7 +3914,9 @@ body.dark-mode .resumo-st-btn.active {
 /* o painel do Apoio (#portal-turmas) vive aqui dentro: tira margens/larguras do portal */
 .ml-body #portal-turmas{max-width:none;margin:0}
 
-.ml-foot{border-top:1px solid var(--border);background:var(--white);padding:.7rem 1.1rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.ml-foot{border-top:1px solid var(--border);background:var(--white);padding:.7rem 1.1rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap}
+.ml-apagar{flex-basis:100%;text-align:center;font-size:.7rem;color:var(--ink4);background:none;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;padding:.2rem;margin-top:.1rem}
+.ml-apagar:hover{color:#c0392b;text-decoration:underline}
 .ml-user{font-size:.82rem;font-weight:700;color:var(--ink2);display:flex;align-items:center;gap:.35rem;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ml-user i{color:var(--sage-dark);font-size:1.05rem}
 .ml-tag{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;background:#e8f5ee;color:#2e7d52;border:1px solid #bfe3c9;border-radius:999px;padding:1px 7px}

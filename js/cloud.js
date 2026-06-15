@@ -105,6 +105,17 @@ var Cloud = (function () {
     });
   }
 
+  /* Apaga a própria conta + todos os dados (RGPD). Chama a função SQL
+     apagar_minha_conta() que só apaga o auth.uid() atual; o cascade
+     limpa progresso/tarefas/mensagens/sessões. Depois faz sign-out. */
+  function apagarConta() {
+    if (!sb || !user) return Promise.reject(new Error('Inicia sessão.'));
+    return sb.rpc('apagar_minha_conta').then(function (res) {
+      if (res.error) throw res.error;
+      return sb.auth.signOut().then(function () { user = null; _notifica(); return true; });
+    });
+  }
+
   /* Altera a palavra-passe do utilizador autenticado (ou no fluxo de
      recuperação, depois de o link do email criar a sessão temporária). */
   function alterarPassword(novaPass) {
@@ -234,6 +245,7 @@ var Cloud = (function () {
     tipo: tipo, ehProfessor: ehProfessor, nome: nome,
     registar: registar, entrar: entrar, sair: sair,
     recuperarPassword: recuperarPassword, alterarPassword: alterarPassword,
+    apagarConta: apagarConta,
     enviarParaNuvem: enviarParaNuvem, enviarDebounce: enviarDebounce,
     _sb: function () { return sb; }   // cliente Supabase (usado por turmas.js)
   };

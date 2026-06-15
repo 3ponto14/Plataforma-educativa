@@ -60,6 +60,30 @@ create policy "atualizar o próprio progresso"
 alter table public.progresso add column if not exists prof jsonb not null default '{}'::jsonb;
 ```
 
+## 3k. APAGAR A PRÓPRIA CONTA (RGPD) — colar no SQL Editor → Run
+
+Permite que cada utilizador apague a SUA conta e, em cascata, todos os
+seus dados (progresso, tarefas, mensagens, sessões…). Função `security
+definer` que só apaga o próprio (`auth.uid()`), nunca outra conta.
+
+```sql
+create or replace function public.apagar_minha_conta()
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  -- só apaga a conta de quem está autenticado a chamar (o próprio)
+  delete from auth.users where id = auth.uid();
+  -- as tabelas com "on delete cascade" para auth.users limpam-se sozinhas
+end;
+$$;
+
+revoke all on function public.apagar_minha_conta() from public;
+grant execute on function public.apagar_minha_conta() to authenticated;
+```
+
 ## 3b. SQL do APOIO AO ESTUDO (espaço partilhado) — colar no SQL Editor → Run
 
 Modelo (decidido com a dona): **um único espaço partilhado**. Os alunos

@@ -169,6 +169,24 @@ function _authFecharSeAberto() {
   if (ov && ov.parentNode) ov.parentNode.removeChild(ov);
 }
 
+/* Apagar a conta (RGPD), com dupla confirmação. */
+function authApagarConta() {
+  if (typeof Cloud === 'undefined' || !Cloud.utilizador || !Cloud.utilizador()) {
+    alert('Precisas de ter sessão iniciada.'); return;
+  }
+  if (!confirm('Apagar a tua conta? Isto remove DEFINITIVAMENTE o teu progresso, mensagens e trabalhos. Não há volta atrás.')) return;
+  var c = prompt('Para confirmares, escreve APAGAR em maiúsculas:');
+  if (c !== 'APAGAR') { alert('Cancelado (não escreveste APAGAR).'); return; }
+  Cloud.apagarConta().then(function () {
+    if (typeof menuLateralFechar === 'function') menuLateralFechar();
+    if (typeof authRenderBotao === 'function') authRenderBotao();
+    alert('A tua conta e os teus dados foram apagados.');
+    try { window.location.href = window.location.pathname; } catch (e) {}
+  }).catch(function (e) {
+    alert((e && e.message) || 'Não foi possível apagar a conta.');
+  });
+}
+
 function authSubmeter(entrar) {
   var email = (document.getElementById('auth-email') || {}).value || '';
   var pass = (document.getElementById('auth-pass') || {}).value || '';
