@@ -54,6 +54,10 @@ var Cloud = (function () {
       sb.auth.onAuthStateChange(function (_evt, session) {
         user = (session && session.user) || null;
         _notifica();
+        // veio do email de recuperação → mostra ecrã de nova palavra-passe
+        if (_evt === 'PASSWORD_RECOVERY' && typeof authMostrarNovaPassword === 'function') {
+          setTimeout(authMostrarNovaPassword, 100);
+        }
       });
     } catch (e) { sb = null; if (onReady) onReady(); }
   }
@@ -87,6 +91,29 @@ var Cloud = (function () {
   function sair() {
     if (!sb) return Promise.resolve();
     return sb.auth.signOut().then(function () { user = null; _notifica(); });
+  }
+
+  /* Esqueceu-se da palavra-passe: envia email com link para definir uma
+     nova. O link traz o utilizador de volta à app (com #recuperar) onde
+     pode escolher a nova password. */
+  function recuperarPassword(email) {
+    if (!sb) return Promise.reject(new Error('Serviço indisponível.'));
+    var url = window.location.origin + window.location.pathname + '#recuperar';
+    return sb.auth.resetPasswordForEmail(email, { redirectTo: url }).then(function (res) {
+      if (res.error) throw res.error;
+      return true;
+    });
+  }
+
+  /* Altera a palavra-passe do utilizador autenticado (ou no fluxo de
+     recuperação, depois de o link do email criar a sessão temporária). */
+  function alterarPassword(novaPass) {
+    if (!sb) return Promise.reject(new Error('Serviço indisponível.'));
+    return sb.auth.updateUser({ password: novaPass }).then(function (res) {
+      if (res.error) throw res.error;
+      if (res.data && res.data.user) user = res.data.user;
+      return true;
+    });
   }
 
   /* Ao entrar: funde o progresso da nuvem com o do dispositivo, guarda,
@@ -206,6 +233,7 @@ var Cloud = (function () {
     init: init, disponivel: disponivel, utilizador: utilizador,
     tipo: tipo, ehProfessor: ehProfessor, nome: nome,
     registar: registar, entrar: entrar, sair: sair,
+    recuperarPassword: recuperarPassword, alterarPassword: alterarPassword,
     enviarParaNuvem: enviarParaNuvem, enviarDebounce: enviarDebounce,
     _sb: function () { return sb; }   // cliente Supabase (usado por turmas.js)
   };

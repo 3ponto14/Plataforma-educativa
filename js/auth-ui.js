@@ -59,6 +59,7 @@ function authAbrir(modo) {
         + '<label style="display:flex;gap:.55rem;align-items:flex-start;font-size:.8rem;color:var(--ink3);line-height:1.45;margin-bottom:.9rem;cursor:pointer">'
         + '<input type="checkbox" id="auth-marketing" style="margin-top:.15rem;flex-shrink:0;width:16px;height:16px;cursor:pointer">'
         + '<span>Aceito receber novidades e dicas de estudo por email. <span style="color:var(--ink4)">(opcional)</span></span></label>')
+    + (entrar ? '<div style="text-align:right;margin:-.5rem 0 .8rem"><a href="#" onclick="authRecuperar();return false" style="font-size:.78rem;color:#4a3f7a;font-weight:700">Esqueci-me da palavra-passe</a></div>' : '')
     + '<button id="auth-btn" onclick="authSubmeter(' + (entrar ? 'true' : 'false') + ')" style="width:100%;background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:12px;padding:.8rem;font-family:Montserrat,sans-serif;font-size:.9rem;font-weight:800;cursor:pointer">' + (entrar ? 'Entrar' : 'Criar conta e entrar') + '</button>'
     + '<div style="text-align:center;margin-top:.9rem;font-size:.8rem;color:var(--ink4)">'
     + (entrar ? 'Ainda não tens conta? <a href="#" onclick="authAbrir(\'criar\');return false" style="color:#4a3f7a;font-weight:700">Cria uma</a>'
@@ -92,6 +93,80 @@ function authSetTipo(t) {
 function _authErro(msg) {
   var el = document.getElementById('auth-erro');
   if (el) { el.textContent = msg; el.style.display = 'block'; }
+}
+
+/* Esqueci-me da palavra-passe: pede o email e envia o link de recuperação. */
+function authRecuperar() {
+  var emailEl = document.getElementById('auth-email');
+  var email = ((emailEl && emailEl.value) || '').trim();
+  if (!email || email.indexOf('@') === -1) {
+    email = (prompt('Escreve o teu email para receberes o link de recuperação:') || '').trim();
+  }
+  if (!email || email.indexOf('@') === -1) { _authErro('Escreve um email válido.'); return; }
+  if (typeof Cloud === 'undefined' || !Cloud.recuperarPassword) { _authErro('Serviço indisponível.'); return; }
+  Cloud.recuperarPassword(email).then(function () {
+    _authErro('');
+    var el = document.getElementById('auth-erro');
+    if (el) { el.style.display = 'block'; el.style.color = '#2e7d52'; el.textContent = 'Enviámos um email para ' + email + ' com um link para definires uma nova palavra-passe. Vê também o spam.'; }
+  }).catch(function (e) {
+    var msg = (e && e.message) || 'Não foi possível enviar.';
+    if (/rate limit/i.test(msg)) msg = 'Demasiados pedidos. Espera um pouco e tenta de novo.';
+    _authErro(msg);
+  });
+}
+
+/* Quando o utilizador volta do email (#recuperar), mostra o ecrã para
+   definir a nova palavra-passe (a sessão temporária já foi criada). */
+function authMostrarNovaPassword() {
+  _authFecharSeAberto();
+  var ov = document.createElement('div');
+  ov.id = 'auth-overlay';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(30,28,40,.55);display:flex;align-items:center;justify-content:center;z-index:10000;padding:1rem';
+  ov.innerHTML = '<div style="background:var(--white,#fff);border-radius:18px;max-width:380px;width:100%;padding:1.6rem;box-shadow:0 20px 60px rgba(0,0,0,.3);font-family:Montserrat,sans-serif">'
+    + '<div style="font-weight:800;font-size:1.1rem;color:#2a2724;margin-bottom:.3rem"><i class="ph ph-key" style="color:#4a3f7a"></i> Nova palavra-passe</div>'
+    + '<div style="font-size:.82rem;color:#6b6560;margin-bottom:1rem">Escolhe a tua nova palavra-passe.</div>'
+    + '<input id="auth-novapass" type="password" placeholder="Nova palavra-passe (mín. 6 letras)" autocomplete="new-password" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin-bottom:.9rem;outline:none" onkeydown="if(event.key===\'Enter\')authGravarNovaPassword()">'
+    + '<div id="auth-erro" style="display:none;font-size:.82rem;color:#c0392b;margin-bottom:.7rem"></div>'
+    + '<button id="auth-btn" onclick="authGravarNovaPassword()" style="width:100%;background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:12px;padding:.8rem;font-family:Montserrat,sans-serif;font-size:.9rem;font-weight:800;cursor:pointer">Guardar nova palavra-passe</button>'
+    + '</div>';
+  document.body.appendChild(ov);
+  var inp = document.getElementById('auth-novapass'); if (inp) inp.focus();
+}
+
+function authGravarNovaPassword() {
+  var nova = ((document.getElementById('auth-novapass') || {}).value || '');
+  if (nova.length < 6) { _authErro('A palavra-passe precisa de pelo menos 6 letras.'); return; }
+  var btn = document.getElementById('auth-btn');
+  if (btn) { btn.disabled = true; btn.textContent = 'A guardar…'; }
+  Cloud.alterarPassword(nova).then(function () {
+    authFechar();
+    // limpa o #recuperar do URL
+    try { history.replaceState(null, '', window.location.pathname + window.location.search); } catch (e) {}
+    if (typeof eduToast === 'function') eduToast('Palavra-passe alterada! Já estás dentro. ✅', 'success');
+    if (typeof authRenderBotao === 'function') authRenderBotao();
+  }).catch(function (e) {
+    _authErro((e && e.message) || 'Não foi possível alterar.');
+    if (btn) { btn.disabled = false; btn.textContent = 'Guardar nova palavra-passe'; }
+  });
+}
+
+/* Alterar a palavra-passe estando autenticado (a partir do menu/conta). */
+function authAlterarPassword() {
+  if (typeof Cloud === 'undefined' || !Cloud.utilizador || !Cloud.utilizador()) {
+    alert('Precisas de ter sessão iniciada.'); return;
+  }
+  var nova = (prompt('Nova palavra-passe (mín. 6 letras):') || '');
+  if (!nova) return;
+  if (nova.length < 6) { alert('A palavra-passe precisa de pelo menos 6 letras.'); return; }
+  Cloud.alterarPassword(nova).then(function () {
+    if (typeof eduToast === 'function') eduToast('Palavra-passe alterada! ✅', 'success');
+    else alert('Palavra-passe alterada!');
+  }).catch(function (e) { alert((e && e.message) || 'Não foi possível alterar.'); });
+}
+
+function _authFecharSeAberto() {
+  var ov = document.getElementById('auth-overlay');
+  if (ov && ov.parentNode) ov.parentNode.removeChild(ov);
 }
 
 function authSubmeter(entrar) {
@@ -188,7 +263,13 @@ function authConvidarParaCurso() {
    showXxxView) carrega depois — garante que as funções já existem. */
 document.addEventListener('DOMContentLoaded', function () {
   if (typeof Cloud === 'undefined') return;
-  Cloud.init(function () { authRenderBotao(); });
+  Cloud.init(function () {
+    authRenderBotao();
+    // Voltou do email de recuperação? Mostra o ecrã de nova palavra-passe.
+    if (/(^|[#&])recuperar/.test(window.location.hash) || /type=recovery/.test(window.location.hash)) {
+      setTimeout(authMostrarNovaPassword, 200);
+    }
+  });
   var tentativas = 0;
   var arma = setInterval(function () {
     _authMuroCursos();
