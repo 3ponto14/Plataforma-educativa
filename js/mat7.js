@@ -680,18 +680,41 @@ function _mat7DeepLink() {
     if (abrir !== 'praticar' && abrir !== 'jogos') return;
     var cap = parseInt(p.get('cap'), 10) || 1;
     var tab = abrir === 'jogos' ? 'jogos' : 'exercicios';
-    if (abrir === 'praticar' && p.get('tarefa')) _mat7TarefaAtiva = p.get('tarefa');
+    if (p.get('tarefa')) _mat7TarefaAtiva = p.get('tarefa');  // modo-tarefa em praticar OU jogos
     _mat7Sel[tab] = cap;
     setTimeout(function () {
       mat7SwitchTab(tab, null);
       // seleciona o capítulo no seletor desta tab
       var capBtn = document.querySelector('#mat7-caps-' + tab + ' .gf-cap-btn[data-cap="' + cap + '"]');
       if (capBtn) mat7TabCapClick(tab, cap, capBtn);
+      if (abrir === 'jogos' && _mat7TarefaAtiva) _mat7MostraEntregaJogo();
     }, 300);
   } catch (e) {}
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(_mat7DeepLink, 350); });
 else setTimeout(_mat7DeepLink, 350);
+
+/* Modo-tarefa num JOGO: mostra uma barra fixa «✓ Já joguei — entregar».
+   Os jogos não dão nota X/Y, por isso entrega-se como concluído. */
+function _mat7MostraEntregaJogo() {
+  if (document.getElementById('mat7-entrega-jogo')) return;
+  var bar = document.createElement('div');
+  bar.id = 'mat7-entrega-jogo';
+  bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:9000;background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;padding:.7rem 1rem;display:flex;align-items:center;justify-content:center;gap:.8rem;box-shadow:0 -4px 16px rgba(0,0,0,.18);font-family:Montserrat,sans-serif';
+  bar.innerHTML = '<span style="font-weight:700;font-size:.86rem">Trabalho atribuído pelo teu professor</span>'
+    + '<button onclick="mat7EntregarJogo()" style="background:#fff;color:#1a4a2e;border:none;border-radius:999px;padding:7px 16px;font-size:.84rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">✓ Já joguei — entregar</button>';
+  document.body.appendChild(bar);
+}
+
+function mat7EntregarJogo() {
+  if (!_mat7TarefaAtiva || typeof Turmas === 'undefined' || !Turmas.guardarResultado) return;
+  // jogo não tem nota: regista como concluído (1/1) com detalhe descritivo
+  Turmas.guardarResultado(_mat7TarefaAtiva, 1, 1, [{ q: 'Jogo concluído', certo: true }]).then(function () {
+    if (typeof eduToast === 'function') eduToast('Jogo entregue ao professor! ✅', 'success');
+    _mat7TarefaAtiva = null;
+    var bar = document.getElementById('mat7-entrega-jogo'); if (bar) bar.parentNode.removeChild(bar);
+  }).catch(function (e) { if (typeof eduToast === 'function') eduToast('Não foi possível entregar.', 'error'); });
+}
 
 // mat7SwitchHub activa uma tab de "hub" (como Praticar) sem despacho adicional
 function mat7SwitchHub(tab, btn) {

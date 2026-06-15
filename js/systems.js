@@ -464,7 +464,7 @@ function _j24ShowResult(cid, type, msg) {
   var el = c.querySelector('.j24-result');
   if (!el) return;
   el.className = 'j24-result ' + type;
-  el.textContent = msg || '';
+  el.innerHTML = msg || ''; // msg é HTML interno (ícones Phosphor + expressão), não input do utilizador
   el.style.display = 'block';
 }
 
