@@ -434,13 +434,15 @@ function mat7RenderUnifiedExercicios(caps, inlineEl) {
           var tema = temas[i % temas.length];
           var tipo = tipos[i % tipos.length];
           var ex = null;
-          if (cap === 4) {
-            if (typeof buildEx4 === 'function') ex = buildEx4(tema, dif);
-          } else if (cap === 3) {
-            if (typeof buildEx3 === 'function') ex = buildEx3(tema, tipo, dif);
-          } else if (cap === 2) {
-            var t2 = tipo === 'fill' ? 'fill_frac' : tipo;
-            if (typeof buildEx2 === 'function') ex = buildEx2(tema, t2, dif);
+          if (cap === 4 && typeof buildEx_m7c4 === 'function') {
+            // Cap 4 (Álgebra): gerador leve próprio
+            ex = buildEx_m7c4(tema, tipo, dif) || buildEx_m7c4(tema, 'fill', dif);
+          } else if (cap === 3 && typeof buildEx_m7c3 === 'function') {
+            // Cap 3 (Geometria): gerador leve próprio
+            ex = buildEx_m7c3(tema, tipo, dif) || buildEx_m7c3(tema, 'fill', dif);
+          } else if (cap === 2 && typeof buildEx_m7c2 === 'function') {
+            // Cap 2 (Racionais): gerador leve próprio
+            ex = buildEx_m7c2(tema, tipo, dif) || buildEx_m7c2(tema, 'fill', dif);
           } else if (cap === 1 && typeof buildEx_m7c1 === 'function') {
             // Cap 1 (Inteiros): gerador leve próprio (substitui o legado)
             ex = buildEx_m7c1(tema, tipo, dif) || buildEx_m7c1(tema, 'fill', dif);
@@ -1325,6 +1327,209 @@ function buildEx_m7c1(tema, tipo, dif) {
     enun5 = enun5.replace(/− -/g, '+ ').replace(/\+ -/g, '− ');
     if (tipo === 'mc') { var m5 = _m7mc(val, [val + _m7rndNZ(1, 4), val - _m7rndNZ(1, 4), -val]); return { enun: 'Calcula, tirando os parênteses: <strong>' + enun5 + '</strong>', tipo: 'mc', opcoes: m5.opcoes, resposta: m5.resposta, expl: 'Resolve primeiro os parênteses. = ' + val + '. (Um «−» antes do parênteses troca os sinais lá dentro.)' }; }
     return { enun: 'Calcula: <strong>' + enun5 + '</strong> =', tipo: 'fill', resposta: String(val), expl: 'Primeiro os parênteses; atenção ao sinal antes deles. = ' + val + '.' };
+  }
+
+  return null;
+}
+
+/* ── helpers de fração para os geradores do mat7 ── */
+function _m7gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { var t = b; b = a % b; a = t; } return a || 1; }
+function _m7reduz(p, q) { if (q < 0) { p = -p; q = -q; } var g = _m7gcd(p, q); return [p / g, q / g]; }
+function _m7frac(p, q) { var r = _m7reduz(p, q); return r[1] === 1 ? String(r[0]) : (r[0] + '/' + r[1]); }
+
+/* ═══ GERADOR Cap 2 — Números Racionais (7.º ano) ═══
+   1 Comparação/ordenação · 2 Frações (+/−) · 3 Percentagens
+   4 Potências · 5 Notação científica */
+function buildEx_m7c2(tema, tipo, dif) {
+  tema = String(tema);
+  var amp = (dif === 'facil') ? 6 : (dif === 'dificil' ? 12 : 9);
+
+  // ── TEMA 1: Comparação e ordenação de racionais ──
+  if (tema === '1') {
+    var p1 = _m7rnd(1, amp), q1 = _m7rnd(2, amp), p2 = _m7rnd(1, amp), q2 = _m7rnd(2, amp);
+    var v1 = p1 / q1, v2 = p2 / q2;
+    if (v1 === v2) q2 = q2 + 1; v2 = p2 / q2;
+    var maior = (v1 > v2) ? (p1 + '/' + q1) : (p2 + '/' + q2);
+    if (tipo === 'fill') return { enun: 'Qual é a maior fração: <strong>' + p1 + '/' + q1 + '</strong> ou <strong>' + p2 + '/' + q2 + '</strong>? (escreve a fração)', tipo: 'fill', resposta: maior, expl: 'Compara os valores: ' + p1 + '/' + q1 + ' ≈ ' + v1.toFixed(2) + ' e ' + p2 + '/' + q2 + ' ≈ ' + v2.toFixed(2) + '.' };
+    var sinal = v1 > v2 ? '>' : '<';
+    var mc = _m7mc(sinal, ['>', '<', '=']);
+    return { enun: 'Compara: ' + p1 + '/' + q1 + ' ___ ' + p2 + '/' + q2 + ' (qual o sinal correto?)', tipo: 'mc', opcoes: mc.opcoes, resposta: mc.resposta, expl: p1 + '/' + q1 + ' ≈ ' + v1.toFixed(2) + ', ' + p2 + '/' + q2 + ' ≈ ' + v2.toFixed(2) + '.' };
+  }
+
+  // ── TEMA 2: Adição e subtração de frações ──
+  if (tema === '2') {
+    var a = _m7rnd(1, amp), b = _m7rnd(2, amp), c = _m7rnd(1, amp), d = _m7rnd(2, amp);
+    var soma = (Math.random() < .5);
+    var np = soma ? (a * d + c * b) : (a * d - c * b), nq = b * d;
+    var resp = _m7frac(np, nq);
+    var op = soma ? '+' : '−';
+    if (tipo === 'mc') {
+      var errado = _m7frac(np + nq, nq);
+      var mc2 = _m7mc(resp, [errado, _m7frac(a + c, b + d), _m7frac(np, nq + 1)]);
+      return { enun: 'Calcula: <strong>' + a + '/' + b + ' ' + op + ' ' + c + '/' + d + '</strong>', tipo: 'mc', opcoes: mc2.opcoes, resposta: mc2.resposta, expl: 'Reduz ao mesmo denominador (' + nq + ') e ' + (soma ? 'soma' : 'subtrai') + ' os numeradores → ' + resp + '.' };
+    }
+    return { enun: 'Calcula (simplifica se der): <strong>' + a + '/' + b + ' ' + op + ' ' + c + '/' + d + '</strong>', tipo: 'fill_frac', resposta: resp, expl: 'Denominador comum ' + nq + ' → ' + resp + '.' };
+  }
+
+  // ── TEMA 3: Percentagens ──
+  if (tema === '3') {
+    var pcts = [10, 20, 25, 50, 5, 75, 30];
+    var pct = pcts[_m7rnd(0, pcts.length - 1)];
+    // base múltipla de 100 / divisor da %: garante resultado SEMPRE inteiro
+    var base = _m7rnd(2, 12) * 100; // múltiplo de 100 → todas estas % dão inteiro
+    var val = base * pct / 100;
+    if (tipo === 'mc') { var mc3 = _m7mc(val, [base * pct / 10, val + 5, val * 2]); return { enun: 'Quanto é <strong>' + pct + '% de ' + base + '</strong>?', tipo: 'mc', opcoes: mc3.opcoes, resposta: mc3.resposta, expl: pct + '% = ' + pct + '/100. ' + pct + '% de ' + base + ' = ' + base + '×' + pct + '/100 = ' + val + '.' }; }
+    return { enun: 'Calcula <strong>' + pct + '% de ' + base + '</strong>:', tipo: 'fill', resposta: String(val), expl: base + ' × ' + pct + ' ÷ 100 = ' + val + '.' };
+  }
+
+  // ── TEMA 4: Potências ──
+  if (tema === '4') {
+    var base4 = _m7rnd(2, (dif === 'facil' ? 5 : 9)), exp4 = _m7rnd(2, (dif === 'dificil' ? 4 : 3));
+    var val4 = Math.pow(base4, exp4);
+    if (tipo === 'mc') { var mc4 = _m7mc(val4, [base4 * exp4, val4 + base4, Math.pow(base4, exp4 - 1)]); return { enun: 'Calcula a potência: <strong>' + base4 + '<sup>' + exp4 + '</sup></strong>', tipo: 'mc', opcoes: mc4.opcoes, resposta: mc4.resposta, expl: base4 + '<sup>' + exp4 + '</sup> = ' + base4 + ' multiplicado por si próprio ' + exp4 + ' vezes = ' + val4 + '.' }; }
+    if (tipo === 'vf') { var mostrado = (Math.random() < .5) ? val4 : base4 * exp4; return { enun: '<strong>' + base4 + '<sup>' + exp4 + '</sup> = ' + mostrado + '</strong> — verdadeiro ou falso?', tipo: 'vf', resposta: (mostrado === val4) ? 'Verdadeiro' : 'Falso', opcoes: ['Verdadeiro', 'Falso'], expl: base4 + '<sup>' + exp4 + '</sup> = ' + val4 + ' (não confundir com ' + base4 + '×' + exp4 + ').' }; }
+    return { enun: 'Calcula: <strong>' + base4 + '<sup>' + exp4 + '</sup></strong> =', tipo: 'fill', resposta: String(val4), expl: '= ' + val4 + '.' };
+  }
+
+  // ── TEMA 5: Notação científica ──
+  if (tema === '5') {
+    var mant = _m7rnd(1, 9), ordem = _m7rnd(2, 6);
+    var numero = mant * Math.pow(10, ordem);
+    var sci = mant + ' × 10^' + ordem;
+    if (Math.random() < .5) {
+      // dar número, pedir notação científica (mantissa)
+      return { enun: 'Escreve <strong>' + numero.toLocaleString('pt-PT') + '</strong> em notação científica: ___ × 10^' + ordem + ' (qual a mantissa?)', tipo: 'fill', resposta: String(mant), expl: numero + ' = ' + mant + ' × 10^' + ordem + '.' };
+    }
+    // dar notação científica, pedir número
+    return { enun: 'Qual é o número correspondente a <strong>' + sci + '</strong>?', tipo: 'fill', resposta: String(numero), expl: mant + ' × 10^' + ordem + ' = ' + mant + ' seguido de ' + ordem + ' zeros = ' + numero + '.' };
+  }
+
+  return null;
+}
+
+/* ═══ GERADOR Cap 4 — Álgebra (7.º ano) ═══
+   1 Sequências/termo geral · 2 Expressões algébricas · 3 Simplificação
+   4 Equações do 1.º grau · 5 Inequações */
+function buildEx_m7c4(tema, tipo, dif) {
+  tema = String(tema);
+  var amp = (dif === 'facil') ? 5 : (dif === 'dificil' ? 12 : 8);
+
+  // ── TEMA 1: Sequências e termo geral (an = a + (n-1)d ou linear) ──
+  if (tema === '1') {
+    var a0 = _m7rnd(1, amp), d = _m7rndNZ(-4, 6); // termo geral: a0 + d*n  (n=1,2,3…) -> usamos un = a0 + d*(n-1)? simplificamos: termo n = m*n + b
+    var m = _m7rndNZ(2, 6), b = _m7rnd(-5, 8);
+    var t1 = m * 1 + b, t2 = m * 2 + b, t3 = m * 3 + b;
+    var nPed = _m7rnd(4, 8);
+    var alvo = m * nPed + b;
+    if (tipo === 'mc') { var mc = _m7mc(alvo, [alvo + m, alvo - m, m * nPed]); return { enun: 'Numa sequência, o termo de ordem n é <strong>' + m + 'n ' + (b >= 0 ? '+ ' + b : '− ' + (-b)) + '</strong>. Qual é o termo de ordem ' + nPed + '?', tipo: 'mc', opcoes: mc.opcoes, resposta: mc.resposta, expl: 'Substitui n = ' + nPed + ': ' + m + '×' + nPed + ' ' + (b >= 0 ? '+ ' + b : '− ' + (-b)) + ' = ' + alvo + '.' }; }
+    return { enun: 'O termo geral de uma sequência é <strong>' + m + 'n ' + (b >= 0 ? '+ ' + b : '− ' + (-b)) + '</strong>. Calcula o termo de ordem ' + nPed + ':', tipo: 'fill', resposta: String(alvo), expl: m + '×' + nPed + ' ' + (b >= 0 ? '+ ' + b : '− ' + (-b)) + ' = ' + alvo + '.' };
+  }
+
+  // ── TEMA 2: Expressões algébricas (valor numérico) ──
+  if (tema === '2') {
+    var coef = _m7rndNZ(2, amp), cons = _m7rnd(-amp, amp), xv = _m7rndNZ(-6, 6);
+    var val = coef * xv + cons;
+    var expr = coef + 'x ' + (cons >= 0 ? '+ ' + cons : '− ' + (-cons));
+    if (tipo === 'mc') { var mc2 = _m7mc(val, [coef * xv, val + coef, coef + xv + cons]); return { enun: 'Calcula o valor de <strong>' + expr + '</strong> para <strong>x = ' + xv + '</strong>.', tipo: 'mc', opcoes: mc2.opcoes, resposta: mc2.resposta, expl: 'Substitui x por ' + xv + ': ' + coef + '×(' + xv + ') ' + (cons >= 0 ? '+ ' + cons : '− ' + (-cons)) + ' = ' + val + '.' }; }
+    return { enun: 'Determina o valor numérico de <strong>' + expr + '</strong> quando <strong>x = ' + xv + '</strong>:', tipo: 'fill', resposta: String(val), expl: coef + '×(' + xv + ') ' + (cons >= 0 ? '+ ' + cons : '− ' + (-cons)) + ' = ' + val + '.' };
+  }
+
+  // ── TEMA 3: Simplificação (juntar termos semelhantes) ──
+  if (tema === '3') {
+    var ax = _m7rndNZ(1, amp), bx = _m7rndNZ(-amp, amp), k1 = _m7rndNZ(-amp, amp), k2 = _m7rndNZ(-amp, amp);
+    var cx = ax + bx, ck = k1 + k2;
+    var expr3 = ax + 'x ' + (k1 >= 0 ? '+ ' + k1 : '− ' + (-k1)) + ' ' + (bx >= 0 ? '+ ' + bx + 'x' : '− ' + (-bx) + 'x') + ' ' + (k2 >= 0 ? '+ ' + k2 : '− ' + (-k2));
+    var resp3 = (cx === 0 ? '' : (cx === 1 ? 'x' : (cx === -1 ? '−x' : cx + 'x'))) + (ck === 0 ? '' : (cx === 0 ? String(ck) : (ck > 0 ? ' + ' + ck : ' − ' + (-ck))));
+    if (resp3 === '') resp3 = '0';
+    return { enun: 'Simplifica (junta os termos semelhantes): <strong>' + expr3 + '</strong>', tipo: 'fill', resposta: resp3, expl: 'Termos em x: ' + ax + 'x ' + (bx >= 0 ? '+ ' + bx + 'x' : '− ' + (-bx) + 'x') + ' = ' + cx + 'x. Constantes: ' + k1 + ' ' + (k2 >= 0 ? '+ ' + k2 : '− ' + (-k2)) + ' = ' + ck + '. → ' + resp3 + '.' };
+  }
+
+  // ── TEMA 4: Equações do 1.º grau (ax + b = c) ──
+  if (tema === '4') {
+    var a4 = _m7rndNZ(2, 6), x4 = _m7rnd(-6, 6), b4 = _m7rnd(-amp, amp);
+    var c4 = a4 * x4 + b4; // garante solução inteira
+    var eq = a4 + 'x ' + (b4 >= 0 ? '+ ' + b4 : '− ' + (-b4)) + ' = ' + c4;
+    if (tipo === 'mc') { var mc4 = _m7mc(x4, [x4 + 1, x4 - 1, -x4]); return { enun: 'Resolve a equação: <strong>' + eq + '</strong>. Qual é o valor de x?', tipo: 'mc', opcoes: mc4.opcoes, resposta: mc4.resposta, expl: a4 + 'x = ' + c4 + ' ' + (b4 >= 0 ? '− ' + b4 : '+ ' + (-b4)) + ' = ' + (c4 - b4) + '; x = ' + (c4 - b4) + ' ÷ ' + a4 + ' = ' + x4 + '.' }; }
+    return { enun: 'Resolve em ordem a x: <strong>' + eq + '</strong>. x =', tipo: 'fill', resposta: String(x4), expl: a4 + 'x = ' + (c4 - b4) + '; x = ' + x4 + '.' };
+  }
+
+  // ── TEMA 5: Inequações simples (ax > c, a>0) ──
+  if (tema === '5') {
+    var a5 = _m7rnd(2, 5), x5 = _m7rnd(-5, 8);
+    var c5 = a5 * x5;
+    var ineq = a5 + 'x > ' + c5;
+    // solução: x > x5
+    if (tipo === 'mc') { var mc5 = _m7mc('x > ' + x5, ['x > ' + x5, 'x < ' + x5, 'x > ' + (x5 + 1)]); return { enun: 'Resolve a inequação: <strong>' + ineq + '</strong>', tipo: 'mc', opcoes: mc5.opcoes, resposta: mc5.resposta, expl: 'Divide ambos os lados por ' + a5 + ' (positivo, mantém o sinal): x > ' + c5 + '÷' + a5 + ' = ' + x5 + '.' }; }
+    return { enun: 'Resolve a inequação <strong>' + ineq + '</strong>. Escreve a solução na forma «x > k» ou «x < k»:', tipo: 'fill', resposta: 'x > ' + x5, expl: 'Como ' + a5 + ' > 0, o sinal mantém-se: x > ' + x5 + '.' };
+  }
+
+  return null;
+}
+
+/* ═══ GERADOR Cap 3 — Geometria (7.º ano) ═══
+   1 Ângulos internos de polígonos · 2 Triângulos · 3 Semelhança
+   4 Áreas de figuras planas · 5 Circunferência (π) */
+function buildEx_m7c3(tema, tipo, dif) {
+  tema = String(tema);
+
+  // ── TEMA 1: Soma dos ângulos internos = (n−2)×180 ──
+  if (tema === '1') {
+    var n = _m7rnd(3, 8);
+    var nomes = { 3: 'triângulo', 4: 'quadrilátero', 5: 'pentágono', 6: 'hexágono', 7: 'heptágono', 8: 'octógono' };
+    var soma = (n - 2) * 180;
+    if (tipo === 'mc') { var mc = _m7mc(soma + 'º', [(n * 180) + 'º', ((n - 1) * 180) + 'º', (soma + 180) + 'º']); return { enun: 'Qual é a soma dos ângulos internos de um <strong>' + nomes[n] + '</strong> (' + n + ' lados)?', tipo: 'mc', opcoes: mc.opcoes, resposta: mc.resposta, expl: 'Soma = (n − 2) × 180º = (' + n + ' − 2) × 180º = ' + soma + 'º.' }; }
+    return { enun: 'Calcula a soma dos ângulos internos de um polígono com <strong>' + n + ' lados</strong> (em graus, só o número):', tipo: 'fill', resposta: String(soma), expl: '(n − 2) × 180 = (' + n + ' − 2) × 180 = ' + soma + '.' };
+  }
+
+  // ── TEMA 2: Triângulos — 3.º ângulo (soma = 180º) ──
+  if (tema === '2') {
+    var a = _m7rnd(30, 80), b = _m7rnd(30, 80);
+    if (a + b >= 170) b = 180 - a - _m7rnd(20, 50);
+    var c = 180 - a - b;
+    if (tipo === 'mc') { var mc2 = _m7mc(c + 'º', [(c + 10) + 'º', (180 - a) + 'º', (a + b) + 'º']); return { enun: 'Num triângulo, dois ângulos medem <strong>' + a + 'º</strong> e <strong>' + b + 'º</strong>. Quanto mede o terceiro?', tipo: 'mc', opcoes: mc2.opcoes, resposta: mc2.resposta, expl: 'Os ângulos de um triângulo somam 180º: 180 − ' + a + ' − ' + b + ' = ' + c + 'º.' }; }
+    return { enun: 'Dois ângulos de um triângulo medem ' + a + 'º e ' + b + 'º. Quanto mede o terceiro (em graus)?', tipo: 'fill', resposta: String(c), expl: '180 − ' + a + ' − ' + b + ' = ' + c + '.' };
+  }
+
+  // ── TEMA 3: Semelhança — razão e lado correspondente ──
+  if (tema === '3') {
+    var k = _m7rnd(2, 4), lado = _m7rnd(2, 9);
+    var grande = lado * k;
+    if (tipo === 'mc') { var mc3 = _m7mc(String(grande), [String(lado + k), String(grande + k), String(lado * (k + 1))]); return { enun: 'Dois triângulos são semelhantes com razão <strong>' + k + '</strong>. Se um lado do menor mede <strong>' + lado + '</strong>, quanto mede o lado correspondente do maior?', tipo: 'mc', opcoes: mc3.opcoes, resposta: mc3.resposta, expl: 'Multiplica pela razão: ' + lado + ' × ' + k + ' = ' + grande + '.' }; }
+    return { enun: 'Em figuras semelhantes de razão ' + k + ', um lado mede ' + lado + ' na figura pequena. Quanto mede o correspondente na grande?', tipo: 'fill', resposta: String(grande), expl: lado + ' × ' + k + ' = ' + grande + '.' };
+  }
+
+  // ── TEMA 4: Áreas (retângulo, triângulo, quadrado) ──
+  if (tema === '4') {
+    var fig = _m7rnd(0, 2);
+    if (fig === 0) { var bb = _m7rnd(2, 12), hh = _m7rnd(2, 12); var ar = bb * hh; return tipo === 'mc'
+        ? (function () { var mc = _m7mc(ar, [bb + hh, 2 * (bb + hh), ar + bb]); return { enun: 'Qual é a área de um <strong>retângulo</strong> de ' + bb + ' por ' + hh + '?', tipo: 'mc', opcoes: mc.opcoes, resposta: mc.resposta, expl: 'Área do retângulo = base × altura = ' + bb + ' × ' + hh + ' = ' + ar + '.' }; })()
+        : { enun: 'Calcula a área de um retângulo de base ' + bb + ' e altura ' + hh + ':', tipo: 'fill', resposta: String(ar), expl: bb + ' × ' + hh + ' = ' + ar + '.' };
+    } else if (fig === 1) { var bt = _m7rnd(2, 12) * 2, ht = _m7rnd(2, 12); var art = bt * ht / 2; return tipo === 'mc'
+        ? (function () { var mc = _m7mc(art, [bt * ht, bt + ht, art + bt]); return { enun: 'Qual é a área de um <strong>triângulo</strong> de base ' + bt + ' e altura ' + ht + '?', tipo: 'mc', opcoes: mc.opcoes, resposta: mc.resposta, expl: 'Área do triângulo = (base × altura) ÷ 2 = (' + bt + ' × ' + ht + ') ÷ 2 = ' + art + '.' }; })()
+        : { enun: 'Calcula a área de um triângulo de base ' + bt + ' e altura ' + ht + ':', tipo: 'fill', resposta: String(art), expl: '(' + bt + ' × ' + ht + ') ÷ 2 = ' + art + '.' };
+    } else { var l = _m7rnd(2, 12); var aq = l * l; return tipo === 'mc'
+        ? (function () { var mc = _m7mc(aq, [4 * l, l + l, aq + l]); return { enun: 'Qual é a área de um <strong>quadrado</strong> de lado ' + l + '?', tipo: 'mc', opcoes: mc.opcoes, resposta: mc.resposta, expl: 'Área do quadrado = lado × lado = ' + l + ' × ' + l + ' = ' + aq + '.' }; })()
+        : { enun: 'Calcula a área de um quadrado de lado ' + l + ':', tipo: 'fill', resposta: String(aq), expl: l + ' × ' + l + ' = ' + aq + '.' };
+    }
+  }
+
+  // ── TEMA 5: Circunferência (diâmetro, raio, e perímetro = 2πr) ──
+  if (tema === '5') {
+    var r = _m7rnd(2, 10);
+    var diam = 2 * r;
+    var perimN = +(2 * 3.14 * r).toFixed(2);
+    var perim = String(perimN).replace('.', ',');   // convenção PT: vírgula decimal
+    var qual = _m7rnd(0, 2);
+    if (qual === 0) {
+      return { enun: 'Qual é o <strong>diâmetro</strong> de uma circunferência de raio ' + r + '?', tipo: 'fill', resposta: String(diam), expl: 'Diâmetro = 2 × raio = 2 × ' + r + ' = ' + diam + '.' };
+    }
+    if (qual === 1) {
+      return { enun: 'O diâmetro de uma circunferência é ' + diam + '. Qual é o <strong>raio</strong>?', tipo: 'fill', resposta: String(r), expl: 'Raio = diâmetro ÷ 2 = ' + diam + ' ÷ 2 = ' + r + '.' };
+    }
+    // perímetro (escolha múltipla, p/ evitar a vírgula no preenchimento)
+    var distrA = String((+(3.14 * r).toFixed(2))).replace('.', ',');
+    var mc5 = _m7mc(perim, [distrA, String(diam), String((+(2 * 3.14 * r * r).toFixed(2))).replace('.', ',')]);
+    return { enun: 'Qual é o <strong>perímetro</strong> (comprimento) de uma circunferência de raio ' + r + '? (usa π ≈ 3,14)', tipo: 'mc', opcoes: mc5.opcoes, resposta: mc5.resposta, expl: 'Perímetro = 2 × π × r ≈ 2 × 3,14 × ' + r + ' = ' + perim + '.' };
   }
 
   return null;
