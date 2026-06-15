@@ -56,6 +56,7 @@ function authAbrir(modo) {
         '<label style="display:flex;gap:.55rem;align-items:flex-start;font-size:.8rem;color:var(--ink3);line-height:1.45;margin-bottom:.6rem;cursor:pointer">'
         + '<input type="checkbox" id="auth-termos" style="margin-top:.15rem;flex-shrink:0;width:16px;height:16px;cursor:pointer">'
         + '<span>Li e aceito os <a href="termos.html" target="_blank" style="color:#4a3f7a;font-weight:700">Termos de Utilização</a> e a <a href="privacidade.html" target="_blank" style="color:#4a3f7a;font-weight:700">Política de Privacidade</a>.</span></label>'
+        + '<div style="font-size:.72rem;color:var(--ink4);line-height:1.4;margin:-.3rem 0 .8rem;padding-left:.05rem">Se tens menos de 13 anos, faz o registo com a autorização de um encarregado de educação.</div>'
         + '<label style="display:flex;gap:.55rem;align-items:flex-start;font-size:.8rem;color:var(--ink3);line-height:1.45;margin-bottom:.9rem;cursor:pointer">'
         + '<input type="checkbox" id="auth-marketing" style="margin-top:.15rem;flex-shrink:0;width:16px;height:16px;cursor:pointer">'
         + '<span>Aceito receber novidades e dicas de estudo por email. <span style="color:var(--ink4)">(opcional)</span></span></label>')
