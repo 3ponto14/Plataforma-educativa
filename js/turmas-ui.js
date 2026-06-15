@@ -1054,10 +1054,14 @@ function _turmasRenderAluno(wrap) {
     + '</div>'
     + '<div style="font-size:.82rem;color:var(--ink4);margin-bottom:1rem">Os grupos a que pertences. Pede o código ao teu professor para entrares.</div>'
     + '<div id="turmas-meus-grupos" style="margin-bottom:1.2rem"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
-    // mensagens do professor
+    // conversa com o professor (mensagens + dúvidas = a mesma conversa)
     + '<div style="border-top:1px solid var(--border);padding-top:1rem;margin-bottom:1.2rem">'
-    + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.6rem"><i class="ph ph-chats-circle" style="color:#2e7d52"></i> Mensagens do professor</div>'
+    + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.6rem"><i class="ph ph-chats-circle" style="color:#2e7d52"></i> Conversa com o professor</div>'
     + '<div id="turmas-mensagens-aluno"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
+    + '<div style="display:flex;gap:.4rem;margin-top:.6rem">'
+    + '<input id="aluno-conv-txt" placeholder="Escrever ao professor…" style="flex:1;border:1.5px solid var(--border);border-radius:999px;padding:8px 14px;font-size:.84rem;font-family:Montserrat,sans-serif" onkeydown="if(event.key===\'Enter\')alunoConvEnviar()">'
+    + '<button onclick="alunoConvEnviar()" style="background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:999px;padding:8px 16px;font-size:.84rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">Enviar</button>'
+    + '</div>'
     + '</div>'
     // o meu registo de sessões
     + '<div style="border-top:1px solid var(--border);padding-top:1rem;margin-bottom:1.2rem">'
@@ -1069,17 +1073,22 @@ function _turmasRenderAluno(wrap) {
     + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.6rem"><i class="ph ph-folder-open" style="color:#4a3f7a"></i> Fichas e materiais</div>'
     + '<div id="turmas-recursos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
     + '</div>'
-    // tirar dúvidas
-    + '<div style="border-top:1px solid var(--border);padding-top:1rem;margin-top:1.2rem">'
-    + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.4rem"><i class="ph ph-question" style="color:#4a3f7a"></i> Tirar dúvidas</div>'
-    + '<div style="font-size:.82rem;color:var(--ink4);margin-bottom:.7rem">Tens uma dúvida? Manda-a ao teu professor. A resposta aparece no teu <strong>Início</strong>, em «Avisos e mensagens».</div>'
-    + '<button onclick="alunoTirarDuvida()" style="background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:999px;padding:8px 18px;font-size:.84rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-paper-plane-tilt"></i> Mandar dúvida ao professor</button>'
-    + '</div>'
     + '</div>';
   _alunoPintaGrupos();
   _alunoPintaMensagens();
   _alunoPintaRegisto();
   _turmasPintaRecursos(false);
+}
+
+/* Aluno escreve na conversa única (mensagem livre = dúvida). */
+function alunoConvEnviar() {
+  var inp = document.getElementById('aluno-conv-txt');
+  if (!inp || !inp.value.trim()) return;
+  var txt = inp.value.trim(); inp.value = '';
+  Turmas.criarDuvida(txt).then(function () {
+    _alunoPintaMensagens();
+    if (typeof notificacoesRender === 'function') notificacoesRender();
+  }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
 }
 
 /* O aluno vê as mensagens do professor (avisos gerais/grupo + feedback a
@@ -1089,42 +1098,33 @@ function _alunoPintaMensagens() {
   if (!el || !Turmas.muralDoAluno) return;
   Turmas.muralDoAluno().then(function (ms) {
     if (!el) return;
-    var respostas = {}, topo = [];
-    ms.forEach(function (m) {
-      if (m.resposta_a) { (respostas[m.resposta_a] = respostas[m.resposta_a] || []).push(m); }
-      else topo.push(m);
-    });
-    var h = '';
-    if (!topo.length) {
-      h += '<div style="font-size:.85rem;color:var(--ink4);margin-bottom:.6rem">Sem mensagens por agora. Tens uma dúvida? Manda-a ao teu professor.</div>';
-    } else {
-      topo.forEach(function (m) {
-        h += _alunoMsgHTML(m, false);
-        (respostas[m.id] || []).forEach(function (r) { h += _alunoMsgHTML(r, true); });
-        if (m.autor_tipo !== 'aluno') {
-          h += '<div style="margin:-.2rem 0 .6rem 0"><a href="#" onclick="alunoResponderTurmas(\'' + m.id + '\');return false" style="font-size:.76rem;font-weight:700;color:#4a3f7a;text-decoration:none">↩ Responder</a></div>';
-        }
-      });
+    // conversa única, por ordem cronológica (mais antiga em cima)
+    ms.sort(function (a, b) { return (a.criado || '') < (b.criado || '') ? -1 : 1; });
+    if (!ms.length) {
+      el.innerHTML = '<div style="font-size:.85rem;color:var(--ink4)">Ainda sem conversa. Escreve a primeira mensagem ou dúvida ao teu professor abaixo.</div>';
+      return;
     }
-    h += '<button onclick="alunoTirarDuvida()" style="width:100%;margin-top:.3rem;background:var(--white);border:1.5px dashed #b9b1d6;color:#4a3f7a;border-radius:12px;padding:.6rem;font-family:Montserrat,sans-serif;font-size:.84rem;font-weight:800;cursor:pointer"><i class="ph ph-question"></i> Mandar dúvida ao professor</button>';
-    el.innerHTML = h;
+    el.innerHTML = '<div style="max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:.35rem;padding:.2rem">'
+      + ms.map(_alunoMsgHTML).join('') + '</div>';
+    // faz scroll para o fim (mensagem mais recente)
+    var box = el.firstChild; if (box) box.scrollTop = box.scrollHeight;
   });
 }
 
-function _alunoMsgHTML(m, ehResp) {
+/* Um balão de conversa: do aluno → direita (verde-claro); do professor →
+   esquerda (lilás). Para avisos a grupo/turma mostra um rótulo discreto. */
+function _alunoMsgHTML(m) {
   var doAluno = m.autor_tipo === 'aluno';
-  var et;
-  if (doAluno) et = m.alcance === 'duvida' ? '❓ A tua dúvida' : '↩ A tua resposta';
-  else if (m.alcance === 'aluno') et = '💬 Para ti';
-  else if (m.alcance === 'grupo') et = '👥 ' + ((m.grupos && m.grupos.nome) || 'Grupo');
-  else et = '📣 Aviso';
-  var cor = doAluno ? '#a8854d' : (m.alcance === 'aluno' ? '#4a3f7a' : '#2e7d52');
-  var fundo = doAluno ? '#faf6ee' : (m.alcance === 'aluno' ? '#f4f2fa' : 'var(--cream)');
-  return '<div style="border-left:3px solid ' + cor + ';background:' + fundo + ';border-radius:0 10px 10px 0;padding:.5rem .8rem;margin-bottom:.45rem' + (ehResp ? ';margin-left:1.2rem' : '') + '">'
-    + '<div style="font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink4);margin-bottom:.15rem">' + _esc(et) + '</div>'
-    + '<div style="font-size:.86rem;color:var(--ink1);line-height:1.5">' + _esc(m.texto) + '</div>'
-    + '<div style="font-size:.7rem;color:var(--ink4);margin-top:.2rem">' + _esc(doAluno ? 'tu' : (m.prof_nome || 'professor')) + '</div>'
-    + '</div>';
+  var rotulo = '';
+  if (!doAluno && m.alcance === 'grupo') rotulo = '👥 ' + ((m.grupos && m.grupos.nome) || 'Grupo') + ' · ';
+  else if (!doAluno && m.alcance === 'geral') rotulo = '📣 Aviso · ';
+  var quem = doAluno ? 'tu' : (rotulo + (m.prof_nome || 'professor'));
+  var fundo = doAluno ? '#e8f5ee' : '#f0edf7';
+  return '<div style="display:flex;justify-content:' + (doAluno ? 'flex-end' : 'flex-start') + '">'
+    + '<div style="max-width:82%;background:' + fundo + ';border-radius:14px;padding:.5rem .8rem">'
+    + '<div style="font-size:.86rem;color:var(--ink1);line-height:1.45">' + _esc(m.texto) + '</div>'
+    + '<div style="font-size:.66rem;color:var(--ink4);margin-top:.2rem">' + _esc(quem) + '</div>'
+    + '</div></div>';
 }
 
 /* Aluno responde a uma mensagem do professor (a partir das Turmas). */
