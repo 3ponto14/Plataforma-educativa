@@ -370,6 +370,15 @@ var Turmas = (function () {
     return sb.from('grupos').delete().eq('id', id);
   }
 
+  /* PROFESSOR: renomear um grupo. */
+  function renomearGrupo(id, novoNome) {
+    var sb = _sb();
+    if (!sb) return Promise.reject(new Error('Sem ligação.'));
+    novoNome = (novoNome || '').trim();
+    if (!novoNome) return Promise.reject(new Error('Escreve um nome.'));
+    return sb.from('grupos').update({ nome: novoNome }).eq('id', id);
+  }
+
   /* PROFESSOR: todos os grupos (espaço partilhado). */
   function todosOsGrupos() {
     var sb = _sb();
@@ -658,7 +667,7 @@ var Turmas = (function () {
     mensagensDoProf: mensagensDoProf, muralDoAluno: muralDoAluno,
     responder: responder, criarDuvida: criarDuvida, respostasDeAlunos: respostasDeAlunos,
     conversaComAluno: conversaComAluno,
-    criarGrupo: criarGrupo, apagarGrupo: apagarGrupo, todosOsGrupos: todosOsGrupos,
+    criarGrupo: criarGrupo, apagarGrupo: apagarGrupo, renomearGrupo: renomearGrupo, todosOsGrupos: todosOsGrupos,
     alunosDoGrupo: alunosDoGrupo, resumoDoGrupo: resumoDoGrupo, adicionarAoGrupo: adicionarAoGrupo, removerDoGrupo: removerDoGrupo,
     entrarPorCodigo: entrarPorCodigo, gruposDoAluno: gruposDoAluno, sairDoGrupo: sairDoGrupo,
     garantirProfDoGrupo: garantirProfDoGrupo, profsDoGrupo: profsDoGrupo,

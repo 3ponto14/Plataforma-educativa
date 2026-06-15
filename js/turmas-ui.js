@@ -181,46 +181,50 @@ function duvidaResponder(msgId, alunoId, nome) {
 /* (Os avisos enviados aparecem no sino 🔔 — ver notificacoes.js. A gestão
    aqui é só das dúvidas dos alunos.) */
 
-/* Escolhe o destinatário (grupo OU aluno) por prompt numerado. Chama
-   cb({grupoId, paraAluno, label}) ou nada se cancelar. Se `prefere` for
-   {grupoId} ou {paraAluno}, salta a pergunta e usa esse destino. */
+/* Escolhe o destinatário (grupo OU aluno) num PAINEL com pesquisa. Chama
+   cb({grupoId|paraAluno, label}) ao escolher. Se `prefere` já tiver
+   destino, salta o painel. Aguenta muitos alunos (pesquisa + lista). */
 function _escolherDestino(prefere, cb) {
   if (prefere && (prefere.grupoId || prefere.paraAluno)) { cb(prefere); return; }
   Turmas.todosOsGrupos().then(function (gs) {
     var alunos = _turmasAlunosCache || [];
     var idx = [];
-    gs.forEach(function (g) { idx.push({ grupoId: g.id, label: 'Grupo: ' + g.nome }); });
-    alunos.forEach(function (a) { idx.push({ paraAluno: a.aluno, label: 'Aluno: ' + _rotuloDoAluno(a) }); });
+    gs.forEach(function (g) { idx.push({ grupoId: g.id, label: g.nome, tipo: 'grupo' }); });
+    alunos.forEach(function (a) { idx.push({ paraAluno: a.aluno, label: _rotuloDoAluno(a), tipo: 'aluno' }); });
     if (!idx.length) { alert('Cria primeiro um grupo ou espera que alunos se registem.'); return; }
 
-    // Poucas opções: lista numerada simples (rápido).
-    if (idx.length <= 12) {
-      var opc = 'Para quem?\n';
-      idx.forEach(function (o, i) { opc += (i + 1) + ' = ' + o.label + '\n'; });
-      var esc = prompt(opc, '1');
-      if (esc === null) return;
-      var n = parseInt(esc, 10);
-      if (!(n >= 1 && n <= idx.length)) { alert('Opção inválida.'); return; }
-      cb(idx[n - 1]);
-      return;
-    }
+    var ov = document.createElement('div');
+    ov.className = 'edu-fm-ov';
+    function fechar() { if (ov.parentNode) ov.parentNode.removeChild(ov); document.removeEventListener('keydown', onKey); }
+    function onKey(e) { if (e.key === 'Escape') fechar(); }
+    ov.innerHTML = '<div class="edu-fm" role="dialog" aria-modal="true">'
+      + '<div class="edu-fm-tit">Para quem?</div>'
+      + '<input id="dest-procura" class="edu-fm-inp" type="search" placeholder="🔍 Procurar grupo ou aluno…" style="margin-bottom:.7rem">'
+      + '<div id="dest-lista" style="max-height:50vh;overflow-y:auto;display:flex;flex-direction:column;gap:.3rem"></div>'
+      + '<div class="edu-fm-acts"><button class="edu-fm-cancel" id="dest-cancel">Cancelar</button></div>'
+      + '</div>';
+    document.body.appendChild(ov);
+    document.addEventListener('keydown', onKey);
+    ov.addEventListener('mousedown', function (e) { if (e.target === ov) fechar(); });
+    document.getElementById('dest-cancel').onclick = fechar;
+    var inp = document.getElementById('dest-procura'); if (inp) inp.focus();
 
-    // Muitas opções: pesquisar por nome/email (ou nome do grupo).
-    var termo = prompt('Para quem? Escreve parte do nome do aluno (ou do grupo), ou o email:\n(' + idx.length + ' destinos disponíveis)');
-    if (termo === null) return;
-    termo = termo.trim().toLowerCase();
-    if (!termo) { alert('Escreve algo para procurar.'); return; }
-    var hits = idx.filter(function (o) { return o.label.toLowerCase().indexOf(termo) !== -1; });
-    if (!hits.length) { alert('Ninguém corresponde a «' + termo + '». Tenta outra vez.'); _escolherDestino(prefere, cb); return; }
-    if (hits.length === 1) { cb(hits[0]); return; }
-    if (hits.length > 20) { alert(hits.length + ' correspondem a «' + termo + '». Escreve mais letras para afinar.'); _escolherDestino(prefere, cb); return; }
-    var opc2 = hits.length + ' correspondem. Escolhe o número:\n';
-    hits.forEach(function (o, i) { opc2 += (i + 1) + ' = ' + o.label + '\n'; });
-    var esc2 = prompt(opc2, '1');
-    if (esc2 === null) return;
-    var m = parseInt(esc2, 10);
-    if (!(m >= 1 && m <= hits.length)) { alert('Opção inválida.'); return; }
-    cb(hits[m - 1]);
+    function pinta(termo) {
+      termo = (termo || '').trim().toLowerCase();
+      var lista = document.getElementById('dest-lista');
+      var hits = !termo ? idx : idx.filter(function (o) { return (o.label || '').toLowerCase().indexOf(termo) !== -1; });
+      if (!hits.length) { lista.innerHTML = '<div style="color:var(--ink4);font-size:.82rem;padding:.5rem">Ninguém corresponde.</div>'; return; }
+      var lim = termo ? hits.length : Math.min(hits.length, 80); // sem pesquisa, limita p/ não pesar
+      lista.innerHTML = hits.slice(0, lim).map(function (o, i) {
+        var ic = o.tipo === 'grupo' ? '👥' : '🎓';
+        return '<button class="dest-opt" data-i="' + idx.indexOf(o) + '" style="text-align:left;background:var(--white);border:1.5px solid var(--border);border-radius:10px;padding:.55rem .8rem;cursor:pointer;font-family:Montserrat,sans-serif;font-size:.86rem;color:var(--ink1)">' + ic + ' ' + _esc(o.label) + '</button>';
+      }).join('') + (hits.length > lim ? '<div style="color:var(--ink4);font-size:.74rem;text-align:center;padding:.3rem">+ ' + (hits.length - lim) + ' — usa a pesquisa</div>' : '');
+      lista.querySelectorAll('.dest-opt').forEach(function (b) {
+        b.onclick = function () { var o = idx[parseInt(b.getAttribute('data-i'), 10)]; fechar(); cb({ grupoId: o.grupoId || null, paraAluno: o.paraAluno || null, label: (o.tipo === 'grupo' ? 'grupo ' : '') + o.label }); };
+      });
+    }
+    if (inp) inp.oninput = function () { pinta(inp.value); };
+    pinta('');
   });
 }
 
@@ -324,7 +328,10 @@ function grupoToggle(id, nome) {
     + '<button onclick="grupoVoltar()" style="display:inline-flex;align-items:center;gap:.4rem;background:none;border:none;color:#2e7d52;font-weight:700;font-size:.85rem;cursor:pointer;font-family:Montserrat,sans-serif;padding:0;margin-bottom:.8rem"><i class="ph ph-arrow-left"></i> Voltar aos grupos</button>'
     + '<div style="display:flex;align-items:center;justify-content:space-between;gap:.6rem;flex-wrap:wrap;margin-bottom:.2rem">'
     + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.5rem;font-weight:700;color:var(--ink1);min-width:0"><i class="ph ph-users-four" style="color:#2e7d52"></i> ' + _esc(nome) + '</div>'
+    + '<span style="display:flex;gap:.35rem;flex-shrink:0">'
+    + '<button class="grp-ic is-reg" onclick="grupoRenomear(\'' + id + '\',\'' + _escAttr(nome) + '\')" title="Renomear grupo" data-tip="Renomear">✏️</button>'
     + '<button class="grp-x" onclick="grupoApagar(\'' + id + '\',\'' + _escAttr(nome) + '\')" title="Apagar grupo">✕</button>'
+    + '</span>'
     + '</div>'
     + '<div id="grupo-det-' + id + '"></div>'
     + '</div>';
@@ -535,6 +542,20 @@ function grupoCriarPrompt() {
       _turmasPintaGrupos();
     });
   }, { botao: 'Criar grupo' });
+}
+
+function grupoRenomear(id, nome) {
+  eduFormModal('Renomear grupo', [
+    { id: 'nome', label: 'Novo nome', valor: nome, obrig: true }
+  ], function (v) {
+    return Turmas.renomearGrupo(id, v.nome).then(function () {
+      if (typeof eduToast === 'function') eduToast('Grupo renomeado.', 'success');
+      _turmasPintaGrupos();
+      // se a página do grupo está aberta, reabre com o novo nome
+      var pag = document.getElementById('turmas-grupo-pagina');
+      if (pag && pag.style.display !== 'none') grupoToggle(id, v.nome);
+    });
+  }, { botao: 'Guardar' });
 }
 
 function grupoApagar(id, nome) {
@@ -1195,13 +1216,15 @@ function alunoResponderTurmas(msgId) {
   Turmas.muralDoAluno().then(function (ms) {
     var m = ms.filter(function (x) { return x.id === msgId; })[0];
     if (!m) return;
-    var txt = prompt('Responder a esta mensagem:');
-    if (txt === null || !txt.trim()) return;
-    Turmas.responder(m, txt).then(function () {
-      if (typeof eduToast === 'function') eduToast('Resposta enviada! 💬', 'success');
-      _alunoPintaMensagens();
-      if (typeof notificacoesRender === 'function') notificacoesRender();
-    }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
+    eduFormModal('Responder', [
+      { id: 'txt', label: 'A tua resposta', tipo: 'textarea', obrig: true }
+    ], function (v) {
+      return Turmas.responder(m, v.txt).then(function () {
+        if (typeof eduToast === 'function') eduToast('Resposta enviada! 💬', 'success');
+        _alunoPintaMensagens();
+        if (typeof notificacoesRender === 'function') notificacoesRender();
+      });
+    }, { botao: 'Enviar' });
   });
 }
 

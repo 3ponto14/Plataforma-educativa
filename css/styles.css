@@ -4104,6 +4104,7 @@ textarea.edu-fm-inp{resize:vertical;min-height:60px}
 .edu-fm-ok{background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:.55rem 1.3rem;font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:800;cursor:pointer}
 .edu-fm-ok:hover{filter:brightness(1.05)}
 .edu-fm-ok:disabled{opacity:.6;cursor:default}
+.dest-opt:hover{border-color:#bfe3c9 !important;background:#e8f5ee !important}
 
 /* ── Grupos das Turmas (vista do professor) ── */
 .grp{border:1.5px solid var(--border);border-radius:12px;margin-bottom:.5rem;overflow:hidden}
