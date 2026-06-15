@@ -10,6 +10,65 @@ function eduToast(msg,type){
   requestAnimationFrame(function(){t.classList.add('show');});
   _toastTimer=setTimeout(function(){t.classList.remove('show');},2800);
 }
+/* ── Modal de formulário reutilizável (substitui os prompt() do browser) ──
+   eduFormModal(titulo, campos, onSubmit, opts)
+     campos: [{ id, label, tipo:'text'|'textarea'|'date'|'select', placeholder,
+                valor, obrig, opcoes:[{value,label}], dica }]
+     onSubmit(valores) — objeto {id: valor}; devolver string = mensagem de erro
+       a mostrar (não fecha); devolver Promise = espera; senão fecha.
+   Acessível: Esc fecha, Enter submete (exceto em textarea), foco no 1.º campo. */
+function eduFormModal(titulo, campos, onSubmit, opts) {
+  opts = opts || {};
+  var ov = document.createElement('div');
+  ov.className = 'edu-fm-ov';
+  function fechar() { if (ov.parentNode) ov.parentNode.removeChild(ov); document.removeEventListener('keydown', onKey); }
+  function onKey(e) {
+    if (e.key === 'Escape') fechar();
+    else if (e.key === 'Enter' && e.target && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); submeter(); }
+  }
+  function _esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function _escA(s) { return _esc(s).replace(/"/g, '&quot;'); }
+  var corpo = campos.map(function (c) {
+    var lab = '<label class="edu-fm-lab">' + _esc(c.label) + (c.obrig ? ' <span style="color:#c0392b">*</span>' : '') + '</label>';
+    var campo;
+    if (c.tipo === 'textarea') campo = '<textarea id="efm-' + c.id + '" class="edu-fm-inp" rows="3" placeholder="' + _escA(c.placeholder || '') + '">' + _esc(c.valor || '') + '</textarea>';
+    else if (c.tipo === 'select') campo = '<select id="efm-' + c.id + '" class="edu-fm-inp">' + (c.opcoes || []).map(function (o) { return '<option value="' + _escA(o.value) + '"' + (o.value === c.valor ? ' selected' : '') + '>' + _esc(o.label) + '</option>'; }).join('') + '</select>';
+    else campo = '<input id="efm-' + c.id + '" class="edu-fm-inp" type="' + (c.tipo || 'text') + '" placeholder="' + _escA(c.placeholder || '') + '" value="' + _escA(c.valor || '') + '">';
+    return '<div class="edu-fm-row">' + lab + campo + (c.dica ? '<div class="edu-fm-dica">' + _esc(c.dica) + '</div>' : '') + '</div>';
+  }).join('');
+  ov.innerHTML = '<div class="edu-fm" role="dialog" aria-modal="true">'
+    + '<div class="edu-fm-tit">' + _esc(titulo) + '</div>'
+    + corpo
+    + '<div class="edu-fm-erro" id="efm-erro" style="display:none"></div>'
+    + '<div class="edu-fm-acts"><button class="edu-fm-cancel" id="efm-cancel">Cancelar</button>'
+    + '<button class="edu-fm-ok" id="efm-ok">' + _esc(opts.botao || 'Guardar') + '</button></div>'
+    + '</div>';
+  document.body.appendChild(ov);
+  document.addEventListener('keydown', onKey);
+  ov.addEventListener('mousedown', function (e) { if (e.target === ov) fechar(); });
+  document.getElementById('efm-cancel').onclick = fechar;
+  var primeiro = document.getElementById('efm-' + campos[0].id); if (primeiro) primeiro.focus();
+  function _erro(msg) { var e = document.getElementById('efm-erro'); if (e) { e.textContent = msg; e.style.display = 'block'; } }
+  function submeter() {
+    var vals = {};
+    for (var i = 0; i < campos.length; i++) {
+      var el = document.getElementById('efm-' + campos[i].id);
+      var v = el ? (el.value || '').trim() : '';
+      if (campos[i].obrig && !v) { _erro('Preenche: ' + campos[i].label); if (el) el.focus(); return; }
+      vals[campos[i].id] = v;
+    }
+    var r = onSubmit(vals);
+    if (typeof r === 'string') { _erro(r); return; }
+    if (r && typeof r.then === 'function') {
+      var ok = document.getElementById('efm-ok'); if (ok) { ok.disabled = true; ok.textContent = 'A guardar…'; }
+      r.then(function () { fechar(); }).catch(function (e) { _erro((e && e.message) || 'Não foi possível guardar.'); if (ok) { ok.disabled = false; ok.textContent = opts.botao || 'Guardar'; } });
+      return;
+    }
+    fechar();
+  }
+  document.getElementById('efm-ok').onclick = submeter;
+}
+
 function htmlToPdfDownload(htmlContent, filename) {
   // Prefix filename with user/role if available (optional, may not be set)
   var _userName = (typeof window !== 'undefined' && (window._n || window.userName)) || null;
