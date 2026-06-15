@@ -4106,6 +4106,17 @@ textarea.edu-fm-inp{resize:vertical;min-height:60px}
 .edu-fm-ok:disabled{opacity:.6;cursor:default}
 .dest-opt:hover{border-color:#bfe3c9 !important;background:#e8f5ee !important}
 
+/* ── «As tuas turmas» no Início do professor ── */
+.pi-prof-resumo-slot{max-width:540px;margin:0 auto 1rem}
+.pi-pr-card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1rem 1.1rem;box-shadow:0 8px 24px rgba(0,0,0,.05)}
+.pi-pr-h{font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.6rem}
+.pi-pr-h i{color:#2e7d52}
+.pi-pr-item{display:flex;align-items:center;gap:.7rem;width:100%;text-align:left;background:none;border:none;border-radius:12px;padding:.6rem .5rem;cursor:pointer;font-family:'Montserrat',sans-serif}
+.pi-pr-item:hover{background:var(--cream)}
+.pi-pr-ic{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;font-size:1.05rem;flex-shrink:0}
+.pi-pr-txt{flex:1;font-size:.88rem;font-weight:700;color:var(--ink1)}
+.pi-pr-seta{color:var(--ink4)}
+
 /* ── Grupos das Turmas (vista do professor) ── */
 .grp{border:1.5px solid var(--border);border-radius:12px;margin-bottom:.5rem;overflow:hidden}
 .grp-head{display:flex;align-items:center;gap:.5rem;padding:.7rem 1rem}

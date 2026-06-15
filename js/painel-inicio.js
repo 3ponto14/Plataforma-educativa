@@ -204,6 +204,7 @@
       + '</div>';
 
     if (prof) {
+      h += '<div id="pi-prof-resumo" class="pi-prof-resumo-slot"></div>';
       h += _profMomentoHTML();
     } else {
       // "O que tenho para fazer" + Desafio. (As mensagens do professor
@@ -224,6 +225,7 @@
     // navegação por secções (portal-nav.js). Aqui só se preenche.
 
     if (prof) {
+      _pintarResumoProf(); // «as tuas turmas hoje» (dúvidas/entregas)
       _pjRender(); // desenha o jogo do dia dentro do painel
       // o Desafio (dos alunos) não faz parte do painel do professor
       var des = document.getElementById('portal-desafio');
@@ -236,8 +238,29 @@
     }
   }
 
-  /* (As mensagens do professor passaram para a secção Turmas —
-     ver turmas-ui.js _alunoPintaMensagens.) */
+  /* Professor: «as tuas turmas hoje» — dúvidas por responder + entregas,
+     com link direto para as Turmas. Só aparece se houver algo. */
+  function _pintarResumoProf() {
+    var box = document.getElementById('pi-prof-resumo');
+    if (!box || typeof Turmas === 'undefined' || !Turmas.respostasDeAlunos) return;
+    Turmas.respostasDeAlunos().then(function (ms) {
+      if (!box) return;
+      var porResp = (ms || []).filter(function (m) { return m.alcance === 'duvida' && !m.respondido; }).length;
+      var itens = '';
+      if (porResp) {
+        itens += '<button class="pi-pr-item" onclick="if(typeof portalIrPara===\'function\')portalIrPara(\'apoio\')">'
+          + '<span class="pi-pr-ic" style="background:#fdf3e7;color:#9a6a1a">⚠️</span>'
+          + '<span class="pi-pr-txt">' + porResp + (porResp === 1 ? ' dúvida por responder' : ' dúvidas por responder') + '</span>'
+          + '<i class="ph ph-arrow-right pi-pr-seta"></i></button>';
+      }
+      // atalho sempre útil: abrir Turmas
+      itens += '<button class="pi-pr-item" onclick="if(typeof portalIrPara===\'function\')portalIrPara(\'apoio\')">'
+        + '<span class="pi-pr-ic" style="background:#e8f5ee;color:#2e7d52">👥</span>'
+        + '<span class="pi-pr-txt">' + (porResp ? 'Ver as turmas' : 'Tudo em dia — ver as turmas') + '</span>'
+        + '<i class="ph ph-arrow-right pi-pr-seta"></i></button>';
+      box.innerHTML = '<div class="pi-pr-card"><div class="pi-pr-h"><i class="ph ph-chalkboard-teacher"></i> As tuas turmas</div>' + itens + '</div>';
+    });
+  }
 
   /* Aluno: "O que tenho para fazer" (tarefas do professor). */
   function _pintarTarefasAluno() {
