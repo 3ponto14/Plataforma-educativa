@@ -400,6 +400,9 @@ function port9GerarExercicios() {
   if (_port9PratModulo(cap, dest)) {
     if (lvlBar) lvlBar.style.display = 'none';
     if (stRow) stRow.style.display = 'none';
+    // modo-tarefa num módulo (Obras, Gramática, Escrita…): estes não dão
+    // nota X/Y, por isso entrega-se como concluído pela barra genérica.
+    if (_port9TarefaAtiva && typeof tarefaEntregaBar === 'function') tarefaEntregaBar(_port9TarefaAtiva, 'Trabalho concluído');
     return;
   }
   if (lvlBar) lvlBar.style.display = '';

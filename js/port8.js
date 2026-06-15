@@ -367,6 +367,7 @@ function port8GerarExercicios() {
   if (_port8PratModulo(cap, dest)) {
     if (lvlBar) lvlBar.style.display = 'none';
     if (stRow) stRow.style.display = 'none';
+    if (_port8TarefaAtiva && typeof tarefaEntregaBar === 'function') tarefaEntregaBar(_port8TarefaAtiva, 'Trabalho concluído');
     return;
   }
   if (lvlBar) lvlBar.style.display = '';
