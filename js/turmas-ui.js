@@ -765,6 +765,21 @@ function tarefaVerQuemFez(id, total) {
         h += '<div style="font-size:.76rem;color:var(--ink4)">Marcaram como feito, mas sem pontuação registada (trabalho sem quiz).</div>';
       }
       box.innerHTML = h;
+      // quem ainda NÃO entregou (acrescenta por baixo)
+      if (Turmas.quemFalta) {
+        Turmas.quemFalta(id).then(function (faltam) {
+          if (!box) return;
+          if (faltam && faltam.length) {
+            var hf = '<div style="border-top:1px dashed var(--border);margin-top:.4rem;padding-top:.4rem;font-weight:700;color:#b8860b;font-size:.8rem">⏳ ' + faltam.length + ' por entregar</div>';
+            hf += faltam.map(function (m) {
+              return '<div style="font-size:.78rem;color:var(--ink3);padding:.15rem 0">• ' + _esc(_rotuloDoAluno(m.aluno) || m.nome_aluno || 'aluno') + '</div>';
+            }).join('');
+            box.innerHTML += hf;
+          } else if (feitos.length) {
+            box.innerHTML += '<div style="border-top:1px dashed var(--border);margin-top:.4rem;padding-top:.4rem;font-size:.78rem;color:#2e7d52;font-weight:700">✓ Entregaram todos!</div>';
+          }
+        });
+      }
     });
   });
 }

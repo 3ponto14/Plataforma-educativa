@@ -201,6 +201,33 @@ var Turmas = (function () {
       .then(function (res) { return res.error ? [] : (res.data || []); });
   }
 
+  /* PROFESSOR: quem ainda NÃO entregou uma tarefa. Calcula a lista de
+     alunos esperados (grupo, aluno único, ou turma toda) e subtrai os que
+     já a fizeram. Devolve [{aluno, nome_aluno}]. */
+  function quemFalta(tarefaId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('tarefas').select('para_aluno, grupo_id').eq('id', tarefaId).maybeSingle().then(function (res) {
+      var t = res.data; if (!t) return [];
+      // lista de esperados
+      var pEsperados;
+      if (t.grupo_id) {
+        pEsperados = sb.from('grupo_membros').select('aluno, nome_aluno').eq('grupo_id', t.grupo_id)
+          .then(function (r) { return r.error ? [] : (r.data || []); });
+      } else if (t.para_aluno) {
+        pEsperados = sb.from('apoio_alunos').select('aluno, nome_aluno').eq('aluno', t.para_aluno)
+          .then(function (r) { return (r.error || !r.data) ? [{ aluno: t.para_aluno, nome_aluno: null }] : (r.data || []); });
+      } else {
+        pEsperados = sb.from('apoio_alunos').select('aluno, nome_aluno')
+          .then(function (r) { return r.error ? [] : (r.data || []); });
+      }
+      return Promise.all([pEsperados, quemFez(tarefaId)]).then(function (a) {
+        var fez = {}; a[1].forEach(function (x) { fez[x.aluno] = true; });
+        return a[0].filter(function (m) { return !fez[m.aluno]; });
+      });
+    });
+  }
+
   /* ALUNO grava o resultado de uma tarefa (nota + detalhe). Fica a MELHOR
      tentativa (mais acertos). Também marca a tarefa como feita. */
   function guardarResultado(tarefaId, certas, total, detalhe) {
@@ -675,7 +702,7 @@ var Turmas = (function () {
     criarSessao: criarSessao, apagarSessao: apagarSessao,
     sessoesDoAluno: sessoesDoAluno, minhasSessoes: minhasSessoes,
     criarTarefa: criarTarefa, apagarTarefa: apagarTarefa, atualizarUrlTarefa: atualizarUrlTarefa,
-    tarefasDoProf: tarefasDoProf, quemFez: quemFez,
+    tarefasDoProf: tarefasDoProf, quemFez: quemFez, quemFalta: quemFalta,
     tarefasDoAluno: tarefasDoAluno, marcarTarefa: marcarTarefa,
     tarefasPendentes: tarefasPendentes, resumoTarefasAluno: resumoTarefasAluno,
     tarefasComResultadoDoAluno: tarefasComResultadoDoAluno,
