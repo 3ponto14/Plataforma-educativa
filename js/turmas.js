@@ -290,6 +290,34 @@ var Turmas = (function () {
     });
   }
 
+  /* PROFESSOR: lista detalhada das tarefas de um aluno — cada tarefa que
+     lhe diz respeito + se a fez + o resultado (nota + detalhe onde
+     errou/acertou). Para a página do aluno. */
+  function tarefasComResultadoDoAluno(alunoId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('tarefas').select('*').order('criado', { ascending: false }).then(function (res) {
+      var ts = (res.error ? [] : (res.data || [])).filter(function (t) {
+        return !t.para_aluno || t.para_aluno === alunoId;
+      });
+      if (!ts.length) return [];
+      var ids = ts.map(function (t) { return t.id; });
+      var pEstado = sb.from('tarefas_estado').select('tarefa_id, feito, feito_em').eq('aluno', alunoId).in('tarefa_id', ids)
+        .then(function (e) { return e.error ? [] : (e.data || []); });
+      var pResult = sb.from('tarefa_resultado').select('*').eq('aluno', alunoId).in('tarefa_id', ids)
+        .then(function (r) { return r.error ? [] : (r.data || []); });
+      return Promise.all([pEstado, pResult]).then(function (r) {
+        var est = {}; r[0].forEach(function (x) { est[x.tarefa_id] = x; });
+        var resu = {}; r[1].forEach(function (x) { resu[x.tarefa_id] = x; });
+        ts.forEach(function (t) {
+          var e = est[t.id]; t.feito = !!(e && e.feito); t.feito_em = e && e.feito_em;
+          t.resultado = resu[t.id] || null;
+        });
+        return ts;
+      });
+    });
+  }
+
   /* Nº de tarefas por fazer do aluno (para o badge no Início). */
   function tarefasPendentes() {
     return tarefasDoAluno().then(function (ts) {
@@ -641,6 +669,7 @@ var Turmas = (function () {
     tarefasDoProf: tarefasDoProf, quemFez: quemFez,
     tarefasDoAluno: tarefasDoAluno, marcarTarefa: marcarTarefa,
     tarefasPendentes: tarefasPendentes, resumoTarefasAluno: resumoTarefasAluno,
+    tarefasComResultadoDoAluno: tarefasComResultadoDoAluno,
     guardarResultado: guardarResultado, resultadosDaTarefa: resultadosDaTarefa,
     autoInscrever: autoInscrever,
     todosOsAlunos: todosOsAlunos,

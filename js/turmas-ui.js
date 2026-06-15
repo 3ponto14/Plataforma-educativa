@@ -861,15 +861,39 @@ function _alunoDetalheHTML(a) {
 
 /* Carrega o resumo de tarefas (feitas/por fazer) no slot do aluno. */
 function _alunoCarregaTarefas(id) {
-  if (!Turmas.resumoTarefasAluno) return;
-  Turmas.resumoTarefasAluno(id).then(function (r) {
-    var box = document.getElementById('al-tarefas-' + id);
+  var box = document.getElementById('al-tarefas-' + id);
+  if (!box) return;
+  var fn = Turmas.tarefasComResultadoDoAluno || null;
+  if (!fn) { if (Turmas.resumoTarefasAluno) Turmas.resumoTarefasAluno(id).then(function (r) { if (box) box.textContent = r.feitas + ' de ' + r.total + ' feitas'; }); return; }
+  fn(id).then(function (ts) {
     if (!box) return;
-    if (!r.total) { box.innerHTML = '<span style="color:var(--ink4)">Sem trabalho atribuído.</span>'; return; }
-    var falta = r.total - r.feitas;
-    box.innerHTML = '<span style="font-weight:800;color:' + (falta === 0 ? '#2e7d52' : (falta > 0 ? '#b8860b' : 'var(--ink2)')) + '">'
-      + r.feitas + ' de ' + r.total + ' feitas</span>'
-      + (falta > 0 ? ' <span style="color:var(--ink4)">· ' + falta + ' por fazer</span>' : ' ✅');
+    if (!ts.length) { box.innerHTML = '<span style="color:var(--ink4)">Sem trabalho atribuído.</span>'; return; }
+    var feitas = ts.filter(function (t) { return t.feito; }).length;
+    var h = '<div style="font-size:.8rem;color:var(--ink4);margin-bottom:.4rem">' + feitas + ' de ' + ts.length + ' feitas</div>';
+    ts.forEach(function (t) {
+      var r = t.resultado;
+      var d = t.feito_em ? (t.feito_em.slice(0, 10)) : '';
+      // cabeçalho da tarefa: título + nota (se houver) ou estado
+      var notaTxt;
+      if (r && r.total) {
+        var pct = Math.round(r.certas / r.total * 100);
+        var cor = pct >= 70 ? '#2e7d52' : (pct >= 50 ? '#b8860b' : '#c0392b');
+        notaTxt = '<span style="font-weight:800;color:' + cor + '">' + r.certas + '/' + r.total + ' · ' + pct + '%</span>';
+      } else if (t.feito) { notaTxt = '<span style="font-weight:700;color:#2e7d52">✓ feito</span>'; }
+      else { notaTxt = '<span style="color:var(--ink4)">por fazer</span>'; }
+      h += '<div style="border:1.5px solid var(--border);border-radius:10px;padding:.5rem .7rem;margin-bottom:.4rem">'
+        + '<div style="display:flex;justify-content:space-between;gap:.5rem;align-items:baseline">'
+        + '<span style="font-weight:700;color:var(--ink1);font-size:.84rem;min-width:0">' + _esc(t.titulo) + '</span>' + notaTxt + '</div>'
+        + (d ? '<div style="font-size:.7rem;color:var(--ink4)">entregue ' + _esc(d) + '</div>' : '');
+      // detalhe: onde errou/acertou
+      if (r && r.detalhe && r.detalhe.length) {
+        h += '<div style="margin-top:.3rem">' + r.detalhe.map(function (q) {
+          return '<div style="font-size:.74rem;color:var(--ink3);line-height:1.4">' + (q.certo ? '✅' : '❌') + ' ' + _esc((q.q || '').slice(0, 90)) + '</div>';
+        }).join('') + '</div>';
+      }
+      h += '</div>';
+    });
+    box.innerHTML = h;
   });
 }
 
@@ -949,19 +973,38 @@ function alunoPagEnviarMsg(id, nome) {
 function _alunoPagPintaReg(id, nome, grupoId) {
   var box = document.getElementById('aluno-pag-reg');
   if (!box || !Turmas.sessoesDoAluno) return;
-  Turmas.sessoesDoAluno(id, grupoId || null).then(function (ss) {
+  var pSess = Turmas.sessoesDoAluno(id, grupoId || null);
+  // trabalhos entregues entram no registo automaticamente (sem duplicar dados)
+  var pTar = Turmas.tarefasComResultadoDoAluno ? Turmas.tarefasComResultadoDoAluno(id) : Promise.resolve([]);
+  Promise.all([pSess, pTar]).then(function (r) {
     if (!box) return;
-    var h = '';
-    if (!ss.length) h += '<div style="font-size:.8rem;color:var(--ink4)">Ainda sem sessões registadas.</div>';
-    else h += ss.map(function (s) {
-      var d = (s.quando || '').slice(0, 10);
-      return '<div style="border:1.5px solid var(--border);border-radius:10px;padding:.5rem .8rem;margin-bottom:.4rem">'
-        + '<div style="font-size:.74rem;font-weight:800;color:#4a3f7a">' + _esc(d) + (s.disciplina ? ' · ' + _esc(s.disciplina) : '') + '</div>'
+    var itens = [];
+    // sessões 1-a-1 escritas pelo professor
+    r[0].forEach(function (s) {
+      itens.push({ tipo: 'sessao', quando: s.quando || '', html:
+        '<div style="font-size:.74rem;font-weight:800;color:#4a3f7a">' + _esc((s.quando || '').slice(0, 10)) + ' · 📓 Sessão' + (s.disciplina ? ' · ' + _esc(s.disciplina) : '') + '</div>'
         + (s.material ? '<div style="font-size:.8rem;color:var(--ink2);margin-top:.15rem">📄 ' + _esc(s.material) + '</div>' : '')
         + (s.notas ? '<div style="font-size:.8rem;color:var(--ink3);margin-top:.15rem">' + _esc(s.notas) + '</div>' : '')
-        + '<div style="font-size:.7rem;color:var(--ink4);margin-top:.15rem">por ' + _esc(s.prof_nome || 'professor') + '</div></div>';
+        + '<div style="font-size:.7rem;color:var(--ink4);margin-top:.15rem">por ' + _esc(s.prof_nome || 'professor') + '</div>' });
+    });
+    // trabalhos entregues (feito) — aparecem como registo automático
+    r[1].filter(function (t) { return t.feito; }).forEach(function (t) {
+      var res = t.resultado, nota = '';
+      if (res && res.total) {
+        var pct = Math.round(res.certas / res.total * 100);
+        var cor = pct >= 70 ? '#2e7d52' : (pct >= 50 ? '#b8860b' : '#c0392b');
+        nota = ' · <span style="font-weight:800;color:' + cor + '">' + res.certas + '/' + res.total + ' (' + pct + '%)</span>';
+      }
+      itens.push({ tipo: 'trabalho', quando: t.feito_em || '', html:
+        '<div style="font-size:.74rem;font-weight:800;color:#2e7d52">' + _esc((t.feito_em || '').slice(0, 10)) + ' · ✅ Trabalho entregue</div>'
+        + '<div style="font-size:.8rem;color:var(--ink2);margin-top:.15rem">' + _esc(t.titulo) + nota + '</div>' });
+    });
+    if (!itens.length) { box.innerHTML = '<div style="font-size:.8rem;color:var(--ink4)">Ainda sem sessões nem trabalhos entregues.</div>'; return; }
+    // ordena por data (mais recente primeiro)
+    itens.sort(function (a, b) { return (a.quando || '') < (b.quando || '') ? 1 : -1; });
+    box.innerHTML = itens.map(function (it) {
+      return '<div style="border:1.5px solid var(--border);border-radius:10px;padding:.5rem .8rem;margin-bottom:.4rem">' + it.html + '</div>';
     }).join('');
-    box.innerHTML = h;
   });
 }
 
