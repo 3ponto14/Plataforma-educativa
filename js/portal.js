@@ -221,9 +221,20 @@ function portalSearch() {
     card.style.display = linksVisiveis ? '' : 'none';
     visiveis += linksVisiveis;
   });
+  // Secção "Preparação para Exames": cartões soltos (.portal-exam-card)
+  document.querySelectorAll('.portal-exam-card').forEach(function(link) {
+    var ano = link.getAttribute('data-ano') || '';
+    var disc = link.getAttribute('data-disc') || '';
+    var hay = ((link.getAttribute('data-search') || '') + ' ' + link.textContent).toLowerCase();
+    var ok = (f.ano === '' || ano === f.ano)
+      && (f.disc === '' || disc === f.disc)
+      && (f.q === '' || hay.indexOf(f.q) !== -1);
+    link.style.display = ok ? '' : 'none';
+    if (ok) visiveis++;
+  });
   document.querySelectorAll('.portal-ciclo').forEach(function(sec) {
     var temCard = false;
-    sec.querySelectorAll('.portal-ano-card').forEach(function(c) {
+    sec.querySelectorAll('.portal-ano-card, .portal-exam-card').forEach(function(c) {
       if (c.style.display !== 'none') temCard = true;
     });
     sec.style.display = temCard ? '' : 'none';
