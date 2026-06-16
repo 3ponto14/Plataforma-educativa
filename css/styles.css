@@ -3612,6 +3612,9 @@ body.dark-mode .portal-card:hover {
 /* ofertas de Português e de exames com identidade própria */
 .portal-ano-link--pt .portal-ano-link-icon { background: #ede8f5; color: #4a3f7a; }
 .portal-ano-link--pt:hover { border-color: #4a3f7a; }
+.portal-ano-link--fq .portal-ano-link-icon { background: #e3eff0; color: #2f7d86; }
+.portal-ano-link--fq:hover { border-color: #2f7d86; }
+.portal-ano-card .portal-ano-link--fq .portal-ano-link-icon { background: #e3eff0; color: #2f7d86; }
 .portal-ano-link--exam { background: #faf9ff; border-style: dashed; border-color: #ddd8f5; }
 .portal-ano-link--exam .portal-ano-link-icon { background: #f0edf7; color: #5c4e8a; }
 .portal-ano-link--exam:hover { border-color: #5c4e8a; background: #f3f0fb; }

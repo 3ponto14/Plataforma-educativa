@@ -26,7 +26,7 @@ function tarefaEntregaBar(tarefaId, oque) {
 function lazyLoad(src, callback) {
   // Páginas de curso vivem num subdiretório (mat7/, …, port9/) e precisam de '../js/'.
   var _p = window.location.pathname;
-  var _inCourseDir = /\/(mat\d+|port\d+)(\/|$)/.test(_p);
+  var _inCourseDir = /\/(mat\d+|port\d+|fq\d+)(\/|$)/.test(_p);
   var _jsPrefix = _inCourseDir ? '../js/' : 'js/';
   var fullSrc = _jsPrefix + src;
   var existing = document.querySelector('script[src="' + fullSrc + '"]');
