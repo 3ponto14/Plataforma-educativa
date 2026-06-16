@@ -119,7 +119,7 @@
     </div>
     <div class="portal-filter-row" id="portal-filter-ano">
       <span class="portal-filter-label">Ano</span>
-      <button class="portal-chip active" data-ano="" onclick="portalSetFilter('ano','',this)">Todos</button>
+      <button class="portal-chip" data-ano="all" onclick="portalSetFilter('ano','all',this)">Todos os anos</button>
       <button class="portal-chip" data-ano="5" onclick="portalSetFilter('ano','5',this)">5.º</button>
       <button class="portal-chip" data-ano="6" onclick="portalSetFilter('ano','6',this)">6.º</button>
       <button class="portal-chip" data-ano="7" onclick="portalSetFilter('ano','7',this)">7.º</button>
@@ -134,9 +134,9 @@
   <!-- Estado inicial: nada selecionado → catálogo escondido e convite a escolher.
        Mostra-se/esconde-se em portalSearch() conforme há (ou não) filtro/pesquisa. -->
   <div class="portal-empty" id="portal-empty">
-    <div class="portal-empty-ic"><i class="ph ph-hand-pointing"></i></div>
-    <div class="portal-empty-title">Escolhe uma opção para ver os cursos</div>
-    <div class="portal-empty-sub">Seleciona <strong>Matemática</strong>, <strong>Português</strong>, <strong>Físico-Química</strong> ou <strong>Exames Nacionais</strong> em cima — ou <strong>Ver todos</strong>. Também podes pesquisar diretamente.</div>
+    <div class="portal-empty-ic"><i class="ph ph-hand-pointing" id="portal-empty-icon"></i></div>
+    <div class="portal-empty-title" id="portal-empty-title">Escolhe uma opção para ver os cursos</div>
+    <div class="portal-empty-sub" id="portal-empty-sub">Seleciona <strong>Matemática</strong>, <strong>Português</strong>, <strong>Físico-Química</strong> ou <strong>Exames Nacionais</strong> em cima — ou <strong>Ver todos</strong>. Também podes pesquisar diretamente.</div>
   </div>
 
   <!-- Catálogo agrupado por ciclo de ensino: um cartão por ano, com tudo o

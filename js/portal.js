@@ -191,6 +191,12 @@ function portalSetFilter(tipo, valor, btn) {
   // Voltar a clicar no filtro já ativo desliga-o (volta ao estado inicial).
   var jaAtivo = (_portalFilters[tipo] === valor) && btn && btn.classList.contains('active');
   _portalFilters[tipo] = jaAtivo ? '' : valor;
+  // mudar de disciplina recomeça a escolha do ano (volta ao passo «Escolhe o ano»)
+  if (tipo === 'disc') {
+    _portalFilters.ano = '';
+    var anoR = document.getElementById('portal-filter-ano');
+    if (anoR) anoR.querySelectorAll('.portal-chip').forEach(function(c) { c.classList.remove('active'); });
+  }
   // ativa só o chip clicado dentro da sua linha
   var rowId = tipo === 'disc' ? 'portal-filter-disc' : 'portal-filter-ano';
   var row = document.getElementById(rowId);
@@ -210,15 +216,37 @@ function portalSearch() {
   var empty = document.getElementById('portal-empty');
   var noRes = document.getElementById('portal-no-results');
   var anoRow = document.getElementById('portal-filter-ano');
+  var eTit = document.getElementById('portal-empty-title');
+  var eSub = document.getElementById('portal-empty-sub');
+  var eIc = document.getElementById('portal-empty-icon');
 
-  // Estado inicial: sem disciplina escolhida E sem pesquisa → convite, catálogo escondido.
-  if (f.disc === '' && f.q === '') {
+  // disciplina concreta (precisa de escolher também o ano); 'todas'/'exames' não.
+  var discReal = f.disc !== '' && f.disc !== 'todas' && f.disc !== 'exames';
+  // 'all' = todos os anos (já escolhido); '' = ainda não escolheu o ano.
+  var anoEscolhido = f.ano !== '';
+
+  function mostraConvite(passo) {
     if (grid) grid.style.display = 'none';
     if (empty) empty.style.display = '';
     if (noRes) noRes.style.display = 'none';
-    if (anoRow) anoRow.style.display = 'none'; // o filtro de ano só faz sentido depois de escolher
-    return;
+    if (passo === 'ano') {
+      if (anoRow) anoRow.style.display = ''; // mostra os botões de ano para escolher
+      if (eIc) eIc.className = 'ph ph-calendar-blank';
+      if (eTit) eTit.textContent = 'Escolhe o ano';
+      if (eSub) eSub.innerHTML = 'Seleciona o <strong>ano</strong> em cima — ou <strong>Todos os anos</strong> para veres toda a oferta da disciplina.';
+    } else {
+      if (anoRow) anoRow.style.display = 'none';
+      if (eIc) eIc.className = 'ph ph-hand-pointing';
+      if (eTit) eTit.textContent = 'Escolhe uma opção para ver os cursos';
+      if (eSub) eSub.innerHTML = 'Seleciona <strong>Matemática</strong>, <strong>Português</strong>, <strong>Físico-Química</strong> ou <strong>Exames Nacionais</strong> em cima — ou <strong>Ver todos</strong>. Também podes pesquisar diretamente.';
+    }
   }
+
+  // Passo 1 — nada escolhido e sem pesquisa.
+  if (f.disc === '' && f.q === '') { mostraConvite('inicial'); return; }
+  // Passo 2 — disciplina escolhida mas ainda sem ano (e sem pesquisa).
+  if (discReal && !anoEscolhido && f.q === '') { mostraConvite('ano'); return; }
+
   if (grid) grid.style.display = '';
   if (empty) empty.style.display = 'none';
   if (anoRow) anoRow.style.display = '';
@@ -235,11 +263,13 @@ function portalSearch() {
     if (f.disc === '' || f.disc === 'todas') return true;
     return disc === f.disc;                       // exames da disciplina escolhida
   }
+  // 'all' e '' equivalem a "todos os anos" na correspondência.
+  function anoMatch(ano) { return f.ano === '' || f.ano === 'all' || ano === f.ano; }
 
   var visiveis = 0;
   document.querySelectorAll('.portal-ano-card').forEach(function(card) {
     var ano = card.getAttribute('data-ano') || '';
-    var okAno = f.ano === '' || ano === f.ano;
+    var okAno = anoMatch(ano);
     var linksVisiveis = 0;
     card.querySelectorAll('.portal-ano-link').forEach(function(link) {
       var disc = link.getAttribute('data-disc') || '';
@@ -256,7 +286,7 @@ function portalSearch() {
     var ano = link.getAttribute('data-ano') || '';
     var disc = link.getAttribute('data-disc') || '';
     var hay = ((link.getAttribute('data-search') || '') + ' ' + link.textContent).toLowerCase();
-    var ok = (f.ano === '' || ano === f.ano) && examesOk(disc) && (f.q === '' || hay.indexOf(f.q) !== -1);
+    var ok = anoMatch(ano) && examesOk(disc) && (f.q === '' || hay.indexOf(f.q) !== -1);
     link.style.display = ok ? '' : 'none';
     if (ok) visiveis++;
   });

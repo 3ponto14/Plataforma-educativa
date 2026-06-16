@@ -4022,6 +4022,9 @@ body.ml-bottom-on #ml-bottombar{display:flex;}
 /* No modo fixo (computador), a secção Cursos alinha a pesquisa e os filtros
    à esquerda (em vez de centrados), para acompanharem a grelha e não ficarem
    a flutuar no meio com branco à direita. */
+/* Com menu fixo (desktop) o catálogo ocupa a largura toda, não os 720px
+   herdados de .portal-section. */
+body.ml-fixed-on #portal-catalogo{max-width:none;margin:0}
 body.ml-fixed-on #sec-cursos{padding:1.5rem 2.5rem 0}
 body.ml-fixed-on #sec-cursos .portal-search{margin-left:0;margin-right:0;max-width:560px}
 body.ml-fixed-on #sec-cursos .portal-filters{margin-left:0;margin-right:0;max-width:none}
