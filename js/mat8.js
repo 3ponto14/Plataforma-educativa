@@ -1081,7 +1081,8 @@ function mat8ProgDownloadPDF() {
    Seleção de vários capítulos; nível; nº de exercícios; PDF ou HTML.
    ════════════════════════════════════════════════════════════════ */
 var _mat8gf = {
-  caps: {},            // { cap: true } selecionados
+  caps: {},
+  sts: {},             // { cap: { stIdx: true } } subtemas por capítulo; vazio = todos            // { cap: true } selecionados
   tipos: { resumo: true, exercicios: true, teste: true, minitestes: false, solucoes: true },
   dif: 'facil',
   qty: 10
@@ -1104,15 +1105,66 @@ function mat8FichasBuildNav() {
     var color = _mat8CapColors[m.n] || '#516860';
     var style = sel ? 'background:' + color + ';border-color:' + color + ';color:#fff' : '';
     h += '<button class="gf-cap-btn' + (sel ? ' active' : '') + '" data-cap="' + m.n + '" onclick="mat8gfToggleCap(' + m.n + ',this)" style="' + style + '">' + m.icon + ' ' + m.label + '</button>';
+    // subtemas do capítulo selecionado (gerar ficha só de um subtema)
+    if (sel) {
+      var _sts = (typeof _mat8Subtemas !== 'undefined' && _mat8Subtemas[m.n]) ? _mat8Subtemas[m.n] : [];
+      if (_sts.length) {
+        var _esc = _mat8gf.sts[m.n] || {};
+        var _alg = _mat8gfStsSel(m.n) !== null;
+        h += '<div style="margin:.15rem 0 .55rem 1.1rem;display:flex;flex-wrap:wrap;gap:.3rem;align-items:center">';
+        h += '<span style="font-size:.66rem;font-weight:800;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-right:.2rem">Subtemas:</span>';
+        h += '<button onclick="mat8gfToggleSt(' + m.n + ',0,this)" style="' + _mat8gfStStyle(!_alg, color) + '">Todos</button>';
+        _sts.forEach(function (st, i) {
+          var on = !!_esc[i + 1];
+          h += '<button onclick="mat8gfToggleSt(' + m.n + ',' + (i + 1) + ',this)" style="' + _mat8gfStStyle(on, color) + '">' + st + '</button>';
+        });
+        h += '</div>';
+      }
+    }
   });
   el.innerHTML = h;
 }
 
+// Subtemas (índices 1..n) escolhidos para um capítulo; null = todos.
+function _mat8gfStsSel(cap) {
+  var sel = _mat8gf.sts[cap];
+  if (!sel) return null;
+  var out = [];
+  Object.keys(sel).forEach(function (i) { if (sel[i]) out.push(parseInt(i)); });
+  return out.length ? out : null;
+}
+
+// Chaves de tema correspondentes aos subtemas escolhidos; null = todos.
+function _mat8gfTemasSel(cap) {
+  var sts = _mat8gfStsSel(cap);
+  if (!sts) return null;
+  var mapa = (typeof _mat8SubtemaTemas !== 'undefined' && _mat8SubtemaTemas[cap]) ? _mat8SubtemaTemas[cap] : {};
+  var temas = [];
+  sts.forEach(function (i) { (mapa[i] || [String(i)]).forEach(function (t) { if (temas.indexOf(t) === -1) temas.push(t); }); });
+  return temas.length ? temas : null;
+}
+
+function _mat8gfStStyle(on, color) {
+  return 'border-radius:999px;padding:3px 11px;font-size:.7rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s;'
+    + (on ? 'background:' + color + ';border:1.5px solid ' + color + ';color:#fff'
+          : 'background:var(--white);border:1.5px solid var(--border);color:var(--ink3)');
+}
+
 function mat8gfToggleCap(cap, btn) {
   _mat8gf.caps[cap] = !_mat8gf.caps[cap];
-  var color = _mat8CapColors[cap] || '#516860';
-  if (_mat8gf.caps[cap]) { btn.classList.add('active'); btn.style.background = color; btn.style.borderColor = color; btn.style.color = '#fff'; }
-  else { btn.classList.remove('active'); btn.style.background = ''; btn.style.borderColor = ''; btn.style.color = ''; }
+  if (!_mat8gf.caps[cap]) delete _mat8gf.sts[cap]; // desmarcar cap limpa os subtemas
+  mat8FichasBuildNav(); // re-render para mostrar/esconder a linha de subtemas
+}
+
+// idx 0 = «Todos» (limpa a seleção); idx 1..n alterna o subtema.
+function mat8gfToggleSt(cap, idx, btn) {
+  if (idx === 0) { delete _mat8gf.sts[cap]; }
+  else {
+    if (!_mat8gf.sts[cap]) _mat8gf.sts[cap] = {};
+    _mat8gf.sts[cap][idx] = !_mat8gf.sts[cap][idx];
+    if (_mat8gfStsSel(cap) === null) delete _mat8gf.sts[cap]; // tudo desmarcado = todos
+  }
+  mat8FichasBuildNav();
 }
 
 function mat8gfToggleType(btn) {
@@ -1167,12 +1219,14 @@ function _mat8gfExBloco(exs, startNum) {
 
 function _mat8gfGenExs(cap, n) {
   var gen = _mat8Gerador(cap); if (!gen) return [];
+  var _temasFiltro = _mat8gfTemasSel(cap); // subtemas escolhidos → temas; null = todos
   var nTemas = _mat8TemasCount[cap] || 1;
   var tipos = ['mc', 'fill', 'vf', 'fill', 'mc', 'mc'];
   var geradas = [], vistos = {};
   // gera até n questões DISTINTAS (evita enunciados repetidos na ficha)
   for (var i = 0, tent = 0; geradas.length < n && tent < n * 6; tent++) {
-    var ex = gen(String((i % nTemas) + 1), tipos[i % tipos.length], _mat8gf.dif);
+    var _tk = _temasFiltro ? _temasFiltro[i % _temasFiltro.length] : String((i % nTemas) + 1);
+    var ex = gen(_tk, tipos[i % tipos.length], _mat8gf.dif);
     i++;
     if (!ex) continue;
     var chave = String(ex.enun || '').replace(/<[^>]+>/g, '').trim();

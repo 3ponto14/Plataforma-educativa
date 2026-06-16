@@ -1022,7 +1022,8 @@ function mat6ProgDownloadPDF() {
    Seleção de vários capítulos; nível; nº de exercícios; PDF ou HTML.
    ════════════════════════════════════════════════════════════════ */
 var _mat6gf = {
-  caps: {},            // { cap: true } selecionados
+  caps: {},
+  sts: {},             // { cap: { stIdx: true } } subtemas por capítulo; vazio = todos            // { cap: true } selecionados
   tipos: { resumo: true, exercicios: true, teste: true, minitestes: false, solucoes: true },
   dif: 'facil',
   qty: 10
@@ -1045,15 +1046,66 @@ function mat6FichasBuildNav() {
     var color = _mat6CapColors[m.n] || '#516860';
     var style = sel ? 'background:' + color + ';border-color:' + color + ';color:#fff' : '';
     h += '<button class="gf-cap-btn' + (sel ? ' active' : '') + '" data-cap="' + m.n + '" onclick="mat6gfToggleCap(' + m.n + ',this)" style="' + style + '">' + m.icon + ' ' + m.label + '</button>';
+    // subtemas do capítulo selecionado (gerar ficha só de um subtema)
+    if (sel) {
+      var _sts = (typeof _mat6Subtemas !== 'undefined' && _mat6Subtemas[m.n]) ? _mat6Subtemas[m.n] : [];
+      if (_sts.length) {
+        var _esc = _mat6gf.sts[m.n] || {};
+        var _alg = _mat6gfStsSel(m.n) !== null;
+        h += '<div style="margin:.15rem 0 .55rem 1.1rem;display:flex;flex-wrap:wrap;gap:.3rem;align-items:center">';
+        h += '<span style="font-size:.66rem;font-weight:800;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-right:.2rem">Subtemas:</span>';
+        h += '<button onclick="mat6gfToggleSt(' + m.n + ',0,this)" style="' + _mat6gfStStyle(!_alg, color) + '">Todos</button>';
+        _sts.forEach(function (st, i) {
+          var on = !!_esc[i + 1];
+          h += '<button onclick="mat6gfToggleSt(' + m.n + ',' + (i + 1) + ',this)" style="' + _mat6gfStStyle(on, color) + '">' + st + '</button>';
+        });
+        h += '</div>';
+      }
+    }
   });
   el.innerHTML = h;
 }
 
+// Subtemas (índices 1..n) escolhidos para um capítulo; null = todos.
+function _mat6gfStsSel(cap) {
+  var sel = _mat6gf.sts[cap];
+  if (!sel) return null;
+  var out = [];
+  Object.keys(sel).forEach(function (i) { if (sel[i]) out.push(parseInt(i)); });
+  return out.length ? out : null;
+}
+
+// Chaves de tema correspondentes aos subtemas escolhidos; null = todos.
+function _mat6gfTemasSel(cap) {
+  var sts = _mat6gfStsSel(cap);
+  if (!sts) return null;
+  var mapa = (typeof _mat6SubtemaTemas !== 'undefined' && _mat6SubtemaTemas[cap]) ? _mat6SubtemaTemas[cap] : {};
+  var temas = [];
+  sts.forEach(function (i) { (mapa[i] || [String(i)]).forEach(function (t) { if (temas.indexOf(t) === -1) temas.push(t); }); });
+  return temas.length ? temas : null;
+}
+
+function _mat6gfStStyle(on, color) {
+  return 'border-radius:999px;padding:3px 11px;font-size:.7rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s;'
+    + (on ? 'background:' + color + ';border:1.5px solid ' + color + ';color:#fff'
+          : 'background:var(--white);border:1.5px solid var(--border);color:var(--ink3)');
+}
+
 function mat6gfToggleCap(cap, btn) {
   _mat6gf.caps[cap] = !_mat6gf.caps[cap];
-  var color = _mat6CapColors[cap] || '#516860';
-  if (_mat6gf.caps[cap]) { btn.classList.add('active'); btn.style.background = color; btn.style.borderColor = color; btn.style.color = '#fff'; }
-  else { btn.classList.remove('active'); btn.style.background = ''; btn.style.borderColor = ''; btn.style.color = ''; }
+  if (!_mat6gf.caps[cap]) delete _mat6gf.sts[cap]; // desmarcar cap limpa os subtemas
+  mat6FichasBuildNav(); // re-render para mostrar/esconder a linha de subtemas
+}
+
+// idx 0 = «Todos» (limpa a seleção); idx 1..n alterna o subtema.
+function mat6gfToggleSt(cap, idx, btn) {
+  if (idx === 0) { delete _mat6gf.sts[cap]; }
+  else {
+    if (!_mat6gf.sts[cap]) _mat6gf.sts[cap] = {};
+    _mat6gf.sts[cap][idx] = !_mat6gf.sts[cap][idx];
+    if (_mat6gfStsSel(cap) === null) delete _mat6gf.sts[cap]; // tudo desmarcado = todos
+  }
+  mat6FichasBuildNav();
 }
 
 function mat6gfToggleType(btn) {
@@ -1108,12 +1160,14 @@ function _mat6gfExBloco(exs, startNum) {
 
 function _mat6gfGenExs(cap, n) {
   var gen = _mat6Gerador(cap); if (!gen) return [];
+  var _temasFiltro = _mat6gfTemasSel(cap); // subtemas escolhidos → temas; null = todos
   var nTemas = _mat6TemasCount[cap] || 1;
   var tipos = ['mc', 'fill', 'vf', 'fill', 'mc', 'mc'];
   var geradas = [], vistos = {};
   // gera até n questões DISTINTAS (evita enunciados repetidos na ficha)
   for (var i = 0, tent = 0; geradas.length < n && tent < n * 6; tent++) {
-    var ex = gen(String((i % nTemas) + 1), tipos[i % tipos.length], _mat6gf.dif);
+    var _tk = _temasFiltro ? _temasFiltro[i % _temasFiltro.length] : String((i % nTemas) + 1);
+    var ex = gen(_tk, tipos[i % tipos.length], _mat6gf.dif);
     i++;
     if (!ex) continue;
     var chave = String(ex.enun || '').replace(/<[^>]+>/g, '').trim();

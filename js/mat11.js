@@ -999,7 +999,8 @@ function mat11ProgDownloadPDF() {
    Seleção de vários capítulos; nível; nº de exercícios; PDF ou HTML.
    ════════════════════════════════════════════════════════════════ */
 var _mat11gf = {
-  caps: {},            // { cap: true } selecionados
+  caps: {},
+  sts: {},             // { cap: { stIdx: true } } subtemas por capítulo; vazio = todos            // { cap: true } selecionados
   tipos: { resumo: true, exercicios: true, teste: true, minitestes: false, solucoes: true },
   dif: 'facil',
   qty: 10
@@ -1022,15 +1023,66 @@ function mat11FichasBuildNav() {
     var color = _mat11CapColors[m.n] || '#516860';
     var style = sel ? 'background:' + color + ';border-color:' + color + ';color:#fff' : '';
     h += '<button class="gf-cap-btn' + (sel ? ' active' : '') + '" data-cap="' + m.n + '" onclick="mat11gfToggleCap(' + m.n + ',this)" style="' + style + '">' + m.icon + ' ' + m.label + '</button>';
+    // subtemas do capítulo selecionado (gerar ficha só de um subtema)
+    if (sel) {
+      var _sts = (typeof _mat11Subtemas !== 'undefined' && _mat11Subtemas[m.n]) ? _mat11Subtemas[m.n] : [];
+      if (_sts.length) {
+        var _esc = _mat11gf.sts[m.n] || {};
+        var _alg = _mat11gfStsSel(m.n) !== null;
+        h += '<div style="margin:.15rem 0 .55rem 1.1rem;display:flex;flex-wrap:wrap;gap:.3rem;align-items:center">';
+        h += '<span style="font-size:.66rem;font-weight:800;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-right:.2rem">Subtemas:</span>';
+        h += '<button onclick="mat11gfToggleSt(' + m.n + ',0,this)" style="' + _mat11gfStStyle(!_alg, color) + '">Todos</button>';
+        _sts.forEach(function (st, i) {
+          var on = !!_esc[i + 1];
+          h += '<button onclick="mat11gfToggleSt(' + m.n + ',' + (i + 1) + ',this)" style="' + _mat11gfStStyle(on, color) + '">' + st + '</button>';
+        });
+        h += '</div>';
+      }
+    }
   });
   el.innerHTML = h;
 }
 
+// Subtemas (índices 1..n) escolhidos para um capítulo; null = todos.
+function _mat11gfStsSel(cap) {
+  var sel = _mat11gf.sts[cap];
+  if (!sel) return null;
+  var out = [];
+  Object.keys(sel).forEach(function (i) { if (sel[i]) out.push(parseInt(i)); });
+  return out.length ? out : null;
+}
+
+// Chaves de tema correspondentes aos subtemas escolhidos; null = todos.
+function _mat11gfTemasSel(cap) {
+  var sts = _mat11gfStsSel(cap);
+  if (!sts) return null;
+  var mapa = (typeof _mat11SubtemaTemas !== 'undefined' && _mat11SubtemaTemas[cap]) ? _mat11SubtemaTemas[cap] : {};
+  var temas = [];
+  sts.forEach(function (i) { (mapa[i] || [String(i)]).forEach(function (t) { if (temas.indexOf(t) === -1) temas.push(t); }); });
+  return temas.length ? temas : null;
+}
+
+function _mat11gfStStyle(on, color) {
+  return 'border-radius:999px;padding:3px 11px;font-size:.7rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s;'
+    + (on ? 'background:' + color + ';border:1.5px solid ' + color + ';color:#fff'
+          : 'background:var(--white);border:1.5px solid var(--border);color:var(--ink3)');
+}
+
 function mat11gfToggleCap(cap, btn) {
   _mat11gf.caps[cap] = !_mat11gf.caps[cap];
-  var color = _mat11CapColors[cap] || '#516860';
-  if (_mat11gf.caps[cap]) { btn.classList.add('active'); btn.style.background = color; btn.style.borderColor = color; btn.style.color = '#fff'; }
-  else { btn.classList.remove('active'); btn.style.background = ''; btn.style.borderColor = ''; btn.style.color = ''; }
+  if (!_mat11gf.caps[cap]) delete _mat11gf.sts[cap]; // desmarcar cap limpa os subtemas
+  mat11FichasBuildNav(); // re-render para mostrar/esconder a linha de subtemas
+}
+
+// idx 0 = «Todos» (limpa a seleção); idx 1..n alterna o subtema.
+function mat11gfToggleSt(cap, idx, btn) {
+  if (idx === 0) { delete _mat11gf.sts[cap]; }
+  else {
+    if (!_mat11gf.sts[cap]) _mat11gf.sts[cap] = {};
+    _mat11gf.sts[cap][idx] = !_mat11gf.sts[cap][idx];
+    if (_mat11gfStsSel(cap) === null) delete _mat11gf.sts[cap]; // tudo desmarcado = todos
+  }
+  mat11FichasBuildNav();
 }
 
 function mat11gfToggleType(btn) {
@@ -1085,12 +1137,14 @@ function _mat11gfExBloco(exs, startNum) {
 
 function _mat11gfGenExs(cap, n) {
   var gen = _mat11Gerador(cap); if (!gen) return [];
+  var _temasFiltro = _mat11gfTemasSel(cap); // subtemas escolhidos → temas; null = todos
   var nTemas = _mat11TemasCount[cap] || 1;
   var tipos = ['mc', 'fill', 'vf', 'fill', 'mc', 'mc'];
   var geradas = [], vistos = {};
   // gera até n questões DISTINTAS (evita enunciados repetidos na ficha)
   for (var i = 0, tent = 0; geradas.length < n && tent < n * 6; tent++) {
-    var ex = gen(String((i % nTemas) + 1), tipos[i % tipos.length], _mat11gf.dif);
+    var _tk = _temasFiltro ? _temasFiltro[i % _temasFiltro.length] : String((i % nTemas) + 1);
+    var ex = gen(_tk, tipos[i % tipos.length], _mat11gf.dif);
     i++;
     if (!ex) continue;
     var chave = String(ex.enun || '').replace(/<[^>]+>/g, '').trim();
