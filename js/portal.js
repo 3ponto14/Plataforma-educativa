@@ -220,8 +220,9 @@ function portalSearch() {
   var eSub = document.getElementById('portal-empty-sub');
   var eIc = document.getElementById('portal-empty-icon');
 
-  // disciplina concreta (precisa de escolher também o ano); 'todas'/'exames' não.
-  var discReal = f.disc !== '' && f.disc !== 'todas' && f.disc !== 'exames';
+  // Qualquer opção escolhida (disciplina, Exames ou Ver todos) exige depois
+  // escolher também o ano antes de mostrar o catálogo.
+  var precisaAno = f.disc !== '';
   // 'all' = todos os anos (já escolhido); '' = ainda não escolheu o ano.
   var anoEscolhido = f.ano !== '';
 
@@ -244,8 +245,8 @@ function portalSearch() {
 
   // Passo 1 — nada escolhido e sem pesquisa.
   if (f.disc === '' && f.q === '') { mostraConvite('inicial'); return; }
-  // Passo 2 — disciplina escolhida mas ainda sem ano (e sem pesquisa).
-  if (discReal && !anoEscolhido && f.q === '') { mostraConvite('ano'); return; }
+  // Passo 2 — opção escolhida mas ainda sem ano (e sem pesquisa).
+  if (precisaAno && !anoEscolhido && f.q === '') { mostraConvite('ano'); return; }
 
   if (grid) grid.style.display = '';
   if (empty) empty.style.display = 'none';
