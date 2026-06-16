@@ -30,56 +30,56 @@ var _fq8Subtemas = {
 // ═══ FLASHCARDS / TEORIA por capítulo (FQ 7.º — base no Universo FQ8) ═══
 var _fq8Cards = {
   1: [
-    { tag: 'Definição', q: 'O que é uma transformação física?', a: 'Uma mudança em que NÃO se formam novas substâncias. Ex.: mudanças de estado (fusão, ebulição), partir um papel. É reversível na maioria dos casos.' },
-    { tag: 'Definição', q: 'O que é uma transformação química (reação química)?', a: 'Uma mudança em que se formam NOVAS substâncias, com propriedades diferentes. Ex.: queimar madeira, enferrujar o ferro, digerir alimentos.' },
-    { tag: 'Definição', q: 'O que são reagentes e produtos?', a: 'Reagentes: as substâncias que reagem (estão no início). Produtos: as novas substâncias formadas (estão no fim). Reagentes → Produtos.' },
-    { tag: 'Notação', q: 'Como se lê uma equação de palavras?', a: 'Reagentes à esquerda, produtos à direita, separados por uma seta (→). Ex.: hidrogénio + oxigénio → água.' },
-    { tag: 'Princípio', q: 'O que diz a Lei de Lavoisier (conservação da massa)?', a: 'Numa reação química, a massa total dos reagentes é igual à massa total dos produtos. "Nada se cria, nada se perde, tudo se transforma."' },
-    { tag: 'Definição', q: 'O que é uma combustão?', a: 'Uma reação química rápida com libertação de energia (calor e luz), entre um combustível e o oxigénio (comburente). Ex.: queimar gás.' },
-    { tag: 'Definição', q: 'O que é uma reação de oxidação (corrosão)?', a: 'Uma reação lenta com o oxigénio. Ex.: o ferro a enferrujar, a prata a escurecer.' },
-    { tag: 'Definição', q: 'O que é um indicador de ácido-base?', a: 'Uma substância que muda de cor conforme o meio é ácido, neutro ou básico. Ex.: tornesol, fenolftaleína, indicador universal.' },
-    { tag: 'Escala', q: 'O que é a escala de pH?', a: 'Mede a acidez/basicidade de 0 a 14. pH < 7 → ácido; pH = 7 → neutro; pH > 7 → básico (alcalino).' },
-    { tag: 'Exemplo', q: 'Exemplos de soluções ácidas e básicas?', a: 'Ácidas: sumo de limão, vinagre, sumo gástrico. Básicas: lixívia, água com sabão, amoníaco. Neutra: água pura.' },
-    { tag: 'Definição', q: 'O que é uma reação ácido-base (neutralização)?', a: 'A reação entre um ácido e uma base, que origina um sal e água, aproximando o pH de 7 (neutro).' },
-    { tag: 'Definição', q: 'O que afeta a velocidade de uma reação?', a: 'A temperatura (maior → mais rápida), a concentração, a superfície de contacto (mais dividido → mais rápido) e os catalisadores.' },
-    { tag: 'Definição', q: 'O que é um catalisador?', a: 'Uma substância que acelera uma reação química sem ser consumida nela. Ex.: enzimas no corpo.' },
-    { tag: 'Regra', q: 'Como reconhecer que houve uma reação química?', a: 'Sinais: mudança de cor, libertação de gás (borbulhas), formação de um sólido (precipitado), libertação ou absorção de energia (calor/luz).' },
-    { tag: 'Exemplo', q: 'Queimar madeira é transformação física ou química?', a: 'Química — formam-se novas substâncias (cinza, fumo, gases) e liberta-se energia. É irreversível.' },
-    { tag: 'Exemplo', q: 'Derreter gelo é transformação física ou química?', a: 'Física — continua a ser água (muda só de estado, de sólido para líquido). É reversível.' }
+    { st: 1, tag: 'Definição', q: 'O que é uma transformação física?', a: 'Uma mudança em que NÃO se formam novas substâncias. Ex.: mudanças de estado (fusão, ebulição), partir um papel. É reversível na maioria dos casos.' },
+    { st: 1, tag: 'Definição', q: 'O que é uma transformação química (reação química)?', a: 'Uma mudança em que se formam NOVAS substâncias, com propriedades diferentes. Ex.: queimar madeira, enferrujar o ferro, digerir alimentos.' },
+    { st: 2, tag: 'Definição', q: 'O que são reagentes e produtos?', a: 'Reagentes: as substâncias que reagem (estão no início). Produtos: as novas substâncias formadas (estão no fim). Reagentes → Produtos.' },
+    { st: 2, tag: 'Notação', q: 'Como se lê uma equação de palavras?', a: 'Reagentes à esquerda, produtos à direita, separados por uma seta (→). Ex.: hidrogénio + oxigénio → água.' },
+    { st: 2, tag: 'Princípio', q: 'O que diz a Lei de Lavoisier (conservação da massa)?', a: 'Numa reação química, a massa total dos reagentes é igual à massa total dos produtos. "Nada se cria, nada se perde, tudo se transforma."' },
+    { st: 3, tag: 'Definição', q: 'O que é uma combustão?', a: 'Uma reação química rápida com libertação de energia (calor e luz), entre um combustível e o oxigénio (comburente). Ex.: queimar gás.' },
+    { st: 3, tag: 'Definição', q: 'O que é uma reação de oxidação (corrosão)?', a: 'Uma reação lenta com o oxigénio. Ex.: o ferro a enferrujar, a prata a escurecer.' },
+    { st: 4, tag: 'Definição', q: 'O que é um indicador de ácido-base?', a: 'Uma substância que muda de cor conforme o meio é ácido, neutro ou básico. Ex.: tornesol, fenolftaleína, indicador universal.' },
+    { st: 4, tag: 'Escala', q: 'O que é a escala de pH?', a: 'Mede a acidez/basicidade de 0 a 14. pH < 7 → ácido; pH = 7 → neutro; pH > 7 → básico (alcalino).' },
+    { st: 4, tag: 'Exemplo', q: 'Exemplos de soluções ácidas e básicas?', a: 'Ácidas: sumo de limão, vinagre, sumo gástrico. Básicas: lixívia, água com sabão, amoníaco. Neutra: água pura.' },
+    { st: 4, tag: 'Definição', q: 'O que é uma reação ácido-base (neutralização)?', a: 'A reação entre um ácido e uma base, que origina um sal e água, aproximando o pH de 7 (neutro).' },
+    { st: 5, tag: 'Definição', q: 'O que afeta a velocidade de uma reação?', a: 'A temperatura (maior → mais rápida), a concentração, a superfície de contacto (mais dividido → mais rápido) e os catalisadores.' },
+    { st: 5, tag: 'Definição', q: 'O que é um catalisador?', a: 'Uma substância que acelera uma reação química sem ser consumida nela. Ex.: enzimas no corpo.' },
+    { st: 1, tag: 'Regra', q: 'Como reconhecer que houve uma reação química?', a: 'Sinais: mudança de cor, libertação de gás (borbulhas), formação de um sólido (precipitado), libertação ou absorção de energia (calor/luz).' },
+    { st: 1, tag: 'Exemplo', q: 'Queimar madeira é transformação física ou química?', a: 'Química — formam-se novas substâncias (cinza, fumo, gases) e liberta-se energia. É irreversível.' },
+    { st: 1, tag: 'Exemplo', q: 'Derreter gelo é transformação física ou química?', a: 'Física — continua a ser água (muda só de estado, de sólido para líquido). É reversível.' }
   ],
   2: [
-    { tag: 'Definição', q: 'Como se produz o som?', a: 'O som é produzido pela vibração de um corpo (a fonte sonora). Ex.: as cordas de uma guitarra, as cordas vocais.' },
-    { tag: 'Definição', q: 'O som é uma onda. O que isso significa?', a: 'O som propaga-se como uma onda de vibração que transmite energia, sem transportar matéria. Precisa de um meio material para se propagar.' },
-    { tag: 'Regra', q: 'O som propaga-se no vácuo?', a: 'NÃO. O som precisa de um meio material (sólido, líquido ou gás). No vácuo (sem matéria) não há som — por isso no espaço não se ouve.' },
-    { tag: 'Comparação', q: 'Em que meio o som se propaga mais depressa?', a: 'Nos sólidos > líquidos > gases. No ar é ~340 m/s; na água é muito mais rápido; nos sólidos mais ainda.' },
-    { tag: 'Dado', q: 'Qual é a velocidade do som no ar?', a: 'Aproximadamente 340 m/s (a ~20 °C). A luz é muito mais rápida — por isso vemos o relâmpago antes de ouvir o trovão.' },
-    { tag: 'Definição', q: 'O que é a frequência de um som?', a: 'O número de vibrações por segundo. Mede-se em hertz (Hz). Determina a ALTURA do som: maior frequência → som mais agudo.' },
-    { tag: 'Definição', q: 'O que distingue um som agudo de um grave?', a: 'A frequência: som agudo = alta frequência (ex.: apito); som grave = baixa frequência (ex.: tambor).' },
-    { tag: 'Definição', q: 'O que é a amplitude de um som?', a: 'Está relacionada com a INTENSIDADE (o "volume"). Maior amplitude → som mais forte (mais alto); menor amplitude → som mais fraco.' },
-    { tag: 'Definição', q: 'O que é o timbre?', a: 'A "qualidade" do som que permite distinguir a mesma nota tocada por instrumentos diferentes (ex.: piano e violino a tocar o mesmo dó).' },
-    { tag: 'Audição', q: 'Que frequências o ouvido humano deteta?', a: 'Aproximadamente de 20 Hz a 20 000 Hz. Abaixo são infrassons; acima são ultrassons (que alguns animais ouvem).' },
-    { tag: 'Definição', q: 'O que é o eco?', a: 'A reflexão do som numa superfície, que volta a ser ouvido depois do som original. Ex.: gritar numa montanha.' },
-    { tag: 'Definição', q: 'O que é o ruído e porque é prejudicial?', a: 'Som intenso e desagradável. A exposição prolongada a ruído elevado pode causar perda de audição e stress.' },
-    { tag: 'Unidade', q: 'Como se mede a intensidade sonora?', a: 'Em decibéis (dB). Acima de ~85 dB de forma prolongada é prejudicial à audição.' },
-    { tag: 'Exemplo', q: 'Porque vemos o relâmpago antes de ouvir o trovão?', a: 'Porque a luz viaja muito mais depressa (~300 000 km/s) que o som (~340 m/s). Quanto maior o intervalo, mais longe foi a trovoada.' },
-    { tag: 'Definição', q: 'O que é o isolamento sonoro?', a: 'Materiais e técnicas que reduzem a passagem do som (ex.: paredes duplas, cortiça, espuma) para diminuir o ruído.' }
+    { st: 1, tag: 'Definição', q: 'Como se produz o som?', a: 'O som é produzido pela vibração de um corpo (a fonte sonora). Ex.: as cordas de uma guitarra, as cordas vocais.' },
+    { st: 1, tag: 'Definição', q: 'O som é uma onda. O que isso significa?', a: 'O som propaga-se como uma onda de vibração que transmite energia, sem transportar matéria. Precisa de um meio material para se propagar.' },
+    { st: 1, tag: 'Regra', q: 'O som propaga-se no vácuo?', a: 'NÃO. O som precisa de um meio material (sólido, líquido ou gás). No vácuo (sem matéria) não há som — por isso no espaço não se ouve.' },
+    { st: 4, tag: 'Comparação', q: 'Em que meio o som se propaga mais depressa?', a: 'Nos sólidos > líquidos > gases. No ar é ~340 m/s; na água é muito mais rápido; nos sólidos mais ainda.' },
+    { st: 4, tag: 'Dado', q: 'Qual é a velocidade do som no ar?', a: 'Aproximadamente 340 m/s (a ~20 °C). A luz é muito mais rápida — por isso vemos o relâmpago antes de ouvir o trovão.' },
+    { st: 2, tag: 'Definição', q: 'O que é a frequência de um som?', a: 'O número de vibrações por segundo. Mede-se em hertz (Hz). Determina a ALTURA do som: maior frequência → som mais agudo.' },
+    { st: 2, tag: 'Definição', q: 'O que distingue um som agudo de um grave?', a: 'A frequência: som agudo = alta frequência (ex.: apito); som grave = baixa frequência (ex.: tambor).' },
+    { st: 2, tag: 'Definição', q: 'O que é a amplitude de um som?', a: 'Está relacionada com a INTENSIDADE (o "volume"). Maior amplitude → som mais forte (mais alto); menor amplitude → som mais fraco.' },
+    { st: 2, tag: 'Definição', q: 'O que é o timbre?', a: 'A "qualidade" do som que permite distinguir a mesma nota tocada por instrumentos diferentes (ex.: piano e violino a tocar o mesmo dó).' },
+    { st: 3, tag: 'Audição', q: 'Que frequências o ouvido humano deteta?', a: 'Aproximadamente de 20 Hz a 20 000 Hz. Abaixo são infrassons; acima são ultrassons (que alguns animais ouvem).' },
+    { st: 1, tag: 'Definição', q: 'O que é o eco?', a: 'A reflexão do som numa superfície, que volta a ser ouvido depois do som original. Ex.: gritar numa montanha.' },
+    { st: 3, tag: 'Definição', q: 'O que é o ruído e porque é prejudicial?', a: 'Som intenso e desagradável. A exposição prolongada a ruído elevado pode causar perda de audição e stress.' },
+    { st: 4, tag: 'Unidade', q: 'Como se mede a intensidade sonora?', a: 'Em decibéis (dB). Acima de ~85 dB de forma prolongada é prejudicial à audição.' },
+    { st: 3, tag: 'Exemplo', q: 'Porque vemos o relâmpago antes de ouvir o trovão?', a: 'Porque a luz viaja muito mais depressa (~300 000 km/s) que o som (~340 m/s). Quanto maior o intervalo, mais longe foi a trovoada.' },
+    { st: 3, tag: 'Definição', q: 'O que é o isolamento sonoro?', a: 'Materiais e técnicas que reduzem a passagem do som (ex.: paredes duplas, cortiça, espuma) para diminuir o ruído.' }
   ],
   3: [
-    { tag: 'Definição', q: 'Como se propaga a luz?', a: 'A luz propaga-se em LINHA RETA, em todas as direções, e — ao contrário do som — também se propaga no vácuo. É muito rápida (~300 000 km/s).' },
-    { tag: 'Definição', q: 'Quais são as fontes de luz?', a: 'Primárias: têm luz própria (Sol, lâmpada, vela). Secundárias: refletem a luz que recebem (Lua, espelho, a maioria dos objetos).' },
-    { tag: 'Definição', q: 'O que são corpos transparentes, translúcidos e opacos?', a: 'Transparentes: deixam passar a luz e ver através (vidro). Translúcidos: deixam passar luz mas não ver bem (papel vegetal). Opacos: não deixam passar (madeira).' },
-    { tag: 'Definição', q: 'O que é a reflexão da luz?', a: 'Quando a luz incide numa superfície e "volta para trás". É o que acontece nos espelhos e nos corpos que vemos.' },
-    { tag: 'Lei', q: 'O que diz a lei da reflexão?', a: 'O ângulo de incidência é igual ao ângulo de reflexão (medidos em relação à normal — a perpendicular à superfície).' },
-    { tag: 'Definição', q: 'Como é a imagem num espelho plano?', a: 'Virtual, direita (não invertida de cima para baixo), do mesmo tamanho e à mesma distância atrás do espelho. Troca esquerda↔direita.' },
-    { tag: 'Definição', q: 'O que é a refração da luz?', a: 'O desvio (mudança de direção) que a luz sofre ao passar de um meio para outro (ex.: do ar para a água). É por isso que uma palhinha parece "partida" num copo.' },
-    { tag: 'Definição', q: 'O que é uma lente convergente?', a: 'Uma lente mais grossa no centro que concentra os raios num ponto (foco). Usada em lupas e na correção da hipermetropia.' },
-    { tag: 'Definição', q: 'O que é uma lente divergente?', a: 'Uma lente mais fina no centro que espalha os raios. Usada na correção da miopia.' },
-    { tag: 'Definição', q: 'O que é a dispersão da luz?', a: 'A separação da luz branca nas suas cores (espetro), por exemplo num prisma ou no arco-íris.' },
-    { tag: 'Definição', q: 'Quais são as cores do espetro visível?', a: 'Vermelho, laranja, amarelo, verde, azul, anil e violeta — como no arco-íris.' },
-    { tag: 'Definição', q: 'Porque é que um objeto tem uma certa cor?', a: 'Porque reflete a luz dessa cor e absorve as outras. Um objeto vermelho reflete o vermelho; um objeto preto absorve quase toda a luz.' },
-    { tag: 'Comparação', q: 'A luz é mais rápida que o som?', a: 'Muito mais. A luz viaja a ~300 000 km/s; o som no ar a ~340 m/s. Por isso vemos antes de ouvir.' },
-    { tag: 'Aplicação', q: 'Como funciona a visão?', a: 'A luz entra no olho, é focada pelo cristalino (uma lente) na retina, e o nervo ótico leva a informação ao cérebro.' },
-    { tag: 'Exemplo', q: 'Porque vemos a Lua se ela não tem luz própria?', a: 'Porque a Lua é uma fonte secundária: reflete a luz do Sol que incide nela.' }
+    { st: 1, tag: 'Definição', q: 'Como se propaga a luz?', a: 'A luz propaga-se em LINHA RETA, em todas as direções, e — ao contrário do som — também se propaga no vácuo. É muito rápida (~300 000 km/s).' },
+    { st: 1, tag: 'Definição', q: 'Quais são as fontes de luz?', a: 'Primárias: têm luz própria (Sol, lâmpada, vela). Secundárias: refletem a luz que recebem (Lua, espelho, a maioria dos objetos).' },
+    { st: 1, tag: 'Definição', q: 'O que são corpos transparentes, translúcidos e opacos?', a: 'Transparentes: deixam passar a luz e ver através (vidro). Translúcidos: deixam passar luz mas não ver bem (papel vegetal). Opacos: não deixam passar (madeira).' },
+    { st: 2, tag: 'Definição', q: 'O que é a reflexão da luz?', a: 'Quando a luz incide numa superfície e "volta para trás". É o que acontece nos espelhos e nos corpos que vemos.' },
+    { st: 2, tag: 'Lei', q: 'O que diz a lei da reflexão?', a: 'O ângulo de incidência é igual ao ângulo de reflexão (medidos em relação à normal — a perpendicular à superfície).' },
+    { st: 2, tag: 'Definição', q: 'Como é a imagem num espelho plano?', a: 'Virtual, direita (não invertida de cima para baixo), do mesmo tamanho e à mesma distância atrás do espelho. Troca esquerda↔direita.' },
+    { st: 3, tag: 'Definição', q: 'O que é a refração da luz?', a: 'O desvio (mudança de direção) que a luz sofre ao passar de um meio para outro (ex.: do ar para a água). É por isso que uma palhinha parece "partida" num copo.' },
+    { st: 3, tag: 'Definição', q: 'O que é uma lente convergente?', a: 'Uma lente mais grossa no centro que concentra os raios num ponto (foco). Usada em lupas e na correção da hipermetropia.' },
+    { st: 3, tag: 'Definição', q: 'O que é uma lente divergente?', a: 'Uma lente mais fina no centro que espalha os raios. Usada na correção da miopia.' },
+    { st: 4, tag: 'Definição', q: 'O que é a dispersão da luz?', a: 'A separação da luz branca nas suas cores (espetro), por exemplo num prisma ou no arco-íris.' },
+    { st: 4, tag: 'Definição', q: 'Quais são as cores do espetro visível?', a: 'Vermelho, laranja, amarelo, verde, azul, anil e violeta — como no arco-íris.' },
+    { st: 1, tag: 'Definição', q: 'Porque é que um objeto tem uma certa cor?', a: 'Porque reflete a luz dessa cor e absorve as outras. Um objeto vermelho reflete o vermelho; um objeto preto absorve quase toda a luz.' },
+    { st: 1, tag: 'Comparação', q: 'A luz é mais rápida que o som?', a: 'Muito mais. A luz viaja a ~300 000 km/s; o som no ar a ~340 m/s. Por isso vemos antes de ouvir.' },
+    { st: 1, tag: 'Aplicação', q: 'Como funciona a visão?', a: 'A luz entra no olho, é focada pelo cristalino (uma lente) na retina, e o nervo ótico leva a informação ao cérebro.' },
+    { st: 1, tag: 'Exemplo', q: 'Porque vemos a Lua se ela não tem luz própria?', a: 'Porque a Lua é uma fonte secundária: reflete a luz do Sol que incide nela.' }
   ]
 };
 
@@ -161,9 +161,11 @@ function fq8ResumoShowSts(cap) {
   if (!stRow) return;
   var sts = _fq8Subtemas[cap] || [];
   if (!sts.length) { stRow.style.display = 'none'; return; }
+  var _stSel = _fq8Sel['resumo-st'] || 0;
   var h = '<div class="resumo-st-label">Subtema</div>';
+  h += '<button class="resumo-st-btn' + (_stSel === 0 ? ' active' : '') + '" data-st="0" onclick="fq8ResumoSelectSt(this,' + cap + ',0)">Todos</button>';
   sts.forEach(function(st, i) {
-    var isActive = (_fq8Sel['resumo-st'] || 0) === (i + 1);
+    var isActive = _stSel === (i + 1);
     h += '<button class="resumo-st-btn' + (isActive ? ' active' : '') + '" data-st="' + (i + 1) + '" onclick="fq8ResumoSelectSt(this,' + cap + ',' + (i + 1) + ')">' + st + '</button>';
   });
   stRow.innerHTML = h;
@@ -200,16 +202,8 @@ function fq8RenderResumoInline() {
 
   // Filtrar por subtema, se selecionado
   var stIdx = _fq8Sel['resumo-st'] || 0;
-  var cards = allCards;
-  if (stIdx > 0 && _fq8Subtemas[cap]) {
-    var stLabel = (_fq8Subtemas[cap][stIdx - 1] || '').toLowerCase();
-    var stWords = stLabel.replace(/[^a-záéíóúâêîôûãõç ]/g, '').split(' ').filter(function(w){ return w.length > 3; });
-    var filtered = allCards.filter(function(card) {
-      var hay = ((card.tag || '') + ' ' + (card.q || '')).toLowerCase();
-      return stWords.some(function(w){ return hay.indexOf(w) !== -1; });
-    });
-    if (filtered.length > 0) cards = filtered;
-  }
+  // Filtro por subtema usa o campo st de cada flashcard (fiável); 0 = Todos.
+  var cards = (stIdx > 0) ? allCards.filter(function(card){ return card.st === stIdx; }) : allCards;
 
   if (!cards.length) {
     dest.innerHTML = '<div class="resumo-empty">'

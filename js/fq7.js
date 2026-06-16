@@ -32,75 +32,75 @@ var _fq7Subtemas = {
 // ═══ FLASHCARDS / TEORIA por capítulo (FQ 7.º — base no Universo FQ7) ═══
 var _fq7Cards = {
   1: [
-    { tag: 'Definição', q: 'O que é o Universo?', a: 'É tudo o que existe: toda a matéria, energia, espaço e tempo. Inclui todos os astros — estrelas, planetas, galáxias — e o espaço entre eles.' },
-    { tag: 'Definição', q: 'O que é um astro?', a: 'Qualquer corpo celeste no Universo: estrelas (como o Sol), planetas, satélites (como a Lua), asteroides, cometas e meteoroides.' },
-    { tag: 'Definição', q: 'O que é uma estrela?', a: 'Um astro com luz própria, formado por gases muito quentes onde ocorrem reações nucleares. O Sol é a estrela mais próxima da Terra.' },
-    { tag: 'Definição', q: 'O que é uma galáxia?', a: 'Um enorme conjunto de estrelas, gases e poeiras que se movem em conjunto em torno de um centro comum. A nossa galáxia é a Via Láctea.' },
-    { tag: 'Definição', q: 'O que é a Via Láctea?', a: 'A galáxia onde está o sistema solar. Tem milhares de milhões de estrelas, gases e poeiras a rodar em torno do seu centro. O Sol NÃO está no centro.' },
-    { tag: 'Hierarquia', q: 'Ordem de tamanho: planeta, galáxia, sistema solar, Universo?', a: 'Do menor para o maior: planeta < sistema solar < galáxia < grupo de galáxias < Universo.' },
-    { tag: 'Definição', q: 'O que é o sistema solar?', a: 'O conjunto formado pelo Sol e por tudo o que orbita à sua volta: 8 planetas, planetas anões, satélites, asteroides e cometas.' },
-    { tag: 'Definição', q: 'Quais são os 8 planetas do sistema solar (por ordem do Sol)?', a: 'Mercúrio, Vénus, Terra, Marte, Júpiter, Saturno, Úrano e Neptuno. (Os 4 primeiros são rochosos; os 4 últimos, gasosos gigantes.)' },
-    { tag: 'Definição', q: 'O que é um planeta anão? Dá um exemplo.', a: 'Um astro que orbita o Sol e tem forma quase esférica, mas não "limpou" a sua órbita de outros corpos. Ex.: Plutão.' },
-    { tag: 'Distâncias', q: 'Que unidade se usa para distâncias dentro do sistema solar?', a: 'A unidade astronómica (UA): é a distância média da Terra ao Sol, cerca de 150 milhões de km.' },
-    { tag: 'Distâncias', q: 'O que é o ano-luz?', a: 'A distância que a luz percorre num ano (≈ 9,5 milhões de milhões de km). Usa-se para distâncias muito grandes, entre estrelas e galáxias. É uma distância, NÃO um tempo.' },
-    { tag: 'Modelo', q: 'O que é o modelo geocêntrico?', a: 'O modelo antigo que punha a Terra imóvel no centro do Universo, com o Sol e os planetas a girar à sua volta. Foi posto em causa por Galileu.' },
-    { tag: 'Modelo', q: 'O que é o modelo heliocêntrico?', a: 'O modelo atual: o Sol está no centro do sistema solar e a Terra e os outros planetas giram à sua volta. Defendido por Copérnico e apoiado por Galileu.' },
-    { tag: 'Instrumentos', q: 'Para que serve um telescópio?', a: 'Para observar astros distantes e de grandes dimensões (planetas, estrelas, galáxias). Galileu foi o primeiro a usá-lo em astronomia.' },
-    { tag: 'Instrumentos', q: 'O que é o telescópio Hubble?', a: 'Um telescópio espacial, em órbita da Terra, lançado em 1990 pela agência espacial americana (NASA). Tem o nome do cientista Edwin Hubble.' },
-    { tag: 'Curiosidade', q: 'O Universo está em expansão. Quem propôs essa ideia?', a: 'Edwin Hubble. As galáxias afastam-se umas das outras — o Universo está a expandir-se.' }
+    { st: 1, tag: 'Definição', q: 'O que é o Universo?', a: 'É tudo o que existe: toda a matéria, energia, espaço e tempo. Inclui todos os astros — estrelas, planetas, galáxias — e o espaço entre eles.' },
+    { st: 1, tag: 'Definição', q: 'O que é um astro?', a: 'Qualquer corpo celeste no Universo: estrelas (como o Sol), planetas, satélites (como a Lua), asteroides, cometas e meteoroides.' },
+    { st: 1, tag: 'Definição', q: 'O que é uma estrela?', a: 'Um astro com luz própria, formado por gases muito quentes onde ocorrem reações nucleares. O Sol é a estrela mais próxima da Terra.' },
+    { st: 1, tag: 'Definição', q: 'O que é uma galáxia?', a: 'Um enorme conjunto de estrelas, gases e poeiras que se movem em conjunto em torno de um centro comum. A nossa galáxia é a Via Láctea.' },
+    { st: 1, tag: 'Definição', q: 'O que é a Via Láctea?', a: 'A galáxia onde está o sistema solar. Tem milhares de milhões de estrelas, gases e poeiras a rodar em torno do seu centro. O Sol NÃO está no centro.' },
+    { st: 1, tag: 'Hierarquia', q: 'Ordem de tamanho: planeta, galáxia, sistema solar, Universo?', a: 'Do menor para o maior: planeta < sistema solar < galáxia < grupo de galáxias < Universo.' },
+    { st: 3, tag: 'Definição', q: 'O que é o sistema solar?', a: 'O conjunto formado pelo Sol e por tudo o que orbita à sua volta: 8 planetas, planetas anões, satélites, asteroides e cometas.' },
+    { st: 3, tag: 'Definição', q: 'Quais são os 8 planetas do sistema solar (por ordem do Sol)?', a: 'Mercúrio, Vénus, Terra, Marte, Júpiter, Saturno, Úrano e Neptuno. (Os 4 primeiros são rochosos; os 4 últimos, gasosos gigantes.)' },
+    { st: 3, tag: 'Definição', q: 'O que é um planeta anão? Dá um exemplo.', a: 'Um astro que orbita o Sol e tem forma quase esférica, mas não "limpou" a sua órbita de outros corpos. Ex.: Plutão.' },
+    { st: 2, tag: 'Distâncias', q: 'Que unidade se usa para distâncias dentro do sistema solar?', a: 'A unidade astronómica (UA): é a distância média da Terra ao Sol, cerca de 150 milhões de km.' },
+    { st: 2, tag: 'Distâncias', q: 'O que é o ano-luz?', a: 'A distância que a luz percorre num ano (≈ 9,5 milhões de milhões de km). Usa-se para distâncias muito grandes, entre estrelas e galáxias. É uma distância, NÃO um tempo.' },
+    { st: 4, tag: 'Modelo', q: 'O que é o modelo geocêntrico?', a: 'O modelo antigo que punha a Terra imóvel no centro do Universo, com o Sol e os planetas a girar à sua volta. Foi posto em causa por Galileu.' },
+    { st: 4, tag: 'Modelo', q: 'O que é o modelo heliocêntrico?', a: 'O modelo atual: o Sol está no centro do sistema solar e a Terra e os outros planetas giram à sua volta. Defendido por Copérnico e apoiado por Galileu.' },
+    { st: 4, tag: 'Instrumentos', q: 'Para que serve um telescópio?', a: 'Para observar astros distantes e de grandes dimensões (planetas, estrelas, galáxias). Galileu foi o primeiro a usá-lo em astronomia.' },
+    { st: 4, tag: 'Instrumentos', q: 'O que é o telescópio Hubble?', a: 'Um telescópio espacial, em órbita da Terra, lançado em 1990 pela agência espacial americana (NASA). Tem o nome do cientista Edwin Hubble.' },
+    { st: 1, tag: 'Curiosidade', q: 'O Universo está em expansão. Quem propôs essa ideia?', a: 'Edwin Hubble. As galáxias afastam-se umas das outras — o Universo está a expandir-se.' }
   ],
   2: [
-    { tag: 'Definição', q: 'O que é o movimento de rotação da Terra?', a: 'É o movimento da Terra em torno do seu próprio eixo. Demora ~24 horas e é responsável pela sucessão dos dias e das noites. Faz-se de oeste para este.' },
-    { tag: 'Definição', q: 'O que é o movimento de translação da Terra?', a: 'É o movimento da Terra à volta do Sol. Demora ~365 dias (um ano). Junto com a inclinação do eixo, dá origem às estações do ano.' },
-    { tag: 'Regra', q: 'O que causa o dia e a noite?', a: 'A ROTAÇÃO da Terra. Como a Terra roda, cada zona fica virada para o Sol (dia) ou para o lado oposto (noite).' },
-    { tag: 'Regra', q: 'O que causa as estações do ano?', a: 'A TRANSLAÇÃO da Terra à volta do Sol, combinada com a inclinação do eixo da Terra. Não é a distância ao Sol.' },
-    { tag: 'Definição', q: 'O que são as fases da Lua?', a: 'São os diferentes aspetos da parte iluminada da Lua vista da Terra: Lua Nova, Quarto Crescente, Lua Cheia e Quarto Minguante. Repetem-se em ~29,5 dias.' },
-    { tag: 'Definição', q: 'Quanto tempo demora a Lua a dar uma volta à Terra?', a: 'Cerca de 27,3 dias. O período de rotação da Lua é igual, por isso vemos sempre a mesma face.' },
-    { tag: 'Propriedade', q: 'Porque vemos sempre a mesma face da Lua?', a: 'Porque a Lua demora o MESMO tempo a rodar sobre si própria e a dar uma volta à Terra (~27,3 dias). Da Terra só vemos metade da superfície da Lua.' },
-    { tag: 'Definição', q: 'Quando ocorre um eclipse solar?', a: 'Em fase de Lua Nova, quando a Lua se coloca ENTRE o Sol e a Terra, fazendo sombra na Terra.' },
-    { tag: 'Definição', q: 'Quando ocorre um eclipse lunar?', a: 'Em fase de Lua Cheia, quando a Terra se coloca ENTRE o Sol e a Lua, fazendo sombra na Lua.' },
-    { tag: 'Definição', q: 'O que é uma força?', a: 'Uma ação que pode alterar o movimento de um corpo ou deformá-lo. Mede-se em newton (N) e representa-se por um vetor (seta).' },
-    { tag: 'Definição', q: 'O que é a força gravítica?', a: 'A força de atração entre corpos com massa. A Terra atrai os corpos para o seu centro; é o que nos mantém no chão e mantém a Lua e os satélites em órbita.' },
-    { tag: 'Regra', q: 'De que depende a força gravítica?', a: 'É MAIOR quanto maior for a massa dos corpos, e MENOR quanto maior for a distância entre eles.' },
-    { tag: 'Definição', q: 'Qual é a diferença entre massa e peso?', a: 'Massa (kg) é a quantidade de matéria, é sempre igual. Peso (N) é a força gravítica sobre o corpo e varia conforme o planeta (na Lua pesamos menos).' },
-    { tag: 'Curiosidade', q: 'O que mantém um satélite em órbita da Terra?', a: 'A força gravítica que a Terra exerce sobre ele. Sem essa força, o satélite seguiria em linha reta para longe.' },
-    { tag: 'Notação', q: 'Como se representa uma força num desenho?', a: 'Por um vetor (seta): o comprimento indica a intensidade (em N, conforme a escala); a direção e o sentido indicam para onde a força atua.' },
-    { tag: 'Exemplo', q: 'Em que sentido se faz a rotação da Terra?', a: 'De oeste para este — por isso o Sol parece "nascer" a este e "pôr-se" a oeste.' }
+    { st: 1, tag: 'Definição', q: 'O que é o movimento de rotação da Terra?', a: 'É o movimento da Terra em torno do seu próprio eixo. Demora ~24 horas e é responsável pela sucessão dos dias e das noites. Faz-se de oeste para este.' },
+    { st: 1, tag: 'Definição', q: 'O que é o movimento de translação da Terra?', a: 'É o movimento da Terra à volta do Sol. Demora ~365 dias (um ano). Junto com a inclinação do eixo, dá origem às estações do ano.' },
+    { st: 1, tag: 'Regra', q: 'O que causa o dia e a noite?', a: 'A ROTAÇÃO da Terra. Como a Terra roda, cada zona fica virada para o Sol (dia) ou para o lado oposto (noite).' },
+    { st: 1, tag: 'Regra', q: 'O que causa as estações do ano?', a: 'A TRANSLAÇÃO da Terra à volta do Sol, combinada com a inclinação do eixo da Terra. Não é a distância ao Sol.' },
+    { st: 2, tag: 'Definição', q: 'O que são as fases da Lua?', a: 'São os diferentes aspetos da parte iluminada da Lua vista da Terra: Lua Nova, Quarto Crescente, Lua Cheia e Quarto Minguante. Repetem-se em ~29,5 dias.' },
+    { st: 2, tag: 'Definição', q: 'Quanto tempo demora a Lua a dar uma volta à Terra?', a: 'Cerca de 27,3 dias. O período de rotação da Lua é igual, por isso vemos sempre a mesma face.' },
+    { st: 2, tag: 'Propriedade', q: 'Porque vemos sempre a mesma face da Lua?', a: 'Porque a Lua demora o MESMO tempo a rodar sobre si própria e a dar uma volta à Terra (~27,3 dias). Da Terra só vemos metade da superfície da Lua.' },
+    { st: 2, tag: 'Definição', q: 'Quando ocorre um eclipse solar?', a: 'Em fase de Lua Nova, quando a Lua se coloca ENTRE o Sol e a Terra, fazendo sombra na Terra.' },
+    { st: 2, tag: 'Definição', q: 'Quando ocorre um eclipse lunar?', a: 'Em fase de Lua Cheia, quando a Terra se coloca ENTRE o Sol e a Lua, fazendo sombra na Lua.' },
+    { st: 3, tag: 'Definição', q: 'O que é uma força?', a: 'Uma ação que pode alterar o movimento de um corpo ou deformá-lo. Mede-se em newton (N) e representa-se por um vetor (seta).' },
+    { st: 3, tag: 'Definição', q: 'O que é a força gravítica?', a: 'A força de atração entre corpos com massa. A Terra atrai os corpos para o seu centro; é o que nos mantém no chão e mantém a Lua e os satélites em órbita.' },
+    { st: 3, tag: 'Regra', q: 'De que depende a força gravítica?', a: 'É MAIOR quanto maior for a massa dos corpos, e MENOR quanto maior for a distância entre eles.' },
+    { st: 3, tag: 'Definição', q: 'Qual é a diferença entre massa e peso?', a: 'Massa (kg) é a quantidade de matéria, é sempre igual. Peso (N) é a força gravítica sobre o corpo e varia conforme o planeta (na Lua pesamos menos).' },
+    { st: 3, tag: 'Curiosidade', q: 'O que mantém um satélite em órbita da Terra?', a: 'A força gravítica que a Terra exerce sobre ele. Sem essa força, o satélite seguiria em linha reta para longe.' },
+    { st: 3, tag: 'Notação', q: 'Como se representa uma força num desenho?', a: 'Por um vetor (seta): o comprimento indica a intensidade (em N, conforme a escala); a direção e o sentido indicam para onde a força atua.' },
+    { st: 1, tag: 'Exemplo', q: 'Em que sentido se faz a rotação da Terra?', a: 'De oeste para este — por isso o Sol parece "nascer" a este e "pôr-se" a oeste.' }
   ],
   3: [
-    { tag: 'Definição', q: 'O que é uma substância pura?', a: 'Um material formado por um único tipo de constituinte, com propriedades fixas. Ex.: água destilada, ouro puro, oxigénio.' },
-    { tag: 'Definição', q: 'O que é uma mistura?', a: 'Um material formado por duas ou mais substâncias. Ex.: água com sal, ar, leite, granito.' },
-    { tag: 'Definição', q: 'Diferença entre mistura homogénea e heterogénea?', a: 'Homogénea: aspeto uniforme, não se distinguem os componentes (ex.: água com sal, ar). Heterogénea: distinguem-se os componentes (ex.: água com areia, granito).' },
-    { tag: 'Definição', q: 'O que é uma solução?', a: 'Uma mistura homogénea de um soluto dissolvido num solvente. Ex.: água com açúcar — o açúcar é o soluto, a água é o solvente.' },
-    { tag: 'Definição', q: 'O que é o soluto e o solvente?', a: 'Soluto: a substância que se dissolve (menor quantidade). Solvente: a substância onde o soluto se dissolve (maior quantidade).' },
-    { tag: 'Fórmula', q: 'Como se calcula a concentração mássica de uma solução?', a: 'Concentração = massa do soluto ÷ volume da solução. Unidade habitual: g/dm³. Ex.: 2,4 g em 1 dm³ → 2,4 g/dm³.' },
-    { tag: 'Definição', q: 'O que é a massa volúmica (densidade)?', a: 'A massa por unidade de volume de um material: ρ = massa ÷ volume. Unidade: g/cm³, g/dm³ ou kg/m³.' },
-    { tag: 'Fórmula', q: 'Como se calcula a massa volúmica?', a: 'ρ = m / V (massa a dividir pelo volume). Ex.: 1,14 g num volume de 1 dm³ → 1,14 g/dm³.' },
-    { tag: 'Regra', q: 'Um corpo flutua ou afunda em função de quê?', a: 'Da massa volúmica: se for menor que a do líquido, flutua; se for maior, afunda. A madeira flutua na água; o ferro afunda.' },
-    { tag: 'Definição', q: 'Quais são os três estados físicos da matéria?', a: 'Sólido (forma e volume fixos), líquido (volume fixo, forma do recipiente) e gasoso (sem forma nem volume fixos).' },
-    { tag: 'Definição', q: 'Como se chamam as mudanças de estado físico?', a: 'Fusão (sólido→líquido), solidificação (líquido→sólido), vaporização (líquido→gasoso), condensação (gasoso→líquido) e sublimação (sólido→gasoso).' },
-    { tag: 'Estratégia', q: 'Como separar areia da água?', a: 'Por filtração: a água passa pelo filtro e a areia (sólido insolúvel) fica retida.' },
-    { tag: 'Estratégia', q: 'Como separar sal dissolvido na água?', a: 'Por evaporação (ou destilação, se quiseres recuperar também a água): a água evapora e o sal fica.' },
-    { tag: 'Estratégia', q: 'Como separar limalha de ferro de areia?', a: 'Com um íman (separação magnética): o íman atrai o ferro e deixa a areia.' },
-    { tag: 'Estratégia', q: 'Como separar dois líquidos que não se misturam (água e óleo)?', a: 'Por decantação, com uma ampola de decantação: o líquido mais denso (água) sai por baixo.' },
-    { tag: 'Exemplo', q: 'O ar é uma substância pura ou uma mistura?', a: 'É uma mistura (homogénea) de gases: principalmente azoto (~78%) e oxigénio (~21%).' }
+    { st: 1, tag: 'Definição', q: 'O que é uma substância pura?', a: 'Um material formado por um único tipo de constituinte, com propriedades fixas. Ex.: água destilada, ouro puro, oxigénio.' },
+    { st: 1, tag: 'Definição', q: 'O que é uma mistura?', a: 'Um material formado por duas ou mais substâncias. Ex.: água com sal, ar, leite, granito.' },
+    { st: 1, tag: 'Definição', q: 'Diferença entre mistura homogénea e heterogénea?', a: 'Homogénea: aspeto uniforme, não se distinguem os componentes (ex.: água com sal, ar). Heterogénea: distinguem-se os componentes (ex.: água com areia, granito).' },
+    { st: 2, tag: 'Definição', q: 'O que é uma solução?', a: 'Uma mistura homogénea de um soluto dissolvido num solvente. Ex.: água com açúcar — o açúcar é o soluto, a água é o solvente.' },
+    { st: 2, tag: 'Definição', q: 'O que é o soluto e o solvente?', a: 'Soluto: a substância que se dissolve (menor quantidade). Solvente: a substância onde o soluto se dissolve (maior quantidade).' },
+    { st: 2, tag: 'Fórmula', q: 'Como se calcula a concentração mássica de uma solução?', a: 'Concentração = massa do soluto ÷ volume da solução. Unidade habitual: g/dm³. Ex.: 2,4 g em 1 dm³ → 2,4 g/dm³.' },
+    { st: 3, tag: 'Definição', q: 'O que é a massa volúmica (densidade)?', a: 'A massa por unidade de volume de um material: ρ = massa ÷ volume. Unidade: g/cm³, g/dm³ ou kg/m³.' },
+    { st: 3, tag: 'Fórmula', q: 'Como se calcula a massa volúmica?', a: 'ρ = m / V (massa a dividir pelo volume). Ex.: 1,14 g num volume de 1 dm³ → 1,14 g/dm³.' },
+    { st: 3, tag: 'Regra', q: 'Um corpo flutua ou afunda em função de quê?', a: 'Da massa volúmica: se for menor que a do líquido, flutua; se for maior, afunda. A madeira flutua na água; o ferro afunda.' },
+    { st: 4, tag: 'Definição', q: 'Quais são os três estados físicos da matéria?', a: 'Sólido (forma e volume fixos), líquido (volume fixo, forma do recipiente) e gasoso (sem forma nem volume fixos).' },
+    { st: 4, tag: 'Definição', q: 'Como se chamam as mudanças de estado físico?', a: 'Fusão (sólido→líquido), solidificação (líquido→sólido), vaporização (líquido→gasoso), condensação (gasoso→líquido) e sublimação (sólido→gasoso).' },
+    { st: 5, tag: 'Estratégia', q: 'Como separar areia da água?', a: 'Por filtração: a água passa pelo filtro e a areia (sólido insolúvel) fica retida.' },
+    { st: 5, tag: 'Estratégia', q: 'Como separar sal dissolvido na água?', a: 'Por evaporação (ou destilação, se quiseres recuperar também a água): a água evapora e o sal fica.' },
+    { st: 5, tag: 'Estratégia', q: 'Como separar limalha de ferro de areia?', a: 'Com um íman (separação magnética): o íman atrai o ferro e deixa a areia.' },
+    { st: 5, tag: 'Estratégia', q: 'Como separar dois líquidos que não se misturam (água e óleo)?', a: 'Por decantação, com uma ampola de decantação: o líquido mais denso (água) sai por baixo.' },
+    { st: 1, tag: 'Exemplo', q: 'O ar é uma substância pura ou uma mistura?', a: 'É uma mistura (homogénea) de gases: principalmente azoto (~78%) e oxigénio (~21%).' }
   ],
   4: [
-    { tag: 'Definição', q: 'O que é a energia?', a: 'A capacidade de produzir alterações (movimento, calor, luz, som…). Não se cria nem se destrói, apenas se transfere e transforma.' },
-    { tag: 'Definição', q: 'O que é uma fonte e um recetor de energia?', a: 'Fonte: o que cede energia (ex.: o Sol, uma pilha). Recetor: o que recebe energia (ex.: uma planta, uma lâmpada).' },
-    { tag: 'Definição', q: 'Fontes de energia renováveis e não renováveis?', a: 'Renováveis: não se esgotam (Sol, vento, água, biomassa). Não renováveis: esgotam-se (carvão, petróleo, gás natural — combustíveis fósseis).' },
-    { tag: 'Definição', q: 'Quais são algumas formas de energia?', a: 'Cinética (movimento), potencial (posição), térmica (calor), luminosa (luz), sonora (som), elétrica e química.' },
-    { tag: 'Regra', q: 'Como se transfere energia por calor?', a: 'A energia transfere-se sempre do corpo a MAIOR temperatura para o de MENOR temperatura, até ficarem em equilíbrio.' },
-    { tag: 'Fórmula', q: 'Qual é a unidade de energia no Sistema Internacional?', a: 'O joule (J). Também se usam a caloria (cal) e o quilowatt-hora (kWh). 1 cal = 4,18 J.' },
-    { tag: 'Conversão', q: 'Quantos joules são 1 caloria?', a: '1 cal = 4,18 J. Ex.: 100 kcal = 100 000 cal = 418 000 J.' },
-    { tag: 'Definição', q: 'O que é a energia cinética?', a: 'A energia associada ao movimento de um corpo. Quanto maior a velocidade e a massa, maior a energia cinética.' },
-    { tag: 'Definição', q: 'O que é a energia potencial gravítica?', a: 'A energia que um corpo tem por estar a uma certa altura. Quanto mais alto, maior a energia potencial gravítica.' },
-    { tag: 'Princípio', q: 'O que diz a conservação da energia?', a: 'A energia não se cria nem se destrói; apenas se transforma ou se transfere. A energia total mantém-se.' },
-    { tag: 'Definição', q: 'O que é o rendimento de um sistema?', a: 'A fração da energia recebida que é aproveitada para o fim útil. O resto dissipa-se (em geral como calor). É sempre menor que 100%.' },
-    { tag: 'Exemplo', q: 'No Sol a aquecer a Terra, qual é a fonte e o recetor?', a: 'Fonte: o Sol. Recetor: a Terra. A energia transfere-se por radiação (luz).' },
-    { tag: 'Exemplo', q: 'Que transformação de energia há numa lâmpada?', a: 'Energia elétrica → energia luminosa (luz) + energia térmica (calor, que é a parte dissipada).' },
-    { tag: 'Exemplo', q: 'Que energia tem a água no topo de uma barragem?', a: 'Energia potencial gravítica. Ao cair, transforma-se em cinética e depois em elétrica (na central).' },
-    { tag: 'Curiosidade', q: 'De onde vem a maior parte da energia na Terra?', a: 'Do Sol — direta ou indiretamente (vento, chuva, plantas e até os combustíveis fósseis têm origem na energia solar).' }
+    { st: 1, tag: 'Definição', q: 'O que é a energia?', a: 'A capacidade de produzir alterações (movimento, calor, luz, som…). Não se cria nem se destrói, apenas se transfere e transforma.' },
+    { st: 1, tag: 'Definição', q: 'O que é uma fonte e um recetor de energia?', a: 'Fonte: o que cede energia (ex.: o Sol, uma pilha). Recetor: o que recebe energia (ex.: uma planta, uma lâmpada).' },
+    { st: 1, tag: 'Definição', q: 'Fontes de energia renováveis e não renováveis?', a: 'Renováveis: não se esgotam (Sol, vento, água, biomassa). Não renováveis: esgotam-se (carvão, petróleo, gás natural — combustíveis fósseis).' },
+    { st: 1, tag: 'Definição', q: 'Quais são algumas formas de energia?', a: 'Cinética (movimento), potencial (posição), térmica (calor), luminosa (luz), sonora (som), elétrica e química.' },
+    { st: 2, tag: 'Regra', q: 'Como se transfere energia por calor?', a: 'A energia transfere-se sempre do corpo a MAIOR temperatura para o de MENOR temperatura, até ficarem em equilíbrio.' },
+    { st: 3, tag: 'Fórmula', q: 'Qual é a unidade de energia no Sistema Internacional?', a: 'O joule (J). Também se usam a caloria (cal) e o quilowatt-hora (kWh). 1 cal = 4,18 J.' },
+    { st: 3, tag: 'Conversão', q: 'Quantos joules são 1 caloria?', a: '1 cal = 4,18 J. Ex.: 100 kcal = 100 000 cal = 418 000 J.' },
+    { st: 1, tag: 'Definição', q: 'O que é a energia cinética?', a: 'A energia associada ao movimento de um corpo. Quanto maior a velocidade e a massa, maior a energia cinética.' },
+    { st: 1, tag: 'Definição', q: 'O que é a energia potencial gravítica?', a: 'A energia que um corpo tem por estar a uma certa altura. Quanto mais alto, maior a energia potencial gravítica.' },
+    { st: 2, tag: 'Princípio', q: 'O que diz a conservação da energia?', a: 'A energia não se cria nem se destrói; apenas se transforma ou se transfere. A energia total mantém-se.' },
+    { st: 2, tag: 'Definição', q: 'O que é o rendimento de um sistema?', a: 'A fração da energia recebida que é aproveitada para o fim útil. O resto dissipa-se (em geral como calor). É sempre menor que 100%.' },
+    { st: 1, tag: 'Exemplo', q: 'No Sol a aquecer a Terra, qual é a fonte e o recetor?', a: 'Fonte: o Sol. Recetor: a Terra. A energia transfere-se por radiação (luz).' },
+    { st: 2, tag: 'Exemplo', q: 'Que transformação de energia há numa lâmpada?', a: 'Energia elétrica → energia luminosa (luz) + energia térmica (calor, que é a parte dissipada).' },
+    { st: 1, tag: 'Exemplo', q: 'Que energia tem a água no topo de uma barragem?', a: 'Energia potencial gravítica. Ao cair, transforma-se em cinética e depois em elétrica (na central).' },
+    { st: 1, tag: 'Curiosidade', q: 'De onde vem a maior parte da energia na Terra?', a: 'Do Sol — direta ou indiretamente (vento, chuva, plantas e até os combustíveis fósseis têm origem na energia solar).' }
   ]
 };
 
@@ -182,9 +182,11 @@ function fq7ResumoShowSts(cap) {
   if (!stRow) return;
   var sts = _fq7Subtemas[cap] || [];
   if (!sts.length) { stRow.style.display = 'none'; return; }
+  var _stSel = _fq7Sel['resumo-st'] || 0;
   var h = '<div class="resumo-st-label">Subtema</div>';
+  h += '<button class="resumo-st-btn' + (_stSel === 0 ? ' active' : '') + '" data-st="0" onclick="fq7ResumoSelectSt(this,' + cap + ',0)">Todos</button>';
   sts.forEach(function(st, i) {
-    var isActive = (_fq7Sel['resumo-st'] || 0) === (i + 1);
+    var isActive = _stSel === (i + 1);
     h += '<button class="resumo-st-btn' + (isActive ? ' active' : '') + '" data-st="' + (i + 1) + '" onclick="fq7ResumoSelectSt(this,' + cap + ',' + (i + 1) + ')">' + st + '</button>';
   });
   stRow.innerHTML = h;
@@ -221,16 +223,8 @@ function fq7RenderResumoInline() {
 
   // Filtrar por subtema, se selecionado
   var stIdx = _fq7Sel['resumo-st'] || 0;
-  var cards = allCards;
-  if (stIdx > 0 && _fq7Subtemas[cap]) {
-    var stLabel = (_fq7Subtemas[cap][stIdx - 1] || '').toLowerCase();
-    var stWords = stLabel.replace(/[^a-záéíóúâêîôûãõç ]/g, '').split(' ').filter(function(w){ return w.length > 3; });
-    var filtered = allCards.filter(function(card) {
-      var hay = ((card.tag || '') + ' ' + (card.q || '')).toLowerCase();
-      return stWords.some(function(w){ return hay.indexOf(w) !== -1; });
-    });
-    if (filtered.length > 0) cards = filtered;
-  }
+  // Filtro por subtema usa o campo st de cada flashcard (fiável); 0 = Todos.
+  var cards = (stIdx > 0) ? allCards.filter(function(card){ return card.st === stIdx; }) : allCards;
 
   if (!cards.length) {
     dest.innerHTML = '<div class="resumo-empty">'

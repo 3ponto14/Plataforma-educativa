@@ -32,73 +32,73 @@ var _fq9Subtemas = {
 // ═══ FLASHCARDS / TEORIA por capítulo (FQ 7.º — base no Universo FQ9) ═══
 var _fq9Cards = {
   1: [
-    { tag: 'Definição', q: 'O que é a velocidade?', a: 'A rapidez com que um corpo muda de posição. Velocidade = distância ÷ tempo. Unidade SI: metro por segundo (m/s); também km/h.' },
-    { tag: 'Fórmula', q: 'Como se calcula a velocidade média?', a: 'v = distância percorrida ÷ tempo gasto. Ex.: 100 m em 20 s → 100 ÷ 20 = 5 m/s.' },
-    { tag: 'Conversão', q: 'Como passar de m/s para km/h?', a: 'Multiplica por 3,6. Ex.: 10 m/s × 3,6 = 36 km/h. (De km/h para m/s, divide por 3,6.)' },
-    { tag: 'Definição', q: 'O que é uma força?', a: 'Uma ação que altera o movimento de um corpo (acelera, trava, muda de direção) ou o deforma. Mede-se em newton (N).' },
-    { tag: 'Lei', q: 'O que diz a 1.ª Lei de Newton (inércia)?', a: 'Um corpo mantém o seu estado de repouso ou de movimento retilíneo uniforme, a menos que uma força resultante atue sobre ele.' },
-    { tag: 'Lei', q: 'O que diz a 2.ª Lei de Newton?', a: 'A força resultante é igual à massa vezes a aceleração: F = m × a. Quanto maior a força, maior a aceleração; quanto maior a massa, menor a aceleração.' },
-    { tag: 'Lei', q: 'O que diz a 3.ª Lei de Newton (ação-reação)?', a: 'A toda a ação corresponde uma reação igual e de sentido oposto. As forças atuam em corpos diferentes.' },
-    { tag: 'Definição', q: 'Qual a diferença entre massa e peso?', a: 'Massa (kg) é a quantidade de matéria. Peso (N) é a força gravítica: P = m × g, com g ≈ 10 N/kg na Terra.' },
-    { tag: 'Fórmula', q: 'Como se calcula o peso de um corpo?', a: 'P = m × g. Com g ≈ 10 N/kg: um corpo de 5 kg pesa 5 × 10 = 50 N.' },
-    { tag: 'Definição', q: 'O que é a pressão (em fluidos)?', a: 'Força exercida por unidade de área: p = F ÷ A. Unidade SI: pascal (Pa). Quanto menor a área, maior a pressão.' },
-    { tag: 'Definição', q: 'O que é a impulsão (força de Arquimedes)?', a: 'A força vertical para cima que um fluido exerce sobre um corpo nele mergulhado. Se a impulsão ≥ peso, o corpo flutua.' },
-    { tag: 'Definição', q: 'O que é o trabalho de uma força?', a: 'Energia transferida quando uma força desloca um corpo: W = F × d (força no sentido do movimento). Unidade: joule (J).' },
-    { tag: 'Definição', q: 'O que é a energia cinética?', a: 'A energia do movimento: Ec = ½ × m × v². Aumenta com a massa e (sobretudo) com a velocidade.' },
-    { tag: 'Definição', q: 'O que é a energia potencial gravítica?', a: 'A energia associada à altura: Ep = m × g × h. Quanto mais alto e mais pesado, maior.' },
-    { tag: 'Princípio', q: 'O que é a conservação da energia mecânica?', a: 'Sem atrito, a soma da energia cinética com a potencial mantém-se constante. A energia transforma-se de uma forma na outra.' },
-    { tag: 'Exemplo', q: 'Um carro a 36 km/h percorre 72 km. Quanto tempo demora?', a: '36 km/h significa 36 km por hora → 72 ÷ 36 = 2 horas.' }
+    { st: 1, tag: 'Definição', q: 'O que é a velocidade?', a: 'A rapidez com que um corpo muda de posição. Velocidade = distância ÷ tempo. Unidade SI: metro por segundo (m/s); também km/h.' },
+    { st: 1, tag: 'Fórmula', q: 'Como se calcula a velocidade média?', a: 'v = distância percorrida ÷ tempo gasto. Ex.: 100 m em 20 s → 100 ÷ 20 = 5 m/s.' },
+    { st: 1, tag: 'Conversão', q: 'Como passar de m/s para km/h?', a: 'Multiplica por 3,6. Ex.: 10 m/s × 3,6 = 36 km/h. (De km/h para m/s, divide por 3,6.)' },
+    { st: 2, tag: 'Definição', q: 'O que é uma força?', a: 'Uma ação que altera o movimento de um corpo (acelera, trava, muda de direção) ou o deforma. Mede-se em newton (N).' },
+    { st: 2, tag: 'Lei', q: 'O que diz a 1.ª Lei de Newton (inércia)?', a: 'Um corpo mantém o seu estado de repouso ou de movimento retilíneo uniforme, a menos que uma força resultante atue sobre ele.' },
+    { st: 2, tag: 'Lei', q: 'O que diz a 2.ª Lei de Newton?', a: 'A força resultante é igual à massa vezes a aceleração: F = m × a. Quanto maior a força, maior a aceleração; quanto maior a massa, menor a aceleração.' },
+    { st: 2, tag: 'Lei', q: 'O que diz a 3.ª Lei de Newton (ação-reação)?', a: 'A toda a ação corresponde uma reação igual e de sentido oposto. As forças atuam em corpos diferentes.' },
+    { st: 2, tag: 'Definição', q: 'Qual a diferença entre massa e peso?', a: 'Massa (kg) é a quantidade de matéria. Peso (N) é a força gravítica: P = m × g, com g ≈ 10 N/kg na Terra.' },
+    { st: 2, tag: 'Fórmula', q: 'Como se calcula o peso de um corpo?', a: 'P = m × g. Com g ≈ 10 N/kg: um corpo de 5 kg pesa 5 × 10 = 50 N.' },
+    { st: 3, tag: 'Definição', q: 'O que é a pressão (em fluidos)?', a: 'Força exercida por unidade de área: p = F ÷ A. Unidade SI: pascal (Pa). Quanto menor a área, maior a pressão.' },
+    { st: 3, tag: 'Definição', q: 'O que é a impulsão (força de Arquimedes)?', a: 'A força vertical para cima que um fluido exerce sobre um corpo nele mergulhado. Se a impulsão ≥ peso, o corpo flutua.' },
+    { st: 4, tag: 'Definição', q: 'O que é o trabalho de uma força?', a: 'Energia transferida quando uma força desloca um corpo: W = F × d (força no sentido do movimento). Unidade: joule (J).' },
+    { st: 4, tag: 'Definição', q: 'O que é a energia cinética?', a: 'A energia do movimento: Ec = ½ × m × v². Aumenta com a massa e (sobretudo) com a velocidade.' },
+    { st: 4, tag: 'Definição', q: 'O que é a energia potencial gravítica?', a: 'A energia associada à altura: Ep = m × g × h. Quanto mais alto e mais pesado, maior.' },
+    { st: 4, tag: 'Princípio', q: 'O que é a conservação da energia mecânica?', a: 'Sem atrito, a soma da energia cinética com a potencial mantém-se constante. A energia transforma-se de uma forma na outra.' },
+    { st: 1, tag: 'Exemplo', q: 'Um carro a 36 km/h percorre 72 km. Quanto tempo demora?', a: '36 km/h significa 36 km por hora → 72 ÷ 36 = 2 horas.' }
   ],
   2: [
-    { tag: 'Definição', q: 'O que é a corrente elétrica?', a: 'O movimento orientado de cargas elétricas (eletrões) num condutor. Mede-se em ampere (A) com um amperímetro.' },
-    { tag: 'Definição', q: 'O que é a tensão (diferença de potencial)?', a: 'A "força" que põe as cargas em movimento num circuito. Mede-se em volt (V) com um voltímetro.' },
-    { tag: 'Definição', q: 'O que é a resistência elétrica?', a: 'A oposição que um material faz à passagem da corrente. Mede-se em ohm (Ω). Maior resistência → menor corrente.' },
-    { tag: 'Lei', q: 'O que diz a Lei de Ohm?', a: 'U = R × I (tensão = resistência × corrente). Permite relacionar as três grandezas num circuito.' },
-    { tag: 'Definição', q: 'O que é um circuito em série?', a: 'Os componentes estão ligados uns a seguir aos outros, num só caminho. A corrente é igual em todos; se um falha, todos apagam.' },
-    { tag: 'Definição', q: 'O que é um circuito em paralelo?', a: 'Os componentes estão em ramos separados. A tensão é igual em cada ramo; se um falha, os outros continuam a funcionar.' },
-    { tag: 'Instrumentos', q: 'Como se liga um amperímetro e um voltímetro?', a: 'O amperímetro liga-se em SÉRIE (mede corrente); o voltímetro liga-se em PARALELO (mede tensão).' },
-    { tag: 'Definição', q: 'O que são bons e maus condutores?', a: 'Condutores deixam passar a corrente (metais como cobre). Isoladores (maus condutores) não deixam (plástico, vidro, borracha).' },
-    { tag: 'Efeito', q: 'Qual é o efeito térmico (Joule) da corrente?', a: 'A corrente aquece os condutores. É usado em torradeiras, ferros de engomar e resistências de aquecimento.' },
-    { tag: 'Efeito', q: 'Quais são outros efeitos da corrente elétrica?', a: 'Efeito luminoso (lâmpadas), efeito químico (eletrólise, baterias) e efeito magnético (eletroíman, motores).' },
-    { tag: 'Fórmula', q: 'Lei de Ohm: se U = 12 V e R = 4 Ω, qual é a corrente I?', a: 'I = U ÷ R = 12 ÷ 4 = 3 A.' },
-    { tag: 'Definição', q: 'O que é um gerador num circuito?', a: 'O componente que fornece energia elétrica (pilha, bateria, fonte). Cria a diferença de potencial.' },
-    { tag: 'Símbolo', q: 'O que faz um interruptor?', a: 'Abre ou fecha o circuito, deixando ou não passar a corrente.' },
-    { tag: 'Segurança', q: 'Para que serve um fusível?', a: 'Protege o circuito: "queima" e corta a corrente quando esta é demasiado intensa, evitando incêndios.' },
-    { tag: 'Exemplo', q: 'Num circuito em série com 2 lâmpadas, o que acontece se uma se fundir?', a: 'A outra também apaga, porque o circuito fica aberto (há um só caminho para a corrente).' }
+    { st: 1, tag: 'Definição', q: 'O que é a corrente elétrica?', a: 'O movimento orientado de cargas elétricas (eletrões) num condutor. Mede-se em ampere (A) com um amperímetro.' },
+    { st: 3, tag: 'Definição', q: 'O que é a tensão (diferença de potencial)?', a: 'A "força" que põe as cargas em movimento num circuito. Mede-se em volt (V) com um voltímetro.' },
+    { st: 3, tag: 'Definição', q: 'O que é a resistência elétrica?', a: 'A oposição que um material faz à passagem da corrente. Mede-se em ohm (Ω). Maior resistência → menor corrente.' },
+    { st: 3, tag: 'Lei', q: 'O que diz a Lei de Ohm?', a: 'U = R × I (tensão = resistência × corrente). Permite relacionar as três grandezas num circuito.' },
+    { st: 2, tag: 'Definição', q: 'O que é um circuito em série?', a: 'Os componentes estão ligados uns a seguir aos outros, num só caminho. A corrente é igual em todos; se um falha, todos apagam.' },
+    { st: 2, tag: 'Definição', q: 'O que é um circuito em paralelo?', a: 'Os componentes estão em ramos separados. A tensão é igual em cada ramo; se um falha, os outros continuam a funcionar.' },
+    { st: 2, tag: 'Instrumentos', q: 'Como se liga um amperímetro e um voltímetro?', a: 'O amperímetro liga-se em SÉRIE (mede corrente); o voltímetro liga-se em PARALELO (mede tensão).' },
+    { st: 1, tag: 'Definição', q: 'O que são bons e maus condutores?', a: 'Condutores deixam passar a corrente (metais como cobre). Isoladores (maus condutores) não deixam (plástico, vidro, borracha).' },
+    { st: 4, tag: 'Efeito', q: 'Qual é o efeito térmico (Joule) da corrente?', a: 'A corrente aquece os condutores. É usado em torradeiras, ferros de engomar e resistências de aquecimento.' },
+    { st: 4, tag: 'Efeito', q: 'Quais são outros efeitos da corrente elétrica?', a: 'Efeito luminoso (lâmpadas), efeito químico (eletrólise, baterias) e efeito magnético (eletroíman, motores).' },
+    { st: 2, tag: 'Fórmula', q: 'Lei de Ohm: se U = 12 V e R = 4 Ω, qual é a corrente I?', a: 'I = U ÷ R = 12 ÷ 4 = 3 A.' },
+    { st: 2, tag: 'Definição', q: 'O que é um gerador num circuito?', a: 'O componente que fornece energia elétrica (pilha, bateria, fonte). Cria a diferença de potencial.' },
+    { st: 4, tag: 'Símbolo', q: 'O que faz um interruptor?', a: 'Abre ou fecha o circuito, deixando ou não passar a corrente.' },
+    { st: 2, tag: 'Segurança', q: 'Para que serve um fusível?', a: 'Protege o circuito: "queima" e corta a corrente quando esta é demasiado intensa, evitando incêndios.' },
+    { st: 2, tag: 'Exemplo', q: 'Num circuito em série com 2 lâmpadas, o que acontece se uma se fundir?', a: 'A outra também apaga, porque o circuito fica aberto (há um só caminho para a corrente).' }
   ],
   3: [
-    { tag: 'Definição', q: 'Quais são as partículas do átomo?', a: 'Protões (carga +) e neutrões (sem carga) no núcleo; eletrões (carga −) à volta, na nuvem eletrónica.' },
-    { tag: 'Definição', q: 'O que é o número atómico (Z)?', a: 'O número de protões do átomo. Identifica o elemento químico. Num átomo neutro, Z = número de eletrões.' },
-    { tag: 'Definição', q: 'O que é o número de massa (A)?', a: 'A soma do número de protões com o número de neutrões: A = Z + N (N = nº de neutrões).' },
-    { tag: 'Cálculo', q: 'Um átomo tem Z = 11 e A = 23. Quantos neutrões tem?', a: 'N = A − Z = 23 − 11 = 12 neutrões.' },
-    { tag: 'Definição', q: 'O que são isótopos?', a: 'Átomos do mesmo elemento (mesmo Z) mas com diferente número de neutrões (diferente A). Ex.: carbono-12 e carbono-14.' },
-    { tag: 'Definição', q: 'O que é a Tabela Periódica?', a: 'A organização dos elementos químicos por ordem crescente de número atómico (Z), em períodos (linhas) e grupos (colunas).' },
-    { tag: 'Definição', q: 'O que é um período e um grupo na Tabela Periódica?', a: 'Período = linha horizontal (nº de níveis de energia). Grupo = coluna vertical (elementos com propriedades semelhantes).' },
-    { tag: 'Definição', q: 'O que são os metais alcalinos?', a: 'Os elementos do Grupo 1 (lítio, sódio, potássio…). São muito reativos e formam iões com carga +1.' },
-    { tag: 'Definição', q: 'O que são os gases nobres?', a: 'Os elementos do Grupo 18 (hélio, néon, árgon…). São muito estáveis e pouco reativos (têm o último nível completo).' },
-    { tag: 'Definição', q: 'O que distingue metais de não-metais?', a: 'Metais: bons condutores, brilhantes, maleáveis (ex.: ferro, cobre). Não-metais: maus condutores, frágeis (ex.: enxofre, cloro).' },
-    { tag: 'Definição', q: 'O que é a distribuição eletrónica?', a: 'A forma como os eletrões se distribuem pelos níveis de energia. Ex.: sódio (11 e⁻) → 2,8,1.' },
-    { tag: 'Regra', q: 'Quantos eletrões cabem nos primeiros níveis?', a: '1.º nível: até 2 eletrões; 2.º nível: até 8; 3.º nível: até 8 (no básico). Preenchem-se de dentro para fora.' },
-    { tag: 'Definição', q: 'O que são eletrões de valência?', a: 'Os eletrões do último nível de energia. São eles que determinam as ligações químicas e a reatividade do elemento.' },
-    { tag: 'Exemplo', q: 'O oxigénio tem Z = 8. Qual a sua distribuição eletrónica?', a: '8 eletrões → 2,6. Tem 6 eletrões de valência.' },
-    { tag: 'Definição', q: 'O que é um elemento químico?', a: 'Uma substância formada por átomos todos com o mesmo número atómico (Z). Ex.: ferro, oxigénio, ouro.' }
+    { st: 1, tag: 'Definição', q: 'Quais são as partículas do átomo?', a: 'Protões (carga +) e neutrões (sem carga) no núcleo; eletrões (carga −) à volta, na nuvem eletrónica.' },
+    { st: 1, tag: 'Definição', q: 'O que é o número atómico (Z)?', a: 'O número de protões do átomo. Identifica o elemento químico. Num átomo neutro, Z = número de eletrões.' },
+    { st: 1, tag: 'Definição', q: 'O que é o número de massa (A)?', a: 'A soma do número de protões com o número de neutrões: A = Z + N (N = nº de neutrões).' },
+    { st: 1, tag: 'Cálculo', q: 'Um átomo tem Z = 11 e A = 23. Quantos neutrões tem?', a: 'N = A − Z = 23 − 11 = 12 neutrões.' },
+    { st: 1, tag: 'Definição', q: 'O que são isótopos?', a: 'Átomos do mesmo elemento (mesmo Z) mas com diferente número de neutrões (diferente A). Ex.: carbono-12 e carbono-14.' },
+    { st: 2, tag: 'Definição', q: 'O que é a Tabela Periódica?', a: 'A organização dos elementos químicos por ordem crescente de número atómico (Z), em períodos (linhas) e grupos (colunas).' },
+    { st: 2, tag: 'Definição', q: 'O que é um período e um grupo na Tabela Periódica?', a: 'Período = linha horizontal (nº de níveis de energia). Grupo = coluna vertical (elementos com propriedades semelhantes).' },
+    { st: 2, tag: 'Definição', q: 'O que são os metais alcalinos?', a: 'Os elementos do Grupo 1 (lítio, sódio, potássio…). São muito reativos e formam iões com carga +1.' },
+    { st: 2, tag: 'Definição', q: 'O que são os gases nobres?', a: 'Os elementos do Grupo 18 (hélio, néon, árgon…). São muito estáveis e pouco reativos (têm o último nível completo).' },
+    { st: 3, tag: 'Definição', q: 'O que distingue metais de não-metais?', a: 'Metais: bons condutores, brilhantes, maleáveis (ex.: ferro, cobre). Não-metais: maus condutores, frágeis (ex.: enxofre, cloro).' },
+    { st: 1, tag: 'Definição', q: 'O que é a distribuição eletrónica?', a: 'A forma como os eletrões se distribuem pelos níveis de energia. Ex.: sódio (11 e⁻) → 2,8,1.' },
+    { st: 1, tag: 'Regra', q: 'Quantos eletrões cabem nos primeiros níveis?', a: '1.º nível: até 2 eletrões; 2.º nível: até 8; 3.º nível: até 8 (no básico). Preenchem-se de dentro para fora.' },
+    { st: 1, tag: 'Definição', q: 'O que são eletrões de valência?', a: 'Os eletrões do último nível de energia. São eles que determinam as ligações químicas e a reatividade do elemento.' },
+    { st: 1, tag: 'Exemplo', q: 'O oxigénio tem Z = 8. Qual a sua distribuição eletrónica?', a: '8 eletrões → 2,6. Tem 6 eletrões de valência.' },
+    { st: 2, tag: 'Definição', q: 'O que é um elemento químico?', a: 'Uma substância formada por átomos todos com o mesmo número atómico (Z). Ex.: ferro, oxigénio, ouro.' }
   ],
   4: [
-    { tag: 'Definição', q: 'O que é uma ligação química?', a: 'A união entre átomos para formarem substâncias mais estáveis. Os átomos ligam-se para completar o último nível de eletrões.' },
-    { tag: 'Regra', q: 'O que é a regra do octeto?', a: 'Os átomos tendem a ficar com 8 eletrões no último nível (como os gases nobres), ganhando, perdendo ou partilhando eletrões.' },
-    { tag: 'Definição', q: 'O que é a ligação iónica?', a: 'Forma-se entre um metal e um não-metal: um átomo cede eletrões (fica ião +) e outro recebe (fica ião −). Ex.: NaCl (sal).' },
-    { tag: 'Definição', q: 'O que é a ligação covalente?', a: 'Forma-se entre não-metais que PARTILHAM eletrões. Ex.: H₂O (água), O₂, CO₂.' },
-    { tag: 'Definição', q: 'O que é um ião?', a: 'Um átomo (ou grupo) com carga elétrica, por ter perdido ou ganho eletrões. Catião = positivo (perdeu e⁻); anião = negativo (ganhou e⁻).' },
-    { tag: 'Exemplo', q: 'O sódio (Na) forma que ião?', a: 'Perde 1 eletrão → catião Na⁺ (carga +1), ficando com o último nível completo.' },
-    { tag: 'Exemplo', q: 'O cloro (Cl) forma que ião?', a: 'Ganha 1 eletrão → anião Cl⁻ (carga −1), completando o último nível.' },
-    { tag: 'Definição', q: 'O que é uma molécula?', a: 'Um conjunto de átomos ligados por ligações covalentes. Ex.: H₂O tem 2 átomos de hidrogénio e 1 de oxigénio.' },
-    { tag: 'Definição', q: 'O que representa a fórmula química H₂O?', a: 'Uma molécula com 2 átomos de hidrogénio (H) e 1 de oxigénio (O) — a água.' },
-    { tag: 'Definição', q: 'O que é a ligação metálica?', a: 'A ligação entre átomos de metais, com eletrões livres partilhados por todos. Explica a condução elétrica e o brilho dos metais.' },
-    { tag: 'Regra', q: 'Metal + não-metal formam que tipo de ligação?', a: 'Ligação iónica (transferência de eletrões). Ex.: sódio + cloro → NaCl.' },
-    { tag: 'Regra', q: 'Não-metal + não-metal formam que tipo de ligação?', a: 'Ligação covalente (partilha de eletrões). Ex.: O₂, H₂O, CO₂.' },
-    { tag: 'Exemplo', q: 'Porque é que os gases nobres quase não fazem ligações?', a: 'Já têm o último nível completo (estável), por isso não precisam de ganhar, perder ou partilhar eletrões.' },
-    { tag: 'Exemplo', q: 'Quantos átomos tem a molécula de dióxido de carbono (CO₂)?', a: 'Três: 1 de carbono (C) e 2 de oxigénio (O).' },
-    { tag: 'Síntese', q: 'Porque é que os átomos se ligam?', a: 'Para atingirem maior estabilidade — em geral, ficando com o último nível de eletrões completo (regra do octeto).' }
+    { st: 1, tag: 'Definição', q: 'O que é uma ligação química?', a: 'A união entre átomos para formarem substâncias mais estáveis. Os átomos ligam-se para completar o último nível de eletrões.' },
+    { st: 3, tag: 'Regra', q: 'O que é a regra do octeto?', a: 'Os átomos tendem a ficar com 8 eletrões no último nível (como os gases nobres), ganhando, perdendo ou partilhando eletrões.' },
+    { st: 1, tag: 'Definição', q: 'O que é a ligação iónica?', a: 'Forma-se entre um metal e um não-metal: um átomo cede eletrões (fica ião +) e outro recebe (fica ião −). Ex.: NaCl (sal).' },
+    { st: 1, tag: 'Definição', q: 'O que é a ligação covalente?', a: 'Forma-se entre não-metais que PARTILHAM eletrões. Ex.: H₂O (água), O₂, CO₂.' },
+    { st: 2, tag: 'Definição', q: 'O que é um ião?', a: 'Um átomo (ou grupo) com carga elétrica, por ter perdido ou ganho eletrões. Catião = positivo (perdeu e⁻); anião = negativo (ganhou e⁻).' },
+    { st: 2, tag: 'Exemplo', q: 'O sódio (Na) forma que ião?', a: 'Perde 1 eletrão → catião Na⁺ (carga +1), ficando com o último nível completo.' },
+    { st: 2, tag: 'Exemplo', q: 'O cloro (Cl) forma que ião?', a: 'Ganha 1 eletrão → anião Cl⁻ (carga −1), completando o último nível.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma molécula?', a: 'Um conjunto de átomos ligados por ligações covalentes. Ex.: H₂O tem 2 átomos de hidrogénio e 1 de oxigénio.' },
+    { st: 2, tag: 'Definição', q: 'O que representa a fórmula química H₂O?', a: 'Uma molécula com 2 átomos de hidrogénio (H) e 1 de oxigénio (O) — a água.' },
+    { st: 1, tag: 'Definição', q: 'O que é a ligação metálica?', a: 'A ligação entre átomos de metais, com eletrões livres partilhados por todos. Explica a condução elétrica e o brilho dos metais.' },
+    { st: 1, tag: 'Regra', q: 'Metal + não-metal formam que tipo de ligação?', a: 'Ligação iónica (transferência de eletrões). Ex.: sódio + cloro → NaCl.' },
+    { st: 1, tag: 'Regra', q: 'Não-metal + não-metal formam que tipo de ligação?', a: 'Ligação covalente (partilha de eletrões). Ex.: O₂, H₂O, CO₂.' },
+    { st: 3, tag: 'Exemplo', q: 'Porque é que os gases nobres quase não fazem ligações?', a: 'Já têm o último nível completo (estável), por isso não precisam de ganhar, perder ou partilhar eletrões.' },
+    { st: 2, tag: 'Exemplo', q: 'Quantos átomos tem a molécula de dióxido de carbono (CO₂)?', a: 'Três: 1 de carbono (C) e 2 de oxigénio (O).' },
+    { st: 3, tag: 'Síntese', q: 'Porque é que os átomos se ligam?', a: 'Para atingirem maior estabilidade — em geral, ficando com o último nível de eletrões completo (regra do octeto).' }
   ]
 };
 
@@ -180,9 +180,11 @@ function fq9ResumoShowSts(cap) {
   if (!stRow) return;
   var sts = _fq9Subtemas[cap] || [];
   if (!sts.length) { stRow.style.display = 'none'; return; }
+  var _stSel = _fq9Sel['resumo-st'] || 0;
   var h = '<div class="resumo-st-label">Subtema</div>';
+  h += '<button class="resumo-st-btn' + (_stSel === 0 ? ' active' : '') + '" data-st="0" onclick="fq9ResumoSelectSt(this,' + cap + ',0)">Todos</button>';
   sts.forEach(function(st, i) {
-    var isActive = (_fq9Sel['resumo-st'] || 0) === (i + 1);
+    var isActive = _stSel === (i + 1);
     h += '<button class="resumo-st-btn' + (isActive ? ' active' : '') + '" data-st="' + (i + 1) + '" onclick="fq9ResumoSelectSt(this,' + cap + ',' + (i + 1) + ')">' + st + '</button>';
   });
   stRow.innerHTML = h;
@@ -219,16 +221,8 @@ function fq9RenderResumoInline() {
 
   // Filtrar por subtema, se selecionado
   var stIdx = _fq9Sel['resumo-st'] || 0;
-  var cards = allCards;
-  if (stIdx > 0 && _fq9Subtemas[cap]) {
-    var stLabel = (_fq9Subtemas[cap][stIdx - 1] || '').toLowerCase();
-    var stWords = stLabel.replace(/[^a-záéíóúâêîôûãõç ]/g, '').split(' ').filter(function(w){ return w.length > 3; });
-    var filtered = allCards.filter(function(card) {
-      var hay = ((card.tag || '') + ' ' + (card.q || '')).toLowerCase();
-      return stWords.some(function(w){ return hay.indexOf(w) !== -1; });
-    });
-    if (filtered.length > 0) cards = filtered;
-  }
+  // Filtro por subtema usa o campo st de cada flashcard (fiável); 0 = Todos.
+  var cards = (stIdx > 0) ? allCards.filter(function(card){ return card.st === stIdx; }) : allCards;
 
   if (!cards.length) {
     dest.innerHTML = '<div class="resumo-empty">'
