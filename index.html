@@ -110,11 +110,12 @@
   <!-- Filtros: disciplina + ano -->
   <div class="portal-filters">
     <div class="portal-filter-row" id="portal-filter-disc">
-      <span class="portal-filter-label">Disciplina</span>
-      <button class="portal-chip active" data-disc="" onclick="portalSetFilter('disc','',this)">Todas</button>
-      <button class="portal-chip" data-disc="matematica" onclick="portalSetFilter('disc','matematica',this)">Matemática</button>
-      <button class="portal-chip" data-disc="portugues" onclick="portalSetFilter('disc','portugues',this)">Português</button>
-      <button class="portal-chip" data-disc="fisico-quimica" onclick="portalSetFilter('disc','fisico-quimica',this)">Físico-Química</button>
+      <span class="portal-filter-label">Escolhe</span>
+      <button class="portal-chip" data-disc="matematica" onclick="portalSetFilter('disc','matematica',this)"><i class="ph ph-math-operations"></i> Matemática</button>
+      <button class="portal-chip" data-disc="portugues" onclick="portalSetFilter('disc','portugues',this)"><i class="ph ph-book-open-text"></i> Português</button>
+      <button class="portal-chip" data-disc="fisico-quimica" onclick="portalSetFilter('disc','fisico-quimica',this)"><i class="ph ph-flask"></i> Físico-Química</button>
+      <button class="portal-chip portal-chip--exames" data-disc="exames" onclick="portalSetFilter('disc','exames',this)"><i class="ph ph-graduation-cap"></i> Exames Nacionais</button>
+      <button class="portal-chip" data-disc="todas" onclick="portalSetFilter('disc','todas',this)">Ver todos</button>
     </div>
     <div class="portal-filter-row" id="portal-filter-ano">
       <span class="portal-filter-label">Ano</span>
@@ -128,6 +129,14 @@
       <button class="portal-chip" data-ano="11" onclick="portalSetFilter('ano','11',this)">11.º</button>
       <button class="portal-chip" data-ano="12" onclick="portalSetFilter('ano','12',this)">12.º</button>
     </div>
+  </div>
+
+  <!-- Estado inicial: nada selecionado → catálogo escondido e convite a escolher.
+       Mostra-se/esconde-se em portalSearch() conforme há (ou não) filtro/pesquisa. -->
+  <div class="portal-empty" id="portal-empty">
+    <div class="portal-empty-ic"><i class="ph ph-hand-pointing"></i></div>
+    <div class="portal-empty-title">Escolhe uma opção para ver os cursos</div>
+    <div class="portal-empty-sub">Seleciona <strong>Matemática</strong>, <strong>Português</strong>, <strong>Físico-Química</strong> ou <strong>Exames Nacionais</strong> em cima — ou <strong>Ver todos</strong>. Também podes pesquisar diretamente.</div>
   </div>
 
   <!-- Catálogo agrupado por ciclo de ensino: um cartão por ano, com tudo o

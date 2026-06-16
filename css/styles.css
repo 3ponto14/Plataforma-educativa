@@ -3511,6 +3511,32 @@ body.dark-mode .portal-card:hover {
   border-color: var(--c2-deep);
   color: #fff;
 }
+.portal-chip i { font-size: .95rem; vertical-align: -1px; margin-right: .15rem; }
+/* chip de Exames Nacionais — destaca-se dos de disciplina */
+.portal-chip--exames { border-color: #cdbfe9; color: #5c4e8a; }
+.portal-chip--exames:hover { border-color: #5c4e8a; }
+.portal-chip--exames.active { background: #5c4e8a; border-color: #5c4e8a; color: #fff; }
+
+/* ── Portal: estado vazio (convite a escolher um filtro) ── */
+.portal-empty {
+  text-align: center;
+  padding: 3.5rem 1.5rem 4rem;
+  max-width: 540px;
+  margin: 0 auto;
+}
+.portal-empty-ic {
+  width: 76px; height: 76px; margin: 0 auto 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; background: var(--cream, #f5f1e8);
+  color: var(--c2-deep); font-size: 2.1rem;
+}
+.portal-empty-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem; font-weight: 700; color: var(--ink1);
+  margin-bottom: .5rem;
+}
+.portal-empty-sub { font-size: .9rem; color: var(--ink3); line-height: 1.55; }
+.portal-empty-sub strong { color: var(--ink2); font-weight: 700; }
 
 /* ── Portal: cabeçalho de ciclo ── */
 .portal-cycle {

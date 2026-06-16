@@ -188,12 +188,14 @@ var _portalFilters = { disc: '', ano: '', q: '' };
 
 // Define um filtro (disc ou ano) e atualiza o chip ativo, depois re-filtra.
 function portalSetFilter(tipo, valor, btn) {
-  _portalFilters[tipo] = valor;
+  // Voltar a clicar no filtro já ativo desliga-o (volta ao estado inicial).
+  var jaAtivo = (_portalFilters[tipo] === valor) && btn && btn.classList.contains('active');
+  _portalFilters[tipo] = jaAtivo ? '' : valor;
   // ativa só o chip clicado dentro da sua linha
   var rowId = tipo === 'disc' ? 'portal-filter-disc' : 'portal-filter-ano';
   var row = document.getElementById(rowId);
   if (row) row.querySelectorAll('.portal-chip').forEach(function(c) { c.classList.remove('active'); });
-  if (btn) btn.classList.add('active');
+  if (btn && !jaAtivo) btn.classList.add('active');
   portalSearch();
 }
 
@@ -204,6 +206,36 @@ function portalSearch() {
   var input = document.getElementById('portal-search-input');
   _portalFilters.q = input ? input.value.toLowerCase().trim() : '';
   var f = _portalFilters;
+  var grid = document.getElementById('portal-grid');
+  var empty = document.getElementById('portal-empty');
+  var noRes = document.getElementById('portal-no-results');
+  var anoRow = document.getElementById('portal-filter-ano');
+
+  // Estado inicial: sem disciplina escolhida E sem pesquisa → convite, catálogo escondido.
+  if (f.disc === '' && f.q === '') {
+    if (grid) grid.style.display = 'none';
+    if (empty) empty.style.display = '';
+    if (noRes) noRes.style.display = 'none';
+    if (anoRow) anoRow.style.display = 'none'; // o filtro de ano só faz sentido depois de escolher
+    return;
+  }
+  if (grid) grid.style.display = '';
+  if (empty) empty.style.display = 'none';
+  if (anoRow) anoRow.style.display = '';
+
+  // 'todas' = ver tudo; 'exames' = só a secção de exames; '' com pesquisa = procura em tudo.
+  var soExames = (f.disc === 'exames');
+  function discOk(disc) {
+    if (soExames) return false;                 // cursos normais escondidos no modo exames
+    if (f.disc === '' || f.disc === 'todas') return true;
+    return disc === f.disc;
+  }
+  function examesOk(disc) {
+    if (soExames) return true;                   // todos os exames
+    if (f.disc === '' || f.disc === 'todas') return true;
+    return disc === f.disc;                       // exames da disciplina escolhida
+  }
+
   var visiveis = 0;
   document.querySelectorAll('.portal-ano-card').forEach(function(card) {
     var ano = card.getAttribute('data-ano') || '';
@@ -212,9 +244,7 @@ function portalSearch() {
     card.querySelectorAll('.portal-ano-link').forEach(function(link) {
       var disc = link.getAttribute('data-disc') || '';
       var hay = ((link.getAttribute('data-search') || '') + ' ' + link.textContent).toLowerCase();
-      var ok = okAno
-        && (f.disc === '' || disc === f.disc)
-        && (f.q === '' || hay.indexOf(f.q) !== -1);
+      var ok = okAno && discOk(disc) && (f.q === '' || hay.indexOf(f.q) !== -1);
       link.style.display = ok ? '' : 'none';
       if (ok) linksVisiveis++;
     });
@@ -226,9 +256,7 @@ function portalSearch() {
     var ano = link.getAttribute('data-ano') || '';
     var disc = link.getAttribute('data-disc') || '';
     var hay = ((link.getAttribute('data-search') || '') + ' ' + link.textContent).toLowerCase();
-    var ok = (f.ano === '' || ano === f.ano)
-      && (f.disc === '' || disc === f.disc)
-      && (f.q === '' || hay.indexOf(f.q) !== -1);
+    var ok = (f.ano === '' || ano === f.ano) && examesOk(disc) && (f.q === '' || hay.indexOf(f.q) !== -1);
     link.style.display = ok ? '' : 'none';
     if (ok) visiveis++;
   });
@@ -239,7 +267,6 @@ function portalSearch() {
     });
     sec.style.display = temCard ? '' : 'none';
   });
-  var noRes = document.getElementById('portal-no-results');
   if (noRes) noRes.style.display = (visiveis === 0) ? 'block' : 'none';
 }
 
@@ -319,6 +346,7 @@ document.addEventListener('DOMContentLoaded', function(){
   if(document.getElementById('portal-main')) portalRender();
   portalRenderProgress();
   if(typeof desafioRender === 'function') desafioRender();
+  portalSearch(); // estado inicial: catálogo escondido até escolher um filtro
   portalAplicarSessao();
   // o Cloud arranca de forma assíncrona; reaplica quando a sessão resolver
   setTimeout(portalAplicarSessao, 600);
