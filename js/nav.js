@@ -9,8 +9,8 @@
    navigation functions resolve paths correctly regardless of the
    current page location.
 ─────────────────────────────────────────────────────────────────── */
-// Deteção genérica: estamos dentro de um diretório de curso (matN/ ou portN/)?
-var _inSub = /\/(mat\d+|port\d+)(\/|$)/.test(window.location.pathname);
+// Deteção genérica: estamos dentro de um diretório de curso (matN/ portN/ fqN/)?
+var _inSub = /\/(mat\d+|port\d+|fq\d+)(\/|$)/.test(window.location.pathname);
 function _inMat(n) { return window.location.pathname.indexOf('/mat' + n + '/') !== -1 || window.location.pathname.endsWith('/mat' + n); }
 function _inPort(n) { return window.location.pathname.indexOf('/port' + n + '/') !== -1 || window.location.pathname.endsWith('/port' + n); }
 var _inMat7 = _inMat(7), _inMat8 = _inMat(8), _inMat9 = _inMat(9);
@@ -27,6 +27,8 @@ var _mat11Path = _inMat(11) ? '' : _coursePath('mat11');
 var _port9Path = _inPort(9) ? '' : _coursePath('port9');
 var _port7Path = _inPort(7) ? '' : _coursePath('port7');
 var _port8Path = _inPort(8) ? '' : _coursePath('port8');
+var _inFq7 = window.location.pathname.indexOf('/fq7/') !== -1 || window.location.pathname.endsWith('/fq7');
+var _fq7Path = _inFq7 ? '' : _coursePath('fq7');
 
 /* ── Portal (index.html at root) ── */
 function showPortalView() { window.location.href = _rootPath + 'index.html'; }
@@ -52,6 +54,10 @@ function showPort7View() { window.location.href = _port7Path + 'index.html'; }
 function showPortalFromPort7() { showPortalView(); }
 function showPort8View() { window.location.href = _port8Path + 'index.html'; }
 function showPortalFromPort8() { showPortalView(); }
+
+/* ── FQ7 hub · Físico-Química 7.º (mesmo modelo de hub) ── */
+function showFq7View() { window.location.href = _fq7Path + 'index.html'; }
+function showPortalFromFq7() { showPortalView(); }
 
 /* ── Mat5 e Mat6 hubs (2.º ciclo) ── */
 function showMat5View()  { window.location.href = _mat5Path + 'index.html'; }
