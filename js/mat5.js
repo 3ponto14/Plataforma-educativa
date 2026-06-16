@@ -38,130 +38,130 @@ var _mat5Subtemas = {
 // ═══ FLASHCARDS / TEORIA por capítulo (5.º ano) ═══
 var _mat5Cards = {
   1: [
-    { tag: 'Definição', q: 'O que é um múltiplo de um número?', a: 'É o resultado de multiplicar esse número por 0, 1, 2, 3, … Ex: múltiplos de 4 → 0, 4, 8, 12, 16, …' },
-    { tag: 'Definição', q: 'O que é um divisor de um número?', a: 'É um número que divide outro deixando resto 0. Ex: os divisores de 12 são 1, 2, 3, 4, 6 e 12.' },
-    { tag: 'Regra', q: 'Como saber se um número é múltiplo de 2?', a: 'Se terminar em 0, 2, 4, 6 ou 8 (é par). Ex: 38 é múltiplo de 2.' },
-    { tag: 'Regra', q: 'Como saber se um número é múltiplo de 5?', a: 'Se terminar em 0 ou 5. Ex: 35 e 70 são múltiplos de 5.' },
-    { tag: 'Regra', q: 'Como saber se um número é múltiplo de 10?', a: 'Se terminar em 0. Ex: 40, 90, 200.' },
-    { tag: 'Regra', q: 'Como saber se um número é múltiplo de 3?', a: 'Se a soma dos seus algarismos for múltiplo de 3. Ex: 51 → 5+1=6, que é múltiplo de 3 → 51 é múltiplo de 3.' },
-    { tag: 'Definição', q: 'O que é uma potência?', a: 'Uma forma curta de escrever uma multiplicação de fatores iguais. Ex: 2×2×2 = 2³ (base 2, expoente 3).' },
-    { tag: 'Definição', q: 'O que é o quadrado de um número?', a: 'O número multiplicado por si próprio. Ex: o quadrado de 7 é 7² = 7×7 = 49.' },
-    { tag: 'Definição', q: 'O que é o cubo de um número?', a: 'O número multiplicado por si próprio três vezes. Ex: 2³ = 2×2×2 = 8.' },
-    { tag: 'Definição', q: 'O que são a base e o expoente?', a: 'Em 5³, a base é 5 (o que se multiplica) e o expoente é 3 (quantas vezes). Lê-se "cinco ao cubo".' },
-    { tag: 'Estratégia', q: 'Prioridade das operações', a: '1.º parênteses; 2.º potências; 3.º multiplicação e divisão (esquerda→direita); 4.º adição e subtração.' },
-    { tag: 'Definição', q: 'O que é um número primo?', a: 'Um número maior que 1 que só tem dois divisores: 1 e ele próprio. Ex: 2, 3, 5, 7, 11, 13.' },
-    { tag: 'Exemplo', q: 'Quais os primeiros 5 múltiplos de 6?', a: '0, 6, 12, 18, 24 (multiplicar 6 por 0, 1, 2, 3, 4).' },
-    { tag: 'Exemplo', q: 'Calcula 3² + 4²', a: '3² = 9 e 4² = 16. Soma: 9 + 16 = 25.' },
-    { tag: 'Exemplo', q: 'Quais os divisores de 20?', a: '1, 2, 4, 5, 10 e 20.' },
-    { tag: 'Exemplo', q: '6 é múltiplo de 4 e de 6?', a: 'De 6 sim; de 4 não (6 ÷ 4 não dá resto 0). Múltiplos de 4 e 6 ao mesmo tempo: 12, 24, …' }
+    { st: 1, tag: 'Definição', q: 'O que é um múltiplo de um número?', a: 'É o resultado de multiplicar esse número por 0, 1, 2, 3, … Ex: múltiplos de 4 → 0, 4, 8, 12, 16, …' },
+    { st: 1, tag: 'Definição', q: 'O que é um divisor de um número?', a: 'É um número que divide outro deixando resto 0. Ex: os divisores de 12 são 1, 2, 3, 4, 6 e 12.' },
+    { st: 1, tag: 'Regra', q: 'Como saber se um número é múltiplo de 2?', a: 'Se terminar em 0, 2, 4, 6 ou 8 (é par). Ex: 38 é múltiplo de 2.' },
+    { st: 1, tag: 'Regra', q: 'Como saber se um número é múltiplo de 5?', a: 'Se terminar em 0 ou 5. Ex: 35 e 70 são múltiplos de 5.' },
+    { st: 1, tag: 'Regra', q: 'Como saber se um número é múltiplo de 10?', a: 'Se terminar em 0. Ex: 40, 90, 200.' },
+    { st: 1, tag: 'Regra', q: 'Como saber se um número é múltiplo de 3?', a: 'Se a soma dos seus algarismos for múltiplo de 3. Ex: 51 → 5+1=6, que é múltiplo de 3 → 51 é múltiplo de 3.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma potência?', a: 'Uma forma curta de escrever uma multiplicação de fatores iguais. Ex: 2×2×2 = 2³ (base 2, expoente 3).' },
+    { st: 2, tag: 'Definição', q: 'O que é o quadrado de um número?', a: 'O número multiplicado por si próprio. Ex: o quadrado de 7 é 7² = 7×7 = 49.' },
+    { st: 2, tag: 'Definição', q: 'O que é o cubo de um número?', a: 'O número multiplicado por si próprio três vezes. Ex: 2³ = 2×2×2 = 8.' },
+    { st: 2, tag: 'Definição', q: 'O que são a base e o expoente?', a: 'Em 5³, a base é 5 (o que se multiplica) e o expoente é 3 (quantas vezes). Lê-se "cinco ao cubo".' },
+    { st: 3, tag: 'Estratégia', q: 'Prioridade das operações', a: '1.º parênteses; 2.º potências; 3.º multiplicação e divisão (esquerda→direita); 4.º adição e subtração.' },
+    { st: 1, tag: 'Definição', q: 'O que é um número primo?', a: 'Um número maior que 1 que só tem dois divisores: 1 e ele próprio. Ex: 2, 3, 5, 7, 11, 13.' },
+    { st: 1, tag: 'Exemplo', q: 'Quais os primeiros 5 múltiplos de 6?', a: '0, 6, 12, 18, 24 (multiplicar 6 por 0, 1, 2, 3, 4).' },
+    { st: 2, tag: 'Exemplo', q: 'Calcula 3² + 4²', a: '3² = 9 e 4² = 16. Soma: 9 + 16 = 25.' },
+    { st: 1, tag: 'Exemplo', q: 'Quais os divisores de 20?', a: '1, 2, 4, 5, 10 e 20.' },
+    { st: 1, tag: 'Exemplo', q: '6 é múltiplo de 4 e de 6?', a: 'De 6 sim; de 4 não (6 ÷ 4 não dá resto 0). Múltiplos de 4 e 6 ao mesmo tempo: 12, 24, …' }
   ],
   2: [
-    { tag: 'Definição', q: 'O que é uma fração?', a: 'Representa uma ou mais partes iguais de um todo. Em 3/4: o 4 (denominador) é o nº de partes do todo, o 3 (numerador) é quantas se consideram.' },
-    { tag: 'Definição', q: 'O que é o numerador e o denominador?', a: 'Numerador: o número de cima (partes consideradas). Denominador: o número de baixo (partes iguais do todo).' },
-    { tag: 'Definição', q: 'O que são frações equivalentes?', a: 'Frações que representam a mesma quantidade. Ex: 1/2 = 2/4 = 3/6. Obtêm-se multiplicando ou dividindo numerador e denominador pelo mesmo número.' },
-    { tag: 'Regra', q: 'Como obter uma fração equivalente?', a: 'Multiplica (ou divide) o numerador E o denominador pelo mesmo número (≠ 0). Ex: 2/3 = (2×2)/(3×2) = 4/6.' },
-    { tag: 'Definição', q: 'O que é uma fração irredutível?', a: 'Uma fração que já não se pode simplificar mais (numerador e denominador não têm divisores comuns além de 1). Ex: 2/3.' },
-    { tag: 'Regra', q: 'Como simplificar uma fração?', a: 'Divide o numerador e o denominador pelo mesmo número, até não dar mais. Ex: 6/8 = 3/4.' },
-    { tag: 'Regra', q: 'Como comparar frações com o mesmo denominador?', a: 'Maior numerador → maior fração. Ex: 3/7 < 5/7.' },
-    { tag: 'Regra', q: 'Como comparar frações com o mesmo numerador?', a: 'Menor denominador → maior fração (partes maiores). Ex: 2/3 > 2/5.' },
-    { tag: 'Regra', q: 'Como somar frações com o mesmo denominador?', a: 'Somam-se os numeradores e mantém-se o denominador. Ex: 2/7 + 3/7 = 5/7.' },
-    { tag: 'Regra', q: 'Como subtrair frações com o mesmo denominador?', a: 'Subtraem-se os numeradores e mantém-se o denominador. Ex: 5/8 − 2/8 = 3/8.' },
-    { tag: 'Definição', q: 'O que é uma fração própria e imprópria?', a: 'Própria: numerador < denominador (< 1), ex: 3/4. Imprópria: numerador ≥ denominador (≥ 1), ex: 7/4.' },
-    { tag: 'Definição', q: 'O que é um numeral misto?', a: 'Uma parte inteira mais uma fração. Ex: 1 e 3/4 = 7/4.' },
-    { tag: 'Exemplo', q: 'Simplifica 8/12', a: 'Divide por 4: 8÷4 = 2, 12÷4 = 3 → 2/3.' },
-    { tag: 'Exemplo', q: '3/5 é equivalente a quê (denominador 10)?', a: 'Multiplica por 2: 3/5 = 6/10.' },
-    { tag: 'Exemplo', q: 'Calcula 1/4 + 2/4', a: '1/4 + 2/4 = 3/4.' },
-    { tag: 'Exemplo', q: 'Qual é maior: 2/3 ou 2/5?', a: '2/3 (mesmo numerador, denominador menor → partes maiores).' }
+    { st: 1, tag: 'Definição', q: 'O que é uma fração?', a: 'Representa uma ou mais partes iguais de um todo. Em 3/4: o 4 (denominador) é o nº de partes do todo, o 3 (numerador) é quantas se consideram.' },
+    { st: 1, tag: 'Definição', q: 'O que é o numerador e o denominador?', a: 'Numerador: o número de cima (partes consideradas). Denominador: o número de baixo (partes iguais do todo).' },
+    { st: 1, tag: 'Definição', q: 'O que são frações equivalentes?', a: 'Frações que representam a mesma quantidade. Ex: 1/2 = 2/4 = 3/6. Obtêm-se multiplicando ou dividindo numerador e denominador pelo mesmo número.' },
+    { st: 1, tag: 'Regra', q: 'Como obter uma fração equivalente?', a: 'Multiplica (ou divide) o numerador E o denominador pelo mesmo número (≠ 0). Ex: 2/3 = (2×2)/(3×2) = 4/6.' },
+    { st: 1, tag: 'Definição', q: 'O que é uma fração irredutível?', a: 'Uma fração que já não se pode simplificar mais (numerador e denominador não têm divisores comuns além de 1). Ex: 2/3.' },
+    { st: 1, tag: 'Regra', q: 'Como simplificar uma fração?', a: 'Divide o numerador e o denominador pelo mesmo número, até não dar mais. Ex: 6/8 = 3/4.' },
+    { st: 2, tag: 'Regra', q: 'Como comparar frações com o mesmo denominador?', a: 'Maior numerador → maior fração. Ex: 3/7 < 5/7.' },
+    { st: 2, tag: 'Regra', q: 'Como comparar frações com o mesmo numerador?', a: 'Menor denominador → maior fração (partes maiores). Ex: 2/3 > 2/5.' },
+    { st: 3, tag: 'Regra', q: 'Como somar frações com o mesmo denominador?', a: 'Somam-se os numeradores e mantém-se o denominador. Ex: 2/7 + 3/7 = 5/7.' },
+    { st: 3, tag: 'Regra', q: 'Como subtrair frações com o mesmo denominador?', a: 'Subtraem-se os numeradores e mantém-se o denominador. Ex: 5/8 − 2/8 = 3/8.' },
+    { st: 1, tag: 'Definição', q: 'O que é uma fração própria e imprópria?', a: 'Própria: numerador < denominador (< 1), ex: 3/4. Imprópria: numerador ≥ denominador (≥ 1), ex: 7/4.' },
+    { st: 1, tag: 'Definição', q: 'O que é um numeral misto?', a: 'Uma parte inteira mais uma fração. Ex: 1 e 3/4 = 7/4.' },
+    { st: 1, tag: 'Exemplo', q: 'Simplifica 8/12', a: 'Divide por 4: 8÷4 = 2, 12÷4 = 3 → 2/3.' },
+    { st: 1, tag: 'Exemplo', q: '3/5 é equivalente a quê (denominador 10)?', a: 'Multiplica por 2: 3/5 = 6/10.' },
+    { st: 3, tag: 'Exemplo', q: 'Calcula 1/4 + 2/4', a: '1/4 + 2/4 = 3/4.' },
+    { st: 2, tag: 'Exemplo', q: 'Qual é maior: 2/3 ou 2/5?', a: '2/3 (mesmo numerador, denominador menor → partes maiores).' }
   ],
   3: [
-    { tag: 'Definição', q: 'O que é um número decimal?', a: 'Um número com parte inteira e parte decimal, separadas por vírgula. Ex: 3,57 (3 inteiros e 57 centésimas).' },
-    { tag: 'Definição', q: 'Valor posicional das casas decimais', a: 'Depois da vírgula: 1.ª casa = décimas, 2.ª = centésimas, 3.ª = milésimas. Ex: em 0,4 = 4 décimas.' },
-    { tag: 'Regra', q: 'Como comparar dois números decimais?', a: 'Compara primeiro a parte inteira; se igual, compara décimas, depois centésimas… Ex: 4,57 > 4,07.' },
-    { tag: 'Regra', q: 'Acrescentar zeros à direita muda o valor?', a: 'Não: 0,5 = 0,50 = 0,500. Os zeros à direita da parte decimal não alteram o valor.' },
-    { tag: 'Definição', q: 'O que é uma percentagem?', a: 'Uma forma de exprimir uma parte em 100. Ex: 45% = 45/100 = 0,45.' },
-    { tag: 'Regra', q: 'Como passar de percentagem para decimal?', a: 'Divide por 100 (move a vírgula 2 casas para a esquerda). Ex: 30% = 0,30.' },
-    { tag: 'Regra', q: 'Como passar de fração para percentagem?', a: 'Escreve uma fração equivalente com denominador 100. Ex: 1/4 = 25/100 = 25%.' },
-    { tag: 'Fórmula', q: 'Como calcular p% de um valor?', a: 'p% de N = (p ÷ 100) × N. Ex: 20% de 50 = 0,20 × 50 = 10.' },
-    { tag: 'Regra', q: 'Como somar números decimais?', a: 'Alinha as vírgulas (e as casas) e soma como números inteiros, mantendo a vírgula. Ex: 2,5 + 1,75 = 4,25.' },
-    { tag: 'Regra', q: 'Como multiplicar um decimal por 10, 100, 1000?', a: 'Move a vírgula para a direita: 1 casa (×10), 2 casas (×100), 3 casas (×1000). Ex: 3,4 × 100 = 340.' },
-    { tag: 'Regra', q: 'Como dividir um decimal por 10, 100, 1000?', a: 'Move a vírgula para a esquerda. Ex: 56 ÷ 100 = 0,56.' },
-    { tag: 'Definição', q: 'Equivalências úteis (fração-decimal-%)', a: '1/2 = 0,5 = 50%; 1/4 = 0,25 = 25%; 3/4 = 0,75 = 75%; 1/10 = 0,1 = 10%.' },
-    { tag: 'Exemplo', q: 'Quanto é 50% de 80?', a: '0,50 × 80 = 40 (metade de 80).' },
-    { tag: 'Exemplo', q: 'Escreve 0,45 em percentagem', a: '0,45 = 45/100 = 45%.' },
-    { tag: 'Exemplo', q: 'Compara 0,45 e 40%', a: '40% = 0,40. Como 0,45 > 0,40, então 0,45 > 40%.' },
-    { tag: 'Exemplo', q: 'Calcula 2,3 + 0,75', a: 'Alinha vírgulas: 2,30 + 0,75 = 3,05.' }
+    { st: 1, tag: 'Definição', q: 'O que é um número decimal?', a: 'Um número com parte inteira e parte decimal, separadas por vírgula. Ex: 3,57 (3 inteiros e 57 centésimas).' },
+    { st: 1, tag: 'Definição', q: 'Valor posicional das casas decimais', a: 'Depois da vírgula: 1.ª casa = décimas, 2.ª = centésimas, 3.ª = milésimas. Ex: em 0,4 = 4 décimas.' },
+    { st: 1, tag: 'Regra', q: 'Como comparar dois números decimais?', a: 'Compara primeiro a parte inteira; se igual, compara décimas, depois centésimas… Ex: 4,57 > 4,07.' },
+    { st: 1, tag: 'Regra', q: 'Acrescentar zeros à direita muda o valor?', a: 'Não: 0,5 = 0,50 = 0,500. Os zeros à direita da parte decimal não alteram o valor.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma percentagem?', a: 'Uma forma de exprimir uma parte em 100. Ex: 45% = 45/100 = 0,45.' },
+    { st: 2, tag: 'Regra', q: 'Como passar de percentagem para decimal?', a: 'Divide por 100 (move a vírgula 2 casas para a esquerda). Ex: 30% = 0,30.' },
+    { st: 2, tag: 'Regra', q: 'Como passar de fração para percentagem?', a: 'Escreve uma fração equivalente com denominador 100. Ex: 1/4 = 25/100 = 25%.' },
+    { st: 2, tag: 'Fórmula', q: 'Como calcular p% de um valor?', a: 'p% de N = (p ÷ 100) × N. Ex: 20% de 50 = 0,20 × 50 = 10.' },
+    { st: 3, tag: 'Regra', q: 'Como somar números decimais?', a: 'Alinha as vírgulas (e as casas) e soma como números inteiros, mantendo a vírgula. Ex: 2,5 + 1,75 = 4,25.' },
+    { st: 3, tag: 'Regra', q: 'Como multiplicar um decimal por 10, 100, 1000?', a: 'Move a vírgula para a direita: 1 casa (×10), 2 casas (×100), 3 casas (×1000). Ex: 3,4 × 100 = 340.' },
+    { st: 3, tag: 'Regra', q: 'Como dividir um decimal por 10, 100, 1000?', a: 'Move a vírgula para a esquerda. Ex: 56 ÷ 100 = 0,56.' },
+    { st: 2, tag: 'Definição', q: 'Equivalências úteis (fração-decimal-%)', a: '1/2 = 0,5 = 50%; 1/4 = 0,25 = 25%; 3/4 = 0,75 = 75%; 1/10 = 0,1 = 10%.' },
+    { st: 2, tag: 'Exemplo', q: 'Quanto é 50% de 80?', a: '0,50 × 80 = 40 (metade de 80).' },
+    { st: 2, tag: 'Exemplo', q: 'Escreve 0,45 em percentagem', a: '0,45 = 45/100 = 45%.' },
+    { st: 1, tag: 'Exemplo', q: 'Compara 0,45 e 40%', a: '40% = 0,40. Como 0,45 > 0,40, então 0,45 > 40%.' },
+    { st: 3, tag: 'Exemplo', q: 'Calcula 2,3 + 0,75', a: 'Alinha vírgulas: 2,30 + 0,75 = 3,05.' }
   ],
   4: [
-    { tag: 'Definição', q: 'O que é um ângulo?', a: 'A abertura entre duas semirretas com a mesma origem (o vértice). Mede-se em graus (°).' },
-    { tag: 'Definição', q: 'Tipos de ângulos pela amplitude', a: 'Agudo: < 90°. Reto: = 90°. Obtuso: entre 90° e 180°. Raso: = 180°. Giro: = 360°.' },
-    { tag: 'Definição', q: 'O que são ângulos complementares?', a: 'Dois ângulos cuja soma é 90°. Ex: 30° e 60° são complementares.' },
-    { tag: 'Definição', q: 'O que são ângulos suplementares?', a: 'Dois ângulos cuja soma é 180°. Ex: 110° e 70° são suplementares.' },
-    { tag: 'Definição', q: 'Classificação de triângulos pelos lados', a: 'Equilátero: 3 lados iguais. Isósceles: 2 lados iguais. Escaleno: 3 lados diferentes.' },
-    { tag: 'Definição', q: 'Classificação de triângulos pelos ângulos', a: 'Acutângulo: 3 ângulos agudos. Retângulo: 1 ângulo reto. Obtusângulo: 1 ângulo obtuso.' },
-    { tag: 'Propriedade', q: 'Soma dos ângulos internos de um triângulo', a: 'É sempre 180°. Ex: se dois ângulos medem 60° e 70°, o terceiro mede 180° − 130° = 50°.' },
-    { tag: 'Definição', q: 'O que é um polígono?', a: 'Uma figura plana fechada formada por segmentos de reta (lados). Ex: triângulo, quadrado, pentágono.' },
-    { tag: 'Definição', q: 'O que é um quadrilátero?', a: 'Um polígono com 4 lados. Ex: quadrado, retângulo, losango, trapézio, paralelogramo.' },
-    { tag: 'Propriedade', q: 'Soma dos ângulos internos de um quadrilátero', a: 'É sempre 360°.' },
-    { tag: 'Definição', q: 'O que é o perímetro de uma figura?', a: 'A soma dos comprimentos de todos os lados. Ex: quadrado de lado 5 → perímetro = 4 × 5 = 20.' },
-    { tag: 'Regra', q: 'Critério de igualdade de triângulos (LLL)', a: 'Dois triângulos são iguais se tiverem os três lados correspondentes iguais.' },
-    { tag: 'Definição', q: 'O que são retas paralelas e perpendiculares?', a: 'Paralelas: nunca se cruzam (mesma direção). Perpendiculares: cruzam-se formando ângulos de 90°.' },
-    { tag: 'Exemplo', q: 'Um triângulo tem ângulos 90° e 45°. Quanto mede o terceiro?', a: '180° − 90° − 45° = 45°.' },
-    { tag: 'Exemplo', q: 'Perímetro de um retângulo 6 cm × 4 cm?', a: '6 + 4 + 6 + 4 = 20 cm (ou 2×(6+4) = 20).' },
-    { tag: 'Exemplo', q: 'Complementar de 35°?', a: '90° − 35° = 55°.' }
+    { st: 1, tag: 'Definição', q: 'O que é um ângulo?', a: 'A abertura entre duas semirretas com a mesma origem (o vértice). Mede-se em graus (°).' },
+    { st: 1, tag: 'Definição', q: 'Tipos de ângulos pela amplitude', a: 'Agudo: < 90°. Reto: = 90°. Obtuso: entre 90° e 180°. Raso: = 180°. Giro: = 360°.' },
+    { st: 1, tag: 'Definição', q: 'O que são ângulos complementares?', a: 'Dois ângulos cuja soma é 90°. Ex: 30° e 60° são complementares.' },
+    { st: 1, tag: 'Definição', q: 'O que são ângulos suplementares?', a: 'Dois ângulos cuja soma é 180°. Ex: 110° e 70° são suplementares.' },
+    { st: 2, tag: 'Definição', q: 'Classificação de triângulos pelos lados', a: 'Equilátero: 3 lados iguais. Isósceles: 2 lados iguais. Escaleno: 3 lados diferentes.' },
+    { st: 2, tag: 'Definição', q: 'Classificação de triângulos pelos ângulos', a: 'Acutângulo: 3 ângulos agudos. Retângulo: 1 ângulo reto. Obtusângulo: 1 ângulo obtuso.' },
+    { st: 2, tag: 'Propriedade', q: 'Soma dos ângulos internos de um triângulo', a: 'É sempre 180°. Ex: se dois ângulos medem 60° e 70°, o terceiro mede 180° − 130° = 50°.' },
+    { st: 3, tag: 'Definição', q: 'O que é um polígono?', a: 'Uma figura plana fechada formada por segmentos de reta (lados). Ex: triângulo, quadrado, pentágono.' },
+    { st: 3, tag: 'Definição', q: 'O que é um quadrilátero?', a: 'Um polígono com 4 lados. Ex: quadrado, retângulo, losango, trapézio, paralelogramo.' },
+    { st: 3, tag: 'Propriedade', q: 'Soma dos ângulos internos de um quadrilátero', a: 'É sempre 360°.' },
+    { st: 3, tag: 'Definição', q: 'O que é o perímetro de uma figura?', a: 'A soma dos comprimentos de todos os lados. Ex: quadrado de lado 5 → perímetro = 4 × 5 = 20.' },
+    { st: 2, tag: 'Regra', q: 'Critério de igualdade de triângulos (LLL)', a: 'Dois triângulos são iguais se tiverem os três lados correspondentes iguais.' },
+    { st: 1, tag: 'Definição', q: 'O que são retas paralelas e perpendiculares?', a: 'Paralelas: nunca se cruzam (mesma direção). Perpendiculares: cruzam-se formando ângulos de 90°.' },
+    { st: 2, tag: 'Exemplo', q: 'Um triângulo tem ângulos 90° e 45°. Quanto mede o terceiro?', a: '180° − 90° − 45° = 45°.' },
+    { st: 3, tag: 'Exemplo', q: 'Perímetro de um retângulo 6 cm × 4 cm?', a: '6 + 4 + 6 + 4 = 20 cm (ou 2×(6+4) = 20).' },
+    { st: 1, tag: 'Exemplo', q: 'Complementar de 35°?', a: '90° − 35° = 55°.' }
   ],
   5: [
-    { tag: 'Definição', q: 'O que é um sólido geométrico?', a: 'Uma figura no espaço (3 dimensões). Ex: cubo, prisma, pirâmide, cilindro, cone, esfera.' },
-    { tag: 'Definição', q: 'O que são faces, arestas e vértices?', a: 'Faces: as superfícies planas. Arestas: os segmentos onde duas faces se encontram. Vértices: os "cantos" (pontos).' },
-    { tag: 'Definição', q: 'O que é um poliedro?', a: 'Um sólido cujas faces são todas polígonos (planas). Ex: cubo, prisma, pirâmide. (A esfera não é poliedro.)' },
-    { tag: 'Definição', q: 'O que é um prisma?', a: 'Um poliedro com duas bases iguais e paralelas (polígonos) e faces laterais retangulares. Ex: prisma triangular, cubo.' },
-    { tag: 'Definição', q: 'O que é uma pirâmide?', a: 'Um poliedro com uma base (polígono) e faces laterais triangulares que se unem num vértice (o topo).' },
-    { tag: 'Definição', q: 'O cubo: faces, arestas e vértices', a: 'O cubo tem 6 faces (quadrados), 12 arestas e 8 vértices.' },
-    { tag: 'Regra', q: 'Quantas faces tem uma pirâmide?', a: 'O número de lados da base + 1 (a base). Ex: pirâmide quadrangular → 4 faces laterais + 1 base = 5 faces.' },
-    { tag: 'Regra', q: 'Quantos vértices tem uma pirâmide?', a: 'O número de vértices da base + 1 (o topo). Ex: pirâmide triangular → 3 + 1 = 4 vértices.' },
-    { tag: 'Definição', q: 'O que é a planificação de um sólido?', a: 'O sólido "aberto" e estendido num plano, mostrando todas as faces. Serve para construir o sólido em papel.' },
-    { tag: 'Definição', q: 'Sólidos com superfícies curvas', a: 'Cilindro (2 bases circulares), cone (1 base circular e ponta) e esfera (toda curva). Não são poliedros.' },
-    { tag: 'Propriedade', q: 'Relação de Euler (poliedros)', a: 'Vértices − Arestas + Faces = 2. Ex: cubo → 8 − 12 + 6 = 2. ✓' },
-    { tag: 'Definição', q: 'Como se nomeia uma pirâmide?', a: 'Pela forma da base: base triangular → pirâmide triangular; base quadrada → pirâmide quadrangular.' },
-    { tag: 'Exemplo', q: 'Quantas arestas tem um prisma triangular?', a: '9 arestas (3 em cada base + 3 laterais).' },
-    { tag: 'Exemplo', q: 'Uma pirâmide pentagonal tem quantas faces?', a: '5 faces laterais + 1 base = 6 faces.' },
-    { tag: 'Exemplo', q: 'Que sólido tem 6 faces quadradas iguais?', a: 'O cubo.' },
-    { tag: 'Exemplo', q: 'Quantos vértices tem um cubo?', a: '8 vértices.' }
+    { st: 1, tag: 'Definição', q: 'O que é um sólido geométrico?', a: 'Uma figura no espaço (3 dimensões). Ex: cubo, prisma, pirâmide, cilindro, cone, esfera.' },
+    { st: 1, tag: 'Definição', q: 'O que são faces, arestas e vértices?', a: 'Faces: as superfícies planas. Arestas: os segmentos onde duas faces se encontram. Vértices: os "cantos" (pontos).' },
+    { st: 1, tag: 'Definição', q: 'O que é um poliedro?', a: 'Um sólido cujas faces são todas polígonos (planas). Ex: cubo, prisma, pirâmide. (A esfera não é poliedro.)' },
+    { st: 2, tag: 'Definição', q: 'O que é um prisma?', a: 'Um poliedro com duas bases iguais e paralelas (polígonos) e faces laterais retangulares. Ex: prisma triangular, cubo.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma pirâmide?', a: 'Um poliedro com uma base (polígono) e faces laterais triangulares que se unem num vértice (o topo).' },
+    { st: 1, tag: 'Definição', q: 'O cubo: faces, arestas e vértices', a: 'O cubo tem 6 faces (quadrados), 12 arestas e 8 vértices.' },
+    { st: 2, tag: 'Regra', q: 'Quantas faces tem uma pirâmide?', a: 'O número de lados da base + 1 (a base). Ex: pirâmide quadrangular → 4 faces laterais + 1 base = 5 faces.' },
+    { st: 2, tag: 'Regra', q: 'Quantos vértices tem uma pirâmide?', a: 'O número de vértices da base + 1 (o topo). Ex: pirâmide triangular → 3 + 1 = 4 vértices.' },
+    { st: 1, tag: 'Definição', q: 'O que é a planificação de um sólido?', a: 'O sólido "aberto" e estendido num plano, mostrando todas as faces. Serve para construir o sólido em papel.' },
+    { st: 1, tag: 'Definição', q: 'Sólidos com superfícies curvas', a: 'Cilindro (2 bases circulares), cone (1 base circular e ponta) e esfera (toda curva). Não são poliedros.' },
+    { st: 1, tag: 'Propriedade', q: 'Relação de Euler (poliedros)', a: 'Vértices − Arestas + Faces = 2. Ex: cubo → 8 − 12 + 6 = 2. ✓' },
+    { st: 2, tag: 'Definição', q: 'Como se nomeia uma pirâmide?', a: 'Pela forma da base: base triangular → pirâmide triangular; base quadrada → pirâmide quadrangular.' },
+    { st: 2, tag: 'Exemplo', q: 'Quantas arestas tem um prisma triangular?', a: '9 arestas (3 em cada base + 3 laterais).' },
+    { st: 2, tag: 'Exemplo', q: 'Uma pirâmide pentagonal tem quantas faces?', a: '5 faces laterais + 1 base = 6 faces.' },
+    { st: 1, tag: 'Exemplo', q: 'Que sólido tem 6 faces quadradas iguais?', a: 'O cubo.' },
+    { st: 1, tag: 'Exemplo', q: 'Quantos vértices tem um cubo?', a: '8 vértices.' }
   ],
   6: [
-    { tag: 'Definição', q: 'O que é uma sequência?', a: 'Uma lista ordenada de elementos (termos) que seguem uma regra. Ex: 2, 4, 6, 8, … (somar 2).' },
-    { tag: 'Definição', q: 'O que é um termo de uma sequência?', a: 'Cada elemento da sequência. O 1.º termo, o 2.º termo, etc. A posição chama-se ordem.' },
-    { tag: 'Definição', q: 'O que é a lei de formação?', a: 'A regra que diz como se passa de um termo para o seguinte (ou como calcular qualquer termo). Ex: "somar 3".' },
-    { tag: 'Estratégia', q: 'Como descobrir o termo seguinte?', a: 'Procura o padrão entre termos consecutivos (somar, subtrair, multiplicar…) e aplica-o ao último termo.' },
-    { tag: 'Exemplo', q: 'Próximo termo de 3, 6, 9, 12, …?', a: 'A regra é "somar 3" → 12 + 3 = 15.' },
-    { tag: 'Exemplo', q: 'Próximo termo de 1, 2, 4, 8, …?', a: 'A regra é "multiplicar por 2" → 8 × 2 = 16.' },
-    { tag: 'Estratégia', q: 'Como calcular um termo distante (ex: o 18.º)?', a: 'Se a regra for somar sempre r: termo = 1.º termo + (ordem − 1) × r. Ex: 5, 8, 11… o 18.º = 5 + 17×3 = 56.' },
-    { tag: 'Definição', q: 'Sequência crescente ou decrescente', a: 'Crescente: os termos aumentam (ex: 2, 5, 8). Decrescente: os termos diminuem (ex: 20, 15, 10).' },
-    { tag: 'Definição', q: 'O que é uma regularidade?', a: 'Um padrão que se repete numa sequência de números ou de figuras. Permite prever os termos seguintes.' },
-    { tag: 'Exemplo', q: 'Termos em falta: 4, __, 12, 16?', a: 'A regra é "somar 4" → o termo em falta é 8.' },
-    { tag: 'Exemplo', q: 'Próximo termo de 20, 17, 14, 11, …?', a: 'A regra é "subtrair 3" → 11 − 3 = 8.' },
-    { tag: 'Estratégia', q: 'Sequência de figuras: como contar?', a: 'Conta os elementos de cada figura e procura como aumentam de uma para a seguinte (ex: +2 quadrados de cada vez).' },
-    { tag: 'Exemplo', q: 'Próximo termo de 1, 4, 9, 16, …?', a: 'São os quadrados: 1², 2², 3², 4² → o seguinte é 5² = 25.' },
-    { tag: 'Exemplo', q: 'Qual a regra de 2, 4, 6, 8?', a: 'Somar 2 (números pares). São os múltiplos de 2.' },
-    { tag: 'Exemplo', q: 'O 10.º termo de 3, 6, 9, … (múltiplos de 3)?', a: '3 × 10 = 30.' },
-    { tag: 'Definição', q: 'Termo geral (intuitivo)', a: 'Uma expressão que dá qualquer termo a partir da ordem n. Ex: para 3, 6, 9, … o termo geral é 3 × n.' }
+    { st: 1, tag: 'Definição', q: 'O que é uma sequência?', a: 'Uma lista ordenada de elementos (termos) que seguem uma regra. Ex: 2, 4, 6, 8, … (somar 2).' },
+    { st: 1, tag: 'Definição', q: 'O que é um termo de uma sequência?', a: 'Cada elemento da sequência. O 1.º termo, o 2.º termo, etc. A posição chama-se ordem.' },
+    { st: 2, tag: 'Definição', q: 'O que é a lei de formação?', a: 'A regra que diz como se passa de um termo para o seguinte (ou como calcular qualquer termo). Ex: "somar 3".' },
+    { st: 1, tag: 'Estratégia', q: 'Como descobrir o termo seguinte?', a: 'Procura o padrão entre termos consecutivos (somar, subtrair, multiplicar…) e aplica-o ao último termo.' },
+    { st: 1, tag: 'Exemplo', q: 'Próximo termo de 3, 6, 9, 12, …?', a: 'A regra é "somar 3" → 12 + 3 = 15.' },
+    { st: 1, tag: 'Exemplo', q: 'Próximo termo de 1, 2, 4, 8, …?', a: 'A regra é "multiplicar por 2" → 8 × 2 = 16.' },
+    { st: 2, tag: 'Estratégia', q: 'Como calcular um termo distante (ex: o 18.º)?', a: 'Se a regra for somar sempre r: termo = 1.º termo + (ordem − 1) × r. Ex: 5, 8, 11… o 18.º = 5 + 17×3 = 56.' },
+    { st: 1, tag: 'Definição', q: 'Sequência crescente ou decrescente', a: 'Crescente: os termos aumentam (ex: 2, 5, 8). Decrescente: os termos diminuem (ex: 20, 15, 10).' },
+    { st: 2, tag: 'Definição', q: 'O que é uma regularidade?', a: 'Um padrão que se repete numa sequência de números ou de figuras. Permite prever os termos seguintes.' },
+    { st: 1, tag: 'Exemplo', q: 'Termos em falta: 4, __, 12, 16?', a: 'A regra é "somar 4" → o termo em falta é 8.' },
+    { st: 2, tag: 'Exemplo', q: 'Próximo termo de 20, 17, 14, 11, …?', a: 'A regra é "subtrair 3" → 11 − 3 = 8.' },
+    { st: 1, tag: 'Estratégia', q: 'Sequência de figuras: como contar?', a: 'Conta os elementos de cada figura e procura como aumentam de uma para a seguinte (ex: +2 quadrados de cada vez).' },
+    { st: 2, tag: 'Exemplo', q: 'Próximo termo de 1, 4, 9, 16, …?', a: 'São os quadrados: 1², 2², 3², 4² → o seguinte é 5² = 25.' },
+    { st: 1, tag: 'Exemplo', q: 'Qual a regra de 2, 4, 6, 8?', a: 'Somar 2 (números pares). São os múltiplos de 2.' },
+    { st: 2, tag: 'Exemplo', q: 'O 10.º termo de 3, 6, 9, … (múltiplos de 3)?', a: '3 × 10 = 30.' },
+    { st: 2, tag: 'Definição', q: 'Termo geral (intuitivo)', a: 'Uma expressão que dá qualquer termo a partir da ordem n. Ex: para 3, 6, 9, … o termo geral é 3 × n.' }
   ],
   7: [
-    { tag: 'Definição', q: 'O que é a frequência absoluta?', a: 'O número de vezes que um valor (ou categoria) aparece nos dados. Ex: se 8 alunos escolheram futebol, a frequência absoluta é 8.' },
-    { tag: 'Definição', q: 'O que é uma tabela de frequências?', a: 'Uma tabela que organiza os dados, mostrando cada valor/categoria e quantas vezes ocorre.' },
-    { tag: 'Definição', q: 'Tipos de gráficos', a: 'Gráfico de barras (categorias), pictograma (com símbolos), gráfico de linhas (evolução) e gráfico circular (proporções).' },
-    { tag: 'Estratégia', q: 'Como ler um gráfico de barras?', a: 'A altura (ou comprimento) de cada barra indica a frequência. Lê o valor no eixo correspondente.' },
-    { tag: 'Definição', q: 'O que é a média?', a: 'A soma de todos os valores a dividir pelo número de valores. Ex: média de 4, 6, 8 = (4+6+8)/3 = 6.' },
-    { tag: 'Definição', q: 'O que é a moda?', a: 'O valor (ou categoria) que aparece mais vezes. Ex: em 3, 5, 5, 5, 7 a moda é 5.' },
-    { tag: 'Definição', q: 'O que é o máximo e o mínimo?', a: 'Máximo: o maior valor dos dados. Mínimo: o menor valor. A diferença chama-se amplitude.' },
-    { tag: 'Definição', q: 'O que é a amplitude?', a: 'A diferença entre o maior e o menor valor (máximo − mínimo). Mostra o quanto os dados variam.' },
-    { tag: 'Estratégia', q: 'Como calcular a média?', a: 'Soma todos os valores e divide pelo número de valores. Ex: (10+20+30)/3 = 60/3 = 20.' },
-    { tag: 'Definição', q: 'O que é uma população e uma amostra?', a: 'População: o conjunto total que se estuda. Amostra: uma parte da população escolhida para a representar.' },
-    { tag: 'Estratégia', q: 'Como construir um gráfico de barras?', a: 'Cada categoria tem uma barra; a altura corresponde à frequência. Mantém a mesma largura e espaçamento entre barras.' },
-    { tag: 'Definição', q: 'O que é um pictograma?', a: 'Um gráfico onde se usam símbolos/imagens para representar quantidades. Cada símbolo vale um certo número.' },
-    { tag: 'Exemplo', q: 'Média de 10, 15, 20?', a: '(10+15+20)/3 = 45/3 = 15.' },
-    { tag: 'Exemplo', q: 'Moda de 2, 3, 3, 4, 3, 5?', a: 'O valor mais frequente é 3 (aparece 3 vezes).' },
-    { tag: 'Exemplo', q: 'Amplitude de 5, 12, 8, 20?', a: 'Máximo 20 − mínimo 5 = 15.' },
-    { tag: 'Exemplo', q: 'Num gráfico, 50 clientes responderam. Se 20 disseram "Muito Satisfeito", que fração é?', a: '20/50 = 2/5 = 40%.' }
+    { st: 2, tag: 'Definição', q: 'O que é a frequência absoluta?', a: 'O número de vezes que um valor (ou categoria) aparece nos dados. Ex: se 8 alunos escolheram futebol, a frequência absoluta é 8.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma tabela de frequências?', a: 'Uma tabela que organiza os dados, mostrando cada valor/categoria e quantas vezes ocorre.' },
+    { st: 1, tag: 'Definição', q: 'Tipos de gráficos', a: 'Gráfico de barras (categorias), pictograma (com símbolos), gráfico de linhas (evolução) e gráfico circular (proporções).' },
+    { st: 1, tag: 'Estratégia', q: 'Como ler um gráfico de barras?', a: 'A altura (ou comprimento) de cada barra indica a frequência. Lê o valor no eixo correspondente.' },
+    { st: 3, tag: 'Definição', q: 'O que é a média?', a: 'A soma de todos os valores a dividir pelo número de valores. Ex: média de 4, 6, 8 = (4+6+8)/3 = 6.' },
+    { st: 3, tag: 'Definição', q: 'O que é a moda?', a: 'O valor (ou categoria) que aparece mais vezes. Ex: em 3, 5, 5, 5, 7 a moda é 5.' },
+    { st: 3, tag: 'Definição', q: 'O que é o máximo e o mínimo?', a: 'Máximo: o maior valor dos dados. Mínimo: o menor valor. A diferença chama-se amplitude.' },
+    { st: 3, tag: 'Definição', q: 'O que é a amplitude?', a: 'A diferença entre o maior e o menor valor (máximo − mínimo). Mostra o quanto os dados variam.' },
+    { st: 3, tag: 'Estratégia', q: 'Como calcular a média?', a: 'Soma todos os valores e divide pelo número de valores. Ex: (10+20+30)/3 = 60/3 = 20.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma população e uma amostra?', a: 'População: o conjunto total que se estuda. Amostra: uma parte da população escolhida para a representar.' },
+    { st: 1, tag: 'Estratégia', q: 'Como construir um gráfico de barras?', a: 'Cada categoria tem uma barra; a altura corresponde à frequência. Mantém a mesma largura e espaçamento entre barras.' },
+    { st: 1, tag: 'Definição', q: 'O que é um pictograma?', a: 'Um gráfico onde se usam símbolos/imagens para representar quantidades. Cada símbolo vale um certo número.' },
+    { st: 3, tag: 'Exemplo', q: 'Média de 10, 15, 20?', a: '(10+15+20)/3 = 45/3 = 15.' },
+    { st: 3, tag: 'Exemplo', q: 'Moda de 2, 3, 3, 4, 3, 5?', a: 'O valor mais frequente é 3 (aparece 3 vezes).' },
+    { st: 3, tag: 'Exemplo', q: 'Amplitude de 5, 12, 8, 20?', a: 'Máximo 20 − mínimo 5 = 15.' },
+    { st: 1, tag: 'Exemplo', q: 'Num gráfico, 50 clientes responderam. Se 20 disseram "Muito Satisfeito", que fração é?', a: '20/50 = 2/5 = 40%.' }
   ]
 };
 
@@ -243,9 +243,11 @@ function mat5ResumoShowSts(cap) {
   if (!stRow) return;
   var sts = _mat5Subtemas[cap] || [];
   if (!sts.length) { stRow.style.display = 'none'; return; }
+  var _stSel = _mat5Sel['resumo-st'] || 0;
   var h = '<div class="resumo-st-label">Subtema</div>';
+  h += '<button class="resumo-st-btn' + (_stSel === 0 ? ' active' : '') + '" data-st="0" onclick="mat5ResumoSelectSt(this,' + cap + ',0)">Todos</button>';
   sts.forEach(function(st, i) {
-    var isActive = (_mat5Sel['resumo-st'] || 0) === (i + 1);
+    var isActive = _stSel === (i + 1);
     h += '<button class="resumo-st-btn' + (isActive ? ' active' : '') + '" data-st="' + (i + 1) + '" onclick="mat5ResumoSelectSt(this,' + cap + ',' + (i + 1) + ')">' + st + '</button>';
   });
   stRow.innerHTML = h;
@@ -282,16 +284,8 @@ function mat5RenderResumoInline() {
 
   // Filtrar por subtema, se selecionado
   var stIdx = _mat5Sel['resumo-st'] || 0;
-  var cards = allCards;
-  if (stIdx > 0 && _mat5Subtemas[cap]) {
-    var stLabel = (_mat5Subtemas[cap][stIdx - 1] || '').toLowerCase();
-    var stWords = stLabel.replace(/[^a-záéíóúâêîôûãõç ]/g, '').split(' ').filter(function(w){ return w.length > 3; });
-    var filtered = allCards.filter(function(card) {
-      var hay = ((card.tag || '') + ' ' + (card.q || '')).toLowerCase();
-      return stWords.some(function(w){ return hay.indexOf(w) !== -1; });
-    });
-    if (filtered.length > 0) cards = filtered;
-  }
+  // Filtro por subtema usa o campo st de cada flashcard (fiável); 0 = Todos.
+  var cards = (stIdx > 0) ? allCards.filter(function(card){ return card.st === stIdx; }) : allCards;
 
   if (!cards.length) {
     dest.innerHTML = '<div class="resumo-empty">'

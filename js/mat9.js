@@ -36,112 +36,112 @@ var _mat9Subtemas = {
 // ═══ FLASHCARDS / TEORIA por capítulo (9.º ano) ═══
 var _mat9Cards = {
   1: [
-    { tag: 'Definição', q: 'O que são os números reais (ℝ)?', a: 'O conjunto que reúne os racionais (ℚ) e os irracionais. Inclui todos os números que se podem representar na reta numérica. ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ.' },
-    { tag: 'Definição', q: 'O que é um número irracional?', a: 'Um número que NÃO se pode escrever como fração de inteiros. A sua dízima é infinita e não periódica. Ex: √2, π, √3.' },
-    { tag: 'Definição', q: 'O que é uma dízima infinita não periódica?', a: 'Uma representação decimal com infinitas casas que nunca se repetem num período. Corresponde sempre a um número irracional. Ex: π = 3,14159…' },
-    { tag: 'Definição', q: 'O que é um intervalo de números reais?', a: 'Um conjunto de todos os reais entre dois extremos. Ex: [2, 5] = todos os x com 2 ≤ x ≤ 5. Usa [ ] para incluir o extremo e ] [ para excluir.' },
-    { tag: 'Regra', q: 'Diferença entre intervalo aberto e fechado', a: 'Fechado [a, b]: inclui a e b (≤). Aberto ]a, b[: exclui a e b (<). Pode ser misto: [a, b[ inclui a mas não b.' },
-    { tag: 'Notação', q: 'Como se escreve "x ≥ 3" como intervalo?', a: '[3, +∞[. O +∞ usa-se sempre com parêntese aberto. "x > 3" seria ]3, +∞[.' },
-    { tag: 'Definição', q: 'O que é uma inequação?', a: 'Uma desigualdade com uma incógnita (<, >, ≤, ≥). A solução é, em geral, um intervalo de valores. Ex: 2x + 1 > 5.' },
-    { tag: 'Regra', q: 'Regra de OURO ao resolver inequações', a: 'Ao multiplicar ou dividir ambos os membros por um número NEGATIVO, INVERTE-SE o sentido da desigualdade (< passa a >).' },
-    { tag: 'Estratégia', q: 'Como resolver uma inequação do 1.º grau?', a: 'Procede como numa equação: isola x. Mas atenção: se multiplicares/dividires por negativo, inverte o sinal. Apresenta a solução como intervalo.' },
-    { tag: 'Definição', q: 'O que é a reunião e a interseção de intervalos?', a: 'Reunião (∪): todos os elementos de ambos. Interseção (∩): apenas os elementos comuns a ambos.' },
-    { tag: 'Regra', q: 'Como representar a solução de uma inequação?', a: 'Por uma condição (x ≥ 2), por um intervalo ([2, +∞[) e/ou na reta numérica (bola cheia = incluído, bola vazia = excluído).' },
-    { tag: 'Exemplo', q: 'Resolve 2x − 4 > 6', a: '2x > 10 → x > 5. Solução: ]5, +∞[.' },
-    { tag: 'Exemplo', q: 'Resolve −3x ≥ 9', a: 'Divide por −3 e INVERTE: x ≤ −3. Solução: ]−∞, −3].' },
-    { tag: 'Exemplo', q: '√2 é racional ou irracional?', a: 'Irracional: não se pode escrever como fração e a dízima é infinita não periódica (√2 ≈ 1,41421…).' },
-    { tag: 'Definição', q: 'O que é o valor absoluto de um número real?', a: '|x| é a distância de x ao zero na reta; é sempre ≥ 0. |−5| = 5 e |5| = 5.' },
-    { tag: 'Exemplo', q: 'Escreve ]−∞, 4] como condição', a: 'x ≤ 4 (todos os reais menores ou iguais a 4).' }
+    { st: 1, tag: 'Definição', q: 'O que são os números reais (ℝ)?', a: 'O conjunto que reúne os racionais (ℚ) e os irracionais. Inclui todos os números que se podem representar na reta numérica. ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ.' },
+    { st: 1, tag: 'Definição', q: 'O que é um número irracional?', a: 'Um número que NÃO se pode escrever como fração de inteiros. A sua dízima é infinita e não periódica. Ex: √2, π, √3.' },
+    { st: 1, tag: 'Definição', q: 'O que é uma dízima infinita não periódica?', a: 'Uma representação decimal com infinitas casas que nunca se repetem num período. Corresponde sempre a um número irracional. Ex: π = 3,14159…' },
+    { st: 2, tag: 'Definição', q: 'O que é um intervalo de números reais?', a: 'Um conjunto de todos os reais entre dois extremos. Ex: [2, 5] = todos os x com 2 ≤ x ≤ 5. Usa [ ] para incluir o extremo e ] [ para excluir.' },
+    { st: 2, tag: 'Regra', q: 'Diferença entre intervalo aberto e fechado', a: 'Fechado [a, b]: inclui a e b (≤). Aberto ]a, b[: exclui a e b (<). Pode ser misto: [a, b[ inclui a mas não b.' },
+    { st: 2, tag: 'Notação', q: 'Como se escreve "x ≥ 3" como intervalo?', a: '[3, +∞[. O +∞ usa-se sempre com parêntese aberto. "x > 3" seria ]3, +∞[.' },
+    { st: 3, tag: 'Definição', q: 'O que é uma inequação?', a: 'Uma desigualdade com uma incógnita (<, >, ≤, ≥). A solução é, em geral, um intervalo de valores. Ex: 2x + 1 > 5.' },
+    { st: 3, tag: 'Regra', q: 'Regra de OURO ao resolver inequações', a: 'Ao multiplicar ou dividir ambos os membros por um número NEGATIVO, INVERTE-SE o sentido da desigualdade (< passa a >).' },
+    { st: 3, tag: 'Estratégia', q: 'Como resolver uma inequação do 1.º grau?', a: 'Procede como numa equação: isola x. Mas atenção: se multiplicares/dividires por negativo, inverte o sinal. Apresenta a solução como intervalo.' },
+    { st: 2, tag: 'Definição', q: 'O que é a reunião e a interseção de intervalos?', a: 'Reunião (∪): todos os elementos de ambos. Interseção (∩): apenas os elementos comuns a ambos.' },
+    { st: 3, tag: 'Regra', q: 'Como representar a solução de uma inequação?', a: 'Por uma condição (x ≥ 2), por um intervalo ([2, +∞[) e/ou na reta numérica (bola cheia = incluído, bola vazia = excluído).' },
+    { st: 3, tag: 'Exemplo', q: 'Resolve 2x − 4 > 6', a: '2x > 10 → x > 5. Solução: ]5, +∞[.' },
+    { st: 3, tag: 'Exemplo', q: 'Resolve −3x ≥ 9', a: 'Divide por −3 e INVERTE: x ≤ −3. Solução: ]−∞, −3].' },
+    { st: 1, tag: 'Exemplo', q: '√2 é racional ou irracional?', a: 'Irracional: não se pode escrever como fração e a dízima é infinita não periódica (√2 ≈ 1,41421…).' },
+    { st: 1, tag: 'Definição', q: 'O que é o valor absoluto de um número real?', a: '|x| é a distância de x ao zero na reta; é sempre ≥ 0. |−5| = 5 e |5| = 5.' },
+    { st: 2, tag: 'Exemplo', q: 'Escreve ]−∞, 4] como condição', a: 'x ≤ 4 (todos os reais menores ou iguais a 4).' }
   ],
   2: [
-    { tag: 'Fórmula', q: 'Caso notável: quadrado da soma', a: '(a + b)² = a² + 2ab + b². Ex: (x + 3)² = x² + 6x + 9.' },
-    { tag: 'Fórmula', q: 'Caso notável: quadrado da diferença', a: '(a − b)² = a² − 2ab + b². Ex: (x − 5)² = x² − 10x + 25.' },
-    { tag: 'Fórmula', q: 'Caso notável: diferença de quadrados', a: '(a + b)(a − b) = a² − b². Ex: (x + 2)(x − 2) = x² − 4.' },
-    { tag: 'Definição', q: 'O que é uma equação do 2.º grau?', a: 'Uma equação da forma ax² + bx + c = 0, com a ≠ 0. Pode ter 0, 1 ou 2 soluções.' },
-    { tag: 'Fórmula', q: 'Fórmula resolvente', a: 'x = (−b ± √(b² − 4ac)) / (2a). Serve para resolver qualquer equação ax² + bx + c = 0.' },
-    { tag: 'Definição', q: 'O que é o binómio discriminante?', a: 'Δ = b² − 4ac. Δ > 0 → duas soluções; Δ = 0 → uma solução; Δ < 0 → nenhuma solução real.' },
-    { tag: 'Estratégia', q: 'Equação incompleta ax² + bx = 0', a: 'Põe x em evidência: x(ax + b) = 0. Soluções: x = 0 ou x = −b/a. (Lei do anulamento do produto.)' },
-    { tag: 'Estratégia', q: 'Equação incompleta ax² + c = 0', a: 'Isola x²: x² = −c/a. Se −c/a ≥ 0, x = ±√(−c/a); se < 0, não tem solução real.' },
-    { tag: 'Regra', q: 'Lei do anulamento do produto', a: 'Se A × B = 0, então A = 0 ou B = 0. Usa-se para resolver equações fatorizadas. Ex: (x−2)(x+3)=0 → x=2 ou x=−3.' },
-    { tag: 'Definição', q: 'O que é a forma canónica de uma equação do 2.º grau?', a: 'a(x − h)² + k = 0, onde (h, k) é o vértice da parábola associada. Obtém-se completando o quadrado.' },
-    { tag: 'Definição', q: 'O que é um monómio e um polinómio?', a: 'Monómio: produto de um número por potências de letras (ex: 3x²). Polinómio: soma de monómios (ex: x² + 2x − 1).' },
-    { tag: 'Regra', q: 'Como multiplicar dois polinómios?', a: 'Aplica a distributiva: multiplica cada termo do primeiro por cada termo do segundo e junta os semelhantes.' },
-    { tag: 'Exemplo', q: 'Resolve x² − 5x + 6 = 0', a: 'Δ = 25 − 24 = 1; x = (5 ± 1)/2 → x = 3 ou x = 2.' },
-    { tag: 'Exemplo', q: 'Resolve x² − 9 = 0', a: 'x² = 9 → x = ±3. (Ou diferença de quadrados: (x−3)(x+3)=0.)' },
-    { tag: 'Exemplo', q: 'Desenvolve (x − 4)²', a: 'x² − 2·x·4 + 4² = x² − 8x + 16.' },
-    { tag: 'Exemplo', q: 'Quantas soluções tem x² + x + 5 = 0?', a: 'Δ = 1 − 20 = −19 < 0 → não tem soluções reais.' }
+    { st: 1, tag: 'Fórmula', q: 'Caso notável: quadrado da soma', a: '(a + b)² = a² + 2ab + b². Ex: (x + 3)² = x² + 6x + 9.' },
+    { st: 1, tag: 'Fórmula', q: 'Caso notável: quadrado da diferença', a: '(a − b)² = a² − 2ab + b². Ex: (x − 5)² = x² − 10x + 25.' },
+    { st: 1, tag: 'Fórmula', q: 'Caso notável: diferença de quadrados', a: '(a + b)(a − b) = a² − b². Ex: (x + 2)(x − 2) = x² − 4.' },
+    { st: 3, tag: 'Definição', q: 'O que é uma equação do 2.º grau?', a: 'Uma equação da forma ax² + bx + c = 0, com a ≠ 0. Pode ter 0, 1 ou 2 soluções.' },
+    { st: 3, tag: 'Fórmula', q: 'Fórmula resolvente', a: 'x = (−b ± √(b² − 4ac)) / (2a). Serve para resolver qualquer equação ax² + bx + c = 0.' },
+    { st: 3, tag: 'Definição', q: 'O que é o binómio discriminante?', a: 'Δ = b² − 4ac. Δ > 0 → duas soluções; Δ = 0 → uma solução; Δ < 0 → nenhuma solução real.' },
+    { st: 3, tag: 'Estratégia', q: 'Equação incompleta ax² + bx = 0', a: 'Põe x em evidência: x(ax + b) = 0. Soluções: x = 0 ou x = −b/a. (Lei do anulamento do produto.)' },
+    { st: 3, tag: 'Estratégia', q: 'Equação incompleta ax² + c = 0', a: 'Isola x²: x² = −c/a. Se −c/a ≥ 0, x = ±√(−c/a); se < 0, não tem solução real.' },
+    { st: 3, tag: 'Regra', q: 'Lei do anulamento do produto', a: 'Se A × B = 0, então A = 0 ou B = 0. Usa-se para resolver equações fatorizadas. Ex: (x−2)(x+3)=0 → x=2 ou x=−3.' },
+    { st: 4, tag: 'Definição', q: 'O que é a forma canónica de uma equação do 2.º grau?', a: 'a(x − h)² + k = 0, onde (h, k) é o vértice da parábola associada. Obtém-se completando o quadrado.' },
+    { st: 2, tag: 'Definição', q: 'O que é um monómio e um polinómio?', a: 'Monómio: produto de um número por potências de letras (ex: 3x²). Polinómio: soma de monómios (ex: x² + 2x − 1).' },
+    { st: 2, tag: 'Regra', q: 'Como multiplicar dois polinómios?', a: 'Aplica a distributiva: multiplica cada termo do primeiro por cada termo do segundo e junta os semelhantes.' },
+    { st: 3, tag: 'Exemplo', q: 'Resolve x² − 5x + 6 = 0', a: 'Δ = 25 − 24 = 1; x = (5 ± 1)/2 → x = 3 ou x = 2.' },
+    { st: 3, tag: 'Exemplo', q: 'Resolve x² − 9 = 0', a: 'x² = 9 → x = ±3. (Ou diferença de quadrados: (x−3)(x+3)=0.)' },
+    { st: 1, tag: 'Exemplo', q: 'Desenvolve (x − 4)²', a: 'x² − 2·x·4 + 4² = x² − 8x + 16.' },
+    { st: 3, tag: 'Exemplo', q: 'Quantas soluções tem x² + x + 5 = 0?', a: 'Δ = 1 − 20 = −19 < 0 → não tem soluções reais.' }
   ],
   3: [
-    { tag: 'Definição', q: 'O que é uma função afim?', a: 'Uma função do tipo f(x) = ax + b. O gráfico é uma reta; a é o declive e b a ordenada na origem.' },
-    { tag: 'Definição', q: 'O que é uma função linear?', a: 'Uma função afim com b = 0: f(x) = ax. O gráfico passa na origem. Traduz proporcionalidade direta.' },
-    { tag: 'Definição', q: 'O que é uma função quadrática?', a: 'Uma função do tipo f(x) = ax² + bx + c (a ≠ 0). O gráfico é uma parábola.' },
-    { tag: 'Definição', q: 'O que é o vértice de uma parábola?', a: 'O ponto mais alto (a < 0) ou mais baixo (a > 0). A sua abcissa é x = −b/(2a).' },
-    { tag: 'Regra', q: 'Concavidade de uma parábola', a: 'Se a > 0, a parábola tem concavidade voltada para cima (∪); se a < 0, para baixo (∩).' },
-    { tag: 'Definição', q: 'O que são os zeros de uma função?', a: 'Os valores de x para os quais f(x) = 0. Graficamente, onde o gráfico corta o eixo Ox. Numa quadrática, resolvem-se com a fórmula resolvente.' },
-    { tag: 'Definição', q: 'O que é a função de proporcionalidade inversa?', a: 'f(x) = k/x (k ≠ 0). O gráfico é uma hipérbole. O produto x·y = k é constante.' },
-    { tag: 'Regra', q: 'Como reconhecer proporcionalidade inversa numa tabela?', a: 'O produto x × y é constante (= k) em todas as colunas. Quando x duplica, y reduz-se a metade.' },
-    { tag: 'Definição', q: 'O que é o domínio e o contradomínio?', a: 'Domínio: conjunto dos objetos (valores de x). Contradomínio: conjunto das imagens (valores de y efetivamente atingidos).' },
-    { tag: 'Estratégia', q: 'Como calcular a imagem f(x)?', a: 'Substitui x pelo valor pretendido na expressão. Ex: f(x) = x² − 1 → f(3) = 9 − 1 = 8.' },
-    { tag: 'Definição', q: 'O que é o declive de uma reta?', a: 'O valor a em f(x) = ax + b. Mede a inclinação: m = (y₂ − y₁)/(x₂ − x₁). Positivo → cresce; negativo → decresce.' },
-    { tag: 'Definição', q: 'O que é a ordenada na origem?', a: 'O valor b em f(x) = ax + b: a ordenada do ponto onde a reta corta o eixo Oy (x = 0).' },
-    { tag: 'Exemplo', q: 'Calcula o vértice de f(x) = x² − 4x + 3', a: 'x_v = −(−4)/(2·1) = 2; y_v = f(2) = 4 − 8 + 3 = −1. Vértice (2, −1).' },
-    { tag: 'Exemplo', q: 'Zeros de f(x) = x² − 4', a: 'x² − 4 = 0 → x = ±2. Os zeros são −2 e 2.' },
-    { tag: 'Exemplo', q: 'Numa proporcionalidade inversa, se y = 6 quando x = 2, qual k?', a: 'k = x·y = 2·6 = 12. A função é f(x) = 12/x.' },
-    { tag: 'Exemplo', q: 'f(x) = 3x − 2, calcula f(4)', a: 'f(4) = 3·4 − 2 = 10.' }
+    { st: 1, tag: 'Definição', q: 'O que é uma função afim?', a: 'Uma função do tipo f(x) = ax + b. O gráfico é uma reta; a é o declive e b a ordenada na origem.' },
+    { st: 1, tag: 'Definição', q: 'O que é uma função linear?', a: 'Uma função afim com b = 0: f(x) = ax. O gráfico passa na origem. Traduz proporcionalidade direta.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma função quadrática?', a: 'Uma função do tipo f(x) = ax² + bx + c (a ≠ 0). O gráfico é uma parábola.' },
+    { st: 2, tag: 'Definição', q: 'O que é o vértice de uma parábola?', a: 'O ponto mais alto (a < 0) ou mais baixo (a > 0). A sua abcissa é x = −b/(2a).' },
+    { st: 2, tag: 'Regra', q: 'Concavidade de uma parábola', a: 'Se a > 0, a parábola tem concavidade voltada para cima (∪); se a < 0, para baixo (∩).' },
+    { st: 1, tag: 'Definição', q: 'O que são os zeros de uma função?', a: 'Os valores de x para os quais f(x) = 0. Graficamente, onde o gráfico corta o eixo Ox. Numa quadrática, resolvem-se com a fórmula resolvente.' },
+    { st: 3, tag: 'Definição', q: 'O que é a função de proporcionalidade inversa?', a: 'f(x) = k/x (k ≠ 0). O gráfico é uma hipérbole. O produto x·y = k é constante.' },
+    { st: 3, tag: 'Regra', q: 'Como reconhecer proporcionalidade inversa numa tabela?', a: 'O produto x × y é constante (= k) em todas as colunas. Quando x duplica, y reduz-se a metade.' },
+    { st: 1, tag: 'Definição', q: 'O que é o domínio e o contradomínio?', a: 'Domínio: conjunto dos objetos (valores de x). Contradomínio: conjunto das imagens (valores de y efetivamente atingidos).' },
+    { st: 1, tag: 'Estratégia', q: 'Como calcular a imagem f(x)?', a: 'Substitui x pelo valor pretendido na expressão. Ex: f(x) = x² − 1 → f(3) = 9 − 1 = 8.' },
+    { st: 1, tag: 'Definição', q: 'O que é o declive de uma reta?', a: 'O valor a em f(x) = ax + b. Mede a inclinação: m = (y₂ − y₁)/(x₂ − x₁). Positivo → cresce; negativo → decresce.' },
+    { st: 1, tag: 'Definição', q: 'O que é a ordenada na origem?', a: 'O valor b em f(x) = ax + b: a ordenada do ponto onde a reta corta o eixo Oy (x = 0).' },
+    { st: 2, tag: 'Exemplo', q: 'Calcula o vértice de f(x) = x² − 4x + 3', a: 'x_v = −(−4)/(2·1) = 2; y_v = f(2) = 4 − 8 + 3 = −1. Vértice (2, −1).' },
+    { st: 2, tag: 'Exemplo', q: 'Zeros de f(x) = x² − 4', a: 'x² − 4 = 0 → x = ±2. Os zeros são −2 e 2.' },
+    { st: 3, tag: 'Exemplo', q: 'Numa proporcionalidade inversa, se y = 6 quando x = 2, qual k?', a: 'k = x·y = 2·6 = 12. A função é f(x) = 12/x.' },
+    { st: 1, tag: 'Exemplo', q: 'f(x) = 3x − 2, calcula f(4)', a: 'f(4) = 3·4 − 2 = 10.' }
   ],
   4: [
-    { tag: 'Definição', q: 'O que são as razões trigonométricas?', a: 'Num triângulo retângulo, para um ângulo agudo: seno, cosseno e tangente - quocientes entre os lados do triângulo.' },
-    { tag: 'Fórmula', q: 'Definição de seno de um ângulo agudo', a: 'sen(α) = cateto oposto / hipotenusa.' },
-    { tag: 'Fórmula', q: 'Definição de cosseno de um ângulo agudo', a: 'cos(α) = cateto adjacente / hipotenusa.' },
-    { tag: 'Fórmula', q: 'Definição de tangente de um ângulo agudo', a: 'tg(α) = cateto oposto / cateto adjacente = sen(α)/cos(α).' },
-    { tag: 'Fórmula', q: 'Fórmula fundamental da trigonometria', a: 'sen²(α) + cos²(α) = 1. Permite calcular uma razão a partir da outra.' },
-    { tag: 'Definição', q: 'Valores notáveis: 30°, 45° e 60°', a: 'sen30°=½, cos30°=√3/2; sen45°=cos45°=√2/2; sen60°=√3/2, cos60°=½; tg45°=1.' },
-    { tag: 'Estratégia', q: 'Como determinar um lado com trigonometria?', a: 'Identifica o ângulo e os lados (oposto/adjacente/hipotenusa), escolhe a razão adequada (sen, cos ou tg) e resolve a equação.' },
-    { tag: 'Definição', q: 'O que é um ângulo ao centro?', a: 'Um ângulo com o vértice no centro da circunferência. A sua amplitude é igual à do arco correspondente.' },
-    { tag: 'Definição', q: 'O que é um ângulo inscrito?', a: 'Um ângulo com o vértice na circunferência. A sua amplitude é METADE do arco (ou do ângulo ao centro) correspondente.' },
-    { tag: 'Fórmula', q: 'Comprimento de um arco de circunferência', a: 'Comprimento = (amplitude/360°) × 2πr. É a fração da circunferência correspondente ao ângulo.' },
-    { tag: 'Definição', q: 'O que é um lugar geométrico?', a: 'O conjunto de todos os pontos que satisfazem uma dada condição. Ex: a circunferência é o lugar dos pontos a distância r de um centro.' },
-    { tag: 'Definição', q: 'O que é a mediatriz de um segmento?', a: 'O lugar geométrico dos pontos equidistantes dos dois extremos do segmento. É uma reta perpendicular ao segmento no seu ponto médio.' },
-    { tag: 'Definição', q: 'O que é a bissetriz de um ângulo?', a: 'O lugar geométrico dos pontos equidistantes dos dois lados do ângulo. Divide o ângulo em dois ângulos iguais.' },
-    { tag: 'Exemplo', q: 'Num triângulo retângulo, cateto oposto 3 e hipotenusa 5. sen(α)?', a: 'sen(α) = 3/5 = 0,6.' },
-    { tag: 'Exemplo', q: 'Arco correspondente a um ângulo ao centro de 90° numa circunferência?', a: 'É 90°, igual ao ângulo ao centro. O comprimento é ¼ da circunferência.' },
-    { tag: 'Exemplo', q: 'Ângulo inscrito que "vê" um arco de 80°. Quanto mede?', a: 'Metade do arco: 80°/2 = 40°.' }
+    { st: 1, tag: 'Definição', q: 'O que são as razões trigonométricas?', a: 'Num triângulo retângulo, para um ângulo agudo: seno, cosseno e tangente - quocientes entre os lados do triângulo.' },
+    { st: 1, tag: 'Fórmula', q: 'Definição de seno de um ângulo agudo', a: 'sen(α) = cateto oposto / hipotenusa.' },
+    { st: 1, tag: 'Fórmula', q: 'Definição de cosseno de um ângulo agudo', a: 'cos(α) = cateto adjacente / hipotenusa.' },
+    { st: 1, tag: 'Fórmula', q: 'Definição de tangente de um ângulo agudo', a: 'tg(α) = cateto oposto / cateto adjacente = sen(α)/cos(α).' },
+    { st: 1, tag: 'Fórmula', q: 'Fórmula fundamental da trigonometria', a: 'sen²(α) + cos²(α) = 1. Permite calcular uma razão a partir da outra.' },
+    { st: 1, tag: 'Definição', q: 'Valores notáveis: 30°, 45° e 60°', a: 'sen30°=½, cos30°=√3/2; sen45°=cos45°=√2/2; sen60°=√3/2, cos60°=½; tg45°=1.' },
+    { st: 2, tag: 'Estratégia', q: 'Como determinar um lado com trigonometria?', a: 'Identifica o ângulo e os lados (oposto/adjacente/hipotenusa), escolhe a razão adequada (sen, cos ou tg) e resolve a equação.' },
+    { st: 3, tag: 'Definição', q: 'O que é um ângulo ao centro?', a: 'Um ângulo com o vértice no centro da circunferência. A sua amplitude é igual à do arco correspondente.' },
+    { st: 3, tag: 'Definição', q: 'O que é um ângulo inscrito?', a: 'Um ângulo com o vértice na circunferência. A sua amplitude é METADE do arco (ou do ângulo ao centro) correspondente.' },
+    { st: 3, tag: 'Fórmula', q: 'Comprimento de um arco de circunferência', a: 'Comprimento = (amplitude/360°) × 2πr. É a fração da circunferência correspondente ao ângulo.' },
+    { st: 3, tag: 'Definição', q: 'O que é um lugar geométrico?', a: 'O conjunto de todos os pontos que satisfazem uma dada condição. Ex: a circunferência é o lugar dos pontos a distância r de um centro.' },
+    { st: 3, tag: 'Definição', q: 'O que é a mediatriz de um segmento?', a: 'O lugar geométrico dos pontos equidistantes dos dois extremos do segmento. É uma reta perpendicular ao segmento no seu ponto médio.' },
+    { st: 3, tag: 'Definição', q: 'O que é a bissetriz de um ângulo?', a: 'O lugar geométrico dos pontos equidistantes dos dois lados do ângulo. Divide o ângulo em dois ângulos iguais.' },
+    { st: 2, tag: 'Exemplo', q: 'Num triângulo retângulo, cateto oposto 3 e hipotenusa 5. sen(α)?', a: 'sen(α) = 3/5 = 0,6.' },
+    { st: 3, tag: 'Exemplo', q: 'Arco correspondente a um ângulo ao centro de 90° numa circunferência?', a: 'É 90°, igual ao ângulo ao centro. O comprimento é ¼ da circunferência.' },
+    { st: 3, tag: 'Exemplo', q: 'Ângulo inscrito que "vê" um arco de 80°. Quanto mede?', a: 'Metade do arco: 80°/2 = 40°.' }
   ],
   5: [
-    { tag: 'Definição', q: 'O que é uma experiência aleatória?', a: 'Uma experiência cujo resultado não se consegue prever com certeza, embora se conheçam os resultados possíveis. Ex: lançar um dado.' },
-    { tag: 'Definição', q: 'O que é o espaço de resultados (ou amostral)?', a: 'O conjunto de TODOS os resultados possíveis de uma experiência aleatória. Representa-se por S ou Ω. Ex: dado → {1,2,3,4,5,6}.' },
-    { tag: 'Definição', q: 'O que é um acontecimento?', a: 'Um subconjunto do espaço de resultados. Ex: "sair par" = {2, 4, 6}.' },
-    { tag: 'Definição', q: 'Acontecimento certo, impossível e elementar', a: 'Certo: ocorre sempre (P = 1). Impossível: nunca ocorre (P = 0). Elementar: tem um só resultado.' },
-    { tag: 'Fórmula', q: 'Regra de Laplace (probabilidade)', a: 'Em casos equiprováveis: P(A) = nº de casos favoráveis / nº de casos possíveis. O valor está entre 0 e 1.' },
-    { tag: 'Definição', q: 'O que são acontecimentos incompatíveis (disjuntos)?', a: 'Não podem ocorrer ao mesmo tempo: A ∩ B = ∅. Ex: "sair 1" e "sair 6" num dado.' },
-    { tag: 'Definição', q: 'O que é o acontecimento contrário?', a: 'O contrário de A (Ā) ocorre quando A não ocorre. P(Ā) = 1 − P(A).' },
-    { tag: 'Fórmula', q: 'Probabilidade da reunião (acontecimentos)', a: 'P(A ∪ B) = P(A) + P(B) − P(A ∩ B). Se forem incompatíveis: P(A ∪ B) = P(A) + P(B).' },
-    { tag: 'Definição', q: 'Operações com acontecimentos', a: 'Reunião (A ∪ B): ocorre A ou B. Interseção (A ∩ B): ocorrem ambos. Contrário (Ā): não ocorre A.' },
-    { tag: 'Estratégia', q: 'Como contar casos em experiências compostas?', a: 'Usa uma tabela de dupla entrada ou um diagrama de árvore para listar todos os resultados possíveis.' },
-    { tag: 'Regra', q: 'Valores possíveis de uma probabilidade', a: '0 ≤ P(A) ≤ 1. A soma das probabilidades de todos os resultados de S é sempre 1.' },
-    { tag: 'Exemplo', q: 'P de sair número par num dado?', a: 'Favoráveis {2,4,6} = 3; possíveis = 6. P = 3/6 = 1/2.' },
-    { tag: 'Exemplo', q: 'P de NÃO sair o 5 num dado?', a: 'P(sair 5) = 1/6, logo P(não sair 5) = 1 − 1/6 = 5/6.' },
-    { tag: 'Exemplo', q: 'Espaço de resultados ao lançar duas moedas?', a: '{CC, CK, KC, KK} → 4 resultados (C = cara, K = coroa).' },
-    { tag: 'Exemplo', q: 'P de tirar uma bola vermelha (4 em 10)?', a: 'P = 4/10 = 2/5 = 0,4 = 40%.' },
-    { tag: 'Exemplo', q: 'P de sair um número maior que 4 num dado?', a: 'Favoráveis {5, 6} = 2; P = 2/6 = 1/3.' }
+    { st: 1, tag: 'Definição', q: 'O que é uma experiência aleatória?', a: 'Uma experiência cujo resultado não se consegue prever com certeza, embora se conheçam os resultados possíveis. Ex: lançar um dado.' },
+    { st: 1, tag: 'Definição', q: 'O que é o espaço de resultados (ou amostral)?', a: 'O conjunto de TODOS os resultados possíveis de uma experiência aleatória. Representa-se por S ou Ω. Ex: dado → {1,2,3,4,5,6}.' },
+    { st: 2, tag: 'Definição', q: 'O que é um acontecimento?', a: 'Um subconjunto do espaço de resultados. Ex: "sair par" = {2, 4, 6}.' },
+    { st: 2, tag: 'Definição', q: 'Acontecimento certo, impossível e elementar', a: 'Certo: ocorre sempre (P = 1). Impossível: nunca ocorre (P = 0). Elementar: tem um só resultado.' },
+    { st: 2, tag: 'Fórmula', q: 'Regra de Laplace (probabilidade)', a: 'Em casos equiprováveis: P(A) = nº de casos favoráveis / nº de casos possíveis. O valor está entre 0 e 1.' },
+    { st: 3, tag: 'Definição', q: 'O que são acontecimentos incompatíveis (disjuntos)?', a: 'Não podem ocorrer ao mesmo tempo: A ∩ B = ∅. Ex: "sair 1" e "sair 6" num dado.' },
+    { st: 3, tag: 'Definição', q: 'O que é o acontecimento contrário?', a: 'O contrário de A (Ā) ocorre quando A não ocorre. P(Ā) = 1 − P(A).' },
+    { st: 3, tag: 'Fórmula', q: 'Probabilidade da reunião (acontecimentos)', a: 'P(A ∪ B) = P(A) + P(B) − P(A ∩ B). Se forem incompatíveis: P(A ∪ B) = P(A) + P(B).' },
+    { st: 1, tag: 'Definição', q: 'Operações com acontecimentos', a: 'Reunião (A ∪ B): ocorre A ou B. Interseção (A ∩ B): ocorrem ambos. Contrário (Ā): não ocorre A.' },
+    { st: 2, tag: 'Estratégia', q: 'Como contar casos em experiências compostas?', a: 'Usa uma tabela de dupla entrada ou um diagrama de árvore para listar todos os resultados possíveis.' },
+    { st: 2, tag: 'Regra', q: 'Valores possíveis de uma probabilidade', a: '0 ≤ P(A) ≤ 1. A soma das probabilidades de todos os resultados de S é sempre 1.' },
+    { st: 2, tag: 'Exemplo', q: 'P de sair número par num dado?', a: 'Favoráveis {2,4,6} = 3; possíveis = 6. P = 3/6 = 1/2.' },
+    { st: 1, tag: 'Exemplo', q: 'P de NÃO sair o 5 num dado?', a: 'P(sair 5) = 1/6, logo P(não sair 5) = 1 − 1/6 = 5/6.' },
+    { st: 2, tag: 'Exemplo', q: 'Espaço de resultados ao lançar duas moedas?', a: '{CC, CK, KC, KK} → 4 resultados (C = cara, K = coroa).' },
+    { st: 1, tag: 'Exemplo', q: 'P de tirar uma bola vermelha (4 em 10)?', a: 'P = 4/10 = 2/5 = 0,4 = 40%.' },
+    { st: 2, tag: 'Exemplo', q: 'P de sair um número maior que 4 num dado?', a: 'Favoráveis {5, 6} = 2; P = 2/6 = 1/3.' }
   ],
   6: [
-    { tag: 'Definição', q: 'O que são as medidas de localização?', a: 'Valores que resumem onde se "centram" os dados: média, moda, mediana e quartis.' },
-    { tag: 'Definição', q: 'O que é a média?', a: 'A soma de todos os valores a dividir pelo número de valores. Sensível a valores extremos.' },
-    { tag: 'Definição', q: 'O que é a mediana?', a: 'O valor central dos dados ORDENADOS. Se o número de dados for par, é a média dos dois centrais. Resistente a extremos.' },
-    { tag: 'Definição', q: 'O que é a moda?', a: 'O valor (ou valores) que ocorre com maior frequência. Pode haver mais de uma moda ou nenhuma.' },
-    { tag: 'Definição', q: 'O que são os quartis (Q1, Q2, Q3)?', a: 'Dividem os dados ordenados em quatro partes iguais (25% cada). Q2 é a mediana. Q1 = 1.º quartil, Q3 = 3.º quartil.' },
-    { tag: 'Fórmula', q: 'O que é a amplitude interquartis (AIQ)?', a: 'AIQ = Q3 − Q1. Mede a dispersão dos 50% centrais dos dados; é resistente a valores extremos.' },
-    { tag: 'Definição', q: 'O que é a amplitude?', a: 'A diferença entre o maior e o menor valor: máximo − mínimo. Mede a dispersão total.' },
-    { tag: 'Definição', q: 'O que é o diagrama de extremos e quartis?', a: 'A "caixa de bigodes": mostra mínimo, Q1, mediana, Q3 e máximo. Resume a distribuição e permite comparar conjuntos.' },
-    { tag: 'Definição', q: 'O que é a frequência absoluta e relativa?', a: 'Absoluta (fi): nº de vezes que um valor ocorre. Relativa (fri): fi/n (total), muitas vezes em %.' },
-    { tag: 'Definição', q: 'O que é um histograma?', a: 'Um gráfico de barras contíguas para dados agrupados em classes (variáveis contínuas). A área de cada barra representa a frequência.' },
-    { tag: 'Definição', q: 'Variável qualitativa vs quantitativa', a: 'Qualitativa: não numérica (cor, desporto). Quantitativa: numérica - discreta (nº de irmãos) ou contínua (altura).' },
-    { tag: 'Estratégia', q: 'Como calcular a mediana?', a: 'Ordena os dados. Se n é ímpar, é o do meio; se n é par, é a média dos dois centrais.' },
-    { tag: 'Exemplo', q: 'Média de 10, 12, 14, 16, 18?', a: '(10+12+14+16+18)/5 = 70/5 = 14.' },
-    { tag: 'Exemplo', q: 'Mediana de 3, 7, 8, 12, 15?', a: 'Já ordenados, 5 valores (ímpar): a mediana é o central → 8.' },
-    { tag: 'Exemplo', q: 'Amplitude interquartis se Q1 = 10 e Q3 = 22?', a: 'AIQ = Q3 − Q1 = 22 − 10 = 12.' },
-    { tag: 'Exemplo', q: 'Moda de 4, 4, 5, 7, 7, 7, 9?', a: 'O valor mais frequente é 7 (três vezes). Moda = 7.' }
+    { st: 1, tag: 'Definição', q: 'O que são as medidas de localização?', a: 'Valores que resumem onde se "centram" os dados: média, moda, mediana e quartis.' },
+    { st: 1, tag: 'Definição', q: 'O que é a média?', a: 'A soma de todos os valores a dividir pelo número de valores. Sensível a valores extremos.' },
+    { st: 1, tag: 'Definição', q: 'O que é a mediana?', a: 'O valor central dos dados ORDENADOS. Se o número de dados for par, é a média dos dois centrais. Resistente a extremos.' },
+    { st: 1, tag: 'Definição', q: 'O que é a moda?', a: 'O valor (ou valores) que ocorre com maior frequência. Pode haver mais de uma moda ou nenhuma.' },
+    { st: 2, tag: 'Definição', q: 'O que são os quartis (Q1, Q2, Q3)?', a: 'Dividem os dados ordenados em quatro partes iguais (25% cada). Q2 é a mediana. Q1 = 1.º quartil, Q3 = 3.º quartil.' },
+    { st: 2, tag: 'Fórmula', q: 'O que é a amplitude interquartis (AIQ)?', a: 'AIQ = Q3 − Q1. Mede a dispersão dos 50% centrais dos dados; é resistente a valores extremos.' },
+    { st: 1, tag: 'Definição', q: 'O que é a amplitude?', a: 'A diferença entre o maior e o menor valor: máximo − mínimo. Mede a dispersão total.' },
+    { st: 2, tag: 'Definição', q: 'O que é o diagrama de extremos e quartis?', a: 'A "caixa de bigodes": mostra mínimo, Q1, mediana, Q3 e máximo. Resume a distribuição e permite comparar conjuntos.' },
+    { st: 3, tag: 'Definição', q: 'O que é a frequência absoluta e relativa?', a: 'Absoluta (fi): nº de vezes que um valor ocorre. Relativa (fri): fi/n (total), muitas vezes em %.' },
+    { st: 3, tag: 'Definição', q: 'O que é um histograma?', a: 'Um gráfico de barras contíguas para dados agrupados em classes (variáveis contínuas). A área de cada barra representa a frequência.' },
+    { st: 1, tag: 'Definição', q: 'Variável qualitativa vs quantitativa', a: 'Qualitativa: não numérica (cor, desporto). Quantitativa: numérica - discreta (nº de irmãos) ou contínua (altura).' },
+    { st: 1, tag: 'Estratégia', q: 'Como calcular a mediana?', a: 'Ordena os dados. Se n é ímpar, é o do meio; se n é par, é a média dos dois centrais.' },
+    { st: 1, tag: 'Exemplo', q: 'Média de 10, 12, 14, 16, 18?', a: '(10+12+14+16+18)/5 = 70/5 = 14.' },
+    { st: 2, tag: 'Exemplo', q: 'Mediana de 3, 7, 8, 12, 15?', a: 'Já ordenados, 5 valores (ímpar): a mediana é o central → 8.' },
+    { st: 3, tag: 'Exemplo', q: 'Amplitude interquartis se Q1 = 10 e Q3 = 22?', a: 'AIQ = Q3 − Q1 = 22 − 10 = 12.' },
+    { st: 1, tag: 'Exemplo', q: 'Moda de 4, 4, 5, 7, 7, 7, 9?', a: 'O valor mais frequente é 7 (três vezes). Moda = 7.' }
   ]
 };
 
@@ -223,9 +223,11 @@ function mat9ResumoShowSts(cap) {
   if (!stRow) return;
   var sts = _mat9Subtemas[cap] || [];
   if (!sts.length) { stRow.style.display = 'none'; return; }
+  var _stSel = _mat9Sel['resumo-st'] || 0;
   var h = '<div class="resumo-st-label">Subtema</div>';
+  h += '<button class="resumo-st-btn' + (_stSel === 0 ? ' active' : '') + '" data-st="0" onclick="mat9ResumoSelectSt(this,' + cap + ',0)">Todos</button>';
   sts.forEach(function(st, i) {
-    var isActive = (_mat9Sel['resumo-st'] || 0) === (i + 1);
+    var isActive = _stSel === (i + 1);
     h += '<button class="resumo-st-btn' + (isActive ? ' active' : '') + '" data-st="' + (i + 1) + '" onclick="mat9ResumoSelectSt(this,' + cap + ',' + (i + 1) + ')">' + st + '</button>';
   });
   stRow.innerHTML = h;
@@ -262,16 +264,8 @@ function mat9RenderResumoInline() {
 
   // Filtrar por subtema, se selecionado
   var stIdx = _mat9Sel['resumo-st'] || 0;
-  var cards = allCards;
-  if (stIdx > 0 && _mat9Subtemas[cap]) {
-    var stLabel = (_mat9Subtemas[cap][stIdx - 1] || '').toLowerCase();
-    var stWords = stLabel.replace(/[^a-záéíóúâêîôûãõç ]/g, '').split(' ').filter(function(w){ return w.length > 3; });
-    var filtered = allCards.filter(function(card) {
-      var hay = ((card.tag || '') + ' ' + (card.q || '')).toLowerCase();
-      return stWords.some(function(w){ return hay.indexOf(w) !== -1; });
-    });
-    if (filtered.length > 0) cards = filtered;
-  }
+  // Filtro por subtema usa o campo st de cada flashcard (fiável); 0 = Todos.
+  var cards = (stIdx > 0) ? allCards.filter(function(card){ return card.st === stIdx; }) : allCards;
 
   if (!cards.length) {
     dest.innerHTML = '<div class="resumo-empty">'

@@ -36,112 +36,112 @@ var _mat10Subtemas = {
 // ═══ FLASHCARDS / TEORIA por capítulo (10.º ano · Matemática A) ═══
 var _mat10Cards = {
   1: [
-    { tag: 'Definição', q: 'O que é uma proposição?', a: 'Uma afirmação à qual se pode atribuir um e um só valor lógico: Verdadeiro (V) ou Falso (F). Ex: "2 é par" é verdadeira.' },
-    { tag: 'Definição', q: 'O que é a negação (¬p)?', a: 'A proposição com o valor lógico contrário de p. Se p é V, ¬p é F (e vice-versa).' },
-    { tag: 'Definição', q: 'O que é a conjunção (p ∧ q)?', a: 'A proposição "p e q". É verdadeira apenas quando p e q são ambas verdadeiras.' },
-    { tag: 'Definição', q: 'O que é a disjunção (p ∨ q)?', a: 'A proposição "p ou q". É falsa apenas quando p e q são ambas falsas.' },
-    { tag: 'Definição', q: 'O que é a implicação (p ⇒ q)?', a: 'A proposição "se p então q". Só é falsa quando p é verdadeira e q é falsa.' },
-    { tag: 'Definição', q: 'O que é a equivalência (p ⇔ q)?', a: 'A proposição "p se e só se q". É verdadeira quando p e q têm o mesmo valor lógico.' },
-    { tag: 'Propriedade', q: 'Leis de De Morgan', a: '¬(p ∧ q) ⇔ ¬p ∨ ¬q  e  ¬(p ∨ q) ⇔ ¬p ∧ ¬q. A negação troca ∧ por ∨ e nega cada parcela.' },
-    { tag: 'Definição', q: 'O que é uma condição?', a: 'Uma expressão com variáveis que se torna proposição quando se atribuem valores às variáveis. Ex: x > 3.' },
-    { tag: 'Definição', q: 'Quantificador universal (∀)', a: '"∀x, p(x)" lê-se "qualquer que seja x, p(x)" - a condição é verdadeira para TODOS os valores.' },
-    { tag: 'Definição', q: 'Quantificador existencial (∃)', a: '"∃x: p(x)" lê-se "existe x tal que p(x)" - há PELO MENOS UM valor que verifica a condição.' },
-    { tag: 'Propriedade', q: 'Negação de quantificadores', a: '¬(∀x, p(x)) ⇔ ∃x: ¬p(x)  e  ¬(∃x: p(x)) ⇔ ∀x, ¬p(x).' },
-    { tag: 'Definição', q: 'Condição necessária e suficiente', a: 'Em p ⇒ q: p é suficiente para q; q é necessária para p. Se p ⇔ q, é necessária E suficiente.' },
-    { tag: 'Definição', q: 'Operações com conjuntos', a: 'Reunião (A ∪ B): elementos de A ou B. Interseção (A ∩ B): elementos comuns. A \\ B: em A mas não em B.' },
-    { tag: 'Exemplo', q: 'Nega "todos os alunos passaram"', a: '"Existe (pelo menos) um aluno que não passou."' },
-    { tag: 'Exemplo', q: 'Valor lógico de (V ∧ F) ∨ V', a: '(V ∧ F) = F; depois F ∨ V = V. Resultado: Verdadeiro.' },
-    { tag: 'Exemplo', q: '[2, 5] ∩ [4, 8] = ?', a: '[4, 5] (os reais que pertencem a ambos os intervalos).' }
+    { st: 1, tag: 'Definição', q: 'O que é uma proposição?', a: 'Uma afirmação à qual se pode atribuir um e um só valor lógico: Verdadeiro (V) ou Falso (F). Ex: "2 é par" é verdadeira.' },
+    { st: 1, tag: 'Definição', q: 'O que é a negação (¬p)?', a: 'A proposição com o valor lógico contrário de p. Se p é V, ¬p é F (e vice-versa).' },
+    { st: 1, tag: 'Definição', q: 'O que é a conjunção (p ∧ q)?', a: 'A proposição "p e q". É verdadeira apenas quando p e q são ambas verdadeiras.' },
+    { st: 1, tag: 'Definição', q: 'O que é a disjunção (p ∨ q)?', a: 'A proposição "p ou q". É falsa apenas quando p e q são ambas falsas.' },
+    { st: 1, tag: 'Definição', q: 'O que é a implicação (p ⇒ q)?', a: 'A proposição "se p então q". Só é falsa quando p é verdadeira e q é falsa.' },
+    { st: 1, tag: 'Definição', q: 'O que é a equivalência (p ⇔ q)?', a: 'A proposição "p se e só se q". É verdadeira quando p e q têm o mesmo valor lógico.' },
+    { st: 1, tag: 'Propriedade', q: 'Leis de De Morgan', a: '¬(p ∧ q) ⇔ ¬p ∨ ¬q  e  ¬(p ∨ q) ⇔ ¬p ∧ ¬q. A negação troca ∧ por ∨ e nega cada parcela.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma condição?', a: 'Uma expressão com variáveis que se torna proposição quando se atribuem valores às variáveis. Ex: x > 3.' },
+    { st: 2, tag: 'Definição', q: 'Quantificador universal (∀)', a: '"∀x, p(x)" lê-se "qualquer que seja x, p(x)" - a condição é verdadeira para TODOS os valores.' },
+    { st: 2, tag: 'Definição', q: 'Quantificador existencial (∃)', a: '"∃x: p(x)" lê-se "existe x tal que p(x)" - há PELO MENOS UM valor que verifica a condição.' },
+    { st: 2, tag: 'Propriedade', q: 'Negação de quantificadores', a: '¬(∀x, p(x)) ⇔ ∃x: ¬p(x)  e  ¬(∃x: p(x)) ⇔ ∀x, ¬p(x).' },
+    { st: 2, tag: 'Definição', q: 'Condição necessária e suficiente', a: 'Em p ⇒ q: p é suficiente para q; q é necessária para p. Se p ⇔ q, é necessária E suficiente.' },
+    { st: 3, tag: 'Definição', q: 'Operações com conjuntos', a: 'Reunião (A ∪ B): elementos de A ou B. Interseção (A ∩ B): elementos comuns. A \\ B: em A mas não em B.' },
+    { st: 1, tag: 'Exemplo', q: 'Nega "todos os alunos passaram"', a: '"Existe (pelo menos) um aluno que não passou."' },
+    { st: 1, tag: 'Exemplo', q: 'Valor lógico de (V ∧ F) ∨ V', a: '(V ∧ F) = F; depois F ∨ V = V. Resultado: Verdadeiro.' },
+    { st: 3, tag: 'Exemplo', q: '[2, 5] ∩ [4, 8] = ?', a: '[4, 5] (os reais que pertencem a ambos os intervalos).' }
   ],
   2: [
-    { tag: 'Definição', q: 'O que é a raiz de índice n?', a: 'ⁿ√a é o número que, elevado a n, dá a. Ex: ³√8 = 2 porque 2³ = 8.' },
-    { tag: 'Regra', q: 'Radical como potência de expoente fracionário', a: 'ⁿ√(aᵐ) = a^(m/n). Ex: √(a³) = a^(3/2); ³√a = a^(1/3).' },
-    { tag: 'Regra', q: 'Produto e quociente de radicais (mesmo índice)', a: 'ⁿ√a × ⁿ√b = ⁿ√(a×b)  e  ⁿ√a ÷ ⁿ√b = ⁿ√(a÷b).' },
-    { tag: 'Regra', q: 'Como racionalizar um denominador?', a: 'Multiplica numerador e denominador por um fator que elimine a raiz. Ex: 1/√2 = √2/2.' },
-    { tag: 'Propriedade', q: 'Propriedades das potências (expoente racional)', a: 'aᵐ × aⁿ = aᵐ⁺ⁿ; aᵐ ÷ aⁿ = aᵐ⁻ⁿ; (aᵐ)ⁿ = aᵐⁿ; a⁻ⁿ = 1/aⁿ; a^(1/n) = ⁿ√a.' },
-    { tag: 'Definição', q: 'O que é um polinómio?', a: 'Uma expressão aₙxⁿ + … + a₁x + a₀. O grau é o maior expoente com coeficiente não nulo.' },
-    { tag: 'Definição', q: 'O que é uma raiz (ou zero) de um polinómio?', a: 'Um valor a tal que P(a) = 0. Se a é raiz, então (x − a) é fator de P(x).' },
-    { tag: 'Regra', q: 'Teorema do resto', a: 'O resto da divisão de P(x) por (x − a) é P(a). Se P(a) = 0, (x − a) divide P(x) exatamente.' },
-    { tag: 'Estratégia', q: 'Regra de Ruffini', a: 'Método rápido para dividir um polinómio por (x − a): usa só os coeficientes e o valor a. Dá o quociente e o resto.' },
-    { tag: 'Estratégia', q: 'Como fatorizar um polinómio?', a: 'Encontra uma raiz a (entre os divisores do termo independente), divide por (x − a) e repete com o quociente.' },
-    { tag: 'Definição', q: 'Fórmula resolvente (2.º grau)', a: 'x = (−b ± √(b² − 4ac)) / (2a) para ax² + bx + c = 0.' },
-    { tag: 'Regra', q: 'Discriminante e nº de soluções', a: 'Δ = b² − 4ac. Δ > 0 → duas raízes; Δ = 0 → uma; Δ < 0 → nenhuma real.' },
-    { tag: 'Exemplo', q: 'Simplifica √8', a: '√8 = √(4×2) = 2√2.' },
-    { tag: 'Exemplo', q: 'Resolve x² − 5x + 6 = 0', a: 'Δ = 25 − 24 = 1; x = (5 ± 1)/2 → x = 3 ou x = 2.' },
-    { tag: 'Exemplo', q: 'Resto de P(x)=x²−3x+2 por (x−1)?', a: 'P(1) = 1 − 3 + 2 = 0 → resto 0 (e (x−1) é fator).' },
-    { tag: 'Exemplo', q: 'Escreve ⁴√(x²) como potência', a: 'x^(2/4) = x^(1/2) = √x.' }
+    { st: 1, tag: 'Definição', q: 'O que é a raiz de índice n?', a: 'ⁿ√a é o número que, elevado a n, dá a. Ex: ³√8 = 2 porque 2³ = 8.' },
+    { st: 1, tag: 'Regra', q: 'Radical como potência de expoente fracionário', a: 'ⁿ√(aᵐ) = a^(m/n). Ex: √(a³) = a^(3/2); ³√a = a^(1/3).' },
+    { st: 1, tag: 'Regra', q: 'Produto e quociente de radicais (mesmo índice)', a: 'ⁿ√a × ⁿ√b = ⁿ√(a×b)  e  ⁿ√a ÷ ⁿ√b = ⁿ√(a÷b).' },
+    { st: 1, tag: 'Regra', q: 'Como racionalizar um denominador?', a: 'Multiplica numerador e denominador por um fator que elimine a raiz. Ex: 1/√2 = √2/2.' },
+    { st: 1, tag: 'Propriedade', q: 'Propriedades das potências (expoente racional)', a: 'aᵐ × aⁿ = aᵐ⁺ⁿ; aᵐ ÷ aⁿ = aᵐ⁻ⁿ; (aᵐ)ⁿ = aᵐⁿ; a⁻ⁿ = 1/aⁿ; a^(1/n) = ⁿ√a.' },
+    { st: 2, tag: 'Definição', q: 'O que é um polinómio?', a: 'Uma expressão aₙxⁿ + … + a₁x + a₀. O grau é o maior expoente com coeficiente não nulo.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma raiz (ou zero) de um polinómio?', a: 'Um valor a tal que P(a) = 0. Se a é raiz, então (x − a) é fator de P(x).' },
+    { st: 2, tag: 'Regra', q: 'Teorema do resto', a: 'O resto da divisão de P(x) por (x − a) é P(a). Se P(a) = 0, (x − a) divide P(x) exatamente.' },
+    { st: 2, tag: 'Estratégia', q: 'Regra de Ruffini', a: 'Método rápido para dividir um polinómio por (x − a): usa só os coeficientes e o valor a. Dá o quociente e o resto.' },
+    { st: 3, tag: 'Estratégia', q: 'Como fatorizar um polinómio?', a: 'Encontra uma raiz a (entre os divisores do termo independente), divide por (x − a) e repete com o quociente.' },
+    { st: 3, tag: 'Definição', q: 'Fórmula resolvente (2.º grau)', a: 'x = (−b ± √(b² − 4ac)) / (2a) para ax² + bx + c = 0.' },
+    { st: 1, tag: 'Regra', q: 'Discriminante e nº de soluções', a: 'Δ = b² − 4ac. Δ > 0 → duas raízes; Δ = 0 → uma; Δ < 0 → nenhuma real.' },
+    { st: 3, tag: 'Exemplo', q: 'Simplifica √8', a: '√8 = √(4×2) = 2√2.' },
+    { st: 2, tag: 'Exemplo', q: 'Resolve x² − 5x + 6 = 0', a: 'Δ = 25 − 24 = 1; x = (5 ± 1)/2 → x = 3 ou x = 2.' },
+    { st: 1, tag: 'Exemplo', q: 'Resto de P(x)=x²−3x+2 por (x−1)?', a: 'P(1) = 1 − 3 + 2 = 0 → resto 0 (e (x−1) é fator).' },
+    { st: 1, tag: 'Exemplo', q: 'Escreve ⁴√(x²) como potência', a: 'x^(2/4) = x^(1/2) = √x.' }
   ],
   3: [
-    { tag: 'Fórmula', q: 'Distância entre dois pontos no plano', a: 'd(A,B) = √((x_B − x_A)² + (y_B − y_A)²). É a aplicação do Teorema de Pitágoras.' },
-    { tag: 'Fórmula', q: 'Ponto médio de um segmento [AB]', a: 'M = ((x_A + x_B)/2, (y_A + y_B)/2). É a média das coordenadas.' },
-    { tag: 'Fórmula', q: 'Equação reduzida da reta', a: 'y = mx + b, com declive m e ordenada na origem b. Declive: m = (y₂ − y₁)/(x₂ − x₁).' },
-    { tag: 'Regra', q: 'Retas paralelas e perpendiculares', a: 'Paralelas: mesmo declive (m₁ = m₂). Perpendiculares: m₁ × m₂ = −1.' },
-    { tag: 'Fórmula', q: 'Equação da circunferência', a: '(x − a)² + (y − b)² = r², com centro (a, b) e raio r.' },
-    { tag: 'Definição', q: 'O que é um vetor?', a: 'Um segmento orientado, caracterizado por direção, sentido e norma. Em coordenadas: v(v₁, v₂).' },
-    { tag: 'Fórmula', q: 'Norma de um vetor', a: '‖v(v₁, v₂)‖ = √(v₁² + v₂²). É o comprimento do vetor.' },
-    { tag: 'Regra', q: 'Operações com vetores em coordenadas', a: 'Soma: (a₁+b₁, a₂+b₂). Produto por escalar: k·v = (k·v₁, k·v₂). Vetor AB = B − A.' },
-    { tag: 'Definição', q: 'Vetores colineares', a: 'Dois vetores são colineares (paralelos) se um é múltiplo escalar do outro: u = k·v.' },
-    { tag: 'Fórmula', q: 'Equação vetorial da reta', a: '(x, y) = (x₀, y₀) + k(v₁, v₂), k ∈ ℝ, onde (x₀, y₀) é um ponto e (v₁, v₂) um vetor diretor.' },
-    { tag: 'Definição', q: 'Mediatriz de um segmento', a: 'O lugar geométrico dos pontos equidistantes dos extremos. Obtém-se igualando distâncias: d(P,A) = d(P,B).' },
-    { tag: 'Definição', q: 'O que é a elipse?', a: 'O lugar geométrico dos pontos cuja soma das distâncias a dois pontos fixos (focos) é constante.' },
-    { tag: 'Exemplo', q: 'Distância entre A(1,2) e B(4,6)?', a: '√((4−1)² + (6−2)²) = √(9+16) = √25 = 5.' },
-    { tag: 'Exemplo', q: 'Ponto médio de [A(2,4), B(6,8)]?', a: '((2+6)/2, (4+8)/2) = (4, 6).' },
-    { tag: 'Exemplo', q: 'Centro e raio de (x−1)² + (y+3)² = 16?', a: 'Centro (1, −3) e raio √16 = 4.' },
-    { tag: 'Exemplo', q: 'Norma do vetor v(3, 4)?', a: '√(3² + 4²) = √25 = 5.' }
+    { st: 1, tag: 'Fórmula', q: 'Distância entre dois pontos no plano', a: 'd(A,B) = √((x_B − x_A)² + (y_B − y_A)²). É a aplicação do Teorema de Pitágoras.' },
+    { st: 1, tag: 'Fórmula', q: 'Ponto médio de um segmento [AB]', a: 'M = ((x_A + x_B)/2, (y_A + y_B)/2). É a média das coordenadas.' },
+    { st: 2, tag: 'Fórmula', q: 'Equação reduzida da reta', a: 'y = mx + b, com declive m e ordenada na origem b. Declive: m = (y₂ − y₁)/(x₂ − x₁).' },
+    { st: 2, tag: 'Regra', q: 'Retas paralelas e perpendiculares', a: 'Paralelas: mesmo declive (m₁ = m₂). Perpendiculares: m₁ × m₂ = −1.' },
+    { st: 3, tag: 'Fórmula', q: 'Equação da circunferência', a: '(x − a)² + (y − b)² = r², com centro (a, b) e raio r.' },
+    { st: 4, tag: 'Definição', q: 'O que é um vetor?', a: 'Um segmento orientado, caracterizado por direção, sentido e norma. Em coordenadas: v(v₁, v₂).' },
+    { st: 4, tag: 'Fórmula', q: 'Norma de um vetor', a: '‖v(v₁, v₂)‖ = √(v₁² + v₂²). É o comprimento do vetor.' },
+    { st: 4, tag: 'Regra', q: 'Operações com vetores em coordenadas', a: 'Soma: (a₁+b₁, a₂+b₂). Produto por escalar: k·v = (k·v₁, k·v₂). Vetor AB = B − A.' },
+    { st: 2, tag: 'Definição', q: 'Vetores colineares', a: 'Dois vetores são colineares (paralelos) se um é múltiplo escalar do outro: u = k·v.' },
+    { st: 1, tag: 'Fórmula', q: 'Equação vetorial da reta', a: '(x, y) = (x₀, y₀) + k(v₁, v₂), k ∈ ℝ, onde (x₀, y₀) é um ponto e (v₁, v₂) um vetor diretor.' },
+    { st: 3, tag: 'Definição', q: 'Mediatriz de um segmento', a: 'O lugar geométrico dos pontos equidistantes dos extremos. Obtém-se igualando distâncias: d(P,A) = d(P,B).' },
+    { st: 1, tag: 'Definição', q: 'O que é a elipse?', a: 'O lugar geométrico dos pontos cuja soma das distâncias a dois pontos fixos (focos) é constante.' },
+    { st: 1, tag: 'Exemplo', q: 'Distância entre A(1,2) e B(4,6)?', a: '√((4−1)² + (6−2)²) = √(9+16) = √25 = 5.' },
+    { st: 3, tag: 'Exemplo', q: 'Ponto médio de [A(2,4), B(6,8)]?', a: '((2+6)/2, (4+8)/2) = (4, 6).' },
+    { st: 4, tag: 'Exemplo', q: 'Centro e raio de (x−1)² + (y+3)² = 16?', a: 'Centro (1, −3) e raio √16 = 4.' },
+    { st: 1, tag: 'Exemplo', q: 'Norma do vetor v(3, 4)?', a: '√(3² + 4²) = √25 = 5.' }
   ],
   4: [
-    { tag: 'Definição', q: 'O que é o domínio de uma função?', a: 'O conjunto de todos os objetos (valores de x) para os quais a função está definida.' },
-    { tag: 'Definição', q: 'O que é o contradomínio?', a: 'O conjunto de todas as imagens (valores de y) que a função efetivamente atinge.' },
-    { tag: 'Definição', q: 'O que são os zeros de uma função?', a: 'Os valores de x para os quais f(x) = 0. Graficamente, onde o gráfico corta o eixo Ox.' },
-    { tag: 'Definição', q: 'Função injetiva', a: 'Objetos diferentes têm imagens diferentes. Graficamente: qualquer reta horizontal corta o gráfico no máximo uma vez.' },
-    { tag: 'Definição', q: 'Monotonia de uma função', a: 'Crescente: x aumenta → f(x) aumenta. Decrescente: x aumenta → f(x) diminui. Pode variar por intervalos.' },
-    { tag: 'Definição', q: 'Função par e função ímpar', a: 'Par: f(−x) = f(x) (simétrica em Oy). Ímpar: f(−x) = −f(x) (simétrica na origem).' },
-    { tag: 'Definição', q: 'Função quadrática e o vértice', a: 'f(x) = ax² + bx + c. Vértice em x = −b/(2a); a > 0 concavidade para cima, a < 0 para baixo.' },
-    { tag: 'Definição', q: 'Função módulo', a: 'f(x) = |x|: vale x se x ≥ 0 e −x se x < 0. O gráfico é um "V" com vértice na origem.' },
-    { tag: 'Regra', q: 'Transformação: y = f(x) + k', a: 'Translação vertical: sobe k unidades (k > 0) ou desce (k < 0).' },
-    { tag: 'Regra', q: 'Transformação: y = f(x − a)', a: 'Translação horizontal: a unidades para a direita (a > 0) ou esquerda (a < 0).' },
-    { tag: 'Regra', q: 'Transformação: y = −f(x) e y = f(−x)', a: 'y = −f(x): reflexão no eixo Ox. y = f(−x): reflexão no eixo Oy.' },
-    { tag: 'Definição', q: 'Função definida por ramos', a: 'Tem expressões diferentes em diferentes intervalos do domínio. Avalia-se com o ramo correspondente a x.' },
-    { tag: 'Exemplo', q: 'Domínio de f(x) = √(x − 2)?', a: 'Precisa de x − 2 ≥ 0 → x ≥ 2. Domínio: [2, +∞[.' },
-    { tag: 'Exemplo', q: 'Domínio de f(x) = 1/(x − 3)?', a: 'O denominador não pode ser 0 → x ≠ 3. Domínio: ℝ \\ {3}.' },
-    { tag: 'Exemplo', q: 'Vértice de f(x) = x² − 6x + 5?', a: 'x_v = 6/2 = 3; f(3) = 9 − 18 + 5 = −4. Vértice (3, −4).' },
-    { tag: 'Exemplo', q: 'Calcula |−7| e |4|', a: '|−7| = 7 e |4| = 4.' }
+    { st: 1, tag: 'Definição', q: 'O que é o domínio de uma função?', a: 'O conjunto de todos os objetos (valores de x) para os quais a função está definida.' },
+    { st: 1, tag: 'Definição', q: 'O que é o contradomínio?', a: 'O conjunto de todas as imagens (valores de y) que a função efetivamente atinge.' },
+    { st: 1, tag: 'Definição', q: 'O que são os zeros de uma função?', a: 'Os valores de x para os quais f(x) = 0. Graficamente, onde o gráfico corta o eixo Ox.' },
+    { st: 1, tag: 'Definição', q: 'Função injetiva', a: 'Objetos diferentes têm imagens diferentes. Graficamente: qualquer reta horizontal corta o gráfico no máximo uma vez.' },
+    { st: 1, tag: 'Definição', q: 'Monotonia de uma função', a: 'Crescente: x aumenta → f(x) aumenta. Decrescente: x aumenta → f(x) diminui. Pode variar por intervalos.' },
+    { st: 1, tag: 'Definição', q: 'Função par e função ímpar', a: 'Par: f(−x) = f(x) (simétrica em Oy). Ímpar: f(−x) = −f(x) (simétrica na origem).' },
+    { st: 2, tag: 'Definição', q: 'Função quadrática e o vértice', a: 'f(x) = ax² + bx + c. Vértice em x = −b/(2a); a > 0 concavidade para cima, a < 0 para baixo.' },
+    { st: 3, tag: 'Definição', q: 'Função módulo', a: 'f(x) = |x|: vale x se x ≥ 0 e −x se x < 0. O gráfico é um "V" com vértice na origem.' },
+    { st: 3, tag: 'Regra', q: 'Transformação: y = f(x) + k', a: 'Translação vertical: sobe k unidades (k > 0) ou desce (k < 0).' },
+    { st: 3, tag: 'Regra', q: 'Transformação: y = f(x − a)', a: 'Translação horizontal: a unidades para a direita (a > 0) ou esquerda (a < 0).' },
+    { st: 3, tag: 'Regra', q: 'Transformação: y = −f(x) e y = f(−x)', a: 'y = −f(x): reflexão no eixo Ox. y = f(−x): reflexão no eixo Oy.' },
+    { st: 3, tag: 'Definição', q: 'Função definida por ramos', a: 'Tem expressões diferentes em diferentes intervalos do domínio. Avalia-se com o ramo correspondente a x.' },
+    { st: 1, tag: 'Exemplo', q: 'Domínio de f(x) = √(x − 2)?', a: 'Precisa de x − 2 ≥ 0 → x ≥ 2. Domínio: [2, +∞[.' },
+    { st: 1, tag: 'Exemplo', q: 'Domínio de f(x) = 1/(x − 3)?', a: 'O denominador não pode ser 0 → x ≠ 3. Domínio: ℝ \\ {3}.' },
+    { st: 2, tag: 'Exemplo', q: 'Vértice de f(x) = x² − 6x + 5?', a: 'x_v = 6/2 = 3; f(3) = 9 − 18 + 5 = −4. Vértice (3, −4).' },
+    { st: 3, tag: 'Exemplo', q: 'Calcula |−7| e |4|', a: '|−7| = 7 e |4| = 4.' }
   ],
   5: [
-    { tag: 'Definição', q: 'O que é a média?', a: 'A soma de todos os valores a dividir pelo número de valores (x̄). Sensível a valores extremos.' },
-    { tag: 'Definição', q: 'O que é a mediana?', a: 'O valor central dos dados ordenados. Divide a amostra em duas metades. Resistente a extremos.' },
-    { tag: 'Definição', q: 'O que são os quartis?', a: 'Q1, Q2 (mediana) e Q3 dividem os dados em quatro partes de 25%. AIQ = Q3 − Q1.' },
-    { tag: 'Definição', q: 'O que é o desvio-padrão?', a: 'Mede a dispersão: indica quanto, em média, os dados se afastam da média. Maior → mais dispersos.' },
-    { tag: 'Definição', q: 'O que é a variância?', a: 'A média dos quadrados dos desvios em relação à média. O desvio-padrão é a sua raiz quadrada.' },
-    { tag: 'Definição', q: 'O que é a amplitude?', a: 'A diferença entre o maior e o menor valor (máximo − mínimo).' },
-    { tag: 'Definição', q: 'O que é a frequência relativa?', a: 'A frequência absoluta dividida pelo total. Costuma exprimir-se em %.' },
-    { tag: 'Definição', q: 'Diagrama de extremos e quartis', a: 'A "caixa de bigodes": mostra mínimo, Q1, mediana, Q3 e máximo. Resume e compara distribuições.' },
-    { tag: 'Definição', q: 'O que é a reta de regressão linear?', a: 'A reta y = ax + b que melhor se ajusta a uma nuvem de pontos (mínimos quadrados), para descrever a relação entre duas variáveis.' },
-    { tag: 'Definição', q: 'O que é o coeficiente de correlação (r)?', a: 'Mede a força e o sentido da relação linear entre duas variáveis. Varia entre −1 e 1; perto de ±1 → forte correlação.' },
-    { tag: 'Estratégia', q: 'Como interpretar o declive da reta de regressão?', a: 'Indica quanto y varia, em média, quando x aumenta uma unidade. Permite fazer previsões.' },
-    { tag: 'Definição', q: 'Variável qualitativa vs quantitativa', a: 'Qualitativa: não numérica (cor). Quantitativa: numérica - discreta (nº filhos) ou contínua (altura).' },
-    { tag: 'Exemplo', q: 'Média de 4, 6, 8, 10, 12?', a: '(4+6+8+10+12)/5 = 40/5 = 8.' },
-    { tag: 'Exemplo', q: 'Mediana de 3, 7, 8, 12, 20?', a: '5 valores ordenados → o central é 8.' },
-    { tag: 'Exemplo', q: 'Amplitude interquartis se Q1=10 e Q3=18?', a: 'AIQ = 18 − 10 = 8.' },
-    { tag: 'Exemplo', q: 'Se r = 0,95, a correlação é…?', a: 'Forte e positiva (perto de 1): as variáveis crescem juntas de forma quase linear.' }
+    { st: 1, tag: 'Definição', q: 'O que é a média?', a: 'A soma de todos os valores a dividir pelo número de valores (x̄). Sensível a valores extremos.' },
+    { st: 1, tag: 'Definição', q: 'O que é a mediana?', a: 'O valor central dos dados ordenados. Divide a amostra em duas metades. Resistente a extremos.' },
+    { st: 1, tag: 'Definição', q: 'O que são os quartis?', a: 'Q1, Q2 (mediana) e Q3 dividem os dados em quatro partes de 25%. AIQ = Q3 − Q1.' },
+    { st: 1, tag: 'Definição', q: 'O que é o desvio-padrão?', a: 'Mede a dispersão: indica quanto, em média, os dados se afastam da média. Maior → mais dispersos.' },
+    { st: 1, tag: 'Definição', q: 'O que é a variância?', a: 'A média dos quadrados dos desvios em relação à média. O desvio-padrão é a sua raiz quadrada.' },
+    { st: 1, tag: 'Definição', q: 'O que é a amplitude?', a: 'A diferença entre o maior e o menor valor (máximo − mínimo).' },
+    { st: 1, tag: 'Definição', q: 'O que é a frequência relativa?', a: 'A frequência absoluta dividida pelo total. Costuma exprimir-se em %.' },
+    { st: 1, tag: 'Definição', q: 'Diagrama de extremos e quartis', a: 'A "caixa de bigodes": mostra mínimo, Q1, mediana, Q3 e máximo. Resume e compara distribuições.' },
+    { st: 2, tag: 'Definição', q: 'O que é a reta de regressão linear?', a: 'A reta y = ax + b que melhor se ajusta a uma nuvem de pontos (mínimos quadrados), para descrever a relação entre duas variáveis.' },
+    { st: 2, tag: 'Definição', q: 'O que é o coeficiente de correlação (r)?', a: 'Mede a força e o sentido da relação linear entre duas variáveis. Varia entre −1 e 1; perto de ±1 → forte correlação.' },
+    { st: 2, tag: 'Estratégia', q: 'Como interpretar o declive da reta de regressão?', a: 'Indica quanto y varia, em média, quando x aumenta uma unidade. Permite fazer previsões.' },
+    { st: 1, tag: 'Definição', q: 'Variável qualitativa vs quantitativa', a: 'Qualitativa: não numérica (cor). Quantitativa: numérica - discreta (nº filhos) ou contínua (altura).' },
+    { st: 1, tag: 'Exemplo', q: 'Média de 4, 6, 8, 10, 12?', a: '(4+6+8+10+12)/5 = 40/5 = 8.' },
+    { st: 1, tag: 'Exemplo', q: 'Mediana de 3, 7, 8, 12, 20?', a: '5 valores ordenados → o central é 8.' },
+    { st: 1, tag: 'Exemplo', q: 'Amplitude interquartis se Q1=10 e Q3=18?', a: 'AIQ = 18 − 10 = 8.' },
+    { st: 2, tag: 'Exemplo', q: 'Se r = 0,95, a correlação é…?', a: 'Forte e positiva (perto de 1): as variáveis crescem juntas de forma quase linear.' }
   ],
   6: [
-    { tag: 'Fórmula', q: 'Seno de um ângulo agudo', a: 'sen(α) = cateto oposto / hipotenusa (num triângulo retângulo).' },
-    { tag: 'Fórmula', q: 'Cosseno de um ângulo agudo', a: 'cos(α) = cateto adjacente / hipotenusa.' },
-    { tag: 'Fórmula', q: 'Tangente de um ângulo agudo', a: 'tg(α) = cateto oposto / cateto adjacente = sen(α) / cos(α).' },
-    { tag: 'Fórmula', q: 'Fórmula fundamental da trigonometria', a: 'sen²(α) + cos²(α) = 1. Permite obter uma razão a partir da outra.' },
-    { tag: 'Fórmula', q: 'Relação entre tangente, seno e cosseno', a: 'tg(α) = sen(α)/cos(α). E 1 + tg²(α) = 1/cos²(α).' },
-    { tag: 'Definição', q: 'Valores notáveis (30°, 45°, 60°)', a: 'sen30°=½, cos30°=√3/2, tg30°=√3/3; sen45°=cos45°=√2/2, tg45°=1; sen60°=√3/2, cos60°=½, tg60°=√3.' },
-    { tag: 'Estratégia', q: 'Como determinar um lado com trigonometria?', a: 'Identifica o ângulo e os lados (oposto/adjacente/hipotenusa), escolhe a razão e resolve a equação.' },
-    { tag: 'Definição', q: 'O que é o círculo trigonométrico?', a: 'Uma circunferência de raio 1 centrada na origem. As coordenadas do ponto associado ao ângulo α são (cos α, sen α).' },
-    { tag: 'Definição', q: 'O que é o radiano?', a: 'Uma unidade de medida de ângulo. 180° = π radianos; 360° = 2π. Converte: rad = graus × π/180.' },
-    { tag: 'Regra', q: 'Sinais das razões por quadrante', a: '1.º Q: tudo positivo. 2.º Q: só sen positivo. 3.º Q: só tg positiva. 4.º Q: só cos positivo.' },
-    { tag: 'Estratégia', q: 'Como calcular cos a partir de sen (ângulo agudo)?', a: 'Usa cos²(α) = 1 − sen²(α) e tira a raiz (positiva para ângulo agudo).' },
-    { tag: 'Definição', q: 'Ângulos complementares em trigonometria', a: 'sen(90° − α) = cos(α) e cos(90° − α) = sen(α).' },
-    { tag: 'Exemplo', q: 'Cateto oposto 3, hipotenusa 5. sen(α)?', a: 'sen(α) = 3/5 = 0,6.' },
-    { tag: 'Exemplo', q: 'Se sen(α) = 0,6, quanto é cos(α) (ângulo agudo)?', a: 'cos²α = 1 − 0,36 = 0,64 → cos α = 0,8.' },
-    { tag: 'Exemplo', q: 'Converte 90° para radianos', a: '90 × π/180 = π/2 radianos.' },
-    { tag: 'Exemplo', q: 'tg(45°) = ?', a: '1 (porque sen45° = cos45°).' }
+    { st: 1, tag: 'Fórmula', q: 'Seno de um ângulo agudo', a: 'sen(α) = cateto oposto / hipotenusa (num triângulo retângulo).' },
+    { st: 1, tag: 'Fórmula', q: 'Cosseno de um ângulo agudo', a: 'cos(α) = cateto adjacente / hipotenusa.' },
+    { st: 1, tag: 'Fórmula', q: 'Tangente de um ângulo agudo', a: 'tg(α) = cateto oposto / cateto adjacente = sen(α) / cos(α).' },
+    { st: 2, tag: 'Fórmula', q: 'Fórmula fundamental da trigonometria', a: 'sen²(α) + cos²(α) = 1. Permite obter uma razão a partir da outra.' },
+    { st: 2, tag: 'Fórmula', q: 'Relação entre tangente, seno e cosseno', a: 'tg(α) = sen(α)/cos(α). E 1 + tg²(α) = 1/cos²(α).' },
+    { st: 2, tag: 'Definição', q: 'Valores notáveis (30°, 45°, 60°)', a: 'sen30°=½, cos30°=√3/2, tg30°=√3/3; sen45°=cos45°=√2/2, tg45°=1; sen60°=√3/2, cos60°=½, tg60°=√3.' },
+    { st: 1, tag: 'Estratégia', q: 'Como determinar um lado com trigonometria?', a: 'Identifica o ângulo e os lados (oposto/adjacente/hipotenusa), escolhe a razão e resolve a equação.' },
+    { st: 2, tag: 'Definição', q: 'O que é o círculo trigonométrico?', a: 'Uma circunferência de raio 1 centrada na origem. As coordenadas do ponto associado ao ângulo α são (cos α, sen α).' },
+    { st: 2, tag: 'Definição', q: 'O que é o radiano?', a: 'Uma unidade de medida de ângulo. 180° = π radianos; 360° = 2π. Converte: rad = graus × π/180.' },
+    { st: 2, tag: 'Regra', q: 'Sinais das razões por quadrante', a: '1.º Q: tudo positivo. 2.º Q: só sen positivo. 3.º Q: só tg positiva. 4.º Q: só cos positivo.' },
+    { st: 2, tag: 'Estratégia', q: 'Como calcular cos a partir de sen (ângulo agudo)?', a: 'Usa cos²(α) = 1 − sen²(α) e tira a raiz (positiva para ângulo agudo).' },
+    { st: 2, tag: 'Definição', q: 'Ângulos complementares em trigonometria', a: 'sen(90° − α) = cos(α) e cos(90° − α) = sen(α).' },
+    { st: 1, tag: 'Exemplo', q: 'Cateto oposto 3, hipotenusa 5. sen(α)?', a: 'sen(α) = 3/5 = 0,6.' },
+    { st: 2, tag: 'Exemplo', q: 'Se sen(α) = 0,6, quanto é cos(α) (ângulo agudo)?', a: 'cos²α = 1 − 0,36 = 0,64 → cos α = 0,8.' },
+    { st: 2, tag: 'Exemplo', q: 'Converte 90° para radianos', a: '90 × π/180 = π/2 radianos.' },
+    { st: 1, tag: 'Exemplo', q: 'tg(45°) = ?', a: '1 (porque sen45° = cos45°).' }
   ]
 };
 
@@ -223,9 +223,11 @@ function mat10ResumoShowSts(cap) {
   if (!stRow) return;
   var sts = _mat10Subtemas[cap] || [];
   if (!sts.length) { stRow.style.display = 'none'; return; }
+  var _stSel = _mat10Sel['resumo-st'] || 0;
   var h = '<div class="resumo-st-label">Subtema</div>';
+  h += '<button class="resumo-st-btn' + (_stSel === 0 ? ' active' : '') + '" data-st="0" onclick="mat10ResumoSelectSt(this,' + cap + ',0)">Todos</button>';
   sts.forEach(function(st, i) {
-    var isActive = (_mat10Sel['resumo-st'] || 0) === (i + 1);
+    var isActive = _stSel === (i + 1);
     h += '<button class="resumo-st-btn' + (isActive ? ' active' : '') + '" data-st="' + (i + 1) + '" onclick="mat10ResumoSelectSt(this,' + cap + ',' + (i + 1) + ')">' + st + '</button>';
   });
   stRow.innerHTML = h;
@@ -262,16 +264,8 @@ function mat10RenderResumoInline() {
 
   // Filtrar por subtema, se selecionado
   var stIdx = _mat10Sel['resumo-st'] || 0;
-  var cards = allCards;
-  if (stIdx > 0 && _mat10Subtemas[cap]) {
-    var stLabel = (_mat10Subtemas[cap][stIdx - 1] || '').toLowerCase();
-    var stWords = stLabel.replace(/[^a-záéíóúâêîôûãõç ]/g, '').split(' ').filter(function(w){ return w.length > 3; });
-    var filtered = allCards.filter(function(card) {
-      var hay = ((card.tag || '') + ' ' + (card.q || '')).toLowerCase();
-      return stWords.some(function(w){ return hay.indexOf(w) !== -1; });
-    });
-    if (filtered.length > 0) cards = filtered;
-  }
+  // Filtro por subtema usa o campo st de cada flashcard (fiável); 0 = Todos.
+  var cards = (stIdx > 0) ? allCards.filter(function(card){ return card.st === stIdx; }) : allCards;
 
   if (!cards.length) {
     dest.innerHTML = '<div class="resumo-empty">'

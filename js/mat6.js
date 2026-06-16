@@ -39,130 +39,130 @@ var _mat6Subtemas = {
 // ═══ FLASHCARDS / TEORIA por capítulo (6.º ano) ═══
 var _mat6Cards = {
   1: [
-    { tag: 'Definição', q: 'O que é um número primo?', a: 'Um número natural maior que 1 que só tem dois divisores: 1 e ele próprio. Ex: 2, 3, 5, 7, 11, 13, 17, 19.' },
-    { tag: 'Definição', q: 'O que é um número composto?', a: 'Um número natural maior que 1 que tem mais de dois divisores. Ex: 4, 6, 8, 9, 12. (O 1 não é primo nem composto.)' },
-    { tag: 'Definição', q: 'O que é a decomposição em fatores primos?', a: 'Escrever um número como produto de números primos. Ex: 45 = 3 × 3 × 5 = 3² × 5.' },
-    { tag: 'Estratégia', q: 'Como decompor um número em fatores primos?', a: 'Divide sucessivamente pelos primos (2, 3, 5, 7…). Ex: 60 → 2×30 → 2×2×15 → 2×2×3×5 = 2²×3×5.' },
-    { tag: 'Regra', q: 'Critério de divisibilidade por 2', a: 'Um número é divisível por 2 se for par (terminar em 0, 2, 4, 6 ou 8).' },
-    { tag: 'Regra', q: 'Critério de divisibilidade por 3', a: 'Um número é divisível por 3 se a soma dos seus algarismos for divisível por 3. Ex: 72 → 7+2=9 → divisível por 3.' },
-    { tag: 'Regra', q: 'Critério de divisibilidade por 5', a: 'Um número é divisível por 5 se terminar em 0 ou 5.' },
-    { tag: 'Regra', q: 'Critério de divisibilidade por 9', a: 'Um número é divisível por 9 se a soma dos seus algarismos for divisível por 9. Ex: 81 → 8+1=9.' },
-    { tag: 'Regra', q: 'Critério de divisibilidade por 10', a: 'Um número é divisível por 10 se terminar em 0.' },
-    { tag: 'Definição', q: 'O que é o m.d.c. (máximo divisor comum)?', a: 'O maior número que divide dois (ou mais) números ao mesmo tempo. Ex: m.d.c.(12, 18) = 6.' },
-    { tag: 'Definição', q: 'O que é o m.m.c. (mínimo múltiplo comum)?', a: 'O menor número que é múltiplo de dois (ou mais) números. Ex: m.m.c.(4, 6) = 12.' },
-    { tag: 'Estratégia', q: 'Como calcular o m.m.c.?', a: 'Decompõe em fatores primos e multiplica os fatores comuns e não comuns com o maior expoente. Ou lista os múltiplos até encontrar o primeiro comum.' },
-    { tag: 'Exemplo', q: 'Decompõe 45 em fatores primos', a: '45 = 9 × 5 = 3 × 3 × 5 = 3² × 5.' },
-    { tag: 'Exemplo', q: 'O 18 é divisível por 3?', a: 'Sim: 1+8=9, que é divisível por 3 (e 18 = 3×6).' },
-    { tag: 'Exemplo', q: 'm.d.c.(8, 12)?', a: 'Divisores comuns de 8 e 12: 1, 2, 4. O maior é 4.' },
-    { tag: 'Exemplo', q: 'm.m.c.(3, 5)?', a: 'Múltiplos de 3: 3,6,9,12,15… Múltiplos de 5: 5,10,15… O primeiro comum é 15.' }
+    { st: 1, tag: 'Definição', q: 'O que é um número primo?', a: 'Um número natural maior que 1 que só tem dois divisores: 1 e ele próprio. Ex: 2, 3, 5, 7, 11, 13, 17, 19.' },
+    { st: 1, tag: 'Definição', q: 'O que é um número composto?', a: 'Um número natural maior que 1 que tem mais de dois divisores. Ex: 4, 6, 8, 9, 12. (O 1 não é primo nem composto.)' },
+    { st: 1, tag: 'Definição', q: 'O que é a decomposição em fatores primos?', a: 'Escrever um número como produto de números primos. Ex: 45 = 3 × 3 × 5 = 3² × 5.' },
+    { st: 1, tag: 'Estratégia', q: 'Como decompor um número em fatores primos?', a: 'Divide sucessivamente pelos primos (2, 3, 5, 7…). Ex: 60 → 2×30 → 2×2×15 → 2×2×3×5 = 2²×3×5.' },
+    { st: 2, tag: 'Regra', q: 'Critério de divisibilidade por 2', a: 'Um número é divisível por 2 se for par (terminar em 0, 2, 4, 6 ou 8).' },
+    { st: 2, tag: 'Regra', q: 'Critério de divisibilidade por 3', a: 'Um número é divisível por 3 se a soma dos seus algarismos for divisível por 3. Ex: 72 → 7+2=9 → divisível por 3.' },
+    { st: 2, tag: 'Regra', q: 'Critério de divisibilidade por 5', a: 'Um número é divisível por 5 se terminar em 0 ou 5.' },
+    { st: 2, tag: 'Regra', q: 'Critério de divisibilidade por 9', a: 'Um número é divisível por 9 se a soma dos seus algarismos for divisível por 9. Ex: 81 → 8+1=9.' },
+    { st: 2, tag: 'Regra', q: 'Critério de divisibilidade por 10', a: 'Um número é divisível por 10 se terminar em 0.' },
+    { st: 3, tag: 'Definição', q: 'O que é o m.d.c. (máximo divisor comum)?', a: 'O maior número que divide dois (ou mais) números ao mesmo tempo. Ex: m.d.c.(12, 18) = 6.' },
+    { st: 3, tag: 'Definição', q: 'O que é o m.m.c. (mínimo múltiplo comum)?', a: 'O menor número que é múltiplo de dois (ou mais) números. Ex: m.m.c.(4, 6) = 12.' },
+    { st: 3, tag: 'Estratégia', q: 'Como calcular o m.m.c.?', a: 'Decompõe em fatores primos e multiplica os fatores comuns e não comuns com o maior expoente. Ou lista os múltiplos até encontrar o primeiro comum.' },
+    { st: 1, tag: 'Exemplo', q: 'Decompõe 45 em fatores primos', a: '45 = 9 × 5 = 3 × 3 × 5 = 3² × 5.' },
+    { st: 2, tag: 'Exemplo', q: 'O 18 é divisível por 3?', a: 'Sim: 1+8=9, que é divisível por 3 (e 18 = 3×6).' },
+    { st: 3, tag: 'Exemplo', q: 'm.d.c.(8, 12)?', a: 'Divisores comuns de 8 e 12: 1, 2, 4. O maior é 4.' },
+    { st: 3, tag: 'Exemplo', q: 'm.m.c.(3, 5)?', a: 'Múltiplos de 3: 3,6,9,12,15… Múltiplos de 5: 5,10,15… O primeiro comum é 15.' }
   ],
   2: [
-    { tag: 'Regra', q: 'Como multiplicar duas frações?', a: 'Multiplica os numeradores entre si e os denominadores entre si: a/b × c/d = (a×c)/(b×d). Ex: 2/3 × 4/5 = 8/15.' },
-    { tag: 'Regra', q: 'Como dividir duas frações?', a: 'Multiplica a primeira pelo inverso da segunda: a/b ÷ c/d = a/b × d/c. Ex: 2/3 ÷ 1/4 = 2/3 × 4 = 8/3.' },
-    { tag: 'Definição', q: 'O que é o inverso de uma fração?', a: 'A fração trocada (numerador ↔ denominador). O inverso de 3/5 é 5/3. O produto de uma fração pelo seu inverso é 1.' },
-    { tag: 'Regra', q: 'Como somar/subtrair frações com denominadores diferentes?', a: 'Reduz ao mesmo denominador (m.m.c. dos denominadores) e depois soma/subtrai os numeradores. Ex: 1/2 + 1/3 = 3/6 + 2/6 = 5/6.' },
-    { tag: 'Definição', q: 'O que é uma potência de base fracionária?', a: '(a/b)ⁿ = aⁿ/bⁿ. Ex: (2/3)² = 2²/3² = 4/9.' },
-    { tag: 'Regra', q: 'Produto de potências com a mesma base', a: 'aᵐ × aⁿ = aᵐ⁺ⁿ (mantém a base, soma os expoentes). Ex: 2³ × 2² = 2⁵.' },
-    { tag: 'Regra', q: 'Quociente de potências com a mesma base', a: 'aᵐ ÷ aⁿ = aᵐ⁻ⁿ (mantém a base, subtrai os expoentes). Ex: 5⁴ ÷ 5² = 5².' },
-    { tag: 'Regra', q: 'Como simplificar uma fração?', a: 'Divide o numerador e o denominador pelo seu m.d.c. (ou por divisores comuns até ser irredutível). Ex: 12/18 = 2/3.' },
-    { tag: 'Regra', q: 'Como passar de fração para percentagem?', a: 'Escreve uma fração equivalente com denominador 100 (ou faz numerador ÷ denominador × 100). Ex: 3/4 = 75/100 = 75%.' },
-    { tag: 'Regra', q: 'Como calcular uma fração de uma quantidade?', a: 'Multiplica a fração pela quantidade. Ex: 2/3 de 30 = (2 × 30) ÷ 3 = 20.' },
-    { tag: 'Definição', q: 'Fração irredutível', a: 'A fração mais simples possível: numerador e denominador sem divisores comuns além de 1. Ex: 4/6 simplifica para 2/3.' },
-    { tag: 'Exemplo', q: 'Calcula 2/3 × 3/4', a: '(2×3)/(3×4) = 6/12 = 1/2.' },
-    { tag: 'Exemplo', q: 'Calcula (1/2)³', a: '1³/2³ = 1/8.' },
-    { tag: 'Exemplo', q: 'Calcula 1/4 + 2/3', a: 'm.m.c.(4,3)=12 → 3/12 + 8/12 = 11/12.' },
-    { tag: 'Exemplo', q: 'Quanto é 3/5 de 100?', a: '(3 × 100) ÷ 5 = 60.' },
-    { tag: 'Exemplo', q: 'Calcula 6/7 ÷ 2/7', a: '6/7 × 7/2 = 42/14 = 3.' }
+    { st: 1, tag: 'Regra', q: 'Como multiplicar duas frações?', a: 'Multiplica os numeradores entre si e os denominadores entre si: a/b × c/d = (a×c)/(b×d). Ex: 2/3 × 4/5 = 8/15.' },
+    { st: 1, tag: 'Regra', q: 'Como dividir duas frações?', a: 'Multiplica a primeira pelo inverso da segunda: a/b ÷ c/d = a/b × d/c. Ex: 2/3 ÷ 1/4 = 2/3 × 4 = 8/3.' },
+    { st: 1, tag: 'Definição', q: 'O que é o inverso de uma fração?', a: 'A fração trocada (numerador ↔ denominador). O inverso de 3/5 é 5/3. O produto de uma fração pelo seu inverso é 1.' },
+    { st: 1, tag: 'Regra', q: 'Como somar/subtrair frações com denominadores diferentes?', a: 'Reduz ao mesmo denominador (m.m.c. dos denominadores) e depois soma/subtrai os numeradores. Ex: 1/2 + 1/3 = 3/6 + 2/6 = 5/6.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma potência de base fracionária?', a: '(a/b)ⁿ = aⁿ/bⁿ. Ex: (2/3)² = 2²/3² = 4/9.' },
+    { st: 2, tag: 'Regra', q: 'Produto de potências com a mesma base', a: 'aᵐ × aⁿ = aᵐ⁺ⁿ (mantém a base, soma os expoentes). Ex: 2³ × 2² = 2⁵.' },
+    { st: 2, tag: 'Regra', q: 'Quociente de potências com a mesma base', a: 'aᵐ ÷ aⁿ = aᵐ⁻ⁿ (mantém a base, subtrai os expoentes). Ex: 5⁴ ÷ 5² = 5².' },
+    { st: 1, tag: 'Regra', q: 'Como simplificar uma fração?', a: 'Divide o numerador e o denominador pelo seu m.d.c. (ou por divisores comuns até ser irredutível). Ex: 12/18 = 2/3.' },
+    { st: 3, tag: 'Regra', q: 'Como passar de fração para percentagem?', a: 'Escreve uma fração equivalente com denominador 100 (ou faz numerador ÷ denominador × 100). Ex: 3/4 = 75/100 = 75%.' },
+    { st: 1, tag: 'Regra', q: 'Como calcular uma fração de uma quantidade?', a: 'Multiplica a fração pela quantidade. Ex: 2/3 de 30 = (2 × 30) ÷ 3 = 20.' },
+    { st: 1, tag: 'Definição', q: 'Fração irredutível', a: 'A fração mais simples possível: numerador e denominador sem divisores comuns além de 1. Ex: 4/6 simplifica para 2/3.' },
+    { st: 1, tag: 'Exemplo', q: 'Calcula 2/3 × 3/4', a: '(2×3)/(3×4) = 6/12 = 1/2.' },
+    { st: 2, tag: 'Exemplo', q: 'Calcula (1/2)³', a: '1³/2³ = 1/8.' },
+    { st: 1, tag: 'Exemplo', q: 'Calcula 1/4 + 2/3', a: 'm.m.c.(4,3)=12 → 3/12 + 8/12 = 11/12.' },
+    { st: 3, tag: 'Exemplo', q: 'Quanto é 3/5 de 100?', a: '(3 × 100) ÷ 5 = 60.' },
+    { st: 1, tag: 'Exemplo', q: 'Calcula 6/7 ÷ 2/7', a: '6/7 × 7/2 = 42/14 = 3.' }
   ],
   3: [
-    { tag: 'Definição', q: 'O que são os números racionais?', a: 'Os números que se podem escrever como fração, incluindo positivos, negativos e zero. Ex: −3, 2/5, 0, −1,5.' },
-    { tag: 'Definição', q: 'O que é um número negativo?', a: 'Um número menor que zero, escrito com sinal "−". Representa, por exemplo, temperaturas abaixo de zero ou dívidas. Ex: −7.' },
-    { tag: 'Definição', q: 'O que é o simétrico de um número?', a: 'O número com sinal trocado. O simétrico de 5 é −5; o simétrico de −3 é 3. A soma de um número com o seu simétrico é 0.' },
-    { tag: 'Definição', q: 'O que é o valor absoluto (módulo)?', a: '|x| é a distância de x ao zero, é sempre ≥ 0. |−4| = 4 e |4| = 4.' },
-    { tag: 'Regra', q: 'Como comparar dois números negativos?', a: 'Quanto "mais negativo", menor. Ex: −7 < −2 (porque −7 está mais à esquerda na reta numérica).' },
-    { tag: 'Regra', q: 'Regra dos sinais na adição', a: 'Sinais iguais: soma e mantém o sinal. Sinais diferentes: subtrai e fica com o sinal do maior em módulo. Ex: −5 + 3 = −2.' },
-    { tag: 'Regra', q: 'Como subtrair números inteiros?', a: 'Subtrair é somar o simétrico: a − b = a + (−b). Ex: 3 − 7 = 3 + (−7) = −4.' },
-    { tag: 'Regra', q: 'Adicionar dois negativos', a: 'Soma os valores e mantém o sinal negativo. Ex: −4 + (−6) = −10.' },
-    { tag: 'Definição', q: 'A reta numérica', a: 'Uma reta onde se representam os números: o zero ao centro, positivos à direita e negativos à esquerda. Mais à esquerda = menor.' },
-    { tag: 'Exemplo', q: 'Qual é maior: −3 ou −8?', a: '−3 (está mais à direita na reta; −8 é mais negativo).' },
-    { tag: 'Exemplo', q: 'Calcula −6 + 10', a: 'Sinais diferentes: 10 − 6 = 4, com o sinal do 10 (positivo) → 4.' },
-    { tag: 'Exemplo', q: 'Calcula 2 − 9', a: '2 + (−9) = −7.' },
-    { tag: 'Exemplo', q: 'Simétrico de −12?', a: '12.' },
-    { tag: 'Exemplo', q: '|−15| = ?', a: '15 (distância ao zero).' },
-    { tag: 'Exemplo', q: 'Calcula −5 + (−3)', a: '−8 (soma e mantém o sinal negativo).' },
-    { tag: 'Exemplo', q: 'Ordena: −2, 0, −5, 3', a: '−5 < −2 < 0 < 3.' }
+    { st: 1, tag: 'Definição', q: 'O que são os números racionais?', a: 'Os números que se podem escrever como fração, incluindo positivos, negativos e zero. Ex: −3, 2/5, 0, −1,5.' },
+    { st: 1, tag: 'Definição', q: 'O que é um número negativo?', a: 'Um número menor que zero, escrito com sinal "−". Representa, por exemplo, temperaturas abaixo de zero ou dívidas. Ex: −7.' },
+    { st: 1, tag: 'Definição', q: 'O que é o simétrico de um número?', a: 'O número com sinal trocado. O simétrico de 5 é −5; o simétrico de −3 é 3. A soma de um número com o seu simétrico é 0.' },
+    { st: 1, tag: 'Definição', q: 'O que é o valor absoluto (módulo)?', a: '|x| é a distância de x ao zero, é sempre ≥ 0. |−4| = 4 e |4| = 4.' },
+    { st: 2, tag: 'Regra', q: 'Como comparar dois números negativos?', a: 'Quanto "mais negativo", menor. Ex: −7 < −2 (porque −7 está mais à esquerda na reta numérica).' },
+    { st: 3, tag: 'Regra', q: 'Regra dos sinais na adição', a: 'Sinais iguais: soma e mantém o sinal. Sinais diferentes: subtrai e fica com o sinal do maior em módulo. Ex: −5 + 3 = −2.' },
+    { st: 3, tag: 'Regra', q: 'Como subtrair números inteiros?', a: 'Subtrair é somar o simétrico: a − b = a + (−b). Ex: 3 − 7 = 3 + (−7) = −4.' },
+    { st: 3, tag: 'Regra', q: 'Adicionar dois negativos', a: 'Soma os valores e mantém o sinal negativo. Ex: −4 + (−6) = −10.' },
+    { st: 1, tag: 'Definição', q: 'A reta numérica', a: 'Uma reta onde se representam os números: o zero ao centro, positivos à direita e negativos à esquerda. Mais à esquerda = menor.' },
+    { st: 2, tag: 'Exemplo', q: 'Qual é maior: −3 ou −8?', a: '−3 (está mais à direita na reta; −8 é mais negativo).' },
+    { st: 3, tag: 'Exemplo', q: 'Calcula −6 + 10', a: 'Sinais diferentes: 10 − 6 = 4, com o sinal do 10 (positivo) → 4.' },
+    { st: 1, tag: 'Exemplo', q: 'Calcula 2 − 9', a: '2 + (−9) = −7.' },
+    { st: 1, tag: 'Exemplo', q: 'Simétrico de −12?', a: '12.' },
+    { st: 3, tag: 'Exemplo', q: '|−15| = ?', a: '15 (distância ao zero).' },
+    { st: 2, tag: 'Exemplo', q: 'Calcula −5 + (−3)', a: '−8 (soma e mantém o sinal negativo).' },
+    { st: 2, tag: 'Exemplo', q: 'Ordena: −2, 0, −5, 3', a: '−5 < −2 < 0 < 3.' }
   ],
   4: [
-    { tag: 'Definição', q: 'O que é o perímetro?', a: 'O comprimento do contorno de uma figura (a soma dos lados). Mede-se em unidades de comprimento (cm, m…).' },
-    { tag: 'Definição', q: 'O que é a área?', a: 'A medida da superfície de uma figura. Mede-se em unidades quadradas (cm², m²…).' },
-    { tag: 'Fórmula', q: 'Perímetro do círculo (circunferência)', a: 'P = 2 × π × r (ou π × diâmetro). Usa π ≈ 3,14. Ex: raio 2 → P = 2 × 3,14 × 2 = 12,56.' },
-    { tag: 'Fórmula', q: 'Área do círculo', a: 'A = π × r². Ex: raio 3 → A = 3,14 × 9 = 28,26.' },
-    { tag: 'Fórmula', q: 'Área do retângulo', a: 'A = comprimento × largura. Ex: 6 × 4 = 24.' },
-    { tag: 'Fórmula', q: 'Área do quadrado', a: 'A = lado × lado = lado². Ex: lado 5 → A = 25.' },
-    { tag: 'Fórmula', q: 'Área do triângulo', a: 'A = (base × altura) ÷ 2. Ex: base 8, altura 5 → (8×5)/2 = 20.' },
-    { tag: 'Fórmula', q: 'Área do paralelogramo', a: 'A = base × altura.' },
-    { tag: 'Definição', q: 'O que é π (pi)?', a: 'A razão entre o perímetro de qualquer circunferência e o seu diâmetro. É aproximadamente 3,14.' },
-    { tag: 'Definição', q: 'Diâmetro e raio', a: 'O raio (r) vai do centro à circunferência. O diâmetro (d) atravessa o círculo pelo centro: d = 2 × r.' },
-    { tag: 'Estratégia', q: 'Área de uma figura composta', a: 'Divide a figura em formas simples (retângulos, triângulos…), calcula cada área e soma (ou subtrai os "buracos").' },
-    { tag: 'Exemplo', q: 'Perímetro de um círculo de raio 2 cm (π=3,14)?', a: 'P = 2 × 3,14 × 2 = 12,56 cm.' },
-    { tag: 'Exemplo', q: 'Área de um triângulo de base 10 e altura 6?', a: '(10 × 6) ÷ 2 = 30.' },
-    { tag: 'Exemplo', q: 'Área de um quadrado de lado 7?', a: '7² = 49.' },
-    { tag: 'Exemplo', q: 'Área de um círculo de raio 5 (π=3,14)?', a: '3,14 × 25 = 78,5.' },
-    { tag: 'Exemplo', q: 'Perímetro de um retângulo 8 × 3?', a: '2 × (8 + 3) = 22.' }
+    { st: 1, tag: 'Definição', q: 'O que é o perímetro?', a: 'O comprimento do contorno de uma figura (a soma dos lados). Mede-se em unidades de comprimento (cm, m…).' },
+    { st: 2, tag: 'Definição', q: 'O que é a área?', a: 'A medida da superfície de uma figura. Mede-se em unidades quadradas (cm², m²…).' },
+    { st: 1, tag: 'Fórmula', q: 'Perímetro do círculo (circunferência)', a: 'P = 2 × π × r (ou π × diâmetro). Usa π ≈ 3,14. Ex: raio 2 → P = 2 × 3,14 × 2 = 12,56.' },
+    { st: 2, tag: 'Fórmula', q: 'Área do círculo', a: 'A = π × r². Ex: raio 3 → A = 3,14 × 9 = 28,26.' },
+    { st: 2, tag: 'Fórmula', q: 'Área do retângulo', a: 'A = comprimento × largura. Ex: 6 × 4 = 24.' },
+    { st: 2, tag: 'Fórmula', q: 'Área do quadrado', a: 'A = lado × lado = lado². Ex: lado 5 → A = 25.' },
+    { st: 2, tag: 'Fórmula', q: 'Área do triângulo', a: 'A = (base × altura) ÷ 2. Ex: base 8, altura 5 → (8×5)/2 = 20.' },
+    { st: 2, tag: 'Fórmula', q: 'Área do paralelogramo', a: 'A = base × altura.' },
+    { st: 1, tag: 'Definição', q: 'O que é π (pi)?', a: 'A razão entre o perímetro de qualquer circunferência e o seu diâmetro. É aproximadamente 3,14.' },
+    { st: 1, tag: 'Definição', q: 'Diâmetro e raio', a: 'O raio (r) vai do centro à circunferência. O diâmetro (d) atravessa o círculo pelo centro: d = 2 × r.' },
+    { st: 3, tag: 'Estratégia', q: 'Área de uma figura composta', a: 'Divide a figura em formas simples (retângulos, triângulos…), calcula cada área e soma (ou subtrai os "buracos").' },
+    { st: 1, tag: 'Exemplo', q: 'Perímetro de um círculo de raio 2 cm (π=3,14)?', a: 'P = 2 × 3,14 × 2 = 12,56 cm.' },
+    { st: 2, tag: 'Exemplo', q: 'Área de um triângulo de base 10 e altura 6?', a: '(10 × 6) ÷ 2 = 30.' },
+    { st: 2, tag: 'Exemplo', q: 'Área de um quadrado de lado 7?', a: '7² = 49.' },
+    { st: 2, tag: 'Exemplo', q: 'Área de um círculo de raio 5 (π=3,14)?', a: '3,14 × 25 = 78,5.' },
+    { st: 1, tag: 'Exemplo', q: 'Perímetro de um retângulo 8 × 3?', a: '2 × (8 + 3) = 22.' }
   ],
   5: [
-    { tag: 'Definição', q: 'O que é o volume?', a: 'A medida do espaço ocupado por um sólido. Mede-se em unidades cúbicas (cm³, m³…).' },
-    { tag: 'Fórmula', q: 'Volume do cubo', a: 'V = aresta³ (aresta × aresta × aresta). Ex: aresta 3 → V = 3³ = 27 cm³.' },
-    { tag: 'Fórmula', q: 'Volume do paralelepípedo (caixa)', a: 'V = comprimento × largura × altura. Ex: 5 × 3 × 2 = 30 cm³.' },
-    { tag: 'Fórmula', q: 'Volume de um prisma', a: 'V = área da base × altura.' },
-    { tag: 'Regra', q: 'Equivalência volume-capacidade', a: '1 litro = 1 dm³ = 1000 cm³. 1 ml = 1 cm³. Útil para converter volume em capacidade.' },
-    { tag: 'Definição', q: 'O que é a capacidade?', a: 'A quantidade de líquido que um recipiente pode conter, normalmente em litros (L) ou mililitros (ml).' },
-    { tag: 'Regra', q: 'Unidades de volume', a: 'Cada unidade é 1000 vezes a seguinte: 1 m³ = 1000 dm³ = 1 000 000 cm³.' },
-    { tag: 'Definição', q: 'Diferença entre área e volume', a: 'Área mede superfície (2D, cm²); volume mede espaço (3D, cm³).' },
-    { tag: 'Estratégia', q: 'Como calcular o volume de um sólido composto?', a: 'Divide em sólidos simples (caixas), calcula cada volume e soma.' },
-    { tag: 'Exemplo', q: 'Volume de um cubo de aresta 4 cm?', a: '4³ = 4 × 4 × 4 = 64 cm³.' },
-    { tag: 'Exemplo', q: 'Volume de uma caixa 10 × 5 × 2 cm?', a: '10 × 5 × 2 = 100 cm³.' },
-    { tag: 'Exemplo', q: 'Quantos litros são 2000 cm³?', a: '2000 cm³ = 2 dm³ = 2 litros.' },
-    { tag: 'Exemplo', q: 'Volume de um cubo de aresta 5?', a: '5³ = 125 cm³.' },
-    { tag: 'Exemplo', q: 'Quantos cm³ tem 1 litro?', a: '1000 cm³.' },
-    { tag: 'Exemplo', q: 'Volume de um prisma com base de área 12 e altura 5?', a: '12 × 5 = 60 cm³.' },
-    { tag: 'Exemplo', q: 'Volume de uma caixa cúbica de aresta 2?', a: '2³ = 8 cm³.' }
+    { st: 1, tag: 'Definição', q: 'O que é o volume?', a: 'A medida do espaço ocupado por um sólido. Mede-se em unidades cúbicas (cm³, m³…).' },
+    { st: 1, tag: 'Fórmula', q: 'Volume do cubo', a: 'V = aresta³ (aresta × aresta × aresta). Ex: aresta 3 → V = 3³ = 27 cm³.' },
+    { st: 1, tag: 'Fórmula', q: 'Volume do paralelepípedo (caixa)', a: 'V = comprimento × largura × altura. Ex: 5 × 3 × 2 = 30 cm³.' },
+    { st: 1, tag: 'Fórmula', q: 'Volume de um prisma', a: 'V = área da base × altura.' },
+    { st: 2, tag: 'Regra', q: 'Equivalência volume-capacidade', a: '1 litro = 1 dm³ = 1000 cm³. 1 ml = 1 cm³. Útil para converter volume em capacidade.' },
+    { st: 2, tag: 'Definição', q: 'O que é a capacidade?', a: 'A quantidade de líquido que um recipiente pode conter, normalmente em litros (L) ou mililitros (ml).' },
+    { st: 2, tag: 'Regra', q: 'Unidades de volume', a: 'Cada unidade é 1000 vezes a seguinte: 1 m³ = 1000 dm³ = 1 000 000 cm³.' },
+    { st: 1, tag: 'Definição', q: 'Diferença entre área e volume', a: 'Área mede superfície (2D, cm²); volume mede espaço (3D, cm³).' },
+    { st: 1, tag: 'Estratégia', q: 'Como calcular o volume de um sólido composto?', a: 'Divide em sólidos simples (caixas), calcula cada volume e soma.' },
+    { st: 1, tag: 'Exemplo', q: 'Volume de um cubo de aresta 4 cm?', a: '4³ = 4 × 4 × 4 = 64 cm³.' },
+    { st: 1, tag: 'Exemplo', q: 'Volume de uma caixa 10 × 5 × 2 cm?', a: '10 × 5 × 2 = 100 cm³.' },
+    { st: 2, tag: 'Exemplo', q: 'Quantos litros são 2000 cm³?', a: '2000 cm³ = 2 dm³ = 2 litros.' },
+    { st: 1, tag: 'Exemplo', q: 'Volume de um cubo de aresta 5?', a: '5³ = 125 cm³.' },
+    { st: 2, tag: 'Exemplo', q: 'Quantos cm³ tem 1 litro?', a: '1000 cm³.' },
+    { st: 1, tag: 'Exemplo', q: 'Volume de um prisma com base de área 12 e altura 5?', a: '12 × 5 = 60 cm³.' },
+    { st: 1, tag: 'Exemplo', q: 'Volume de uma caixa cúbica de aresta 2?', a: '2³ = 8 cm³.' }
   ],
   6: [
-    { tag: 'Definição', q: 'O que é a proporcionalidade direta?', a: 'Duas grandezas são diretamente proporcionais se, quando uma duplica, a outra também duplica (e o quociente entre elas é constante).' },
-    { tag: 'Definição', q: 'O que é a constante de proporcionalidade?', a: 'O valor constante k = y ÷ x. Ex: se 3 kg custam 6 €, k = 6/3 = 2 €/kg.' },
-    { tag: 'Regra', q: 'Como reconhecer proporcionalidade direta numa tabela?', a: 'O quociente y/x é o mesmo em todas as colunas. Se variar, NÃO há proporcionalidade direta.' },
-    { tag: 'Estratégia', q: 'Regra de três simples', a: 'Se a → b, então c → x, onde x = (b × c) ÷ a. Serve para encontrar um valor desconhecido numa proporção.' },
-    { tag: 'Definição', q: 'O que é uma razão?', a: 'A comparação de duas grandezas por divisão. Ex: 4 rapazes para 6 raparigas → razão 4/6 = 2/3.' },
-    { tag: 'Definição', q: 'O que é uma escala?', a: 'A razão entre uma medida no desenho/mapa e a medida real. Ex: escala 1:100 → 1 cm no mapa = 100 cm reais.' },
-    { tag: 'Definição', q: 'O que é a velocidade média?', a: 'A distância percorrida a dividir pelo tempo. v = distância ÷ tempo. Ex: 120 km em 2 h → 60 km/h.' },
-    { tag: 'Estratégia', q: 'Como resolver um problema de proporcionalidade?', a: 'Identifica as grandezas, monta a proporção (ou usa a constante k) e calcula o valor em falta com a regra de três.' },
-    { tag: 'Exemplo', q: 'Se 2 kg custam 6 €, quanto custam 5 kg?', a: 'k = 6/2 = 3 €/kg → 5 × 3 = 15 €.' },
-    { tag: 'Exemplo', q: 'Se 4 lápis custam 2 €, quanto custam 10?', a: 'Regra de três: (2 × 10) ÷ 4 = 5 €.' },
-    { tag: 'Exemplo', q: 'A tabela x:1,2,3 e y:5,10,15 é proporcional?', a: 'Sim: y/x = 5 em todas as colunas. k = 5.' },
-    { tag: 'Exemplo', q: 'Um carro faz 180 km em 3 h. Velocidade média?', a: '180 ÷ 3 = 60 km/h.' },
-    { tag: 'Exemplo', q: 'Escala 1:50, 4 cm no mapa = quanto real?', a: '4 × 50 = 200 cm = 2 m.' },
-    { tag: 'Exemplo', q: 'Se 3 operários fazem em proporção, k de y=12 quando x=4?', a: 'k = 12 ÷ 4 = 3.' },
-    { tag: 'Exemplo', q: '6 sumos custam 9 €. Preço de 1?', a: '9 ÷ 6 = 1,5 €.' },
-    { tag: 'Definição', q: 'Gráfico de proporcionalidade direta', a: 'É uma reta que passa pela origem (0,0). O declive é a constante k.' }
+    { st: 1, tag: 'Definição', q: 'O que é a proporcionalidade direta?', a: 'Duas grandezas são diretamente proporcionais se, quando uma duplica, a outra também duplica (e o quociente entre elas é constante).' },
+    { st: 1, tag: 'Definição', q: 'O que é a constante de proporcionalidade?', a: 'O valor constante k = y ÷ x. Ex: se 3 kg custam 6 €, k = 6/3 = 2 €/kg.' },
+    { st: 1, tag: 'Regra', q: 'Como reconhecer proporcionalidade direta numa tabela?', a: 'O quociente y/x é o mesmo em todas as colunas. Se variar, NÃO há proporcionalidade direta.' },
+    { st: 2, tag: 'Estratégia', q: 'Regra de três simples', a: 'Se a → b, então c → x, onde x = (b × c) ÷ a. Serve para encontrar um valor desconhecido numa proporção.' },
+    { st: 1, tag: 'Definição', q: 'O que é uma razão?', a: 'A comparação de duas grandezas por divisão. Ex: 4 rapazes para 6 raparigas → razão 4/6 = 2/3.' },
+    { st: 3, tag: 'Definição', q: 'O que é uma escala?', a: 'A razão entre uma medida no desenho/mapa e a medida real. Ex: escala 1:100 → 1 cm no mapa = 100 cm reais.' },
+    { st: 3, tag: 'Definição', q: 'O que é a velocidade média?', a: 'A distância percorrida a dividir pelo tempo. v = distância ÷ tempo. Ex: 120 km em 2 h → 60 km/h.' },
+    { st: 2, tag: 'Estratégia', q: 'Como resolver um problema de proporcionalidade?', a: 'Identifica as grandezas, monta a proporção (ou usa a constante k) e calcula o valor em falta com a regra de três.' },
+    { st: 2, tag: 'Exemplo', q: 'Se 2 kg custam 6 €, quanto custam 5 kg?', a: 'k = 6/2 = 3 €/kg → 5 × 3 = 15 €.' },
+    { st: 2, tag: 'Exemplo', q: 'Se 4 lápis custam 2 €, quanto custam 10?', a: 'Regra de três: (2 × 10) ÷ 4 = 5 €.' },
+    { st: 1, tag: 'Exemplo', q: 'A tabela x:1,2,3 e y:5,10,15 é proporcional?', a: 'Sim: y/x = 5 em todas as colunas. k = 5.' },
+    { st: 3, tag: 'Exemplo', q: 'Um carro faz 180 km em 3 h. Velocidade média?', a: '180 ÷ 3 = 60 km/h.' },
+    { st: 3, tag: 'Exemplo', q: 'Escala 1:50, 4 cm no mapa = quanto real?', a: '4 × 50 = 200 cm = 2 m.' },
+    { st: 2, tag: 'Exemplo', q: 'Se 3 operários fazem em proporção, k de y=12 quando x=4?', a: 'k = 12 ÷ 4 = 3.' },
+    { st: 2, tag: 'Exemplo', q: '6 sumos custam 9 €. Preço de 1?', a: '9 ÷ 6 = 1,5 €.' },
+    { st: 1, tag: 'Definição', q: 'Gráfico de proporcionalidade direta', a: 'É uma reta que passa pela origem (0,0). O declive é a constante k.' }
   ],
   7: [
-    { tag: 'Definição', q: 'O que é a frequência absoluta?', a: 'O número de vezes que um valor/categoria ocorre. Ex: 12 alunos gostam de matemática → frequência absoluta 12.' },
-    { tag: 'Definição', q: 'O que é a frequência relativa?', a: 'A frequência absoluta a dividir pelo total. Exprime-se em fração, decimal ou %. Ex: 12 em 30 → 12/30 = 0,4 = 40%.' },
-    { tag: 'Definição', q: 'O que é a média?', a: 'A soma de todos os valores a dividir pelo número de valores. Ex: (4+6+8)/3 = 6.' },
-    { tag: 'Definição', q: 'O que é a moda?', a: 'O valor ou categoria que ocorre mais vezes. Ex: em 2, 3, 3, 5 a moda é 3.' },
-    { tag: 'Definição', q: 'O que é a amplitude?', a: 'A diferença entre o maior e o menor valor (máximo − mínimo).' },
-    { tag: 'Definição', q: 'Tipos de gráficos', a: 'De barras, circular (setores), de linhas, pictograma. Cada um serve para mostrar dados de formas diferentes.' },
-    { tag: 'Estratégia', q: 'Como construir um gráfico circular?', a: 'O ângulo de cada setor = frequência relativa × 360°. Ex: 25% → 0,25 × 360° = 90°.' },
-    { tag: 'Definição', q: 'O que é população e amostra?', a: 'População: o conjunto total estudado. Amostra: uma parte da população escolhida para a representar.' },
-    { tag: 'Estratégia', q: 'Como calcular a frequência relativa em %?', a: 'Divide a frequência absoluta pelo total e multiplica por 100. Ex: 9 em 20 → 9/20 × 100 = 45%.' },
-    { tag: 'Definição', q: 'O que é o infográfico?', a: 'Uma representação visual de dados que combina números, gráficos e imagens para comunicar informação de forma clara.' },
-    { tag: 'Exemplo', q: 'Média de 10, 20, 30, 40?', a: '(10+20+30+40)/4 = 100/4 = 25.' },
-    { tag: 'Exemplo', q: 'Frequência relativa de 8 em 40?', a: '8/40 = 1/5 = 0,2 = 20%.' },
-    { tag: 'Exemplo', q: 'Moda de 5, 7, 7, 7, 9, 9?', a: 'O valor mais frequente é 7 (3 vezes).' },
-    { tag: 'Exemplo', q: 'Amplitude de 3, 15, 8, 22, 10?', a: '22 − 3 = 19.' },
-    { tag: 'Exemplo', q: 'Num gráfico circular, 50% corresponde a quantos graus?', a: '0,5 × 360° = 180°.' },
-    { tag: 'Exemplo', q: 'Se 25 de 100 pessoas preferem chá, que % é?', a: '25/100 = 25%.' }
+    { st: 2, tag: 'Definição', q: 'O que é a frequência absoluta?', a: 'O número de vezes que um valor/categoria ocorre. Ex: 12 alunos gostam de matemática → frequência absoluta 12.' },
+    { st: 2, tag: 'Definição', q: 'O que é a frequência relativa?', a: 'A frequência absoluta a dividir pelo total. Exprime-se em fração, decimal ou %. Ex: 12 em 30 → 12/30 = 0,4 = 40%.' },
+    { st: 3, tag: 'Definição', q: 'O que é a média?', a: 'A soma de todos os valores a dividir pelo número de valores. Ex: (4+6+8)/3 = 6.' },
+    { st: 3, tag: 'Definição', q: 'O que é a moda?', a: 'O valor ou categoria que ocorre mais vezes. Ex: em 2, 3, 3, 5 a moda é 3.' },
+    { st: 1, tag: 'Definição', q: 'O que é a amplitude?', a: 'A diferença entre o maior e o menor valor (máximo − mínimo).' },
+    { st: 1, tag: 'Definição', q: 'Tipos de gráficos', a: 'De barras, circular (setores), de linhas, pictograma. Cada um serve para mostrar dados de formas diferentes.' },
+    { st: 1, tag: 'Estratégia', q: 'Como construir um gráfico circular?', a: 'O ângulo de cada setor = frequência relativa × 360°. Ex: 25% → 0,25 × 360° = 90°.' },
+    { st: 1, tag: 'Definição', q: 'O que é população e amostra?', a: 'População: o conjunto total estudado. Amostra: uma parte da população escolhida para a representar.' },
+    { st: 2, tag: 'Estratégia', q: 'Como calcular a frequência relativa em %?', a: 'Divide a frequência absoluta pelo total e multiplica por 100. Ex: 9 em 20 → 9/20 × 100 = 45%.' },
+    { st: 1, tag: 'Definição', q: 'O que é o infográfico?', a: 'Uma representação visual de dados que combina números, gráficos e imagens para comunicar informação de forma clara.' },
+    { st: 3, tag: 'Exemplo', q: 'Média de 10, 20, 30, 40?', a: '(10+20+30+40)/4 = 100/4 = 25.' },
+    { st: 2, tag: 'Exemplo', q: 'Frequência relativa de 8 em 40?', a: '8/40 = 1/5 = 0,2 = 20%.' },
+    { st: 3, tag: 'Exemplo', q: 'Moda de 5, 7, 7, 7, 9, 9?', a: 'O valor mais frequente é 7 (3 vezes).' },
+    { st: 3, tag: 'Exemplo', q: 'Amplitude de 3, 15, 8, 22, 10?', a: '22 − 3 = 19.' },
+    { st: 1, tag: 'Exemplo', q: 'Num gráfico circular, 50% corresponde a quantos graus?', a: '0,5 × 360° = 180°.' },
+    { st: 2, tag: 'Exemplo', q: 'Se 25 de 100 pessoas preferem chá, que % é?', a: '25/100 = 25%.' }
   ]
 };
 
@@ -244,9 +244,11 @@ function mat6ResumoShowSts(cap) {
   if (!stRow) return;
   var sts = _mat6Subtemas[cap] || [];
   if (!sts.length) { stRow.style.display = 'none'; return; }
+  var _stSel = _mat6Sel['resumo-st'] || 0;
   var h = '<div class="resumo-st-label">Subtema</div>';
+  h += '<button class="resumo-st-btn' + (_stSel === 0 ? ' active' : '') + '" data-st="0" onclick="mat6ResumoSelectSt(this,' + cap + ',0)">Todos</button>';
   sts.forEach(function(st, i) {
-    var isActive = (_mat6Sel['resumo-st'] || 0) === (i + 1);
+    var isActive = _stSel === (i + 1);
     h += '<button class="resumo-st-btn' + (isActive ? ' active' : '') + '" data-st="' + (i + 1) + '" onclick="mat6ResumoSelectSt(this,' + cap + ',' + (i + 1) + ')">' + st + '</button>';
   });
   stRow.innerHTML = h;
@@ -283,16 +285,8 @@ function mat6RenderResumoInline() {
 
   // Filtrar por subtema, se selecionado
   var stIdx = _mat6Sel['resumo-st'] || 0;
-  var cards = allCards;
-  if (stIdx > 0 && _mat6Subtemas[cap]) {
-    var stLabel = (_mat6Subtemas[cap][stIdx - 1] || '').toLowerCase();
-    var stWords = stLabel.replace(/[^a-záéíóúâêîôûãõç ]/g, '').split(' ').filter(function(w){ return w.length > 3; });
-    var filtered = allCards.filter(function(card) {
-      var hay = ((card.tag || '') + ' ' + (card.q || '')).toLowerCase();
-      return stWords.some(function(w){ return hay.indexOf(w) !== -1; });
-    });
-    if (filtered.length > 0) cards = filtered;
-  }
+  // Filtro por subtema usa o campo st de cada flashcard (fiável); 0 = Todos.
+  var cards = (stIdx > 0) ? allCards.filter(function(card){ return card.st === stIdx; }) : allCards;
 
   if (!cards.length) {
     dest.innerHTML = '<div class="resumo-empty">'

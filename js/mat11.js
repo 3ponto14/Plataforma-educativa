@@ -37,112 +37,112 @@ var _mat11Subtemas = {
 // ═══ FLASHCARDS / TEORIA por capítulo (11.º ano · Matemática A) ═══
 var _mat11Cards = {
   1: [
-    { tag: 'Definição', q: 'O que é um radiano?', a: 'A medida do ângulo ao centro que corresponde a um arco de comprimento igual ao raio. 180° = π rad; 360° = 2π rad.' },
-    { tag: 'Regra', q: 'Conversão graus ↔ radianos', a: 'rad = graus × π/180  e  graus = rad × 180/π. Ex: 90° = π/2; π/3 = 60°.' },
-    { tag: 'Fórmula', q: 'Fórmula fundamental da trigonometria', a: 'sen²(α) + cos²(α) = 1. Permite obter uma razão a partir da outra.' },
-    { tag: 'Fórmula', q: 'Relações com a tangente', a: 'tg(α) = sen(α)/cos(α)  e  1 + tg²(α) = 1/cos²(α) = sec²(α).' },
-    { tag: 'Definição', q: 'Círculo trigonométrico', a: 'Circunferência de raio 1 centrada na origem. O ponto associado a α tem coordenadas (cos α, sen α).' },
-    { tag: 'Regra', q: 'Sinais por quadrante', a: '1.º Q: tudo +. 2.º Q: só sen +. 3.º Q: só tg +. 4.º Q: só cos +. (Regra "ASTC".)' },
-    { tag: 'Fórmula', q: 'Redução ao 1.º quadrante (alguns casos)', a: 'sen(π − α) = sen α; cos(π − α) = −cos α; sen(−α) = −sen α; cos(−α) = cos α.' },
-    { tag: 'Definição', q: 'Período de uma função trigonométrica', a: 'sen e cos têm período 2π; tg tem período π. f(x + P) = f(x) para todo o x.' },
-    { tag: 'Definição', q: 'Funções seno, cosseno e tangente', a: 'y = sen x e y = cos x têm contradomínio [−1, 1]. y = tg x tem domínio ℝ \\ {π/2 + kπ}.' },
-    { tag: 'Estratégia', q: 'Como resolver sen x = a?', a: 'Se −1 ≤ a ≤ 1: x = arcsen(a) + 2kπ ∨ x = π − arcsen(a) + 2kπ, k ∈ ℤ.' },
-    { tag: 'Estratégia', q: 'Como resolver cos x = a?', a: 'Se −1 ≤ a ≤ 1: x = ± arccos(a) + 2kπ, k ∈ ℤ.' },
-    { tag: 'Definição', q: 'Valores notáveis', a: 'sen30°=½, cos30°=√3/2; sen45°=cos45°=√2/2; sen60°=√3/2, cos60°=½; tg45°=1.' },
-    { tag: 'Exemplo', q: 'Converte 120° para radianos', a: '120 × π/180 = 2π/3 rad.' },
-    { tag: 'Exemplo', q: 'Se cos α = 0,6 e α agudo, quanto é sen α?', a: 'sen²α = 1 − 0,36 = 0,64 → sen α = 0,8.' },
-    { tag: 'Exemplo', q: 'Resolve sen x = 1', a: 'x = π/2 + 2kπ, k ∈ ℤ.' },
-    { tag: 'Exemplo', q: 'Período de y = sen(2x)?', a: '2π ÷ 2 = π.' }
+    { st: 1, tag: 'Definição', q: 'O que é um radiano?', a: 'A medida do ângulo ao centro que corresponde a um arco de comprimento igual ao raio. 180° = π rad; 360° = 2π rad.' },
+    { st: 1, tag: 'Regra', q: 'Conversão graus ↔ radianos', a: 'rad = graus × π/180  e  graus = rad × 180/π. Ex: 90° = π/2; π/3 = 60°.' },
+    { st: 2, tag: 'Fórmula', q: 'Fórmula fundamental da trigonometria', a: 'sen²(α) + cos²(α) = 1. Permite obter uma razão a partir da outra.' },
+    { st: 2, tag: 'Fórmula', q: 'Relações com a tangente', a: 'tg(α) = sen(α)/cos(α)  e  1 + tg²(α) = 1/cos²(α) = sec²(α).' },
+    { st: 1, tag: 'Definição', q: 'Círculo trigonométrico', a: 'Circunferência de raio 1 centrada na origem. O ponto associado a α tem coordenadas (cos α, sen α).' },
+    { st: 1, tag: 'Regra', q: 'Sinais por quadrante', a: '1.º Q: tudo +. 2.º Q: só sen +. 3.º Q: só tg +. 4.º Q: só cos +. (Regra "ASTC".)' },
+    { st: 1, tag: 'Fórmula', q: 'Redução ao 1.º quadrante (alguns casos)', a: 'sen(π − α) = sen α; cos(π − α) = −cos α; sen(−α) = −sen α; cos(−α) = cos α.' },
+    { st: 2, tag: 'Definição', q: 'Período de uma função trigonométrica', a: 'sen e cos têm período 2π; tg tem período π. f(x + P) = f(x) para todo o x.' },
+    { st: 2, tag: 'Definição', q: 'Funções seno, cosseno e tangente', a: 'y = sen x e y = cos x têm contradomínio [−1, 1]. y = tg x tem domínio ℝ \\ {π/2 + kπ}.' },
+    { st: 3, tag: 'Estratégia', q: 'Como resolver sen x = a?', a: 'Se −1 ≤ a ≤ 1: x = arcsen(a) + 2kπ ∨ x = π − arcsen(a) + 2kπ, k ∈ ℤ.' },
+    { st: 3, tag: 'Estratégia', q: 'Como resolver cos x = a?', a: 'Se −1 ≤ a ≤ 1: x = ± arccos(a) + 2kπ, k ∈ ℤ.' },
+    { st: 2, tag: 'Definição', q: 'Valores notáveis', a: 'sen30°=½, cos30°=√3/2; sen45°=cos45°=√2/2; sen60°=√3/2, cos60°=½; tg45°=1.' },
+    { st: 1, tag: 'Exemplo', q: 'Converte 120° para radianos', a: '120 × π/180 = 2π/3 rad.' },
+    { st: 2, tag: 'Exemplo', q: 'Se cos α = 0,6 e α agudo, quanto é sen α?', a: 'sen²α = 1 − 0,36 = 0,64 → sen α = 0,8.' },
+    { st: 3, tag: 'Exemplo', q: 'Resolve sen x = 1', a: 'x = π/2 + 2kπ, k ∈ ℤ.' },
+    { st: 2, tag: 'Exemplo', q: 'Período de y = sen(2x)?', a: '2π ÷ 2 = π.' }
   ],
   2: [
-    { tag: 'Fórmula', q: 'Distância entre pontos no espaço', a: 'd(A,B) = √((x_B−x_A)² + (y_B−y_A)² + (z_B−z_A)²).' },
-    { tag: 'Fórmula', q: 'Ponto médio no espaço', a: 'M = ((x_A+x_B)/2, (y_A+y_B)/2, (z_A+z_B)/2).' },
-    { tag: 'Fórmula', q: 'Equação da superfície esférica', a: '(x−a)² + (y−b)² + (z−c)² = r², com centro (a,b,c) e raio r.' },
-    { tag: 'Definição', q: 'Vetor no espaço', a: 'v(v₁, v₂, v₃). Norma: ‖v‖ = √(v₁² + v₂² + v₃²). Vetor AB = B − A.' },
-    { tag: 'Fórmula', q: 'Produto escalar de dois vetores', a: 'u · v = u₁v₁ + u₂v₂ + u₃v₃. Também u · v = ‖u‖‖v‖cos(θ).' },
-    { tag: 'Regra', q: 'Vetores perpendiculares', a: 'u ⊥ v  ⟺  u · v = 0 (produto escalar nulo).' },
-    { tag: 'Fórmula', q: 'Ângulo entre dois vetores', a: 'cos(θ) = (u · v) / (‖u‖ · ‖v‖).' },
-    { tag: 'Fórmula', q: 'Equação do plano (forma cartesiana)', a: 'ax + by + cz + d = 0, onde (a, b, c) é um vetor normal ao plano.' },
-    { tag: 'Definição', q: 'Vetor normal a um plano', a: 'Um vetor perpendicular ao plano. Em ax + by + cz + d = 0, o vetor normal é (a, b, c).' },
-    { tag: 'Fórmula', q: 'Equação vetorial da reta no espaço', a: '(x,y,z) = (x₀,y₀,z₀) + k(v₁,v₂,v₃), k ∈ ℝ.' },
-    { tag: 'Regra', q: 'Planos paralelos e perpendiculares', a: 'Paralelos: vetores normais colineares. Perpendiculares: vetores normais perpendiculares (produto escalar 0).' },
-    { tag: 'Definição', q: 'Vetores colineares (espaço)', a: 'u e v são colineares se u = k·v para algum escalar k.' },
-    { tag: 'Exemplo', q: 'Norma de v(2, 3, 6)?', a: '√(4 + 9 + 36) = √49 = 7.' },
-    { tag: 'Exemplo', q: 'Produto escalar de (1,2,3) e (4,−1,2)?', a: '1×4 + 2×(−1) + 3×2 = 4 − 2 + 6 = 8.' },
-    { tag: 'Exemplo', q: 'Centro e raio de (x−1)²+(y+2)²+z²=9?', a: 'Centro (1, −2, 0) e raio 3.' },
-    { tag: 'Exemplo', q: 'Vetor normal ao plano 2x − y + 3z − 5 = 0?', a: '(2, −1, 3).' }
+    { st: 1, tag: 'Fórmula', q: 'Distância entre pontos no espaço', a: 'd(A,B) = √((x_B−x_A)² + (y_B−y_A)² + (z_B−z_A)²).' },
+    { st: 1, tag: 'Fórmula', q: 'Ponto médio no espaço', a: 'M = ((x_A+x_B)/2, (y_A+y_B)/2, (z_A+z_B)/2).' },
+    { st: 1, tag: 'Fórmula', q: 'Equação da superfície esférica', a: '(x−a)² + (y−b)² + (z−c)² = r², com centro (a,b,c) e raio r.' },
+    { st: 2, tag: 'Definição', q: 'Vetor no espaço', a: 'v(v₁, v₂, v₃). Norma: ‖v‖ = √(v₁² + v₂² + v₃²). Vetor AB = B − A.' },
+    { st: 2, tag: 'Fórmula', q: 'Produto escalar de dois vetores', a: 'u · v = u₁v₁ + u₂v₂ + u₃v₃. Também u · v = ‖u‖‖v‖cos(θ).' },
+    { st: 2, tag: 'Regra', q: 'Vetores perpendiculares', a: 'u ⊥ v  ⟺  u · v = 0 (produto escalar nulo).' },
+    { st: 2, tag: 'Fórmula', q: 'Ângulo entre dois vetores', a: 'cos(θ) = (u · v) / (‖u‖ · ‖v‖).' },
+    { st: 3, tag: 'Fórmula', q: 'Equação do plano (forma cartesiana)', a: 'ax + by + cz + d = 0, onde (a, b, c) é um vetor normal ao plano.' },
+    { st: 3, tag: 'Definição', q: 'Vetor normal a um plano', a: 'Um vetor perpendicular ao plano. Em ax + by + cz + d = 0, o vetor normal é (a, b, c).' },
+    { st: 3, tag: 'Fórmula', q: 'Equação vetorial da reta no espaço', a: '(x,y,z) = (x₀,y₀,z₀) + k(v₁,v₂,v₃), k ∈ ℝ.' },
+    { st: 2, tag: 'Regra', q: 'Planos paralelos e perpendiculares', a: 'Paralelos: vetores normais colineares. Perpendiculares: vetores normais perpendiculares (produto escalar 0).' },
+    { st: 2, tag: 'Definição', q: 'Vetores colineares (espaço)', a: 'u e v são colineares se u = k·v para algum escalar k.' },
+    { st: 2, tag: 'Exemplo', q: 'Norma de v(2, 3, 6)?', a: '√(4 + 9 + 36) = √49 = 7.' },
+    { st: 1, tag: 'Exemplo', q: 'Produto escalar de (1,2,3) e (4,−1,2)?', a: '1×4 + 2×(−1) + 3×2 = 4 − 2 + 6 = 8.' },
+    { st: 3, tag: 'Exemplo', q: 'Centro e raio de (x−1)²+(y+2)²+z²=9?', a: 'Centro (1, −2, 0) e raio 3.' },
+    { st: 2, tag: 'Exemplo', q: 'Vetor normal ao plano 2x − y + 3z − 5 = 0?', a: '(2, −1, 3).' }
   ],
   3: [
-    { tag: 'Definição', q: 'O que é uma sucessão?', a: 'Uma função de domínio ℕ: a cada ordem n associa um termo uₙ. Ex: uₙ = 2n + 1.' },
-    { tag: 'Definição', q: 'Termo geral de uma sucessão', a: 'A expressão uₙ que dá qualquer termo em função da ordem n. Ex: uₙ = n² calcula o n-ésimo termo.' },
-    { tag: 'Definição', q: 'Sucessão monótona', a: 'Crescente se uₙ₊₁ > uₙ para todo o n; decrescente se uₙ₊₁ < uₙ. Estuda-se o sinal de uₙ₊₁ − uₙ.' },
-    { tag: 'Definição', q: 'Progressão aritmética (PA)', a: 'A diferença entre termos consecutivos é constante (razão r). uₙ = u₁ + (n−1)r.' },
-    { tag: 'Fórmula', q: 'Soma de n termos de uma PA', a: 'Sₙ = (u₁ + uₙ) × n / 2.' },
-    { tag: 'Definição', q: 'Progressão geométrica (PG)', a: 'O quociente entre termos consecutivos é constante (razão r). uₙ = u₁ × r^(n−1).' },
-    { tag: 'Fórmula', q: 'Soma de n termos de uma PG', a: 'Sₙ = u₁ × (1 − rⁿ)/(1 − r), com r ≠ 1.' },
-    { tag: 'Definição', q: 'Sucessão limitada', a: 'Existe um intervalo [m, M] que contém todos os termos. Tem majorante e minorante.' },
-    { tag: 'Definição', q: 'Sucessão definida por recorrência', a: 'Cada termo define-se a partir do(s) anterior(es). Ex: u₁ = 2, uₙ₊₁ = uₙ + 3.' },
-    { tag: 'Estratégia', q: 'Como verificar se uma sucessão é PA?', a: 'Calcula uₙ₊₁ − uₙ. Se for constante, é PA e essa constante é a razão.' },
-    { tag: 'Estratégia', q: 'Como verificar se uma sucessão é PG?', a: 'Calcula uₙ₊₁ ÷ uₙ. Se for constante (≠0), é PG e esse quociente é a razão.' },
-    { tag: 'Definição', q: 'Sucessão convergente', a: 'Aproxima-se de um valor finito (limite) quando n → +∞. Ex: uₙ = 1/n → 0.' },
-    { tag: 'Exemplo', q: 'PA com u₁=3 e r=4: o 10.º termo?', a: 'u₁₀ = 3 + 9×4 = 39.' },
-    { tag: 'Exemplo', q: 'PG com u₁=2 e r=3: o 4.º termo?', a: 'u₄ = 2 × 3³ = 2 × 27 = 54.' },
-    { tag: 'Exemplo', q: 'A sucessão uₙ = 2n − 1 é crescente?', a: 'uₙ₊₁ − uₙ = 2 > 0 → é crescente.' },
-    { tag: 'Exemplo', q: 'Soma dos 5 primeiros termos da PA 2,5,8,11,14?', a: 'S₅ = (2 + 14)×5/2 = 40.' }
+    { st: 1, tag: 'Definição', q: 'O que é uma sucessão?', a: 'Uma função de domínio ℕ: a cada ordem n associa um termo uₙ. Ex: uₙ = 2n + 1.' },
+    { st: 1, tag: 'Definição', q: 'Termo geral de uma sucessão', a: 'A expressão uₙ que dá qualquer termo em função da ordem n. Ex: uₙ = n² calcula o n-ésimo termo.' },
+    { st: 1, tag: 'Definição', q: 'Sucessão monótona', a: 'Crescente se uₙ₊₁ > uₙ para todo o n; decrescente se uₙ₊₁ < uₙ. Estuda-se o sinal de uₙ₊₁ − uₙ.' },
+    { st: 2, tag: 'Definição', q: 'Progressão aritmética (PA)', a: 'A diferença entre termos consecutivos é constante (razão r). uₙ = u₁ + (n−1)r.' },
+    { st: 2, tag: 'Fórmula', q: 'Soma de n termos de uma PA', a: 'Sₙ = (u₁ + uₙ) × n / 2.' },
+    { st: 3, tag: 'Definição', q: 'Progressão geométrica (PG)', a: 'O quociente entre termos consecutivos é constante (razão r). uₙ = u₁ × r^(n−1).' },
+    { st: 3, tag: 'Fórmula', q: 'Soma de n termos de uma PG', a: 'Sₙ = u₁ × (1 − rⁿ)/(1 − r), com r ≠ 1.' },
+    { st: 1, tag: 'Definição', q: 'Sucessão limitada', a: 'Existe um intervalo [m, M] que contém todos os termos. Tem majorante e minorante.' },
+    { st: 1, tag: 'Definição', q: 'Sucessão definida por recorrência', a: 'Cada termo define-se a partir do(s) anterior(es). Ex: u₁ = 2, uₙ₊₁ = uₙ + 3.' },
+    { st: 2, tag: 'Estratégia', q: 'Como verificar se uma sucessão é PA?', a: 'Calcula uₙ₊₁ − uₙ. Se for constante, é PA e essa constante é a razão.' },
+    { st: 3, tag: 'Estratégia', q: 'Como verificar se uma sucessão é PG?', a: 'Calcula uₙ₊₁ ÷ uₙ. Se for constante (≠0), é PG e esse quociente é a razão.' },
+    { st: 1, tag: 'Definição', q: 'Sucessão convergente', a: 'Aproxima-se de um valor finito (limite) quando n → +∞. Ex: uₙ = 1/n → 0.' },
+    { st: 2, tag: 'Exemplo', q: 'PA com u₁=3 e r=4: o 10.º termo?', a: 'u₁₀ = 3 + 9×4 = 39.' },
+    { st: 3, tag: 'Exemplo', q: 'PG com u₁=2 e r=3: o 4.º termo?', a: 'u₄ = 2 × 3³ = 2 × 27 = 54.' },
+    { st: 1, tag: 'Exemplo', q: 'A sucessão uₙ = 2n − 1 é crescente?', a: 'uₙ₊₁ − uₙ = 2 > 0 → é crescente.' },
+    { st: 2, tag: 'Exemplo', q: 'Soma dos 5 primeiros termos da PA 2,5,8,11,14?', a: 'S₅ = (2 + 14)×5/2 = 40.' }
   ],
   4: [
-    { tag: 'Definição', q: 'O que é o limite de uma sucessão?', a: 'O valor de que os termos se aproximam quando n → +∞. Escreve-se lim uₙ.' },
-    { tag: 'Regra', q: 'Limites notáveis de sucessões', a: 'lim 1/n = 0; lim (1 + 1/n)ⁿ = e ≈ 2,718; lim rⁿ = 0 se |r| < 1.' },
-    { tag: 'Definição', q: 'Sucessão divergente', a: 'Não tende para um valor finito: tende para +∞, −∞ ou oscila sem limite.' },
-    { tag: 'Definição', q: 'Limite de uma função num ponto', a: 'lim(x→a) f(x) = L significa que f(x) se aproxima de L quando x se aproxima de a.' },
-    { tag: 'Regra', q: 'Limites laterais', a: 'O limite existe num ponto se os limites à esquerda e à direita forem iguais: lim(x→a⁻) = lim(x→a⁺).' },
-    { tag: 'Estratégia', q: 'Indeterminação 0/0', a: 'Fatoriza numerador e denominador e simplifica o fator comum, depois substitui. Ex: (x²−1)/(x−1) → x+1 → 2 (x→1).' },
-    { tag: 'Estratégia', q: 'Indeterminação ∞/∞ (funções racionais)', a: 'Compara os graus: divide tudo pela maior potência ou usa o quociente dos termos de maior grau.' },
-    { tag: 'Definição', q: 'O que é uma assíntota vertical?', a: 'A reta x = a tal que lim(x→a) f(x) = ±∞. Surge onde a função "explode" (ex: denominador zero).' },
-    { tag: 'Definição', q: 'O que é uma assíntota horizontal?', a: 'A reta y = b tal que lim(x→±∞) f(x) = b. Descreve o comportamento da função no infinito.' },
-    { tag: 'Definição', q: 'Função contínua num ponto', a: 'f é contínua em a se existe f(a), existe lim(x→a) f(x) e são iguais: lim(x→a) f(x) = f(a).' },
-    { tag: 'Definição', q: 'Continuidade num intervalo', a: 'f é contínua em [a,b] se é contínua em todos os pontos. O seu gráfico não tem "saltos".' },
-    { tag: 'Teorema', q: 'Teorema de Bolzano (valor intermédio)', a: 'Se f é contínua em [a,b] e f(a)·f(b) < 0, então existe c em ]a,b[ tal que f(c) = 0 (há um zero).' },
-    { tag: 'Exemplo', q: 'lim(x→2) (x² − 4)/(x − 2)?', a: '(x²−4)/(x−2) = (x−2)(x+2)/(x−2) = x+2 → 4.' },
-    { tag: 'Exemplo', q: 'lim(x→+∞) (3x² + 1)/(x² − 5)?', a: 'Mesmo grau: quociente dos coeficientes principais = 3/1 = 3.' },
-    { tag: 'Exemplo', q: 'lim 1/n quando n→+∞?', a: '0.' },
-    { tag: 'Exemplo', q: 'Assíntota horizontal de f(x)=(2x)/(x+1)?', a: 'lim(x→±∞) = 2 → assíntota y = 2.' }
+    { st: 1, tag: 'Definição', q: 'O que é o limite de uma sucessão?', a: 'O valor de que os termos se aproximam quando n → +∞. Escreve-se lim uₙ.' },
+    { st: 1, tag: 'Regra', q: 'Limites notáveis de sucessões', a: 'lim 1/n = 0; lim (1 + 1/n)ⁿ = e ≈ 2,718; lim rⁿ = 0 se |r| < 1.' },
+    { st: 1, tag: 'Definição', q: 'Sucessão divergente', a: 'Não tende para um valor finito: tende para +∞, −∞ ou oscila sem limite.' },
+    { st: 2, tag: 'Definição', q: 'Limite de uma função num ponto', a: 'lim(x→a) f(x) = L significa que f(x) se aproxima de L quando x se aproxima de a.' },
+    { st: 2, tag: 'Regra', q: 'Limites laterais', a: 'O limite existe num ponto se os limites à esquerda e à direita forem iguais: lim(x→a⁻) = lim(x→a⁺).' },
+    { st: 2, tag: 'Estratégia', q: 'Indeterminação 0/0', a: 'Fatoriza numerador e denominador e simplifica o fator comum, depois substitui. Ex: (x²−1)/(x−1) → x+1 → 2 (x→1).' },
+    { st: 2, tag: 'Estratégia', q: 'Indeterminação ∞/∞ (funções racionais)', a: 'Compara os graus: divide tudo pela maior potência ou usa o quociente dos termos de maior grau.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma assíntota vertical?', a: 'A reta x = a tal que lim(x→a) f(x) = ±∞. Surge onde a função "explode" (ex: denominador zero).' },
+    { st: 2, tag: 'Definição', q: 'O que é uma assíntota horizontal?', a: 'A reta y = b tal que lim(x→±∞) f(x) = b. Descreve o comportamento da função no infinito.' },
+    { st: 3, tag: 'Definição', q: 'Função contínua num ponto', a: 'f é contínua em a se existe f(a), existe lim(x→a) f(x) e são iguais: lim(x→a) f(x) = f(a).' },
+    { st: 3, tag: 'Definição', q: 'Continuidade num intervalo', a: 'f é contínua em [a,b] se é contínua em todos os pontos. O seu gráfico não tem "saltos".' },
+    { st: 3, tag: 'Teorema', q: 'Teorema de Bolzano (valor intermédio)', a: 'Se f é contínua em [a,b] e f(a)·f(b) < 0, então existe c em ]a,b[ tal que f(c) = 0 (há um zero).' },
+    { st: 2, tag: 'Exemplo', q: 'lim(x→2) (x² − 4)/(x − 2)?', a: '(x²−4)/(x−2) = (x−2)(x+2)/(x−2) = x+2 → 4.' },
+    { st: 2, tag: 'Exemplo', q: 'lim(x→+∞) (3x² + 1)/(x² − 5)?', a: 'Mesmo grau: quociente dos coeficientes principais = 3/1 = 3.' },
+    { st: 1, tag: 'Exemplo', q: 'lim 1/n quando n→+∞?', a: '0.' },
+    { st: 2, tag: 'Exemplo', q: 'Assíntota horizontal de f(x)=(2x)/(x+1)?', a: 'lim(x→±∞) = 2 → assíntota y = 2.' }
   ],
   5: [
-    { tag: 'Definição', q: 'O que é a taxa de variação média?', a: 'tvm = (f(b) − f(a))/(b − a). É o declive da reta secante entre os pontos (a, f(a)) e (b, f(b)).' },
-    { tag: 'Definição', q: 'O que é a derivada num ponto?', a: 'f\'(a) = lim(h→0) (f(a+h) − f(a))/h. É o declive da reta tangente ao gráfico em (a, f(a)).' },
-    { tag: 'Regra', q: 'Derivada de uma potência', a: '(xⁿ)\' = n·x^(n−1). Ex: (x³)\' = 3x²; (x)\' = 1; (constante)\' = 0.' },
-    { tag: 'Regra', q: 'Derivada da soma e do produto por constante', a: '(f + g)\' = f\' + g\'  e  (k·f)\' = k·f\'.' },
-    { tag: 'Regra', q: 'Regra do produto', a: '(f·g)\' = f\'·g + f·g\'.' },
-    { tag: 'Regra', q: 'Regra do quociente', a: '(f/g)\' = (f\'·g − f·g\') / g².' },
-    { tag: 'Regra', q: 'Derivada da função composta (regra da cadeia)', a: '(f(g(x)))\' = f\'(g(x)) · g\'(x).' },
-    { tag: 'Estratégia', q: 'Como estudar a monotonia com a derivada?', a: 'f\'(x) > 0 → f crescente; f\'(x) < 0 → f decrescente. Os zeros de f\' são candidatos a extremos.' },
-    { tag: 'Definição', q: 'O que é um extremo relativo?', a: 'Um máximo ou mínimo local. Ocorre onde f\' muda de sinal (de + para − → máximo; de − para + → mínimo).' },
-    { tag: 'Estratégia', q: 'Equação da reta tangente num ponto a', a: 'y = f(a) + f\'(a)·(x − a). O declive é f\'(a).' },
-    { tag: 'Definição', q: 'Pontos críticos', a: 'Os valores de x onde f\'(x) = 0 ou f\' não existe. São candidatos a máximos/mínimos.' },
-    { tag: 'Definição', q: 'Derivada de funções trigonométricas', a: '(sen x)\' = cos x; (cos x)\' = −sen x.' },
-    { tag: 'Exemplo', q: 'Deriva f(x) = 3x² − 5x + 2', a: 'f\'(x) = 6x − 5.' },
-    { tag: 'Exemplo', q: 'tvm de f(x)=x² em [1, 3]?', a: '(9 − 1)/(3 − 1) = 8/2 = 4.' },
-    { tag: 'Exemplo', q: 'Deriva f(x) = x⁴', a: 'f\'(x) = 4x³.' },
-    { tag: 'Exemplo', q: 'Declive da tangente a f(x)=x² em x=2?', a: 'f\'(x) = 2x → f\'(2) = 4.' }
+    { st: 1, tag: 'Definição', q: 'O que é a taxa de variação média?', a: 'tvm = (f(b) − f(a))/(b − a). É o declive da reta secante entre os pontos (a, f(a)) e (b, f(b)).' },
+    { st: 1, tag: 'Definição', q: 'O que é a derivada num ponto?', a: 'f\'(a) = lim(h→0) (f(a+h) − f(a))/h. É o declive da reta tangente ao gráfico em (a, f(a)).' },
+    { st: 2, tag: 'Regra', q: 'Derivada de uma potência', a: '(xⁿ)\' = n·x^(n−1). Ex: (x³)\' = 3x²; (x)\' = 1; (constante)\' = 0.' },
+    { st: 2, tag: 'Regra', q: 'Derivada da soma e do produto por constante', a: '(f + g)\' = f\' + g\'  e  (k·f)\' = k·f\'.' },
+    { st: 2, tag: 'Regra', q: 'Regra do produto', a: '(f·g)\' = f\'·g + f·g\'.' },
+    { st: 2, tag: 'Regra', q: 'Regra do quociente', a: '(f/g)\' = (f\'·g − f·g\') / g².' },
+    { st: 2, tag: 'Regra', q: 'Derivada da função composta (regra da cadeia)', a: '(f(g(x)))\' = f\'(g(x)) · g\'(x).' },
+    { st: 3, tag: 'Estratégia', q: 'Como estudar a monotonia com a derivada?', a: 'f\'(x) > 0 → f crescente; f\'(x) < 0 → f decrescente. Os zeros de f\' são candidatos a extremos.' },
+    { st: 3, tag: 'Definição', q: 'O que é um extremo relativo?', a: 'Um máximo ou mínimo local. Ocorre onde f\' muda de sinal (de + para − → máximo; de − para + → mínimo).' },
+    { st: 3, tag: 'Estratégia', q: 'Equação da reta tangente num ponto a', a: 'y = f(a) + f\'(a)·(x − a). O declive é f\'(a).' },
+    { st: 2, tag: 'Definição', q: 'Pontos críticos', a: 'Os valores de x onde f\'(x) = 0 ou f\' não existe. São candidatos a máximos/mínimos.' },
+    { st: 1, tag: 'Definição', q: 'Derivada de funções trigonométricas', a: '(sen x)\' = cos x; (cos x)\' = −sen x.' },
+    { st: 2, tag: 'Exemplo', q: 'Deriva f(x) = 3x² − 5x + 2', a: 'f\'(x) = 6x − 5.' },
+    { st: 1, tag: 'Exemplo', q: 'tvm de f(x)=x² em [1, 3]?', a: '(9 − 1)/(3 − 1) = 8/2 = 4.' },
+    { st: 2, tag: 'Exemplo', q: 'Deriva f(x) = x⁴', a: 'f\'(x) = 4x³.' },
+    { st: 1, tag: 'Exemplo', q: 'Declive da tangente a f(x)=x² em x=2?', a: 'f\'(x) = 2x → f\'(2) = 4.' }
   ],
   6: [
-    { tag: 'Definição', q: 'O que é o fatorial n!?', a: 'O produto de todos os naturais de 1 a n: n! = n × (n−1) × … × 2 × 1. Por convenção, 0! = 1.' },
-    { tag: 'Fórmula', q: 'Arranjos (sem repetição)', a: 'ⁿAₚ = n!/(n−p)!. Conta sequências ordenadas de p elementos de um conjunto de n.' },
-    { tag: 'Fórmula', q: 'Combinações', a: 'ⁿCₚ = n!/(p!(n−p)!). Conta subconjuntos de p elementos (ordem não importa).' },
-    { tag: 'Fórmula', q: 'Permutações', a: 'O número de ordenações de n elementos distintos é n!.' },
-    { tag: 'Regra', q: 'Triângulo de Pascal', a: 'Cada número é a soma dos dois acima. As linhas dão os coeficientes ⁿCₚ do binómio de Newton.' },
-    { tag: 'Fórmula', q: 'Binómio de Newton', a: '(a + b)ⁿ = Σ ⁿCₖ · a^(n−k) · bᵏ, para k de 0 a n.' },
-    { tag: 'Fórmula', q: 'Regra de Laplace', a: 'P(A) = casos favoráveis / casos possíveis (em casos equiprováveis). 0 ≤ P(A) ≤ 1.' },
-    { tag: 'Fórmula', q: 'Probabilidade condicionada', a: 'P(A|B) = P(A ∩ B) / P(B), com P(B) ≠ 0. É a probabilidade de A sabendo que B ocorreu.' },
-    { tag: 'Regra', q: 'Acontecimentos independentes', a: 'A e B são independentes se P(A ∩ B) = P(A) × P(B), ou seja P(A|B) = P(A).' },
-    { tag: 'Fórmula', q: 'Probabilidade da reunião', a: 'P(A ∪ B) = P(A) + P(B) − P(A ∩ B). Se incompatíveis: P(A ∪ B) = P(A) + P(B).' },
-    { tag: 'Definição', q: 'Acontecimento contrário', a: 'P(Ā) = 1 − P(A).' },
-    { tag: 'Definição', q: 'Valor médio de uma variável aleatória', a: 'μ = Σ xᵢ · P(X = xᵢ). É a "média esperada" da distribuição.' },
-    { tag: 'Exemplo', q: 'Quanto é 5!?', a: '5 × 4 × 3 × 2 × 1 = 120.' },
-    { tag: 'Exemplo', q: 'Quantas combinações ⁵C₂?', a: '5!/(2!3!) = (5×4)/(2×1) = 10.' },
-    { tag: 'Exemplo', q: 'P(A|B) se P(A∩B)=0,2 e P(B)=0,5?', a: '0,2 / 0,5 = 0,4.' },
-    { tag: 'Exemplo', q: 'P de duas caras ao lançar 2 moedas?', a: 'Independentes: ½ × ½ = ¼ = 0,25.' }
+    { st: 1, tag: 'Definição', q: 'O que é o fatorial n!?', a: 'O produto de todos os naturais de 1 a n: n! = n × (n−1) × … × 2 × 1. Por convenção, 0! = 1.' },
+    { st: 1, tag: 'Fórmula', q: 'Arranjos (sem repetição)', a: 'ⁿAₚ = n!/(n−p)!. Conta sequências ordenadas de p elementos de um conjunto de n.' },
+    { st: 1, tag: 'Fórmula', q: 'Combinações', a: 'ⁿCₚ = n!/(p!(n−p)!). Conta subconjuntos de p elementos (ordem não importa).' },
+    { st: 1, tag: 'Fórmula', q: 'Permutações', a: 'O número de ordenações de n elementos distintos é n!.' },
+    { st: 1, tag: 'Regra', q: 'Triângulo de Pascal', a: 'Cada número é a soma dos dois acima. As linhas dão os coeficientes ⁿCₚ do binómio de Newton.' },
+    { st: 1, tag: 'Fórmula', q: 'Binómio de Newton', a: '(a + b)ⁿ = Σ ⁿCₖ · a^(n−k) · bᵏ, para k de 0 a n.' },
+    { st: 2, tag: 'Fórmula', q: 'Regra de Laplace', a: 'P(A) = casos favoráveis / casos possíveis (em casos equiprováveis). 0 ≤ P(A) ≤ 1.' },
+    { st: 2, tag: 'Fórmula', q: 'Probabilidade condicionada', a: 'P(A|B) = P(A ∩ B) / P(B), com P(B) ≠ 0. É a probabilidade de A sabendo que B ocorreu.' },
+    { st: 2, tag: 'Regra', q: 'Acontecimentos independentes', a: 'A e B são independentes se P(A ∩ B) = P(A) × P(B), ou seja P(A|B) = P(A).' },
+    { st: 2, tag: 'Fórmula', q: 'Probabilidade da reunião', a: 'P(A ∪ B) = P(A) + P(B) − P(A ∩ B). Se incompatíveis: P(A ∪ B) = P(A) + P(B).' },
+    { st: 3, tag: 'Definição', q: 'Acontecimento contrário', a: 'P(Ā) = 1 − P(A).' },
+    { st: 1, tag: 'Definição', q: 'Valor médio de uma variável aleatória', a: 'μ = Σ xᵢ · P(X = xᵢ). É a "média esperada" da distribuição.' },
+    { st: 1, tag: 'Exemplo', q: 'Quanto é 5!?', a: '5 × 4 × 3 × 2 × 1 = 120.' },
+    { st: 2, tag: 'Exemplo', q: 'Quantas combinações ⁵C₂?', a: '5!/(2!3!) = (5×4)/(2×1) = 10.' },
+    { st: 2, tag: 'Exemplo', q: 'P(A|B) se P(A∩B)=0,2 e P(B)=0,5?', a: '0,2 / 0,5 = 0,4.' },
+    { st: 1, tag: 'Exemplo', q: 'P de duas caras ao lançar 2 moedas?', a: 'Independentes: ½ × ½ = ¼ = 0,25.' }
   ]
 };
 
@@ -224,9 +224,11 @@ function mat11ResumoShowSts(cap) {
   if (!stRow) return;
   var sts = _mat11Subtemas[cap] || [];
   if (!sts.length) { stRow.style.display = 'none'; return; }
+  var _stSel = _mat11Sel['resumo-st'] || 0;
   var h = '<div class="resumo-st-label">Subtema</div>';
+  h += '<button class="resumo-st-btn' + (_stSel === 0 ? ' active' : '') + '" data-st="0" onclick="mat11ResumoSelectSt(this,' + cap + ',0)">Todos</button>';
   sts.forEach(function(st, i) {
-    var isActive = (_mat11Sel['resumo-st'] || 0) === (i + 1);
+    var isActive = _stSel === (i + 1);
     h += '<button class="resumo-st-btn' + (isActive ? ' active' : '') + '" data-st="' + (i + 1) + '" onclick="mat11ResumoSelectSt(this,' + cap + ',' + (i + 1) + ')">' + st + '</button>';
   });
   stRow.innerHTML = h;
@@ -263,16 +265,8 @@ function mat11RenderResumoInline() {
 
   // Filtrar por subtema, se selecionado
   var stIdx = _mat11Sel['resumo-st'] || 0;
-  var cards = allCards;
-  if (stIdx > 0 && _mat11Subtemas[cap]) {
-    var stLabel = (_mat11Subtemas[cap][stIdx - 1] || '').toLowerCase();
-    var stWords = stLabel.replace(/[^a-záéíóúâêîôûãõç ]/g, '').split(' ').filter(function(w){ return w.length > 3; });
-    var filtered = allCards.filter(function(card) {
-      var hay = ((card.tag || '') + ' ' + (card.q || '')).toLowerCase();
-      return stWords.some(function(w){ return hay.indexOf(w) !== -1; });
-    });
-    if (filtered.length > 0) cards = filtered;
-  }
+  // Filtro por subtema usa o campo st de cada flashcard (fiável); 0 = Todos.
+  var cards = (stIdx > 0) ? allCards.filter(function(card){ return card.st === stIdx; }) : allCards;
 
   if (!cards.length) {
     dest.innerHTML = '<div class="resumo-empty">'
