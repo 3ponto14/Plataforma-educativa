@@ -319,10 +319,13 @@ function portalAplicarSessao() {
   // Conteúdo interno da montra: visível exceto na porta de entrada.
   // (A secção #sec-cursos como um todo é mostrada/escondida pela
   //  navegação por secções — portal-nav.js — quando há sessão.)
-  mostra('portal-grid', !fechado);
+  // O grid não é mostrado diretamente: quem decide se aparece (e o quê) é
+  // portalSearch() conforme o filtro/pesquisa. Na porta de entrada, esconde-se.
+  if (fechado) { mostra('portal-grid', false); mostra('portal-empty', false); }
+  else if (typeof portalSearch === 'function') { portalSearch(); }
   mostraCls('portal-search', !fechado);
   mostraCls('portal-filters', !fechado);
-  mostra('portal-no-results', false);
+  if (fechado) mostra('portal-no-results', false);
   if (fechado) { var pw = document.getElementById('portal-progress-widget'); if (pw) pw.style.display = 'none'; }
 
   var secCursos = document.getElementById('sec-cursos');
