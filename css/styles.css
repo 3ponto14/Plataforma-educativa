@@ -4024,6 +4024,10 @@ body.ml-bottom-on #ml-bottombar{display:flex;}
    a flutuar no meio com branco à direita. */
 /* Com menu fixo (desktop) o catálogo ocupa a largura toda, não os 720px
    herdados de .portal-section. */
+/* Menu fixo: portal em coluna a 100vh para o footer ficar sempre colado em
+   baixo, mesmo quando o conteúdo é curto (ex.: estado «Escolhe o ano»). */
+body.ml-fixed-on #view-portal{display:flex;flex-direction:column;min-height:100vh}
+body.ml-fixed-on #view-portal > footer{margin-top:auto}
 body.ml-fixed-on #portal-catalogo{max-width:none;margin:0}
 body.ml-fixed-on #sec-cursos{padding:1.5rem 2.5rem 0}
 body.ml-fixed-on #sec-cursos .portal-search{margin-left:0;margin-right:0;max-width:560px}
