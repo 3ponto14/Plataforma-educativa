@@ -29,6 +29,8 @@ var _port7Path = _inPort(7) ? '' : _coursePath('port7');
 var _port8Path = _inPort(8) ? '' : _coursePath('port8');
 var _inFq7 = window.location.pathname.indexOf('/fq7/') !== -1 || window.location.pathname.endsWith('/fq7');
 var _fq7Path = _inFq7 ? '' : _coursePath('fq7');
+var _inFq9 = window.location.pathname.indexOf('/fq9/') !== -1 || window.location.pathname.endsWith('/fq9');
+var _fq9Path = _inFq9 ? '' : _coursePath('fq9');
 
 /* ── Portal (index.html at root) ── */
 function showPortalView() { window.location.href = _rootPath + 'index.html'; }
@@ -58,6 +60,10 @@ function showPortalFromPort8() { showPortalView(); }
 /* ── FQ7 hub · Físico-Química 7.º (mesmo modelo de hub) ── */
 function showFq7View() { window.location.href = _fq7Path + 'index.html'; }
 function showPortalFromFq7() { showPortalView(); }
+
+/* ── FQ9 hub · Físico-Química 9.º ── */
+function showFq9View() { window.location.href = _fq9Path + 'index.html'; }
+function showPortalFromFq9() { showPortalView(); }
 
 /* ── Mat5 e Mat6 hubs (2.º ciclo) ── */
 function showMat5View()  { window.location.href = _mat5Path + 'index.html'; }
