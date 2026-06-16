@@ -49,9 +49,59 @@ var _fq7Cards = {
     { tag: 'Instrumentos', q: 'O que é o telescópio Hubble?', a: 'Um telescópio espacial, em órbita da Terra, lançado em 1990 pela agência espacial americana (NASA). Tem o nome do cientista Edwin Hubble.' },
     { tag: 'Curiosidade', q: 'O Universo está em expansão. Quem propôs essa ideia?', a: 'Edwin Hubble. As galáxias afastam-se umas das outras — o Universo está a expandir-se.' }
   ],
-  2: [ { tag: 'Em preparação', q: 'Terra, Lua e Forças', a: 'A teoria deste capítulo está a ser preparada. Já podes praticar exercícios.' } ],
-  3: [ { tag: 'Em preparação', q: 'Materiais', a: 'A teoria deste capítulo está a ser preparada. Já podes praticar exercícios.' } ],
-  4: [ { tag: 'Em preparação', q: 'Energia', a: 'A teoria deste capítulo está a ser preparada. Já podes praticar exercícios.' } ]
+  2: [
+    { tag: 'Definição', q: 'O que é o movimento de rotação da Terra?', a: 'É o movimento da Terra em torno do seu próprio eixo. Demora ~24 horas e é responsável pela sucessão dos dias e das noites. Faz-se de oeste para este.' },
+    { tag: 'Definição', q: 'O que é o movimento de translação da Terra?', a: 'É o movimento da Terra à volta do Sol. Demora ~365 dias (um ano). Junto com a inclinação do eixo, dá origem às estações do ano.' },
+    { tag: 'Regra', q: 'O que causa o dia e a noite?', a: 'A ROTAÇÃO da Terra. Como a Terra roda, cada zona fica virada para o Sol (dia) ou para o lado oposto (noite).' },
+    { tag: 'Regra', q: 'O que causa as estações do ano?', a: 'A TRANSLAÇÃO da Terra à volta do Sol, combinada com a inclinação do eixo da Terra. Não é a distância ao Sol.' },
+    { tag: 'Definição', q: 'O que são as fases da Lua?', a: 'São os diferentes aspetos da parte iluminada da Lua vista da Terra: Lua Nova, Quarto Crescente, Lua Cheia e Quarto Minguante. Repetem-se em ~29,5 dias.' },
+    { tag: 'Definição', q: 'Quanto tempo demora a Lua a dar uma volta à Terra?', a: 'Cerca de 27,3 dias. O período de rotação da Lua é igual, por isso vemos sempre a mesma face.' },
+    { tag: 'Propriedade', q: 'Porque vemos sempre a mesma face da Lua?', a: 'Porque a Lua demora o MESMO tempo a rodar sobre si própria e a dar uma volta à Terra (~27,3 dias). Da Terra só vemos metade da superfície da Lua.' },
+    { tag: 'Definição', q: 'Quando ocorre um eclipse solar?', a: 'Em fase de Lua Nova, quando a Lua se coloca ENTRE o Sol e a Terra, fazendo sombra na Terra.' },
+    { tag: 'Definição', q: 'Quando ocorre um eclipse lunar?', a: 'Em fase de Lua Cheia, quando a Terra se coloca ENTRE o Sol e a Lua, fazendo sombra na Lua.' },
+    { tag: 'Definição', q: 'O que é uma força?', a: 'Uma ação que pode alterar o movimento de um corpo ou deformá-lo. Mede-se em newton (N) e representa-se por um vetor (seta).' },
+    { tag: 'Definição', q: 'O que é a força gravítica?', a: 'A força de atração entre corpos com massa. A Terra atrai os corpos para o seu centro; é o que nos mantém no chão e mantém a Lua e os satélites em órbita.' },
+    { tag: 'Regra', q: 'De que depende a força gravítica?', a: 'É MAIOR quanto maior for a massa dos corpos, e MENOR quanto maior for a distância entre eles.' },
+    { tag: 'Definição', q: 'Qual é a diferença entre massa e peso?', a: 'Massa (kg) é a quantidade de matéria, é sempre igual. Peso (N) é a força gravítica sobre o corpo e varia conforme o planeta (na Lua pesamos menos).' },
+    { tag: 'Curiosidade', q: 'O que mantém um satélite em órbita da Terra?', a: 'A força gravítica que a Terra exerce sobre ele. Sem essa força, o satélite seguiria em linha reta para longe.' },
+    { tag: 'Notação', q: 'Como se representa uma força num desenho?', a: 'Por um vetor (seta): o comprimento indica a intensidade (em N, conforme a escala); a direção e o sentido indicam para onde a força atua.' },
+    { tag: 'Exemplo', q: 'Em que sentido se faz a rotação da Terra?', a: 'De oeste para este — por isso o Sol parece "nascer" a este e "pôr-se" a oeste.' }
+  ],
+  3: [
+    { tag: 'Definição', q: 'O que é uma substância pura?', a: 'Um material formado por um único tipo de constituinte, com propriedades fixas. Ex.: água destilada, ouro puro, oxigénio.' },
+    { tag: 'Definição', q: 'O que é uma mistura?', a: 'Um material formado por duas ou mais substâncias. Ex.: água com sal, ar, leite, granito.' },
+    { tag: 'Definição', q: 'Diferença entre mistura homogénea e heterogénea?', a: 'Homogénea: aspeto uniforme, não se distinguem os componentes (ex.: água com sal, ar). Heterogénea: distinguem-se os componentes (ex.: água com areia, granito).' },
+    { tag: 'Definição', q: 'O que é uma solução?', a: 'Uma mistura homogénea de um soluto dissolvido num solvente. Ex.: água com açúcar — o açúcar é o soluto, a água é o solvente.' },
+    { tag: 'Definição', q: 'O que é o soluto e o solvente?', a: 'Soluto: a substância que se dissolve (menor quantidade). Solvente: a substância onde o soluto se dissolve (maior quantidade).' },
+    { tag: 'Fórmula', q: 'Como se calcula a concentração mássica de uma solução?', a: 'Concentração = massa do soluto ÷ volume da solução. Unidade habitual: g/dm³. Ex.: 2,4 g em 1 dm³ → 2,4 g/dm³.' },
+    { tag: 'Definição', q: 'O que é a massa volúmica (densidade)?', a: 'A massa por unidade de volume de um material: ρ = massa ÷ volume. Unidade: g/cm³, g/dm³ ou kg/m³.' },
+    { tag: 'Fórmula', q: 'Como se calcula a massa volúmica?', a: 'ρ = m / V (massa a dividir pelo volume). Ex.: 1,14 g num volume de 1 dm³ → 1,14 g/dm³.' },
+    { tag: 'Regra', q: 'Um corpo flutua ou afunda em função de quê?', a: 'Da massa volúmica: se for menor que a do líquido, flutua; se for maior, afunda. A madeira flutua na água; o ferro afunda.' },
+    { tag: 'Definição', q: 'Quais são os três estados físicos da matéria?', a: 'Sólido (forma e volume fixos), líquido (volume fixo, forma do recipiente) e gasoso (sem forma nem volume fixos).' },
+    { tag: 'Definição', q: 'Como se chamam as mudanças de estado físico?', a: 'Fusão (sólido→líquido), solidificação (líquido→sólido), vaporização (líquido→gasoso), condensação (gasoso→líquido) e sublimação (sólido→gasoso).' },
+    { tag: 'Estratégia', q: 'Como separar areia da água?', a: 'Por filtração: a água passa pelo filtro e a areia (sólido insolúvel) fica retida.' },
+    { tag: 'Estratégia', q: 'Como separar sal dissolvido na água?', a: 'Por evaporação (ou destilação, se quiseres recuperar também a água): a água evapora e o sal fica.' },
+    { tag: 'Estratégia', q: 'Como separar limalha de ferro de areia?', a: 'Com um íman (separação magnética): o íman atrai o ferro e deixa a areia.' },
+    { tag: 'Estratégia', q: 'Como separar dois líquidos que não se misturam (água e óleo)?', a: 'Por decantação, com uma ampola de decantação: o líquido mais denso (água) sai por baixo.' },
+    { tag: 'Exemplo', q: 'O ar é uma substância pura ou uma mistura?', a: 'É uma mistura (homogénea) de gases: principalmente azoto (~78%) e oxigénio (~21%).' }
+  ],
+  4: [
+    { tag: 'Definição', q: 'O que é a energia?', a: 'A capacidade de produzir alterações (movimento, calor, luz, som…). Não se cria nem se destrói, apenas se transfere e transforma.' },
+    { tag: 'Definição', q: 'O que é uma fonte e um recetor de energia?', a: 'Fonte: o que cede energia (ex.: o Sol, uma pilha). Recetor: o que recebe energia (ex.: uma planta, uma lâmpada).' },
+    { tag: 'Definição', q: 'Fontes de energia renováveis e não renováveis?', a: 'Renováveis: não se esgotam (Sol, vento, água, biomassa). Não renováveis: esgotam-se (carvão, petróleo, gás natural — combustíveis fósseis).' },
+    { tag: 'Definição', q: 'Quais são algumas formas de energia?', a: 'Cinética (movimento), potencial (posição), térmica (calor), luminosa (luz), sonora (som), elétrica e química.' },
+    { tag: 'Regra', q: 'Como se transfere energia por calor?', a: 'A energia transfere-se sempre do corpo a MAIOR temperatura para o de MENOR temperatura, até ficarem em equilíbrio.' },
+    { tag: 'Fórmula', q: 'Qual é a unidade de energia no Sistema Internacional?', a: 'O joule (J). Também se usam a caloria (cal) e o quilowatt-hora (kWh). 1 cal = 4,18 J.' },
+    { tag: 'Conversão', q: 'Quantos joules são 1 caloria?', a: '1 cal = 4,18 J. Ex.: 100 kcal = 100 000 cal = 418 000 J.' },
+    { tag: 'Definição', q: 'O que é a energia cinética?', a: 'A energia associada ao movimento de um corpo. Quanto maior a velocidade e a massa, maior a energia cinética.' },
+    { tag: 'Definição', q: 'O que é a energia potencial gravítica?', a: 'A energia que um corpo tem por estar a uma certa altura. Quanto mais alto, maior a energia potencial gravítica.' },
+    { tag: 'Princípio', q: 'O que diz a conservação da energia?', a: 'A energia não se cria nem se destrói; apenas se transforma ou se transfere. A energia total mantém-se.' },
+    { tag: 'Definição', q: 'O que é o rendimento de um sistema?', a: 'A fração da energia recebida que é aproveitada para o fim útil. O resto dissipa-se (em geral como calor). É sempre menor que 100%.' },
+    { tag: 'Exemplo', q: 'No Sol a aquecer a Terra, qual é a fonte e o recetor?', a: 'Fonte: o Sol. Recetor: a Terra. A energia transfere-se por radiação (luz).' },
+    { tag: 'Exemplo', q: 'Que transformação de energia há numa lâmpada?', a: 'Energia elétrica → energia luminosa (luz) + energia térmica (calor, que é a parte dissipada).' },
+    { tag: 'Exemplo', q: 'Que energia tem a água no topo de uma barragem?', a: 'Energia potencial gravítica. Ao cair, transforma-se em cinética e depois em elétrica (na central).' },
+    { tag: 'Curiosidade', q: 'De onde vem a maior parte da energia na Terra?', a: 'Do Sol — direta ou indiretamente (vento, chuva, plantas e até os combustíveis fósseis têm origem na energia solar).' }
+  ]
 };
 
 // Seleção atual por tab
@@ -230,21 +280,53 @@ var _fq7Banco = {
   ],
   2: [
     { t:1, tipo:'mc', enun:'O que causa o dia e a noite?', opcoes:['A rotação da Terra','A translação da Terra','As fases da Lua','O movimento do Sol'], resposta:'A rotação da Terra', expl:'A Terra roda sobre si mesma (rotação) em ~24 h → dia e noite.' },
+    { t:1, tipo:'mc', enun:'Quanto tempo demora a rotação da Terra?', opcoes:['Cerca de 24 horas','Cerca de 1 mês','Cerca de 365 dias','Cerca de 27 dias'], resposta:'Cerca de 24 horas', expl:'A rotação (volta sobre o próprio eixo) demora ~24 h.' },
     { t:1, tipo:'mc', enun:'O que dá origem às estações do ano?', opcoes:['A translação da Terra (e a inclinação do eixo)','A rotação da Terra','As marés','As fases da Lua'], resposta:'A translação da Terra (e a inclinação do eixo)', expl:'A Terra dá uma volta ao Sol num ano; a inclinação do eixo causa as estações.' },
+    { t:1, tipo:'vf', enun:'A rotação da Terra faz-se de oeste para este.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'Por isso o Sol parece nascer a este e pôr-se a oeste.' },
+    { t:1, tipo:'vf', enun:'As estações do ano devem-se à distância da Terra ao Sol.', opcoes:['Verdadeiro','Falso'], resposta:'Falso', expl:'Devem-se à inclinação do eixo e à translação, não à distância.' },
     { t:2, tipo:'mc', enun:'Quanto tempo (aprox.) demora a Lua a dar uma volta à Terra?', opcoes:['Cerca de 27 dias','Cerca de 24 horas','Cerca de 365 dias','Cerca de 7 dias'], resposta:'Cerca de 27 dias', expl:'O período da Lua em torno da Terra é ~27,3 dias.' },
-    { t:3, tipo:'vf', enun:'A força gravítica é maior quanto MAIOR for a massa dos corpos.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'A força gravítica aumenta com a massa e diminui com a distância.' }
+    { t:2, tipo:'vf', enun:'Da Terra vemos sempre a mesma face da Lua.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'A Lua roda sobre si no mesmo tempo que orbita a Terra, por isso mostra sempre a mesma face.' },
+    { t:2, tipo:'mc', enun:'Um eclipse solar ocorre na fase de…', opcoes:['Lua Nova','Lua Cheia','Quarto Crescente','Quarto Minguante'], resposta:'Lua Nova', expl:'A Lua fica entre o Sol e a Terra (Lua Nova), fazendo sombra na Terra.' },
+    { t:2, tipo:'mc', enun:'Um eclipse lunar ocorre na fase de…', opcoes:['Lua Cheia','Lua Nova','Quarto Crescente','Quarto Minguante'], resposta:'Lua Cheia', expl:'A Terra fica entre o Sol e a Lua (Lua Cheia), fazendo sombra na Lua.' },
+    { t:3, tipo:'vf', enun:'A força gravítica é maior quanto MAIOR for a massa dos corpos.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'A força gravítica aumenta com a massa e diminui com a distância.' },
+    { t:3, tipo:'vf', enun:'A força gravítica aumenta quando a distância entre os corpos aumenta.', opcoes:['Verdadeiro','Falso'], resposta:'Falso', expl:'É o contrário: quanto maior a distância, MENOR a força gravítica.' },
+    { t:3, tipo:'mc', enun:'A força mede-se em…', opcoes:['newton (N)','quilograma (kg)','joule (J)','metro (m)'], resposta:'newton (N)', expl:'A unidade de força é o newton (N).' },
+    { t:3, tipo:'mc', enun:'Qual é a diferença entre massa e peso?', opcoes:['Massa é a matéria (kg); peso é a força gravítica (N)','São a mesma coisa','Massa mede-se em N','Peso mede-se em kg'], resposta:'Massa é a matéria (kg); peso é a força gravítica (N)', expl:'A massa é constante; o peso varia com o planeta.' },
+    { t:3, tipo:'mc', enun:'O que mantém um satélite em órbita da Terra?', opcoes:['A força gravítica da Terra','O vento solar','O magnetismo da Lua','Nada'], resposta:'A força gravítica da Terra', expl:'A gravidade "puxa" o satélite, mantendo-o em órbita.' },
+    { t:3, tipo:'mc', enun:'Dois satélites iguais: A está mais perto, B mais longe da Terra. Em qual a força gravítica é maior?', opcoes:['Em A (mais perto)','Em B (mais longe)','É igual','Não há força'], resposta:'Em A (mais perto)', expl:'Menor distância → maior força gravítica.' }
   ],
   3: [
     { t:1, tipo:'mc', enun:'Uma <strong>mistura</strong> é…', opcoes:['duas ou mais substâncias juntas','uma única substância pura','sempre um sólido','sempre líquida'], resposta:'duas ou mais substâncias juntas', expl:'Uma mistura tem mais do que uma substância (ex.: água com sal).' },
+    { t:1, tipo:'mc', enun:'Qual destes é uma substância pura?', opcoes:['Água destilada','Água do mar','Ar','Sumo de laranja'], resposta:'Água destilada', expl:'A água destilada tem só um constituinte; as outras são misturas.' },
+    { t:1, tipo:'mc', enun:'A água com areia é uma mistura…', opcoes:['heterogénea','homogénea','pura','gasosa'], resposta:'heterogénea', expl:'Distinguem-se os componentes (água e areia) → heterogénea.' },
+    { t:1, tipo:'mc', enun:'A água com sal dissolvido é uma mistura…', opcoes:['homogénea','heterogénea','pura','sólida'], resposta:'homogénea', expl:'Tem aspeto uniforme, não se distinguem os componentes → homogénea (solução).' },
     { t:2, tipo:'mc', enun:'Numa solução, o que é o <strong>soluto</strong>?', opcoes:['A substância que se dissolve','O líquido onde se dissolve','O recipiente','O gás'], resposta:'A substância que se dissolve', expl:'Soluto dissolve-se no solvente (ex.: sal=soluto, água=solvente).' },
+    { t:2, tipo:'mc', enun:'Na água com açúcar, qual é o solvente?', opcoes:['A água','O açúcar','O copo','O ar'], resposta:'A água', expl:'O solvente é onde se dissolve o soluto (açúcar). Aqui é a água.' },
     { t:3, tipo:'mc', enun:'A densidade (massa volúmica) calcula-se por:', opcoes:['massa ÷ volume','volume ÷ massa','massa × volume','massa + volume'], resposta:'massa ÷ volume', expl:'ρ = m / V. Ex.: 1,14 g em 1 dm³ → 1,14 g/dm³.' },
+    { t:3, tipo:'mc', enun:'Um corpo flutua na água quando a sua massa volúmica é…', opcoes:['menor que a da água','maior que a da água','igual à do ar','o dobro da água'], resposta:'menor que a da água', expl:'Menos denso que o líquido → flutua (ex.: madeira).' },
+    { t:3, tipo:'vf', enun:'O ferro afunda na água porque é mais denso do que ela.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'A massa volúmica do ferro é maior que a da água → afunda.' },
     { t:4, tipo:'mc', enun:'Quantos estados físicos pode ter a água?', opcoes:['Três (sólido, líquido, gasoso)','Dois','Um','Quatro'], resposta:'Três (sólido, líquido, gasoso)', expl:'Gelo (sólido), água (líquido), vapor (gasoso).' },
-    { t:5, tipo:'mc', enun:'Como separar areia da água?', opcoes:['Filtração','Destilação','Evaporação do sal','Magnetização'], resposta:'Filtração', expl:'A filtração separa um sólido insolúvel (areia) de um líquido (água).' }
+    { t:4, tipo:'mc', enun:'A passagem de sólido a líquido chama-se…', opcoes:['fusão','solidificação','condensação','vaporização'], resposta:'fusão', expl:'Sólido → líquido = fusão (ex.: gelo a derreter).' },
+    { t:4, tipo:'mc', enun:'A passagem de líquido a gasoso chama-se…', opcoes:['vaporização','condensação','fusão','solidificação'], resposta:'vaporização', expl:'Líquido → gasoso = vaporização (ex.: água a ferver).' },
+    { t:5, tipo:'mc', enun:'Como separar areia da água?', opcoes:['Filtração','Destilação','Evaporação do sal','Magnetização'], resposta:'Filtração', expl:'A filtração separa um sólido insolúvel (areia) de um líquido (água).' },
+    { t:5, tipo:'mc', enun:'Como separar limalha de ferro de areia?', opcoes:['Com um íman','Filtração','Evaporação','Decantação'], resposta:'Com um íman', expl:'O íman atrai o ferro (separação magnética).' },
+    { t:5, tipo:'mc', enun:'Como recuperar o sal dissolvido em água?', opcoes:['Evaporação','Filtração','Magnetização','Peneiração'], resposta:'Evaporação', expl:'A água evapora e o sal fica.' }
   ],
   4: [
     { t:1, tipo:'mc', enun:'Qual destas é uma <strong>fonte de energia renovável</strong>?', opcoes:['O Sol','O carvão','O petróleo','O gás natural'], resposta:'O Sol', expl:'A energia solar é renovável; carvão/petróleo/gás são fósseis (não renováveis).' },
+    { t:1, tipo:'mc', enun:'Qual destas é uma fonte de energia NÃO renovável?', opcoes:['O petróleo','O vento','O Sol','A água'], resposta:'O petróleo', expl:'O petróleo é um combustível fóssil — esgota-se.' },
+    { t:1, tipo:'vf', enun:'O vento é uma fonte de energia renovável.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'A energia eólica (vento) é renovável.' },
+    { t:1, tipo:'mc', enun:'No Sol a aquecer a Terra, qual é a fonte de energia?', opcoes:['O Sol','A Terra','O ar','A Lua'], resposta:'O Sol', expl:'A fonte cede energia (Sol); o recetor recebe-a (Terra).' },
     { t:2, tipo:'mc', enun:'Num aquecimento, a energia transfere-se da fonte para o recetor sobretudo por…', opcoes:['calor','luz visível apenas','som','não há transferência'], resposta:'calor', expl:'A energia transfere-se como calor do corpo mais quente para o mais frio.' },
-    { t:3, tipo:'mc', enun:'A unidade de energia no Sistema Internacional é o…', opcoes:['joule (J)','metro (m)','watt (W)','grama (g)'], resposta:'joule (J)', expl:'A energia mede-se em joule (J). 1 cal = 4,18 J.' }
+    { t:2, tipo:'mc', enun:'O calor transfere-se sempre do corpo…', opcoes:['mais quente para o mais frio','mais frio para o mais quente','maior para o menor','não se transfere'], resposta:'mais quente para o mais frio', expl:'Até atingirem a mesma temperatura (equilíbrio térmico).' },
+    { t:2, tipo:'mc', enun:'Numa lâmpada, a energia elétrica transforma-se em…', opcoes:['luz e calor','som','energia química','massa'], resposta:'luz e calor', expl:'Elétrica → luminosa (útil) + térmica (dissipada).' },
+    { t:2, tipo:'vf', enun:'A energia pode ser criada do nada.', opcoes:['Verdadeiro','Falso'], resposta:'Falso', expl:'A energia não se cria nem se destrói; só se transforma/transfere.' },
+    { t:3, tipo:'mc', enun:'A unidade de energia no Sistema Internacional é o…', opcoes:['joule (J)','metro (m)','watt (W)','grama (g)'], resposta:'joule (J)', expl:'A energia mede-se em joule (J). 1 cal = 4,18 J.' },
+    { t:3, tipo:'mc', enun:'A quantos joules corresponde 1 caloria?', opcoes:['4,18 J','1 J','100 J','1000 J'], resposta:'4,18 J', expl:'1 cal = 4,18 J.' },
+    { t:3, tipo:'mc', enun:'A energia associada ao movimento chama-se energia…', opcoes:['cinética','potencial','química','sonora'], resposta:'cinética', expl:'Energia cinética = energia do movimento.' },
+    { t:3, tipo:'mc', enun:'A água no topo de uma barragem tem sobretudo energia…', opcoes:['potencial gravítica','cinética','sonora','elétrica'], resposta:'potencial gravítica', expl:'Por estar em altura; ao cair transforma-se em cinética e depois elétrica.' },
+    { t:3, tipo:'vf', enun:'A maior parte da energia na Terra tem origem no Sol.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'Direta ou indiretamente (vento, chuva, plantas, fósseis).' },
+    { t:3, tipo:'mc', enun:'O rendimento de um sistema é sempre…', opcoes:['menor que 100%','igual a 100%','maior que 100%','zero'], resposta:'menor que 100%', expl:'Há sempre energia dissipada (em geral como calor).' }
   ]
 };
 
@@ -2676,47 +2758,6 @@ function buildEx_f72(tema, tipo, dif) {
   return { enun: 'Simétrico de v(2, −3)?', tipo: 'mc', opcoes: ['(−2, 3)', '(2, 3)', '(−2, −3)', '(3, 2)'], resposta: '(−2, 3)', expl: 'Troca os sinais.', tema: 'Vetores' };
 }
 
-/* ════════════════════════════════════════════════════════════════
-   BANCO DE QUESTÕES (contexto/problema) - Matemática · 8.º ano
-   ════════════════════════════════════════════════════════════════ */
-var _fq7Banco = {
-  1: [ // Números (racionais, potências, notação científica)
-    { t: '5', tipo: 'fill', enun: 'Um telemóvel custa 240 € e tem 15% de desconto. Quanto se paga (em €)?', resposta: '204', expl: '240 × (1 − 0,15) = 240 × 0,85 = 204 €.', tema: 'T5 · Expressões' },
-    { t: '10', tipo: 'fill_frac', enun: 'A distância da Terra ao Sol é cerca de 150 000 000 km. Escreve em notação científica.', resposta: '1,5×10⁸', expl: '150 000 000 = 1,5 × 10⁸.', tema: 'T10 · Notação Científica' },
-    { t: '11', tipo: 'fill_frac', enun: 'Calcula (3 × 10⁴) × (2 × 10³) em notação científica.', resposta: '6×10⁷', expl: '(3×2) × 10⁴⁺³ = 6 × 10⁷.', tema: 'T11 · Operações N.C.' },
-    { t: '9', tipo: 'fill', enun: 'Um quadrado tem área 64 cm². Qual é o comprimento do lado (em cm)?', resposta: '8', expl: 'lado = √64 = 8 cm.', tema: 'T9 · Raízes' }
-  ],
-  2: [ // Vetores e Isometrias
-    { t: '1', tipo: 'fill_frac', enun: 'Um drone está em (2, −1) e desloca-se segundo o vetor (3, 4). Qual é a nova posição? (forma (x, y))', resposta: '(5,3)', expl: '(2+3, −1+4) = (5, 3).', tema: 'T1 · Translação' },
-    { t: '3', tipo: 'mc', enun: 'A imagem de uma figura por uma isometria é sempre:', opcoes: ['geometricamente igual (congruente)', 'maior', 'menor', 'de forma diferente'], resposta: 'geometricamente igual (congruente)', expl: 'As isometrias preservam distâncias e ângulos → figuras congruentes.', tema: 'T3 · Isometrias' }
-  ],
-  3: [ // Polinómios e Equações
-    { t: '5', tipo: 'fill', enun: 'O triplo de um número, mais 7, é igual a 22. Qual é o número?', resposta: '5', expl: '3x + 7 = 22 → 3x = 15 → x = 5.', tema: 'T5 · Equações' },
-    { t: '1', tipo: 'fill', enun: 'Simplifica 3x² × 2x³ (escreve no formato axⁿ, ex: 6x5).', resposta: '6x5', expl: 'Coeficientes 3×2=6; expoentes 2+3=5 → 6x⁵.', tema: 'T1 · Monómios' },
-    { t: '5', tipo: 'fill', enun: 'A Rita tem 5 € e poupa 3 € por semana. Ao fim de quantas semanas terá 26 €?', resposta: '7', expl: '3x + 5 = 26 → 3x = 21 → x = 7 semanas.', tema: 'T5 · Equações' }
-  ],
-  4: [ // Teorema de Pitágoras
-    { t: '4', tipo: 'fill', enun: 'Uma escada de 10 m está encostada a uma parede, com a base a 6 m. A que altura chega? (em m)', resposta: '8', expl: 'altura = √(10² − 6²) = √(100 − 36) = √64 = 8 m.', tema: 'T4 · Aplicações' },
-    { t: '1', tipo: 'fill', enun: 'Um triângulo retângulo tem catetos 9 e 12. Qual é a hipotenusa?', resposta: '15', expl: 'h = √(9² + 12²) = √(81 + 144) = √225 = 15.', tema: 'T1 · Hipotenusa' },
-    { t: '4', tipo: 'fill', enun: 'Um ecrã de TV tem 16 cm de largura e 12 cm de altura. Qual é a diagonal (em cm)?', resposta: '20', expl: 'd = √(16² + 12²) = √(256 + 144) = √400 = 20 cm.', tema: 'T4 · Aplicações' }
-  ],
-  5: [ // Equações Literais e Funções
-    { t: '2', tipo: 'fill', enun: 'Um táxi cobra 3 € de partida e 1 € por km. Quanto custa uma viagem de 8 km (em €)?', resposta: '11', expl: 'C(x) = x + 3 → C(8) = 8 + 3 = 11 €.', tema: 'T2 · Imagem' },
-    { t: '3', tipo: 'fill', enun: 'Na função f(x) = 2x − 1, qual é o declive?', resposta: '2', expl: 'Na forma f(x) = ax + b, o declive é a = 2.', tema: 'T3 · Função Afim' }
-  ],
-  6: [ // Sistemas de Equações
-    { t: '2', tipo: 'fill', enun: 'A soma de dois números é 12 e a diferença é 4. Qual é o número maior?', resposta: '8', expl: 'Sistema {x+y=12; x−y=4}. Somando: 2x=16 → x=8 (maior), y=4.', tema: 'T2 · Sistema (x)' },
-    { t: '3', tipo: 'fill', enun: '2 bolas e 1 raquete custam 13 €. 1 bola e 1 raquete custam 10 €. Quanto custa uma bola (em €)?', resposta: '3', expl: 'Subtraindo as equações: 1 bola = 13 − 10 = 3 €.', tema: 'T3 · Sistema (y)' }
-  ],
-  7: [ // Figuras no Espaço e Volumes
-    { t: '1', tipo: 'fill', enun: 'Um depósito tem a forma de uma caixa de 5 m × 3 m × 2 m. Qual é o volume (em m³)?', resposta: '30', expl: 'V = 5 × 3 × 2 = 30 m³.', tema: 'T1 · Volume Prisma' },
-    { t: '1', tipo: 'fill', enun: 'Um prisma tem base de área 12 cm² e altura 5 cm. Qual é o volume (em cm³)?', resposta: '60', expl: 'V = área da base × altura = 12 × 5 = 60 cm³.', tema: 'T1 · Volume Prisma' }
-  ],
-  8: [ // Dados e Probabilidades
-    { t: '1', tipo: 'fill', enun: 'As notas de um teste foram 10, 12, 14, 16, 18. Qual é a média (em valores)?', resposta: '14', expl: '(10+12+14+16+18)/5 = 70/5 = 14.', tema: 'T1 · Média' },
-    { t: '5', tipo: 'fill_frac', enun: 'Num saco há 4 bolas verdes e 6 vermelhas. Qual a probabilidade de tirar uma verde? (fração irredutível)', resposta: '2/5', expl: 'P = 4/(4+6) = 4/10 = 2/5.', tema: 'T5 · Probabilidade' }
-  ]
-};
 /* atribuir: deep-link fq7 */
 function _fq7DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_fq7gf){ _fq7gf.caps={}; cs.forEach(function(n){ _fq7gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _fq7gf.dif=p.get('dif'); } if(p.get('tarefa'))setTimeout(function(){tarefaEntregaBar(p.get('tarefa'),'Ficha concluída');},400); setTimeout(function(){ fq7SwitchTab('fichas',null); },350); return; }
     if(p.get('abrir')==='jogos'){ var jc=parseInt(p.get('cap'),10); if(jc&&_fq7Prat) _fq7Prat.cap=jc; if(p.get('tarefa'))setTimeout(function(){tarefaEntregaBar(p.get('tarefa'),'Jogo concluído');},400); setTimeout(function(){ fq7SwitchTab('jogos',null); var jg=p.get('jogo'); if(jg&&typeof gTabSwitch==='function')setTimeout(function(){try{gTabSwitch('fq7-jogos-app',jg);}catch(e){}},250); },350); return; }
