@@ -312,6 +312,8 @@
     Turmas.marcarTarefa(id, feita).then(function () {
       _pintarTarefasAluno();
       if (feita && typeof eduToast === 'function') eduToast('Trabalho marcado como feito! ✅', 'success');
+    }).catch(function (e) {
+      if (typeof eduToast === 'function') eduToast((e && e.message) || 'Não foi possível guardar. Verifica a ligação.', 'error');
     });
   };
 

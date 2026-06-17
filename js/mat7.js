@@ -686,6 +686,10 @@ function mat7RenderUnifiedExercicios(caps, inlineEl) {
           Turmas.guardarResultado(_mat7TarefaAtiva, correct, total, det).then(function () {
             if (typeof eduToast === 'function') eduToast('Trabalho entregue! Acertaste ' + correct + ' de ' + total + '. ✅', 'success');
             _mat7TarefaAtiva = null;
+          }).catch(function (e) {
+            // falha de rede: avisa e mantém a tarefa ativa para poder tentar de novo
+            if (typeof eduToast === 'function') eduToast((e && e.message) || 'Não foi possível entregar. Tenta de novo.', 'error');
+            else alert((e && e.message) || 'Não foi possível entregar. Tenta de novo.');
           });
         }
       });
