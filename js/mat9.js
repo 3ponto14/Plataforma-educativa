@@ -1569,9 +1569,14 @@ function buildEx_m9c3(tema, tipo, dif) {
   // ── TEMA 2 · Função quadrática (vértice / zeros) ──
   if (tema === '2') {
     // f(x) = x² + bx + c com zeros inteiros r1, r2 (pequenos, para caber no gráfico)
+    // r1+r2 PAR garante b par → abcissa do vértice (−b/2) inteira (sem vírgulas).
     var r1 = rnd_m81(-3, 3), r2 = rnd_m81(-3, 3);
+    if ((r1 + r2) % 2 !== 0) { r2 = r2 + (r2 < 3 ? 1 : -1); } // ajusta para soma par
     var b = -(r1 + r2), c = r1 * r2;
-    var fn = 'f(x) = x' + sup_m81(2) + ' ' + (b >= 0 ? '+ ' + b : '− ' + Math.abs(b)) + 'x ' + (c >= 0 ? '+ ' + c : '− ' + Math.abs(c));
+    // termo bx: omite coeficiente 1/−1 e o termo se b=0; idem para o termo c.
+    var termoB = b === 0 ? '' : (b > 0 ? ' + ' : ' − ') + (Math.abs(b) === 1 ? '' : Math.abs(b)) + 'x';
+    var termoC = c === 0 ? '' : (c > 0 ? ' + ' : ' − ') + Math.abs(c);
+    var fn = 'f(x) = x' + sup_m81(2) + termoB + termoC;
     var xvert = -b / 2, yvert = xvert * xvert + b * xvert + c;
     // parábola desenhada com vértice e zeros marcados
     var visQ = (typeof EduVisual !== 'undefined') ? EduVisual.grafico(
