@@ -153,11 +153,21 @@ function _turmasPintaDuvidas() {
     el.innerHTML = ms.map(function (m) {
       var tipo = m.alcance === 'duvida' ? '❓ Dúvida' : '↩ Resposta';
       var feito = !!m.respondido;
+      // respostas dadas pelo professor a esta dúvida (mostradas inline)
+      var respHTML = (m.respostas || []).map(function (r) {
+        return '<div style="margin-top:.45rem;padding:.5rem .7rem;background:#dff0e6;border-left:3px solid #2e7d52;border-radius:8px">'
+          + '<span style="font-size:.66rem;font-weight:800;color:#2e7d52">↩ A tua resposta'
+          + (r.prof_nome ? ' · ' + _esc(r.prof_nome) : '') + '</span>'
+          + '<div style="font-size:.84rem;color:var(--ink2);line-height:1.5;margin-top:.15rem">' + _esc(r.texto) + '</div>'
+          + '</div>';
+      }).join('');
       return '<div style="border:1.5px solid ' + (feito ? '#bfe3c9' : 'var(--border)') + ';border-radius:12px;padding:.7rem 1rem;margin-bottom:.5rem;background:' + (feito ? '#eef7f0' : '#f4f2fa') + '">'
         + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem">'
         + '<div style="min-width:0"><span style="font-size:.7rem;font-weight:800;color:#4a3f7a">' + tipo + ' · ' + _esc(m.de_nome || 'aluno') + '</span>'
         + (feito ? ' <span style="font-size:.68rem;font-weight:800;color:#2e7d52;background:#dff0e6;border:1px solid #bfe3c9;border-radius:6px;padding:1px 7px">✓ Respondido</span>' : '')
-        + '<div style="font-size:.86rem;color:var(--ink2);line-height:1.5;margin-top:.3rem' + (feito ? ';opacity:.7' : '') + '">' + _esc(m.texto) + '</div></div>'
+        + '<div style="font-size:.86rem;color:var(--ink2);line-height:1.5;margin-top:.3rem">' + _esc(m.texto) + '</div>'
+        + respHTML
+        + '</div>'
         + (feito
             ? '<button onclick="duvidaResponder(\'' + m.id + '\',\'' + (m.de_aluno || '') + '\',\'' + _escAttr(m.de_nome || 'aluno') + '\')" style="font-size:.72rem;font-weight:700;color:#2e7d52;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:4px 11px;cursor:pointer;font-family:Montserrat,sans-serif;flex-shrink:0">Responder de novo</button>'
             : '<button onclick="duvidaResponder(\'' + m.id + '\',\'' + (m.de_aluno || '') + '\',\'' + _escAttr(m.de_nome || 'aluno') + '\')" style="font-size:.74rem;font-weight:700;color:#fff;background:#4a3f7a;border:none;border-radius:999px;padding:4px 12px;cursor:pointer;font-family:Montserrat,sans-serif;flex-shrink:0">Responder</button>')

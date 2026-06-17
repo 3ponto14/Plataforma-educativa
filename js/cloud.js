@@ -53,7 +53,11 @@ var Cloud = (function () {
       // reage a login/logout
       sb.auth.onAuthStateChange(function (_evt, session) {
         user = (session && session.user) || null;
-        _notifica();
+        // O Supabase re-emite SIGNED_IN/TOKEN_REFRESHED sempre que o separador
+        // volta a ter foco. Só notificamos quando a IDENTIDADE muda mesmo
+        // (login/logout/troca de utilizador) — senão a vista das Turmas
+        // reconstruía-se e perdia a página do aluno aberta a meio do apoio.
+        if (_evt !== 'PASSWORD_RECOVERY') _notifica();
         // veio do email de recuperação → mostra ecrã de nova palavra-passe
         if (_evt === 'PASSWORD_RECOVERY' && typeof authMostrarNovaPassword === 'function') {
           setTimeout(authMostrarNovaPassword, 100);
@@ -62,7 +66,13 @@ var Cloud = (function () {
     } catch (e) { sb = null; if (onReady) onReady(); }
   }
 
-  function _notifica() {
+  var _lastNotifiedId = undefined; // identidade já anunciada (undefined = ainda nenhuma)
+  function _notifica(force) {
+    var id = user ? user.id : null;
+    // ignora re-emissões com o mesmo utilizador (ex.: refrescos de token ao
+    // voltar ao separador); só anuncia quando a identidade muda de facto.
+    if (!force && id === _lastNotifiedId) return;
+    _lastNotifiedId = id;
     document.dispatchEvent(new CustomEvent('cloud:auth', { detail: { user: user } }));
   }
 

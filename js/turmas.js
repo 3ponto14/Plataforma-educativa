@@ -678,13 +678,21 @@ var Turmas = (function () {
     if (!sb) return Promise.resolve([]);
     return sb.from('mensagens').select('*').order('criado', { ascending: false }).then(function (res) {
       var todas = res.error ? [] : (res.data || []);
-      // ids de mensagens de aluno que JÁ têm uma resposta do professor
-      var respondidos = {};
+      // respostas do professor agrupadas pela dúvida a que respondem
+      var respostas = {};
       todas.forEach(function (m) {
-        if (m.autor_tipo !== 'aluno' && m.resposta_a) respondidos[m.resposta_a] = true;
+        if (m.autor_tipo !== 'aluno' && m.resposta_a) {
+          (respostas[m.resposta_a] = respostas[m.resposta_a] || []).push(m);
+        }
       });
       var doAluno = todas.filter(function (m) { return m.autor_tipo === 'aluno'; });
-      doAluno.forEach(function (m) { m.respondido = !!respondidos[m.id]; });
+      doAluno.forEach(function (m) {
+        var rs = respostas[m.id] || [];
+        // mais antiga primeiro (ordem natural da conversa)
+        rs.sort(function (a, b) { return (a.criado || '') < (b.criado || '') ? -1 : 1; });
+        m.respostas = rs;            // respostas dadas a esta dúvida
+        m.respondido = rs.length > 0;
+      });
       return doAluno;
     });
   }
