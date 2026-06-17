@@ -36,74 +36,74 @@ var _port9Subtemas = {
 var _port9Cards = {
   // ── Domínio 1 · Educação Literária ──
   1: [
-    { tag: 'Definição', q: 'O que é uma epopeia?', a: 'Uma longa narrativa em verso que celebra os feitos heroicos de um povo ou herói. Ex: Os Lusíadas, de Camões.' },
-    { tag: 'Definição', q: 'O que é um auto (teatro vicentino)?', a: 'Uma peça curta de teatro, muitas vezes alegórica e satírica. O Auto da Barca do Inferno, de Gil Vicente, critica os vícios sociais através de figuras-tipo.' },
-    { tag: 'Os Lusíadas', q: 'Quais são os planos de Os Lusíadas?', a: 'Plano da viagem (Vasco da Gama à Índia), plano da História de Portugal, plano mitológico (deuses do Olimpo) e plano do Poeta (reflexões de Camões).' },
-    { tag: 'Os Lusíadas', q: 'O que é a Proposição?', a: 'A apresentação do tema da epopeia, no início (Canto I): «As armas e os barões assinalados…». Camões anuncia que vai cantar os feitos dos portugueses.' },
-    { tag: 'Os Lusíadas', q: 'Episódios líricos centrais de Os Lusíadas?', a: 'Inês de Castro (amor e morte), o Adamastor (medo e profecia) e a Ilha dos Amores (recompensa dos heróis).' },
-    { tag: 'Auto da Barca', q: 'Quem julga as almas no Auto da Barca do Inferno?', a: 'O Diabo (barca do Inferno) e o Anjo (barca do Paraíso). Cada figura: Fidalgo, Onzeneiro, Frade, Sapateiro…: é julgada pelos seus pecados.' },
-    { tag: 'Conceito', q: 'O que é uma personagem-tipo (figura alegórica)?', a: 'Uma personagem que representa um grupo ou um vício/virtude, não um indivíduo. No Auto, o Onzeneiro representa a usura, o Frade a hipocrisia do clero.' },
-    { tag: 'Conceito', q: 'O que é o sujeito poético?', a: 'A "voz" que fala no poema: não é o autor, mas a entidade que exprime emoções e ideias no texto lírico.' },
-    { tag: 'Conceito', q: 'O que distingue texto narrativo de texto lírico?', a: 'O narrativo conta uma história (ação, personagens, narrador); o lírico exprime emoções e estados de alma do sujeito poético.' },
-    { tag: 'Poesia', q: 'O que é uma estrofe e um verso?', a: 'O verso é cada linha do poema; a estrofe é um conjunto de versos. Ex: a oitava de Os Lusíadas tem 8 versos decassílabos.' },
-    { tag: 'Poesia', q: 'O que é a rima?', a: 'A correspondência de sons no final dos versos. Pode ser emparelhada (aabb), cruzada (abab) ou interpolada (abba).' },
-    { tag: 'Contexto', q: 'O que é o conto?', a: 'Uma narrativa curta, com poucas personagens e uma só ação central. Ex: «A Aia», de Eça de Queirós; «Um Dia Destes», de García Márquez.' }
+    { st: 2, tag: 'Definição', q: 'O que é uma epopeia?', a: 'Uma longa narrativa em verso que celebra os feitos heroicos de um povo ou herói. Ex: Os Lusíadas, de Camões.' },
+    { st: 1, tag: 'Definição', q: 'O que é um auto (teatro vicentino)?', a: 'Uma peça curta de teatro, muitas vezes alegórica e satírica. O Auto da Barca do Inferno, de Gil Vicente, critica os vícios sociais através de figuras-tipo.' },
+    { st: 2, tag: 'Os Lusíadas', q: 'Quais são os planos de Os Lusíadas?', a: 'Plano da viagem (Vasco da Gama à Índia), plano da História de Portugal, plano mitológico (deuses do Olimpo) e plano do Poeta (reflexões de Camões).' },
+    { st: 2, tag: 'Os Lusíadas', q: 'O que é a Proposição?', a: 'A apresentação do tema da epopeia, no início (Canto I): «As armas e os barões assinalados…». Camões anuncia que vai cantar os feitos dos portugueses.' },
+    { st: 2, tag: 'Os Lusíadas', q: 'Episódios líricos centrais de Os Lusíadas?', a: 'Inês de Castro (amor e morte), o Adamastor (medo e profecia) e a Ilha dos Amores (recompensa dos heróis).' },
+    { st: 1, tag: 'Auto da Barca', q: 'Quem julga as almas no Auto da Barca do Inferno?', a: 'O Diabo (barca do Inferno) e o Anjo (barca do Paraíso). Cada figura: Fidalgo, Onzeneiro, Frade, Sapateiro…: é julgada pelos seus pecados.' },
+    { st: 1, tag: 'Conceito', q: 'O que é uma personagem-tipo (figura alegórica)?', a: 'Uma personagem que representa um grupo ou um vício/virtude, não um indivíduo. No Auto, o Onzeneiro representa a usura, o Frade a hipocrisia do clero.' },
+    { st: 4, tag: 'Conceito', q: 'O que é o sujeito poético?', a: 'A "voz" que fala no poema: não é o autor, mas a entidade que exprime emoções e ideias no texto lírico.' },
+    { st: 1, tag: 'Conceito', q: 'O que distingue texto narrativo de texto lírico?', a: 'O narrativo conta uma história (ação, personagens, narrador); o lírico exprime emoções e estados de alma do sujeito poético.' },
+    { st: 4, tag: 'Poesia', q: 'O que é uma estrofe e um verso?', a: 'O verso é cada linha do poema; a estrofe é um conjunto de versos. Ex: a oitava de Os Lusíadas tem 8 versos decassílabos.' },
+    { st: 4, tag: 'Poesia', q: 'O que é a rima?', a: 'A correspondência de sons no final dos versos. Pode ser emparelhada (aabb), cruzada (abab) ou interpolada (abba).' },
+    { st: 3, tag: 'Contexto', q: 'O que é o conto?', a: 'Uma narrativa curta, com poucas personagens e uma só ação central. Ex: «A Aia», de Eça de Queirós; «Um Dia Destes», de García Márquez.' }
   ],
   // ── Domínio 2 · Gramática ──
   2: [
-    { tag: 'Definição', q: 'O que são classes de palavras?', a: 'Grupos em que se organizam as palavras: nome, verbo, adjetivo, advérbio, determinante, pronome, preposição, conjunção, quantificador, interjeição.' },
-    { tag: 'Regra', q: 'Quais são as funções sintáticas principais?', a: 'Sujeito, predicado, complemento direto, complemento indireto, complemento oblíquo, predicativo do sujeito, modificador.' },
-    { tag: 'Regra', q: 'Como identificar o sujeito?', a: 'É quem pratica ou de quem se diz a ação. Pergunta-se "quem?" antes do verbo. Pode ser simples, composto, nulo (subentendido) ou indeterminado.' },
-    { tag: 'Regra', q: 'Complemento direto vs. indireto?', a: 'Direto: responde a "o quê?/quem?" sem preposição (Vi o filme). Indireto: responde a "a quem?" com preposição a (Dei o livro à Ana).' },
-    { tag: 'Definição', q: 'O que é uma oração subordinada?', a: 'Uma oração que depende de outra (a subordinante). Ex: «Disse que vinha»: «que vinha» é subordinada substantiva completiva.' },
-    { tag: 'Regra', q: 'Tipos de orações coordenadas?', a: 'Copulativas (e, nem), adversativas (mas, porém), disjuntivas (ou), conclusivas (logo, portanto) e explicativas (pois, que).' },
-    { tag: 'Regra', q: 'Modos verbais?', a: 'Indicativo (factos: canto), conjuntivo (hipótese/desejo: que eu cante), condicional (cantaria), imperativo (canta!), infinitivo e gerúndio.' },
-    { tag: 'Definição', q: 'O que é o discurso direto e indireto?', a: 'Direto: reproduz as palavras tal qual (« — Vou já», disse). Indireto: integra-as na narração (Disse que ia já).' },
-    { tag: 'Regra', q: 'Funções sintáticas a nível da palavra: modificador do nome?', a: 'O modificador acrescenta informação ao nome sem ser essencial. Restritivo (sem vírgulas) ou apositivo (entre vírgulas).' },
-    { tag: 'Exemplo', q: 'Classifica "rapidamente" em "Correu rapidamente".', a: 'Advérbio de modo, com função de modificador do grupo verbal.' },
-    { tag: 'Definição', q: 'O que é o predicativo do sujeito?', a: 'Atribui uma qualidade ou estado ao sujeito, através de um verbo copulativo (ser, estar, parecer). Ex: «A casa está limpa»: limpa é predicativo.' },
-    { tag: 'Regra', q: 'Coesão e coerência: que diferença?', a: 'Coesão = ligações gramaticais e lexicais (conectores, pronomes). Coerência = sentido lógico global do texto. Ambas tornam o texto bem construído.' },
-    { tag: 'Definição', q: 'Léxico: como se formam palavras novas?', a: 'Por DERIVAÇÃO (afixos: caça → caçada; in+feliz) ou por COMPOSIÇÃO (malcriado = palavra+palavra; sonoplastia = radical+radical).' },
-    { tag: 'Definição', q: 'Léxico: relações semânticas entre palavras?', a: 'Sinonímia (macio/suave), antonímia (fraco/forte), hierarquia: hiperónimo/hipónimo (flor/rosa) e parte-todo: holónimo/merónimo (livro/capa).' },
-    { tag: 'Definição', q: 'Léxico: arcaísmos e neologismos?', a: 'Arcaísmo = palavra que caiu em desuso (antre → entre). Neologismo = palavra ou sentido novo (cibersegurança; as invenções literárias de Mia Couto).' },
-    { tag: 'Regra', q: 'Variação da língua: que tipos há?', a: 'Geográfica (pequeno-almoço/café da manhã), social (linguagem juvenil, técnica) e histórica/diacrónica (processos fonológicos: FLORE → flor).' }
+    { st: 1, tag: 'Definição', q: 'O que são classes de palavras?', a: 'Grupos em que se organizam as palavras: nome, verbo, adjetivo, advérbio, determinante, pronome, preposição, conjunção, quantificador, interjeição.' },
+    { st: 2, tag: 'Regra', q: 'Quais são as funções sintáticas principais?', a: 'Sujeito, predicado, complemento direto, complemento indireto, complemento oblíquo, predicativo do sujeito, modificador.' },
+    { st: 2, tag: 'Regra', q: 'Como identificar o sujeito?', a: 'É quem pratica ou de quem se diz a ação. Pergunta-se "quem?" antes do verbo. Pode ser simples, composto, nulo (subentendido) ou indeterminado.' },
+    { st: 2, tag: 'Regra', q: 'Complemento direto vs. indireto?', a: 'Direto: responde a "o quê?/quem?" sem preposição (Vi o filme). Indireto: responde a "a quem?" com preposição a (Dei o livro à Ana).' },
+    { st: 3, tag: 'Definição', q: 'O que é uma oração subordinada?', a: 'Uma oração que depende de outra (a subordinante). Ex: «Disse que vinha»: «que vinha» é subordinada substantiva completiva.' },
+    { st: 3, tag: 'Regra', q: 'Tipos de orações coordenadas?', a: 'Copulativas (e, nem), adversativas (mas, porém), disjuntivas (ou), conclusivas (logo, portanto) e explicativas (pois, que).' },
+    { st: 4, tag: 'Regra', q: 'Modos verbais?', a: 'Indicativo (factos: canto), conjuntivo (hipótese/desejo: que eu cante), condicional (cantaria), imperativo (canta!), infinitivo e gerúndio.' },
+    { st: 3, tag: 'Definição', q: 'O que é o discurso direto e indireto?', a: 'Direto: reproduz as palavras tal qual (« — Vou já», disse). Indireto: integra-as na narração (Disse que ia já).' },
+    { st: 2, tag: 'Regra', q: 'Funções sintáticas a nível da palavra: modificador do nome?', a: 'O modificador acrescenta informação ao nome sem ser essencial. Restritivo (sem vírgulas) ou apositivo (entre vírgulas).' },
+    { st: 1, tag: 'Exemplo', q: 'Classifica "rapidamente" em "Correu rapidamente".', a: 'Advérbio de modo, com função de modificador do grupo verbal.' },
+    { st: 2, tag: 'Definição', q: 'O que é o predicativo do sujeito?', a: 'Atribui uma qualidade ou estado ao sujeito, através de um verbo copulativo (ser, estar, parecer). Ex: «A casa está limpa»: limpa é predicativo.' },
+    { st: 3, tag: 'Regra', q: 'Coesão e coerência: que diferença?', a: 'Coesão = ligações gramaticais e lexicais (conectores, pronomes). Coerência = sentido lógico global do texto. Ambas tornam o texto bem construído.' },
+    { st: 5, tag: 'Definição', q: 'Léxico: como se formam palavras novas?', a: 'Por DERIVAÇÃO (afixos: caça → caçada; in+feliz) ou por COMPOSIÇÃO (malcriado = palavra+palavra; sonoplastia = radical+radical).' },
+    { st: 5, tag: 'Definição', q: 'Léxico: relações semânticas entre palavras?', a: 'Sinonímia (macio/suave), antonímia (fraco/forte), hierarquia: hiperónimo/hipónimo (flor/rosa) e parte-todo: holónimo/merónimo (livro/capa).' },
+    { st: 5, tag: 'Definição', q: 'Léxico: arcaísmos e neologismos?', a: 'Arcaísmo = palavra que caiu em desuso (antre → entre). Neologismo = palavra ou sentido novo (cibersegurança; as invenções literárias de Mia Couto).' },
+    { st: 5, tag: 'Regra', q: 'Variação da língua: que tipos há?', a: 'Geográfica (pequeno-almoço/café da manhã), social (linguagem juvenil, técnica) e histórica/diacrónica (processos fonológicos: FLORE → flor).' }
   ],
   // ── Domínio 3 · Leitura ──
   3: [
-    { tag: 'Estratégia', q: 'Como abordar a compreensão de um texto?', a: '1) Lê o texto todo; 2) lê as perguntas; 3) procura no texto a informação; 4) responde com base no texto, citando quando pedido.' },
-    { tag: 'Definição', q: 'O que é o tema de um texto?', a: 'O assunto central, aquilo de que o texto trata. Distingue-se da ideia principal (o que se afirma sobre o tema).' },
-    { tag: 'Definição', q: 'Tipologias textuais?', a: 'Narrativo (conta), descritivo (caracteriza), argumentativo (defende uma tese), expositivo (informa) e dialogal (troca de falas).' },
-    { tag: 'Estratégia', q: 'O que é inferir?', a: 'Deduzir informação que não está escrita explicitamente, mas que o texto deixa subentender. Ex: «Tremia e os olhos brilhavam» → estava emocionado.' },
-    { tag: 'Definição', q: 'Sentido denotativo vs. conotativo?', a: 'Denotativo = sentido literal, de dicionário. Conotativo = sentido figurado, com valor afetivo ou simbólico. Ex: "noite" (escuridão / tristeza).' },
-    { tag: 'Definição', q: 'O que é o narrador?', a: 'A entidade que conta a história. Pode ser participante (1.ª pessoa) ou não participante (3.ª pessoa); pode ter conhecimento total (omnisciente) ou parcial.' },
-    { tag: 'Estratégia', q: 'Como justificar uma resposta com o texto?', a: 'Indica a passagem (cita ou refere) e explica como ela apoia a tua afirmação. "Como se lê em…, conclui-se que…".' },
-    { tag: 'Definição', q: 'O que são marcas de subjetividade?', a: 'Palavras que revelam a opinião/emoção de quem escreve: adjetivos valorativos, advérbios, verbos de opinião (acho, penso), pontuação expressiva.' }
+    { st: 1, tag: 'Estratégia', q: 'Como abordar a compreensão de um texto?', a: '1) Lê o texto todo; 2) lê as perguntas; 3) procura no texto a informação; 4) responde com base no texto, citando quando pedido.' },
+    { st: 1, tag: 'Definição', q: 'O que é o tema de um texto?', a: 'O assunto central, aquilo de que o texto trata. Distingue-se da ideia principal (o que se afirma sobre o tema).' },
+    { st: 2, tag: 'Definição', q: 'Tipologias textuais?', a: 'Narrativo (conta), descritivo (caracteriza), argumentativo (defende uma tese), expositivo (informa) e dialogal (troca de falas).' },
+    { st: 3, tag: 'Estratégia', q: 'O que é inferir?', a: 'Deduzir informação que não está escrita explicitamente, mas que o texto deixa subentender. Ex: «Tremia e os olhos brilhavam» → estava emocionado.' },
+    { st: 3, tag: 'Definição', q: 'Sentido denotativo vs. conotativo?', a: 'Denotativo = sentido literal, de dicionário. Conotativo = sentido figurado, com valor afetivo ou simbólico. Ex: "noite" (escuridão / tristeza).' },
+    { st: 1, tag: 'Definição', q: 'O que é o narrador?', a: 'A entidade que conta a história. Pode ser participante (1.ª pessoa) ou não participante (3.ª pessoa); pode ter conhecimento total (omnisciente) ou parcial.' },
+    { st: 1, tag: 'Estratégia', q: 'Como justificar uma resposta com o texto?', a: 'Indica a passagem (cita ou refere) e explica como ela apoia a tua afirmação. "Como se lê em…, conclui-se que…".' },
+    { st: 3, tag: 'Definição', q: 'O que são marcas de subjetividade?', a: 'Palavras que revelam a opinião/emoção de quem escreve: adjetivos valorativos, advérbios, verbos de opinião (acho, penso), pontuação expressiva.' }
   ],
   // ── Domínio 4 · Escrita ──
   4: [
-    { tag: 'Estrutura', q: 'Como se estrutura um texto de opinião?', a: 'Introdução (apresenta o tema e a tese), desenvolvimento (argumentos + exemplos), conclusão (reafirma a posição). 160–260 palavras no exame.' },
-    { tag: 'Estrutura', q: 'Como se estrutura um texto narrativo?', a: 'Situação inicial → desenvolvimento (peripécias/conflito) → ponto culminante → desenlace. Com narrador, personagens, espaço e tempo.' },
-    { tag: 'Estrutura', q: 'O que é um texto expositivo?', a: 'Apresenta e explica informação de forma objetiva e organizada. Introdução (tema), desenvolvimento (informação clara), conclusão (síntese).' },
-    { tag: 'Estratégia', q: 'O que são conectores e para que servem?', a: 'Palavras que ligam ideias e dão coesão: de adição (além disso), de causa (porque), de oposição (contudo), de conclusão (portanto).' },
-    { tag: 'Estratégia', q: 'Como construir um argumento forte?', a: 'Afirma a ideia, justifica-a com uma razão e ilustra com um exemplo concreto. Evita repetir só a tese sem a fundamentar.' },
-    { tag: 'Regra', q: 'Cuidados de escrita avaliados no exame?', a: 'Tema e tipologia respeitados, estrutura clara, coesão (conectores), correção linguística (ortografia, pontuação, acordo) e número de palavras.' },
-    { tag: 'Estratégia', q: 'Como planificar antes de escrever?', a: 'Faz um esquema rápido: tese/ideia central, 2–3 argumentos com exemplos, e como vais concluir. Poupa tempo e evita repetições.' },
-    { tag: 'Exemplo', q: 'Frase de introdução de um texto de opinião?', a: '«Atualmente, discute-se muito se… Na minha perspetiva, …»: apresenta o tema e toma logo posição.' }
+    { st: 1, tag: 'Estrutura', q: 'Como se estrutura um texto de opinião?', a: 'Introdução (apresenta o tema e a tese), desenvolvimento (argumentos + exemplos), conclusão (reafirma a posição). 160–260 palavras no exame.' },
+    { st: 2, tag: 'Estrutura', q: 'Como se estrutura um texto narrativo?', a: 'Situação inicial → desenvolvimento (peripécias/conflito) → ponto culminante → desenlace. Com narrador, personagens, espaço e tempo.' },
+    { st: 3, tag: 'Estrutura', q: 'O que é um texto expositivo?', a: 'Apresenta e explica informação de forma objetiva e organizada. Introdução (tema), desenvolvimento (informação clara), conclusão (síntese).' },
+    { st: 1, tag: 'Estratégia', q: 'O que são conectores e para que servem?', a: 'Palavras que ligam ideias e dão coesão: de adição (além disso), de causa (porque), de oposição (contudo), de conclusão (portanto).' },
+    { st: 1, tag: 'Estratégia', q: 'Como construir um argumento forte?', a: 'Afirma a ideia, justifica-a com uma razão e ilustra com um exemplo concreto. Evita repetir só a tese sem a fundamentar.' },
+    { st: 1, tag: 'Regra', q: 'Cuidados de escrita avaliados no exame?', a: 'Tema e tipologia respeitados, estrutura clara, coesão (conectores), correção linguística (ortografia, pontuação, acordo) e número de palavras.' },
+    { st: 1, tag: 'Estratégia', q: 'Como planificar antes de escrever?', a: 'Faz um esquema rápido: tese/ideia central, 2–3 argumentos com exemplos, e como vais concluir. Poupa tempo e evita repetições.' },
+    { st: 1, tag: 'Exemplo', q: 'Frase de introdução de um texto de opinião?', a: '«Atualmente, discute-se muito se… Na minha perspetiva, …»: apresenta o tema e toma logo posição.' }
   ],
   // ── Domínio 5 · Recursos Expressivos ──
   5: [
-    { tag: 'Figura', q: 'Comparação', a: 'Aproxima dois elementos através de uma palavra de ligação (como, tal como, semelhante a). Ex: «forte como um touro».' },
-    { tag: 'Figura', q: 'Metáfora', a: 'Identifica dois elementos sem palavra de ligação, por semelhança. Ex: «és o sol da minha vida».' },
-    { tag: 'Figura', q: 'Personificação', a: 'Atribui características humanas a seres não humanos. Ex: «o vento sussurrava segredos».' },
-    { tag: 'Figura', q: 'Hipérbole', a: 'Exagero intencional para dar ênfase. Ex: «chorei rios de lágrimas».' },
-    { tag: 'Figura', q: 'Antítese', a: 'Aproxima ideias ou palavras de sentido oposto. Ex: «o amor é fogo que arde sem se ver» (frio/calor).' },
-    { tag: 'Figura', q: 'Anáfora', a: 'Repetição de uma palavra ou expressão no início de versos/frases. Ex: «Tudo no mundo… / Tudo o que vive…».' },
-    { tag: 'Figura', q: 'Eufemismo', a: 'Suaviza uma ideia desagradável. Ex: «partiu» em vez de «morreu».' },
-    { tag: 'Figura', q: 'Aliteração', a: 'Repetição de sons consonânticos para criar musicalidade. Ex: «o rato roeu a rolha».' },
-    { tag: 'Figura', q: 'Ironia', a: 'Diz-se o contrário do que se quer dar a entender, com intenção crítica ou humorística.' },
-    { tag: 'Figura', q: 'Enumeração', a: 'Sucessão de elementos (palavras ou expressões) para reforçar uma ideia. Ex: «Vim, vi, venci».' },
-    { tag: 'Versificação', q: 'O que é a métrica?', a: 'A contagem das sílabas métricas de um verso. Decassílabo = 10 sílabas (como em Os Lusíadas); redondilha maior = 7 sílabas.' },
-    { tag: 'Versificação', q: 'O que é a quadra e a oitava?', a: 'Quadra = estrofe de 4 versos. Oitava = estrofe de 8 versos (a forma de Os Lusíadas).' }
+    { st: 1, tag: 'Figura', q: 'Comparação', a: 'Aproxima dois elementos através de uma palavra de ligação (como, tal como, semelhante a). Ex: «forte como um touro».' },
+    { st: 1, tag: 'Figura', q: 'Metáfora', a: 'Identifica dois elementos sem palavra de ligação, por semelhança. Ex: «és o sol da minha vida».' },
+    { st: 1, tag: 'Figura', q: 'Personificação', a: 'Atribui características humanas a seres não humanos. Ex: «o vento sussurrava segredos».' },
+    { st: 1, tag: 'Figura', q: 'Hipérbole', a: 'Exagero intencional para dar ênfase. Ex: «chorei rios de lágrimas».' },
+    { st: 1, tag: 'Figura', q: 'Antítese', a: 'Aproxima ideias ou palavras de sentido oposto. Ex: «o amor é fogo que arde sem se ver» (frio/calor).' },
+    { st: 1, tag: 'Figura', q: 'Anáfora', a: 'Repetição de uma palavra ou expressão no início de versos/frases. Ex: «Tudo no mundo… / Tudo o que vive…».' },
+    { st: 1, tag: 'Figura', q: 'Eufemismo', a: 'Suaviza uma ideia desagradável. Ex: «partiu» em vez de «morreu».' },
+    { st: 1, tag: 'Figura', q: 'Aliteração', a: 'Repetição de sons consonânticos para criar musicalidade. Ex: «o rato roeu a rolha».' },
+    { st: 1, tag: 'Figura', q: 'Ironia', a: 'Diz-se o contrário do que se quer dar a entender, com intenção crítica ou humorística.' },
+    { st: 1, tag: 'Figura', q: 'Enumeração', a: 'Sucessão de elementos (palavras ou expressões) para reforçar uma ideia. Ex: «Vim, vi, venci».' },
+    { st: 3, tag: 'Versificação', q: 'O que é a métrica?', a: 'A contagem das sílabas métricas de um verso. Decassílabo = 10 sílabas (como em Os Lusíadas); redondilha maior = 7 sílabas.' },
+    { st: 3, tag: 'Versificação', q: 'O que é a quadra e a oitava?', a: 'Quadra = estrofe de 4 versos. Oitava = estrofe de 8 versos (a forma de Os Lusíadas).' }
   ]
 };
 
@@ -185,9 +185,15 @@ function port9ResumoShowSts(cap) {
   if (!stRow) return;
   var sts = _port9Subtemas[cap] || [];
   if (!sts.length) { stRow.style.display = 'none'; return; }
+  // conta cards por subtema para esconder chips de subtemas sem teoria
+  var _cc = (typeof _port9Cards !== 'undefined' && _port9Cards[cap]) ? _port9Cards[cap] : [];
+  var _nSt = {}; _cc.forEach(function(c){ if (c.st) _nSt[c.st] = (_nSt[c.st]||0)+1; });
+  var _stSel = _port9Sel['resumo-st'] || 0;
   var h = '<div class="resumo-st-label">Subtema</div>';
+  h += '<button class="resumo-st-btn' + (_stSel === 0 ? ' active' : '') + '" data-st="0" onclick="port9ResumoSelectSt(this,' + cap + ',0)">Todos</button>';
   sts.forEach(function(st, i) {
-    var isActive = (_port9Sel['resumo-st'] || 0) === (i + 1);
+    if (!_nSt[i + 1]) return; // subtema sem flashcards → não mostra o chip
+    var isActive = _stSel === (i + 1);
     h += '<button class="resumo-st-btn' + (isActive ? ' active' : '') + '" data-st="' + (i + 1) + '" onclick="port9ResumoSelectSt(this,' + cap + ',' + (i + 1) + ')">' + st + '</button>';
   });
   stRow.innerHTML = h;
@@ -224,16 +230,8 @@ function port9RenderResumoInline() {
 
   // Filtrar por subtema, se selecionado
   var stIdx = _port9Sel['resumo-st'] || 0;
-  var cards = allCards;
-  if (stIdx > 0 && _port9Subtemas[cap]) {
-    var stLabel = (_port9Subtemas[cap][stIdx - 1] || '').toLowerCase();
-    var stWords = stLabel.replace(/[^a-záéíóúâêîôûãõç ]/g, '').split(' ').filter(function(w){ return w.length > 3; });
-    var filtered = allCards.filter(function(card) {
-      var hay = ((card.tag || '') + ' ' + (card.q || '')).toLowerCase();
-      return stWords.some(function(w){ return hay.indexOf(w) !== -1; });
-    });
-    if (filtered.length > 0) cards = filtered;
-  }
+  // Filtro por subtema usa o campo st de cada flashcard (fiável); 0 = Todos.
+  var cards = (stIdx > 0) ? allCards.filter(function(card){ return card.st === stIdx; }) : allCards;
 
   if (!cards.length) {
     dest.innerHTML = '<div class="resumo-empty">'

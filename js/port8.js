@@ -38,68 +38,68 @@ var _port8Subtemas = {
 var _port8Cards = {
   // ── Domínio 1 · Educação Literária (8.º) ──
   1: [
-    { tag: 'Definição', q: 'O que é uma narrativa?', a: 'Um texto que conta uma história, com narrador, personagens, ação, espaço e tempo. No 8.º estudam-se autores como Sophia de Mello Breyner, Jorge Amado e José Saramago.' },
-    { tag: 'Conceito', q: 'Tipos de narrador quanto à presença?', a: 'Participante (narra na 1.ª pessoa, entra na ação) e não participante (3.ª pessoa). Quanto ao conhecimento: omnisciente (sabe tudo) ou de ciência limitada.' },
-    { tag: 'Conceito', q: 'Personagens quanto ao relevo e à construção?', a: 'Relevo: principal, secundária, figurante. Construção: redonda (complexa, evolui) ou plana (simples, não muda); modelada (caracterizada aos poucos) ou tipo.' },
-    { tag: 'Contexto', q: 'O que é «O Gato Malhado e a Andorinha Sinhá»?', a: 'Uma narrativa de Jorge Amado, com fortes recursos expressivos e personagens animais que representam comportamentos humanos: o Gato temido aprende sobre o amor com a Andorinha.' },
-    { tag: 'Contexto', q: 'Quem é o Garrinchas («Natal», de Miguel Torga)?', a: 'Um pedinte pobre e doente do conto «Natal»; o texto critica a insensibilidade das pessoas que não têm piedade da sua miséria.' },
-    { tag: 'Contexto', q: 'O que é «O Diário de Anne Frank»?', a: 'O diário real de uma jovem judia escondida durante a ocupação nazi. Anne trata o diário como uma amiga, a quem chama «Kitty».' },
-    { tag: 'Definição', q: 'Como se organiza o texto dramático?', a: 'Em atos e cenas, com as falas das personagens e as didascálias (indicações cénicas). Não tem narrador: a história revela-se pelo diálogo e pela ação.' },
-    { tag: 'Definição', q: 'O que é o monólogo e o aparte?', a: 'Monólogo: a personagem fala sozinha, em voz alta, expondo os seus pensamentos. Aparte: uma fala dirigida ao público que as outras personagens «não ouvem».' },
-    { tag: 'Poesia', q: 'O que é o sujeito poético?', a: 'A «voz» que fala no poema: não se confunde com o poeta, a pessoa real. Exprime emoções, ideias e visões do mundo.' },
-    { tag: 'Poesia', q: 'O que distingue a quadra popular?', a: 'Estrofe de 4 versos, em redondilha (5 ou 7 sílabas), de rima simples: forma típica da poesia tradicional e das cantigas.' },
-    { tag: 'Contexto', q: 'O que é «O Adamastor» de Luís de Sttau Monteiro?', a: 'Um texto («Aquilo que os Olhos Veem») que recria, em tom crítico e humorístico, o episódio do gigante de Os Lusíadas, a bordo de um navio.' },
-    { tag: 'Conceito', q: 'O que é a estrutura de uma narrativa?', a: 'Situação inicial → desenvolvimento (peripécias/conflito) → ponto culminante (clímax) → desenlace (resolução).' }
+    { st: 1, tag: 'Definição', q: 'O que é uma narrativa?', a: 'Um texto que conta uma história, com narrador, personagens, ação, espaço e tempo. No 8.º estudam-se autores como Sophia de Mello Breyner, Jorge Amado e José Saramago.' },
+    { st: 1, tag: 'Conceito', q: 'Tipos de narrador quanto à presença?', a: 'Participante (narra na 1.ª pessoa, entra na ação) e não participante (3.ª pessoa). Quanto ao conhecimento: omnisciente (sabe tudo) ou de ciência limitada.' },
+    { st: 1, tag: 'Conceito', q: 'Personagens quanto ao relevo e à construção?', a: 'Relevo: principal, secundária, figurante. Construção: redonda (complexa, evolui) ou plana (simples, não muda); modelada (caracterizada aos poucos) ou tipo.' },
+    { st: 1, tag: 'Contexto', q: 'O que é «O Gato Malhado e a Andorinha Sinhá»?', a: 'Uma narrativa de Jorge Amado, com fortes recursos expressivos e personagens animais que representam comportamentos humanos: o Gato temido aprende sobre o amor com a Andorinha.' },
+    { st: 1, tag: 'Contexto', q: 'Quem é o Garrinchas («Natal», de Miguel Torga)?', a: 'Um pedinte pobre e doente do conto «Natal»; o texto critica a insensibilidade das pessoas que não têm piedade da sua miséria.' },
+    { st: 1, tag: 'Contexto', q: 'O que é «O Diário de Anne Frank»?', a: 'O diário real de uma jovem judia escondida durante a ocupação nazi. Anne trata o diário como uma amiga, a quem chama «Kitty».' },
+    { st: 3, tag: 'Definição', q: 'Como se organiza o texto dramático?', a: 'Em atos e cenas, com as falas das personagens e as didascálias (indicações cénicas). Não tem narrador: a história revela-se pelo diálogo e pela ação.' },
+    { st: 3, tag: 'Definição', q: 'O que é o monólogo e o aparte?', a: 'Monólogo: a personagem fala sozinha, em voz alta, expondo os seus pensamentos. Aparte: uma fala dirigida ao público que as outras personagens «não ouvem».' },
+    { st: 2, tag: 'Poesia', q: 'O que é o sujeito poético?', a: 'A «voz» que fala no poema: não se confunde com o poeta, a pessoa real. Exprime emoções, ideias e visões do mundo.' },
+    { st: 2, tag: 'Poesia', q: 'O que distingue a quadra popular?', a: 'Estrofe de 4 versos, em redondilha (5 ou 7 sílabas), de rima simples: forma típica da poesia tradicional e das cantigas.' },
+    { st: 3, tag: 'Contexto', q: 'O que é «O Adamastor» de Luís de Sttau Monteiro?', a: 'Um texto («Aquilo que os Olhos Veem») que recria, em tom crítico e humorístico, o episódio do gigante de Os Lusíadas, a bordo de um navio.' },
+    { st: 1, tag: 'Conceito', q: 'O que é a estrutura de uma narrativa?', a: 'Situação inicial → desenvolvimento (peripécias/conflito) → ponto culminante (clímax) → desenlace (resolução).' }
   ],
   // ── Domínio 2 · Gramática (8.º) ──
   2: [
-    { tag: 'Regra', q: 'Funções sintáticas estudadas no 8.º?', a: 'Sujeito, predicado, complementos (direto, indireto, oblíquo, agente da passiva), predicativo do sujeito e do complemento direto, modificador (do nome e do grupo verbal).' },
-    { tag: 'Definição', q: 'O que é o predicativo do complemento direto?', a: 'Atribui uma característica ao complemento direto, com verbos como achar, considerar, eleger: «Consideram o livro [CD] interessante [PCD].»' },
-    { tag: 'Regra', q: 'Complemento direto vs. oblíquo?', a: 'Direto: «o quê?» sem preposição (li-o). Oblíquo: exigido pelo verbo COM preposição, não substituível por lhe («gosto de música»).' },
-    { tag: 'Regra', q: 'Frase passiva e agente da passiva?', a: 'Na passiva, o CD da ativa torna-se sujeito e o sujeito da ativa passa a complemento agente da passiva, introduzido por «por»: «O livro foi lido por mim.»' },
-    { tag: 'Regra', q: 'Os quatro modos verbais?', a: 'Indicativo (factos: canto), conjuntivo (hipótese/desejo: que eu cante), condicional (cantaria) e imperativo (canta!).' },
-    { tag: 'Regra', q: 'Quando se usa o conjuntivo?', a: 'Em desejos/hipóteses e depois de «talvez», «oxalá», «embora», «para que», «caso», «logo que» (futuro): «Espero que venhas.»' },
-    { tag: 'Definição', q: 'Orações subordinadas: que tipos?', a: 'Adverbiais (tempo, causa, fim, condição, concessão…), adjetivas relativas (restritivas/explicativas) e substantivas (completivas e relativas).' },
-    { tag: 'Definição', q: 'Os valores da palavra «que»?', a: '«Que» pode ser: pronome relativo (o livro QUE li), conjunção (disse QUE vinha), determinante interrogativo (QUE horas?) ou parte de «tão… que».' },
-    { tag: 'Regra', q: 'Subordinação substantiva completiva: como reconhecer?', a: 'Completa o sentido de um verbo, nome ou adjetivo e responde a «o quê?»: «Disse [que viria]»: a oração é complemento direto.' },
-    { tag: 'Definição', q: 'Modificador do nome restritivo e apositivo?', a: 'Restritivo: limita o sentido do nome, sem vírgulas («o aluno que estudou»). Apositivo: acrescenta informação, entre vírgulas («o Rui, meu vizinho»).' },
-    { tag: 'Definição', q: 'Léxico: como se formam palavras?', a: 'Derivação (prefixação, sufixação, parassíntese: en+triste+cer) e composição (morfológica: pluvi+oso; morfossintática: guarda-chuva).' },
-    { tag: 'Regra', q: 'Discurso direto e indireto?', a: 'Direto: reproduz as falas (« — Vou já»). Indireto: integra-as na narração (Disse que ia já): mudam tempos verbais, pronomes e dêiticos.' }
+    { st: 2, tag: 'Regra', q: 'Funções sintáticas estudadas no 8.º?', a: 'Sujeito, predicado, complementos (direto, indireto, oblíquo, agente da passiva), predicativo do sujeito e do complemento direto, modificador (do nome e do grupo verbal).' },
+    { st: 2, tag: 'Definição', q: 'O que é o predicativo do complemento direto?', a: 'Atribui uma característica ao complemento direto, com verbos como achar, considerar, eleger: «Consideram o livro [CD] interessante [PCD].»' },
+    { st: 2, tag: 'Regra', q: 'Complemento direto vs. oblíquo?', a: 'Direto: «o quê?» sem preposição (li-o). Oblíquo: exigido pelo verbo COM preposição, não substituível por lhe («gosto de música»).' },
+    { st: 3, tag: 'Regra', q: 'Frase passiva e agente da passiva?', a: 'Na passiva, o CD da ativa torna-se sujeito e o sujeito da ativa passa a complemento agente da passiva, introduzido por «por»: «O livro foi lido por mim.»' },
+    { st: 4, tag: 'Regra', q: 'Os quatro modos verbais?', a: 'Indicativo (factos: canto), conjuntivo (hipótese/desejo: que eu cante), condicional (cantaria) e imperativo (canta!).' },
+    { st: 4, tag: 'Regra', q: 'Quando se usa o conjuntivo?', a: 'Em desejos/hipóteses e depois de «talvez», «oxalá», «embora», «para que», «caso», «logo que» (futuro): «Espero que venhas.»' },
+    { st: 3, tag: 'Definição', q: 'Orações subordinadas: que tipos?', a: 'Adverbiais (tempo, causa, fim, condição, concessão…), adjetivas relativas (restritivas/explicativas) e substantivas (completivas e relativas).' },
+    { st: 3, tag: 'Definição', q: 'Os valores da palavra «que»?', a: '«Que» pode ser: pronome relativo (o livro QUE li), conjunção (disse QUE vinha), determinante interrogativo (QUE horas?) ou parte de «tão… que».' },
+    { st: 3, tag: 'Regra', q: 'Subordinação substantiva completiva: como reconhecer?', a: 'Completa o sentido de um verbo, nome ou adjetivo e responde a «o quê?»: «Disse [que viria]»: a oração é complemento direto.' },
+    { st: 2, tag: 'Definição', q: 'Modificador do nome restritivo e apositivo?', a: 'Restritivo: limita o sentido do nome, sem vírgulas («o aluno que estudou»). Apositivo: acrescenta informação, entre vírgulas («o Rui, meu vizinho»).' },
+    { st: 5, tag: 'Definição', q: 'Léxico: como se formam palavras?', a: 'Derivação (prefixação, sufixação, parassíntese: en+triste+cer) e composição (morfológica: pluvi+oso; morfossintática: guarda-chuva).' },
+    { st: 3, tag: 'Regra', q: 'Discurso direto e indireto?', a: 'Direto: reproduz as falas (« — Vou já»). Indireto: integra-as na narração (Disse que ia já): mudam tempos verbais, pronomes e dêiticos.' }
   ],
   // ── Domínio 3 · Leitura (8.º) ──
   3: [
-    { tag: 'Estratégia', q: 'Como abordar um texto e as perguntas?', a: '1) Lê o texto todo; 2) lê as perguntas; 3) localiza a informação no texto; 4) responde por palavras tuas, citando quando pedido.' },
-    { tag: 'Definição', q: 'O que é uma reportagem?', a: 'Um texto jornalístico aprofundado sobre um tema, que recolhe factos, testemunhos e dados: mais desenvolvido do que a notícia.' },
-    { tag: 'Definição', q: 'O que é o texto (auto)biográfico?', a: 'Biografia: alguém conta a vida de outra pessoa (3.ª pessoa). Autobiografia: a própria pessoa conta a sua vida (1.ª pessoa): diário, memórias, autorretrato.' },
-    { tag: 'Definição', q: 'Características do texto jornalístico?', a: 'Informa de forma objetiva, responde a quem/o quê/quando/onde/como/porquê; tem título, lead e corpo. A reportagem e a entrevista são géneros jornalísticos.' },
-    { tag: 'Definição', q: 'Facto vs. opinião?', a: 'Facto: pode ser verificado («estreou em 2020»). Opinião: exprime um juízo de valor («é uma série brilhante»). Saber distingui-los é essencial.' },
-    { tag: 'Definição', q: 'Sentido denotativo e conotativo?', a: 'Denotativo: sentido literal, de dicionário. Conotativo: sentido figurado, afetivo ou simbólico («noite» = escuridão/tristeza).' },
-    { tag: 'Estratégia', q: 'O que é inferir?', a: 'Concluir o que o texto sugere mas não diz com todas as letras, juntando pistas. É «ler nas entrelinhas».' },
-    { tag: 'Estratégia', q: 'Como justificar uma resposta com o texto?', a: 'Indica a passagem (cita entre aspas ou refere a linha) e mostra como ela apoia a tua afirmação.' }
+    { st: 1, tag: 'Estratégia', q: 'Como abordar um texto e as perguntas?', a: '1) Lê o texto todo; 2) lê as perguntas; 3) localiza a informação no texto; 4) responde por palavras tuas, citando quando pedido.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma reportagem?', a: 'Um texto jornalístico aprofundado sobre um tema, que recolhe factos, testemunhos e dados: mais desenvolvido do que a notícia.' },
+    { st: 2, tag: 'Definição', q: 'O que é o texto (auto)biográfico?', a: 'Biografia: alguém conta a vida de outra pessoa (3.ª pessoa). Autobiografia: a própria pessoa conta a sua vida (1.ª pessoa): diário, memórias, autorretrato.' },
+    { st: 2, tag: 'Definição', q: 'Características do texto jornalístico?', a: 'Informa de forma objetiva, responde a quem/o quê/quando/onde/como/porquê; tem título, lead e corpo. A reportagem e a entrevista são géneros jornalísticos.' },
+    { st: 3, tag: 'Definição', q: 'Facto vs. opinião?', a: 'Facto: pode ser verificado («estreou em 2020»). Opinião: exprime um juízo de valor («é uma série brilhante»). Saber distingui-los é essencial.' },
+    { st: 3, tag: 'Definição', q: 'Sentido denotativo e conotativo?', a: 'Denotativo: sentido literal, de dicionário. Conotativo: sentido figurado, afetivo ou simbólico («noite» = escuridão/tristeza).' },
+    { st: 1, tag: 'Estratégia', q: 'O que é inferir?', a: 'Concluir o que o texto sugere mas não diz com todas as letras, juntando pistas. É «ler nas entrelinhas».' },
+    { st: 1, tag: 'Estratégia', q: 'Como justificar uma resposta com o texto?', a: 'Indica a passagem (cita entre aspas ou refere a linha) e mostra como ela apoia a tua afirmação.' }
   ],
   // ── Domínio 4 · Escrita (8.º) ──
   4: [
-    { tag: 'Estrutura', q: 'Como se estrutura um texto narrativo?', a: 'Situação inicial → desenvolvimento (peripécias) → ponto culminante → desenlace. Com narrador, personagens, espaço e tempo coerentes.' },
-    { tag: 'Estrutura', q: 'Como se faz um resumo?', a: 'Conserva as ideias principais, por palavras próprias, sem opiniões nem pormenores; muito mais curto que o original, mas fiel ao texto.' },
-    { tag: 'Estrutura', q: 'Como se estrutura um texto de opinião?', a: 'Introdução (tema + tese), desenvolvimento (argumentos com exemplos, podendo refutar contra-argumentos), conclusão (reafirma a posição).' },
-    { tag: 'Estratégia', q: 'Para que servem os conectores?', a: 'Dão coesão ao texto: adição (além disso), causa (porque), oposição (contudo), conclusão (portanto), tempo (primeiro, depois).' },
-    { tag: 'Estratégia', q: 'Como construir um bom argumento?', a: 'Afirma a ideia, justifica-a com uma razão e ilustra-a com um exemplo concreto: não basta repetir a tese.' },
-    { tag: 'Regra', q: 'O que rever no fim de um texto?', a: 'Ortografia, pontuação, concordâncias, conectores, repetições de palavras e se o texto responde mesmo ao que foi pedido.' },
-    { tag: 'Estratégia', q: 'Como planificar antes de escrever?', a: 'Anota as ideias-chave (tese, argumentos, exemplos), ordena-as e só depois redige. Poupa tempo e evita fugas ao tema.' },
-    { tag: 'Estratégia', q: 'Como evitar repetir palavras?', a: 'Usa pronomes («o João… ele») e sinónimos («o rapaz», «o jovem»), além de hiperónimos («o animal»).' }
+    { st: 1, tag: 'Estrutura', q: 'Como se estrutura um texto narrativo?', a: 'Situação inicial → desenvolvimento (peripécias) → ponto culminante → desenlace. Com narrador, personagens, espaço e tempo coerentes.' },
+    { st: 3, tag: 'Estrutura', q: 'Como se faz um resumo?', a: 'Conserva as ideias principais, por palavras próprias, sem opiniões nem pormenores; muito mais curto que o original, mas fiel ao texto.' },
+    { st: 2, tag: 'Estrutura', q: 'Como se estrutura um texto de opinião?', a: 'Introdução (tema + tese), desenvolvimento (argumentos com exemplos, podendo refutar contra-argumentos), conclusão (reafirma a posição).' },
+    { st: 2, tag: 'Estratégia', q: 'Para que servem os conectores?', a: 'Dão coesão ao texto: adição (além disso), causa (porque), oposição (contudo), conclusão (portanto), tempo (primeiro, depois).' },
+    { st: 2, tag: 'Estratégia', q: 'Como construir um bom argumento?', a: 'Afirma a ideia, justifica-a com uma razão e ilustra-a com um exemplo concreto: não basta repetir a tese.' },
+    { st: 1, tag: 'Regra', q: 'O que rever no fim de um texto?', a: 'Ortografia, pontuação, concordâncias, conectores, repetições de palavras e se o texto responde mesmo ao que foi pedido.' },
+    { st: 1, tag: 'Estratégia', q: 'Como planificar antes de escrever?', a: 'Anota as ideias-chave (tese, argumentos, exemplos), ordena-as e só depois redige. Poupa tempo e evita fugas ao tema.' },
+    { st: 1, tag: 'Estratégia', q: 'Como evitar repetir palavras?', a: 'Usa pronomes («o João… ele») e sinónimos («o rapaz», «o jovem»), além de hiperónimos («o animal»).' }
   ],
   // ── Domínio 5 · Recursos Expressivos (8.º) ──
   5: [
-    { tag: 'Figura', q: 'Comparação', a: 'Aproxima dois elementos com palavra comparativa (como, tal como): «frio como gelo».' },
-    { tag: 'Figura', q: 'Metáfora', a: 'Identifica dois elementos SEM palavra de ligação: «os teus olhos são duas estrelas».' },
-    { tag: 'Figura', q: 'Personificação', a: 'Atribui características humanas a seres não humanos: «a cidade adormeceu».' },
-    { tag: 'Figura', q: 'Hipérbole', a: 'Exagero intencional para dar ênfase: «morria de rir».' },
-    { tag: 'Figura', q: 'Antítese', a: 'Aproxima ideias ou palavras de sentido oposto: «é fogo que arde sem se ver».' },
-    { tag: 'Figura', q: 'Enumeração', a: 'Sucessão de elementos para reforçar uma ideia: «Vim, vi, venci».' },
-    { tag: 'Figura', q: 'Anáfora', a: 'Repetição de palavras no início de versos ou frases seguidas.' },
-    { tag: 'Figura', q: 'Aliteração e onomatopeia', a: 'Aliteração: repetição de sons consonânticos («o rato roeu a rolha»). Onomatopeia: palavra que imita um som (tique-taque).' },
-    { tag: 'Versificação', q: 'Como se conta a métrica?', a: 'Contam-se as sílabas métricas até à última sílaba TÓNICA do verso (as átonas finais não contam).' },
-    { tag: 'Versificação', q: 'Esquemas de rima e estrofes?', a: 'Rima emparelhada (AABB), cruzada (ABAB), interpolada (ABBA). Estrofes: quadra (4), quintilha (5), sextilha (6), oitava (8).' }
+    { st: 1, tag: 'Figura', q: 'Comparação', a: 'Aproxima dois elementos com palavra comparativa (como, tal como): «frio como gelo».' },
+    { st: 1, tag: 'Figura', q: 'Metáfora', a: 'Identifica dois elementos SEM palavra de ligação: «os teus olhos são duas estrelas».' },
+    { st: 1, tag: 'Figura', q: 'Personificação', a: 'Atribui características humanas a seres não humanos: «a cidade adormeceu».' },
+    { st: 1, tag: 'Figura', q: 'Hipérbole', a: 'Exagero intencional para dar ênfase: «morria de rir».' },
+    { st: 1, tag: 'Figura', q: 'Antítese', a: 'Aproxima ideias ou palavras de sentido oposto: «é fogo que arde sem se ver».' },
+    { st: 1, tag: 'Figura', q: 'Enumeração', a: 'Sucessão de elementos para reforçar uma ideia: «Vim, vi, venci».' },
+    { st: 1, tag: 'Figura', q: 'Anáfora', a: 'Repetição de palavras no início de versos ou frases seguidas.' },
+    { st: 2, tag: 'Figura', q: 'Aliteração e onomatopeia', a: 'Aliteração: repetição de sons consonânticos («o rato roeu a rolha»). Onomatopeia: palavra que imita um som (tique-taque).' },
+    { st: 3, tag: 'Versificação', q: 'Como se conta a métrica?', a: 'Contam-se as sílabas métricas até à última sílaba TÓNICA do verso (as átonas finais não contam).' },
+    { st: 3, tag: 'Versificação', q: 'Esquemas de rima e estrofes?', a: 'Rima emparelhada (AABB), cruzada (ABAB), interpolada (ABBA). Estrofes: quadra (4), quintilha (5), sextilha (6), oitava (8).' }
   ]
 };
 
@@ -181,9 +181,15 @@ function port8ResumoShowSts(cap) {
   if (!stRow) return;
   var sts = _port8Subtemas[cap] || [];
   if (!sts.length) { stRow.style.display = 'none'; return; }
+  // conta cards por subtema para esconder chips de subtemas sem teoria
+  var _cc = (typeof _port8Cards !== 'undefined' && _port8Cards[cap]) ? _port8Cards[cap] : [];
+  var _nSt = {}; _cc.forEach(function(c){ if (c.st) _nSt[c.st] = (_nSt[c.st]||0)+1; });
+  var _stSel = _port8Sel['resumo-st'] || 0;
   var h = '<div class="resumo-st-label">Subtema</div>';
+  h += '<button class="resumo-st-btn' + (_stSel === 0 ? ' active' : '') + '" data-st="0" onclick="port8ResumoSelectSt(this,' + cap + ',0)">Todos</button>';
   sts.forEach(function(st, i) {
-    var isActive = (_port8Sel['resumo-st'] || 0) === (i + 1);
+    if (!_nSt[i + 1]) return; // subtema sem flashcards → não mostra o chip
+    var isActive = _stSel === (i + 1);
     h += '<button class="resumo-st-btn' + (isActive ? ' active' : '') + '" data-st="' + (i + 1) + '" onclick="port8ResumoSelectSt(this,' + cap + ',' + (i + 1) + ')">' + st + '</button>';
   });
   stRow.innerHTML = h;
@@ -220,16 +226,8 @@ function port8RenderResumoInline() {
 
   // Filtrar por subtema, se selecionado
   var stIdx = _port8Sel['resumo-st'] || 0;
-  var cards = allCards;
-  if (stIdx > 0 && _port8Subtemas[cap]) {
-    var stLabel = (_port8Subtemas[cap][stIdx - 1] || '').toLowerCase();
-    var stWords = stLabel.replace(/[^a-záéíóúâêîôûãõç ]/g, '').split(' ').filter(function(w){ return w.length > 3; });
-    var filtered = allCards.filter(function(card) {
-      var hay = ((card.tag || '') + ' ' + (card.q || '')).toLowerCase();
-      return stWords.some(function(w){ return hay.indexOf(w) !== -1; });
-    });
-    if (filtered.length > 0) cards = filtered;
-  }
+  // Filtro por subtema usa o campo st de cada flashcard (fiável); 0 = Todos.
+  var cards = (stIdx > 0) ? allCards.filter(function(card){ return card.st === stIdx; }) : allCards;
 
   if (!cards.length) {
     dest.innerHTML = '<div class="resumo-empty">'

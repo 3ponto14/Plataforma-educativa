@@ -37,71 +37,71 @@ var _port7Subtemas = {
 var _port7Cards = {
   // ── Domínio 1 · Educação Literária (7.º) ──
   1: [
-    { tag: 'Definição', q: 'O que é uma narrativa tradicional?', a: 'Um conto transmitido oralmente de geração em geração, de autor anónimo (o povo), muitas vezes com uma lição de vida. Há versões diferentes do mesmo conto.' },
-    { tag: 'Definição', q: 'O que distingue a fábula?', a: 'É uma narrativa curta, geralmente com animais que falam e agem como pessoas, terminando com uma moralidade (lição).' },
-    { tag: 'Definição', q: 'O que é uma lenda?', a: 'Uma narrativa tradicional que mistura factos reais (lugares, figuras históricas) com elementos maravilhosos, para explicar origens ou acontecimentos.' },
-    { tag: 'Conceito', q: 'Quais são os elementos da narrativa?', a: 'Narrador (quem conta), personagens (quem age), ação (o que acontece), espaço (onde) e tempo (quando).' },
-    { tag: 'Conceito', q: 'Tipos de narrador quanto à presença?', a: 'Participante (entra na história, narra na 1.ª pessoa) ou não participante (apenas conta, na 3.ª pessoa).' },
-    { tag: 'Conceito', q: 'Tipos de personagens quanto ao relevo?', a: 'Principal (protagonista, centro da ação), secundária (participa mas não é o centro) e figurante (apenas compõe o cenário).' },
-    { tag: 'Conceito', q: 'Modos de relato no texto narrativo?', a: 'Narração (contar ações), descrição (caracterizar pessoas/lugares, com pausa na ação) e diálogo (falas das personagens).' },
-    { tag: 'Contexto', q: 'Quem é o «Ladino» de Miguel Torga?', a: 'Um pardal esperto e manhoso, protagonista do conto «Ladino» (do livro Bichos), em que os animais são tratados como pessoas.' },
-    { tag: 'Definição', q: 'Como se organiza o texto dramático?', a: 'Em atos e cenas, com as falas das personagens e as didascálias (indicações cénicas em itálico ou parênteses, que não são ditas).' },
-    { tag: 'Poesia', q: 'O que é o sujeito poético?', a: 'A «voz» que fala no poema: não se confunde com o poeta, a pessoa real que o escreveu.' },
-    { tag: 'Poesia', q: 'Verso, estrofe e refrão?', a: 'Verso = cada linha; estrofe = grupo de versos (quadra = 4); refrão = verso ou estrofe que se repete ao longo do poema.' },
-    { tag: 'Contexto', q: 'Poetas trabalhados no 7.º ano (manual Mensagens 7)?', a: 'José Régio, Vitorino Nemésio, Sebastião da Gama, Ruy Cinatti, David Mourão-Ferreira e Percy B. Shelley.' },
-    { tag: 'Contexto', q: 'Que textos narrativos saem no manual Mensagens 7?', a: 'Contos tradicionais («Os dez anõezinhos da Tia Verde-Água»); narrativas de autor português (o touro Miura; a avó e o neto na praia; a caça à baleia nos Açores) e estrangeiro (A Ilha do Tesouro; Sexta-Feira).' },
-    { tag: 'Exemplo', q: '«Pelo sonho é que vamos», de Sebastião da Gama: qual é a mensagem?', a: 'O importante é SONHAR, mesmo sem garantia de êxito («chegamos ou não chegamos»). Verso hexassílabo (6 sílabas) e anáfora na repetição do verso-título.' },
-    { tag: 'Exemplo', q: 'O «Senhor Papão» no poema de José Régio: o que simboliza?', a: 'É uma metáfora do medo que mora dentro de cada um. Só quando o sujeito se rende consegue vê-lo sem disfarce.' }
+    { st: 1, tag: 'Definição', q: 'O que é uma narrativa tradicional?', a: 'Um conto transmitido oralmente de geração em geração, de autor anónimo (o povo), muitas vezes com uma lição de vida. Há versões diferentes do mesmo conto.' },
+    { st: 1, tag: 'Definição', q: 'O que distingue a fábula?', a: 'É uma narrativa curta, geralmente com animais que falam e agem como pessoas, terminando com uma moralidade (lição).' },
+    { st: 1, tag: 'Definição', q: 'O que é uma lenda?', a: 'Uma narrativa tradicional que mistura factos reais (lugares, figuras históricas) com elementos maravilhosos, para explicar origens ou acontecimentos.' },
+    { st: 2, tag: 'Conceito', q: 'Quais são os elementos da narrativa?', a: 'Narrador (quem conta), personagens (quem age), ação (o que acontece), espaço (onde) e tempo (quando).' },
+    { st: 2, tag: 'Conceito', q: 'Tipos de narrador quanto à presença?', a: 'Participante (entra na história, narra na 1.ª pessoa) ou não participante (apenas conta, na 3.ª pessoa).' },
+    { st: 2, tag: 'Conceito', q: 'Tipos de personagens quanto ao relevo?', a: 'Principal (protagonista, centro da ação), secundária (participa mas não é o centro) e figurante (apenas compõe o cenário).' },
+    { st: 2, tag: 'Conceito', q: 'Modos de relato no texto narrativo?', a: 'Narração (contar ações), descrição (caracterizar pessoas/lugares, com pausa na ação) e diálogo (falas das personagens).' },
+    { st: 2, tag: 'Contexto', q: 'Quem é o «Ladino» de Miguel Torga?', a: 'Um pardal esperto e manhoso, protagonista do conto «Ladino» (do livro Bichos), em que os animais são tratados como pessoas.' },
+    { st: 4, tag: 'Definição', q: 'Como se organiza o texto dramático?', a: 'Em atos e cenas, com as falas das personagens e as didascálias (indicações cénicas em itálico ou parênteses, que não são ditas).' },
+    { st: 3, tag: 'Poesia', q: 'O que é o sujeito poético?', a: 'A «voz» que fala no poema: não se confunde com o poeta, a pessoa real que o escreveu.' },
+    { st: 3, tag: 'Poesia', q: 'Verso, estrofe e refrão?', a: 'Verso = cada linha; estrofe = grupo de versos (quadra = 4); refrão = verso ou estrofe que se repete ao longo do poema.' },
+    { st: 3, tag: 'Contexto', q: 'Poetas trabalhados no 7.º ano (manual Mensagens 7)?', a: 'José Régio, Vitorino Nemésio, Sebastião da Gama, Ruy Cinatti, David Mourão-Ferreira e Percy B. Shelley.' },
+    { st: 2, tag: 'Contexto', q: 'Que textos narrativos saem no manual Mensagens 7?', a: 'Contos tradicionais («Os dez anõezinhos da Tia Verde-Água»); narrativas de autor português (o touro Miura; a avó e o neto na praia; a caça à baleia nos Açores) e estrangeiro (A Ilha do Tesouro; Sexta-Feira).' },
+    { st: 3, tag: 'Exemplo', q: '«Pelo sonho é que vamos», de Sebastião da Gama: qual é a mensagem?', a: 'O importante é SONHAR, mesmo sem garantia de êxito («chegamos ou não chegamos»). Verso hexassílabo (6 sílabas) e anáfora na repetição do verso-título.' },
+    { st: 3, tag: 'Exemplo', q: 'O «Senhor Papão» no poema de José Régio: o que simboliza?', a: 'É uma metáfora do medo que mora dentro de cada um. Só quando o sujeito se rende consegue vê-lo sem disfarce.' }
   ],
   // ── Domínio 2 · Gramática (7.º) ──
   2: [
-    { tag: 'Definição', q: 'Quais são as classes de palavras?', a: 'Nome, adjetivo, verbo, advérbio, determinante, pronome, quantificador, preposição, conjunção e interjeição.' },
-    { tag: 'Regra', q: 'Determinante ou pronome?', a: 'O determinante acompanha o nome («este livro»); o pronome substitui-o («este é meu»). A mesma palavra pode ser uma coisa ou outra!' },
-    { tag: 'Regra', q: 'Como identificar o sujeito?', a: 'Pergunta-se «quem?» antes do verbo. Pode ser simples (a Ana), composto (a Ana e o Rui) ou nulo/subentendido («[Eu] cheguei tarde»).' },
-    { tag: 'Regra', q: 'Complemento direto vs. indireto?', a: 'Direto: responde a «o quê?» sem preposição («Li o livro» → li-o). Indireto: responde a «a quem?» («Dei o livro à Ana» → dei-lhe).' },
-    { tag: 'Definição', q: 'O que é o vocativo?', a: 'O chamamento, separado por vírgula(s): «Rita, anda cá!». Não desempenha função na oração.' },
-    { tag: 'Regra', q: 'Orações coordenadas: tipos?', a: 'Copulativas (e, nem), adversativas (mas, porém), disjuntivas (ou), conclusivas (logo, portanto) e explicativas (pois).' },
-    { tag: 'Regra', q: 'Subordinadas adverbiais do 7.º ano?', a: 'Temporal (quando), causal (porque), final (para que) e condicional (se).' },
-    { tag: 'Regra', q: 'Tempos compostos: como se formam?', a: 'Verbo auxiliar TER + particípio passado: «tenho lido», «tinha saído», «terá chegado».' },
-    { tag: 'Definição', q: 'Discurso direto e indireto?', a: 'Direto: reproduz as falas tal e qual (« — Vou sair», disse). Indireto: integra-as na narração (Disse que ia sair): mudam tempos verbais, pronomes e advérbios.' },
-    { tag: 'Regra', q: 'Colocação do pronome átono: quando vai para antes do verbo?', a: 'Com negação («Não o vi»), com certos advérbios («Já o li») e em orações subordinadas («…que o viu»).' },
-    { tag: 'Definição', q: 'Léxico: como se formam palavras?', a: 'Derivação (prefixos/sufixos: feliz → infeliz, felizmente) e composição (guarda-chuva, couve-flor).' },
-    { tag: 'Regra', q: 'Variedades geográficas do português?', a: 'Português europeu, do Brasil e variedades africanas: a mesma língua com diferenças de vocabulário, pronúncia e construção.' }
+    { st: 1, tag: 'Definição', q: 'Quais são as classes de palavras?', a: 'Nome, adjetivo, verbo, advérbio, determinante, pronome, quantificador, preposição, conjunção e interjeição.' },
+    { st: 1, tag: 'Regra', q: 'Determinante ou pronome?', a: 'O determinante acompanha o nome («este livro»); o pronome substitui-o («este é meu»). A mesma palavra pode ser uma coisa ou outra!' },
+    { st: 2, tag: 'Regra', q: 'Como identificar o sujeito?', a: 'Pergunta-se «quem?» antes do verbo. Pode ser simples (a Ana), composto (a Ana e o Rui) ou nulo/subentendido («[Eu] cheguei tarde»).' },
+    { st: 2, tag: 'Regra', q: 'Complemento direto vs. indireto?', a: 'Direto: responde a «o quê?» sem preposição («Li o livro» → li-o). Indireto: responde a «a quem?» («Dei o livro à Ana» → dei-lhe).' },
+    { st: 2, tag: 'Definição', q: 'O que é o vocativo?', a: 'O chamamento, separado por vírgula(s): «Rita, anda cá!». Não desempenha função na oração.' },
+    { st: 3, tag: 'Regra', q: 'Orações coordenadas: tipos?', a: 'Copulativas (e, nem), adversativas (mas, porém), disjuntivas (ou), conclusivas (logo, portanto) e explicativas (pois).' },
+    { st: 3, tag: 'Regra', q: 'Subordinadas adverbiais do 7.º ano?', a: 'Temporal (quando), causal (porque), final (para que) e condicional (se).' },
+    { st: 4, tag: 'Regra', q: 'Tempos compostos: como se formam?', a: 'Verbo auxiliar TER + particípio passado: «tenho lido», «tinha saído», «terá chegado».' },
+    { st: 3, tag: 'Definição', q: 'Discurso direto e indireto?', a: 'Direto: reproduz as falas tal e qual (« — Vou sair», disse). Indireto: integra-as na narração (Disse que ia sair): mudam tempos verbais, pronomes e advérbios.' },
+    { st: 1, tag: 'Regra', q: 'Colocação do pronome átono: quando vai para antes do verbo?', a: 'Com negação («Não o vi»), com certos advérbios («Já o li») e em orações subordinadas («…que o viu»).' },
+    { st: 5, tag: 'Definição', q: 'Léxico: como se formam palavras?', a: 'Derivação (prefixos/sufixos: feliz → infeliz, felizmente) e composição (guarda-chuva, couve-flor).' },
+    { st: 5, tag: 'Regra', q: 'Variedades geográficas do português?', a: 'Português europeu, do Brasil e variedades africanas: a mesma língua com diferenças de vocabulário, pronúncia e construção.' }
   ],
   // ── Domínio 3 · Leitura (7.º) ──
   3: [
-    { tag: 'Estratégia', q: 'Como abordar um texto e as perguntas?', a: '1) Lê o texto todo; 2) lê as perguntas; 3) volta ao texto para localizar a informação; 4) responde por palavras tuas, citando se for pedido.' },
-    { tag: 'Definição', q: 'O que é o tema de um texto?', a: 'O assunto central de que o texto trata: não confundir com o título nem com pormenores.' },
-    { tag: 'Definição', q: 'Texto publicitário: o que pretende?', a: 'Persuadir o destinatário (comprar, aderir, mudar de comportamento), com slogan, imagem e linguagem apelativa.' },
-    { tag: 'Definição', q: 'O que é uma crítica?', a: 'Um texto que apresenta e avalia uma obra (livro, filme, espetáculo), combinando informação com a opinião fundamentada do autor.' },
-    { tag: 'Definição', q: 'O que é uma biografia?', a: 'Um texto que relata a vida de uma pessoa real, geralmente por ordem cronológica (nascimento, percurso, feitos).' },
-    { tag: 'Definição', q: 'Sentido literal vs. sentido figurado?', a: 'Literal = o que as palavras dizem exatamente. Figurado = um sentido «emprestado»: «coração de pedra» = pessoa insensível.' },
-    { tag: 'Estratégia', q: 'O que é inferir?', a: 'Concluir algo que o texto não diz com todas as letras, juntando pistas: «vestiu o casaco e pegou no chapéu-de-chuva» → ia sair e chovia.' },
-    { tag: 'Estratégia', q: 'Como justificar com o texto?', a: 'Indica a passagem (cita entre aspas ou refere a linha) e explica como ela apoia a tua resposta.' }
+    { st: 1, tag: 'Estratégia', q: 'Como abordar um texto e as perguntas?', a: '1) Lê o texto todo; 2) lê as perguntas; 3) volta ao texto para localizar a informação; 4) responde por palavras tuas, citando se for pedido.' },
+    { st: 1, tag: 'Definição', q: 'O que é o tema de um texto?', a: 'O assunto central de que o texto trata: não confundir com o título nem com pormenores.' },
+    { st: 2, tag: 'Definição', q: 'Texto publicitário: o que pretende?', a: 'Persuadir o destinatário (comprar, aderir, mudar de comportamento), com slogan, imagem e linguagem apelativa.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma crítica?', a: 'Um texto que apresenta e avalia uma obra (livro, filme, espetáculo), combinando informação com a opinião fundamentada do autor.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma biografia?', a: 'Um texto que relata a vida de uma pessoa real, geralmente por ordem cronológica (nascimento, percurso, feitos).' },
+    { st: 3, tag: 'Definição', q: 'Sentido literal vs. sentido figurado?', a: 'Literal = o que as palavras dizem exatamente. Figurado = um sentido «emprestado»: «coração de pedra» = pessoa insensível.' },
+    { st: 3, tag: 'Estratégia', q: 'O que é inferir?', a: 'Concluir algo que o texto não diz com todas as letras, juntando pistas: «vestiu o casaco e pegou no chapéu-de-chuva» → ia sair e chovia.' },
+    { st: 1, tag: 'Estratégia', q: 'Como justificar com o texto?', a: 'Indica a passagem (cita entre aspas ou refere a linha) e explica como ela apoia a tua resposta.' }
   ],
   // ── Domínio 4 · Escrita (7.º) ──
   4: [
-    { tag: 'Estrutura', q: 'Como se estrutura um texto narrativo?', a: 'Situação inicial → desenvolvimento (peripécias/conflito) → desenlace. Com narrador, personagens, espaço e tempo definidos.' },
-    { tag: 'Estrutura', q: 'Como se faz uma boa descrição?', a: 'Caracteriza-se com adjetivos expressivos e sensações (ver, ouvir, cheirar…), organizando do geral para o pormenor.' },
-    { tag: 'Estrutura', q: 'Como se estrutura um texto de opinião?', a: 'Introdução (apresenta o tema e a tua posição), desenvolvimento (razões + exemplos), conclusão (reafirma a posição).' },
-    { tag: 'Estratégia', q: 'Para que servem os conectores?', a: 'Ligam as ideias: primeiro, depois, finalmente (tempo); porque (causa); mas (oposição); por isso (conclusão).' },
-    { tag: 'Estratégia', q: 'O que fazer antes de escrever?', a: 'Planificar: anota as ideias principais, ordena-as e só depois redige. No fim, relê para rever erros e repetições.' },
-    { tag: 'Regra', q: 'Cuidados na revisão do texto?', a: 'Verificar ortografia, pontuação, concordâncias, repetições de palavras e se o texto responde mesmo ao que foi pedido.' },
-    { tag: 'Estratégia', q: 'Como evitar repetir palavras?', a: 'Usa pronomes («o João… ele») e sinónimos («o rapaz», «o jovem»).' },
-    { tag: 'Exemplo', q: 'Início possível para uma narrativa?', a: '«Naquela manhã de inverno, quando saiu de casa, o Pedro não imaginava o que estava prestes a acontecer.»: situa tempo, personagem e cria expectativa.' }
+    { st: 1, tag: 'Estrutura', q: 'Como se estrutura um texto narrativo?', a: 'Situação inicial → desenvolvimento (peripécias/conflito) → desenlace. Com narrador, personagens, espaço e tempo definidos.' },
+    { st: 3, tag: 'Estrutura', q: 'Como se faz uma boa descrição?', a: 'Caracteriza-se com adjetivos expressivos e sensações (ver, ouvir, cheirar…), organizando do geral para o pormenor.' },
+    { st: 2, tag: 'Estrutura', q: 'Como se estrutura um texto de opinião?', a: 'Introdução (apresenta o tema e a tua posição), desenvolvimento (razões + exemplos), conclusão (reafirma a posição).' },
+    { st: 2, tag: 'Estratégia', q: 'Para que servem os conectores?', a: 'Ligam as ideias: primeiro, depois, finalmente (tempo); porque (causa); mas (oposição); por isso (conclusão).' },
+    { st: 1, tag: 'Estratégia', q: 'O que fazer antes de escrever?', a: 'Planificar: anota as ideias principais, ordena-as e só depois redige. No fim, relê para rever erros e repetições.' },
+    { st: 1, tag: 'Regra', q: 'Cuidados na revisão do texto?', a: 'Verificar ortografia, pontuação, concordâncias, repetições de palavras e se o texto responde mesmo ao que foi pedido.' },
+    { st: 1, tag: 'Estratégia', q: 'Como evitar repetir palavras?', a: 'Usa pronomes («o João… ele») e sinónimos («o rapaz», «o jovem»).' },
+    { st: 1, tag: 'Exemplo', q: 'Início possível para uma narrativa?', a: '«Naquela manhã de inverno, quando saiu de casa, o Pedro não imaginava o que estava prestes a acontecer.»: situa tempo, personagem e cria expectativa.' }
   ],
   // ── Domínio 5 · Recursos Expressivos (7.º) ──
   5: [
-    { tag: 'Figura', q: 'Comparação', a: 'Aproxima dois elementos com palavra comparativa (como, tal como): «veloz como um relâmpago».' },
-    { tag: 'Figura', q: 'Personificação', a: 'Atribui características humanas a animais ou coisas: «o vento uivava lá fora».' },
-    { tag: 'Figura', q: 'Metáfora', a: 'Identifica dois elementos SEM palavra comparativa: «este quarto é uma gelataria» (= está frio).' },
-    { tag: 'Figura', q: 'Onomatopeia', a: 'Palavra que imita um som: trrrim!, miau, bzzz, cocorococó.' },
-    { tag: 'Figura', q: 'Anáfora', a: 'Repetição de palavras no início de versos ou frases seguidas: «Era a manhã… / Era a luz…».' },
-    { tag: 'Figura', q: 'Enumeração', a: 'Lista de elementos seguidos: «trouxe pão, queijo, fruta e sumo».' },
-    { tag: 'Figura', q: 'Hipérbole', a: 'Exagero intencional: «já te chamei mil vezes!».' },
-    { tag: 'Versificação', q: 'Como se conta a métrica de um verso?', a: 'Contam-se as sílabas métricas até à última sílaba TÓNICA do verso (as átonas finais não contam).' },
-    { tag: 'Versificação', q: 'Esquemas de rima?', a: 'Emparelhada (AABB), cruzada (ABAB) e interpolada (ABBA). Versos sem rima = versos soltos/brancos.' },
-    { tag: 'Versificação', q: 'Nomes das estrofes?', a: 'Dístico (2 versos), terceto (3), quadra (4), quintilha (5), sextilha (6).' }
+    { st: 1, tag: 'Figura', q: 'Comparação', a: 'Aproxima dois elementos com palavra comparativa (como, tal como): «veloz como um relâmpago».' },
+    { st: 1, tag: 'Figura', q: 'Personificação', a: 'Atribui características humanas a animais ou coisas: «o vento uivava lá fora».' },
+    { st: 1, tag: 'Figura', q: 'Metáfora', a: 'Identifica dois elementos SEM palavra comparativa: «este quarto é uma gelataria» (= está frio).' },
+    { st: 2, tag: 'Figura', q: 'Onomatopeia', a: 'Palavra que imita um som: trrrim!, miau, bzzz, cocorococó.' },
+    { st: 1, tag: 'Figura', q: 'Anáfora', a: 'Repetição de palavras no início de versos ou frases seguidas: «Era a manhã… / Era a luz…».' },
+    { st: 1, tag: 'Figura', q: 'Enumeração', a: 'Lista de elementos seguidos: «trouxe pão, queijo, fruta e sumo».' },
+    { st: 1, tag: 'Figura', q: 'Hipérbole', a: 'Exagero intencional: «já te chamei mil vezes!».' },
+    { st: 3, tag: 'Versificação', q: 'Como se conta a métrica de um verso?', a: 'Contam-se as sílabas métricas até à última sílaba TÓNICA do verso (as átonas finais não contam).' },
+    { st: 3, tag: 'Versificação', q: 'Esquemas de rima?', a: 'Emparelhada (AABB), cruzada (ABAB) e interpolada (ABBA). Versos sem rima = versos soltos/brancos.' },
+    { st: 3, tag: 'Versificação', q: 'Nomes das estrofes?', a: 'Dístico (2 versos), terceto (3), quadra (4), quintilha (5), sextilha (6).' }
   ]
 };
 
@@ -183,9 +183,15 @@ function port7ResumoShowSts(cap) {
   if (!stRow) return;
   var sts = _port7Subtemas[cap] || [];
   if (!sts.length) { stRow.style.display = 'none'; return; }
+  // conta cards por subtema para esconder chips de subtemas sem teoria
+  var _cc = (typeof _port7Cards !== 'undefined' && _port7Cards[cap]) ? _port7Cards[cap] : [];
+  var _nSt = {}; _cc.forEach(function(c){ if (c.st) _nSt[c.st] = (_nSt[c.st]||0)+1; });
+  var _stSel = _port7Sel['resumo-st'] || 0;
   var h = '<div class="resumo-st-label">Subtema</div>';
+  h += '<button class="resumo-st-btn' + (_stSel === 0 ? ' active' : '') + '" data-st="0" onclick="port7ResumoSelectSt(this,' + cap + ',0)">Todos</button>';
   sts.forEach(function(st, i) {
-    var isActive = (_port7Sel['resumo-st'] || 0) === (i + 1);
+    if (!_nSt[i + 1]) return; // subtema sem flashcards → não mostra o chip
+    var isActive = _stSel === (i + 1);
     h += '<button class="resumo-st-btn' + (isActive ? ' active' : '') + '" data-st="' + (i + 1) + '" onclick="port7ResumoSelectSt(this,' + cap + ',' + (i + 1) + ')">' + st + '</button>';
   });
   stRow.innerHTML = h;
@@ -222,16 +228,8 @@ function port7RenderResumoInline() {
 
   // Filtrar por subtema, se selecionado
   var stIdx = _port7Sel['resumo-st'] || 0;
-  var cards = allCards;
-  if (stIdx > 0 && _port7Subtemas[cap]) {
-    var stLabel = (_port7Subtemas[cap][stIdx - 1] || '').toLowerCase();
-    var stWords = stLabel.replace(/[^a-záéíóúâêîôûãõç ]/g, '').split(' ').filter(function(w){ return w.length > 3; });
-    var filtered = allCards.filter(function(card) {
-      var hay = ((card.tag || '') + ' ' + (card.q || '')).toLowerCase();
-      return stWords.some(function(w){ return hay.indexOf(w) !== -1; });
-    });
-    if (filtered.length > 0) cards = filtered;
-  }
+  // Filtro por subtema usa o campo st de cada flashcard (fiável); 0 = Todos.
+  var cards = (stIdx > 0) ? allCards.filter(function(card){ return card.st === stIdx; }) : allCards;
 
   if (!cards.length) {
     dest.innerHTML = '<div class="resumo-empty">'
