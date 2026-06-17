@@ -1508,7 +1508,8 @@ function buildEx_m11c5(tema, tipo, dif) {
     var a = rndNZ_m81(1, 5), b = rnd_m81(-6, 6), c = rnd_m81(-6, 6), x0 = rnd_m81(-4, 4);
     var dval = 2 * a * x0 + b;
     var bx = (Math.abs(b) === 1 ? 'x' : Math.abs(b) + 'x');
-    var f = 'f(x) = ' + (a === 1 ? 'x²' : a + 'x²') + (b === 0 ? '' : (b > 0 ? ' + ' + bx : ' − ' + bx)) + ' ' + (c >= 0 ? '+ ' + c : '− ' + Math.abs(c));
+    var _tc11 = c === 0 ? '' : (c > 0 ? ' + ' + c : ' − ' + Math.abs(c)); // omite termo c se 0
+    var f = 'f(x) = ' + (a === 1 ? 'x²' : a + 'x²') + (b === 0 ? '' : (b > 0 ? ' + ' + bx : ' − ' + bx)) + _tc11;
     return {
       enun: 'Sendo <strong>' + f + '</strong>, calcula f\'(' + x0 + ').',
       tipo: 'fill', resposta: String(dval),

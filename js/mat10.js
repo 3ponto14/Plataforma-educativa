@@ -1544,7 +1544,10 @@ function buildEx_m10c4(tema, tipo, dif) {
     // vértice de x²+bx+c (b par para x_v inteiro); valores pequenos p/ caber no gráfico
     var bv = rnd_m81(-2, 2) * 2, cv = rnd_m81(-3, 3);
     var xv = -bv / 2, yv = xv * xv + bv * xv + cv;
-    var f = 'f(x) = x² ' + (bv >= 0 ? '+ ' + bv : '− ' + Math.abs(bv)) + 'x ' + (cv >= 0 ? '+ ' + cv : '− ' + Math.abs(cv));
+    // termos limpos: omite bx se b=0, coeficiente 1; omite c se c=0
+    var _tb = bv === 0 ? '' : (bv > 0 ? ' + ' : ' − ') + (Math.abs(bv) === 1 ? '' : Math.abs(bv)) + 'x';
+    var _tc = cv === 0 ? '' : (cv > 0 ? ' + ' : ' − ') + Math.abs(cv);
+    var f = 'f(x) = x²' + _tb + _tc;
     var visP = (typeof EduVisual !== 'undefined') ? EduVisual.grafico(
       function (x) { return x * x + bv * x + cv; },
       { range: 5, color: '#3f7a9a', markers: [{ x: xv, y: yv, label: 'V' }] }

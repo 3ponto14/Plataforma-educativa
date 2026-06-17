@@ -1534,8 +1534,10 @@ function buildEx_m81(tema, tipo, dif) {
         { nome: 'A Sueli recebe uma comissão de p% sobre as suas vendas', vendas: true },
         { nome: 'Um artigo de V € tem um desconto de p%', desconto: true }
       ];
-      var p5 = [5, 10, 15, 20, 25][rnd_m81(0, 4)];
-      var V5 = [200, 350, 500, 800, 1200, 6750][rnd_m81(0, 5)];
+      var p5 = [5, 10, 20, 25, 50][rnd_m81(0, 4)];
+      // valores múltiplos de 100 → comissão e valor a pagar dão sempre inteiros
+      // (evita respostas com vírgula que o aluno teria de adivinhar o formato)
+      var V5 = [200, 400, 500, 800, 1200, 2000][rnd_m81(0, 5)];
       var qual = rnd_m81(0, 1);
       if (qual === 0) {
         var com = V5 * p5 / 100;
@@ -1888,19 +1890,21 @@ function buildEx_m83(tema, tipo, dif) {
     var a4 = rndNZ_m81(2, easy ? 5 : 8), b4 = rndNZ_m81(1, 6), c4 = rndNZ_m81(1, 8);
     var t1 = a4 * b4, t2 = a4 * c4;
     var res4 = t1 + 'x' + (t2 >= 0 ? ' + ' + t2 : ' − ' + Math.abs(t2));
+    // termo «b4x» dentro do parêntese: coeficiente 1 não se escreve (x, não 1x)
+    var bx4 = (b4 === 1 ? 'x' : b4 + 'x');
     if (tipo === 'mc') {
       var w4 = [(a4 + b4) + 'x + ' + t2, t1 + 'x + ' + (a4 + c4), (a4 * b4) + 'x + ' + c4];
       var opts4 = shuffle_m81([t1 + 'x + ' + t2].concat(w4).filter(function (v, i, ar) { return ar.indexOf(v) === i; })).slice(0, 4);
       if (opts4.indexOf(t1 + 'x + ' + t2) === -1) opts4[0] = t1 + 'x + ' + t2;
       return {
-        enun: 'Aplica a propriedade distributiva: ' + a4 + '(' + b4 + 'x + ' + c4 + ')',
+        enun: 'Aplica a propriedade distributiva: ' + a4 + '(' + bx4 + ' + ' + c4 + ')',
         tipo: 'mc', opcoes: opts4, resposta: t1 + 'x + ' + t2,
         expl: a4 + ' × ' + b4 + 'x = ' + t1 + 'x e ' + a4 + ' × ' + c4 + ' = ' + t2 + ' → ' + t1 + 'x + ' + t2 + '.',
         tema: 'T4 · Op. Polinómios'
       };
     }
     return {
-      enun: 'Desenvolve: ' + a4 + '(' + b4 + 'x + ' + c4 + ')', tipo: 'fill', resposta: t1 + 'x+' + t2,
+      enun: 'Desenvolve: ' + a4 + '(' + bx4 + ' + ' + c4 + ')', tipo: 'fill', resposta: t1 + 'x+' + t2,
       expl: 'Distributiva: ' + a4 + '×' + b4 + 'x + ' + a4 + '×' + c4 + ' = ' + t1 + 'x + ' + t2 + '.',
       tema: 'T4 · Op. Polinómios'
     };
