@@ -1,3 +1,35 @@
+/* ── localStorage à prova de falha ───────────────────────────────────
+   Em Safari/iOS no modo privado (ou com cookies/armazenamento bloqueados)
+   o acesso a localStorage LANÇA exceção. Como há muitas chamadas pela app,
+   instalamos aqui — antes de tudo o resto (shared.js carrega primeiro em
+   todas as páginas) — um substituto em memória quando o real não funciona.
+   Assim nenhuma chamada existente rebenta e a app continua a abrir; o
+   progresso desse separador fica só em memória (não persiste), o que é o
+   comportamento esperado em modo privado. */
+(function () {
+  function _testaLS() {
+    try {
+      var k = '__ls_test__';
+      window.localStorage.setItem(k, '1');
+      window.localStorage.removeItem(k);
+      return true;
+    } catch (e) { return false; }
+  }
+  if (_testaLS()) return; // localStorage real funciona → nada a fazer
+  // fallback em memória com a mesma API mínima usada na app
+  var _mem = {};
+  var shim = {
+    getItem: function (k) { return Object.prototype.hasOwnProperty.call(_mem, k) ? _mem[k] : null; },
+    setItem: function (k, v) { _mem[k] = String(v); },
+    removeItem: function (k) { delete _mem[k]; },
+    clear: function () { _mem = {}; },
+    key: function (i) { return Object.keys(_mem)[i] || null; },
+    get length() { return Object.keys(_mem).length; }
+  };
+  try { Object.defineProperty(window, 'localStorage', { value: shim, configurable: true }); }
+  catch (e) { try { window.localStorage = shim; } catch (e2) {} }
+})();
+
 /* ── Block 1 (from line 26) ── */
 /* ── Toast notification system ── */
 var _toastTimer=null;
