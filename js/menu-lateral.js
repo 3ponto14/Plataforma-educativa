@@ -80,6 +80,7 @@
     foot.innerHTML =
       '<div class="ml-user"><i class="ph ph-user-circle"></i> <span>' + _esc(nome)
       + (prof ? ' <span class="ml-tag">professor</span>' : '') + '</span></div>'
+      + (prof ? '<button class="ml-apagar" style="border-color:#bfe3c9;color:#2e7d52" title="Editar as disciplinas e anos que lecionas" onclick="if(typeof profEditarDisciplinas===\'function\')profEditarDisciplinas()"><i class="ph ph-sliders-horizontal"></i> Editar disciplinas</button>' : '')
       + '<button class="ml-chave" title="Alterar palavra-passe" aria-label="Alterar palavra-passe" onclick="if(typeof authAlterarPassword===\'function\')authAlterarPassword()"><i class="ph ph-key"></i></button>'
       + '<button class="ml-sair" onclick="if(typeof authSair===\'function\'){menuLateralFechar();authSair();}">Sair</button>'
       + '<button class="ml-apagar" title="Apagar a minha conta" onclick="if(typeof authApagarConta===\'function\')authApagarConta()">Apagar conta</button>';
