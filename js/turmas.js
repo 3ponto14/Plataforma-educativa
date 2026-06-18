@@ -499,6 +499,24 @@ var Turmas = (function () {
       .then(function (res) { return res.error ? [] : (res.data || []); });
   }
 
+  /* ALUNO: os professores a quem pode dirigir uma dúvida — os professores
+     dos grupos onde está inscrito (sem repetidos). [{prof, prof_nome}] */
+  function professoresDoAluno() {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return gruposDoAluno().then(function (gs) {
+      var gids = gs.map(function (g) { return g.grupo_id; });
+      if (!gids.length) return [];
+      return sb.from('grupo_professores').select('prof, prof_nome').in('grupo_id', gids).then(function (res) {
+        var vistos = {}, out = [];
+        (res.data || []).forEach(function (p) {
+          if (p.prof && !vistos[p.prof]) { vistos[p.prof] = 1; out.push({ prof: p.prof, prof_nome: p.prof_nome || 'Professor(a)' }); }
+        });
+        return out;
+      });
+    });
+  }
+
   /* ALUNO sai de um grupo. */
   function sairDoGrupo(grupoId) {
     var sb = _sb(); var u = Cloud.utilizador();
@@ -660,15 +678,24 @@ var Turmas = (function () {
 
   /* ALUNO abre uma dúvida nova (sem mensagem-mãe → visível a todos os
      professores). */
-  function criarDuvida(texto) {
+  /* ALUNO abre uma dúvida DIRIGIDA: a um grupo seu (a veem os professores
+     desse grupo) OU a um professor específico do seu grupo. Já não há
+     "dúvida para todos os professores". dest = {grupoId} ou {professor}. */
+  function criarDuvida(texto, dest) {
     var sb = _sb(); var u = Cloud.utilizador();
     if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
     texto = (texto || '').trim();
     if (!texto) return Promise.reject(new Error('Escreve a dúvida.'));
+    dest = dest || {};
+    if (!dest.grupoId && !dest.professor) {
+      return Promise.reject(new Error('Escolhe a quem queres enviar a dúvida (um grupo ou um professor).'));
+    }
     var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
     return sb.from('mensagens').insert({
       autor_tipo: 'aluno', de_aluno: u.id, de_nome: nome,
-      professor: null, resposta_a: null, alcance: 'duvida', texto: texto
+      professor: dest.professor || null,
+      grupo_id: dest.grupoId || null,
+      resposta_a: null, alcance: 'duvida', texto: texto
     }).then(function (r) { if (r.error) throw r.error; _invalidaDuvidas(); return r; });
   }
 
@@ -724,7 +751,7 @@ var Turmas = (function () {
     conversaComAluno: conversaComAluno,
     criarGrupo: criarGrupo, apagarGrupo: apagarGrupo, renomearGrupo: renomearGrupo, todosOsGrupos: todosOsGrupos,
     alunosDoGrupo: alunosDoGrupo, resumoDoGrupo: resumoDoGrupo, adicionarAoGrupo: adicionarAoGrupo, removerDoGrupo: removerDoGrupo,
-    entrarPorCodigo: entrarPorCodigo, gruposDoAluno: gruposDoAluno, sairDoGrupo: sairDoGrupo,
+    entrarPorCodigo: entrarPorCodigo, gruposDoAluno: gruposDoAluno, professoresDoAluno: professoresDoAluno, sairDoGrupo: sairDoGrupo,
     garantirProfDoGrupo: garantirProfDoGrupo, profsDoGrupo: profsDoGrupo,
     entrarComoProf: entrarComoProf, gruposDoProf: gruposDoProf,
     criarSessao: criarSessao, apagarSessao: apagarSessao,

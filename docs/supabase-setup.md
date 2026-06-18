@@ -403,6 +403,39 @@ create policy "prof lê o que lhe toca" on public.mensagens for select
   ));
 ```
 
+## 3g-bis. PRIVACIDADE DAS DÚVIDAS — colar no SQL Editor → Run
+
+As dúvidas dos alunos deixam de ser vistas por TODOS os professores. Uma
+dúvida passa a ser dirigida a um GRUPO (veem-na os professores desse grupo)
+ou a um PROFESSOR específico. Substitui as duas policies de leitura do prof.
+
+```sql
+-- Função: o professor atual é professor deste grupo? (segura, sem recursão)
+create or replace function public.eh_prof_do_grupo(g uuid)
+returns boolean language sql security definer stable set search_path = public as $$
+  select exists (
+    select 1 from public.grupo_professores gp
+    where gp.grupo_id = g and gp.prof = auth.uid()
+  );
+$$;
+
+-- Substitui as policies antigas (que deixavam ver dúvidas com professor null
+-- a qualquer professor) por versões com âmbito de privacidade.
+drop policy if exists "prof vê respostas/dúvidas" on public.mensagens;
+drop policy if exists "prof lê o que lhe toca"    on public.mensagens;
+
+-- O professor vê: avisos gerais; mensagens que ele próprio criou; e mensagens
+-- de alunos (dúvidas/respostas) SÓ se forem dirigidas a ele (professor = ele)
+-- ou a um grupo onde ele é professor.
+create policy "prof lê o que lhe toca" on public.mensagens for select
+  using (public.eh_professor() and (
+    alcance = 'geral'
+    or professor = auth.uid()
+    or (autor_tipo = 'aluno' and grupo_id is not null and public.eh_prof_do_grupo(grupo_id))
+    or (alcance = 'grupo' and grupo_id is not null and public.eh_prof_do_grupo(grupo_id))
+  ));
+```
+
 ## 3h. SQL do REGISTO DE SESSÕES (diário por aluno) — colar no SQL Editor → Run
 
 Centra as turmas no ALUNO: o professor regista o que trabalhou com cada

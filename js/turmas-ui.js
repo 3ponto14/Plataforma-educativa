@@ -1191,13 +1191,12 @@ function _turmasRenderAluno(wrap) {
 
 /* Aluno escreve na conversa única (mensagem livre = dúvida). */
 function alunoConvEnviar() {
+  // A dúvida precisa agora de destino (grupo ou professor). Em vez de enviar
+  // "para todos", abre o seletor de destino com o texto já escrito.
   var inp = document.getElementById('aluno-conv-txt');
-  if (!inp || !inp.value.trim()) return;
-  var txt = inp.value.trim(); inp.value = '';
-  Turmas.criarDuvida(txt).then(function () {
-    _alunoPintaMensagens();
-    if (typeof notificacoesRender === 'function') notificacoesRender();
-  }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
+  var txt = inp ? inp.value.trim() : '';
+  alunoTirarDuvida(txt);
+  if (inp) inp.value = '';
 }
 
 /* O aluno vê as mensagens do professor (avisos gerais/grupo + feedback a
@@ -1276,17 +1275,43 @@ function _alunoPintaRegisto() {
   });
 }
 
-/* Mandar dúvida a partir da secção Turmas. */
-function alunoTirarDuvida() {
-  eduFormModal('Mandar dúvida ao professor', [
-    { id: 'txt', label: 'A tua dúvida', tipo: 'textarea', placeholder: 'Escreve aqui a tua pergunta', obrig: true }
-  ], function (v) {
-    return Turmas.criarDuvida(v.txt).then(function () {
-      if (typeof eduToast === 'function') eduToast('Dúvida enviada ao professor! ❓', 'success');
-      if (typeof _alunoPintaMensagens === 'function') _alunoPintaMensagens();
-      if (typeof notificacoesRender === 'function') notificacoesRender();
+/* Mandar dúvida a partir da secção Turmas. O aluno escolhe o destino:
+   um GRUPO seu (veem os professores do grupo) ou um PROFESSOR específico.
+   Sem grupo não há a quem enviar → convida a entrar num grupo. */
+function alunoTirarDuvida(textoInicial) {
+  Promise.all([
+    Turmas.gruposDoAluno ? Turmas.gruposDoAluno() : Promise.resolve([]),
+    Turmas.professoresDoAluno ? Turmas.professoresDoAluno() : Promise.resolve([])
+  ]).then(function (r) {
+    var grupos = r[0] || [], profs = r[1] || [];
+    if (!grupos.length) {
+      alert('Ainda não estás em nenhum grupo. Pede o código ao teu professor e entra num grupo para poderes enviar dúvidas.');
+      return;
+    }
+    // opções do destino: cada grupo + cada professor (com prefixo p/ distinguir)
+    var opcoes = [];
+    grupos.forEach(function (g) {
+      var nome = (g.grupos && g.grupos.nome) || 'Grupo';
+      opcoes.push({ value: 'g:' + g.grupo_id, label: '👥 Grupo: ' + nome });
     });
-  }, { botao: 'Enviar' });
+    profs.forEach(function (p) {
+      opcoes.push({ value: 'p:' + p.prof, label: '👤 Professor: ' + (p.prof_nome || 'Professor(a)') });
+    });
+    eduFormModal('Mandar dúvida', [
+      { id: 'dest', label: 'Enviar para', tipo: 'select', opcoes: opcoes, obrig: true,
+        dica: 'A dúvida só fica visível para o grupo ou professor que escolheres.' },
+      { id: 'txt', label: 'A tua dúvida', tipo: 'textarea', placeholder: 'Escreve aqui a tua pergunta', obrig: true, valor: textoInicial || '' }
+    ], function (v) {
+      var dest = v.dest.charAt(0) === 'g'
+        ? { grupoId: v.dest.slice(2) }
+        : { professor: v.dest.slice(2) };
+      return Turmas.criarDuvida(v.txt, dest).then(function () {
+        if (typeof eduToast === 'function') eduToast('Dúvida enviada! ❓', 'success');
+        if (typeof _alunoPintaMensagens === 'function') _alunoPintaMensagens();
+        if (typeof notificacoesRender === 'function') notificacoesRender();
+      });
+    }, { botao: 'Enviar' });
+  });
 }
 
 /* ── Os meus grupos (vista do aluno) ── */
