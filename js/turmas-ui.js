@@ -776,6 +776,66 @@ function sessaoGrupoGuardar(grupoId, nome) {
   });
 }
 
+/* REGISTAR sessão de UM aluno (na página do aluno). Se vier sem grupo,
+   descobre o grupo partilhado prof↔aluno. Escolhe disciplina + data + notas. */
+function sessaoAlunoPrompt(alunoId, nome, grupoId) {
+  var p = (grupoId && Turmas.alunosDoGrupo)
+    ? Promise.resolve([{ grupo_id: grupoId, nome: '' }])
+    : (Turmas.gruposComAluno ? Turmas.gruposComAluno(alunoId) : Promise.resolve([]));
+  p.then(function (grupos) {
+    if (!grupos.length) { alert('Este aluno não está em nenhum grupo teu. Adiciona-o a um grupo para registares sessões.'); return; }
+    var discs = (typeof EDU_DISCIPLINAS !== 'undefined' ? EDU_DISCIPLINAS : ['Matemática', 'Português', 'Físico-Química']);
+    var hoje = new Date().toISOString().slice(0, 10);
+    // se houver vários grupos partilhados, deixa escolher
+    var grpSel = grupos.length === 1
+      ? '<input type="hidden" id="ses-a-grp" value="' + grupos[0].grupo_id + '">'
+      : '<label style="font-size:.78rem;font-weight:700;color:var(--ink2)">Grupo<br><select id="ses-a-grp" style="margin-top:.2rem;border:1.5px solid var(--border);border-radius:10px;padding:7px 11px;font-size:.83rem;font-family:Montserrat,sans-serif">'
+        + grupos.map(function (g) { return '<option value="' + g.grupo_id + '">' + _esc(g.nome || 'Grupo') + '</option>'; }).join('') + '</select></label>';
+    var ov = document.createElement('div');
+    ov.id = 'ses-aluno-ov';
+    ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:4vh 1rem';
+    ov.innerHTML = '<div style="background:var(--white);border-radius:18px;max-width:540px;width:100%;padding:1.3rem 1.4rem;box-shadow:0 10px 40px rgba(0,0,0,.25)">'
+      + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.4rem;font-weight:700;color:var(--ink1);margin-bottom:.2rem"><i class="ph ph-notebook" style="color:#9a6a1a"></i> Registar sessão · ' + _esc(nome) + '</div>'
+      + '<div style="font-size:.8rem;color:var(--ink4);margin-bottom:.9rem">Fica no histórico deste aluno, na disciplina escolhida.</div>'
+      + '<div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:.8rem">'
+      + '<label style="font-size:.78rem;font-weight:700;color:var(--ink2)">Disciplina<br><select id="ses-a-disc" style="margin-top:.2rem;border:1.5px solid var(--border);border-radius:10px;padding:7px 11px;font-size:.83rem;font-family:Montserrat,sans-serif">'
+      + discs.map(function (d) { return '<option value="' + _escAttr(d) + '">' + _esc(d) + '</option>'; }).join('') + '</select></label>'
+      + '<label style="font-size:.78rem;font-weight:700;color:var(--ink2)">Data<br><input id="ses-a-data" type="date" value="' + hoje + '" style="margin-top:.2rem;border:1.5px solid var(--border);border-radius:10px;padding:7px 11px;font-size:.83rem;font-family:Montserrat,sans-serif"></label>'
+      + grpSel
+      + '</div>'
+      + '<label style="font-size:.78rem;font-weight:700;color:var(--ink2)">Material (opcional)<br><input id="ses-a-mat" placeholder="ex.: ficha 3, manual p.40" style="margin-top:.2rem;width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:10px;padding:7px 11px;font-size:.83rem;font-family:Montserrat,sans-serif"></label>'
+      + '<label style="font-size:.78rem;font-weight:700;color:var(--ink2);display:block;margin-top:.7rem">Notas para o próximo professor<br><textarea id="ses-a-notas" rows="3" placeholder="o que trabalhou, o que falta, como correu…" style="margin-top:.2rem;width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:10px;padding:7px 11px;font-size:.83rem;font-family:Montserrat,sans-serif;resize:vertical"></textarea></label>'
+      + '<div id="ses-a-erro" style="display:none;color:#c0392b;font-size:.8rem;margin-top:.6rem"></div>'
+      + '<div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem">'
+      + '<button onclick="(function(){var o=document.getElementById(\'ses-aluno-ov\');if(o)o.remove();})()" style="background:var(--white);border:1.5px solid var(--border);color:var(--ink3);border-radius:999px;padding:8px 16px;font-size:.84rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">Cancelar</button>'
+      + '<button id="ses-a-btn" onclick="sessaoAlunoGuardar(\'' + alunoId + '\',\'' + _escAttr(nome) + '\')" style="background:linear-gradient(135deg,#9a6a1a,#c08a2e);color:#fff;border:none;border-radius:999px;padding:8px 18px;font-size:.84rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">Gravar sessão</button>'
+      + '</div></div>';
+    document.body.appendChild(ov);
+    ov.addEventListener('click', function (e) { if (e.target === ov) ov.remove(); });
+  });
+}
+
+function sessaoAlunoGuardar(alunoId, nome) {
+  var disc = (document.getElementById('ses-a-disc') || {}).value || '';
+  var data = (document.getElementById('ses-a-data') || {}).value || '';
+  var mat = (document.getElementById('ses-a-mat') || {}).value || '';
+  var notas = (document.getElementById('ses-a-notas') || {}).value || '';
+  var grp = (document.getElementById('ses-a-grp') || {}).value || '';
+  var erro = document.getElementById('ses-a-erro');
+  var btn = document.getElementById('ses-a-btn');
+  if (!(notas || '').trim() && !(mat || '').trim()) { if (erro) { erro.textContent = 'Escreve as notas ou o material da sessão.'; erro.style.display = ''; } return; }
+  if (btn) { btn.disabled = true; btn.textContent = 'A gravar…'; }
+  var quando = data ? new Date(data + 'T12:00:00').toISOString() : new Date().toISOString();
+  Turmas.criarSessao({ grupoId: grp, aluno: alunoId, disciplina: disc, material: mat, notas: notas, quando: quando }).then(function () {
+    var o = document.getElementById('ses-aluno-ov'); if (o) o.remove();
+    if (typeof eduToast === 'function') eduToast('Sessão registada! 📓', 'success');
+    if (typeof _alunoPagPintaReg === 'function') _alunoPagPintaReg(alunoId, nome, null); // refresca o histórico
+  }).catch(function (e) {
+    if (btn) { btn.disabled = false; btn.textContent = 'Gravar sessão'; }
+    if (erro) { erro.textContent = (e && e.message) || 'Não foi possível guardar.'; erro.style.display = ''; }
+  });
+}
+
 /* ── Conversa com um aluno (dentro do detalhe do aluno, no grupo) ── */
 function conversaToggle(grupoId, alunoId, nome) {
   var box = document.getElementById('conversa-' + grupoId + '_' + alunoId);
@@ -1098,6 +1158,7 @@ function abrirPaginaAluno(id, grupoId) {
     + '<div style="display:flex;gap:.6rem;font-size:.82rem;color:var(--ink3);margin:.3rem 0 .8rem"><span>⭐ ' + a.xp + '</span><span>' + (a.streak > 0 ? '🔥 ' + a.streak : '🔥 0') + '</span><span title="Desafios">🎯 ' + a.desafios + '</span></div>'
     + '<div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">'
     + '<button onclick="alunoEnviarPrompt(\'' + id + '\',\'' + _escAttr(a.nome) + '\')" style="font-size:.78rem;font-weight:700;color:#1a4a2e;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:5px 13px;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-paper-plane-tilt"></i> Enviar (ficha/trabalho/aviso)</button>'
+    + '<button onclick="sessaoAlunoPrompt(\'' + id + '\',\'' + _escAttr(a.nome) + '\',\'' + (grupoId || '') + '\')" style="font-size:.78rem;font-weight:700;color:#9a6a1a;background:var(--white);border:1.5px solid #f0d2a6;border-radius:999px;padding:5px 13px;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-notebook"></i> Registar sessão</button>'
     + '</div>'
     + '<div id="aluno-pag-det">' + _alunoDetalheHTML(a) + '</div>'
     // Mensagens

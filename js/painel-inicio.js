@@ -336,84 +336,100 @@
     if (typeof desafioRender === 'function') desafioRender();
   }
 
-  /* Onboarding obrigatório do professor: escolher disciplinas (e anos) que
-     leciona antes de poder usar a plataforma. Renderizado no painel de
-     boas-vindas; não há como saltar (só guarda quando há pelo menos 1
-     disciplina). Vale para contas novas e antigas sem disciplinas. */
-  function _pintarOnboardingProf(sec, nome) {
+  /* ── Editor de disciplinas COM anos por disciplina ──
+     Cada disciplina é uma linha: clicar nela liga/desliga; quando ligada,
+     mostra os chips de ANOS só dessa disciplina. Reutilizado no onboarding
+     (obrigatório) e no modal de edição. `atual` = mapa disciplina→[anos]. */
+  var _PI_ANOS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+  function _piDiscAnosHTML(atual) {
+    atual = atual || {};
     var discs = (typeof EDU_DISCIPLINAS !== 'undefined') ? EDU_DISCIPLINAS : ['Matemática', 'Português', 'Físico-Química'];
-    var anos = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-    function pill(attr, val, lbl) {
-      return '<button type="button" class="pi-onb-pill" data-' + attr + '="' + _esc(val) + '" onclick="piOnbToggle(this)" '
-        + 'style="background:var(--white);border:1.5px solid var(--border);color:var(--ink3);border-radius:999px;padding:5px 13px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">' + _esc(lbl) + '</button>';
-    }
+    return discs.map(function (d) {
+      var on = !!atual[d];
+      var anosSel = atual[d] || [];
+      var sty = on ? 'background:#2e7d52;border:1.5px solid #2e7d52;color:#fff' : 'background:var(--white);border:1.5px solid var(--border);color:var(--ink3)';
+      var anosHTML = _PI_ANOS.map(function (a) {
+        var aon = anosSel.indexOf(a) !== -1;
+        var asty = aon ? 'background:#dff0e6;border:1.5px solid #2e7d52;color:#1a4a2e' : 'background:var(--white);border:1.5px solid var(--border);color:var(--ink4)';
+        return '<button type="button" class="pi-ano" data-ano="' + a + '" onclick="piAnoToggle(this)" style="' + asty + ';border-radius:999px;padding:3px 9px;font-size:.74rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">' + a + '.º</button>';
+      }).join('');
+      return '<div class="pi-disc-row" data-disc="' + _esc(d) + '" style="border:1.5px solid var(--border);border-radius:12px;padding:.5rem .6rem;margin-bottom:.45rem">'
+        + '<button type="button" class="pi-disc-btn" onclick="piDiscToggle(this)" style="' + sty + ';border-radius:999px;padding:5px 13px;font-size:.82rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">' + _esc(d) + '</button>'
+        + '<div class="pi-disc-anos" style="display:' + (on ? 'flex' : 'none') + ';flex-wrap:wrap;gap:.3rem;margin-top:.5rem">'
+        + '<span style="font-size:.7rem;color:var(--ink4);align-self:center;margin-right:.2rem">anos:</span>' + anosHTML
+        + '</div></div>';
+    }).join('');
+  }
+  // liga/desliga uma disciplina (mostra/esconde os anos dessa linha)
+  window.piDiscToggle = function (btn) {
+    var on = btn.classList.toggle('on');
+    btn.style.cssText = (on ? 'background:#2e7d52;border:1.5px solid #2e7d52;color:#fff' : 'background:var(--white);border:1.5px solid var(--border);color:var(--ink3)') + ';border-radius:999px;padding:5px 13px;font-size:.82rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif';
+    var row = btn.closest('.pi-disc-row'); var anos = row && row.querySelector('.pi-disc-anos');
+    if (anos) anos.style.display = on ? 'flex' : 'none';
+  };
+  window.piAnoToggle = function (btn) {
+    var on = btn.classList.toggle('on');
+    btn.style.cssText = (on ? 'background:#dff0e6;border:1.5px solid #2e7d52;color:#1a4a2e' : 'background:var(--white);border:1.5px solid var(--border);color:var(--ink4)') + ';border-radius:999px;padding:3px 9px;font-size:.74rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif';
+  };
+  /* Lê o mapa disciplina→[anos] das linhas ativas dentro de um contentor. */
+  function _piLerDiscAnos(containerId) {
+    var box = document.getElementById(containerId); if (!box) return {};
+    var map = {};
+    box.querySelectorAll('.pi-disc-row').forEach(function (row) {
+      var btn = row.querySelector('.pi-disc-btn');
+      if (!btn || !btn.classList.contains('on')) return;
+      var d = row.getAttribute('data-disc');
+      var anos = [];
+      row.querySelectorAll('.pi-ano.on').forEach(function (a) { anos.push(a.getAttribute('data-ano')); });
+      map[d] = anos;
+    });
+    return map;
+  }
+
+  /* Onboarding obrigatório: escolher disciplinas E os anos de cada uma. */
+  function _pintarOnboardingProf(sec, nome) {
     var h = '<div class="pi-wrap"><div style="background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.5rem 1.6rem;max-width:680px;margin:0 auto">'
       + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.7rem;font-weight:700;color:var(--ink1);margin-bottom:.2rem">Bem-vindo, ' + _esc(nome) + '! 👋</div>'
-      + '<div style="font-size:.9rem;color:var(--ink3);line-height:1.5;margin-bottom:1.2rem">Antes de começares, diz-nos <strong>que disciplinas e anos lecionas</strong>. Usamos isto para te mostrar só as dúvidas que te dizem respeito.</div>'
-      + '<div style="font-size:.8rem;font-weight:800;color:var(--ink2);margin-bottom:.5rem">Disciplinas <span style="color:#c0392b">*</span></div>'
-      + '<div id="pi-onb-discs" style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.1rem">' + discs.map(function (d) { return pill('disc', d, d); }).join('') + '</div>'
-      + '<div style="font-size:.8rem;font-weight:800;color:var(--ink2);margin-bottom:.5rem">Anos que lecionas</div>'
-      + '<div id="pi-onb-anos" style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.3rem">' + anos.map(function (a) { return pill('ano', a, a + '.º'); }).join('') + '</div>'
-      + '<div id="pi-onb-erro" style="display:none;color:#c0392b;font-size:.82rem;margin-bottom:.7rem"></div>'
-      + '<button id="pi-onb-btn" onclick="piOnbGuardar()" style="width:100%;background:linear-gradient(135deg,#2e7d52,#3da06a);color:#fff;border:none;border-radius:12px;padding:.85rem;font-family:Montserrat,sans-serif;font-size:.92rem;font-weight:800;cursor:pointer">Guardar e continuar</button>'
+      + '<div style="font-size:.9rem;color:var(--ink3);line-height:1.5;margin-bottom:1.2rem">Escolhe <strong>as disciplinas que lecionas</strong> e, em cada uma, <strong>os anos</strong>. Ex.: Matemática no 1.º ciclo, Português só no 9.º. Usa-se para te mostrar só as dúvidas que te dizem respeito.</div>'
+      + '<div id="pi-onb-discs">' + _piDiscAnosHTML({}) + '</div>'
+      + '<div id="pi-onb-erro" style="display:none;color:#c0392b;font-size:.82rem;margin:.4rem 0 .7rem"></div>'
+      + '<button id="pi-onb-btn" onclick="piOnbGuardar()" style="width:100%;margin-top:.6rem;background:linear-gradient(135deg,#2e7d52,#3da06a);color:#fff;border:none;border-radius:12px;padding:.85rem;font-family:Montserrat,sans-serif;font-size:.92rem;font-weight:800;cursor:pointer">Guardar e continuar</button>'
       + '</div></div>';
     sec.innerHTML = h;
     sec.style.display = '';
   }
 
-  window.piOnbToggle = function (btn) {
-    var on = btn.classList.toggle('on');
-    btn.style.cssText = on
-      ? 'background:#2e7d52;border:1.5px solid #2e7d52;color:#fff;border-radius:999px;padding:5px 13px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif'
-      : 'background:var(--white);border:1.5px solid var(--border);color:var(--ink3);border-radius:999px;padding:5px 13px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif';
-  };
-  function _onbLer(id, attr) {
-    var box = document.getElementById(id); if (!box) return [];
-    var out = []; box.querySelectorAll('.pi-onb-pill.on').forEach(function (b) { out.push(b.getAttribute(attr)); });
-    return out;
-  }
   window.piOnbGuardar = function () {
-    var discs = _onbLer('pi-onb-discs', 'data-disc');
-    var anos = _onbLer('pi-onb-anos', 'data-ano');
+    var map = _piLerDiscAnos('pi-onb-discs');
     var erro = document.getElementById('pi-onb-erro');
-    if (!discs.length) { if (erro) { erro.textContent = 'Escolhe pelo menos uma disciplina.'; erro.style.display = ''; } return; }
+    if (!Object.keys(map).length) { if (erro) { erro.textContent = 'Escolhe pelo menos uma disciplina.'; erro.style.display = ''; } return; }
+    var semAno = Object.keys(map).filter(function (d) { return !map[d].length; });
+    if (semAno.length) { if (erro) { erro.textContent = 'Escolhe os anos de: ' + semAno.join(', ') + '.'; erro.style.display = ''; } return; }
     var btn = document.getElementById('pi-onb-btn');
     if (btn) { btn.disabled = true; btn.textContent = 'A guardar…'; }
-    Cloud.atualizarPerfilProf(discs, anos).then(function () {
+    Cloud.atualizarPerfilProf(map).then(function () {
       if (typeof eduToast === 'function') eduToast('Perfil guardado! ✅', 'success');
-      render(); // já tem disciplinas → mostra o painel normal
+      render();
     }).catch(function (e) {
       if (btn) { btn.disabled = false; btn.textContent = 'Guardar e continuar'; }
       if (erro) { erro.textContent = (e && e.message) || 'Não foi possível guardar. Tenta de novo.'; erro.style.display = ''; }
     });
   };
 
-  /* EDITAR (a qualquer momento) as disciplinas/anos do professor. Modal com
-     as pílulas pré-selecionadas com as escolhas atuais. */
+  /* EDITAR a qualquer momento (modal), pré-preenchido com o mapa atual. */
   window.profEditarDisciplinas = function () {
     if (typeof Cloud === 'undefined' || !Cloud.ehProfessor || !Cloud.ehProfessor()) return;
     if (typeof menuLateralFechar === 'function') { try { menuLateralFechar(); } catch (e) {} }
-    var discs = (typeof EDU_DISCIPLINAS !== 'undefined') ? EDU_DISCIPLINAS : ['Matemática', 'Português', 'Físico-Química'];
-    var anos = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-    var atuaisD = (Cloud.profDisciplinas && Cloud.profDisciplinas()) || [];
-    var atuaisA = (Cloud.profAnos && Cloud.profAnos()) || [];
-    function pill(attr, val, lbl, on) {
-      var base = 'border-radius:999px;padding:5px 13px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif;';
-      var sty = on ? base + 'background:#2e7d52;border:1.5px solid #2e7d52;color:#fff' : base + 'background:var(--white);border:1.5px solid var(--border);color:var(--ink3)';
-      return '<button type="button" class="pi-onb-pill' + (on ? ' on' : '') + '" data-' + attr + '="' + _esc(val) + '" onclick="piOnbToggle(this)" style="' + sty + '">' + _esc(lbl) + '</button>';
-    }
+    var atual = (Cloud.profDisciplinasAnos && Cloud.profDisciplinasAnos()) || {};
     var ov = document.createElement('div');
     ov.id = 'pi-edit-ov';
     ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:4vh 1rem';
     ov.innerHTML = '<div style="background:var(--white);border-radius:18px;max-width:600px;width:100%;padding:1.4rem 1.5rem;box-shadow:0 10px 40px rgba(0,0,0,.25)">'
       + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.5rem;font-weight:700;color:var(--ink1);margin-bottom:.2rem"><i class="ph ph-sliders-horizontal" style="color:#2e7d52"></i> As minhas disciplinas</div>'
-      + '<div style="font-size:.85rem;color:var(--ink3);margin-bottom:1.1rem">Escolhe as disciplinas e anos que lecionas. Usa-se para te mostrar só as dúvidas e o acompanhamento que te dizem respeito.</div>'
-      + '<div style="font-size:.8rem;font-weight:800;color:var(--ink2);margin-bottom:.5rem">Disciplinas <span style="color:#c0392b">*</span></div>'
-      + '<div id="pi-onb-discs" style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.1rem">' + discs.map(function (d) { return pill('disc', d, d, atuaisD.indexOf(d) !== -1); }).join('') + '</div>'
-      + '<div style="font-size:.8rem;font-weight:800;color:var(--ink2);margin-bottom:.5rem">Anos que lecionas</div>'
-      + '<div id="pi-onb-anos" style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.2rem">' + anos.map(function (a) { return pill('ano', a, a + '.º', atuaisA.indexOf(a) !== -1); }).join('') + '</div>'
-      + '<div id="pi-onb-erro" style="display:none;color:#c0392b;font-size:.82rem;margin-bottom:.7rem"></div>'
-      + '<div style="display:flex;gap:.5rem;justify-content:flex-end">'
+      + '<div style="font-size:.85rem;color:var(--ink3);margin-bottom:1.1rem">Em cada disciplina, escolhe os anos que lecionas. Usa-se para filtrar as dúvidas e o acompanhamento.</div>'
+      + '<div id="pi-onb-discs" style="max-height:54vh;overflow:auto">' + _piDiscAnosHTML(atual) + '</div>'
+      + '<div id="pi-onb-erro" style="display:none;color:#c0392b;font-size:.82rem;margin:.4rem 0 .7rem"></div>'
+      + '<div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:.8rem">'
       + '<button onclick="(function(){var o=document.getElementById(\'pi-edit-ov\');if(o)o.remove();})()" style="background:var(--white);border:1.5px solid var(--border);color:var(--ink3);border-radius:999px;padding:8px 16px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">Cancelar</button>'
       + '<button id="pi-edit-btn" onclick="piEditGuardar()" style="background:linear-gradient(135deg,#2e7d52,#3da06a);color:#fff;border:none;border-radius:999px;padding:8px 18px;font-size:.85rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">Guardar</button>'
       + '</div></div>';
@@ -422,13 +438,14 @@
   };
 
   window.piEditGuardar = function () {
-    var discs = _onbLer('pi-onb-discs', 'data-disc');
-    var anos = _onbLer('pi-onb-anos', 'data-ano');
+    var map = _piLerDiscAnos('pi-onb-discs');
     var erro = document.getElementById('pi-onb-erro');
-    if (!discs.length) { if (erro) { erro.textContent = 'Escolhe pelo menos uma disciplina.'; erro.style.display = ''; } return; }
+    if (!Object.keys(map).length) { if (erro) { erro.textContent = 'Escolhe pelo menos uma disciplina.'; erro.style.display = ''; } return; }
+    var semAno = Object.keys(map).filter(function (d) { return !map[d].length; });
+    if (semAno.length) { if (erro) { erro.textContent = 'Escolhe os anos de: ' + semAno.join(', ') + '.'; erro.style.display = ''; } return; }
     var btn = document.getElementById('pi-edit-btn');
     if (btn) { btn.disabled = true; btn.textContent = 'A guardar…'; }
-    Cloud.atualizarPerfilProf(discs, anos).then(function () {
+    Cloud.atualizarPerfilProf(map).then(function () {
       var o = document.getElementById('pi-edit-ov'); if (o) o.remove();
       if (typeof eduToast === 'function') eduToast('Disciplinas atualizadas! ✅', 'success');
       render();

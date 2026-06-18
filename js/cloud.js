@@ -32,10 +32,26 @@ var Cloud = (function () {
      depois). Arrays de strings. Vazio = ainda não definiu (vê tudo). */
   function profDisciplinas() { var d = user && user.user_metadata && user.user_metadata.disciplinas; return Array.isArray(d) ? d : []; }
   function profAnos() { var a = user && user.user_metadata && user.user_metadata.anos; return Array.isArray(a) ? a : []; }
-  /* Atualiza os metadados do professor (disciplinas/anos). */
-  function atualizarPerfilProf(disciplinas, anos) {
+  /* Mapa disciplina → anos que leciona NESSA disciplina. Ex.:
+     { "Matemática": ["1","2"], "Português": ["7","8","9"] }. Para contas
+     antigas (só tinham listas planas), recompõe um mapa a partir delas. */
+  function profDisciplinasAnos() {
+    var m = user && user.user_metadata && user.user_metadata.disciplinas_anos;
+    if (m && typeof m === 'object' && !Array.isArray(m)) return m;
+    // retrocompat: cada disciplina antiga fica com TODOS os anos antigos
+    var out = {}; var anos = profAnos();
+    profDisciplinas().forEach(function (d) { out[d] = anos.slice(); });
+    return out;
+  }
+  /* Atualiza os metadados do professor. Aceita o mapa disciplina→anos e
+     mantém também as listas planas (disciplinas, anos) por retrocompat. */
+  function atualizarPerfilProf(disciplinasAnos) {
     if (!sb || !user) return Promise.reject(new Error('Inicia sessão.'));
-    return sb.auth.updateUser({ data: { disciplinas: disciplinas || [], anos: anos || [] } }).then(function (res) {
+    var map = disciplinasAnos || {};
+    var discs = Object.keys(map);
+    var anosSet = {}; discs.forEach(function (d) { (map[d] || []).forEach(function (a) { anosSet[a] = 1; }); });
+    var anos = Object.keys(anosSet);
+    return sb.auth.updateUser({ data: { disciplinas: discs, anos: anos, disciplinas_anos: map } }).then(function (res) {
       if (res.error) throw res.error;
       if (res.data && res.data.user) user = res.data.user;
       return true;
@@ -94,8 +110,14 @@ var Cloud = (function () {
     if (!sb) return Promise.reject(new Error('Serviço indisponível.'));
     var t = tipoConta === 'professor' ? 'professor' : 'aluno';
     var meta = { tipo: t, marketing: !!marketing, nome: (nomeProprio || '').trim(), termos_aceites_em: new Date().toISOString() };
-    // professor: guarda disciplinas/anos que leciona (para filtrar dúvidas)
-    if (t === 'professor' && extra) { meta.disciplinas = extra.disciplinas || []; meta.anos = extra.anos || []; }
+    // professor: as disciplinas/anos são definidas no onboarding obrigatório
+    // (mapa disciplina→anos). Se o registo já trouxer algo, aproveita.
+    if (t === 'professor' && extra && extra.disciplinas_anos) {
+      var map = extra.disciplinas_anos; meta.disciplinas_anos = map;
+      meta.disciplinas = Object.keys(map);
+      var aset = {}; meta.disciplinas.forEach(function (d) { (map[d] || []).forEach(function (a) { aset[a] = 1; }); });
+      meta.anos = Object.keys(aset);
+    }
     return sb.auth.signUp({ email: email, password: pass, options: { data: meta } }).then(function (res) {
       if (res.error) throw res.error;
       // com "Confirm email" OFF, a sessão vem logo; se não vier, faz login
@@ -352,7 +374,7 @@ var Cloud = (function () {
   return {
     init: init, disponivel: disponivel, utilizador: utilizador,
     tipo: tipo, ehProfessor: ehProfessor, nome: nome,
-    profDisciplinas: profDisciplinas, profAnos: profAnos, atualizarPerfilProf: atualizarPerfilProf,
+    profDisciplinas: profDisciplinas, profAnos: profAnos, profDisciplinasAnos: profDisciplinasAnos, atualizarPerfilProf: atualizarPerfilProf,
     registar: registar, entrar: entrar, sair: sair,
     recuperarPassword: recuperarPassword, alterarPassword: alterarPassword,
     apagarConta: apagarConta,

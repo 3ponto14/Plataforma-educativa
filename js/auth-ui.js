@@ -50,17 +50,7 @@ function authAbrir(modo) {
         + '<button type="button" id="auth-tipo-prof" onclick="authSetTipo(\'professor\')" style="flex:1;border:1.5px solid var(--border);background:var(--white);color:var(--ink3);border-radius:12px;padding:.6rem;font-family:Montserrat,sans-serif;font-size:.85rem;font-weight:700;cursor:pointer"><i class="ph ph-chalkboard-teacher"></i> Sou professor</button>'
         + '</div>')
     + (entrar ? '' :
-        '<div id="auth-prof-extra" style="display:none;background:#f6f8f7;border:1px solid var(--border);border-radius:12px;padding:.7rem .8rem;margin-bottom:.75rem">'
-        + '<div style="font-size:.78rem;font-weight:800;color:var(--ink2);margin-bottom:.4rem">Disciplinas que lecionas</div>'
-        + '<div id="auth-prof-discs" style="display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.65rem">'
-        + (typeof EDU_DISCIPLINAS !== 'undefined' ? EDU_DISCIPLINAS : ['Matemática','Português','Físico-Química']).map(function(d){ return '<button type="button" class="auth-pill" data-disc="' + d + '" onclick="authTogglePill(this)" style="background:var(--white);border:1.5px solid var(--border);color:var(--ink3);border-radius:999px;padding:4px 12px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">' + d + '</button>'; }).join('')
-        + '</div>'
-        + '<div style="font-size:.78rem;font-weight:800;color:var(--ink2);margin-bottom:.4rem">Anos que lecionas</div>'
-        + '<div id="auth-prof-anos" style="display:flex;flex-wrap:wrap;gap:.35rem">'
-        + ['5','6','7','8','9','10','11','12'].map(function(a){ return '<button type="button" class="auth-pill" data-ano="' + a + '" onclick="authTogglePill(this)" style="background:var(--white);border:1.5px solid var(--border);color:var(--ink3);border-radius:999px;padding:4px 12px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">' + a + '.º</button>'; }).join('')
-        + '</div>'
-        + '<div style="font-size:.7rem;color:var(--ink4);margin-top:.5rem;line-height:1.4">Usa-se para te mostrar só as dúvidas das tuas disciplinas. Podes alterar depois.</div>'
-        + '</div>')
+        '<div id="auth-prof-extra" style="display:none;font-size:.74rem;color:var(--ink4);line-height:1.4;margin:-.2rem 0 .75rem;padding-left:.05rem">A seguir vais escolher as <strong>disciplinas e os anos</strong> que lecionas.</div>')
     + (entrar ? '' : '<input id="auth-nome" type="text" placeholder="O teu primeiro nome" autocomplete="given-name" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin-bottom:.6rem;outline:none">')
     + '<input id="auth-email" type="email" placeholder="O teu email" autocomplete="email" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin-bottom:.6rem;outline:none">'
     + '<input id="auth-pass" type="password" placeholder="Palavra-passe (mín. 6 letras)" autocomplete="' + (entrar ? 'current-password' : 'new-password') + '" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin-bottom:.9rem;outline:none" onkeydown="if(event.key===\'Enter\')authSubmeter(' + (entrar ? 'true' : 'false') + ')">'
@@ -235,11 +225,9 @@ function authSubmeter(entrar) {
   var btn = document.getElementById('auth-btn');
   if (btn) { btn.disabled = true; btn.textContent = 'A entrar…'; }
 
-  var extraProf = null;
-  if (!entrar && _authTipo === 'professor') {
-    extraProf = { disciplinas: _authLerPills('auth-prof-discs', 'data-disc'), anos: _authLerPills('auth-prof-anos', 'data-ano') };
-  }
-  var promessa = entrar ? Cloud.entrar(email, pass) : Cloud.registar(email, pass, _authTipo, marketing, nome, extraProf);
+  // As disciplinas/anos do professor são definidas no onboarding obrigatório
+  // (mapa disciplina→anos), logo após o registo — não no formulário pequeno.
+  var promessa = entrar ? Cloud.entrar(email, pass) : Cloud.registar(email, pass, _authTipo, marketing, nome, null);
   promessa.then(function () {
     authFechar();
     var prof = (typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor());

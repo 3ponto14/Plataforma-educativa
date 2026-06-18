@@ -586,6 +586,27 @@ var Turmas = (function () {
       .then(function (res) { return res.error ? [] : (res.data || []); });
   }
 
+  /* PROFESSOR: os MEUS grupos onde este aluno também está. Para registar uma
+     sessão a partir da página do aluno (precisa de um grupo_id). Devolve
+     [{grupo_id, nome}]. */
+  function gruposComAluno(alunoId) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u || !alunoId) return Promise.resolve([]);
+    return sb.from('grupo_professores').select('grupo_id, grupos(nome)').eq('prof', u.id).then(function (gp) {
+      var meus = (gp.error ? [] : (gp.data || []));
+      var byId = {}; meus.forEach(function (g) { byId[g.grupo_id] = (g.grupos && g.grupos.nome) || 'Grupo'; });
+      var gids = Object.keys(byId);
+      if (!gids.length) return [];
+      return sb.from('grupo_membros').select('grupo_id').eq('aluno', alunoId).in('grupo_id', gids).then(function (gm) {
+        var out = [], seen = {};
+        (gm.error ? [] : (gm.data || [])).forEach(function (m) {
+          if (!seen[m.grupo_id]) { seen[m.grupo_id] = 1; out.push({ grupo_id: m.grupo_id, nome: byId[m.grupo_id] }); }
+        });
+        return out;
+      });
+    });
+  }
+
   /* Criar um registo de sessão com um aluno (dentro de um grupo).
      opts: {grupoId, aluno, quando(ISO), disciplina, material, notas}. */
   function criarSessao(opts) {
@@ -758,18 +779,24 @@ var Turmas = (function () {
   function duvidasPublicas() {
     var sb = _sb();
     if (!sb) return Promise.resolve([]);
-    var discs = (typeof Cloud.profDisciplinas === 'function') ? Cloud.profDisciplinas() : [];
-    var anos = (typeof Cloud.profAnos === 'function') ? Cloud.profAnos() : [];
+    // mapa disciplina→anos do professor (anos por disciplina)
+    var map = (typeof Cloud.profDisciplinasAnos === 'function') ? Cloud.profDisciplinasAnos() : {};
+    var discs = Object.keys(map);
     var q = sb.from('mensagens').select('*').eq('alcance', 'duvida_publica').order('criado', { ascending: false }).limit(300);
     if (discs.length) q = q.in('disciplina', discs); // filtra pelas disciplinas do prof
     return q.then(function (res) {
       // coluna disciplina ainda não criada (SQL por correr) → não rebenta o painel
       if (res.error) return [];
       var todas = res.data || [];
-      // se o prof definiu anos, filtra também por ano (deixa passar dúvidas sem ano)
-      if (anos.length) {
-        var anosStr = anos.map(String);
-        todas = todas.filter(function (m) { return !m.ano || anosStr.indexOf(String(m.ano)) !== -1; });
+      // filtra por ANO conforme a disciplina: a dúvida de "Matemática 9.º" só
+      // aparece a quem dá Matemática ao 9.º. Dúvida sem ano passa sempre.
+      if (discs.length) {
+        todas = todas.filter(function (m) {
+          var anosDaDisc = (map[m.disciplina] || []).map(String);
+          if (!m.ano) return true;            // sem ano → mostra
+          if (!anosDaDisc.length) return true; // disciplina sem anos definidos → mostra
+          return anosDaDisc.indexOf(String(m.ano)) !== -1;
+        });
       }
       if (!todas.length) return [];
       // junta as respostas já dadas a cada pergunta pública (resposta_publica)
@@ -865,7 +892,7 @@ var Turmas = (function () {
     alunosDoGrupo: alunosDoGrupo, resumoDoGrupo: resumoDoGrupo, adicionarAoGrupo: adicionarAoGrupo, removerDoGrupo: removerDoGrupo,
     entrarPorCodigo: entrarPorCodigo, gruposDoAluno: gruposDoAluno, professoresDoAluno: professoresDoAluno, sairDoGrupo: sairDoGrupo,
     garantirProfDoGrupo: garantirProfDoGrupo, profsDoGrupo: profsDoGrupo,
-    entrarComoProf: entrarComoProf, gruposDoProf: gruposDoProf,
+    entrarComoProf: entrarComoProf, gruposDoProf: gruposDoProf, gruposComAluno: gruposComAluno,
     criarSessao: criarSessao, criarSessoesLote: criarSessoesLote, apagarSessao: apagarSessao,
     sessoesDoAluno: sessoesDoAluno, minhasSessoes: minhasSessoes,
     criarTarefa: criarTarefa, apagarTarefa: apagarTarefa, atualizarUrlTarefa: atualizarUrlTarefa,
