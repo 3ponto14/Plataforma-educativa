@@ -202,21 +202,33 @@ function _turmasPintaPublicas() {
     if (!el) return;
     if (!ms.length) {
       el.innerHTML = '<div style="color:var(--ink4);font-size:.85rem;padding:.3rem 0">Sem perguntas públicas das tuas disciplinas por agora.</div>';
+      _turmasPublicasCache = {};
       return;
     }
-    el.innerHTML = ms.map(function (m) {
-      var meta = (m.disciplina || '') + (m.ano ? ' · ' + m.ano + '.º' : '');
-      return '<div style="border:1.5px solid #f0d2a6;border-radius:12px;padding:.7rem 1rem;margin-bottom:.5rem;background:#fdf7ee">'
-        + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem">'
-        + '<div style="min-width:0">'
-        + '<span style="font-size:.68rem;font-weight:800;color:#b06a1e;text-transform:uppercase;letter-spacing:.04em">📢 ' + _esc(meta) + ' · anónima</span>'
-        + '<div style="font-size:.86rem;color:var(--ink2);line-height:1.5;margin-top:.3rem">' + _esc(m.texto) + '</div>'
-        + '</div>'
-        + '<button onclick="publicaResponder(\'' + m.id + '\')" style="font-size:.74rem;font-weight:700;color:#fff;background:#b06a1e;border:none;border-radius:999px;padding:4px 12px;cursor:pointer;font-family:Montserrat,sans-serif;flex-shrink:0">Responder</button>'
-        + '</div></div>';
-    }).join('');
     // guarda as dúvidas para o responder ter acesso ao objeto (de_aluno)
     _turmasPublicasCache = {}; ms.forEach(function (m) { _turmasPublicasCache[m.id] = m; });
+    // por responder primeiro
+    ms.sort(function (a, b) { return (a.respondido ? 1 : 0) - (b.respondido ? 1 : 0); });
+    el.innerHTML = ms.map(function (m) {
+      var meta = (m.disciplina || '') + (m.ano ? ' · ' + m.ano + '.º' : '');
+      var feito = !!m.respondido;
+      // respostas já dadas (qualquer prof da disciplina pode ter respondido)
+      var respHTML = (m.respostas || []).map(function (r) {
+        return '<div style="margin-top:.45rem;padding:.5rem .7rem;background:#dff0e6;border-left:3px solid #2e7d52;border-radius:8px">'
+          + '<span style="font-size:.66rem;font-weight:800;color:#2e7d52">↩ Resposta' + (r.prof_nome ? ' · ' + _esc(r.prof_nome) : '') + '</span>'
+          + '<div style="font-size:.84rem;color:var(--ink2);line-height:1.5;margin-top:.15rem">' + _esc(r.texto) + '</div></div>';
+      }).join('');
+      return '<div style="border:1.5px solid ' + (feito ? '#bfe3c9' : '#f0d2a6') + ';border-radius:12px;padding:.7rem 1rem;margin-bottom:.5rem;background:' + (feito ? '#eef7f0' : '#fdf7ee') + '">'
+        + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem">'
+        + '<div style="min-width:0">'
+        + '<span style="font-size:.68rem;font-weight:800;color:' + (feito ? '#2e7d52' : '#b06a1e') + ';text-transform:uppercase;letter-spacing:.04em">📢 ' + _esc(meta) + ' · anónima</span>'
+        + (feito ? ' <span style="font-size:.68rem;font-weight:800;color:#2e7d52;background:#dff0e6;border:1px solid #bfe3c9;border-radius:6px;padding:1px 7px">✓ Respondida</span>' : '')
+        + '<div style="font-size:.86rem;color:var(--ink2);line-height:1.5;margin-top:.3rem">' + _esc(m.texto) + '</div>'
+        + respHTML
+        + '</div>'
+        + '<button onclick="publicaResponder(\'' + m.id + '\')" style="font-size:.73rem;font-weight:700;color:' + (feito ? '#2e7d52' : '#fff') + ';background:' + (feito ? 'var(--white)' : '#b06a1e') + ';border:' + (feito ? '1.5px solid #bfe3c9' : 'none') + ';border-radius:999px;padding:4px 12px;cursor:pointer;font-family:Montserrat,sans-serif;flex-shrink:0">' + (feito ? 'Responder de novo' : 'Responder') + '</button>'
+        + '</div></div>';
+    }).join('');
   });
 }
 var _turmasPublicasCache = {};

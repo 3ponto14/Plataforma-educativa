@@ -736,7 +736,23 @@ var Turmas = (function () {
         var anosStr = anos.map(String);
         todas = todas.filter(function (m) { return !m.ano || anosStr.indexOf(String(m.ano)) !== -1; });
       }
-      return todas;
+      if (!todas.length) return [];
+      // junta as respostas já dadas a cada pergunta pública (resposta_publica)
+      var ids = todas.map(function (m) { return m.id; });
+      return sb.from('mensagens').select('*').eq('alcance', 'resposta_publica').in('resposta_a', ids)
+        .then(function (rr) {
+          var porDuvida = {};
+          (rr.error ? [] : (rr.data || [])).forEach(function (r) {
+            (porDuvida[r.resposta_a] = porDuvida[r.resposta_a] || []).push(r);
+          });
+          todas.forEach(function (m) {
+            var rs = porDuvida[m.id] || [];
+            rs.sort(function (a, b) { return (a.criado || '') < (b.criado || '') ? -1 : 1; });
+            m.respostas = rs;
+            m.respondido = rs.length > 0;
+          });
+          return todas;
+        });
     });
   }
 
@@ -789,7 +805,9 @@ var Turmas = (function () {
           (respostas[m.resposta_a] = respostas[m.resposta_a] || []).push(m);
         }
       });
-      var doAluno = todas.filter(function (m) { return m.autor_tipo === 'aluno'; });
+      // dúvidas/respostas de aluno DIRIGIDAS (grupo/prof) — exclui as públicas,
+      // que têm painel próprio («Perguntas públicas»).
+      var doAluno = todas.filter(function (m) { return m.autor_tipo === 'aluno' && m.alcance !== 'duvida_publica'; });
       doAluno.forEach(function (m) {
         var rs = respostas[m.id] || [];
         // mais antiga primeiro (ordem natural da conversa)
