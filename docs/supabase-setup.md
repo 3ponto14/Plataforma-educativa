@@ -551,6 +551,49 @@ create policy "aluno vê as suas sessoes"   on public.sessoes for select
 > `grupo_professores`. Ao abrir o grupo, o código garante a inscrição do
 > criador como dono (auto-correção), por isso não é preciso mexer à mão.
 
+## 3h-bis. ACOMPANHAMENTO POR DISCIPLINA (segurança) — colar no SQL Editor → Run
+
+Reforça a privacidade do histórico do aluno: um professor só vê/escreve as
+**sessões da(s) disciplina(s) que leciona** (do seu perfil). Um prof de
+Português deixa de poder ler as notas de Matemática de um aluno, mesmo via
+pedido direto. Continua a precisar de ser professor do grupo (3h). Profs sem
+disciplinas no perfil veem tudo (até definirem — o onboarding já obriga).
+
+```sql
+-- Helper: a disciplina pertence às que EU leciono? (ou não defini nenhuma)
+-- Compara pela "base" da disciplina (Matemática, Português, Físico-Química…),
+-- ignorando o ano (ex.: "Matemática 9.º" casa com "Matemática").
+create or replace function public.disciplina_minha(d text)
+returns boolean language sql stable security definer set search_path = public as $$
+  select
+    -- sem disciplinas no perfil → vê tudo (estado inicial)
+    coalesce(array_length(public.minhas_disciplinas(), 1), 0) = 0
+    or d is null
+    or exists (
+      select 1 from unnest(public.minhas_disciplinas()) md
+      where lower(d) like '%' || lower(md) || '%'
+         or lower(md) like '%' || lower(d) || '%'
+    );
+$$;
+
+-- SESSÕES: além de ser prof do grupo, a disciplina tem de ser uma das minhas.
+drop policy if exists "prof do grupo gere sessoes" on public.sessoes;
+create policy "prof gere sessoes da sua disc" on public.sessoes for all
+  using (
+    public.eh_professor() and public.e_prof_do_grupo(grupo_id)
+    and public.disciplina_minha(disciplina)
+  )
+  with check (
+    public.eh_professor() and public.e_prof_do_grupo(grupo_id) and auth.uid() = prof
+    and public.disciplina_minha(disciplina)
+  );
+-- (a policy "aluno vê as suas sessoes" mantém-se: o aluno vê sempre as suas.)
+```
+
+> A vista da ficha do aluno já está agrupada por disciplina; com este SQL, um
+> professor só vê lá as disciplinas que dá. As sessões de outras disciplinas
+> ficam invisíveis para ele (não aparecem sequer no histórico).
+
 ## 3i. SQL dos DESTINATÁRIOS (ficha/trabalho para grupo ou aluno) — Run
 
 Permite escolher PARA QUEM vai cada ficha e cada trabalho: um grupo ou um
