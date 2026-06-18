@@ -91,15 +91,25 @@ var Turmas = (function () {
   /* ── PROFESSOR: lista única de todos os alunos do Apoio ao Estudo ──
      Cada aluno vem com totais (XP, ofensiva, desafios) e o resumo por
      disciplina, para o professor ver "o que ele andou a fazer". */
+  /* PROFESSOR: os alunos DOS SEUS GRUPOS (não todos os da plataforma). Junta
+     os membros de todos os grupos onde é professor, sem repetidos, e traz o
+     progresso de cada um. (RLS deixa o prof ler os membros dos seus grupos.) */
   function todosOsAlunos() {
-    var sb = _sb();
-    if (!sb) return Promise.resolve([]);
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.resolve([]);
     if (_alunosCache && (Date.now() - _alunosCacheAt) < ALUNOS_TTL) return Promise.resolve(_alunosCache);
-    return sb.from('apoio_alunos').select('aluno, nome_aluno, email').then(function (res) {
-      var lista = res.error ? [] : (res.data || []);
-      if (!lista.length) return [];
-      var ids = lista.map(function (a) { return a.aluno; });
-      return sb.from('progresso').select('user_id, dados, desafio').in('user_id', ids).then(function (p) {
+    // 1) grupos do professor → 2) membros desses grupos
+    return sb.from('grupo_professores').select('grupo_id').eq('prof', u.id).then(function (gp) {
+      var gids = (gp.error ? [] : (gp.data || [])).map(function (g) { return g.grupo_id; });
+      if (!gids.length) { _alunosCache = []; _alunosCacheAt = Date.now(); return []; }
+      return sb.from('grupo_membros').select('aluno, nome_aluno').in('grupo_id', gids).then(function (gm) {
+        var seen = {}, lista = [];
+        (gm.error ? [] : (gm.data || [])).forEach(function (m) {
+          if (m.aluno && !seen[m.aluno]) { seen[m.aluno] = 1; lista.push({ aluno: m.aluno, nome_aluno: m.nome_aluno, email: '' }); }
+        });
+        if (!lista.length) { _alunosCache = []; _alunosCacheAt = Date.now(); return []; }
+        var ids = lista.map(function (a) { return a.aluno; });
+        return sb.from('progresso').select('user_id, dados, desafio').in('user_id', ids).then(function (p) {
         var prog = {};
         (p.data || []).forEach(function (row) { prog[row.user_id] = row; });
         var out = lista.map(function (a) {
@@ -122,6 +132,7 @@ var Turmas = (function () {
         }).sort(function (a, b) { return b.xp - a.xp; }); // ranking por XP
         _alunosCache = out; _alunosCacheAt = Date.now();
         return out;
+        });
       });
     });
   }

@@ -109,7 +109,7 @@ function _turmasRenderProfessor(wrap) {
     // barra de «dúvidas por responder» (só aparece se houver)
     + '<div id="turmas-alerta-duvidas"></div>'
     + _acc('grupos', 'ph-users-four', '#2e7d52', 'Grupos', btnGrupos, '<div id="turmas-grupos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
-    + _acc('alunos', 'ph-users-three', '#2e7d52', 'Todos os alunos', '', alunosBody)
+    + _acc('alunos', 'ph-users-three', '#2e7d52', 'Os meus alunos', '', alunosBody)
     + _acc('avisos', 'ph-chats-circle', '#4a3f7a', 'Dúvidas dos alunos', btnAviso, avisosBody)
     + _acc('publicas', 'ph-megaphone', '#b06a1e', 'Perguntas públicas (anónimas)', '',
         '<div style="font-size:.78rem;color:var(--ink4);margin-bottom:.6rem">Perguntas anónimas de alunos das tuas disciplinas. Não sabes quem é — respondes só para ajudar; o aluno recebe a resposta.</div>'
@@ -888,7 +888,7 @@ function _turmasPintaAlunos(alunos, limite) {
   var el = document.getElementById('turmas-lista');
   if (!el) return;
   if (!alunos.length) {
-    el.innerHTML = '<div style="color:var(--ink4);font-size:.85rem;padding:.4rem 0">Ainda nenhum aluno com conta. Assim que se registarem, aparecem aqui.</div>';
+    el.innerHTML = '<div style="color:var(--ink4);font-size:.85rem;padding:.4rem 0">Ainda não tens alunos. Cria um grupo e partilha o código com a tua turma — assim que entrarem, aparecem aqui.</div>';
     return;
   }
   var lim = limite || _turmasListaLimite;
