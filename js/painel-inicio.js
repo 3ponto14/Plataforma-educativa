@@ -318,6 +318,7 @@
     if (typeof Turmas === 'undefined' || !Turmas.marcarTarefa) return;
     Turmas.marcarTarefa(id, feita).then(function () {
       _pintarTarefasAluno();
+      if (typeof _alunoPintaTrabalho === 'function') _alunoPintaTrabalho(); // refresca a lista nas Turmas
       if (feita && typeof eduToast === 'function') eduToast('Trabalho marcado como feito! ✅', 'success');
     }).catch(function (e) {
       if (typeof eduToast === 'function') eduToast((e && e.message) || 'Não foi possível guardar. Verifica a ligação.', 'error');

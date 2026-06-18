@@ -1214,38 +1214,65 @@ function recursosApagar(id, titulo) {
 
 /* ════════════════════ ALUNO ════════════════════ */
 function _turmasRenderAluno(wrap) {
+  // Conversa: caixa de escrita + lista, dentro do acordeão (aberto por defeito)
+  var convBody = '<div id="turmas-mensagens-aluno"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
+    + '<div style="display:flex;gap:.4rem;margin-top:.7rem">'
+    + '<input id="aluno-conv-txt" placeholder="Escrever ao professor…" style="flex:1;border:1.5px solid var(--border);border-radius:999px;padding:8px 14px;font-size:.84rem;font-family:Montserrat,sans-serif" onkeydown="if(event.key===\'Enter\')alunoConvEnviar()">'
+    + '<button onclick="alunoConvEnviar()" style="background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:999px;padding:8px 16px;font-size:.84rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">Enviar</button>'
+    + '</div>';
+  var btnDuvida = '<button onclick="alunoTirarDuvida()" style="background:#2e7d52;color:#fff;border:none;border-radius:999px;padding:5px 12px;font-size:.74rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-question"></i> Tirar dúvida</button>';
+
   wrap.innerHTML =
     '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.25rem 1.4rem">'
     + '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.15rem">'
     + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.45rem;font-weight:700;color:var(--ink1)"><i class="ph ph-users-three" style="color:#4a3f7a"></i> As minhas turmas</div>'
     + '<button onclick="grupoEntrarPrompt()" style="background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:999px;padding:6px 15px;font-size:.78rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-sign-in"></i> Entrar num grupo</button>'
     + '</div>'
-    + '<div style="font-size:.82rem;color:var(--ink4);margin-bottom:1rem">Os grupos a que pertences. Pede o código ao teu professor para entrares.</div>'
-    + '<div id="turmas-meus-grupos" style="margin-bottom:1.2rem"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
-    // conversa com o professor (mensagens + dúvidas = a mesma conversa)
-    + '<div style="border-top:1px solid var(--border);padding-top:1rem;margin-bottom:1.2rem">'
-    + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.6rem"><i class="ph ph-chats-circle" style="color:#2e7d52"></i> Conversa com o professor</div>'
-    + '<div id="turmas-mensagens-aluno"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
-    + '<div style="display:flex;gap:.4rem;margin-top:.6rem">'
-    + '<input id="aluno-conv-txt" placeholder="Escrever ao professor…" style="flex:1;border:1.5px solid var(--border);border-radius:999px;padding:8px 14px;font-size:.84rem;font-family:Montserrat,sans-serif" onkeydown="if(event.key===\'Enter\')alunoConvEnviar()">'
-    + '<button onclick="alunoConvEnviar()" style="background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:999px;padding:8px 16px;font-size:.84rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">Enviar</button>'
-    + '</div>'
-    + '</div>'
-    // o meu registo de sessões
-    + '<div style="border-top:1px solid var(--border);padding-top:1rem;margin-bottom:1.2rem">'
-    + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.6rem"><i class="ph ph-notebook" style="color:#4a3f7a"></i> O meu registo de sessões</div>'
-    + '<div id="turmas-meu-registo"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
-    + '</div>'
-    // fichas
-    + '<div style="border-top:1px solid var(--border);padding-top:1rem">'
-    + '<div style="font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.6rem"><i class="ph ph-folder-open" style="color:#4a3f7a"></i> Fichas e materiais</div>'
-    + '<div id="turmas-recursos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
-    + '</div>'
+    + '<div style="font-size:.82rem;color:var(--ink4);margin-bottom:1rem">Os grupos a que pertences, o teu trabalho e a conversa com o professor.</div>'
+    + '<div id="turmas-meus-grupos" style="margin-bottom:1.1rem"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
+    // secções colapsáveis (clareza): Trabalho, Conversa & dúvidas, Sessões, Fichas
+    + _acc('al-trab', 'ph-clipboard-text', '#b06a1e', 'O meu trabalho', '', '<div id="turmas-trab-aluno"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
+    + _acc('al-conv', 'ph-chats-circle', '#2e7d52', 'Conversa &amp; dúvidas', btnDuvida, convBody)
+    + _acc('al-sess', 'ph-notebook', '#4a3f7a', 'O meu registo de sessões', '', '<div id="turmas-meu-registo"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
+    + _acc('al-fich', 'ph-folder-open', '#4a3f7a', 'Fichas e materiais', '', '<div id="turmas-recursos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
     + '</div>';
+  // abre por defeito Trabalho + Conversa (o que mais interessa ao aluno)
+  accToggle('al-trab'); accToggle('al-conv');
   _alunoPintaGrupos();
+  _alunoPintaTrabalho();
   _alunoPintaMensagens();
   _alunoPintaRegisto();
   _turmasPintaRecursos(false);
+}
+
+/* ALUNO: o trabalho que lhe foi atribuído (dentro das Turmas, não só no
+   Início). Marca como feito / abre o trabalho. */
+function _alunoPintaTrabalho() {
+  var box = document.getElementById('turmas-trab-aluno');
+  if (!box || !Turmas.tarefasDoAluno) return;
+  Turmas.tarefasDoAluno().then(function (ts) {
+    if (!box) return;
+    if (!ts.length) {
+      box.innerHTML = '<div style="color:var(--ink4);font-size:.85rem;padding:.2rem 0">Sem trabalho atribuído por agora.</div>';
+      return;
+    }
+    var pend = ts.filter(function (t) { return !t.feito; }).length;
+    var h = '<div style="font-size:.78rem;color:var(--ink4);margin-bottom:.5rem">' + (pend ? pend + ' por fazer' : 'Tudo feito ✅') + '</div>';
+    h += ts.map(function (t) {
+      var prazo = '';
+      if (t.prazo) { var hoje = new Date().toISOString().slice(0, 10); prazo = t.prazo < hoje ? '⚠️ prazo passou' : (t.prazo === hoje ? '⏰ entrega hoje' : 'até ' + t.prazo); }
+      var url = (t.url && t.url.indexOf('tarefa=') === -1) ? (t.url + (t.url.indexOf('?') === -1 ? '?' : '&') + 'tarefa=' + t.id) : t.url;
+      return '<div style="display:flex;gap:.6rem;align-items:flex-start;padding:.55rem .7rem;border:1.5px solid ' + (t.feito ? '#bfe3c9' : 'var(--border)') + ';border-radius:12px;margin-bottom:.45rem;background:' + (t.feito ? '#eef7f0' : 'var(--white)') + '">'
+        + '<button onclick="alunoMarcarTarefa(\'' + t.id + '\',' + (t.feito ? 'false' : 'true') + ')" style="background:none;border:none;font-size:1.1rem;cursor:pointer;flex-shrink:0;line-height:1.2" title="' + (t.feito ? 'Marcar por fazer' : 'Marcar como feito') + '">' + (t.feito ? '✅' : '⬜') + '</button>'
+        + '<div style="min-width:0;flex:1">'
+        + '<div style="font-weight:700;font-size:.86rem;color:var(--ink1)">' + _esc(t.titulo) + (t.curso_nome ? ' <span style="font-size:.68rem;font-weight:700;color:#b06a1e;background:#fdf3e7;border-radius:6px;padding:1px 7px">' + _esc(t.curso_nome) + '</span>' : '') + '</div>'
+        + (t.instrucoes ? '<div style="font-size:.78rem;color:var(--ink3);margin-top:.15rem">' + _esc(t.instrucoes) + '</div>' : '')
+        + '<div style="font-size:.72rem;color:var(--ink4);margin-top:.2rem">' + (prazo ? prazo + ' · ' : '') + 'por ' + _esc(t.prof_nome || 'professor')
+        + (url ? ' · <a href="' + _escAttr(url) + '" target="_blank" rel="noopener" style="color:#4a3f7a;font-weight:700">abrir trabalho</a>' : '') + '</div>'
+        + '</div></div>';
+    }).join('');
+    box.innerHTML = h;
+  });
 }
 
 /* Aluno escreve na conversa única (mensagem livre = dúvida). */
