@@ -604,6 +604,30 @@ var Turmas = (function () {
     }).select().single().then(function (r) { if (r.error) throw r.error; return r.data; });
   }
 
+  /* Registo RÁPIDO de sessão para vários alunos de uma vez (apoio com vários
+     alunos ao mesmo tempo). opts: {grupoId, quando, disciplina, alunos:[{aluno,
+     notas}]}. Grava só os que têm nota escrita. Devolve nº gravado. */
+  function criarSessoesLote(opts) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    opts = opts || {};
+    if (!opts.grupoId) return Promise.reject(new Error('Falta o grupo.'));
+    if (!opts.disciplina) return Promise.reject(new Error('Escolhe a disciplina da sessão.'));
+    var quando = opts.quando || new Date().toISOString();
+    var nome = _meuNome();
+    var linhas = (opts.alunos || [])
+      .filter(function (a) { return a.aluno && (a.notas || '').trim(); })
+      .map(function (a) {
+        return { grupo_id: opts.grupoId, aluno: a.aluno, prof: u.id, prof_nome: nome,
+          quando: quando, disciplina: opts.disciplina, material: (opts.material || '').trim() || null,
+          notas: (a.notas || '').trim() };
+      });
+    if (!linhas.length) return Promise.reject(new Error('Escreve a nota de pelo menos um aluno.'));
+    return sb.from('sessoes').insert(linhas).then(function (r) {
+      if (r.error) throw r.error; return linhas.length;
+    });
+  }
+
   function apagarSessao(id) {
     var sb = _sb();
     if (!sb) return Promise.reject(new Error('Sem ligação.'));
@@ -842,7 +866,7 @@ var Turmas = (function () {
     entrarPorCodigo: entrarPorCodigo, gruposDoAluno: gruposDoAluno, professoresDoAluno: professoresDoAluno, sairDoGrupo: sairDoGrupo,
     garantirProfDoGrupo: garantirProfDoGrupo, profsDoGrupo: profsDoGrupo,
     entrarComoProf: entrarComoProf, gruposDoProf: gruposDoProf,
-    criarSessao: criarSessao, apagarSessao: apagarSessao,
+    criarSessao: criarSessao, criarSessoesLote: criarSessoesLote, apagarSessao: apagarSessao,
     sessoesDoAluno: sessoesDoAluno, minhasSessoes: minhasSessoes,
     criarTarefa: criarTarefa, apagarTarefa: apagarTarefa, atualizarUrlTarefa: atualizarUrlTarefa,
     tarefasDoProf: tarefasDoProf, quemFez: quemFez, quemFalta: quemFalta,

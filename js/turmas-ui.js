@@ -443,6 +443,7 @@ function _grupoPintaDet(id, nome) {
       + '<span>' + membros.length + (membros.length === 1 ? ' aluno' : ' alunos') + '</span>'
       + '<span>código <span class="grp-code">' + _esc(codigo) + '</span></span>'
       + '<button class="grp-send" onclick="grupoEnviarPrompt(\'' + id + '\',\'' + _escAttr(nome) + '\')"><i class="ph ph-paper-plane-tilt"></i> enviar a todos</button>'
+      + '<button class="grp-send" style="background:#fdf3e7;border-color:#f0d2a6;color:#9a6a1a" onclick="sessaoGrupoPrompt(\'' + id + '\',\'' + _escAttr(nome) + '\')"><i class="ph ph-notebook"></i> registar sessão</button>'
       + '</div>';
 
     if (!membros.length) {
@@ -714,6 +715,65 @@ function sessaoGuardar(grupoId, alunoId, nome) {
 function sessaoApagar(id, grupoId, alunoId, nome) {
   if (!confirm('Apagar este registo de sessão?')) return;
   Turmas.apagarSessao(id).then(function () { _sessaoPinta(grupoId, alunoId, nome); });
+}
+
+/* REGISTO RÁPIDO de sessão para o grupo todo: escolhe a disciplina + data
+   uma vez e escreve uma nota por aluno; grava todas de uma vez. Pensado para
+   apoio com vários alunos ao mesmo tempo. */
+function sessaoGrupoPrompt(grupoId, nome) {
+  Turmas.alunosDoGrupo(grupoId).then(function (membros) {
+    if (!membros.length) { alert('Este grupo ainda não tem alunos.'); return; }
+    var discs = (typeof EDU_DISCIPLINAS !== 'undefined' ? EDU_DISCIPLINAS : ['Matemática', 'Português', 'Físico-Química']);
+    var hoje = new Date().toISOString().slice(0, 10);
+    var ov = document.createElement('div');
+    ov.id = 'ses-grupo-ov';
+    ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:3vh 1rem';
+    var rows = membros.map(function (m) {
+      var nm = m.nome_aluno || '(aluno)';
+      return '<div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.45rem">'
+        + '<span style="min-width:110px;max-width:110px;font-size:.82rem;font-weight:700;color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + _escAttr(nm) + '">' + _esc(nm) + '</span>'
+        + '<input class="ses-g-nota" data-aluno="' + m.aluno + '" placeholder="o que trabalhou / o que falta…" style="flex:1;border:1.5px solid var(--border);border-radius:10px;padding:7px 11px;font-size:.83rem;font-family:Montserrat,sans-serif">'
+        + '</div>';
+    }).join('');
+    ov.innerHTML = '<div style="background:var(--white);border-radius:18px;max-width:620px;width:100%;padding:1.3rem 1.4rem;box-shadow:0 10px 40px rgba(0,0,0,.25)">'
+      + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.4rem;font-weight:700;color:var(--ink1);margin-bottom:.2rem"><i class="ph ph-notebook" style="color:#9a6a1a"></i> Registar sessão · ' + _esc(nome) + '</div>'
+      + '<div style="font-size:.8rem;color:var(--ink4);margin-bottom:.9rem">Escolhe a disciplina e escreve uma nota por aluno. Fica no histórico de cada um, por disciplina.</div>'
+      + '<div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:.9rem">'
+      + '<label style="font-size:.78rem;font-weight:700;color:var(--ink2)">Disciplina<br><select id="ses-g-disc" style="margin-top:.2rem;border:1.5px solid var(--border);border-radius:10px;padding:7px 11px;font-size:.83rem;font-family:Montserrat,sans-serif">'
+      + discs.map(function (d) { return '<option value="' + _escAttr(d) + '">' + _esc(d) + '</option>'; }).join('') + '</select></label>'
+      + '<label style="font-size:.78rem;font-weight:700;color:var(--ink2)">Data<br><input id="ses-g-data" type="date" value="' + hoje + '" style="margin-top:.2rem;border:1.5px solid var(--border);border-radius:10px;padding:7px 11px;font-size:.83rem;font-family:Montserrat,sans-serif"></label>'
+      + '<label style="font-size:.78rem;font-weight:700;color:var(--ink2);flex:1;min-width:160px">Material (opcional, comum)<br><input id="ses-g-mat" placeholder="ex.: ficha 3, manual p.40" style="margin-top:.2rem;width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:10px;padding:7px 11px;font-size:.83rem;font-family:Montserrat,sans-serif"></label>'
+      + '</div>'
+      + '<div style="max-height:46vh;overflow:auto;margin-bottom:1rem">' + rows + '</div>'
+      + '<div id="ses-g-erro" style="display:none;color:#c0392b;font-size:.8rem;margin-bottom:.6rem"></div>'
+      + '<div style="display:flex;gap:.5rem;justify-content:flex-end">'
+      + '<button onclick="(function(){var o=document.getElementById(\'ses-grupo-ov\');if(o)o.remove();})()" style="background:var(--white);border:1.5px solid var(--border);color:var(--ink3);border-radius:999px;padding:8px 16px;font-size:.84rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">Cancelar</button>'
+      + '<button id="ses-g-btn" onclick="sessaoGrupoGuardar(\'' + grupoId + '\',\'' + _escAttr(nome) + '\')" style="background:linear-gradient(135deg,#9a6a1a,#c08a2e);color:#fff;border:none;border-radius:999px;padding:8px 18px;font-size:.84rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">Gravar sessão</button>'
+      + '</div></div>';
+    document.body.appendChild(ov);
+    ov.addEventListener('click', function (e) { if (e.target === ov) ov.remove(); });
+  });
+}
+
+function sessaoGrupoGuardar(grupoId, nome) {
+  var disc = (document.getElementById('ses-g-disc') || {}).value || '';
+  var data = (document.getElementById('ses-g-data') || {}).value || '';
+  var mat = (document.getElementById('ses-g-mat') || {}).value || '';
+  var alunos = [];
+  document.querySelectorAll('.ses-g-nota').forEach(function (inp) {
+    alunos.push({ aluno: inp.getAttribute('data-aluno'), notas: inp.value });
+  });
+  var quando = data ? new Date(data + 'T12:00:00').toISOString() : new Date().toISOString();
+  var erro = document.getElementById('ses-g-erro');
+  var btn = document.getElementById('ses-g-btn');
+  if (btn) { btn.disabled = true; btn.textContent = 'A gravar…'; }
+  Turmas.criarSessoesLote({ grupoId: grupoId, disciplina: disc, material: mat, quando: quando, alunos: alunos }).then(function (n) {
+    var o = document.getElementById('ses-grupo-ov'); if (o) o.remove();
+    if (typeof eduToast === 'function') eduToast('Sessão registada para ' + n + ' aluno' + (n === 1 ? '' : 's') + '! 📓', 'success');
+  }).catch(function (e) {
+    if (btn) { btn.disabled = false; btn.textContent = 'Gravar sessão'; }
+    if (erro) { erro.textContent = (e && e.message) || 'Não foi possível guardar.'; erro.style.display = ''; }
+  });
 }
 
 /* ── Conversa com um aluno (dentro do detalhe do aluno, no grupo) ── */
