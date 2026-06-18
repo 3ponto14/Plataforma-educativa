@@ -58,6 +58,11 @@ create policy "atualizar o próprio progresso"
 -- Coluna p/ a gamificação do "Momento do Professor" (🔥 ofensiva / ⭐ XP).
 -- Segura e não destrutiva: só acrescenta a coluna se ainda não existir.
 alter table public.progresso add column if not exists prof jsonb not null default '{}'::jsonb;
+
+-- Coluna p/ o detalhe "O Meu Progresso" do 7.º ano (chaves edupt_cap1..8 e _fc
+-- do motor legado, que antes ficavam só no dispositivo). Sem esta coluna, o XP
+-- continua a sincronizar; só o detalhe por capítulo do mat7 não segue o aluno.
+alter table public.progresso add column if not exists mat7 jsonb not null default '{}'::jsonb;
 ```
 
 ## 3k. APAGAR A PRÓPRIA CONTA (RGPD) — colar no SQL Editor → Run

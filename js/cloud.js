@@ -191,6 +191,66 @@ var Cloud = (function () {
     return out;
   }
 
+  /* ── Detalhe "O Meu Progresso" do mat7 (chaves edupt_cap1..8 e _fc) ──
+     Estas chaves são do motor legado (chapter-engine) e, ao contrário do
+     ProgressManager, não iam para a nuvem. Empacotam-se todas numa coluna
+     `mat7` jsonb para o detalhe (secções feitas, contagens, flashcards)
+     seguir o aluno entre dispositivos. */
+  var MAT7_KEYS = ['edupt_cap1','edupt_cap2','edupt_cap3','edupt_cap4','edupt_cap5','edupt_cap6','edupt_cap7','edupt_cap8',
+                   'edupt_cap1_fc','edupt_cap2_fc','edupt_cap3_fc','edupt_cap4_fc','edupt_cap5_fc','edupt_cap6_fc','edupt_cap7_fc','edupt_cap8_fc'];
+
+  function _empacotaMat7() {
+    var o = {};
+    MAT7_KEYS.forEach(function (k) { var v = _lerLocal(k); if (v) o[k] = v; });
+    return o;
+  }
+
+  /* Funde o detalhe de UM capítulo do mat7: por secção fica o de maior
+     `total` (mais trabalho registado); une os logs. Nunca apaga nada. */
+  function _fundeCap(local, nuvem) {
+    if (!local) return nuvem || null;
+    if (!nuvem) return local;
+    var out = { sections: {}, log: [], lastActivity: Math.max(local.lastActivity || 0, nuvem.lastActivity || 0) };
+    var secIds = {};
+    Object.keys((local.sections) || {}).forEach(function (s) { secIds[s] = 1; });
+    Object.keys((nuvem.sections) || {}).forEach(function (s) { secIds[s] = 1; });
+    Object.keys(secIds).forEach(function (s) {
+      var a = (local.sections || {})[s], b = (nuvem.sections || {})[s];
+      out.sections[s] = (!b || ((a && a.total) || 0) >= ((b && b.total) || 0)) ? a : b;
+    });
+    // log: une e fica com os mais recentes (até 50, como o motor)
+    var todos = ((local.log) || []).concat((nuvem.log) || []);
+    out.log = todos.slice(-50);
+    return out;
+  }
+
+  /* Funde as flashcards de um capítulo (stats): por carta fica o de maior nº
+     de tentativas/acertos. Estrutura livre → união simples campo a campo. */
+  function _fundeFc(local, nuvem) {
+    if (!local) return nuvem || null;
+    if (!nuvem) return local;
+    var out = {}, ids = {};
+    Object.keys(local).forEach(function (k) { ids[k] = 1; });
+    Object.keys(nuvem).forEach(function (k) { ids[k] = 1; });
+    Object.keys(ids).forEach(function (k) {
+      var a = local[k], b = nuvem[k];
+      var va = (a && (a.vistas || a.total || 0)) || 0, vb = (b && (b.vistas || b.total || 0)) || 0;
+      out[k] = va >= vb ? a : b;
+    });
+    return out;
+  }
+
+  /* Aplica o pacote mat7 da nuvem, fundindo cada chave com o local. */
+  function _aplicaMat7(nuvem) {
+    if (!nuvem || typeof nuvem !== 'object') return;
+    MAT7_KEYS.forEach(function (k) {
+      var local = _lerLocal(k), remoto = nuvem[k];
+      if (!remoto) return;
+      var fundido = (k.indexOf('_fc') !== -1) ? _fundeFc(local, remoto) : _fundeCap(local, remoto);
+      if (fundido) _guardarLocal(k, fundido);
+    });
+  }
+
   /* Funde a gamificação do professor (Momento do Professor): maior XP,
      maior ofensiva, e o "dia" mais recente (para não recontar o de hoje). */
   function _fundeProf(local, nuvem) {
@@ -206,21 +266,37 @@ var Cloud = (function () {
 
   /* Puxa o que está na nuvem e funde com o local (deixa o resultado no
      localStorage, para o resto da plataforma ver). */
+  // a coluna `mat7` é opcional (pode ainda não existir na BD); detetamos uma
+  // vez para não pedir um campo inexistente e partir a sync principal.
+  var _temColunaMat7 = true;
+
+  function _aplicaLinha(linha) {
+    if (!linha) return;
+    _guardarLocal(PROG_KEY, _fundeProgresso(_lerLocal(PROG_KEY), linha.dados));
+    _guardarLocal(DESAFIO_KEY, _fundeDesafio(_lerLocal(DESAFIO_KEY), linha.desafio));
+    if (typeof linha.prof !== 'undefined') _guardarLocal(PROF_KEY, _fundeProf(_lerLocal(PROF_KEY), linha.prof));
+    if (typeof linha.mat7 !== 'undefined') _aplicaMat7(linha.mat7);
+    if (linha.ano && !localStorage.getItem(ANO_KEY)) _guardarLocal(ANO_KEY, linha.ano);
+    // refresca a topbar/conquistas se as funções existirem
+    if (typeof painelInicioRender === 'function') { try { painelInicioRender(); } catch (e) {} }
+    if (typeof pmUpdateTopbar === 'function') pmUpdateTopbar();
+    if (typeof desafioRender === 'function') desafioRender();
+    if (typeof desafioRenderConquistas === 'function') desafioRenderConquistas();
+  }
+
   function _puxarDaNuvem() {
     if (!sb || !user) return Promise.resolve();
-    return sb.from('progresso').select('dados, desafio, ano, prof').eq('user_id', user.id).maybeSingle().then(function (res) {
-      if (res.error) return;
-      var linha = res.data;
-      if (!linha) return; // ainda não tem linha; será criada no primeiro envio
-      _guardarLocal(PROG_KEY, _fundeProgresso(_lerLocal(PROG_KEY), linha.dados));
-      _guardarLocal(DESAFIO_KEY, _fundeDesafio(_lerLocal(DESAFIO_KEY), linha.desafio));
-      if (typeof linha.prof !== 'undefined') _guardarLocal(PROF_KEY, _fundeProf(_lerLocal(PROF_KEY), linha.prof));
-      if (linha.ano && !localStorage.getItem(ANO_KEY)) _guardarLocal(ANO_KEY, linha.ano);
-      // refresca a topbar/conquistas se as funções existirem
-      if (typeof painelInicioRender === 'function') { try { painelInicioRender(); } catch (e) {} }
-      if (typeof pmUpdateTopbar === 'function') pmUpdateTopbar();
-      if (typeof desafioRender === 'function') desafioRender();
-      if (typeof desafioRenderConquistas === 'function') desafioRenderConquistas();
+    var cols = _temColunaMat7 ? 'dados, desafio, ano, prof, mat7' : 'dados, desafio, ano, prof';
+    return sb.from('progresso').select(cols).eq('user_id', user.id).maybeSingle().then(function (res) {
+      if (res.error) {
+        // coluna mat7 ainda não criada na BD → tenta sem ela (uma vez)
+        if (_temColunaMat7 && /mat7/.test(res.error.message || '')) {
+          _temColunaMat7 = false;
+          return _puxarDaNuvem();
+        }
+        return;
+      }
+      _aplicaLinha(res.data);
     });
   }
 
@@ -236,8 +312,16 @@ var Cloud = (function () {
       ano: parseInt(localStorage.getItem(ANO_KEY)) || null,
       atualizado: new Date().toISOString()
     };
+    if (_temColunaMat7) linha.mat7 = _empacotaMat7(); // detalhe do mat7 (se a coluna existir)
     return sb.from('progresso').upsert(linha, { onConflict: 'user_id' }).then(function (res) {
-      if (res.error) { /* silencioso: o local nunca se perde */ }
+      if (res.error) {
+        // coluna mat7 ainda não criada → reenvia sem ela (silencioso; local nunca se perde)
+        if (_temColunaMat7 && /mat7/.test(res.error.message || '')) {
+          _temColunaMat7 = false;
+          delete linha.mat7;
+          return sb.from('progresso').upsert(linha, { onConflict: 'user_id' });
+        }
+      }
     });
   }
 

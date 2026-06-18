@@ -1872,13 +1872,23 @@ function renderProgressoUnificado() {
 
   var html = '';
 
-  // ── Aviso localStorage ──
-  html += '<div style="display:flex;align-items:center;gap:.75rem;background:#fdf0ef;border:1px solid #e8b4b0;border-radius:10px;padding:.65rem 1rem;margin-bottom:1.25rem;font-size:.82rem;color:#8b3a35;flex-wrap:wrap">'
-        + '<i class="ph ph-info" style="flex-shrink:0"></i>'
-        + '<span style="flex:1">O progresso é guardado <strong>apenas neste browser e neste dispositivo</strong>. Se mudares de browser ou de computador, o registo começa do zero. '
-        + '<button onclick="progDownloadPDF()" style="font-family:\'Montserrat\',sans-serif;font-size:.82rem;font-weight:700;color:#8b3a35;background:none;border:none;cursor:pointer;text-decoration:underline;padding:0">Guarda o relatório PDF</button>'
-        + ' para ficares sempre com o registo do teu progresso.</span>'
-        + '</div>';
+  // ── Aviso sobre guardar o progresso ──
+  // Com sessão iniciada, o progresso sincroniza na conta (segue-te entre
+  // dispositivos). Sem sessão, fica só neste browser.
+  var _temSessao = (typeof Cloud !== 'undefined' && Cloud.utilizador && Cloud.utilizador());
+  if (_temSessao) {
+    html += '<div style="display:flex;align-items:center;gap:.75rem;background:#eef7f0;border:1px solid #bfe3c9;border-radius:10px;padding:.65rem 1rem;margin-bottom:1.25rem;font-size:.82rem;color:#2e5d44;flex-wrap:wrap">'
+          + '<i class="ph ph-cloud-check" style="flex-shrink:0"></i>'
+          + '<span style="flex:1">O teu progresso fica guardado <strong>na tua conta</strong> e acompanha-te em qualquer dispositivo. Também podes '
+          + '<button onclick="progDownloadPDF()" style="font-family:\'Montserrat\',sans-serif;font-size:.82rem;font-weight:700;color:#2e5d44;background:none;border:none;cursor:pointer;text-decoration:underline;padding:0">descarregar o relatório PDF</button>.</span>'
+          + '</div>';
+  } else {
+    html += '<div style="display:flex;align-items:center;gap:.75rem;background:#fdf0ef;border:1px solid #e8b4b0;border-radius:10px;padding:.65rem 1rem;margin-bottom:1.25rem;font-size:.82rem;color:#8b3a35;flex-wrap:wrap">'
+          + '<i class="ph ph-info" style="flex-shrink:0"></i>'
+          + '<span style="flex:1"><strong>Inicia sessão</strong> para o teu progresso ficar guardado na conta e te seguir entre dispositivos. Sem sessão, fica só neste browser. '
+          + '<button onclick="progDownloadPDF()" style="font-family:\'Montserrat\',sans-serif;font-size:.82rem;font-weight:700;color:#8b3a35;background:none;border:none;cursor:pointer;text-decoration:underline;padding:0">Guarda o relatório PDF</button>.</span>'
+          + '</div>';
+  }
 
   // ── Resumo geral ──
   html += '<div style="background:var(--c2-pale);border:1.5px solid var(--c2-mid);border-radius:16px;padding:1.1rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap">'
