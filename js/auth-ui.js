@@ -53,7 +53,7 @@ function authAbrir(modo) {
         '<div id="auth-prof-extra" style="display:none;background:#f6f8f7;border:1px solid var(--border);border-radius:12px;padding:.7rem .8rem;margin-bottom:.75rem">'
         + '<div style="font-size:.78rem;font-weight:800;color:var(--ink2);margin-bottom:.4rem">Disciplinas que lecionas</div>'
         + '<div id="auth-prof-discs" style="display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.65rem">'
-        + ['Matemática','Português','Físico-Química'].map(function(d){ return '<button type="button" class="auth-pill" data-disc="' + d + '" onclick="authTogglePill(this)" style="background:var(--white);border:1.5px solid var(--border);color:var(--ink3);border-radius:999px;padding:4px 12px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">' + d + '</button>'; }).join('')
+        + (typeof EDU_DISCIPLINAS !== 'undefined' ? EDU_DISCIPLINAS : ['Matemática','Português','Físico-Química']).map(function(d){ return '<button type="button" class="auth-pill" data-disc="' + d + '" onclick="authTogglePill(this)" style="background:var(--white);border:1.5px solid var(--border);color:var(--ink3);border-radius:999px;padding:4px 12px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">' + d + '</button>'; }).join('')
         + '</div>'
         + '<div style="font-size:.78rem;font-weight:800;color:var(--ink2);margin-bottom:.4rem">Anos que lecionas</div>'
         + '<div id="auth-prof-anos" style="display:flex;flex-wrap:wrap;gap:.35rem">'

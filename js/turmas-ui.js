@@ -1346,10 +1346,11 @@ function alunoTirarDuvida(textoInicial) {
     eduFormModal('Mandar dúvida', [
       { id: 'dest', label: 'Enviar para', tipo: 'select', opcoes: opcoes, obrig: true,
         dica: 'Grupo/professor: privado e com o teu nome. Pública: anónima, qualquer professor da disciplina pode responder.' },
-      { id: 'disc', label: 'Disciplina (só para pública)', tipo: 'select', opcoes: [
-          { value: '', label: '—' }, { value: 'Matemática', label: 'Matemática' },
-          { value: 'Português', label: 'Português' }, { value: 'Físico-Química', label: 'Físico-Química' }
-        ] },
+      { id: 'disc', label: 'Disciplina (só para pública)', tipo: 'select',
+        opcoes: [{ value: '', label: '—' }].concat(
+          (typeof EDU_DISCIPLINAS !== 'undefined' ? EDU_DISCIPLINAS : ['Matemática','Português','Físico-Química'])
+            .map(function (d) { return { value: d, label: d }; })
+        ) },
       { id: 'txt', label: 'A tua dúvida', tipo: 'textarea', placeholder: 'Escreve aqui a tua pergunta', obrig: true, valor: textoInicial || '' }
     ], function (v) {
       if (v.dest === 'pub') {

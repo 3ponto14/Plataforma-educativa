@@ -1,3 +1,33 @@
+/* ── Disciplinas do currículo português (1.º ciclo → Secundário) ──────
+   Lista canónica única, usada no perfil do professor (disciplinas que
+   leciona) e na pergunta pública do aluno (disciplina da dúvida). As que
+   têm curso na plataforma estão no início para aparecerem primeiro. */
+var EDU_DISCIPLINAS = [
+  // com curso na plataforma
+  'Matemática', 'Português', 'Físico-Química',
+  // 1.º ciclo
+  'Estudo do Meio',
+  // 2.º/3.º ciclo
+  'Inglês', 'Francês', 'Espanhol', 'Alemão',
+  'Ciências Naturais', 'História', 'Geografia',
+  'História e Geografia de Portugal',
+  'Educação Visual', 'Educação Tecnológica', 'Educação Física',
+  'Educação Musical', 'Tecnologias da Informação e Comunicação (TIC)',
+  'Cidadania e Desenvolvimento', 'Educação Moral e Religiosa',
+  'Complemento à Educação Artística',
+  // Secundário — gerais e específicas
+  'Matemática A', 'Matemática B', 'Matemática Aplicada às Ciências Sociais (MACS)',
+  'Biologia e Geologia', 'Biologia', 'Geologia',
+  'Física', 'Química', 'Física e Química A',
+  'Filosofia', 'Psicologia',
+  'História A', 'História B', 'História da Cultura e das Artes',
+  'Geografia A', 'Geografia C',
+  'Economia A', 'Economia C', 'Direito', 'Contabilidade',
+  'Literatura Portuguesa', 'Latim', 'Grego',
+  'Geometria Descritiva', 'Desenho A', 'História e Cultura das Artes',
+  'Aplicações Informáticas B'
+];
+
 /* ── localStorage à prova de falha ───────────────────────────────────
    Em Safari/iOS no modo privado (ou com cookies/armazenamento bloqueados)
    o acesso a localStorage LANÇA exceção. Como há muitas chamadas pela app,
