@@ -699,6 +699,64 @@ var Turmas = (function () {
     }).then(function (r) { if (r.error) throw r.error; _invalidaDuvidas(); return r; });
   }
 
+  /* ALUNO abre uma dúvida PÚBLICA e ANÓNIMA: não vai para um grupo nem para
+     um prof específico — fica disponível a qualquer professor da DISCIPLINA
+     escolhida, que pode responder. O nome do aluno NÃO é gravado (anonimato);
+     o aluno recebe a resposta no seu sino (ligação por de_aluno, que só ele vê
+     via RLS). disciplina obrigatória; ano opcional. */
+  function criarDuvidaPublica(texto, disciplina, ano) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    texto = (texto || '').trim();
+    if (!texto) return Promise.reject(new Error('Escreve a dúvida.'));
+    if (!disciplina) return Promise.reject(new Error('Escolhe a disciplina da dúvida.'));
+    return sb.from('mensagens').insert({
+      autor_tipo: 'aluno', de_aluno: u.id, de_nome: null,   // anónima: sem nome
+      professor: null, grupo_id: null, resposta_a: null,
+      alcance: 'duvida_publica', disciplina: disciplina, ano: ano || null,
+      texto: texto
+    }).then(function (r) { if (r.error) throw r.error; _invalidaDuvidas(); return r; });
+  }
+
+  /* PROFESSOR: dúvidas públicas anónimas das suas DISCIPLINAS (e anos, se os
+     definiu). Vêm sem nome do aluno. Junta as respostas já dadas. */
+  function duvidasPublicas() {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    var discs = (typeof Cloud.profDisciplinas === 'function') ? Cloud.profDisciplinas() : [];
+    var anos = (typeof Cloud.profAnos === 'function') ? Cloud.profAnos() : [];
+    var q = sb.from('mensagens').select('*').eq('alcance', 'duvida_publica').order('criado', { ascending: false }).limit(300);
+    if (discs.length) q = q.in('disciplina', discs); // filtra pelas disciplinas do prof
+    return q.then(function (res) {
+      // coluna disciplina ainda não criada (SQL por correr) → não rebenta o painel
+      if (res.error) return [];
+      var todas = res.data || [];
+      // se o prof definiu anos, filtra também por ano (deixa passar dúvidas sem ano)
+      if (anos.length) {
+        var anosStr = anos.map(String);
+        todas = todas.filter(function (m) { return !m.ano || anosStr.indexOf(String(m.ano)) !== -1; });
+      }
+      return todas;
+    });
+  }
+
+  /* PROFESSOR responde a uma dúvida pública. A resposta liga-se à dúvida
+     (resposta_a) e vai para o aluno (para_aluno = de_aluno da dúvida), que a
+     vê no sino. O prof identifica-se (tem nome); o aluno continua anónimo. */
+  function responderDuvidaPublica(duvida, texto) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    texto = (texto || '').trim();
+    if (!texto) return Promise.reject(new Error('Escreve a resposta.'));
+    var profNome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+    return sb.from('mensagens').insert({
+      autor_tipo: 'professor', professor: u.id, prof_nome: profNome,
+      para_aluno: duvida.de_aluno || null, resposta_a: duvida.id,
+      alcance: 'resposta_publica', disciplina: duvida.disciplina || null,
+      texto: texto
+    }).then(function (r) { if (r.error) throw r.error; _invalidaDuvidas(); return r; });
+  }
+
   /* PROFESSOR: a conversa com UM aluno específico — o feedback que lhe
      deu (para_aluno = aluno) + as respostas/dúvidas que o aluno escreveu
      (de_aluno = aluno). A RLS garante que só vê o que lhe diz respeito.
@@ -748,6 +806,7 @@ var Turmas = (function () {
     enviarMensagem: enviarMensagem, apagarMensagem: apagarMensagem,
     mensagensDoProf: mensagensDoProf, muralDoAluno: muralDoAluno,
     responder: responder, criarDuvida: criarDuvida, respostasDeAlunos: respostasDeAlunos,
+    criarDuvidaPublica: criarDuvidaPublica, duvidasPublicas: duvidasPublicas, responderDuvidaPublica: responderDuvidaPublica,
     conversaComAluno: conversaComAluno,
     criarGrupo: criarGrupo, apagarGrupo: apagarGrupo, renomearGrupo: renomearGrupo, todosOsGrupos: todosOsGrupos,
     alunosDoGrupo: alunosDoGrupo, resumoDoGrupo: resumoDoGrupo, adicionarAoGrupo: adicionarAoGrupo, removerDoGrupo: removerDoGrupo,

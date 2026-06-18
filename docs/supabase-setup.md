@@ -436,6 +436,59 @@ create policy "prof lê o que lhe toca" on public.mensagens for select
   ));
 ```
 
+## 3g-ter. PERGUNTAS PÚBLICAS ANÓNIMAS — colar no SQL Editor → Run
+
+Um aluno (mesmo sem grupo) pode lançar uma pergunta PÚBLICA e ANÓNIMA, com
+disciplina. Qualquer professor dessa disciplina a vê (sem saber quem é) e pode
+responder; o aluno recebe a resposta. As disciplinas/anos do professor vivem
+nos metadados da conta (escolhidos no registo).
+
+```sql
+-- Campos da pergunta pública na tabela mensagens.
+alter table public.mensagens add column if not exists disciplina text;
+alter table public.mensagens add column if not exists ano        int;
+
+-- Disciplinas que o professor atual leciona (lidas dos metadados da conta).
+-- Converte o array JSON das disciplinas em text[] de forma robusta.
+create or replace function public.minhas_disciplinas()
+returns text[] language sql stable as $$
+  select coalesce(
+    array(
+      select jsonb_array_elements_text(
+        coalesce(auth.jwt() -> 'user_metadata' -> 'disciplinas', '[]'::jsonb)
+      )
+    ),
+    array[]::text[]
+  );
+$$;
+
+-- PROFESSOR vê perguntas públicas: das suas disciplinas, ou todas se ainda
+-- não definiu nenhuma. (Continua sem ver nomes — a coluna de_nome vem null.)
+drop policy if exists "prof vê publicas" on public.mensagens;
+create policy "prof vê publicas" on public.mensagens for select
+  using (
+    public.eh_professor() and alcance = 'duvida_publica' and (
+      array_length(public.minhas_disciplinas(), 1) is null
+      or disciplina = any (public.minhas_disciplinas())
+    )
+  );
+
+-- PROFESSOR responde a pública (insere resposta_publica dirigida ao aluno).
+drop policy if exists "prof responde publica" on public.mensagens;
+create policy "prof responde publica" on public.mensagens for insert
+  with check (public.eh_professor() and auth.uid() = professor
+              and alcance = 'resposta_publica');
+
+-- ALUNO vê as respostas às SUAS perguntas públicas (para_aluno = ele).
+drop policy if exists "aluno vê resposta publica" on public.mensagens;
+create policy "aluno vê resposta publica" on public.mensagens for select
+  using (alcance = 'resposta_publica' and para_aluno = auth.uid());
+```
+
+> Nota: a policy "aluno escreve" já permite ao aluno inserir a sua pergunta
+> (autor_tipo='aluno' e de_aluno=ele), por isso a pergunta pública não precisa
+> de policy de insert extra.
+
 ## 3h. SQL do REGISTO DE SESSÕES (diário por aluno) — colar no SQL Editor → Run
 
 Centra as turmas no ALUNO: o professor regista o que trabalhou com cada

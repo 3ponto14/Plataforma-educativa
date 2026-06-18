@@ -111,6 +111,9 @@ function _turmasRenderProfessor(wrap) {
     + _acc('grupos', 'ph-users-four', '#2e7d52', 'Grupos', btnGrupos, '<div id="turmas-grupos"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
     + _acc('alunos', 'ph-users-three', '#2e7d52', 'Todos os alunos', '', alunosBody)
     + _acc('avisos', 'ph-chats-circle', '#4a3f7a', 'Dúvidas dos alunos', btnAviso, avisosBody)
+    + _acc('publicas', 'ph-megaphone', '#b06a1e', 'Perguntas públicas (anónimas)', '',
+        '<div style="font-size:.78rem;color:var(--ink4);margin-bottom:.6rem">Perguntas anónimas de alunos das tuas disciplinas. Não sabes quem é — respondes só para ajudar; o aluno recebe a resposta.</div>'
+        + '<div id="turmas-publicas"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>')
     + '</div>'
     // Página dedicada de UM grupo (escondida até se clicar num grupo)
     + '<div id="turmas-grupo-pagina" style="display:none"></div>'
@@ -123,6 +126,7 @@ function _turmasRenderProfessor(wrap) {
   });
   _turmasPintaGrupos();
   _turmasPintaDuvidas();
+  _turmasPintaPublicas();
   _turmasPintaRecursos(true);
 }
 
@@ -184,6 +188,49 @@ function duvidaResponder(msgId, alunoId, nome) {
       if (typeof eduToast === 'function') eduToast('Resposta enviada a ' + nome + '! 💬', 'success');
       _turmasPintaDuvidas();
       if (typeof notificacoesRender === 'function') notificacoesRender();
+    });
+  }, { botao: 'Responder' });
+}
+
+/* ── Perguntas públicas anónimas (vista do professor) ──
+   Mostradas sem qualquer identidade do aluno. O prof responde para ajudar;
+   a resposta chega ao aluno (que continua anónimo para o prof). */
+function _turmasPintaPublicas() {
+  var el = document.getElementById('turmas-publicas');
+  if (!el || !Turmas.duvidasPublicas) return;
+  Turmas.duvidasPublicas().then(function (ms) {
+    if (!el) return;
+    if (!ms.length) {
+      el.innerHTML = '<div style="color:var(--ink4);font-size:.85rem;padding:.3rem 0">Sem perguntas públicas das tuas disciplinas por agora.</div>';
+      return;
+    }
+    el.innerHTML = ms.map(function (m) {
+      var meta = (m.disciplina || '') + (m.ano ? ' · ' + m.ano + '.º' : '');
+      return '<div style="border:1.5px solid #f0d2a6;border-radius:12px;padding:.7rem 1rem;margin-bottom:.5rem;background:#fdf7ee">'
+        + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem">'
+        + '<div style="min-width:0">'
+        + '<span style="font-size:.68rem;font-weight:800;color:#b06a1e;text-transform:uppercase;letter-spacing:.04em">📢 ' + _esc(meta) + ' · anónima</span>'
+        + '<div style="font-size:.86rem;color:var(--ink2);line-height:1.5;margin-top:.3rem">' + _esc(m.texto) + '</div>'
+        + '</div>'
+        + '<button onclick="publicaResponder(\'' + m.id + '\')" style="font-size:.74rem;font-weight:700;color:#fff;background:#b06a1e;border:none;border-radius:999px;padding:4px 12px;cursor:pointer;font-family:Montserrat,sans-serif;flex-shrink:0">Responder</button>'
+        + '</div></div>';
+    }).join('');
+    // guarda as dúvidas para o responder ter acesso ao objeto (de_aluno)
+    _turmasPublicasCache = {}; ms.forEach(function (m) { _turmasPublicasCache[m.id] = m; });
+  });
+}
+var _turmasPublicasCache = {};
+
+function publicaResponder(id) {
+  var duvida = _turmasPublicasCache[id];
+  if (!duvida) return;
+  eduFormModal('Responder à pergunta pública', [
+    { id: 'texto', label: 'A tua resposta', tipo: 'textarea', obrig: true,
+      dica: 'O aluno é anónimo; a resposta chega-lhe na mesma. O teu nome fica visível para ele.' }
+  ], function (v) {
+    return Turmas.responderDuvidaPublica(duvida, v.texto).then(function () {
+      if (typeof eduToast === 'function') eduToast('Resposta enviada! 📢', 'success');
+      _turmasPintaPublicas();
     });
   }, { botao: 'Responder' });
 }
@@ -1284,11 +1331,7 @@ function alunoTirarDuvida(textoInicial) {
     Turmas.professoresDoAluno ? Turmas.professoresDoAluno() : Promise.resolve([])
   ]).then(function (r) {
     var grupos = r[0] || [], profs = r[1] || [];
-    if (!grupos.length) {
-      alert('Ainda não estás em nenhum grupo. Pede o código ao teu professor e entra num grupo para poderes enviar dúvidas.');
-      return;
-    }
-    // opções do destino: cada grupo + cada professor (com prefixo p/ distinguir)
+    // destinos privados (com nome): grupos do aluno + professores dos grupos
     var opcoes = [];
     grupos.forEach(function (g) {
       var nome = (g.grupos && g.grupos.nome) || 'Grupo';
@@ -1297,14 +1340,27 @@ function alunoTirarDuvida(textoInicial) {
     profs.forEach(function (p) {
       opcoes.push({ value: 'p:' + p.prof, label: '👤 Professor: ' + (p.prof_nome || 'Professor(a)') });
     });
+    // dúvida pública anónima: sempre disponível (mesmo sem grupo)
+    opcoes.push({ value: 'pub', label: '📢 Pergunta pública (anónima)' });
+
     eduFormModal('Mandar dúvida', [
       { id: 'dest', label: 'Enviar para', tipo: 'select', opcoes: opcoes, obrig: true,
-        dica: 'A dúvida só fica visível para o grupo ou professor que escolheres.' },
+        dica: 'Grupo/professor: privado e com o teu nome. Pública: anónima, qualquer professor da disciplina pode responder.' },
+      { id: 'disc', label: 'Disciplina (só para pública)', tipo: 'select', opcoes: [
+          { value: '', label: '—' }, { value: 'Matemática', label: 'Matemática' },
+          { value: 'Português', label: 'Português' }, { value: 'Físico-Química', label: 'Físico-Química' }
+        ] },
       { id: 'txt', label: 'A tua dúvida', tipo: 'textarea', placeholder: 'Escreve aqui a tua pergunta', obrig: true, valor: textoInicial || '' }
     ], function (v) {
-      var dest = v.dest.charAt(0) === 'g'
-        ? { grupoId: v.dest.slice(2) }
-        : { professor: v.dest.slice(2) };
+      if (v.dest === 'pub') {
+        if (!v.disc) return 'Escolhe a disciplina da pergunta pública.';
+        return Turmas.criarDuvidaPublica(v.txt, v.disc).then(function () {
+          if (typeof eduToast === 'function') eduToast('Pergunta pública enviada (anónima)! 📢', 'success');
+          if (typeof _alunoPintaMensagens === 'function') _alunoPintaMensagens();
+          if (typeof notificacoesRender === 'function') notificacoesRender();
+        });
+      }
+      var dest = v.dest.charAt(0) === 'g' ? { grupoId: v.dest.slice(2) } : { professor: v.dest.slice(2) };
       return Turmas.criarDuvida(v.txt, dest).then(function () {
         if (typeof eduToast === 'function') eduToast('Dúvida enviada! ❓', 'success');
         if (typeof _alunoPintaMensagens === 'function') _alunoPintaMensagens();

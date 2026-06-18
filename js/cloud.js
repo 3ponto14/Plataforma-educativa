@@ -28,6 +28,19 @@ var Cloud = (function () {
   /* Tipo de conta: 'professor' ou 'aluno' (guardado nos metadados). */
   function tipo() { return (user && user.user_metadata && user.user_metadata.tipo) || 'aluno'; }
   function ehProfessor() { return tipo() === 'professor'; }
+  /* Disciplinas/anos que o professor leciona (escolhidos no registo, edit.
+     depois). Arrays de strings. Vazio = ainda não definiu (vê tudo). */
+  function profDisciplinas() { var d = user && user.user_metadata && user.user_metadata.disciplinas; return Array.isArray(d) ? d : []; }
+  function profAnos() { var a = user && user.user_metadata && user.user_metadata.anos; return Array.isArray(a) ? a : []; }
+  /* Atualiza os metadados do professor (disciplinas/anos). */
+  function atualizarPerfilProf(disciplinas, anos) {
+    if (!sb || !user) return Promise.reject(new Error('Inicia sessão.'));
+    return sb.auth.updateUser({ data: { disciplinas: disciplinas || [], anos: anos || [] } }).then(function (res) {
+      if (res.error) throw res.error;
+      if (res.data && res.data.user) user = res.data.user;
+      return true;
+    });
+  }
   /* Primeiro nome (dado no registo). Recua para o início do email se a
      conta for antiga e não tiver nome guardado. */
   function nome() {
@@ -77,10 +90,12 @@ var Cloud = (function () {
   }
 
   /* ── Registo / Entrada / Saída ── */
-  function registar(email, pass, tipoConta, marketing, nomeProprio) {
+  function registar(email, pass, tipoConta, marketing, nomeProprio, extra) {
     if (!sb) return Promise.reject(new Error('Serviço indisponível.'));
     var t = tipoConta === 'professor' ? 'professor' : 'aluno';
     var meta = { tipo: t, marketing: !!marketing, nome: (nomeProprio || '').trim(), termos_aceites_em: new Date().toISOString() };
+    // professor: guarda disciplinas/anos que leciona (para filtrar dúvidas)
+    if (t === 'professor' && extra) { meta.disciplinas = extra.disciplinas || []; meta.anos = extra.anos || []; }
     return sb.auth.signUp({ email: email, password: pass, options: { data: meta } }).then(function (res) {
       if (res.error) throw res.error;
       // com "Confirm email" OFF, a sessão vem logo; se não vier, faz login
@@ -337,6 +352,7 @@ var Cloud = (function () {
   return {
     init: init, disponivel: disponivel, utilizador: utilizador,
     tipo: tipo, ehProfessor: ehProfessor, nome: nome,
+    profDisciplinas: profDisciplinas, profAnos: profAnos, atualizarPerfilProf: atualizarPerfilProf,
     registar: registar, entrar: entrar, sair: sair,
     recuperarPassword: recuperarPassword, alterarPassword: alterarPassword,
     apagarConta: apagarConta,

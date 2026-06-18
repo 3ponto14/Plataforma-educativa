@@ -49,6 +49,18 @@ function authAbrir(modo) {
         + '<button type="button" id="auth-tipo-aluno" onclick="authSetTipo(\'aluno\')" style="flex:1;border:1.5px solid #4a3f7a;background:#f0edf7;color:#4a3f7a;border-radius:12px;padding:.6rem;font-family:Montserrat,sans-serif;font-size:.85rem;font-weight:800;cursor:pointer"><i class="ph ph-student"></i> Sou aluno</button>'
         + '<button type="button" id="auth-tipo-prof" onclick="authSetTipo(\'professor\')" style="flex:1;border:1.5px solid var(--border);background:var(--white);color:var(--ink3);border-radius:12px;padding:.6rem;font-family:Montserrat,sans-serif;font-size:.85rem;font-weight:700;cursor:pointer"><i class="ph ph-chalkboard-teacher"></i> Sou professor</button>'
         + '</div>')
+    + (entrar ? '' :
+        '<div id="auth-prof-extra" style="display:none;background:#f6f8f7;border:1px solid var(--border);border-radius:12px;padding:.7rem .8rem;margin-bottom:.75rem">'
+        + '<div style="font-size:.78rem;font-weight:800;color:var(--ink2);margin-bottom:.4rem">Disciplinas que lecionas</div>'
+        + '<div id="auth-prof-discs" style="display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.65rem">'
+        + ['Matemática','Português','Físico-Química'].map(function(d){ return '<button type="button" class="auth-pill" data-disc="' + d + '" onclick="authTogglePill(this)" style="background:var(--white);border:1.5px solid var(--border);color:var(--ink3);border-radius:999px;padding:4px 12px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">' + d + '</button>'; }).join('')
+        + '</div>'
+        + '<div style="font-size:.78rem;font-weight:800;color:var(--ink2);margin-bottom:.4rem">Anos que lecionas</div>'
+        + '<div id="auth-prof-anos" style="display:flex;flex-wrap:wrap;gap:.35rem">'
+        + ['5','6','7','8','9','10','11','12'].map(function(a){ return '<button type="button" class="auth-pill" data-ano="' + a + '" onclick="authTogglePill(this)" style="background:var(--white);border:1.5px solid var(--border);color:var(--ink3);border-radius:999px;padding:4px 12px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">' + a + '.º</button>'; }).join('')
+        + '</div>'
+        + '<div style="font-size:.7rem;color:var(--ink4);margin-top:.5rem;line-height:1.4">Usa-se para te mostrar só as dúvidas das tuas disciplinas. Podes alterar depois.</div>'
+        + '</div>')
     + (entrar ? '' : '<input id="auth-nome" type="text" placeholder="O teu primeiro nome" autocomplete="given-name" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin-bottom:.6rem;outline:none">')
     + '<input id="auth-email" type="email" placeholder="O teu email" autocomplete="email" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin-bottom:.6rem;outline:none">'
     + '<input id="auth-pass" type="password" placeholder="Palavra-passe (mín. 6 letras)" autocomplete="' + (entrar ? 'current-password' : 'new-password') + '" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin-bottom:.9rem;outline:none" onkeydown="if(event.key===\'Enter\')authSubmeter(' + (entrar ? 'true' : 'false') + ')">'
@@ -89,6 +101,22 @@ function authSetTipo(t) {
   var off = 'border:1.5px solid var(--border);background:var(--white);color:var(--ink3);border-radius:12px;padding:.6rem;font-family:Montserrat,sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;flex:1';
   bA.style.cssText = t === 'aluno' ? on : off;
   bP.style.cssText = t === 'professor' ? on.replace('#4a3f7a', '#2e7d52').replace('#f0edf7', '#e8f5ee') : off;
+  // mostra o bloco de disciplinas/anos só para professor
+  var extra = document.getElementById('auth-prof-extra');
+  if (extra) extra.style.display = (t === 'professor') ? 'block' : 'none';
+}
+
+/* Alterna uma pílula (disciplina/ano) no registo de professor. */
+function authTogglePill(btn) {
+  var on = btn.classList.toggle('on');
+  btn.style.cssText = on
+    ? 'background:#2e7d52;border:1.5px solid #2e7d52;color:#fff;border-radius:999px;padding:4px 12px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif'
+    : 'background:var(--white);border:1.5px solid var(--border);color:var(--ink3);border-radius:999px;padding:4px 12px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif';
+}
+function _authLerPills(containerId, attr) {
+  var box = document.getElementById(containerId); if (!box) return [];
+  var out = []; box.querySelectorAll('.auth-pill.on').forEach(function (b) { out.push(b.getAttribute(attr)); });
+  return out;
 }
 
 function _authErro(msg) {
@@ -207,7 +235,11 @@ function authSubmeter(entrar) {
   var btn = document.getElementById('auth-btn');
   if (btn) { btn.disabled = true; btn.textContent = 'A entrar…'; }
 
-  var promessa = entrar ? Cloud.entrar(email, pass) : Cloud.registar(email, pass, _authTipo, marketing, nome);
+  var extraProf = null;
+  if (!entrar && _authTipo === 'professor') {
+    extraProf = { disciplinas: _authLerPills('auth-prof-discs', 'data-disc'), anos: _authLerPills('auth-prof-anos', 'data-ano') };
+  }
+  var promessa = entrar ? Cloud.entrar(email, pass) : Cloud.registar(email, pass, _authTipo, marketing, nome, extraProf);
   promessa.then(function () {
     authFechar();
     var prof = (typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor());
