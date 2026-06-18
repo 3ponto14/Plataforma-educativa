@@ -1150,25 +1150,39 @@ function alunoPagEnviarMsg(id, nome) {
   }).catch(function (e) { alert(e.message || 'Não foi possível enviar.'); });
 }
 
-/* Registo de sessões do aluno na página (lê de todos os grupos). */
+/* Normaliza uma etiqueta de disciplina ao nome simples (Matemática,
+   Português, Físico-Química…) para agrupar sessões e trabalhos juntos. */
+function _discKey(txt) {
+  var t = (txt || '').toLowerCase();
+  if (t.indexOf('matem') !== -1 || /\bmat\b|mat\d|^m\d/.test(t)) return 'Matemática';
+  if (t.indexOf('portug') !== -1 || /\bport\b|port\d/.test(t)) return 'Português';
+  if (t.indexOf('quím') !== -1 || t.indexOf('quim') !== -1 || t.indexOf('físico') !== -1 || t.indexOf('fisico') !== -1 || /\bfq\b|fq\d/.test(t)) return 'Físico-Química';
+  return (txt || '').trim() || 'Outros';
+}
+
+/* Acompanhamento do aluno AGRUPADO POR DISCIPLINA: histórico de sessões
+   (mais recente primeiro) + trabalhos entregues, por disciplina, em secções
+   dobráveis. Qualquer professor da disciplina dá continuidade rapidamente. */
 function _alunoPagPintaReg(id, nome, grupoId) {
   var box = document.getElementById('aluno-pag-reg');
   if (!box || !Turmas.sessoesDoAluno) return;
   var pSess = Turmas.sessoesDoAluno(id, grupoId || null);
-  // trabalhos entregues entram no registo automaticamente (sem duplicar dados)
   var pTar = Turmas.tarefasComResultadoDoAluno ? Turmas.tarefasComResultadoDoAluno(id) : Promise.resolve([]);
   Promise.all([pSess, pTar]).then(function (r) {
     if (!box) return;
-    var itens = [];
-    // sessões 1-a-1 escritas pelo professor
+    var porDisc = {}; // disciplina -> [itens]
+    function add(disc, quando, html) {
+      var k = _discKey(disc);
+      (porDisc[k] = porDisc[k] || []).push({ quando: quando || '', html: html });
+    }
+    // sessões escritas pelo professor
     r[0].forEach(function (s) {
-      itens.push({ tipo: 'sessao', quando: s.quando || '', html:
-        '<div style="font-size:.74rem;font-weight:800;color:#4a3f7a">' + _esc((s.quando || '').slice(0, 10)) + ' · 📓 Sessão' + (s.disciplina ? ' · ' + _esc(s.disciplina) : '') + '</div>'
+      add(s.disciplina, s.quando,
+        '<div style="font-size:.74rem;font-weight:800;color:#4a3f7a">' + _esc((s.quando || '').slice(0, 10)) + ' · 📓 Sessão · ' + _esc(s.prof_nome || 'professor') + '</div>'
         + (s.material ? '<div style="font-size:.8rem;color:var(--ink2);margin-top:.15rem">📄 ' + _esc(s.material) + '</div>' : '')
-        + (s.notas ? '<div style="font-size:.8rem;color:var(--ink3);margin-top:.15rem">' + _esc(s.notas) + '</div>' : '')
-        + '<div style="font-size:.7rem;color:var(--ink4);margin-top:.15rem">por ' + _esc(s.prof_nome || 'professor') + '</div>' });
+        + (s.notas ? '<div style="font-size:.8rem;color:var(--ink3);margin-top:.15rem">' + _esc(s.notas) + '</div>' : ''));
     });
-    // trabalhos entregues (feito) — aparecem como registo automático
+    // trabalhos entregues na plataforma → entram automaticamente, por disciplina
     r[1].filter(function (t) { return t.feito; }).forEach(function (t) {
       var res = t.resultado, nota = '';
       if (res && res.total) {
@@ -1176,16 +1190,28 @@ function _alunoPagPintaReg(id, nome, grupoId) {
         var cor = pct >= 70 ? '#2e7d52' : (pct >= 50 ? '#b8860b' : '#c0392b');
         nota = ' · <span style="font-weight:800;color:' + cor + '">' + res.certas + '/' + res.total + ' (' + pct + '%)</span>';
       }
-      itens.push({ tipo: 'trabalho', quando: t.feito_em || '', html:
+      add(t.curso_nome, t.feito_em,
         '<div style="font-size:.74rem;font-weight:800;color:#2e7d52">' + _esc((t.feito_em || '').slice(0, 10)) + ' · ✅ Trabalho entregue</div>'
-        + '<div style="font-size:.8rem;color:var(--ink2);margin-top:.15rem">' + _esc(t.titulo) + nota + '</div>' });
+        + '<div style="font-size:.8rem;color:var(--ink2);margin-top:.15rem">' + _esc(t.titulo) + nota + '</div>');
     });
-    if (!itens.length) { box.innerHTML = '<div style="font-size:.8rem;color:var(--ink4)">Ainda sem sessões nem trabalhos entregues.</div>'; return; }
-    // ordena por data (mais recente primeiro)
-    itens.sort(function (a, b) { return (a.quando || '') < (b.quando || '') ? 1 : -1; });
-    box.innerHTML = itens.map(function (it) {
-      return '<div style="border:1.5px solid var(--border);border-radius:10px;padding:.5rem .8rem;margin-bottom:.4rem">' + it.html + '</div>';
+    var discs = Object.keys(porDisc);
+    if (!discs.length) {
+      box.innerHTML = '<div style="font-size:.8rem;color:var(--ink4)">Ainda sem sessões nem trabalhos entregues. Usa «registar sessão» no grupo para começar o histórico.</div>';
+      return;
+    }
+    // ordena disciplinas: as com curso primeiro, depois alfabético
+    var ord = { 'Matemática': 0, 'Português': 1, 'Físico-Química': 2 };
+    discs.sort(function (a, b) { return (ord[a] != null ? ord[a] : 9) - (ord[b] != null ? ord[b] : 9) || (a < b ? -1 : 1); });
+    box.innerHTML = discs.map(function (d, i) {
+      var itens = porDisc[d].sort(function (a, b) { return (a.quando || '') < (b.quando || '') ? 1 : -1; });
+      var key = 'reg-' + id + '-' + i;
+      var corpo = itens.map(function (it) {
+        return '<div style="border:1.5px solid var(--border);border-radius:10px;padding:.5rem .8rem;margin-bottom:.4rem">' + it.html + '</div>';
+      }).join('');
+      return _acc(key, 'ph-book-bookmark', '#9a6a1a', _esc(d) + ' <span style="font-weight:600;color:var(--ink4);font-size:.78rem">(' + itens.length + ')</span>', '', corpo);
     }).join('');
+    // abre a primeira disciplina por defeito
+    accToggle('reg-' + id + '-0');
   });
 }
 
