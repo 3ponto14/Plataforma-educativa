@@ -15,6 +15,19 @@
 var Turmas = (function () {
   function _sb() { return (typeof Cloud !== 'undefined' && Cloud._sb) ? Cloud._sb() : null; }
 
+  /* Cache curta partilhada: o sino, a lista de dúvidas e o painel Início
+     pedem as dúvidas quase ao mesmo tempo. Sem isto eram 3 scans seguidos da
+     tabela mensagens. Com 60 profs/300 alunos a tabela cresce, por isso isto
+     evita carga repetida (TTL curto p/ continuar fresco). */
+  var _duvCache = null, _duvCacheAt = 0;
+  var DUV_TTL = 15000; // 15s
+  function _invalidaDuvidas() { _duvCache = null; _duvCacheAt = 0; }
+
+  /* Cache da lista de alunos (com progresso): é pesada (300 alunos × JSON de
+     progresso) e a vista das Turmas re-renderiza com frequência. TTL curto. */
+  var _alunosCache = null, _alunosCacheAt = 0;
+  var ALUNOS_TTL = 20000; // 20s
+
   /* ── Classificação de um capId numa DISCIPLINA legível ──
      Os IDs de progresso trazem o ano/disciplina no prefixo:
        mat7cap3, mat8cap1, m8cap2, port7, port9, cap1 (mat7 legado)… */
@@ -81,6 +94,7 @@ var Turmas = (function () {
   function todosOsAlunos() {
     var sb = _sb();
     if (!sb) return Promise.resolve([]);
+    if (_alunosCache && (Date.now() - _alunosCacheAt) < ALUNOS_TTL) return Promise.resolve(_alunosCache);
     return sb.from('apoio_alunos').select('aluno, nome_aluno, email').then(function (res) {
       var lista = res.error ? [] : (res.data || []);
       if (!lista.length) return [];
@@ -88,7 +102,7 @@ var Turmas = (function () {
       return sb.from('progresso').select('user_id, dados, desafio').in('user_id', ids).then(function (p) {
         var prog = {};
         (p.data || []).forEach(function (row) { prog[row.user_id] = row; });
-        return lista.map(function (a) {
+        var out = lista.map(function (a) {
           var d = (prog[a.aluno] && prog[a.aluno].dados) || {};
           var des = (prog[a.aluno] && prog[a.aluno].desafio) || {};
           var caps = d.caps || {};
@@ -106,6 +120,8 @@ var Turmas = (function () {
             dificuldades: _pontosFracos(caps)    // capítulos com pior quiz
           };
         }).sort(function (a, b) { return b.xp - a.xp; }); // ranking por XP
+        _alunosCache = out; _alunosCacheAt = Date.now();
+        return out;
       });
     });
   }
@@ -185,11 +201,13 @@ var Turmas = (function () {
     return sb.from('tarefas').delete().eq('id', id);
   }
 
-  /* PROFESSOR: todas as tarefas (mais recentes primeiro). */
+  /* PROFESSOR: as tarefas que ELE atribuiu (mais recentes primeiro).
+     Filtra no servidor pelo próprio professor — a vista é «o que atribuíste»
+     e evita puxar as tarefas de todos os 60 professores. */
   function tarefasDoProf() {
-    var sb = _sb();
-    if (!sb) return Promise.resolve([]);
-    return sb.from('tarefas').select('*').order('criado', { ascending: false })
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.resolve([]);
+    return sb.from('tarefas').select('*').eq('professor', u.id).order('criado', { ascending: false }).limit(300)
       .then(function (res) { return res.error ? [] : (res.data || []); });
   }
 
@@ -268,7 +286,7 @@ var Turmas = (function () {
   function tarefasDoAluno() {
     var sb = _sb(); var u = Cloud.utilizador();
     if (!sb || !u) return Promise.resolve([]);
-    return sb.from('tarefas').select('*').order('criado', { ascending: false }).then(function (res) {
+    return sb.from('tarefas').select('*').order('criado', { ascending: false }).limit(200).then(function (res) {
       var ts = res.error ? [] : (res.data || []);
       if (!ts.length) return [];
       return sb.from('tarefas_estado').select('tarefa_id, feito').eq('aluno', u.id).then(function (e) {
@@ -303,10 +321,9 @@ var Turmas = (function () {
   function resumoTarefasAluno(alunoId) {
     var sb = _sb();
     if (!sb) return Promise.resolve({ total: 0, feitas: 0 });
-    return sb.from('tarefas').select('id, para_aluno').then(function (res) {
-      var ts = (res.error ? [] : (res.data || [])).filter(function (t) {
-        return !t.para_aluno || t.para_aluno === alunoId;
-      });
+    // só as que dizem respeito a este aluno: para todos (para_aluno null) OU para ele
+    return sb.from('tarefas').select('id, para_aluno').or('para_aluno.is.null,para_aluno.eq.' + alunoId).then(function (res) {
+      var ts = (res.error ? [] : (res.data || []));
       var total = ts.length;
       if (!total) return { total: 0, feitas: 0 };
       return sb.from('tarefas_estado').select('tarefa_id').eq('aluno', alunoId).eq('feito', true).then(function (e) {
@@ -323,10 +340,8 @@ var Turmas = (function () {
   function tarefasComResultadoDoAluno(alunoId) {
     var sb = _sb();
     if (!sb) return Promise.resolve([]);
-    return sb.from('tarefas').select('*').order('criado', { ascending: false }).then(function (res) {
-      var ts = (res.error ? [] : (res.data || [])).filter(function (t) {
-        return !t.para_aluno || t.para_aluno === alunoId;
-      });
+    return sb.from('tarefas').select('*').or('para_aluno.is.null,para_aluno.eq.' + alunoId).order('criado', { ascending: false }).limit(300).then(function (res) {
+      var ts = (res.error ? [] : (res.data || []));
       if (!ts.length) return [];
       var ids = ts.map(function (t) { return t.id; });
       var pEstado = sb.from('tarefas_estado').select('tarefa_id, feito, feito_em').eq('aluno', alunoId).in('tarefa_id', ids)
@@ -602,7 +617,7 @@ var Turmas = (function () {
       para_aluno: alcance === 'aluno' ? (opts.paraAluno || null) : null,
       resposta_a: opts.respostaA || null,
       texto: texto
-    }).select().single().then(function (r) { if (r.error) throw r.error; return r.data; });
+    }).select().single().then(function (r) { if (r.error) throw r.error; _invalidaDuvidas(); return r.data; });
   }
 
   function apagarMensagem(id) {
@@ -640,7 +655,7 @@ var Turmas = (function () {
       autor_tipo: 'aluno', de_aluno: u.id, de_nome: nome,
       professor: msg.professor || null, resposta_a: msg.id,
       alcance: 'resposta', texto: texto
-    }).then(function (r) { if (r.error) throw r.error; return r; });
+    }).then(function (r) { if (r.error) throw r.error; _invalidaDuvidas(); return r; });
   }
 
   /* ALUNO abre uma dúvida nova (sem mensagem-mãe → visível a todos os
@@ -654,7 +669,7 @@ var Turmas = (function () {
     return sb.from('mensagens').insert({
       autor_tipo: 'aluno', de_aluno: u.id, de_nome: nome,
       professor: null, resposta_a: null, alcance: 'duvida', texto: texto
-    }).then(function (r) { if (r.error) throw r.error; return r; });
+    }).then(function (r) { if (r.error) throw r.error; _invalidaDuvidas(); return r; });
   }
 
   /* PROFESSOR: a conversa com UM aluno específico — o feedback que lhe
@@ -676,7 +691,11 @@ var Turmas = (function () {
   function respostasDeAlunos() {
     var sb = _sb();
     if (!sb) return Promise.resolve([]);
-    return sb.from('mensagens').select('*').order('criado', { ascending: false }).then(function (res) {
+    // serve da cache se ainda fresca (sino + lista + painel pedem quase juntos)
+    if (_duvCache && (Date.now() - _duvCacheAt) < DUV_TTL) return Promise.resolve(_duvCache);
+    // só as 400 mensagens mais recentes (cobre dúvidas recentes + respostas);
+    // evita puxar a conversa inteira da escola a cada render.
+    return sb.from('mensagens').select('*').order('criado', { ascending: false }).limit(400).then(function (res) {
       var todas = res.error ? [] : (res.data || []);
       // respostas do professor agrupadas pela dúvida a que respondem
       var respostas = {};
@@ -693,6 +712,7 @@ var Turmas = (function () {
         m.respostas = rs;            // respostas dadas a esta dúvida
         m.respondido = rs.length > 0;
       });
+      _duvCache = doAluno; _duvCacheAt = Date.now();
       return doAluno;
     });
   }
