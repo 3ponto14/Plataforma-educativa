@@ -54,10 +54,10 @@
 
 <!-- ── Tab bar 4 tabs ── -->
 <div class="mat7-hub-tabbar" id="mat7-hub-tabbar">
-  <button class="mat7-hub-tab"         data-tab="resumo"    onclick="mat7SwitchTab('resumo',this)">   <span class="mat7-hub-tab-icon"><i class="ph ph-book-open-text"></i></span> Teoria</button>
+  <button class="mat7-hub-tab active"  data-tab="resumo"    onclick="mat7SwitchTab('resumo',this)">   <span class="mat7-hub-tab-icon"><i class="ph ph-book-open-text"></i></span> Teoria</button>
   <button class="mat7-hub-tab"         data-tab="praticar"  onclick="mat7SwitchHub('praticar',this)"> <span class="mat7-hub-tab-icon"><i class="ph ph-pencil-simple"></i></span> Praticar</button>
   <button class="mat7-hub-tab"         data-tab="fichas"    onclick="mat7SwitchTab('fichas',this)">   <span class="mat7-hub-tab-icon"><i class="ph ph-file-pdf"></i></span> Fichas</button>
-  <button class="mat7-hub-tab active"  data-tab="progresso" onclick="mat7SwitchTab('progresso',this)"><span class="mat7-hub-tab-icon"><i class="ph ph-chart-bar"></i></span> Progresso</button>
+  <button class="mat7-hub-tab"         data-tab="progresso" onclick="mat7SwitchTab('progresso',this)"><span class="mat7-hub-tab-icon"><i class="ph ph-chart-bar"></i></span> Progresso</button>
 </div>
 
 
@@ -167,7 +167,7 @@
 <!-- ══════════════════════════════════════════
      PANEL: RESUMO
 ══════════════════════════════════════════ -->
-<div class="mat7-panel" id="mat7p-resumo">
+<div class="mat7-panel active" id="mat7p-resumo">
 
   <div class="mat7-panel-heading">Teoria</div>
   <div class="mat7-panel-sub">Seleciona um capítulo e depois o subtema que queres rever.</div>
@@ -286,7 +286,7 @@
 <!-- ══════════════════════════════════════════
      PANEL: PROGRESSO
 ══════════════════════════════════════════ -->
-<div class="mat7-panel active" id="mat7p-progresso">
+<div class="mat7-panel" id="mat7p-progresso">
   <div class="mat7-panel-heading">O Teu Progresso</div>
   <div class="mat7-panel-sub">Visão global de todos os capítulos desempenho, erros e treino direcionado</div>
   <div id="mat7-progresso-unified"></div>

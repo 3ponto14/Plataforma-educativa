@@ -306,6 +306,9 @@ function _mat7Init() {
   if (typeof _addFuncTeoriaVisuais === 'function' && _cards6) {
     _addFuncTeoriaVisuais(_cards6, '#56b6c2');
   }
+  // a Teoria é a tab inicial (como nos outros anos): popula os capítulos/
+  // subtemas logo no arranque, já que o HTML a marca activa sem disparar o JS.
+  if (typeof mat7BuildResumoNav === 'function') mat7BuildResumoNav();
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _mat7Init);
 else _mat7Init();
