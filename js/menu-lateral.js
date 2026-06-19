@@ -89,6 +89,14 @@
       + '</div>';
   }
 
+  /* Fecha o sub-painel "Editar perfil" (se estiver aberto). */
+  function fecharPerfil() {
+    var menu = document.getElementById('ml-perfil-menu');
+    var btn = document.querySelector('.ml-perfil');
+    if (menu && !menu.hasAttribute('hidden')) menu.setAttribute('hidden', '');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  }
+
   /* Abre/fecha o sub-painel "Editar perfil" no rodapé. */
   function alternarPerfil() {
     var menu = document.getElementById('ml-perfil-menu');
@@ -100,6 +108,14 @@
     if (btn) btn.setAttribute('aria-expanded', aberto ? 'false' : 'true');
   }
   window.menuLateralPerfil = alternarPerfil;
+
+  /* Fecha o sub-painel ao clicar fora dele (comportamento de dropdown). */
+  document.addEventListener('click', function (e) {
+    var menu = document.getElementById('ml-perfil-menu');
+    if (!menu || menu.hasAttribute('hidden')) return;
+    var foot = document.getElementById('ml-foot');
+    if (foot && !foot.contains(e.target)) fecharPerfil();
+  });
 
   /* Abrir/fechar só fazem sentido no modo gaveta (telemóvel). */
   function abrir() {
@@ -186,7 +202,7 @@
   window.menuLateralFechar = fechar;
   window.menuLateralIr = ir;
 
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && ABERTA) fechar(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { fecharPerfil(); if (ABERTA) fechar(); } });
   document.addEventListener('cloud:auth', function () { aplicar(); });
   // reage a mudanças de tamanho de ecrã (rodar telemóvel, redimensionar janela)
   if (MQ.addEventListener) MQ.addEventListener('change', aplicar);
