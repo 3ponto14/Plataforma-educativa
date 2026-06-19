@@ -49,7 +49,11 @@ var _port8Cards = {
     { st: 2, tag: 'Poesia', q: 'O que é o sujeito poético?', a: 'A «voz» que fala no poema: não se confunde com o poeta, a pessoa real. Exprime emoções, ideias e visões do mundo.' },
     { st: 2, tag: 'Poesia', q: 'O que distingue a quadra popular?', a: 'Estrofe de 4 versos, em redondilha (5 ou 7 sílabas), de rima simples: forma típica da poesia tradicional e das cantigas.' },
     { st: 3, tag: 'Contexto', q: 'O que é «O Adamastor» de Luís de Sttau Monteiro?', a: 'Um texto («Aquilo que os Olhos Veem») que recria, em tom crítico e humorístico, o episódio do gigante de Os Lusíadas, a bordo de um navio.' },
-    { st: 1, tag: 'Conceito', q: 'O que é a estrutura de uma narrativa?', a: 'Situação inicial → desenvolvimento (peripécias/conflito) → ponto culminante (clímax) → desenlace (resolução).' }
+    { st: 1, tag: 'Conceito', q: 'O que é a estrutura de uma narrativa?', a: 'Situação inicial → desenvolvimento (peripécias/conflito) → ponto culminante (clímax) → desenlace (resolução).' },
+    { st: 4, tag: 'Definição', q: 'O que é uma epopeia?', a: 'Uma longa narrativa em verso que celebra os feitos heroicos de um povo. Em Portugal, «Os Lusíadas» de Camões.' },
+    { st: 4, tag: 'Os Lusíadas', q: 'Quem é o herói de «Os Lusíadas»?', a: 'Não é uma só personagem: o herói coletivo é o povo português, embora Vasco da Gama conduza a viagem narrada.' },
+    { st: 2, tag: 'Poesia', q: 'O que é a medida (métrica) de um poema?', a: 'É a contagem das sílabas métricas de cada verso (até à última tónica). Versos com o mesmo número têm medida regular.' },
+    { st: 3, tag: 'Definição', q: 'O que é o conflito no texto dramático?', a: 'É a oposição de forças/interesses entre personagens que faz avançar a ação (ex.: o Adamastor contra os navegadores).' }
   ],
   // ── Domínio 2 · Gramática (8.º) ──
   2: [

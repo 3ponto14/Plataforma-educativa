@@ -51,7 +51,10 @@ var _port7Cards = {
     { st: 3, tag: 'Contexto', q: 'Poetas trabalhados no 7.º ano (manual Mensagens 7)?', a: 'José Régio, Vitorino Nemésio, Sebastião da Gama, Ruy Cinatti, David Mourão-Ferreira e Percy B. Shelley.' },
     { st: 2, tag: 'Contexto', q: 'Que textos narrativos saem no manual Mensagens 7?', a: 'Contos tradicionais («Os dez anõezinhos da Tia Verde-Água»); narrativas de autor português (o touro Miura; a avó e o neto na praia; a caça à baleia nos Açores) e estrangeiro (A Ilha do Tesouro; Sexta-Feira).' },
     { st: 3, tag: 'Exemplo', q: '«Pelo sonho é que vamos», de Sebastião da Gama: qual é a mensagem?', a: 'O importante é SONHAR, mesmo sem garantia de êxito («chegamos ou não chegamos»). Verso hexassílabo (6 sílabas) e anáfora na repetição do verso-título.' },
-    { st: 3, tag: 'Exemplo', q: 'O «Senhor Papão» no poema de José Régio: o que simboliza?', a: 'É uma metáfora do medo que mora dentro de cada um. Só quando o sujeito se rende consegue vê-lo sem disfarce.' }
+    { st: 3, tag: 'Exemplo', q: 'O «Senhor Papão» no poema de José Régio: o que simboliza?', a: 'É uma metáfora do medo que mora dentro de cada um. Só quando o sujeito se rende consegue vê-lo sem disfarce.' },
+    { st: 4, tag: 'Definição', q: 'O que são as didascálias no texto dramático?', a: 'São as indicações cénicas (em itálico ou entre parênteses): dizem como falar, mover-se e os cenários. Não são ditas pelos atores.' },
+    { st: 4, tag: 'Conceito', q: 'Como se distingue ato de cena no teatro?', a: 'Ato: grande divisão da peça (muda o cenário/tempo). Cena: parte mais pequena, marcada pela entrada ou saída de personagens.' },
+    { st: 1, tag: 'Definição', q: 'Qual é a «moral» de uma fábula?', a: 'É o ensinamento final, muitas vezes explícito, que se retira da história protagonizada por animais com comportamentos humanos.' }
   ],
   // ── Domínio 2 · Gramática (7.º) ──
   2: [
