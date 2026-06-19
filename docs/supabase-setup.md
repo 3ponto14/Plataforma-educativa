@@ -648,7 +648,9 @@ $$;
 
 -- SESSÕES: prof do grupo + disciplina E ano meus. O aluno do grupo tem o `ano`
 -- na tabela grupo_membros; cruzamos com o que o prof dá nessa disciplina.
+-- (apaga AMBAS as versões possíveis da policy, para poder correr de novo.)
 drop policy if exists "prof gere sessoes da sua disc" on public.sessoes;
+drop policy if exists "prof gere sessoes disc+ano"    on public.sessoes;
 create policy "prof gere sessoes disc+ano" on public.sessoes for all
   using (
     public.eh_professor() and public.e_prof_do_grupo(grupo_id)
@@ -665,7 +667,9 @@ create policy "prof gere sessoes disc+ano" on public.sessoes for all
 
 -- RECURSOS (fichas): o prof só vê fichas da(s) sua(s) disciplina(s). As que
 -- não têm disciplina, ou são dele, vê sempre.
-drop policy if exists "ler recursos" on public.recursos;
+drop policy if exists "ler recursos"                 on public.recursos;
+drop policy if exists "aluno lê recursos"            on public.recursos;
+drop policy if exists "prof lê recursos da sua disc" on public.recursos;
 create policy "aluno lê recursos"  on public.recursos for select
   using (auth.role() = 'authenticated' and not public.eh_professor());
 create policy "prof lê recursos da sua disc" on public.recursos for select
