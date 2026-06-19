@@ -75,7 +75,15 @@ var _port8Cards = {
     { st: 3, tag: 'Definição', q: 'Facto vs. opinião?', a: 'Facto: pode ser verificado («estreou em 2020»). Opinião: exprime um juízo de valor («é uma série brilhante»). Saber distingui-los é essencial.' },
     { st: 3, tag: 'Definição', q: 'Sentido denotativo e conotativo?', a: 'Denotativo: sentido literal, de dicionário. Conotativo: sentido figurado, afetivo ou simbólico («noite» = escuridão/tristeza).' },
     { st: 1, tag: 'Estratégia', q: 'O que é inferir?', a: 'Concluir o que o texto sugere mas não diz com todas as letras, juntando pistas. É «ler nas entrelinhas».' },
-    { st: 1, tag: 'Estratégia', q: 'Como justificar uma resposta com o texto?', a: 'Indica a passagem (cita entre aspas ou refere a linha) e mostra como ela apoia a tua afirmação.' }
+    { st: 1, tag: 'Estratégia', q: 'Como justificar uma resposta com o texto?', a: 'Indica a passagem (cita entre aspas ou refere a linha) e mostra como ela apoia a tua afirmação.' },
+    { st: 1, tag: 'Definição', q: 'O que é a ideia principal de um parágrafo?', a: 'É a afirmação central que o parágrafo desenvolve; as outras frases dão exemplos, causas ou pormenores que a sustentam.' },
+    { st: 1, tag: 'Estratégia', q: 'Como identificar a intenção do autor?', a: 'Pergunta para que serve o texto: informar, convencer, criticar, emocionar? As escolhas de vocabulário e de tom dão pistas.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma notícia e a sua estrutura?', a: 'Relata um facto atual de forma objetiva. Tem título, lead (resume o essencial) e corpo, respondendo a quem/o quê/quando/onde/como/porquê.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma crónica?', a: 'Texto breve, de autor, que comenta o quotidiano misturando narração e opinião, muitas vezes com humor ou ironia.' },
+    { st: 2, tag: 'Definição', q: 'O que é um texto de opinião (artigo de opinião)?', a: 'Defende um ponto de vista com argumentos e exemplos; tem introdução (tese), desenvolvimento (razões) e conclusão.' },
+    { st: 3, tag: 'Estratégia', q: 'Como reconhecer a ironia num texto?', a: 'Diz-se o contrário do que se quer dizer, com intenção crítica ou humorística. O contexto e o tom revelam o sentido real.' },
+    { st: 3, tag: 'Definição', q: 'O que é a linguagem objetiva e subjetiva?', a: 'Objetiva: factual, sem emoção (notícia). Subjetiva: marca a presença de quem escreve (adjetivos de valor, 1.ª pessoa, opinião).' },
+    { st: 3, tag: 'Estratégia', q: 'Como inferir o estado de espírito de uma personagem?', a: 'Junta pistas: o que faz, o que diz, os adjetivos usados e o ambiente descrito. O texto sugere, tu concluis.' }
   ],
   // ── Domínio 4 · Escrita (8.º) ──
   4: [

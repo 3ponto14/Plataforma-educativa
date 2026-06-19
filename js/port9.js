@@ -77,7 +77,15 @@ var _port9Cards = {
     { st: 3, tag: 'Definição', q: 'Sentido denotativo vs. conotativo?', a: 'Denotativo = sentido literal, de dicionário. Conotativo = sentido figurado, com valor afetivo ou simbólico. Ex: "noite" (escuridão / tristeza).' },
     { st: 1, tag: 'Definição', q: 'O que é o narrador?', a: 'A entidade que conta a história. Pode ser participante (1.ª pessoa) ou não participante (3.ª pessoa); pode ter conhecimento total (omnisciente) ou parcial.' },
     { st: 1, tag: 'Estratégia', q: 'Como justificar uma resposta com o texto?', a: 'Indica a passagem (cita ou refere) e explica como ela apoia a tua afirmação. "Como se lê em…, conclui-se que…".' },
-    { st: 3, tag: 'Definição', q: 'O que são marcas de subjetividade?', a: 'Palavras que revelam a opinião/emoção de quem escreve: adjetivos valorativos, advérbios, verbos de opinião (acho, penso), pontuação expressiva.' }
+    { st: 3, tag: 'Definição', q: 'O que são marcas de subjetividade?', a: 'Palavras que revelam a opinião/emoção de quem escreve: adjetivos valorativos, advérbios, verbos de opinião (acho, penso), pontuação expressiva.' },
+    { st: 1, tag: 'Estratégia', q: 'Como distinguir ideia principal de ideia secundária?', a: 'A principal é a mensagem central do parágrafo; as secundárias acrescentam exemplos, causas ou pormenores que a apoiam.' },
+    { st: 1, tag: 'Estratégia', q: 'Como fazer um resumo fiel de um texto?', a: 'Identifica as ideias principais de cada parte, elimina exemplos e repetições, e reescreve-as encadeadas por palavras tuas, sem opinar.' },
+    { st: 1, tag: 'Definição', q: 'O que é a coesão e a coerência de um texto?', a: 'Coesão: a ligação entre as frases (conectores, pronomes). Coerência: o sentido lógico do conjunto, sem contradições.' },
+    { st: 2, tag: 'Definição', q: 'O que distingue um texto expositivo de um argumentativo?', a: 'Expositivo: informa/explica objetivamente. Argumentativo: defende uma tese com argumentos para convencer o leitor.' },
+    { st: 2, tag: 'Definição', q: 'O que é o texto publicitário e os seus recursos?', a: 'Quer persuadir: usa slogan, imperativo, trocadilhos, imagem e apelo às emoções/necessidades do destinatário.' },
+    { st: 3, tag: 'Estratégia', q: 'Como interpretar uma metáfora num texto?', a: 'Procura a relação entre os dois elementos identificados sem «como». «Mar de gente» = multidão enorme. O sentido é figurado.' },
+    { st: 3, tag: 'Definição', q: 'O que é a ironia e qual o seu efeito?', a: 'Dizer o contrário do que se pensa, com intenção crítica ou humorística. Cria cumplicidade com o leitor e reforça a crítica.' },
+    { st: 3, tag: 'Estratégia', q: 'Como reconhecer o ponto de vista do narrador?', a: 'Vê se ele participa na história (1.ª pessoa) ou a observa de fora (3.ª pessoa) e se sabe tudo (omnisciente) ou só o que vê.' }
   ],
   // ── Domínio 4 · Escrita ──
   4: [
