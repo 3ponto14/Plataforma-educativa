@@ -517,10 +517,17 @@ var Turmas = (function () {
       var g = res.data;
       var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
       var ano = (typeof Cloud.alunoAno === 'function' ? Cloud.alunoAno() : '') || null;
+      var base = { grupo_id: g.id, aluno: u.id, nome_aluno: nome };
       return sb.from('grupo_membros').upsert(
         { grupo_id: g.id, aluno: u.id, nome_aluno: nome, ano: ano },
         { onConflict: 'grupo_id,aluno' }
-      ).then(function (r2) { if (r2.error) throw r2.error; return g; });
+      ).then(function (r2) {
+        // coluna 'ano' ainda não criada → entra sem o ano (não bloqueia a entrada no grupo)
+        if (r2 && r2.error && /ano/.test(r2.error.message || '')) {
+          return sb.from('grupo_membros').upsert(base, { onConflict: 'grupo_id,aluno' }).then(function (r3) { if (r3.error) throw r3.error; return g; });
+        }
+        if (r2.error) throw r2.error; return g;
+      });
     });
   }
 
