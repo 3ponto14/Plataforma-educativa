@@ -47,7 +47,11 @@ var _port9Cards = {
     { st: 1, tag: 'Conceito', q: 'O que distingue texto narrativo de texto lírico?', a: 'O narrativo conta uma história (ação, personagens, narrador); o lírico exprime emoções e estados de alma do sujeito poético.' },
     { st: 4, tag: 'Poesia', q: 'O que é uma estrofe e um verso?', a: 'O verso é cada linha do poema; a estrofe é um conjunto de versos. Ex: a oitava de Os Lusíadas tem 8 versos decassílabos.' },
     { st: 4, tag: 'Poesia', q: 'O que é a rima?', a: 'A correspondência de sons no final dos versos. Pode ser emparelhada (aabb), cruzada (abab) ou interpolada (abba).' },
-    { st: 3, tag: 'Contexto', q: 'O que é o conto?', a: 'Uma narrativa curta, com poucas personagens e uma só ação central. Ex: «A Aia», de Eça de Queirós; «Um Dia Destes», de García Márquez.' }
+    { st: 3, tag: 'Contexto', q: 'O que é o conto?', a: 'Uma narrativa curta, com poucas personagens e uma só ação central. Ex: «A Aia», de Eça de Queirós; «Um Dia Destes», de García Márquez.' },
+    { st: 1, tag: 'Auto da Barca', q: 'Qual é a crítica social do Auto da Barca do Inferno?', a: 'Gil Vicente critica os vícios de todas as classes (fidalgo, onzeneiro, frade, clérigo…): o que conta para a salvação são as ações, não o estatuto.' },
+    { st: 1, tag: 'Auto da Barca', q: 'Que tipos de cómico há no Auto da Barca do Inferno?', a: 'Cómico de personagem (defeitos), de situação (cenas ridículas), de linguagem (trocadilhos, insultos) e de caráter.' },
+    { st: 2, tag: 'Os Lusíadas', q: 'Quais são os quatro planos de Os Lusíadas?', a: 'Plano da viagem (de Gama à Índia), da História de Portugal, da mitologia (deuses) e das considerações do poeta.' },
+    { st: 2, tag: 'Os Lusíadas', q: 'O que representa o Adamastor em Os Lusíadas?', a: 'É o gigante que personifica o Cabo das Tormentas e os perigos do mar desconhecido; anuncia desgraças aos navegadores.' }
   ],
   // ── Domínio 2 · Gramática ──
   2: [

@@ -4236,5 +4236,17 @@ a.grp-item-tit:hover{color:#2e7d52;text-decoration:underline}
 /* variante para ícones encostados à direita: tooltip alinhado à direita (não corta) */
 [data-tip].tip-end::after{left:auto;right:0;transform:translateX(0) translateY(4px)}
 [data-tip].tip-end:hover::after,[data-tip].tip-end:focus-visible::after{transform:translateX(0) translateY(0)}
-/* chips da topbar (🔥 ofensiva / ⭐ pontos): texto longo, deixar quebrar linha */
-.site-topbar-actions [data-tip]::after{white-space:normal;width:max-content;max-width:240px;text-align:left}
+/* chips da topbar (🔥 ofensiva / ⭐ pontos): estão colados ao topo do ecrã,
+   por isso o tooltip tem de abrir PARA BAIXO (senão fica cortado), alinhado à
+   direita e a quebrar linha (texto longo). */
+.site-topbar-actions [data-tip]::after{
+  bottom:auto;top:calc(100% + 7px);left:auto;right:0;
+  transform:translateY(-4px);
+  white-space:normal;width:max-content;max-width:240px;text-align:left}
+.site-topbar-actions [data-tip]::before{
+  bottom:auto;top:calc(100% + 2px);left:auto;right:14px;
+  transform:translateY(-4px);
+  border-top-color:transparent;border-bottom-color:#2a2620}
+.site-topbar-actions [data-tip]:hover::after,.site-topbar-actions [data-tip]:focus-visible::after,
+.site-topbar-actions [data-tip]:hover::before,.site-topbar-actions [data-tip]:focus-visible::before{
+  transform:translateY(0)}

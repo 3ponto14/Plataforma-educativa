@@ -68,7 +68,11 @@ var _port8Cards = {
     { st: 3, tag: 'Regra', q: 'Subordinação substantiva completiva: como reconhecer?', a: 'Completa o sentido de um verbo, nome ou adjetivo e responde a «o quê?»: «Disse [que viria]»: a oração é complemento direto.' },
     { st: 2, tag: 'Definição', q: 'Modificador do nome restritivo e apositivo?', a: 'Restritivo: limita o sentido do nome, sem vírgulas («o aluno que estudou»). Apositivo: acrescenta informação, entre vírgulas («o Rui, meu vizinho»).' },
     { st: 5, tag: 'Definição', q: 'Léxico: como se formam palavras?', a: 'Derivação (prefixação, sufixação, parassíntese: en+triste+cer) e composição (morfológica: pluvi+oso; morfossintática: guarda-chuva).' },
-    { st: 3, tag: 'Regra', q: 'Discurso direto e indireto?', a: 'Direto: reproduz as falas (« — Vou já»). Indireto: integra-as na narração (Disse que ia já): mudam tempos verbais, pronomes e dêiticos.' }
+    { st: 3, tag: 'Regra', q: 'Discurso direto e indireto?', a: 'Direto: reproduz as falas (« — Vou já»). Indireto: integra-as na narração (Disse que ia já): mudam tempos verbais, pronomes e dêiticos.' },
+    { st: 1, tag: 'Definição', q: 'Que classes de palavras são variáveis e invariáveis?', a: 'Variáveis (mudam de forma): nome, adjetivo, determinante, pronome, quantificador, verbo. Invariáveis: advérbio, preposição, conjunção, interjeição.' },
+    { st: 1, tag: 'Definição', q: 'O que distingue advérbio de adjetivo?', a: 'O adjetivo caracteriza um nome e concorda com ele («casa bonita»); o advérbio modifica um verbo/adjetivo e é invariável («correu rapidamente»).' },
+    { st: 4, tag: 'Regra', q: 'Como se forma a voz passiva?', a: 'Verbo «ser» + particípio passado do verbo principal: «O bolo foi comido». O agente da passiva introduz-se por «por».' },
+    { st: 5, tag: 'Definição', q: 'O que é um campo lexical?', a: 'Conjunto de palavras associadas a uma área/tema. Ex.: campo lexical da escola: aluno, professor, aula, caderno, recreio.' }
   ],
   // ── Domínio 3 · Leitura (8.º) ──
   3: [

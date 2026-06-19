@@ -69,7 +69,11 @@ var _port7Cards = {
     { st: 3, tag: 'Definição', q: 'Discurso direto e indireto?', a: 'Direto: reproduz as falas tal e qual (« — Vou sair», disse). Indireto: integra-as na narração (Disse que ia sair): mudam tempos verbais, pronomes e advérbios.' },
     { st: 1, tag: 'Regra', q: 'Colocação do pronome átono: quando vai para antes do verbo?', a: 'Com negação («Não o vi»), com certos advérbios («Já o li») e em orações subordinadas («…que o viu»).' },
     { st: 5, tag: 'Definição', q: 'Léxico: como se formam palavras?', a: 'Derivação (prefixos/sufixos: feliz → infeliz, felizmente) e composição (guarda-chuva, couve-flor).' },
-    { st: 5, tag: 'Regra', q: 'Variedades geográficas do português?', a: 'Português europeu, do Brasil e variedades africanas: a mesma língua com diferenças de vocabulário, pronúncia e construção.' }
+    { st: 5, tag: 'Regra', q: 'Variedades geográficas do português?', a: 'Português europeu, do Brasil e variedades africanas: a mesma língua com diferenças de vocabulário, pronúncia e construção.' },
+    { st: 1, tag: 'Definição', q: 'O que é o nome (substantivo) e os seus tipos?', a: 'Palavra que designa seres, coisas ou ideias. Comum/próprio, concreto/abstrato, coletivo (ex.: «cardume»). Varia em género e número.' },
+    { st: 4, tag: 'Definição', q: 'Quais são os tempos do modo indicativo?', a: 'Presente, pretérito (perfeito, imperfeito, mais-que-perfeito) e futuro. O indicativo exprime factos reais ou certos.' },
+    { st: 4, tag: 'Regra', q: 'Para que serve o modo imperativo?', a: 'Exprime ordens, pedidos ou conselhos: «Fecha a porta», «Tem cuidado». Usa-se na 2.ª pessoa, sem sujeito expresso.' },
+    { st: 5, tag: 'Definição', q: 'O que são sinónimos e antónimos?', a: 'Sinónimos: palavras de sentido próximo (alegre/contente). Antónimos: de sentido oposto (alegre/triste).' }
   ],
   // ── Domínio 3 · Leitura (7.º) ──
   3: [
