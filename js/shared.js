@@ -131,6 +131,20 @@ function eduFormModal(titulo, campos, onSubmit, opts) {
   document.getElementById('efm-ok').onclick = submeter;
 }
 
+/* Linha "Aluno: Nome · 7.º ano" para o cabeçalho dos relatórios de progresso
+   em PDF, vinda da conta com sessão iniciada. Devolve '' se não houver sessão
+   ou nome (ex.: a usar sem conta), para o relatório continuar a sair na mesma.
+   Centraliza isto para não duplicar em mat5–mat11, fq7–fq9, port7–port9. */
+function eduAlunoLinhaPDF() {
+  if (typeof Cloud === 'undefined' || !Cloud.utilizador || !Cloud.utilizador()) return '';
+  var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : '') || '';
+  if (!nome) return '';
+  var ano = (typeof Cloud.alunoAno === 'function' ? Cloud.alunoAno() : '') || '';
+  var esc = function (s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+  return '<div style="font-size:14px;color:#333;margin:-8px 0 14px"><strong>Aluno:</strong> '
+    + esc(nome) + (ano ? ' &middot; ' + esc(ano) + '.º ano' : '') + '</div>';
+}
+
 function htmlToPdfDownload(htmlContent, filename) {
   // Prefix filename with user/role if available (optional, may not be set)
   var _userName = (typeof window !== 'undefined' && (window._n || window.userName)) || null;
