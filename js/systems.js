@@ -1422,103 +1422,35 @@ function toggleTeacher(btn) {
 }
 
 
-// DOWNLOAD PROGRESSO JSON e PDF
-function _progRecolherTudo() {
-  // Junta dados dos 4 caps + ProgressManager XP
-  var cap4raw = {};
-  try { cap4raw = JSON.parse(localStorage.getItem('edupt_cap4') || '{}'); } catch(e) {}
-  var pm = {};
-  try { pm = JSON.parse(localStorage.getItem('edupt_progress_v2') || '{}'); } catch(e) {}
-
-  function secTotals(data) {
-    var c=0,t=0;
-    if (data && data.sections) Object.values(data.sections).forEach(function(s){ c+=s.correct||0; t+=s.total||0; });
-    return { corretas: c, total: t, taxa: t>0 ? Math.round(c/t*100)+'%' : '-', detalhe: data && data.sections ? data.sections : {} };
-  }
-  function cap4Totals() {
-    var c=0,t=0,det={};
-    Object.entries(cap4raw).forEach(function(kv) {
-      var k=kv[0], v=kv[1];
-      if (v && typeof v.correct==='number') { c+=v.correct; t+=v.total||0; det[k]={corretas:v.correct,total:v.total||0}; }
-    });
-    return { corretas: c, total: t, taxa: t>0 ? Math.round(c/t*100)+'%' : '-', detalhe: det };
-  }
-
-  return {
-    exportadoEm: new Date().toLocaleString('pt-PT'),
-    xpTotal: (pm.totalXp || 0),
-    streakDias: (pm.streak || 0),
-    capitulos: {
-      'Números Inteiros':  secTotals(typeof _progData  !== 'undefined' ? _progData  : null),
-      'Números Racionais': secTotals(typeof _progData2 !== 'undefined' ? _progData2 : null),
-      'Geometria': secTotals(typeof _progData3 !== 'undefined' ? _progData3 : null),
-      'Equações':   cap4Totals(),
-      'Sequências': (function(){ var p={}; try{p=JSON.parse(localStorage.getItem('edupt_cap5')||'{}');}catch(e){} return p; })(),
-      'Funções':    (function(){ var p={}; try{p=JSON.parse(localStorage.getItem('edupt_cap6')||'{}');}catch(e){} return p; })(),
-      'Figuras Semelhantes': (function(){ var p={}; try{p=JSON.parse(localStorage.getItem('edupt_cap7')||'{}');}catch(e){} return p; })(),
-      'Dados e Probabilidades': (function(){ var p={}; try{p=JSON.parse(localStorage.getItem('edupt_cap8')||'{}');}catch(e){} return p; })()
-    },
-    historico: {
-      cap1: (typeof _progData  !== 'undefined' ? _progData.log  : []),
-      cap2: (typeof _progData2 !== 'undefined' ? _progData2.log : []),
-      cap3: (typeof _progData3 !== 'undefined' ? _progData3.log : []),
-      cap4: (function(){ var p={}; try{p=JSON.parse(localStorage.getItem('edupt_cap4')||'{}');}catch(e){} return p.last_updated ? p : null; })(),
-      cap5: (function(){ var p={}; try{p=JSON.parse(localStorage.getItem('edupt_cap5')||'{}');}catch(e){} return p.last_updated ? p : null; })()
-    }
-  };
-}
-
+// DOWNLOAD PROGRESSO PDF
 function progDownloadPDF() {
-  var d = _progRecolherTudo();
-  var caps = d.capitulos;
-  var cor = function(taxa) {
-    if (taxa==='-') return '#9e9e9e';
-    var n = parseInt(taxa);
-    if (isNaN(n)) return '#9e9e9e';
-    return n>=80 ? '#516860' : n>=50 ? '#c4a030' : '#c4796e';
-  };
-  var barraHtml = function(taxa) {
-    if (taxa==='-') return '<div style="width:100%;height:8px;background:#eee;border-radius:4px"></div>';
-    var n = parseInt(taxa);
-    if (isNaN(n)) n = 0;
-    return '<div style="width:100%;height:8px;background:#eee;border-radius:4px;overflow:hidden"><div style="height:100%;width:'+n+'%;background:'+cor(taxa)+';border-radius:4px"></div></div>';
-  };
+  // Mesmo formato dos restantes anos (mat5–mat11, fq, port): cabeçalho com
+  // título + data + linha do aluno, caixa da taxa global e tabela por capítulo,
+  // exportado via htmlToPdfDownload (coerência entre todos os relatórios).
+  var caps = _progGetCapTotals();
+  var totalC = 0, totalT = 0;
+  caps.forEach(function(c){ totalC += c.data.correct; totalT += c.data.total; });
+  var globalPct = totalT > 0 ? Math.round(totalC / totalT * 100) : 0;
 
-  var capsHtml = Object.entries(caps).map(function(kv) {
-    var nome = kv[0], c = kv[1];
-    return '<tr><td style="padding:10px 14px;font-weight:600;color:#2a2724">'+nome+'</td>'
-      +'<td style="padding:10px 14px;text-align:center;font-family:monospace">'+c.corretas+'/'+c.total+'</td>'
-      +'<td style="padding:10px 14px;text-align:center;font-weight:700;color:'+cor(c.taxa)+'">'+c.taxa+'</td>'
-      +'<td style="padding:10px 24px 10px 14px;min-width:120px">'+barraHtml(c.taxa)+'</td></tr>';
+  var rows = caps.map(function(c) {
+    var pct = c.data.total > 0 ? Math.round(c.data.correct / c.data.total * 100) : 0;
+    return '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">' + c.name + '</td>'
+      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.data.total > 0 ? c.data.correct + ' / ' + c.data.total : '-') + '</td>'
+      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.data.total > 0 ? pct + '%' : '-') + '</td></tr>';
   }).join('');
 
-  var totalCorretas = Object.values(caps).reduce(function(s,c){return s+c.corretas;},0);
-  var totalQs       = Object.values(caps).reduce(function(s,c){return s+c.total;},0);
-  var taxaGlobal    = totalQs>0 ? Math.round(totalCorretas/totalQs*100)+'%' : '-';
+  var html = '<div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;padding:24px">'
+    + '<h1 style="font-size:20px;margin:0 0 4px">Relatório de Progresso · Matemática 7.º Ano</h1>'
+    + '<div style="color:#666;font-size:13px;margin-bottom:16px">3ponto14 · ' + new Date().toLocaleString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' }) + '</div>'
+    + eduAlunoLinhaPDF()
+    + '<div style="background:#eef3f9;border:1px solid #5a7fa8;border-radius:8px;padding:12px 16px;margin-bottom:16px">'
+    + '<strong>Taxa global:</strong> ' + (totalT > 0 ? globalPct + '%' : '-') + ' &nbsp;·&nbsp; ' + totalC + ' certas em ' + totalT + ' questões.</div>'
+    + '<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr style="background:#36527a;color:#fff">'
+    + '<th style="padding:8px 10px;text-align:left">Capítulo</th><th style="padding:8px 10px">Certas</th><th style="padding:8px 10px">%</th></tr></thead>'
+    + '<tbody>' + rows + '</tbody></table></div>';
 
-  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8">'
-    + '<title>Progresso 3ponto14 · Mat 7</title>'
-    + '</head><body>'
-    + '<h1>3ponto14 · Matemática 7.º ano</h1>'
-    + ''
-    + '<p class="sub">Relatório de progresso exportado em '+d.exportadoEm+'</p>'
-    + '<div class="stat-grid">'
-    +   '<div class="stat"><div class="n">'+totalCorretas+'</div><div class="l">Respostas certas</div></div>'
-    +   '<div class="stat"><div class="n">'+taxaGlobal+'</div><div class="l">Taxa global</div></div>'
-    +   '<div class="stat"><div class="n">'+d.xpTotal+'</div><div class="l">XP total</div></div>'
-    + '</div>'
-    + '<h2>Desempenho por Capítulo</h2>'
-    + '<table><thead><tr><th>Capítulo</th><th style="text-align:center">Certas / Total</th><th style="text-align:center">Taxa</th><th>Barra</th></tr></thead>'
-    + '<tbody>'+capsHtml+'</tbody></table>'
-    + '<div class="footer"><span>3ponto14.pt</span><span>Progresso guardado localmente neste browser</span></div>'
-    + '</body></html>';
-
-  var win = window.open('', '_blank', 'width=720,height=900');
-  if (!win) { alert('Permite popups para gerar o PDF.'); return; }
-  win.document.write(html);
-  win.document.close();
-  win.focus();
-  setTimeout(function(){ win.print(); }, 400);
+  if (typeof htmlToPdfDownload === 'function') htmlToPdfDownload(html, 'progresso-mat7.pdf');
+  else if (typeof eduToast === 'function') eduToast('Geração de PDF indisponível.', 'warn');
 }
 
 // PROGRESSO UNIFICADO hub tab "Progresso" (todos os capítulos)
