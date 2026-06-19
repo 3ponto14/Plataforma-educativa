@@ -77,7 +77,15 @@ var _port7Cards = {
     { st: 2, tag: 'Definição', q: 'O que é uma biografia?', a: 'Um texto que relata a vida de uma pessoa real, geralmente por ordem cronológica (nascimento, percurso, feitos).' },
     { st: 3, tag: 'Definição', q: 'Sentido literal vs. sentido figurado?', a: 'Literal = o que as palavras dizem exatamente. Figurado = um sentido «emprestado»: «coração de pedra» = pessoa insensível.' },
     { st: 3, tag: 'Estratégia', q: 'O que é inferir?', a: 'Concluir algo que o texto não diz com todas as letras, juntando pistas: «vestiu o casaco e pegou no chapéu-de-chuva» → ia sair e chovia.' },
-    { st: 1, tag: 'Estratégia', q: 'Como justificar com o texto?', a: 'Indica a passagem (cita entre aspas ou refere a linha) e explica como ela apoia a tua resposta.' }
+    { st: 1, tag: 'Estratégia', q: 'Como justificar com o texto?', a: 'Indica a passagem (cita entre aspas ou refere a linha) e explica como ela apoia a tua resposta.' },
+    { st: 1, tag: 'Definição', q: 'O que é a ideia principal e as ideias secundárias?', a: 'A ideia principal é a mensagem central de um parágrafo; as secundárias dão pormenores, exemplos ou explicações que a apoiam.' },
+    { st: 1, tag: 'Estratégia', q: 'Como responder a uma pergunta «de acordo com o texto»?', a: 'A resposta tem de sair do texto (não da tua opinião). Localiza a parte certa e reformula por palavras tuas, sem inventar.' },
+    { st: 1, tag: 'Definição', q: 'O que é a finalidade (intenção) de um texto?', a: 'É o objetivo do autor: informar, convencer, emocionar, dar instruções ou entreter. Reconhecê-la ajuda a interpretar.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma notícia e quais as suas perguntas-chave?', a: 'Relata um facto atual e responde a: O quê? Quem? Quando? Onde? Como? Porquê. Tem título, lead e corpo.' },
+    { st: 2, tag: 'Definição', q: 'O que é um texto instrucional?', a: 'Dá indicações passo a passo (receita, regras de um jogo, manual). Usa verbos no imperativo ou no infinitivo e ordem clara.' },
+    { st: 2, tag: 'Regra', q: 'Como distinguir facto de opinião?', a: 'Facto: pode verificar-se (data, número, acontecimento). Opinião: exprime um juízo («acho», «é o melhor»), varia de pessoa para pessoa.' },
+    { st: 3, tag: 'Definição', q: 'O que é a conotação e a denotação?', a: 'Denotação: o sentido literal/de dicionário. Conotação: os sentidos sugeridos, afetivos ou simbólicos (ex.: «casa» = abrigo, família).' },
+    { st: 3, tag: 'Estratégia', q: 'Como interpretar uma expressão idiomática?', a: 'Não a leias à letra. «Estar com a pulga atrás da orelha» = estar desconfiado. O sentido é o do conjunto, não das palavras.' }
   ],
   // ── Domínio 4 · Escrita (7.º) ──
   4: [
@@ -1029,9 +1037,9 @@ function port7ProgDownloadPDF() {
     + '<h1 style="font-size:20px;margin:0 0 4px">Relatório de Progresso · Português 7.º Ano</h1>'
     + '<div style="color:#666;font-size:13px;margin-bottom:16px">3ponto14 · ' + new Date().toLocaleString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' }) + '</div>'
     + eduAlunoLinhaPDF()
-    + '<div style="background:#eef3f9;border:1px solid #5a7fa8;border-radius:8px;padding:12px 16px;margin-bottom:16px">'
+    + '<div style="background:#eef2f0;border:1px solid #9ab5aa;border-radius:8px;padding:12px 16px;margin-bottom:16px">'
     + '<strong>Taxa global:</strong> ' + (totalT > 0 ? globalPct + '%' : '-') + ' &nbsp;·&nbsp; ' + totalC + ' certas em ' + totalT + ' questões.</div>'
-    + '<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr style="background:#36527a;color:#fff">'
+    + '<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr style="background:#516860;color:#fff">'
     + '<th style="padding:8px 10px;text-align:left">Capítulo</th><th style="padding:8px 10px">Certas</th><th style="padding:8px 10px">%</th></tr></thead>'
     + '<tbody>' + rows + '</tbody></table></div>';
   if (typeof htmlToPdfDownload === 'function') htmlToPdfDownload(html, 'progresso-port7.pdf');
