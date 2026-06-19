@@ -415,10 +415,10 @@ function pmUpdateTopbar() {
   var h = '';
   if (streak > 0 && ofensivaViva) {
     var apagada = lastDay === ontem;
-    h += '<span class="tip-end" data-tip="' + tipFogo + '" title="' + tipFogo + '" style="display:inline-flex;align-items:center;gap:.25rem;background:' + (apagada ? '#fff3e0' : '#fdeede') + ';color:#c2410c;border:1px solid ' + (apagada ? '#ffd8a8' : '#f7d3a8') + ';border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800;cursor:help' + (apagada ? ';opacity:.75' : '') + '">🔥 ' + streak + '</span>';
+    h += '<span class="tip-end" tabindex="0" data-tip="' + tipFogo + '" style="display:inline-flex;align-items:center;gap:.25rem;background:' + (apagada ? '#fff3e0' : '#fdeede') + ';color:#c2410c;border:1px solid ' + (apagada ? '#ffd8a8' : '#f7d3a8') + ';border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800;cursor:help' + (apagada ? ';opacity:.75' : '') + '">🔥 ' + streak + '</span>';
   }
   if (xp > 0) {
-    h += '<span class="tip-end" data-tip="' + tipXp + '" title="' + tipXp + '" style="display:inline-flex;align-items:center;gap:.25rem;background:#f0edf7;color:#4a3f7a;border:1px solid #ddd8f5;border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800;cursor:help">⭐ ' + xp + '</span>';
+    h += '<span class="tip-end" tabindex="0" data-tip="' + tipXp + '" style="display:inline-flex;align-items:center;gap:.25rem;background:#f0edf7;color:#4a3f7a;border:1px solid #ddd8f5;border-radius:999px;padding:4px 11px;font-family:Montserrat,sans-serif;font-size:.82rem;font-weight:800;cursor:help">⭐ ' + xp + '</span>';
   }
   box.innerHTML = h;            // chips de fogo/XP (recria o conteúdo)
   // 🏆 conquistas é só do aluno (desafio); não mostrar a professores
