@@ -10,6 +10,23 @@ funciona como antes.
 
 ---
 
+## 3-limpeza. APAGAR CONTAS DE TESTE — colar no SQL Editor → Run
+
+Apaga as contas de teste criadas durante o desenvolvimento (emails terminados
+em `@ex.com` ou `@example.com`). O `on delete cascade` das tabelas remove
+automaticamente os grupos/membros/sessões/mensagens ligados a elas.
+
+```sql
+delete from auth.users
+where email like '%@ex.com' or email like '%@example.com';
+```
+
+> Confirma antes que NENHUMA conta real tua usa esses domínios (as tuas são
+> `3ponto14edu@gmail.com`, `joanacarvalho89`, `aprendecomigoedu` — não são
+> apanhadas por este filtro).
+
+---
+
 ## 1. Chaves (dadas pela dona)
 
 No Supabase: ⚙️ Settings → API Keys → Publishable key.
@@ -593,6 +610,71 @@ create policy "prof gere sessoes da sua disc" on public.sessoes for all
 > A vista da ficha do aluno já está agrupada por disciplina; com este SQL, um
 > professor só vê lá as disciplinas que dá. As sessões de outras disciplinas
 > ficam invisíveis para ele (não aparecem sequer no histórico).
+
+## 3h-ter. ANO do aluno + RLS por DISCIPLINA E ANO — colar no SQL Editor → Run
+
+Acrescenta a coluna `ano` do aluno (o registo pede o ano ao aluno e grava-o
+aqui; aparece ao lado do nome nas turmas) e aperta a segurança: um prof só vê
+as sessões da(s) disciplina(s) **e ano(s)** que dá.
+Ex.: quem dá Matemática só ao 1.º ciclo não vê sessões de Matemática do 9.º.
+Também limita as FICHAS/recursos à disciplina do professor.
+
+```sql
+-- Coluna do ano do aluno nas tabelas de turmas (o registo já tenta gravá-la).
+alter table public.apoio_alunos  add column if not exists ano text;
+alter table public.grupo_membros add column if not exists ano text;
+
+-- Helper: leio do JWT o mapa disciplina→anos e digo se (disc, ano) é meu.
+-- Match da disciplina pela base (ignora o ano no rótulo). Se a disciplina não
+-- tiver anos definidos, ou a sessão não tiver ano, deixa passar.
+create or replace function public.disciplina_ano_meu(d text, a text)
+returns boolean language sql stable security definer set search_path = public as $$
+  with mapa as (
+    select coalesce(auth.jwt() -> 'user_metadata' -> 'disciplinas_anos', '{}'::jsonb) as m
+  ),
+  pares as (
+    select k as disc, array(select jsonb_array_elements_text(value)) as anos
+    from mapa, jsonb_each((select m from mapa)) as e(k, value)
+  )
+  select
+    -- sem mapa definido → vê tudo (estado inicial, antes do onboarding)
+    not exists (select 1 from pares)
+    or exists (
+      select 1 from pares p
+      where (lower(d) like '%' || lower(p.disc) || '%' or lower(p.disc) like '%' || lower(d) || '%')
+        and (a is null or a = '' or array_length(p.anos,1) is null or a = any(p.anos))
+    );
+$$;
+
+-- SESSÕES: prof do grupo + disciplina E ano meus. O aluno do grupo tem o `ano`
+-- na tabela grupo_membros; cruzamos com o que o prof dá nessa disciplina.
+drop policy if exists "prof gere sessoes da sua disc" on public.sessoes;
+create policy "prof gere sessoes disc+ano" on public.sessoes for all
+  using (
+    public.eh_professor() and public.e_prof_do_grupo(grupo_id)
+    and public.disciplina_ano_meu(
+      disciplina,
+      (select gm.ano from public.grupo_membros gm
+        where gm.grupo_id = sessoes.grupo_id and gm.aluno = sessoes.aluno limit 1)
+    )
+  )
+  with check (
+    public.eh_professor() and public.e_prof_do_grupo(grupo_id) and auth.uid() = prof
+    and public.disciplina_minha(disciplina)
+  );
+
+-- RECURSOS (fichas): o prof só vê fichas da(s) sua(s) disciplina(s). As que
+-- não têm disciplina, ou são dele, vê sempre.
+drop policy if exists "ler recursos" on public.recursos;
+create policy "aluno lê recursos"  on public.recursos for select
+  using (auth.role() = 'authenticated' and not public.eh_professor());
+create policy "prof lê recursos da sua disc" on public.recursos for select
+  using (public.eh_professor() and (autor = auth.uid() or public.disciplina_minha(disciplina)));
+```
+
+> Nota: as TAREFAS já estão isoladas por professor (cada prof só vê as que
+> criou — `professor = auth.uid()`), por isso não há fuga por disciplina aí.
+> A vista (UI) já filtra disciplina+ano; este SQL fecha-o também na BD.
 
 ## 3i. SQL dos DESTINATÁRIOS (ficha/trabalho para grupo ou aluno) — Run
 

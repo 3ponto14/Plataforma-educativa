@@ -194,9 +194,11 @@
     var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
     var prof = (typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor());
 
-    // Gate: professor sem disciplinas definidas tem de as escolher antes de
-    // usar a plataforma (filtra as dúvidas públicas pela disciplina certa).
-    if (prof && typeof Cloud.profDisciplinas === 'function' && !Cloud.profDisciplinas().length) {
+    // Gate: professor tem de ter o mapa disciplina→anos definido antes de
+    // usar a plataforma (filtra as dúvidas/acompanhamento pela disciplina e
+    // ano certos). Apanha também contas antigas que só tinham a lista plana
+    // de disciplinas (sem os anos por disciplina) — pedimos que reconfirmem.
+    if (prof && _profPrecisaDisciplinas()) {
       _pintarOnboardingProf(sec, nome);
       return;
     }
@@ -216,6 +218,7 @@
     } else {
       // "O que tenho para fazer" + Desafio. (As mensagens do professor
       // vivem agora na secção Turmas, junto ao registo do aluno.)
+      h += '<div id="pi-ano-aluno" class="pi-ano-aluno-slot"></div>';
       h += '<div id="pi-tarefas" class="pi-tarefas-slot"></div>';
       h += '<div id="pi-desafio-slot" class="pi-desafio-slot"></div>';
     }
@@ -241,9 +244,38 @@
       var des2 = document.getElementById('portal-desafio');
       if (des2) des2.style.display = '';
       _moverDesafio();
+      _pintarAnoAluno();
       _pintarTarefasAluno();
     }
   }
+
+  /* Aluno sem ano definido (conta criada antes deste campo): pede uma vez,
+     de forma simpática, que escolha o ano. É das infos mais importantes da
+     escola — fica ao lado do nome para os professores. Some assim que escolhe. */
+  function _pintarAnoAluno() {
+    var box = document.getElementById('pi-ano-aluno');
+    if (!box) return;
+    if (typeof Cloud.alunoAno !== 'function' || Cloud.alunoAno()) { box.innerHTML = ''; return; }
+    var anos = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+    var pills = anos.map(function (a) {
+      return '<button type="button" onclick="alunoEscolherAno(\'' + a + '\')" style="background:var(--white);border:1.5px solid var(--border);color:var(--ink3);border-radius:999px;padding:5px 11px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">' + a + '.º</button>';
+    }).join('');
+    box.innerHTML = '<div class="pi-tar-card" style="border-color:#ddd8f5">'
+      + '<div class="pi-tar-h"><span><i class="ph ph-graduation-cap" style="color:#4a3f7a"></i> Em que ano andas?</span></div>'
+      + '<div style="font-size:.82rem;color:var(--ink3);line-height:1.5;margin:.2rem 0 .6rem">Escolhe o teu ano de escolaridade. Aparece ao lado do teu nome para os teus professores saberem quem és.</div>'
+      + '<div style="display:flex;flex-wrap:wrap;gap:.3rem">' + pills + '</div></div>';
+  }
+
+  /* Aluno escolhe/atualiza o ano: grava nos metadados + tabelas das turmas. */
+  window.alunoEscolherAno = function (ano) {
+    if (typeof Cloud === 'undefined' || !Cloud.atualizarAnoAluno) return;
+    Cloud.atualizarAnoAluno(ano).then(function () {
+      if (typeof eduToast === 'function') eduToast('Ano guardado: ' + ano + '.º 🎓', 'success');
+      _pintarAnoAluno();
+    }).catch(function (e) {
+      if (typeof eduToast === 'function') eduToast((e && e.message) || 'Não foi possível guardar. Verifica a ligação.', 'error');
+    });
+  };
 
   /* Professor: «as tuas turmas hoje» — dúvidas por responder + entregas,
      com link direto para as Turmas. Só aparece se houver algo. */
@@ -386,12 +418,40 @@
     return map;
   }
 
-  /* Onboarding obrigatório: escolher disciplinas E os anos de cada uma. */
+  /* Precisa de (re)definir o perfil? Sim se não tem disciplinas, OU se tem a
+     lista antiga de disciplinas mas ainda não o mapa disciplina→anos (contas
+     criadas antes de os anos por disciplina existirem). Assim, professores
+     já registados são convidados a preencher os anos de cada disciplina. */
+  function _profPrecisaDisciplinas() {
+    if (typeof Cloud.profDisciplinas !== 'function') return false;
+    if (!Cloud.profDisciplinas().length) return true;
+    var u = (typeof Cloud.utilizador === 'function') ? Cloud.utilizador() : null;
+    var map = u && u.user_metadata && u.user_metadata.disciplinas_anos;
+    // sem mapa explícito (só listas planas) → reconfirma para escolher os anos
+    if (!map || typeof map !== 'object' || Array.isArray(map)) return true;
+    // mapa existe mas alguma disciplina ficou sem anos → reconfirma
+    var discs = Object.keys(map);
+    if (!discs.length) return true;
+    for (var i = 0; i < discs.length; i++) {
+      if (!Array.isArray(map[discs[i]]) || !map[discs[i]].length) return true;
+    }
+    return false;
+  }
+
+  /* Onboarding obrigatório: escolher disciplinas E os anos de cada uma.
+     Pré-preenche com o que o professor já tinha (contas antigas que só
+     escolheram disciplinas, sem os anos), para só confirmarem/completarem. */
   function _pintarOnboardingProf(sec, nome) {
+    var atual = (Cloud.profDisciplinasAnos && Cloud.profDisciplinasAnos()) || {};
+    var jaTinha = Object.keys(atual).length > 0;
+    var titulo = jaTinha ? 'Completa o teu perfil, ' + _esc(nome) + ' 👋' : 'Bem-vindo, ' + _esc(nome) + '! 👋';
+    var intro = jaTinha
+      ? 'Atualizámos o perfil: agora indicas <strong>os anos</strong> que lecionas em cada disciplina. Confirma os anos de cada disciplina abaixo (ex.: Matemática no 1.º ciclo, Português só no 9.º). Usa-se para te mostrar só as dúvidas e o acompanhamento que te dizem respeito.'
+      : 'Escolhe <strong>as disciplinas que lecionas</strong> e, em cada uma, <strong>os anos</strong>. Ex.: Matemática no 1.º ciclo, Português só no 9.º. Usa-se para te mostrar só as dúvidas que te dizem respeito.';
     var h = '<div class="pi-wrap"><div style="background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.5rem 1.6rem;max-width:680px;margin:0 auto">'
-      + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.7rem;font-weight:700;color:var(--ink1);margin-bottom:.2rem">Bem-vindo, ' + _esc(nome) + '! 👋</div>'
-      + '<div style="font-size:.9rem;color:var(--ink3);line-height:1.5;margin-bottom:1.2rem">Escolhe <strong>as disciplinas que lecionas</strong> e, em cada uma, <strong>os anos</strong>. Ex.: Matemática no 1.º ciclo, Português só no 9.º. Usa-se para te mostrar só as dúvidas que te dizem respeito.</div>'
-      + '<div id="pi-onb-discs">' + _piDiscAnosHTML({}) + '</div>'
+      + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.7rem;font-weight:700;color:var(--ink1);margin-bottom:.2rem">' + titulo + '</div>'
+      + '<div style="font-size:.9rem;color:var(--ink3);line-height:1.5;margin-bottom:1.2rem">' + intro + '</div>'
+      + '<div id="pi-onb-discs">' + _piDiscAnosHTML(atual) + '</div>'
       + '<div id="pi-onb-erro" style="display:none;color:#c0392b;font-size:.82rem;margin:.4rem 0 .7rem"></div>'
       + '<button id="pi-onb-btn" onclick="piOnbGuardar()" style="width:100%;margin-top:.6rem;background:linear-gradient(135deg,#2e7d52,#3da06a);color:#fff;border:none;border-radius:12px;padding:.85rem;font-family:Montserrat,sans-serif;font-size:.92rem;font-weight:800;cursor:pointer">Guardar e continuar</button>'
       + '</div></div>';

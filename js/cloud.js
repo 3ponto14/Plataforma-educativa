@@ -64,6 +64,23 @@ var Cloud = (function () {
     if (n && String(n).trim()) return String(n).trim();
     return ((user && user.email) || '').split('@')[0];
   }
+  /* Ano de escolaridade do aluno (string '1'..'12'), ou '' se não definido. */
+  function alunoAno() {
+    var a = user && user.user_metadata && user.user_metadata.ano;
+    return a ? String(a) : '';
+  }
+  /* Atualiza o ano do aluno nos metadados (para contas antigas que ainda
+     não o tinham). Sincroniza também a coluna nas tabelas de turmas. */
+  function atualizarAnoAluno(ano) {
+    if (!sb || !user) return Promise.reject(new Error('Inicia sessão.'));
+    ano = String(ano || '');
+    return sb.auth.updateUser({ data: { ano: ano } }).then(function (res) {
+      if (res.error) throw res.error;
+      if (res.data && res.data.user) user = res.data.user;
+      if (typeof Turmas !== 'undefined' && Turmas.sincronizarAno) { try { Turmas.sincronizarAno(); } catch (e) {} }
+      return true;
+    });
+  }
 
   /* ── Arranque: cria o cliente se a lib do Supabase estiver carregada ── */
   function init(onReady) {
@@ -110,6 +127,10 @@ var Cloud = (function () {
     if (!sb) return Promise.reject(new Error('Serviço indisponível.'));
     var t = tipoConta === 'professor' ? 'professor' : 'aluno';
     var meta = { tipo: t, marketing: !!marketing, nome: (nomeProprio || '').trim(), termos_aceites_em: new Date().toISOString() };
+    // aluno: ano de escolaridade (1–12), escolhido no registo. É das infos
+    // mais importantes da escola — fica nos metadados e numa coluna nas
+    // tabelas de turmas, para o professor o ver ao lado do nome.
+    if (t !== 'professor' && extra && extra.ano) meta.ano = String(extra.ano);
     // professor: as disciplinas/anos são definidas no onboarding obrigatório
     // (mapa disciplina→anos). Se o registo já trouxer algo, aproveita.
     if (t === 'professor' && extra && extra.disciplinas_anos) {
@@ -374,6 +395,7 @@ var Cloud = (function () {
   return {
     init: init, disponivel: disponivel, utilizador: utilizador,
     tipo: tipo, ehProfessor: ehProfessor, nome: nome,
+    alunoAno: alunoAno, atualizarAnoAluno: atualizarAnoAluno,
     profDisciplinas: profDisciplinas, profAnos: profAnos, profDisciplinasAnos: profDisciplinasAnos, atualizarPerfilProf: atualizarPerfilProf,
     registar: registar, entrar: entrar, sair: sair,
     recuperarPassword: recuperarPassword, alterarPassword: alterarPassword,

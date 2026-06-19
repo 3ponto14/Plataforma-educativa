@@ -82,10 +82,30 @@ var Turmas = (function () {
     if (!sb || !u) return Promise.resolve();
     if (typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor()) return Promise.resolve();
     var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
-    return sb.from('apoio_alunos').upsert(
-      { aluno: u.id, nome_aluno: nome, email: u.email || null },
-      { onConflict: 'aluno' }
-    ).then(function (r) { return r; }).catch(function () {});
+    var ano = (typeof Cloud.alunoAno === 'function' ? Cloud.alunoAno() : '') || null;
+    var base = { aluno: u.id, nome_aluno: nome, email: u.email || null };
+    var comAno = { aluno: u.id, nome_aluno: nome, email: u.email || null, ano: ano };
+    return sb.from('apoio_alunos').upsert(comAno, { onConflict: 'aluno' }).then(function (r) {
+      // coluna 'ano' ainda não criada na BD → reinscreve sem ela (não bloqueia)
+      if (r && r.error && /ano/.test(r.error.message || '')) {
+        return sb.from('apoio_alunos').upsert(base, { onConflict: 'aluno' });
+      }
+      return r;
+    }).catch(function () {});
+  }
+
+  /* Propaga o ano do aluno para as tabelas de turmas (apoio_alunos +
+     grupo_membros). Chamado quando o aluno define/atualiza o ano. */
+  function sincronizarAno() {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.resolve();
+    if (typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor()) return Promise.resolve();
+    var ano = (typeof Cloud.alunoAno === 'function' ? Cloud.alunoAno() : '') || null;
+    // se a coluna 'ano' ainda não existir na BD, o update falha em silêncio
+    // (o .catch trata) e o ano fica nos metadados até o SQL ser corrido.
+    var p1 = sb.from('apoio_alunos').update({ ano: ano }).eq('aluno', u.id);
+    var p2 = sb.from('grupo_membros').update({ ano: ano }).eq('aluno', u.id);
+    return Promise.all([p1.catch(function () {}), p2.catch(function () {})]).catch(function () {});
   }
 
   /* ── PROFESSOR: lista única de todos os alunos do Apoio ao Estudo ──
@@ -102,10 +122,10 @@ var Turmas = (function () {
     return sb.from('grupo_professores').select('grupo_id').eq('prof', u.id).then(function (gp) {
       var gids = (gp.error ? [] : (gp.data || [])).map(function (g) { return g.grupo_id; });
       if (!gids.length) { _alunosCache = []; _alunosCacheAt = Date.now(); return []; }
-      return sb.from('grupo_membros').select('aluno, nome_aluno').in('grupo_id', gids).then(function (gm) {
+      return sb.from('grupo_membros').select('aluno, nome_aluno, ano').in('grupo_id', gids).then(function (gm) {
         var seen = {}, lista = [];
         (gm.error ? [] : (gm.data || [])).forEach(function (m) {
-          if (m.aluno && !seen[m.aluno]) { seen[m.aluno] = 1; lista.push({ aluno: m.aluno, nome_aluno: m.nome_aluno, email: '' }); }
+          if (m.aluno && !seen[m.aluno]) { seen[m.aluno] = 1; lista.push({ aluno: m.aluno, nome_aluno: m.nome_aluno, ano: m.ano || '', email: '' }); }
         });
         if (!lista.length) { _alunosCache = []; _alunosCacheAt = Date.now(); return []; }
         var ids = lista.map(function (a) { return a.aluno; });
@@ -119,6 +139,7 @@ var Turmas = (function () {
           return {
             aluno: a.aluno,
             nome: a.nome_aluno || (a.email || '').split('@')[0] || '(aluno)',
+            ano: a.ano || '',
             email: a.email || '',
             xp: d.totalXp || 0,
             streak: d.streak || 0,
@@ -444,7 +465,7 @@ var Turmas = (function () {
   function alunosDoGrupo(grupoId) {
     var sb = _sb();
     if (!sb) return Promise.resolve([]);
-    return sb.from('grupo_membros').select('aluno, nome_aluno, entrou').eq('grupo_id', grupoId)
+    return sb.from('grupo_membros').select('aluno, nome_aluno, ano, entrou').eq('grupo_id', grupoId)
       .then(function (res) { return res.error ? [] : (res.data || []); });
   }
 
@@ -495,8 +516,9 @@ var Turmas = (function () {
       if (!res.data) throw new Error('Não existe nenhum grupo com esse código.');
       var g = res.data;
       var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+      var ano = (typeof Cloud.alunoAno === 'function' ? Cloud.alunoAno() : '') || null;
       return sb.from('grupo_membros').upsert(
-        { grupo_id: g.id, aluno: u.id, nome_aluno: nome },
+        { grupo_id: g.id, aluno: u.id, nome_aluno: nome, ano: ano },
         { onConflict: 'grupo_id,aluno' }
       ).then(function (r2) { if (r2.error) throw r2.error; return g; });
     });
@@ -902,6 +924,7 @@ var Turmas = (function () {
     tarefasComResultadoDoAluno: tarefasComResultadoDoAluno,
     guardarResultado: guardarResultado, resultadosDaTarefa: resultadosDaTarefa,
     autoInscrever: autoInscrever,
+    sincronizarAno: sincronizarAno,
     todosOsAlunos: todosOsAlunos,
     recursos: recursos,
     adicionarRecurso: adicionarRecurso,

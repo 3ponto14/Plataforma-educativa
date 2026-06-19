@@ -30,6 +30,7 @@ function authRenderBotao() {
 function authAbrir(modo) {
   modo = modo || 'entrar';
   authFechar();
+  _authTipo = 'aluno'; _authAno = ''; // estado limpo a cada abertura do modal
   var ov = document.createElement('div');
   ov.id = 'auth-overlay';
   ov.style.cssText = 'position:fixed;inset:0;background:rgba(20,16,40,.55);z-index:9998;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(3px)';
@@ -52,6 +53,11 @@ function authAbrir(modo) {
     + (entrar ? '' :
         '<div id="auth-prof-extra" style="display:none;font-size:.74rem;color:var(--ink4);line-height:1.4;margin:-.2rem 0 .75rem;padding-left:.05rem">A seguir vais escolher as <strong>disciplinas e os anos</strong> que lecionas.</div>')
     + (entrar ? '' : '<input id="auth-nome" type="text" placeholder="O teu primeiro nome" autocomplete="given-name" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin-bottom:.6rem;outline:none">')
+    + (entrar ? '' :
+        '<div id="auth-aluno-ano" style="margin-bottom:.6rem">'
+        + '<div style="font-size:.78rem;color:var(--ink3);font-weight:700;margin-bottom:.35rem">Em que ano andas?</div>'
+        + '<div id="auth-ano-pills" style="display:flex;flex-wrap:wrap;gap:.3rem">' + _authAnoPillsHTML() + '</div>'
+        + '</div>')
     + '<input id="auth-email" type="email" placeholder="O teu email" autocomplete="email" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin-bottom:.6rem;outline:none">'
     + '<input id="auth-pass" type="password" placeholder="Palavra-passe (mín. 6 letras)" autocomplete="' + (entrar ? 'current-password' : 'new-password') + '" style="width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:12px;padding:.75rem 1rem;font-family:Montserrat,sans-serif;font-size:.9rem;margin-bottom:.9rem;outline:none" onkeydown="if(event.key===\'Enter\')authSubmeter(' + (entrar ? 'true' : 'false') + ')">'
     + (entrar ? '' :
@@ -80,8 +86,24 @@ function authFechar() {
   if (ov) ov.remove();
 }
 
-/* Tipo escolhido no registo (aluno por defeito). */
+/* Tipo escolhido no registo (aluno por defeito) e ano do aluno. */
 var _authTipo = 'aluno';
+var _authAno = '';
+var _AUTH_ANOS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+function _authAnoPillsHTML() {
+  return _AUTH_ANOS.map(function (a) {
+    var on = _authAno === a;
+    var sty = on
+      ? 'background:#4a3f7a;border:1.5px solid #4a3f7a;color:#fff'
+      : 'background:var(--white);border:1.5px solid var(--border);color:var(--ink3)';
+    return '<button type="button" class="auth-ano-pill" data-ano="' + a + '" onclick="authAnoPick(\'' + a + '\')" style="' + sty + ';border-radius:999px;padding:5px 11px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">' + a + '.º</button>';
+  }).join('');
+}
+function authAnoPick(a) {
+  _authAno = a;
+  var box = document.getElementById('auth-ano-pills');
+  if (box) box.innerHTML = _authAnoPillsHTML();
+}
 function authSetTipo(t) {
   _authTipo = t;
   var bA = document.getElementById('auth-tipo-aluno');
@@ -94,6 +116,9 @@ function authSetTipo(t) {
   // mostra o bloco de disciplinas/anos só para professor
   var extra = document.getElementById('auth-prof-extra');
   if (extra) extra.style.display = (t === 'professor') ? 'block' : 'none';
+  // o ano de escolaridade é só para o aluno
+  var anoBox = document.getElementById('auth-aluno-ano');
+  if (anoBox) anoBox.style.display = (t === 'aluno') ? 'block' : 'none';
 }
 
 /* Alterna uma pílula (disciplina/ano) no registo de professor. */
@@ -213,10 +238,15 @@ function authSubmeter(entrar) {
   if (!email || email.indexOf('@') === -1) { _authErro('Escreve um email válido.'); return; }
   if (pass.length < 6) { _authErro('A palavra-passe precisa de pelo menos 6 letras.'); return; }
   // no registo, é obrigatório o nome e aceitar os termos
-  var marketing = false, nome = '';
+  var marketing = false, nome = '', ano = '';
   if (!entrar) {
     nome = ((document.getElementById('auth-nome') || {}).value || '').trim();
     if (nome.length < 2) { _authErro('Escreve o teu primeiro nome.'); return; }
+    // o aluno tem de indicar o ano de escolaridade (info essencial da escola)
+    if (_authTipo !== 'professor') {
+      if (!_authAno) { _authErro('Escolhe o ano em que andas.'); return; }
+      ano = _authAno;
+    }
     var cT = document.getElementById('auth-termos');
     if (!cT || !cT.checked) { _authErro('Para criar conta, tens de aceitar os Termos e a Política de Privacidade.'); return; }
     var cM = document.getElementById('auth-marketing');
@@ -227,7 +257,7 @@ function authSubmeter(entrar) {
 
   // As disciplinas/anos do professor são definidas no onboarding obrigatório
   // (mapa disciplina→anos), logo após o registo — não no formulário pequeno.
-  var promessa = entrar ? Cloud.entrar(email, pass) : Cloud.registar(email, pass, _authTipo, marketing, nome, null);
+  var promessa = entrar ? Cloud.entrar(email, pass) : Cloud.registar(email, pass, _authTipo, marketing, nome, (ano ? { ano: ano } : null));
   promessa.then(function () {
     authFechar();
     var prof = (typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor());

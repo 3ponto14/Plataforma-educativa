@@ -492,8 +492,10 @@ function _grupoMembroRowHTML(id, nome, m) {
   var temMail = _nomeRepetido(nm);
   var a = (_turmasAlunosCache || []).filter(function (x) { return x.aluno === m.aluno; })[0];
   var mail = (temMail && a && a.email) ? a.email : '';
+  var ano = m.ano || (a && a.ano) || '';
   return '<div class="grupo-aluno-row grp-aluno" data-nome="' + _escAttr((nm || '').toLowerCase()) + '">'
     + '<span class="grp-aluno-nome" onclick="abrirPaginaAluno(\'' + m.aluno + '\',\'' + id + '\')" style="cursor:pointer">' + _esc(nm)
+    + _anoBadge(ano)
     + (mail ? ' <span class="grp-aluno-mail">· ' + _esc(mail) + '</span>' : '')
     + '</span>'
     + '<span class="grp-acts">'
@@ -731,7 +733,7 @@ function sessaoGrupoPrompt(grupoId, nome) {
     var rows = membros.map(function (m) {
       var nm = m.nome_aluno || '(aluno)';
       return '<div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.45rem">'
-        + '<span style="min-width:110px;max-width:110px;font-size:.82rem;font-weight:700;color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + _escAttr(nm) + '">' + _esc(nm) + '</span>'
+        + '<span style="min-width:110px;max-width:140px;font-size:.82rem;font-weight:700;color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + _escAttr(nm) + (m.ano ? ' (' + m.ano + '.º ano)' : '') + '">' + _esc(nm) + _anoBadge(m.ano) + '</span>'
         + '<input class="ses-g-nota" data-aluno="' + m.aluno + '" placeholder="o que trabalhou / o que falta…" style="flex:1;border:1.5px solid var(--border);border-radius:10px;padding:7px 11px;font-size:.83rem;font-family:Montserrat,sans-serif">'
         + '</div>';
     }).join('');
@@ -1018,6 +1020,7 @@ function _turmasPintaAlunos(alunos, limite) {
     return '<div style="border:1.5px solid var(--border);border-radius:12px;margin-bottom:.5rem;overflow:hidden">'
       + '<div onclick="abrirPaginaAluno(\'' + a.aluno + '\')" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.4rem;padding:.7rem 1rem;cursor:pointer">'
       + '<div style="font-weight:800;color:var(--ink1)"><i class="ph ph-user-circle" style="color:#2e7d52"></i> ' + _esc(a.nome)
+      + _anoBadge(a.ano)
       + (a.email && _nomeRepetido(a.nome) ? ' <span style="font-weight:600;font-size:.74rem;color:var(--ink4)">· ' + _esc(a.email) + '</span>' : '')
       + '</div>'
       + '<div style="display:flex;gap:.7rem;font-size:.8rem;color:var(--ink3);align-items:center">'
@@ -1153,7 +1156,7 @@ function abrirPaginaAluno(id, grupoId) {
   pag.innerHTML =
     '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.1rem 1.4rem 1.4rem">'
     + '<button onclick="' + voltarFn + '" style="display:inline-flex;align-items:center;gap:.4rem;background:none;border:none;color:#2e7d52;font-weight:700;font-size:.85rem;cursor:pointer;font-family:Montserrat,sans-serif;padding:0;margin-bottom:.8rem"><i class="ph ph-arrow-left"></i> ' + voltarTxt + '</button>'
-    + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.5rem;font-weight:700;color:var(--ink1);line-height:1.15"><i class="ph ph-user-circle" style="color:#2e7d52"></i> ' + _esc(a.nome) + '</div>'
+    + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.5rem;font-weight:700;color:var(--ink1);line-height:1.15"><i class="ph ph-user-circle" style="color:#2e7d52"></i> ' + _esc(a.nome) + _anoBadge(a.ano) + '</div>'
     + (a.email ? '<div style="font-size:.76rem;color:var(--ink4);margin-bottom:.4rem">' + _esc(a.email) + '</div>' : '')
     + '<div style="display:flex;gap:.6rem;font-size:.82rem;color:var(--ink3);margin:.3rem 0 .8rem"><span>⭐ ' + a.xp + '</span><span>' + (a.streak > 0 ? '🔥 ' + a.streak : '🔥 0') + '</span><span title="Desafios">🎯 ' + a.desafios + '</span></div>'
     + '<div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">'
@@ -1598,6 +1601,15 @@ function grupoSair(grupoId, nome) {
 /* ── utilitários ── */
 function _esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
 function _escAttr(s) { return _esc(s); }
+
+/* Pílula com o ano de escolaridade do aluno (ex.: «7.º»). Info essencial
+   da escola: aparece ao lado do nome em todas as listas/fichas de aluno.
+   Devolve '' se o aluno ainda não tem ano definido. */
+function _anoBadge(ano) {
+  ano = (ano == null ? '' : String(ano)).trim();
+  if (!ano) return '';
+  return ' <span class="grp-aluno-ano" style="display:inline-block;background:#ede9f7;color:#4a3f7a;border-radius:999px;padding:1px 8px;font-size:.7rem;font-weight:800;vertical-align:middle">' + _esc(ano) + '.º</span>';
+}
 
 /* Render quando a sessão muda (login/logout) e ao carregar. */
 document.addEventListener('cloud:auth', function () { turmasRender(); });
