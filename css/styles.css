@@ -1904,7 +1904,7 @@ body.tab-hidden *::after {
 body.dark-mode{
   --cream:#1a1a1a;--cream2:#242424;--cream3:#2e2e2e;
   --white:#242424;--border:#3a3a3a;--border2:#444;
-  --ink:#e8e4df;--ink2:#ccc8c2;--ink3:#a09890;--ink4:#706860;
+  --ink:#e8e4df;--ink1:#e8e4df;--ink2:#ccc8c2;--ink3:#a09890;--ink4:#706860;
   --avail-bg:#1a2e28;--available:#77998E;
   --c1-base:#1a2e28;--c1-pale:#162420;--c1-mid:#77998E;--c1-deep:#9ab5aa;
   --c2-base:#1a2420;--c2-pale:#141e1b;--c2-mid:#77998E;--c2-deep:#9ab5aa;

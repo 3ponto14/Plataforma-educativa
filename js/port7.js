@@ -96,7 +96,14 @@ var _port7Cards = {
     { st: 1, tag: 'Estratégia', q: 'O que fazer antes de escrever?', a: 'Planificar: anota as ideias principais, ordena-as e só depois redige. No fim, relê para rever erros e repetições.' },
     { st: 1, tag: 'Regra', q: 'Cuidados na revisão do texto?', a: 'Verificar ortografia, pontuação, concordâncias, repetições de palavras e se o texto responde mesmo ao que foi pedido.' },
     { st: 1, tag: 'Estratégia', q: 'Como evitar repetir palavras?', a: 'Usa pronomes («o João… ele») e sinónimos («o rapaz», «o jovem»).' },
-    { st: 1, tag: 'Exemplo', q: 'Início possível para uma narrativa?', a: '«Naquela manhã de inverno, quando saiu de casa, o Pedro não imaginava o que estava prestes a acontecer.»: situa tempo, personagem e cria expectativa.' }
+    { st: 1, tag: 'Exemplo', q: 'Início possível para uma narrativa?', a: '«Naquela manhã de inverno, quando saiu de casa, o Pedro não imaginava o que estava prestes a acontecer.»: situa tempo, personagem e cria expectativa.' },
+    { st: 1, tag: 'Definição', q: 'Quais são os elementos a definir numa narrativa?', a: 'Narrador (quem conta), personagens, espaço (onde), tempo (quando) e ação (o que acontece): situação inicial, conflito e desenlace.' },
+    { st: 1, tag: 'Estratégia', q: 'Como criar suspense numa história?', a: 'Adia a informação importante, usa frases curtas nos momentos de tensão e termina partes com uma pergunta ou ameaça por resolver.' },
+    { st: 2, tag: 'Estrutura', q: 'O que é a tese num texto de opinião?', a: 'É a posição que defendes sobre o tema, apresentada na introdução. Todo o desenvolvimento serve para a justificar.' },
+    { st: 2, tag: 'Estratégia', q: 'Como apoiar uma opinião com um exemplo?', a: 'Depois do argumento, dá um caso concreto: «Por exemplo, …». O exemplo torna a ideia credível e fácil de entender.' },
+    { st: 3, tag: 'Estratégia', q: 'Que sentidos usar numa descrição?', a: 'Não descrevas só o que se vê: junta sons, cheiros, texturas e até sabores, para o leitor «entrar» na cena.' },
+    { st: 3, tag: 'Regra', q: 'Que classe de palavras é essencial na descrição?', a: 'Os adjetivos (e locuções adjetivais): caracterizam pessoas, lugares e objetos. Escolhe-os com precisão, evitando os banais.' },
+    { st: 3, tag: 'Estratégia', q: 'Como organizar uma descrição de um espaço?', a: 'Segue uma ordem (do geral ao pormenor, ou de cima para baixo, da entrada para o fundo) para o leitor conseguir imaginar o conjunto.' }
   ],
   // ── Domínio 5 · Recursos Expressivos (7.º) ──
   5: [

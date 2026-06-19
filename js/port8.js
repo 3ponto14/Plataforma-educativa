@@ -94,7 +94,14 @@ var _port8Cards = {
     { st: 2, tag: 'Estratégia', q: 'Como construir um bom argumento?', a: 'Afirma a ideia, justifica-a com uma razão e ilustra-a com um exemplo concreto: não basta repetir a tese.' },
     { st: 1, tag: 'Regra', q: 'O que rever no fim de um texto?', a: 'Ortografia, pontuação, concordâncias, conectores, repetições de palavras e se o texto responde mesmo ao que foi pedido.' },
     { st: 1, tag: 'Estratégia', q: 'Como planificar antes de escrever?', a: 'Anota as ideias-chave (tese, argumentos, exemplos), ordena-as e só depois redige. Poupa tempo e evita fugas ao tema.' },
-    { st: 1, tag: 'Estratégia', q: 'Como evitar repetir palavras?', a: 'Usa pronomes («o João… ele») e sinónimos («o rapaz», «o jovem»), além de hiperónimos («o animal»).' }
+    { st: 1, tag: 'Estratégia', q: 'Como evitar repetir palavras?', a: 'Usa pronomes («o João… ele») e sinónimos («o rapaz», «o jovem»), além de hiperónimos («o animal»).' },
+    { st: 1, tag: 'Estratégia', q: 'Como variar o início das frases numa narrativa?', a: 'Não comeces tudo com o sujeito. Usa advérbios e complementos no início: «De repente…», «Lá fora…», «Sem pensar duas vezes, …».' },
+    { st: 1, tag: 'Definição', q: 'Que tempos verbais dominam a narração?', a: 'Pretérito perfeito (ações concluídas: «chegou») e imperfeito (descrições e ações em fundo: «estava», «chovia»).' },
+    { st: 2, tag: 'Estratégia', q: 'O que é um contra-argumento e como usá-lo?', a: 'É uma objeção possível à tua tese. Mencioná-la e rebatê-la («É certo que… no entanto…») torna o texto de opinião mais forte.' },
+    { st: 2, tag: 'Estratégia', q: 'Como escrever uma boa conclusão num texto de opinião?', a: 'Retoma a tese por outras palavras, sintetiza os argumentos e fecha com uma frase de impacto ou apelo.' },
+    { st: 3, tag: 'Regra', q: 'Que pessoa e tempo usar num resumo?', a: 'Usa a 3.ª pessoa e mantém o tempo do texto original. Não dês a tua opinião nem cites diálogos: só o essencial.' },
+    { st: 3, tag: 'Estratégia', q: 'Como saber o que cortar num resumo?', a: 'Elimina exemplos, repetições, pormenores e adjetivos dispensáveis. Mantém só as ideias principais e a sua ligação.' },
+    { st: 3, tag: 'Definição', q: 'Qual a extensão certa de um resumo?', a: 'Em regra, cerca de 1/3 do texto original. Deve dar para entender o todo sem ler o original.' }
   ],
   // ── Domínio 5 · Recursos Expressivos (8.º) ──
   5: [

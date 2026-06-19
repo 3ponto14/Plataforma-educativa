@@ -96,7 +96,14 @@ var _port9Cards = {
     { st: 1, tag: 'Estratégia', q: 'Como construir um argumento forte?', a: 'Afirma a ideia, justifica-a com uma razão e ilustra com um exemplo concreto. Evita repetir só a tese sem a fundamentar.' },
     { st: 1, tag: 'Regra', q: 'Cuidados de escrita avaliados no exame?', a: 'Tema e tipologia respeitados, estrutura clara, coesão (conectores), correção linguística (ortografia, pontuação, acordo) e número de palavras.' },
     { st: 1, tag: 'Estratégia', q: 'Como planificar antes de escrever?', a: 'Faz um esquema rápido: tese/ideia central, 2–3 argumentos com exemplos, e como vais concluir. Poupa tempo e evita repetições.' },
-    { st: 1, tag: 'Exemplo', q: 'Frase de introdução de um texto de opinião?', a: '«Atualmente, discute-se muito se… Na minha perspetiva, …»: apresenta o tema e toma logo posição.' }
+    { st: 1, tag: 'Exemplo', q: 'Frase de introdução de um texto de opinião?', a: '«Atualmente, discute-se muito se… Na minha perspetiva, …»: apresenta o tema e toma logo posição.' },
+    { st: 1, tag: 'Estratégia', q: 'Como reforçar a credibilidade dos argumentos?', a: 'Apoia-te em dados, exemplos reais, citações ou consenso de especialistas. Evita generalizações («toda a gente sabe»).' },
+    { st: 1, tag: 'Definição', q: 'O que é a estrutura argumentativa completa?', a: 'Tese → argumentos com exemplos → contra-argumento refutado → conclusão que reafirma a posição.' },
+    { st: 1, tag: 'Regra', q: 'Que registo de língua usar no texto de opinião do exame?', a: 'Registo cuidado/formal: evita gíria e abreviaturas, usa conectores e frases bem construídas; 1.ª pessoa moderada.' },
+    { st: 2, tag: 'Estratégia', q: 'Como tornar uma narrativa mais expressiva?', a: 'Mistura narração com descrição e diálogo, usa recursos expressivos (metáfora, comparação) e controla o ritmo das frases.' },
+    { st: 2, tag: 'Definição', q: 'O que é o foco/ponto de vista narrativo?', a: 'A perspetiva de quem conta: narrador participante (1.ª pessoa) ou não participante (3.ª), com conhecimento total ou limitado.' },
+    { st: 3, tag: 'Estrutura', q: 'Como se organiza um texto expositivo?', a: 'Introdução (apresenta o tema), desenvolvimento (explica por partes, com exemplos e dados) e conclusão (sintetiza). Tom objetivo.' },
+    { st: 3, tag: 'Estratégia', q: 'Que conectores ajudam a explicar num texto expositivo?', a: 'De adição (além disso), de exemplificação (por exemplo), de causa/consequência (por isso, logo) e de síntese (em suma).' }
   ],
   // ── Domínio 5 · Recursos Expressivos ──
   5: [
