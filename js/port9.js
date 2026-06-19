@@ -118,7 +118,13 @@ var _port9Cards = {
     { st: 1, tag: 'Figura', q: 'Ironia', a: 'Diz-se o contrário do que se quer dar a entender, com intenção crítica ou humorística.' },
     { st: 1, tag: 'Figura', q: 'Enumeração', a: 'Sucessão de elementos (palavras ou expressões) para reforçar uma ideia. Ex: «Vim, vi, venci».' },
     { st: 3, tag: 'Versificação', q: 'O que é a métrica?', a: 'A contagem das sílabas métricas de um verso. Decassílabo = 10 sílabas (como em Os Lusíadas); redondilha maior = 7 sílabas.' },
-    { st: 3, tag: 'Versificação', q: 'O que é a quadra e a oitava?', a: 'Quadra = estrofe de 4 versos. Oitava = estrofe de 8 versos (a forma de Os Lusíadas).' }
+    { st: 3, tag: 'Versificação', q: 'O que é a quadra e a oitava?', a: 'Quadra = estrofe de 4 versos. Oitava = estrofe de 8 versos (a forma de Os Lusíadas).' },
+    { st: 1, tag: 'Figura', q: 'Metonímia', a: 'Substitui um termo por outro relacionado: «o Brasil venceu» (= a seleção); «ganhar o pão» (= o sustento).' },
+    { st: 1, tag: 'Figura', q: 'Apóstrofe', a: 'Interpelação direta a alguém ou algo: «Ó mar salgado, quanto do teu sal / São lágrimas de Portugal!» (Pessoa).' },
+    { st: 2, tag: 'Definição', q: 'Como justificar um recurso expressivo numa resposta de exame?', a: 'Identifica o recurso, cita o verso/expressão e explica o EFEITO de sentido que cria no poema/texto. Os três passos contam para a cotação.' },
+    { st: 2, tag: 'Definição', q: 'O que distingue recurso de conteúdo e de som?', a: 'De conteúdo: jogam com o significado (metáfora, antítese, ironia). De som: jogam com a sonoridade (aliteração, onomatopeia).' },
+    { st: 3, tag: 'Versificação', q: 'O que é o verso decassílabo?', a: 'Verso de 10 sílabas métricas, o metro de Os Lusíadas. Conta-se até à última sílaba tónica.' },
+    { st: 3, tag: 'Versificação', q: 'O que é a redondilha?', a: 'Redondilha menor: verso de 5 sílabas; redondilha maior: verso de 7 sílabas (muito usada na poesia tradicional).' }
   ]
 };
 

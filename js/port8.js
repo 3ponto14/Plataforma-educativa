@@ -114,7 +114,13 @@ var _port8Cards = {
     { st: 1, tag: 'Figura', q: 'Anáfora', a: 'Repetição de palavras no início de versos ou frases seguidas.' },
     { st: 2, tag: 'Figura', q: 'Aliteração e onomatopeia', a: 'Aliteração: repetição de sons consonânticos («o rato roeu a rolha»). Onomatopeia: palavra que imita um som (tique-taque).' },
     { st: 3, tag: 'Versificação', q: 'Como se conta a métrica?', a: 'Contam-se as sílabas métricas até à última sílaba TÓNICA do verso (as átonas finais não contam).' },
-    { st: 3, tag: 'Versificação', q: 'Esquemas de rima e estrofes?', a: 'Rima emparelhada (AABB), cruzada (ABAB), interpolada (ABBA). Estrofes: quadra (4), quintilha (5), sextilha (6), oitava (8).' }
+    { st: 3, tag: 'Versificação', q: 'Esquemas de rima e estrofes?', a: 'Rima emparelhada (AABB), cruzada (ABAB), interpolada (ABBA). Estrofes: quadra (4), quintilha (5), sextilha (6), oitava (8).' },
+    { st: 1, tag: 'Figura', q: 'Metonímia', a: 'Substitui um termo por outro com que tem relação: «ler Camões» (= a obra dele); «beber um copo» (= o conteúdo).' },
+    { st: 1, tag: 'Figura', q: 'Eufemismo', a: 'Suaviza uma ideia dura ou desagradável: «partiu» em vez de «morreu».' },
+    { st: 2, tag: 'Definição', q: 'O que são recursos expressivos e para que servem?', a: 'São usos criativos da língua que reforçam a mensagem e provocam emoção. Na análise, identifica o recurso E explica o seu efeito.' },
+    { st: 2, tag: 'Estratégia', q: 'Como analisar o efeito de uma figura?', a: 'Não basta nomear. Diz o que a figura SUGERE no contexto: a comparação «olhos como o mar» transmite imensidão/profundidade.' },
+    { st: 2, tag: 'Definição', q: 'O que é a expressividade de um texto?', a: 'É a sua capacidade de impressionar o leitor, conseguida com recursos expressivos, escolha de vocabulário e ritmo.' },
+    { st: 3, tag: 'Versificação', q: 'O que é o ritmo num poema?', a: 'É a cadência criada pela métrica, pelas pausas e pela posição das sílabas tónicas; pode ser rápido ou lento, conforme o efeito.' }
   ]
 };
 

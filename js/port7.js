@@ -116,7 +116,13 @@ var _port7Cards = {
     { st: 1, tag: 'Figura', q: 'Hipérbole', a: 'Exagero intencional: «já te chamei mil vezes!».' },
     { st: 3, tag: 'Versificação', q: 'Como se conta a métrica de um verso?', a: 'Contam-se as sílabas métricas até à última sílaba TÓNICA do verso (as átonas finais não contam).' },
     { st: 3, tag: 'Versificação', q: 'Esquemas de rima?', a: 'Emparelhada (AABB), cruzada (ABAB) e interpolada (ABBA). Versos sem rima = versos soltos/brancos.' },
-    { st: 3, tag: 'Versificação', q: 'Nomes das estrofes?', a: 'Dístico (2 versos), terceto (3), quadra (4), quintilha (5), sextilha (6).' }
+    { st: 3, tag: 'Versificação', q: 'Nomes das estrofes?', a: 'Dístico (2 versos), terceto (3), quadra (4), quintilha (5), sextilha (6).' },
+    { st: 1, tag: 'Figura', q: 'Antítese', a: 'Aproxima ideias opostas para criar contraste: «era o melhor dos tempos, era o pior dos tempos».' },
+    { st: 1, tag: 'Estratégia', q: 'Como identificar uma figura de estilo num verso?', a: 'Repara em palavras fora do sentido literal e em repetições/sons. Pergunta: há comparação? exagero? algo «humano» no que não é? som imitado?' },
+    { st: 2, tag: 'Definição', q: 'O que são recursos expressivos?', a: 'São usos especiais da linguagem (figuras, sons, repetições) que dão força, beleza ou emoção ao texto, afastando-se da linguagem comum.' },
+    { st: 2, tag: 'Definição', q: 'Qual é o efeito de uma figura de estilo?', a: 'Cada figura cria um efeito: a hipérbole reforça, a personificação dá vida, a comparação esclarece. Na análise, diz sempre o EFEITO, não só o nome.' },
+    { st: 2, tag: 'Definição', q: 'O que é a aliteração?', a: 'Repetição do mesmo som consonântico em palavras próximas, criando musicalidade: «o rato roeu a rolha».' },
+    { st: 3, tag: 'Definição', q: 'O que é um verso e uma estrofe?', a: 'Verso é cada linha de um poema; estrofe é o conjunto de versos separado por um espaço (como o parágrafo na prosa).' }
   ]
 };
 
