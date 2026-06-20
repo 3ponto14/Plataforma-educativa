@@ -3997,6 +3997,7 @@ body.dark-mode .resumo-st-btn.active {
   width:268px;
 }
 #ml-drawer.fixed .ml-close{display:none;}  /* não há "fechar" no modo fixo */
+#ml-drawer.fixed .ml-head{display:none;}   /* sem cabeçalho repetido no modo fixo (o logo já está na topbar) */
 /* conteúdo do portal dá lugar à barra (a topbar NÃO é empurrada) */
 body.ml-fixed-on #view-portal > *:not(.site-topbar){margin-left:268px;}
 body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */

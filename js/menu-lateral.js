@@ -44,7 +44,6 @@
     d.setAttribute('role', 'navigation');
     d.innerHTML =
       '<div class="ml-head">'
-      + '<span class="ml-title"><i class="ph ph-graduation-cap"></i> 3ponto14</span>'
       + '<button class="ml-close" aria-label="Fechar" onclick="menuLateralFechar()"><i class="ph ph-x"></i></button>'
       + '</div>'
       + '<nav class="ml-nav" id="ml-nav">'
