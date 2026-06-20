@@ -4242,11 +4242,13 @@ a.grp-item-tit:hover{color:#2e7d52;text-decoration:underline}
 .site-topbar-actions [data-tip]::after{
   bottom:auto;top:calc(100% + 7px);left:auto;right:0;
   transform:translateY(-4px);
-  white-space:normal;width:max-content;max-width:240px;text-align:left}
+  white-space:normal;width:max-content;max-width:240px;text-align:left;
+  background:#fff;color:var(--ink1,#2a2620);border:1px solid var(--border,#e6e0d8);
+  box-shadow:0 6px 18px rgba(0,0,0,.12)}
 .site-topbar-actions [data-tip]::before{
   bottom:auto;top:calc(100% + 2px);left:auto;right:14px;
   transform:translateY(-4px);
-  border-top-color:transparent;border-bottom-color:#2a2620}
+  border-top-color:transparent;border-bottom-color:#fff}
 .site-topbar-actions [data-tip]:hover::after,.site-topbar-actions [data-tip]:focus-visible::after,
 .site-topbar-actions [data-tip]:hover::before,.site-topbar-actions [data-tip]:focus-visible::before{
   transform:translateY(0)}

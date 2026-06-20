@@ -18,7 +18,7 @@ function authRenderBotao() {
   if (u) {
     var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
     div.innerHTML =
-      '<span title="' + (u.email || '') + '" style="font-size:.78rem;font-weight:700;color:var(--ink3);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><i class="ph ph-user-circle" style="color:#4a3f7a"></i> ' + nome + '</span>'
+      '<span title="' + (u.email || '') + '" style="font-size:.78rem;font-weight:700;color:var(--ink3);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><i class="ph ph-user-circle" style="color:#4a3f7a"></i> ' + nome + '</span>'
       + '<button onclick="authSair()" style="font-size:.72rem;font-weight:700;color:var(--ink4);background:none;border:1px solid var(--border);border-radius:999px;padding:3px 11px;cursor:pointer;font-family:Montserrat,sans-serif">Sair</button>';
   } else {
     div.innerHTML =
