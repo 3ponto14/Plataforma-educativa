@@ -680,6 +680,42 @@ create policy "prof lê recursos da sua disc" on public.recursos for select
 > criou — `professor = auth.uid()`), por isso não há fuga por disciplina aí.
 > A vista (UI) já filtra disciplina+ano; este SQL fecha-o também na BD.
 
+## 3m. PROFESSOR só vê os alunos DOS SEUS GRUPOS — colar no SQL Editor → Run
+
+A interface já só mostra os alunos dos grupos do próprio professor, mas a
+regra antiga ("prof vê alunos todos") ainda permitia, a nível de base de dados,
+um professor consultar a lista global e o progresso de qualquer aluno. Este
+bloco fecha essa brecha: um prof só lê os alunos (e o progresso) dos grupos
+onde é professor.
+
+```sql
+-- Helper: este aluno pertence a algum grupo onde EU sou professor?
+create or replace function public.aluno_meu(aluno_id uuid)
+returns boolean language sql stable security definer set search_path = public as $$
+  select exists (
+    select 1
+    from public.grupo_membros m
+    join public.grupo_professores gp on gp.grupo_id = m.grupo_id
+    where m.aluno = aluno_id and gp.prof = auth.uid()
+  );
+$$;
+
+-- APOIO_ALUNOS: o prof passa a ver só os alunos dos seus grupos.
+drop policy if exists "prof vê alunos todos"  on public.apoio_alunos;
+drop policy if exists "prof vê os seus alunos" on public.apoio_alunos;
+create policy "prof vê os seus alunos" on public.apoio_alunos for select
+  using (public.eh_professor() and public.aluno_meu(aluno));
+
+-- PROGRESSO: o prof passa a ver só o progresso dos alunos dos seus grupos.
+drop policy if exists "prof vê progresso apoio" on public.progresso;
+drop policy if exists "prof vê progresso dos seus" on public.progresso;
+create policy "prof vê progresso dos seus" on public.progresso for select
+  using (public.eh_professor() and public.aluno_meu(progresso.user_id));
+```
+
+> O aluno continua a ver só os seus próprios dados (as policies de aluno usam
+> `auth.uid() = aluno`). Isto só restringe o que cada PROFESSOR pode ler.
+
 ## 3i. SQL dos DESTINATÁRIOS (ficha/trabalho para grupo ou aluno) — Run
 
 Permite escolher PARA QUEM vai cada ficha e cada trabalho: um grupo ou um
