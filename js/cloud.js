@@ -82,8 +82,22 @@ var Cloud = (function () {
     });
   }
 
-  /* ── Arranque: cria o cliente se a lib do Supabase estiver carregada ── */
+  /* ── Arranque: cria o cliente se a lib do Supabase estiver carregada ──
+     Idempotente: várias chamadas a init() (guard.js, atribuir.js, …) não
+     recriam o cliente nem duplicam o listener. A 1.ª faz o trabalho; as
+     seguintes apenas esperam que ela termine e chamam o seu onReady. */
+  var _initDone = false;       // sessão já recuperada (init concluído)
+  var _initPend = null;        // callbacks à espera da 1.ª inicialização
   function init(onReady) {
+    if (_initDone) { if (onReady) onReady(); return; }
+    if (_initPend) { if (onReady) _initPend.push(onReady); return; }
+    _initPend = onReady ? [onReady] : [];
+    var done = function () {
+      _initDone = true;
+      var fila = _initPend; _initPend = null;
+      fila.forEach(function (cb) { try { cb(); } catch (e) {} });
+    };
+    onReady = done;
     try {
       if (typeof supabase === 'undefined' || !supabase.createClient) {
         if (onReady) onReady();
