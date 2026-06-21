@@ -1955,6 +1955,33 @@ function _selResumo(state, cfg) {
   return state.caps.length + ' capítulos';
 }
 
+// Gera uma questão de escolha múltipla respeitando a seleção (cap+subtema).
+// fillToMc (opcional): função que converte uma questão 'fill' em 'mc' (alguns
+// anos usam-na como recurso quando o tema não tem mc nativo).
+function _selMcQuestion(state, cfg, fillToMc) {
+  var pares = _selPares(state, cfg);
+  if (!pares.length) return null;
+  var ex = null, i;
+  for (i = 0; i < 14; i++) {
+    var par = pares[Math.floor(Math.random() * pares.length)];
+    var gen = cfg.gerador && cfg.gerador(par.cap);
+    if (!gen) continue;
+    ex = gen(par.tema, 'mc', 'medio');
+    if (ex && ex.tipo === 'mc' && ex.opcoes && ex.opcoes.length >= 2) return ex;
+  }
+  // recurso: converte uma 'fill' em 'mc'
+  if (typeof fillToMc === 'function') {
+    for (i = 0; i < 14; i++) {
+      var par2 = pares[Math.floor(Math.random() * pares.length)];
+      var gen2 = cfg.gerador && cfg.gerador(par2.cap);
+      if (!gen2) continue;
+      var mc = fillToMc(gen2(par2.tema, 'fill', 'medio'));
+      if (mc && mc.opcoes && mc.opcoes.length >= 2) return mc;
+    }
+  }
+  return null;
+}
+
 // HTML das duas barras de chips (Capítulos multi + Subtemas multi do cap único).
 // onCap/onSt = nomes de funções globais chamadas com (idx) ou (cap,idx).
 function _selBarsHTML(state, cfg, onCap, onSt) {

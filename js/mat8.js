@@ -600,19 +600,24 @@ function _mat8BuildMcQuestion(capOrPares) {
 /* ════════════════════════════════════════════════════════════════
    SUB-MODO: QUIZ RELÂMPAGO (3 vidas, streak)
    ════════════════════════════════════════════════════════════════ */
-var _mat8Quiz = { cap: 1, lives: 3, streak: 0, maxStreak: 0, score: 0, total: 0, answered: false, current: null };
+var _mat8Quiz = { cap: 1, sel: null, lives: 3, streak: 0, maxStreak: 0, score: 0, total: 0, answered: false, current: null };
+function _mat8QuizSel() { if (!_mat8Quiz.sel) _mat8Quiz.sel = _selNew(); return _mat8Quiz.sel; }
 
 function mat8QuizBuildNav() {
-  if (!_mat8Gerador(_mat8Quiz.cap)) _mat8Quiz.cap = 1;
-  _mat8BuildCapRow('mat8-quiz-cap-row', _mat8Quiz.cap, 'mat8QuizSelectCap');
+  var row = document.getElementById('mat8-quiz-cap-row');
+  if (row) row.innerHTML = _selBarsHTML(_mat8QuizSel(), _mat8SelCfg(), 'mat8QuizToggleCap', 'mat8QuizToggleSt');
+  // esconde a antiga linha de subtemas, se existir (o helper desenha as 2 barras)
+  var st = document.getElementById('mat8-quiz-st-row'); if (st) st.style.display = 'none';
   mat8QuizStart();
 }
 
-function mat8QuizSelectCap(cap, btn) {
-  if (!_mat8Gerador(cap)) return;
-  _mat8SetActiveCapBtn('mat8-quiz-cap-row', btn, cap);
-  _mat8Quiz.cap = cap;
-  mat8QuizStart();
+function mat8QuizToggleCap(cap) {
+  _selToggleCap(_mat8QuizSel(), _mat8SelCfg(), cap);
+  mat8QuizBuildNav();
+}
+function mat8QuizToggleSt(cap, st) {
+  _selToggleSt(_mat8QuizSel(), cap, st);
+  mat8QuizBuildNav();
 }
 
 function mat8QuizStart() {
@@ -625,8 +630,10 @@ function mat8QuizNext() {
   var app = document.getElementById('mat8-quiz-app');
   if (!app) return;
   if (_mat8Quiz.lives <= 0) { mat8QuizGameOver(app); return; }
-  var ex = _mat8BuildMcQuestion(_mat8Quiz.cap);
-  if (!ex) { app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Sem questões disponíveis para este capítulo.</p>'; return; }
+  var _qpares = _selPares(_mat8QuizSel(), _mat8SelCfg());
+  _mat8Quiz.cap = (_mat8QuizSel().caps[0]) || (_qpares[0] && _qpares[0].cap) || 1; // primário p/ progresso
+  var ex = _selMcQuestion(_mat8QuizSel(), _mat8SelCfg());
+  if (!ex) { app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Sem questões disponíveis para esta seleção.</p>'; return; }
   _mat8Quiz.current = ex; _mat8Quiz.answered = false;
   var lives = '';
   for (var i = 0; i < 3; i++) lives += (i < _mat8Quiz.lives ? '❤️' : '🖤') + ' ';
@@ -761,19 +768,23 @@ function mat8FcPrev() { _mat8Fc.idx = (_mat8Fc.idx - 1 + (_mat8Fc.cards.length |
 /* ════════════════════════════════════════════════════════════════
    SUB-MODO: TESTE CRONOMETRADO
    ════════════════════════════════════════════════════════════════ */
-var _mat8Teste = { cap: 1, nivel: 'medio', qtd: 10, tempo: 600, exs: [], answered: {}, score: { correct: 0, total: 0 }, timer: null, restante: 0 };
+var _mat8Teste = { cap: 1, sel: null, nivel: 'medio', qtd: 10, tempo: 600, exs: [], answered: {}, score: { correct: 0, total: 0 }, timer: null, restante: 0 };
+function _mat8TesteSel() { if (!_mat8Teste.sel) _mat8Teste.sel = _selNew(); return _mat8Teste.sel; }
 
 function mat8TesteBuildNav() {
-  if (!_mat8Gerador(_mat8Teste.cap)) _mat8Teste.cap = 1;
-  _mat8BuildCapRow('mat8-teste-cap-row', _mat8Teste.cap, 'mat8TesteSelectCap');
+  var row = document.getElementById('mat8-teste-cap-row');
+  if (row) row.innerHTML = _selBarsHTML(_mat8TesteSel(), _mat8SelCfg(), 'mat8TesteToggleCap', 'mat8TesteToggleSt');
+  var st = document.getElementById('mat8-teste-st-row'); if (st) st.style.display = 'none';
   mat8TesteRenderConfig();
 }
 
-function mat8TesteSelectCap(cap, btn) {
-  if (!_mat8Gerador(cap)) return;
-  _mat8SetActiveCapBtn('mat8-teste-cap-row', btn, cap);
-  _mat8Teste.cap = cap;
-  mat8TesteRenderConfig();
+function mat8TesteToggleCap(cap) {
+  _selToggleCap(_mat8TesteSel(), _mat8SelCfg(), cap);
+  mat8TesteBuildNav();
+}
+function mat8TesteToggleSt(cap, st) {
+  _selToggleSt(_mat8TesteSel(), cap, st);
+  mat8TesteBuildNav();
 }
 
 function mat8TesteRenderConfig() {
@@ -807,15 +818,21 @@ function mat8TesteSetNivel(nivel, btn) {
 }
 
 function mat8TesteStart() {
-  var gen = _mat8Gerador(_mat8Teste.cap); if (!gen) return;
+  var pares = _selPares(_mat8TesteSel(), _mat8SelCfg());
+  if (!pares.length) return;
+  // baralha os pares para misturar capítulos/subtemas ao longo do teste
+  pares = pares.slice();
+  for (var s = pares.length - 1; s > 0; s--) { var rs = Math.floor(Math.random() * (s + 1)); var ts = pares[s]; pares[s] = pares[rs]; pares[rs] = ts; }
+  _mat8Teste.cap = (_mat8TesteSel().caps[0]) || (pares[0] && pares[0].cap) || 1; // primário p/ progresso
   var qtdEl = document.getElementById('mat8-teste-qtd'), tempoEl = document.getElementById('mat8-teste-tempo');
   _mat8Teste.qtd = qtdEl ? parseInt(qtdEl.value) : 10;
   _mat8Teste.tempo = tempoEl ? parseInt(tempoEl.value) : 600;
-  var nTemas = _mat8TemasCount[_mat8Teste.cap] || 1;
   var tipos = ['mc', 'fill', 'mc', 'vf', 'fill'];
   var exs = [];
   for (var i = 0; i < _mat8Teste.qtd; i++) {
-    var ex = gen(String((i % nTemas) + 1), tipos[i % tipos.length], _mat8Teste.nivel);
+    var par = pares[i % pares.length];
+    var gen = _mat8Gerador(par.cap); if (!gen) continue;
+    var ex = gen(par.tema, tipos[i % tipos.length], _mat8Teste.nivel);
     if (ex) exs.push(Object.assign({}, ex, { num: i + 1 }));
   }
   _mat8Teste.exs = exs; _mat8Teste.answered = {}; _mat8Teste.score = { correct: 0, total: 0 };
