@@ -324,56 +324,34 @@ var _fq8TarefaAtiva=null, _fq8TarefaResp={};
 
 function _fq8PratStorageKey(cap) { return 'edupt_fq8_cap' + cap; }
 
+function _fq8SelCfg() {
+  return { capMeta: _fq8CapMeta, capColors: _fq8CapColors, subtemas: _fq8Subtemas,
+    subtemaTemas: _fq8SubtemaTemas, temasCount: _fq8TemasCount, gerador: _fq8Gerador };
+}
+function _fq8PratSel() {
+  if (!_fq8Prat.sel) {
+    _fq8Prat.sel = _selNew();
+    if (_fq8Prat.cap) { _fq8Prat.sel.caps = [_fq8Prat.cap]; if (_fq8Prat.st) _fq8Prat.sel.stsByCap[_fq8Prat.cap] = [_fq8Prat.st]; }
+  }
+  return _fq8Prat.sel;
+}
+
 function fq8BuildPraticarNav() {
   var capRow = document.getElementById('fq8-praticar-cap-row');
   if (!capRow) return;
-  var activeCap = _fq8Prat.cap || 1;
-  var h = '';
-  _fq8CapMeta.forEach(function(m) {
-    var hasGen = !!_fq8Gerador(m.n);
-    var color = _fq8CapColors[m.n] || '#516860';
-    var isActive = activeCap === m.n;
-    var activeStyle = isActive ? 'background:' + color + ';border-color:' + color + ';color:#fff' : '';
-    var disabledStyle = hasGen ? '' : 'opacity:.45;cursor:not-allowed';
-    var onclick = hasGen ? 'fq8PraticarSelectCap(' + m.n + ',this)' : '';
-    var title = hasGen ? '' : ' title="Em preparação"';
-    h += '<button class="resumo-cap-btn' + (isActive ? ' active' : '') + '" data-cap="' + m.n + '" onclick="' + onclick + '" style="' + activeStyle + ';' + disabledStyle + '"' + title + '>'
-       + '<span class="resumo-cap-icon">' + m.icon + '</span>' + m.label + (hasGen ? '' : ' ·') + '</button>';
-  });
-  capRow.innerHTML = h;
-  fq8PraticarShowSts(activeCap);
-}
-
-function fq8PraticarShowSts(cap) {
   var stRow = document.getElementById('fq8-praticar-st-row');
-  if (!stRow) return;
-  var sts = _fq8Subtemas[cap] || [];
-  if (!sts.length) { stRow.style.display = 'none'; return; }
-  var h = '<div class="resumo-st-label">Subtema</div>';
-  h += '<button class="resumo-st-btn' + (_fq8Prat.st === 0 ? ' active' : '') + '" data-st="0" onclick="fq8PraticarSelectSt(this,0)">Todos</button>';
-  sts.forEach(function(st, i) {
-    h += '<button class="resumo-st-btn' + (_fq8Prat.st === (i + 1) ? ' active' : '') + '" data-st="' + (i + 1) + '" onclick="fq8PraticarSelectSt(this,' + (i + 1) + ')">' + st + '</button>';
-  });
-  stRow.innerHTML = h;
-  stRow.style.display = 'flex';
+  if (stRow) stRow.style.display = 'none';
+  capRow.innerHTML = _selBarsHTML(_fq8PratSel(), _fq8SelCfg(), 'fq8PratToggleCap', 'fq8PratToggleSt');
 }
 
-function fq8PraticarSelectCap(cap, btn) {
-  if (!_fq8Gerador(cap)) return;
-  _fq8Prat.cap = cap;
-  _fq8Prat.st = 0;
-  var capRow = document.getElementById('fq8-praticar-cap-row');
-  if (capRow) capRow.querySelectorAll('.resumo-cap-btn').forEach(function(b) { b.classList.remove('active'); b.style.background = ''; b.style.borderColor = ''; b.style.color = ''; });
-  if (btn) { var color = _fq8CapColors[cap] || '#516860'; btn.classList.add('active'); btn.style.background = color; btn.style.borderColor = color; btn.style.color = '#fff'; }
-  fq8PraticarShowSts(cap);
+function fq8PratToggleCap(cap) {
+  _selToggleCap(_fq8PratSel(), _fq8SelCfg(), cap);
+  fq8BuildPraticarNav();
   fq8GerarExercicios();
 }
-
-function fq8PraticarSelectSt(btn, stIdx) {
-  var stRow = document.getElementById('fq8-praticar-st-row');
-  if (stRow) stRow.querySelectorAll('.resumo-st-btn').forEach(function(b) { b.classList.remove('active'); });
-  if (btn) btn.classList.add('active');
-  _fq8Prat.st = stIdx;
+function fq8PratToggleSt(cap, st) {
+  _selToggleSt(_fq8PratSel(), cap, st);
+  fq8BuildPraticarNav();
   fq8GerarExercicios();
 }
 
@@ -421,27 +399,30 @@ var _fq8SubtemaTemas = {
 function fq8GerarExercicios() {
   var dest = document.getElementById('fq8-praticar-content');
   if (!dest) return;
-  var cap = _fq8Prat.cap, gen = _fq8Gerador(cap);
-  if (!gen) { dest.innerHTML = ''; return; }
-
-  // Que temas usar?
-  var temas;
-  if (_fq8Prat.st > 0 && _fq8SubtemaTemas[cap] && _fq8SubtemaTemas[cap][_fq8Prat.st]) {
-    temas = _fq8SubtemaTemas[cap][_fq8Prat.st];
-  } else {
-    temas = [];
-    for (var t = 1; t <= (_fq8TemasCount[cap] || 1); t++) temas.push(String(t));
-  }
+  var pares = _selPares(_fq8PratSel(), _fq8SelCfg());
+  if (!pares.length) { dest.innerHTML = ''; return; }
+  pares = pares.slice();
+  for (var pz = pares.length - 1; pz > 0; pz--) { var rz = Math.floor(Math.random() * (pz + 1)); var tz = pares[pz]; pares[pz] = pares[rz]; pares[rz] = tz; }
+  var cap = _fq8PratSel().caps[0] || (pares[0] && pares[0].cap) || 1;
 
   var QTD = 8;
   var tipos = ['mc', 'fill', 'mc', 'vf', 'fill', 'mc', 'fill', 'mc'];
   var geradas = [];
   for (var i = 0; i < QTD; i++) {
-    var tema = temas[i % temas.length];
-    var ex = gen(tema, tipos[i % tipos.length], _fq8Prat.nivel);
+    var par = pares[i % pares.length];
+    var gen = _fq8Gerador(par.cap);
+    if (!gen) continue;
+    var ex = gen(par.tema, tipos[i % tipos.length], _fq8Prat.nivel);
     if (ex) geradas.push(ex);
   }
-  var banco = (typeof _fq8Banco !== "undefined" && _fq8Banco[cap]) ? _fq8Banco[cap].filter(function (q) { return temas.indexOf(q.t) !== -1; }) : [];
+  var temasPorCap = {};
+  pares.forEach(function (pr) { (temasPorCap[pr.cap] = temasPorCap[pr.cap] || []).push(pr.tema); });
+  var banco = [];
+  if (typeof _fq8Banco !== "undefined") {
+    Object.keys(temasPorCap).forEach(function (c) {
+      if (_fq8Banco[c]) banco = banco.concat(_fq8Banco[c].filter(function (q) { return temasPorCap[c].indexOf(String(q.t)) !== -1; }));
+    });
+  }
   var exs = (typeof _mixBancoGeradas === "function") ? _mixBancoGeradas(banco, geradas, QTD, 2, _fq8Prat.nivel)
     : geradas.map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
   _fq8Prat.exs = exs;
@@ -460,10 +441,13 @@ function fq8GerarExercicios() {
     ? _capBuildQuizHTML(exs, 'm8ex', 'fq8CheckEx')
     : '<p style="color:var(--ink4)">Motor de exercícios indisponível.</p>';
   dest.innerHTML = scoreBar + '<div id="fq8-atribuir" style="margin:.2rem 0 .8rem"></div>' + quizHTML;
+  _fq8Prat.cap = cap;
   if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
     var _cm = _fq8CapMeta.filter(function (m) { return m.n === cap; })[0] || {};
-    var _sn = (_fq8Subtemas[cap] && _fq8Prat.st > 0) ? (_fq8Subtemas[cap][_fq8Prat.st - 1] || '') : '';
-    Atribuir.montar('fq8-atribuir', { curso: 'fq8', cursoNome: 'Físico-Química 8.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_fq8Prat.st || ''), subNome: _sn, tipo: 'quiz', nivel: _fq8Prat.nivel });
+    var _selA = _fq8PratSel();
+    var _stA = (_selA.caps.length === 1 && (_selA.stsByCap[cap] || []).length === 1) ? _selA.stsByCap[cap][0] : 0;
+    var _sn = (_fq8Subtemas[cap] && _stA > 0) ? (_fq8Subtemas[cap][_stA - 1] || '') : '';
+    Atribuir.montar('fq8-atribuir', { curso: 'fq8', cursoNome: 'Físico-Química 8.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_stA || ''), subNome: _sn, tipo: 'quiz', nivel: _fq8Prat.nivel });
   }
 }
 
@@ -548,19 +532,24 @@ function _fq8BuildMcQuestion(cap) {
 /* ════════════════════════════════════════════════════════════════
    SUB-MODO: QUIZ RELÂMPAGO (3 vidas, streak)
    ════════════════════════════════════════════════════════════════ */
-var _fq8Quiz = { cap: 1, lives: 3, streak: 0, maxStreak: 0, score: 0, total: 0, answered: false, current: null };
+var _fq8Quiz = { cap: 1, sel: null, lives: 3, streak: 0, maxStreak: 0, score: 0, total: 0, answered: false, current: null };
+
+function _fq8QuizSel() { if (!_fq8Quiz.sel) _fq8Quiz.sel = _selNew(); return _fq8Quiz.sel; }
 
 function fq8QuizBuildNav() {
-  if (!_fq8Gerador(_fq8Quiz.cap)) _fq8Quiz.cap = 1;
-  _fq8BuildCapRow('fq8-quiz-cap-row', _fq8Quiz.cap, 'fq8QuizSelectCap');
+  var row = document.getElementById('fq8-quiz-cap-row');
+  if (row) row.innerHTML = _selBarsHTML(_fq8QuizSel(), _fq8SelCfg(), 'fq8QuizToggleCap', 'fq8QuizToggleSt');
+  var st = document.getElementById('fq8-quiz-st-row'); if (st) st.style.display = 'none';
   fq8QuizStart();
 }
 
-function fq8QuizSelectCap(cap, btn) {
-  if (!_fq8Gerador(cap)) return;
-  _fq8SetActiveCapBtn('fq8-quiz-cap-row', btn, cap);
-  _fq8Quiz.cap = cap;
-  fq8QuizStart();
+function fq8QuizToggleCap(cap) {
+  _selToggleCap(_fq8QuizSel(), _fq8SelCfg(), cap);
+  fq8QuizBuildNav();
+}
+function fq8QuizToggleSt(cap, st) {
+  _selToggleSt(_fq8QuizSel(), cap, st);
+  fq8QuizBuildNav();
 }
 
 function fq8QuizStart() {
@@ -573,8 +562,10 @@ function fq8QuizNext() {
   var app = document.getElementById('fq8-quiz-app');
   if (!app) return;
   if (_fq8Quiz.lives <= 0) { fq8QuizGameOver(app); return; }
-  var ex = _fq8BuildMcQuestion(_fq8Quiz.cap);
-  if (!ex) { app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Sem questões disponíveis para este capítulo.</p>'; return; }
+  var _qpares = _selPares(_fq8QuizSel(), _fq8SelCfg());
+  _fq8Quiz.cap = (_fq8QuizSel().caps[0]) || (_qpares[0] && _qpares[0].cap) || 1;
+  var ex = _selMcQuestion(_fq8QuizSel(), _fq8SelCfg());
+  if (!ex) { app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Sem questões disponíveis para esta seleção.</p>'; return; }
   _fq8Quiz.current = ex; _fq8Quiz.answered = false;
   var lives = '';
   for (var i = 0; i < 3; i++) lives += (i < _fq8Quiz.lives ? '❤️' : '🖤') + ' ';
@@ -709,19 +700,24 @@ function fq8FcPrev() { _fq8Fc.idx = (_fq8Fc.idx - 1 + (_fq8Fc.cards.length || 1)
 /* ════════════════════════════════════════════════════════════════
    SUB-MODO: TESTE CRONOMETRADO
    ════════════════════════════════════════════════════════════════ */
-var _fq8Teste = { cap: 1, nivel: 'medio', qtd: 10, tempo: 600, exs: [], answered: {}, score: { correct: 0, total: 0 }, timer: null, restante: 0 };
+var _fq8Teste = { cap: 1, sel: null, nivel: 'medio', qtd: 10, tempo: 600, exs: [], answered: {}, score: { correct: 0, total: 0 }, timer: null, restante: 0 };
+
+function _fq8TesteSel() { if (!_fq8Teste.sel) _fq8Teste.sel = _selNew(); return _fq8Teste.sel; }
 
 function fq8TesteBuildNav() {
-  if (!_fq8Gerador(_fq8Teste.cap)) _fq8Teste.cap = 1;
-  _fq8BuildCapRow('fq8-teste-cap-row', _fq8Teste.cap, 'fq8TesteSelectCap');
+  var row = document.getElementById('fq8-teste-cap-row');
+  if (row) row.innerHTML = _selBarsHTML(_fq8TesteSel(), _fq8SelCfg(), 'fq8TesteToggleCap', 'fq8TesteToggleSt');
+  var st = document.getElementById('fq8-teste-st-row'); if (st) st.style.display = 'none';
   fq8TesteRenderConfig();
 }
 
-function fq8TesteSelectCap(cap, btn) {
-  if (!_fq8Gerador(cap)) return;
-  _fq8SetActiveCapBtn('fq8-teste-cap-row', btn, cap);
-  _fq8Teste.cap = cap;
-  fq8TesteRenderConfig();
+function fq8TesteToggleCap(cap) {
+  _selToggleCap(_fq8TesteSel(), _fq8SelCfg(), cap);
+  fq8TesteBuildNav();
+}
+function fq8TesteToggleSt(cap, st) {
+  _selToggleSt(_fq8TesteSel(), cap, st);
+  fq8TesteBuildNav();
 }
 
 function fq8TesteRenderConfig() {
@@ -755,15 +751,20 @@ function fq8TesteSetNivel(nivel, btn) {
 }
 
 function fq8TesteStart() {
-  var gen = _fq8Gerador(_fq8Teste.cap); if (!gen) return;
+  var pares = _selPares(_fq8TesteSel(), _fq8SelCfg());
+  if (!pares.length) return;
+  pares = pares.slice();
+  for (var sp = pares.length - 1; sp > 0; sp--) { var rsp = Math.floor(Math.random() * (sp + 1)); var tsp = pares[sp]; pares[sp] = pares[rsp]; pares[rsp] = tsp; }
+  _fq8Teste.cap = (_fq8TesteSel().caps[0]) || (pares[0] && pares[0].cap) || 1;
   var qtdEl = document.getElementById('fq8-teste-qtd'), tempoEl = document.getElementById('fq8-teste-tempo');
   _fq8Teste.qtd = qtdEl ? parseInt(qtdEl.value) : 10;
   _fq8Teste.tempo = tempoEl ? parseInt(tempoEl.value) : 600;
-  var nTemas = _fq8TemasCount[_fq8Teste.cap] || 1;
   var tipos = ['mc', 'fill', 'mc', 'vf', 'fill'];
   var exs = [];
   for (var i = 0; i < _fq8Teste.qtd; i++) {
-    var ex = gen(String((i % nTemas) + 1), tipos[i % tipos.length], _fq8Teste.nivel);
+    var par = pares[i % pares.length];
+    var gen = _fq8Gerador(par.cap); if (!gen) continue;
+    var ex = gen(par.tema, tipos[i % tipos.length], _fq8Teste.nivel);
     if (ex) exs.push(Object.assign({}, ex, { num: i + 1 }));
   }
   _fq8Teste.exs = exs; _fq8Teste.answered = {}; _fq8Teste.score = { correct: 0, total: 0 };
@@ -971,6 +972,7 @@ function fq8RenderProgresso() {
 function fq8TreinarCap(cap) {
   _fq8Prat.cap = cap;
   _fq8Prat.st = 0;
+  _fq8Prat.sel = { caps: [cap], stsByCap: {} };
   fq8SwitchTab('exercicios', null);
 }
 
@@ -2782,7 +2784,7 @@ function buildEx_f72(tema, tipo, dif) {
 /* atribuir: deep-link fq8 */
 function _fq8DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_fq8gf){ _fq8gf.caps={}; cs.forEach(function(n){ _fq8gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _fq8gf.dif=p.get('dif'); } if(p.get('tarefa'))setTimeout(function(){tarefaEntregaBar(p.get('tarefa'),'Ficha concluída');},400); setTimeout(function(){ fq8SwitchTab('fichas',null); },350); return; }
     if(p.get('abrir')==='jogos'){ var jc=parseInt(p.get('cap'),10); if(jc&&_fq8Prat) _fq8Prat.cap=jc; if(p.get('tarefa'))setTimeout(function(){tarefaEntregaBar(p.get('tarefa'),'Jogo concluído');},400); setTimeout(function(){ fq8SwitchTab('jogos',null); var jg=p.get('jogo'); if(jg&&typeof gTabSwitch==='function')setTimeout(function(){try{gTabSwitch('fq8-jogos-app',jg);}catch(e){}},250); },350); return; }
-    if(p.get('abrir')!=='praticar')return; if(p.get('tarefa')){_fq8TarefaAtiva=p.get('tarefa');_fq8TarefaResp={};} var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _fq8Prat.cap=cap; _fq8Prat.st=st; _fq8Prat.nivel=nivel; setTimeout(function(){ fq8SwitchTab('exercicios',null); if(typeof fq8GerarExercicios==='function') fq8GerarExercicios(); },350); }catch(e){} }
+    if(p.get('abrir')!=='praticar')return; if(p.get('tarefa')){_fq8TarefaAtiva=p.get('tarefa');_fq8TarefaResp={};} var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _fq8Prat.cap=cap; _fq8Prat.st=st; _fq8Prat.nivel=nivel; _fq8Prat.sel={caps:[cap],stsByCap:(st?(function(){var o={};o[cap]=[st];return o;})():{})}; setTimeout(function(){ fq8SwitchTab('exercicios',null); if(typeof fq8GerarExercicios==='function') fq8GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_fq8DeepLinkAuto,300);});else setTimeout(_fq8DeepLinkAuto,300);
 
 function fq8AtribuirFicha(){

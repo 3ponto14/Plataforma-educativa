@@ -367,56 +367,34 @@ var _fq7TarefaAtiva=null, _fq7TarefaResp={};
 
 function _fq7PratStorageKey(cap) { return 'edupt_fq7_cap' + cap; }
 
+function _fq7SelCfg() {
+  return { capMeta: _fq7CapMeta, capColors: _fq7CapColors, subtemas: _fq7Subtemas,
+    subtemaTemas: _fq7SubtemaTemas, temasCount: _fq7TemasCount, gerador: _fq7Gerador };
+}
+function _fq7PratSel() {
+  if (!_fq7Prat.sel) {
+    _fq7Prat.sel = _selNew();
+    if (_fq7Prat.cap) { _fq7Prat.sel.caps = [_fq7Prat.cap]; if (_fq7Prat.st) _fq7Prat.sel.stsByCap[_fq7Prat.cap] = [_fq7Prat.st]; }
+  }
+  return _fq7Prat.sel;
+}
+
 function fq7BuildPraticarNav() {
   var capRow = document.getElementById('fq7-praticar-cap-row');
   if (!capRow) return;
-  var activeCap = _fq7Prat.cap || 1;
-  var h = '';
-  _fq7CapMeta.forEach(function(m) {
-    var hasGen = !!_fq7Gerador(m.n);
-    var color = _fq7CapColors[m.n] || '#516860';
-    var isActive = activeCap === m.n;
-    var activeStyle = isActive ? 'background:' + color + ';border-color:' + color + ';color:#fff' : '';
-    var disabledStyle = hasGen ? '' : 'opacity:.45;cursor:not-allowed';
-    var onclick = hasGen ? 'fq7PraticarSelectCap(' + m.n + ',this)' : '';
-    var title = hasGen ? '' : ' title="Em preparação"';
-    h += '<button class="resumo-cap-btn' + (isActive ? ' active' : '') + '" data-cap="' + m.n + '" onclick="' + onclick + '" style="' + activeStyle + ';' + disabledStyle + '"' + title + '>'
-       + '<span class="resumo-cap-icon">' + m.icon + '</span>' + m.label + (hasGen ? '' : ' ·') + '</button>';
-  });
-  capRow.innerHTML = h;
-  fq7PraticarShowSts(activeCap);
-}
-
-function fq7PraticarShowSts(cap) {
   var stRow = document.getElementById('fq7-praticar-st-row');
-  if (!stRow) return;
-  var sts = _fq7Subtemas[cap] || [];
-  if (!sts.length) { stRow.style.display = 'none'; return; }
-  var h = '<div class="resumo-st-label">Subtema</div>';
-  h += '<button class="resumo-st-btn' + (_fq7Prat.st === 0 ? ' active' : '') + '" data-st="0" onclick="fq7PraticarSelectSt(this,0)">Todos</button>';
-  sts.forEach(function(st, i) {
-    h += '<button class="resumo-st-btn' + (_fq7Prat.st === (i + 1) ? ' active' : '') + '" data-st="' + (i + 1) + '" onclick="fq7PraticarSelectSt(this,' + (i + 1) + ')">' + st + '</button>';
-  });
-  stRow.innerHTML = h;
-  stRow.style.display = 'flex';
+  if (stRow) stRow.style.display = 'none';
+  capRow.innerHTML = _selBarsHTML(_fq7PratSel(), _fq7SelCfg(), 'fq7PratToggleCap', 'fq7PratToggleSt');
 }
 
-function fq7PraticarSelectCap(cap, btn) {
-  if (!_fq7Gerador(cap)) return;
-  _fq7Prat.cap = cap;
-  _fq7Prat.st = 0;
-  var capRow = document.getElementById('fq7-praticar-cap-row');
-  if (capRow) capRow.querySelectorAll('.resumo-cap-btn').forEach(function(b) { b.classList.remove('active'); b.style.background = ''; b.style.borderColor = ''; b.style.color = ''; });
-  if (btn) { var color = _fq7CapColors[cap] || '#516860'; btn.classList.add('active'); btn.style.background = color; btn.style.borderColor = color; btn.style.color = '#fff'; }
-  fq7PraticarShowSts(cap);
+function fq7PratToggleCap(cap) {
+  _selToggleCap(_fq7PratSel(), _fq7SelCfg(), cap);
+  fq7BuildPraticarNav();
   fq7GerarExercicios();
 }
-
-function fq7PraticarSelectSt(btn, stIdx) {
-  var stRow = document.getElementById('fq7-praticar-st-row');
-  if (stRow) stRow.querySelectorAll('.resumo-st-btn').forEach(function(b) { b.classList.remove('active'); });
-  if (btn) btn.classList.add('active');
-  _fq7Prat.st = stIdx;
+function fq7PratToggleSt(cap, st) {
+  _selToggleSt(_fq7PratSel(), cap, st);
+  fq7BuildPraticarNav();
   fq7GerarExercicios();
 }
 
@@ -464,27 +442,30 @@ var _fq7SubtemaTemas = {
 function fq7GerarExercicios() {
   var dest = document.getElementById('fq7-praticar-content');
   if (!dest) return;
-  var cap = _fq7Prat.cap, gen = _fq7Gerador(cap);
-  if (!gen) { dest.innerHTML = ''; return; }
-
-  // Que temas usar?
-  var temas;
-  if (_fq7Prat.st > 0 && _fq7SubtemaTemas[cap] && _fq7SubtemaTemas[cap][_fq7Prat.st]) {
-    temas = _fq7SubtemaTemas[cap][_fq7Prat.st];
-  } else {
-    temas = [];
-    for (var t = 1; t <= (_fq7TemasCount[cap] || 1); t++) temas.push(String(t));
-  }
+  var pares = _selPares(_fq7PratSel(), _fq7SelCfg());
+  if (!pares.length) { dest.innerHTML = ''; return; }
+  pares = pares.slice();
+  for (var pz = pares.length - 1; pz > 0; pz--) { var rz = Math.floor(Math.random() * (pz + 1)); var tz = pares[pz]; pares[pz] = pares[rz]; pares[rz] = tz; }
+  var cap = _fq7PratSel().caps[0] || (pares[0] && pares[0].cap) || 1;
 
   var QTD = 8;
   var tipos = ['mc', 'fill', 'mc', 'vf', 'fill', 'mc', 'fill', 'mc'];
   var geradas = [];
   for (var i = 0; i < QTD; i++) {
-    var tema = temas[i % temas.length];
-    var ex = gen(tema, tipos[i % tipos.length], _fq7Prat.nivel);
+    var par = pares[i % pares.length];
+    var gen = _fq7Gerador(par.cap);
+    if (!gen) continue;
+    var ex = gen(par.tema, tipos[i % tipos.length], _fq7Prat.nivel);
     if (ex) geradas.push(ex);
   }
-  var banco = (typeof _fq7Banco !== "undefined" && _fq7Banco[cap]) ? _fq7Banco[cap].filter(function (q) { return temas.indexOf(q.t) !== -1; }) : [];
+  var temasPorCap = {};
+  pares.forEach(function (pr) { (temasPorCap[pr.cap] = temasPorCap[pr.cap] || []).push(pr.tema); });
+  var banco = [];
+  if (typeof _fq7Banco !== "undefined") {
+    Object.keys(temasPorCap).forEach(function (c) {
+      if (_fq7Banco[c]) banco = banco.concat(_fq7Banco[c].filter(function (q) { return temasPorCap[c].indexOf(String(q.t)) !== -1; }));
+    });
+  }
   var exs = (typeof _mixBancoGeradas === "function") ? _mixBancoGeradas(banco, geradas, QTD, 2, _fq7Prat.nivel)
     : geradas.map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
   _fq7Prat.exs = exs;
@@ -503,10 +484,13 @@ function fq7GerarExercicios() {
     ? _capBuildQuizHTML(exs, 'm8ex', 'fq7CheckEx')
     : '<p style="color:var(--ink4)">Motor de exercícios indisponível.</p>';
   dest.innerHTML = scoreBar + '<div id="fq7-atribuir" style="margin:.2rem 0 .8rem"></div>' + quizHTML;
+  _fq7Prat.cap = cap;
   if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
     var _cm = _fq7CapMeta.filter(function (m) { return m.n === cap; })[0] || {};
-    var _sn = (_fq7Subtemas[cap] && _fq7Prat.st > 0) ? (_fq7Subtemas[cap][_fq7Prat.st - 1] || '') : '';
-    Atribuir.montar('fq7-atribuir', { curso: 'fq7', cursoNome: 'Físico-Química 7.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_fq7Prat.st || ''), subNome: _sn, tipo: 'quiz', nivel: _fq7Prat.nivel });
+    var _selA = _fq7PratSel();
+    var _stA = (_selA.caps.length === 1 && (_selA.stsByCap[cap] || []).length === 1) ? _selA.stsByCap[cap][0] : 0;
+    var _sn = (_fq7Subtemas[cap] && _stA > 0) ? (_fq7Subtemas[cap][_stA - 1] || '') : '';
+    Atribuir.montar('fq7-atribuir', { curso: 'fq7', cursoNome: 'Físico-Química 7.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_stA || ''), subNome: _sn, tipo: 'quiz', nivel: _fq7Prat.nivel });
   }
 }
 
@@ -591,19 +575,24 @@ function _fq7BuildMcQuestion(cap) {
 /* ════════════════════════════════════════════════════════════════
    SUB-MODO: QUIZ RELÂMPAGO (3 vidas, streak)
    ════════════════════════════════════════════════════════════════ */
-var _fq7Quiz = { cap: 1, lives: 3, streak: 0, maxStreak: 0, score: 0, total: 0, answered: false, current: null };
+var _fq7Quiz = { cap: 1, sel: null, lives: 3, streak: 0, maxStreak: 0, score: 0, total: 0, answered: false, current: null };
+
+function _fq7QuizSel() { if (!_fq7Quiz.sel) _fq7Quiz.sel = _selNew(); return _fq7Quiz.sel; }
 
 function fq7QuizBuildNav() {
-  if (!_fq7Gerador(_fq7Quiz.cap)) _fq7Quiz.cap = 1;
-  _fq7BuildCapRow('fq7-quiz-cap-row', _fq7Quiz.cap, 'fq7QuizSelectCap');
+  var row = document.getElementById('fq7-quiz-cap-row');
+  if (row) row.innerHTML = _selBarsHTML(_fq7QuizSel(), _fq7SelCfg(), 'fq7QuizToggleCap', 'fq7QuizToggleSt');
+  var st = document.getElementById('fq7-quiz-st-row'); if (st) st.style.display = 'none';
   fq7QuizStart();
 }
 
-function fq7QuizSelectCap(cap, btn) {
-  if (!_fq7Gerador(cap)) return;
-  _fq7SetActiveCapBtn('fq7-quiz-cap-row', btn, cap);
-  _fq7Quiz.cap = cap;
-  fq7QuizStart();
+function fq7QuizToggleCap(cap) {
+  _selToggleCap(_fq7QuizSel(), _fq7SelCfg(), cap);
+  fq7QuizBuildNav();
+}
+function fq7QuizToggleSt(cap, st) {
+  _selToggleSt(_fq7QuizSel(), cap, st);
+  fq7QuizBuildNav();
 }
 
 function fq7QuizStart() {
@@ -616,8 +605,10 @@ function fq7QuizNext() {
   var app = document.getElementById('fq7-quiz-app');
   if (!app) return;
   if (_fq7Quiz.lives <= 0) { fq7QuizGameOver(app); return; }
-  var ex = _fq7BuildMcQuestion(_fq7Quiz.cap);
-  if (!ex) { app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Sem questões disponíveis para este capítulo.</p>'; return; }
+  var _qpares = _selPares(_fq7QuizSel(), _fq7SelCfg());
+  _fq7Quiz.cap = (_fq7QuizSel().caps[0]) || (_qpares[0] && _qpares[0].cap) || 1;
+  var ex = _selMcQuestion(_fq7QuizSel(), _fq7SelCfg());
+  if (!ex) { app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Sem questões disponíveis para esta seleção.</p>'; return; }
   _fq7Quiz.current = ex; _fq7Quiz.answered = false;
   var lives = '';
   for (var i = 0; i < 3; i++) lives += (i < _fq7Quiz.lives ? '❤️' : '🖤') + ' ';
@@ -752,19 +743,24 @@ function fq7FcPrev() { _fq7Fc.idx = (_fq7Fc.idx - 1 + (_fq7Fc.cards.length || 1)
 /* ════════════════════════════════════════════════════════════════
    SUB-MODO: TESTE CRONOMETRADO
    ════════════════════════════════════════════════════════════════ */
-var _fq7Teste = { cap: 1, nivel: 'medio', qtd: 10, tempo: 600, exs: [], answered: {}, score: { correct: 0, total: 0 }, timer: null, restante: 0 };
+var _fq7Teste = { cap: 1, sel: null, nivel: 'medio', qtd: 10, tempo: 600, exs: [], answered: {}, score: { correct: 0, total: 0 }, timer: null, restante: 0 };
+
+function _fq7TesteSel() { if (!_fq7Teste.sel) _fq7Teste.sel = _selNew(); return _fq7Teste.sel; }
 
 function fq7TesteBuildNav() {
-  if (!_fq7Gerador(_fq7Teste.cap)) _fq7Teste.cap = 1;
-  _fq7BuildCapRow('fq7-teste-cap-row', _fq7Teste.cap, 'fq7TesteSelectCap');
+  var row = document.getElementById('fq7-teste-cap-row');
+  if (row) row.innerHTML = _selBarsHTML(_fq7TesteSel(), _fq7SelCfg(), 'fq7TesteToggleCap', 'fq7TesteToggleSt');
+  var st = document.getElementById('fq7-teste-st-row'); if (st) st.style.display = 'none';
   fq7TesteRenderConfig();
 }
 
-function fq7TesteSelectCap(cap, btn) {
-  if (!_fq7Gerador(cap)) return;
-  _fq7SetActiveCapBtn('fq7-teste-cap-row', btn, cap);
-  _fq7Teste.cap = cap;
-  fq7TesteRenderConfig();
+function fq7TesteToggleCap(cap) {
+  _selToggleCap(_fq7TesteSel(), _fq7SelCfg(), cap);
+  fq7TesteBuildNav();
+}
+function fq7TesteToggleSt(cap, st) {
+  _selToggleSt(_fq7TesteSel(), cap, st);
+  fq7TesteBuildNav();
 }
 
 function fq7TesteRenderConfig() {
@@ -798,15 +794,20 @@ function fq7TesteSetNivel(nivel, btn) {
 }
 
 function fq7TesteStart() {
-  var gen = _fq7Gerador(_fq7Teste.cap); if (!gen) return;
+  var pares = _selPares(_fq7TesteSel(), _fq7SelCfg());
+  if (!pares.length) return;
+  pares = pares.slice();
+  for (var sp = pares.length - 1; sp > 0; sp--) { var rsp = Math.floor(Math.random() * (sp + 1)); var tsp = pares[sp]; pares[sp] = pares[rsp]; pares[rsp] = tsp; }
+  _fq7Teste.cap = (_fq7TesteSel().caps[0]) || (pares[0] && pares[0].cap) || 1;
   var qtdEl = document.getElementById('fq7-teste-qtd'), tempoEl = document.getElementById('fq7-teste-tempo');
   _fq7Teste.qtd = qtdEl ? parseInt(qtdEl.value) : 10;
   _fq7Teste.tempo = tempoEl ? parseInt(tempoEl.value) : 600;
-  var nTemas = _fq7TemasCount[_fq7Teste.cap] || 1;
   var tipos = ['mc', 'fill', 'mc', 'vf', 'fill'];
   var exs = [];
   for (var i = 0; i < _fq7Teste.qtd; i++) {
-    var ex = gen(String((i % nTemas) + 1), tipos[i % tipos.length], _fq7Teste.nivel);
+    var par = pares[i % pares.length];
+    var gen = _fq7Gerador(par.cap); if (!gen) continue;
+    var ex = gen(par.tema, tipos[i % tipos.length], _fq7Teste.nivel);
     if (ex) exs.push(Object.assign({}, ex, { num: i + 1 }));
   }
   _fq7Teste.exs = exs; _fq7Teste.answered = {}; _fq7Teste.score = { correct: 0, total: 0 };
@@ -1014,6 +1015,7 @@ function fq7RenderProgresso() {
 function fq7TreinarCap(cap) {
   _fq7Prat.cap = cap;
   _fq7Prat.st = 0;
+  _fq7Prat.sel = { caps: [cap], stsByCap: {} };
   fq7SwitchTab('exercicios', null);
 }
 
@@ -2825,7 +2827,7 @@ function buildEx_f72(tema, tipo, dif) {
 /* atribuir: deep-link fq7 */
 function _fq7DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_fq7gf){ _fq7gf.caps={}; cs.forEach(function(n){ _fq7gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _fq7gf.dif=p.get('dif'); } if(p.get('tarefa'))setTimeout(function(){tarefaEntregaBar(p.get('tarefa'),'Ficha concluída');},400); setTimeout(function(){ fq7SwitchTab('fichas',null); },350); return; }
     if(p.get('abrir')==='jogos'){ var jc=parseInt(p.get('cap'),10); if(jc&&_fq7Prat) _fq7Prat.cap=jc; if(p.get('tarefa'))setTimeout(function(){tarefaEntregaBar(p.get('tarefa'),'Jogo concluído');},400); setTimeout(function(){ fq7SwitchTab('jogos',null); var jg=p.get('jogo'); if(jg&&typeof gTabSwitch==='function')setTimeout(function(){try{gTabSwitch('fq7-jogos-app',jg);}catch(e){}},250); },350); return; }
-    if(p.get('abrir')!=='praticar')return; if(p.get('tarefa')){_fq7TarefaAtiva=p.get('tarefa');_fq7TarefaResp={};} var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _fq7Prat.cap=cap; _fq7Prat.st=st; _fq7Prat.nivel=nivel; setTimeout(function(){ fq7SwitchTab('exercicios',null); if(typeof fq7GerarExercicios==='function') fq7GerarExercicios(); },350); }catch(e){} }
+    if(p.get('abrir')!=='praticar')return; if(p.get('tarefa')){_fq7TarefaAtiva=p.get('tarefa');_fq7TarefaResp={};} var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _fq7Prat.cap=cap; _fq7Prat.st=st; _fq7Prat.nivel=nivel; _fq7Prat.sel={caps:[cap],stsByCap:(st?(function(){var o={};o[cap]=[st];return o;})():{})}; setTimeout(function(){ fq7SwitchTab('exercicios',null); if(typeof fq7GerarExercicios==='function') fq7GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_fq7DeepLinkAuto,300);});else setTimeout(_fq7DeepLinkAuto,300);
 
 function fq7AtribuirFicha(){
