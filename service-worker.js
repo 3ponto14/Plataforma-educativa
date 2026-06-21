@@ -5,7 +5,7 @@
  *   - Sem internet: serve a última versão guardada em cache.
  * Para forçar atualização do cache, mudar CACHE_VERSION.
  */
-var CACHE_VERSION = 'v20260621';
+var CACHE_VERSION = 'v20260621b';
 var CACHE_NAME = 'ep3ponto14-' + CACHE_VERSION;
 
 // Páginas/ficheiros base a tentar pré-cachear na instalação (best-effort).
