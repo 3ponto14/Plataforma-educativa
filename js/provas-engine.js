@@ -183,7 +183,8 @@ function _pnRenderQuestion(practice) {
   // Enunciado em texto
   // Imagem recortada do exame - substitui o enunciado em texto, com fallback para texto se a imagem não carregar
   if (q.examKey && q.page) {
-    var _pfx = (window.location.pathname.indexOf('/mat7/') !== -1) ? '../' : '';
+    var _pfx = (typeof eduRootPath === 'function') ? eduRootPath()
+      : ((window.location.pathname.indexOf('/mat7/') !== -1) ? '../' : '');
     var _cropSrc = _pfx + 'img/exames/crops/' + q.examKey + '/' + q.id + '.png';
     h += '<div class="pn-fig-wrap" data-fallback-id="pn-fb-' + q.id + '">';
     h += '<img src="' + _cropSrc + '" class="pn-fig-img" alt="Figura do exame" onerror="_pnFigFallback(this,\'pn-fb-' + q.id + '\')">';
@@ -518,7 +519,8 @@ function pnVerProvaImg(btn, examKey, page) {
     return;
   }
   // determine path prefix (exames.html is at root, chapter pages in mat7/)
-  var prefix = (window.location.pathname.indexOf('/mat7/') !== -1) ? '../' : '';
+  var prefix = (typeof eduRootPath === 'function') ? eduRootPath()
+    : ((window.location.pathname.indexOf('/mat7/') !== -1) ? '../' : '');
   var imgBase = prefix + 'img/exames/' + examKey + '/';
   var h = '<div style="background:#111;border-radius:10px;padding:.75rem">';
   h += '<div style="color:#fff;font-size:.75rem;font-weight:700;margin-bottom:.5rem;opacity:.7">Prova original - ' + examKey + '</div>';

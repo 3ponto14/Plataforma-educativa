@@ -10,7 +10,9 @@
    current page location.
 ─────────────────────────────────────────────────────────────────── */
 // Deteção genérica: estamos dentro de um diretório de curso (matN/ portN/ fqN/)?
-var _inSub = /\/(mat\d+|port\d+|fq\d+)(\/|$)/.test(window.location.pathname);
+// Fonte única em shared.js (eduIsCourseHub); fallback à regex se faltar.
+var _inSub = (typeof eduIsCourseHub === 'function') ? eduIsCourseHub()
+  : /\/(mat\d+|port\d+|fq\d+)(\/|$)/.test(window.location.pathname);
 function _inMat(n) { return window.location.pathname.indexOf('/mat' + n + '/') !== -1 || window.location.pathname.endsWith('/mat' + n); }
 function _inPort(n) { return window.location.pathname.indexOf('/port' + n + '/') !== -1 || window.location.pathname.endsWith('/port' + n); }
 var _inMat7 = _inMat(7), _inMat8 = _inMat(8), _inMat9 = _inMat(9);
