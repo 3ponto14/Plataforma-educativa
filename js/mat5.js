@@ -328,56 +328,34 @@ var _mat5TarefaAtiva=null, _mat5TarefaResp={};
 
 function _mat5PratStorageKey(cap) { return 'edupt_mat5_cap' + cap; }
 
+function _mat5SelCfg() {
+  return { capMeta: _mat5CapMeta, capColors: _mat5CapColors, subtemas: _mat5Subtemas,
+    subtemaTemas: _mat5SubtemaTemas, temasCount: _mat5TemasCount, gerador: _mat5Gerador };
+}
+function _mat5PratSel() {
+  if (!_mat5Prat.sel) {
+    _mat5Prat.sel = _selNew();
+    if (_mat5Prat.cap) { _mat5Prat.sel.caps = [_mat5Prat.cap]; if (_mat5Prat.st) _mat5Prat.sel.stsByCap[_mat5Prat.cap] = [_mat5Prat.st]; }
+  }
+  return _mat5Prat.sel;
+}
+
 function mat5BuildPraticarNav() {
   var capRow = document.getElementById('mat5-praticar-cap-row');
   if (!capRow) return;
-  var activeCap = _mat5Prat.cap || 1;
-  var h = '';
-  _mat5CapMeta.forEach(function(m) {
-    var hasGen = !!_mat5Gerador(m.n);
-    var color = _mat5CapColors[m.n] || '#516860';
-    var isActive = activeCap === m.n;
-    var activeStyle = isActive ? 'background:' + color + ';border-color:' + color + ';color:#fff' : '';
-    var disabledStyle = hasGen ? '' : 'opacity:.45;cursor:not-allowed';
-    var onclick = hasGen ? 'mat5PraticarSelectCap(' + m.n + ',this)' : '';
-    var title = hasGen ? '' : ' title="Em preparação"';
-    h += '<button class="resumo-cap-btn' + (isActive ? ' active' : '') + '" data-cap="' + m.n + '" onclick="' + onclick + '" style="' + activeStyle + ';' + disabledStyle + '"' + title + '>'
-       + '<span class="resumo-cap-icon">' + m.icon + '</span>' + m.label + (hasGen ? '' : ' ·') + '</button>';
-  });
-  capRow.innerHTML = h;
-  mat5PraticarShowSts(activeCap);
-}
-
-function mat5PraticarShowSts(cap) {
   var stRow = document.getElementById('mat5-praticar-st-row');
-  if (!stRow) return;
-  var sts = _mat5Subtemas[cap] || [];
-  if (!sts.length) { stRow.style.display = 'none'; return; }
-  var h = '<div class="resumo-st-label">Subtema</div>';
-  h += '<button class="resumo-st-btn' + (_mat5Prat.st === 0 ? ' active' : '') + '" data-st="0" onclick="mat5PraticarSelectSt(this,0)">Todos</button>';
-  sts.forEach(function(st, i) {
-    h += '<button class="resumo-st-btn' + (_mat5Prat.st === (i + 1) ? ' active' : '') + '" data-st="' + (i + 1) + '" onclick="mat5PraticarSelectSt(this,' + (i + 1) + ')">' + st + '</button>';
-  });
-  stRow.innerHTML = h;
-  stRow.style.display = 'flex';
+  if (stRow) stRow.style.display = 'none';
+  capRow.innerHTML = _selBarsHTML(_mat5PratSel(), _mat5SelCfg(), 'mat5PratToggleCap', 'mat5PratToggleSt');
 }
 
-function mat5PraticarSelectCap(cap, btn) {
-  if (!_mat5Gerador(cap)) return;
-  _mat5Prat.cap = cap;
-  _mat5Prat.st = 0;
-  var capRow = document.getElementById('mat5-praticar-cap-row');
-  if (capRow) capRow.querySelectorAll('.resumo-cap-btn').forEach(function(b) { b.classList.remove('active'); b.style.background = ''; b.style.borderColor = ''; b.style.color = ''; });
-  if (btn) { var color = _mat5CapColors[cap] || '#516860'; btn.classList.add('active'); btn.style.background = color; btn.style.borderColor = color; btn.style.color = '#fff'; }
-  mat5PraticarShowSts(cap);
+function mat5PratToggleCap(cap) {
+  _selToggleCap(_mat5PratSel(), _mat5SelCfg(), cap);
+  mat5BuildPraticarNav();
   mat5GerarExercicios();
 }
-
-function mat5PraticarSelectSt(btn, stIdx) {
-  var stRow = document.getElementById('mat5-praticar-st-row');
-  if (stRow) stRow.querySelectorAll('.resumo-st-btn').forEach(function(b) { b.classList.remove('active'); });
-  if (btn) btn.classList.add('active');
-  _mat5Prat.st = stIdx;
+function mat5PratToggleSt(cap, st) {
+  _selToggleSt(_mat5PratSel(), cap, st);
+  mat5BuildPraticarNav();
   mat5GerarExercicios();
 }
 
@@ -403,27 +381,30 @@ var _mat5SubtemaTemas = {
 function mat5GerarExercicios() {
   var dest = document.getElementById('mat5-praticar-content');
   if (!dest) return;
-  var cap = _mat5Prat.cap, gen = _mat5Gerador(cap);
-  if (!gen) { dest.innerHTML = ''; return; }
-
-  // Que temas usar?
-  var temas;
-  if (_mat5Prat.st > 0 && _mat5SubtemaTemas[cap] && _mat5SubtemaTemas[cap][_mat5Prat.st]) {
-    temas = _mat5SubtemaTemas[cap][_mat5Prat.st];
-  } else {
-    temas = [];
-    for (var t = 1; t <= (_mat5TemasCount[cap] || 1); t++) temas.push(String(t));
-  }
+  var pares = _selPares(_mat5PratSel(), _mat5SelCfg());
+  if (!pares.length) { dest.innerHTML = ''; return; }
+  pares = pares.slice();
+  for (var pz = pares.length - 1; pz > 0; pz--) { var rz = Math.floor(Math.random() * (pz + 1)); var tz = pares[pz]; pares[pz] = pares[rz]; pares[rz] = tz; }
+  var cap = _mat5PratSel().caps[0] || (pares[0] && pares[0].cap) || 1;
 
   var QTD = 8;
   var tipos = ['mc', 'fill', 'mc', 'vf', 'fill', 'mc', 'fill', 'mc'];
   var geradas = [];
   for (var i = 0; i < QTD; i++) {
-    var tema = temas[i % temas.length];
-    var ex = gen(tema, tipos[i % tipos.length], _mat5Prat.nivel);
+    var par = pares[i % pares.length];
+    var gen = _mat5Gerador(par.cap);
+    if (!gen) continue;
+    var ex = gen(par.tema, tipos[i % tipos.length], _mat5Prat.nivel);
     if (ex) geradas.push(ex);
   }
-  var banco = (typeof _mat5Banco !== "undefined" && _mat5Banco[cap]) ? _mat5Banco[cap].filter(function (q) { return temas.indexOf(q.t) !== -1; }) : [];
+  var temasPorCap = {};
+  pares.forEach(function (pr) { (temasPorCap[pr.cap] = temasPorCap[pr.cap] || []).push(pr.tema); });
+  var banco = [];
+  if (typeof _mat5Banco !== "undefined") {
+    Object.keys(temasPorCap).forEach(function (c) {
+      if (_mat5Banco[c]) banco = banco.concat(_mat5Banco[c].filter(function (q) { return temasPorCap[c].indexOf(String(q.t)) !== -1; }));
+    });
+  }
   var exs = (typeof _mixBancoGeradas === "function") ? _mixBancoGeradas(banco, geradas, QTD, 2, _mat5Prat.nivel)
     : geradas.map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
   _mat5Prat.exs = exs;
@@ -442,10 +423,13 @@ function mat5GerarExercicios() {
     ? _capBuildQuizHTML(exs, 'm8ex', 'mat5CheckEx')
     : '<p style="color:var(--ink4)">Motor de exercícios indisponível.</p>';
   dest.innerHTML = scoreBar + '<div id="mat5-atribuir" style="margin:.2rem 0 .8rem"></div>' + quizHTML;
+  _mat5Prat.cap = cap;
   if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
     var _cm = _mat5CapMeta.filter(function (m) { return m.n === cap; })[0] || {};
-    var _sn = (_mat5Subtemas[cap] && _mat5Prat.st > 0) ? (_mat5Subtemas[cap][_mat5Prat.st - 1] || '') : '';
-    Atribuir.montar('mat5-atribuir', { curso: 'mat5', cursoNome: 'Matemática 5.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_mat5Prat.st || ''), subNome: _sn, tipo: 'quiz', nivel: _mat5Prat.nivel });
+    var _selA = _mat5PratSel();
+    var _stA = (_selA.caps.length === 1 && (_selA.stsByCap[cap] || []).length === 1) ? _selA.stsByCap[cap][0] : 0;
+    var _sn = (_mat5Subtemas[cap] && _stA > 0) ? (_mat5Subtemas[cap][_stA - 1] || '') : '';
+    Atribuir.montar('mat5-atribuir', { curso: 'mat5', cursoNome: 'Matemática 5.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_stA || ''), subNome: _sn, tipo: 'quiz', nivel: _mat5Prat.nivel });
   }
 }
 
@@ -543,19 +527,24 @@ function _mat5BuildMcQuestion(cap) {
 /* ════════════════════════════════════════════════════════════════
    SUB-MODO: QUIZ RELÂMPAGO (3 vidas, streak)
    ════════════════════════════════════════════════════════════════ */
-var _mat5Quiz = { cap: 1, lives: 3, streak: 0, maxStreak: 0, score: 0, total: 0, answered: false, current: null };
+var _mat5Quiz = { cap: 1, sel: null, lives: 3, streak: 0, maxStreak: 0, score: 0, total: 0, answered: false, current: null };
+
+function _mat5QuizSel() { if (!_mat5Quiz.sel) _mat5Quiz.sel = _selNew(); return _mat5Quiz.sel; }
 
 function mat5QuizBuildNav() {
-  if (!_mat5Gerador(_mat5Quiz.cap)) _mat5Quiz.cap = 1;
-  _mat5BuildCapRow('mat5-quiz-cap-row', _mat5Quiz.cap, 'mat5QuizSelectCap');
+  var row = document.getElementById('mat5-quiz-cap-row');
+  if (row) row.innerHTML = _selBarsHTML(_mat5QuizSel(), _mat5SelCfg(), 'mat5QuizToggleCap', 'mat5QuizToggleSt');
+  var st = document.getElementById('mat5-quiz-st-row'); if (st) st.style.display = 'none';
   mat5QuizStart();
 }
 
-function mat5QuizSelectCap(cap, btn) {
-  if (!_mat5Gerador(cap)) return;
-  _mat5SetActiveCapBtn('mat5-quiz-cap-row', btn, cap);
-  _mat5Quiz.cap = cap;
-  mat5QuizStart();
+function mat5QuizToggleCap(cap) {
+  _selToggleCap(_mat5QuizSel(), _mat5SelCfg(), cap);
+  mat5QuizBuildNav();
+}
+function mat5QuizToggleSt(cap, st) {
+  _selToggleSt(_mat5QuizSel(), cap, st);
+  mat5QuizBuildNav();
 }
 
 function mat5QuizStart() {
@@ -568,8 +557,10 @@ function mat5QuizNext() {
   var app = document.getElementById('mat5-quiz-app');
   if (!app) return;
   if (_mat5Quiz.lives <= 0) { mat5QuizGameOver(app); return; }
-  var ex = _mat5BuildMcQuestion(_mat5Quiz.cap);
-  if (!ex) { app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Sem questões disponíveis para este capítulo.</p>'; return; }
+  var _qpares = _selPares(_mat5QuizSel(), _mat5SelCfg());
+  _mat5Quiz.cap = (_mat5QuizSel().caps[0]) || (_qpares[0] && _qpares[0].cap) || 1;
+  var ex = _selMcQuestion(_mat5QuizSel(), _mat5SelCfg(), _mat5FillToMc);
+  if (!ex) { app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Sem questões disponíveis para esta seleção.</p>'; return; }
   _mat5Quiz.current = ex; _mat5Quiz.answered = false;
   var lives = '';
   for (var i = 0; i < 3; i++) lives += (i < _mat5Quiz.lives ? '❤️' : '🖤') + ' ';
@@ -704,19 +695,24 @@ function mat5FcPrev() { _mat5Fc.idx = (_mat5Fc.idx - 1 + (_mat5Fc.cards.length |
 /* ════════════════════════════════════════════════════════════════
    SUB-MODO: TESTE CRONOMETRADO
    ════════════════════════════════════════════════════════════════ */
-var _mat5Teste = { cap: 1, nivel: 'medio', qtd: 10, tempo: 600, exs: [], answered: {}, score: { correct: 0, total: 0 }, timer: null, restante: 0 };
+var _mat5Teste = { cap: 1, sel: null, nivel: 'medio', qtd: 10, tempo: 600, exs: [], answered: {}, score: { correct: 0, total: 0 }, timer: null, restante: 0 };
+
+function _mat5TesteSel() { if (!_mat5Teste.sel) _mat5Teste.sel = _selNew(); return _mat5Teste.sel; }
 
 function mat5TesteBuildNav() {
-  if (!_mat5Gerador(_mat5Teste.cap)) _mat5Teste.cap = 1;
-  _mat5BuildCapRow('mat5-teste-cap-row', _mat5Teste.cap, 'mat5TesteSelectCap');
+  var row = document.getElementById('mat5-teste-cap-row');
+  if (row) row.innerHTML = _selBarsHTML(_mat5TesteSel(), _mat5SelCfg(), 'mat5TesteToggleCap', 'mat5TesteToggleSt');
+  var st = document.getElementById('mat5-teste-st-row'); if (st) st.style.display = 'none';
   mat5TesteRenderConfig();
 }
 
-function mat5TesteSelectCap(cap, btn) {
-  if (!_mat5Gerador(cap)) return;
-  _mat5SetActiveCapBtn('mat5-teste-cap-row', btn, cap);
-  _mat5Teste.cap = cap;
-  mat5TesteRenderConfig();
+function mat5TesteToggleCap(cap) {
+  _selToggleCap(_mat5TesteSel(), _mat5SelCfg(), cap);
+  mat5TesteBuildNav();
+}
+function mat5TesteToggleSt(cap, st) {
+  _selToggleSt(_mat5TesteSel(), cap, st);
+  mat5TesteBuildNav();
 }
 
 function mat5TesteRenderConfig() {
@@ -750,15 +746,20 @@ function mat5TesteSetNivel(nivel, btn) {
 }
 
 function mat5TesteStart() {
-  var gen = _mat5Gerador(_mat5Teste.cap); if (!gen) return;
+  var pares = _selPares(_mat5TesteSel(), _mat5SelCfg());
+  if (!pares.length) return;
+  pares = pares.slice();
+  for (var sp = pares.length - 1; sp > 0; sp--) { var rsp = Math.floor(Math.random() * (sp + 1)); var tsp = pares[sp]; pares[sp] = pares[rsp]; pares[rsp] = tsp; }
+  _mat5Teste.cap = (_mat5TesteSel().caps[0]) || (pares[0] && pares[0].cap) || 1;
   var qtdEl = document.getElementById('mat5-teste-qtd'), tempoEl = document.getElementById('mat5-teste-tempo');
   _mat5Teste.qtd = qtdEl ? parseInt(qtdEl.value) : 10;
   _mat5Teste.tempo = tempoEl ? parseInt(tempoEl.value) : 600;
-  var nTemas = _mat5TemasCount[_mat5Teste.cap] || 1;
   var tipos = ['mc', 'fill', 'mc', 'vf', 'fill'];
   var exs = [];
   for (var i = 0; i < _mat5Teste.qtd; i++) {
-    var ex = gen(String((i % nTemas) + 1), tipos[i % tipos.length], _mat5Teste.nivel);
+    var par = pares[i % pares.length];
+    var gen = _mat5Gerador(par.cap); if (!gen) continue;
+    var ex = gen(par.tema, tipos[i % tipos.length], _mat5Teste.nivel);
     if (ex) exs.push(Object.assign({}, ex, { num: i + 1 }));
   }
   _mat5Teste.exs = exs; _mat5Teste.answered = {}; _mat5Teste.score = { correct: 0, total: 0 };
@@ -967,6 +968,7 @@ function mat5RenderProgresso() {
 function mat5TreinarCap(cap) {
   _mat5Prat.cap = cap;
   _mat5Prat.st = 0;
+  _mat5Prat.sel = { caps: [cap], stsByCap: {} };
   mat5SwitchTab('exercicios', null);
 }
 
@@ -1775,7 +1777,7 @@ var _mat5Banco = {
 /* atribuir: deep-link mat5 */
 function _mat5DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_mat5gf){ _mat5gf.caps={}; cs.forEach(function(n){ _mat5gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _mat5gf.dif=p.get('dif'); } if(p.get('tarefa'))setTimeout(function(){tarefaEntregaBar(p.get('tarefa'),'Ficha concluída');},400); setTimeout(function(){ mat5SwitchTab('fichas',null); },350); return; }
     if(p.get('abrir')==='jogos'){ var jc=parseInt(p.get('cap'),10); if(jc&&_mat5Prat) _mat5Prat.cap=jc; if(p.get('tarefa'))setTimeout(function(){tarefaEntregaBar(p.get('tarefa'),'Jogo concluído');},400); setTimeout(function(){ mat5SwitchTab('jogos',null); var jg=p.get('jogo'); if(jg&&typeof gTabSwitch==='function')setTimeout(function(){try{gTabSwitch('mat5-jogos-app',jg);}catch(e){}},250); },350); return; }
-    if(p.get('abrir')!=='praticar')return; if(p.get('tarefa')){_mat5TarefaAtiva=p.get('tarefa');_mat5TarefaResp={};} var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat5Prat.cap=cap; _mat5Prat.st=st; _mat5Prat.nivel=nivel; setTimeout(function(){ mat5SwitchTab('exercicios',null); if(typeof mat5GerarExercicios==='function') mat5GerarExercicios(); },350); }catch(e){} }
+    if(p.get('abrir')!=='praticar')return; if(p.get('tarefa')){_mat5TarefaAtiva=p.get('tarefa');_mat5TarefaResp={};} var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat5Prat.cap=cap; _mat5Prat.st=st; _mat5Prat.nivel=nivel; _mat5Prat.sel={caps:[cap],stsByCap:(st?(function(){var o={};o[cap]=[st];return o;})():{})}; setTimeout(function(){ mat5SwitchTab('exercicios',null); if(typeof mat5GerarExercicios==='function') mat5GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat5DeepLinkAuto,300);});else setTimeout(_mat5DeepLinkAuto,300);
 
 function mat5AtribuirFicha(){
