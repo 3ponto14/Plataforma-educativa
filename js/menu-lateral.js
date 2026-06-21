@@ -175,7 +175,8 @@
 
   /* Caminho para a raiz do site a partir da página atual (hubs vivem em matN/). */
   function _rootPathML() {
-    return /\/(mat\d+|port\d+|fq\d+)(\/|$)/.test(window.location.pathname) ? '../' : '';
+    return (typeof eduRootPath === 'function') ? eduRootPath()
+      : (/\/(mat\d+|port\d+|fq\d+)(\/|$)/.test(window.location.pathname) ? '../' : '');
   }
 
   /* Realça o link ativo na barra lateral E na barra inferior. */
