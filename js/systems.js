@@ -677,12 +677,19 @@ function _gBuildJogos(wrapId, defaultLevel) {
 // Memória anti-repetição genérica: tenta até 6× obter uma pergunta inédita.
 function _gNoRepeat(wrapId, q, cfg, lv) {
   var recent = _gRecent[wrapId] || [];
-  for (var k = 0; k < 6 && q && recent.indexOf(q.q) !== -1; k++) {
+  // Tenta várias vezes obter uma pergunta que não esteja nas recentes. Em pools
+  // pequenos pode não conseguir; aí mantém-se uma janela curta para, no mínimo,
+  // alternar e nunca repetir a IMEDIATAMENTE anterior.
+  var melhor = q;
+  for (var k = 0; k < 14 && q && recent.indexOf(q.q) !== -1; k++) {
     try { q = cfg.qFor(lv, _gSelFor(wrapId)); } catch (e) { break; }
+    if (q && q.q && (!recent.length || q.q !== recent[recent.length - 1])) melhor = q;
   }
+  if (q && recent.indexOf(q.q) === -1) melhor = q; // encontrou inédita
+  q = melhor;
   if (q && q.q) {
     recent.push(q.q);
-    while (recent.length > 8) recent.shift();
+    while (recent.length > 3) recent.shift(); // janela curta (alternância)
     _gRecent[wrapId] = recent;
   }
   return q;
@@ -914,11 +921,19 @@ function _gGetQuestion(wrapId, level) {
   // Sem repetições seguidas: evita as últimas perguntas servidas neste jogo.
   var recent = _gRecent[wrapId] || [];
   var fresco = pool.filter(function(q){ return recent.indexOf(q.q) === -1; });
-  var escolha = (fresco.length ? fresco : pool)[Math.floor(Math.random() * (fresco.length ? fresco.length : pool.length))];
+  // Se não há frescas (pool pequeno já todo visto), pelo menos não repetir a
+  // ÚLTIMA pergunta servida quando há alternativa no pool.
+  if (!fresco.length && pool.length > 1) {
+    var ultima = recent[recent.length - 1];
+    fresco = pool.filter(function(q){ return q.q !== ultima; });
+  }
+  var base = fresco.length ? fresco : pool;
+  var escolha = base[Math.floor(Math.random() * base.length)];
   if (escolha) {
     recent.push(escolha.q);
-    // memoriza no máximo metade do pool (mín. 3) para haver sempre variedade
-    var lim = Math.max(3, Math.floor(pool.length / 2));
+    // memoriza no máximo metade do pool (mín. 1) para haver sempre variedade;
+    // com pool pequeno guarda menos, para não bloquear a escolha.
+    var lim = Math.max(1, Math.min(8, Math.floor(pool.length / 2)));
     while (recent.length > lim) recent.shift();
     _gRecent[wrapId] = recent;
   }
