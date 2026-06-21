@@ -308,56 +308,34 @@ var _mat11TarefaAtiva=null, _mat11TarefaResp={};
 
 function _mat11PratStorageKey(cap) { return 'edupt_mat11_cap' + cap; }
 
+function _mat11SelCfg() {
+  return { capMeta: _mat11CapMeta, capColors: _mat11CapColors, subtemas: _mat11Subtemas,
+    subtemaTemas: _mat11SubtemaTemas, temasCount: _mat11TemasCount, gerador: _mat11Gerador };
+}
+function _mat11PratSel() {
+  if (!_mat11Prat.sel) {
+    _mat11Prat.sel = _selNew();
+    if (_mat11Prat.cap) { _mat11Prat.sel.caps = [_mat11Prat.cap]; if (_mat11Prat.st) _mat11Prat.sel.stsByCap[_mat11Prat.cap] = [_mat11Prat.st]; }
+  }
+  return _mat11Prat.sel;
+}
+
 function mat11BuildPraticarNav() {
   var capRow = document.getElementById('mat11-praticar-cap-row');
   if (!capRow) return;
-  var activeCap = _mat11Prat.cap || 1;
-  var h = '';
-  _mat11CapMeta.forEach(function(m) {
-    var hasGen = !!_mat11Gerador(m.n);
-    var color = _mat11CapColors[m.n] || '#516860';
-    var isActive = activeCap === m.n;
-    var activeStyle = isActive ? 'background:' + color + ';border-color:' + color + ';color:#fff' : '';
-    var disabledStyle = hasGen ? '' : 'opacity:.45;cursor:not-allowed';
-    var onclick = hasGen ? 'mat11PraticarSelectCap(' + m.n + ',this)' : '';
-    var title = hasGen ? '' : ' title="Em preparação"';
-    h += '<button class="resumo-cap-btn' + (isActive ? ' active' : '') + '" data-cap="' + m.n + '" onclick="' + onclick + '" style="' + activeStyle + ';' + disabledStyle + '"' + title + '>'
-       + '<span class="resumo-cap-icon">' + m.icon + '</span>' + m.label + (hasGen ? '' : ' ·') + '</button>';
-  });
-  capRow.innerHTML = h;
-  mat11PraticarShowSts(activeCap);
-}
-
-function mat11PraticarShowSts(cap) {
   var stRow = document.getElementById('mat11-praticar-st-row');
-  if (!stRow) return;
-  var sts = _mat11Subtemas[cap] || [];
-  if (!sts.length) { stRow.style.display = 'none'; return; }
-  var h = '<div class="resumo-st-label">Subtema</div>';
-  h += '<button class="resumo-st-btn' + (_mat11Prat.st === 0 ? ' active' : '') + '" data-st="0" onclick="mat11PraticarSelectSt(this,0)">Todos</button>';
-  sts.forEach(function(st, i) {
-    h += '<button class="resumo-st-btn' + (_mat11Prat.st === (i + 1) ? ' active' : '') + '" data-st="' + (i + 1) + '" onclick="mat11PraticarSelectSt(this,' + (i + 1) + ')">' + st + '</button>';
-  });
-  stRow.innerHTML = h;
-  stRow.style.display = 'flex';
+  if (stRow) stRow.style.display = 'none';
+  capRow.innerHTML = _selBarsHTML(_mat11PratSel(), _mat11SelCfg(), 'mat11PratToggleCap', 'mat11PratToggleSt');
 }
 
-function mat11PraticarSelectCap(cap, btn) {
-  if (!_mat11Gerador(cap)) return;
-  _mat11Prat.cap = cap;
-  _mat11Prat.st = 0;
-  var capRow = document.getElementById('mat11-praticar-cap-row');
-  if (capRow) capRow.querySelectorAll('.resumo-cap-btn').forEach(function(b) { b.classList.remove('active'); b.style.background = ''; b.style.borderColor = ''; b.style.color = ''; });
-  if (btn) { var color = _mat11CapColors[cap] || '#516860'; btn.classList.add('active'); btn.style.background = color; btn.style.borderColor = color; btn.style.color = '#fff'; }
-  mat11PraticarShowSts(cap);
+function mat11PratToggleCap(cap) {
+  _selToggleCap(_mat11PratSel(), _mat11SelCfg(), cap);
+  mat11BuildPraticarNav();
   mat11GerarExercicios();
 }
-
-function mat11PraticarSelectSt(btn, stIdx) {
-  var stRow = document.getElementById('mat11-praticar-st-row');
-  if (stRow) stRow.querySelectorAll('.resumo-st-btn').forEach(function(b) { b.classList.remove('active'); });
-  if (btn) btn.classList.add('active');
-  _mat11Prat.st = stIdx;
+function mat11PratToggleSt(cap, st) {
+  _selToggleSt(_mat11PratSel(), cap, st);
+  mat11BuildPraticarNav();
   mat11GerarExercicios();
 }
 
@@ -382,27 +360,30 @@ var _mat11SubtemaTemas = {
 function mat11GerarExercicios() {
   var dest = document.getElementById('mat11-praticar-content');
   if (!dest) return;
-  var cap = _mat11Prat.cap, gen = _mat11Gerador(cap);
-  if (!gen) { dest.innerHTML = ''; return; }
-
-  // Que temas usar?
-  var temas;
-  if (_mat11Prat.st > 0 && _mat11SubtemaTemas[cap] && _mat11SubtemaTemas[cap][_mat11Prat.st]) {
-    temas = _mat11SubtemaTemas[cap][_mat11Prat.st];
-  } else {
-    temas = [];
-    for (var t = 1; t <= (_mat11TemasCount[cap] || 1); t++) temas.push(String(t));
-  }
+  var pares = _selPares(_mat11PratSel(), _mat11SelCfg());
+  if (!pares.length) { dest.innerHTML = ''; return; }
+  pares = pares.slice();
+  for (var pz = pares.length - 1; pz > 0; pz--) { var rz = Math.floor(Math.random() * (pz + 1)); var tz = pares[pz]; pares[pz] = pares[rz]; pares[rz] = tz; }
+  var cap = _mat11PratSel().caps[0] || (pares[0] && pares[0].cap) || 1;
 
   var QTD = 8;
   var tipos = ['mc', 'fill', 'mc', 'vf', 'fill', 'mc', 'fill', 'mc'];
   var geradas = [];
   for (var i = 0; i < QTD; i++) {
-    var tema = temas[i % temas.length];
-    var ex = gen(tema, tipos[i % tipos.length], _mat11Prat.nivel);
+    var par = pares[i % pares.length];
+    var gen = _mat11Gerador(par.cap);
+    if (!gen) continue;
+    var ex = gen(par.tema, tipos[i % tipos.length], _mat11Prat.nivel);
     if (ex) geradas.push(ex);
   }
-  var banco = (typeof _mat11Banco !== 'undefined' && _mat11Banco[cap]) ? _mat11Banco[cap].filter(function (q) { return temas.indexOf(q.t) !== -1; }) : [];
+  var temasPorCap = {};
+  pares.forEach(function (pr) { (temasPorCap[pr.cap] = temasPorCap[pr.cap] || []).push(pr.tema); });
+  var banco = [];
+  if (typeof _mat11Banco !== "undefined") {
+    Object.keys(temasPorCap).forEach(function (c) {
+      if (_mat11Banco[c]) banco = banco.concat(_mat11Banco[c].filter(function (q) { return temasPorCap[c].indexOf(String(q.t)) !== -1; }));
+    });
+  }
   var exs = (typeof _mixBancoGeradas === 'function') ? _mixBancoGeradas(banco, geradas, QTD, 3, _mat11Prat.nivel)
     : geradas.map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
   _mat11Prat.exs = exs;
@@ -421,10 +402,13 @@ function mat11GerarExercicios() {
     ? _capBuildQuizHTML(exs, 'm8ex', 'mat11CheckEx')
     : '<p style="color:var(--ink4)">Motor de exercícios indisponível.</p>';
   dest.innerHTML = scoreBar + '<div id="mat11-atribuir" style="margin:.2rem 0 .8rem"></div>' + quizHTML;
+  _mat11Prat.cap = cap;
   if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
     var _cm = _mat11CapMeta.filter(function (m) { return m.n === cap; })[0] || {};
-    var _sn = (_mat11Subtemas[cap] && _mat11Prat.st > 0) ? (_mat11Subtemas[cap][_mat11Prat.st - 1] || '') : '';
-    Atribuir.montar('mat11-atribuir', { curso: 'mat11', cursoNome: 'Matemática 11.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_mat11Prat.st || ''), subNome: _sn, tipo: 'quiz', nivel: _mat11Prat.nivel });
+    var _selA = _mat11PratSel();
+    var _stA = (_selA.caps.length === 1 && (_selA.stsByCap[cap] || []).length === 1) ? _selA.stsByCap[cap][0] : 0;
+    var _sn = (_mat11Subtemas[cap] && _stA > 0) ? (_mat11Subtemas[cap][_stA - 1] || '') : '';
+    Atribuir.montar('mat11-atribuir', { curso: 'mat11', cursoNome: 'Matemática 11.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_stA || ''), subNome: _sn, tipo: 'quiz', nivel: _mat11Prat.nivel });
   }
 }
 
@@ -519,19 +503,24 @@ function _mat11BuildMcQuestion(cap) {
 /* ════════════════════════════════════════════════════════════════
    SUB-MODO: QUIZ RELÂMPAGO (3 vidas, streak)
    ════════════════════════════════════════════════════════════════ */
-var _mat11Quiz = { cap: 1, lives: 3, streak: 0, maxStreak: 0, score: 0, total: 0, answered: false, current: null };
+var _mat11Quiz = { cap: 1, sel: null, lives: 3, streak: 0, maxStreak: 0, score: 0, total: 0, answered: false, current: null };
+
+function _mat11QuizSel() { if (!_mat11Quiz.sel) _mat11Quiz.sel = _selNew(); return _mat11Quiz.sel; }
 
 function mat11QuizBuildNav() {
-  if (!_mat11Gerador(_mat11Quiz.cap)) _mat11Quiz.cap = 1;
-  _mat11BuildCapRow('mat11-quiz-cap-row', _mat11Quiz.cap, 'mat11QuizSelectCap');
+  var row = document.getElementById('mat11-quiz-cap-row');
+  if (row) row.innerHTML = _selBarsHTML(_mat11QuizSel(), _mat11SelCfg(), 'mat11QuizToggleCap', 'mat11QuizToggleSt');
+  var st = document.getElementById('mat11-quiz-st-row'); if (st) st.style.display = 'none';
   mat11QuizStart();
 }
 
-function mat11QuizSelectCap(cap, btn) {
-  if (!_mat11Gerador(cap)) return;
-  _mat11SetActiveCapBtn('mat11-quiz-cap-row', btn, cap);
-  _mat11Quiz.cap = cap;
-  mat11QuizStart();
+function mat11QuizToggleCap(cap) {
+  _selToggleCap(_mat11QuizSel(), _mat11SelCfg(), cap);
+  mat11QuizBuildNav();
+}
+function mat11QuizToggleSt(cap, st) {
+  _selToggleSt(_mat11QuizSel(), cap, st);
+  mat11QuizBuildNav();
 }
 
 function mat11QuizStart() {
@@ -544,8 +533,10 @@ function mat11QuizNext() {
   var app = document.getElementById('mat11-quiz-app');
   if (!app) return;
   if (_mat11Quiz.lives <= 0) { mat11QuizGameOver(app); return; }
-  var ex = _mat11BuildMcQuestion(_mat11Quiz.cap);
-  if (!ex) { app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Sem questões disponíveis para este capítulo.</p>'; return; }
+  var _qpares = _selPares(_mat11QuizSel(), _mat11SelCfg());
+  _mat11Quiz.cap = (_mat11QuizSel().caps[0]) || (_qpares[0] && _qpares[0].cap) || 1;
+  var ex = _selMcQuestion(_mat11QuizSel(), _mat11SelCfg(), _mat11FillToMc);
+  if (!ex) { app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Sem questões disponíveis para esta seleção.</p>'; return; }
   _mat11Quiz.current = ex; _mat11Quiz.answered = false;
   var lives = '';
   for (var i = 0; i < 3; i++) lives += (i < _mat11Quiz.lives ? '❤️' : '🖤') + ' ';
@@ -680,19 +671,24 @@ function mat11FcPrev() { _mat11Fc.idx = (_mat11Fc.idx - 1 + (_mat11Fc.cards.leng
 /* ════════════════════════════════════════════════════════════════
    SUB-MODO: TESTE CRONOMETRADO
    ════════════════════════════════════════════════════════════════ */
-var _mat11Teste = { cap: 1, nivel: 'medio', qtd: 10, tempo: 600, exs: [], answered: {}, score: { correct: 0, total: 0 }, timer: null, restante: 0 };
+var _mat11Teste = { cap: 1, sel: null, nivel: 'medio', qtd: 10, tempo: 600, exs: [], answered: {}, score: { correct: 0, total: 0 }, timer: null, restante: 0 };
+
+function _mat11TesteSel() { if (!_mat11Teste.sel) _mat11Teste.sel = _selNew(); return _mat11Teste.sel; }
 
 function mat11TesteBuildNav() {
-  if (!_mat11Gerador(_mat11Teste.cap)) _mat11Teste.cap = 1;
-  _mat11BuildCapRow('mat11-teste-cap-row', _mat11Teste.cap, 'mat11TesteSelectCap');
+  var row = document.getElementById('mat11-teste-cap-row');
+  if (row) row.innerHTML = _selBarsHTML(_mat11TesteSel(), _mat11SelCfg(), 'mat11TesteToggleCap', 'mat11TesteToggleSt');
+  var st = document.getElementById('mat11-teste-st-row'); if (st) st.style.display = 'none';
   mat11TesteRenderConfig();
 }
 
-function mat11TesteSelectCap(cap, btn) {
-  if (!_mat11Gerador(cap)) return;
-  _mat11SetActiveCapBtn('mat11-teste-cap-row', btn, cap);
-  _mat11Teste.cap = cap;
-  mat11TesteRenderConfig();
+function mat11TesteToggleCap(cap) {
+  _selToggleCap(_mat11TesteSel(), _mat11SelCfg(), cap);
+  mat11TesteBuildNav();
+}
+function mat11TesteToggleSt(cap, st) {
+  _selToggleSt(_mat11TesteSel(), cap, st);
+  mat11TesteBuildNav();
 }
 
 function mat11TesteRenderConfig() {
@@ -726,15 +722,20 @@ function mat11TesteSetNivel(nivel, btn) {
 }
 
 function mat11TesteStart() {
-  var gen = _mat11Gerador(_mat11Teste.cap); if (!gen) return;
+  var pares = _selPares(_mat11TesteSel(), _mat11SelCfg());
+  if (!pares.length) return;
+  pares = pares.slice();
+  for (var sp = pares.length - 1; sp > 0; sp--) { var rsp = Math.floor(Math.random() * (sp + 1)); var tsp = pares[sp]; pares[sp] = pares[rsp]; pares[rsp] = tsp; }
+  _mat11Teste.cap = (_mat11TesteSel().caps[0]) || (pares[0] && pares[0].cap) || 1;
   var qtdEl = document.getElementById('mat11-teste-qtd'), tempoEl = document.getElementById('mat11-teste-tempo');
   _mat11Teste.qtd = qtdEl ? parseInt(qtdEl.value) : 10;
   _mat11Teste.tempo = tempoEl ? parseInt(tempoEl.value) : 600;
-  var nTemas = _mat11TemasCount[_mat11Teste.cap] || 1;
   var tipos = ['mc', 'fill', 'mc', 'vf', 'fill'];
   var exs = [];
   for (var i = 0; i < _mat11Teste.qtd; i++) {
-    var ex = gen(String((i % nTemas) + 1), tipos[i % tipos.length], _mat11Teste.nivel);
+    var par = pares[i % pares.length];
+    var gen = _mat11Gerador(par.cap); if (!gen) continue;
+    var ex = gen(par.tema, tipos[i % tipos.length], _mat11Teste.nivel);
     if (ex) exs.push(Object.assign({}, ex, { num: i + 1 }));
   }
   _mat11Teste.exs = exs; _mat11Teste.answered = {}; _mat11Teste.score = { correct: 0, total: 0 };
@@ -943,6 +944,7 @@ function mat11RenderProgresso() {
 function mat11TreinarCap(cap) {
   _mat11Prat.cap = cap;
   _mat11Prat.st = 0;
+  _mat11Prat.sel = { caps: [cap], stsByCap: {} };
   mat11SwitchTab('exercicios', null);
 }
 
@@ -1656,7 +1658,7 @@ var _mat11Banco = {
 /* atribuir: deep-link mat11 */
 function _mat11DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_mat11gf){ _mat11gf.caps={}; cs.forEach(function(n){ _mat11gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _mat11gf.dif=p.get('dif'); } if(p.get('tarefa'))setTimeout(function(){tarefaEntregaBar(p.get('tarefa'),'Ficha concluída');},400); setTimeout(function(){ mat11SwitchTab('fichas',null); },350); return; }
     if(p.get('abrir')==='jogos'){ var jc=parseInt(p.get('cap'),10); if(jc&&_mat11Prat) _mat11Prat.cap=jc; if(p.get('tarefa'))setTimeout(function(){tarefaEntregaBar(p.get('tarefa'),'Jogo concluído');},400); setTimeout(function(){ mat11SwitchTab('jogos',null); var jg=p.get('jogo'); if(jg&&typeof gTabSwitch==='function')setTimeout(function(){try{gTabSwitch('mat11-jogos-app',jg);}catch(e){}},250); },350); return; }
-    if(p.get('abrir')!=='praticar')return; if(p.get('tarefa')){_mat11TarefaAtiva=p.get('tarefa');_mat11TarefaResp={};} var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat11Prat.cap=cap; _mat11Prat.st=st; _mat11Prat.nivel=nivel; setTimeout(function(){ mat11SwitchTab('exercicios',null); if(typeof mat11GerarExercicios==='function') mat11GerarExercicios(); },350); }catch(e){} }
+    if(p.get('abrir')!=='praticar')return; if(p.get('tarefa')){_mat11TarefaAtiva=p.get('tarefa');_mat11TarefaResp={};} var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat11Prat.cap=cap; _mat11Prat.st=st; _mat11Prat.nivel=nivel; _mat11Prat.sel={caps:[cap],stsByCap:(st?(function(){var o={};o[cap]=[st];return o;})():{})}; setTimeout(function(){ mat11SwitchTab('exercicios',null); if(typeof mat11GerarExercicios==='function') mat11GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat11DeepLinkAuto,300);});else setTimeout(_mat11DeepLinkAuto,300);
 
 function mat11AtribuirFicha(){
