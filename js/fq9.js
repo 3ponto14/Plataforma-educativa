@@ -330,7 +330,11 @@ var _fq9Banco = {
     { t:2, tipo:'mc', enun:'Quantos átomos tem a molécula de CO₂?', opcoes:['3','2','1','4'], resposta:'3', expl:'1 carbono + 2 oxigénios = 3 átomos.' },
     { t:1, tipo:'mc', enun:'A ligação metálica explica que propriedade dos metais?', opcoes:['conduzirem eletricidade','serem transparentes','flutuarem','não terem brilho'], resposta:'conduzirem eletricidade', expl:'Os eletrões livres permitem a condução elétrica.' },
     { t:3, tipo:'vf', enun:'Na ligação iónica há partilha de eletrões.', opcoes:['Verdadeiro','Falso'], resposta:'Falso', expl:'Na iónica há TRANSFERÊNCIA; a partilha é na covalente.' },
-    { t:1, tipo:'mc', enun:'Porque é que os átomos se ligam?', opcoes:['para ficarem mais estáveis','para aumentarem de massa','para mudarem de cor','por acaso'], resposta:'para ficarem mais estáveis', expl:'Ligam-se para completar o último nível (regra do octeto).' }
+    { t:1, tipo:'mc', enun:'Porque é que os átomos se ligam?', opcoes:['para ficarem mais estáveis','para aumentarem de massa','para mudarem de cor','por acaso'], resposta:'para ficarem mais estáveis', expl:'Ligam-se para completar o último nível (regra do octeto).' },
+    { t:2, tipo:'mc', enun:'Um anião é um ião com carga:', opcoes:['negativa (ganhou eletrões)','positiva','neutra','sempre dupla'], resposta:'negativa (ganhou eletrões)', expl:'Anião = − (ganhou eletrões); catião = + (perdeu eletrões).' },
+    { t:2, tipo:'mc', enun:'A molécula de oxigénio O₂ tem:', opcoes:['2 átomos do mesmo elemento','2 elementos diferentes','3 átomos','1 átomo'], resposta:'2 átomos do mesmo elemento', expl:'O₂ é uma molécula formada por 2 átomos de oxigénio (ligação covalente).' },
+    { t:1, tipo:'mc', enun:'No cloreto de sódio (NaCl), a ligação é iónica porque:', opcoes:['o sódio cede 1 eletrão ao cloro','partilham eletrões','não há eletrões','são dois metais'], resposta:'o sódio cede 1 eletrão ao cloro', expl:'Transferência de eletrões entre metal (Na) e não-metal (Cl) → forma Na⁺ e Cl⁻.' },
+    { t:3, tipo:'vf', enun:'Na ligação covalente, os átomos partilham pares de eletrões.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'Cada par partilhado conta para o octeto de ambos os átomos (ex.: H₂O).' }
   ]
 };
 
