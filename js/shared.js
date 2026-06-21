@@ -1876,6 +1876,120 @@ function _jogoQForCourse(cfg, level, sel) {
   return null;
 }
 
+/* ════════════════════════════════════════════════════════════════
+   SELEÇÃO MULTI (capítulos + subtemas) — componente partilhado
+   Usado pelas secções de estudo (Exercícios, Quiz, Teste, Fichas) de
+   todos os anos, para o aluno montar a sua própria combinação.
+   Estado: { caps:[1,3], stsByCap:{1:[2,4], 3:[]} }
+     caps vazio        → todos os capítulos disponíveis.
+     stsByCap[c] vazio → todos os subtemas desse capítulo.
+   cfg: { capMeta, capColors, subtemas, subtemaTemas, temasCount, gerador }
+   ════════════════════════════════════════════════════════════════ */
+function _selNew() { return { caps: [], stsByCap: {} }; }
+
+// Capítulos que têm gerador (jogáveis); ignora os "em preparação".
+function _selCapsDisp(cfg) {
+  var out = [];
+  (cfg.capMeta || []).forEach(function (m) {
+    var tem = !cfg.gerador || !!cfg.gerador(m.n);
+    if (tem) out.push(m);
+  });
+  return out;
+}
+
+// Liga/desliga um capítulo. cap=0 → "Todos" (limpa seleção).
+function _selToggleCap(state, cfg, cap) {
+  if (cap === 0) { state.caps = []; state.stsByCap = {}; return; }
+  if (cfg.gerador && !cfg.gerador(cap)) return; // capítulo sem gerador
+  var i = state.caps.indexOf(cap);
+  if (i === -1) state.caps.push(cap);
+  else { state.caps.splice(i, 1); delete state.stsByCap[cap]; }
+}
+// Liga/desliga um subtema de um capítulo. st=0 → "Todos os subtemas".
+function _selToggleSt(state, cap, st) {
+  if (!state.stsByCap[cap]) state.stsByCap[cap] = [];
+  if (st === 0) { state.stsByCap[cap] = []; return; }
+  var arr = state.stsByCap[cap], i = arr.indexOf(st);
+  if (i === -1) arr.push(st); else arr.splice(i, 1);
+}
+
+// Expande a seleção numa lista de pares { cap, tema } a gerar, percorrendo
+// os capítulos escolhidos (ou todos) e, dentro de cada um, os temas dos
+// subtemas escolhidos (ou todos os temas do capítulo).
+function _selPares(state, cfg) {
+  var capsDisp = _selCapsDisp(cfg).map(function (m) { return m.n; });
+  var caps = (state.caps && state.caps.length)
+    ? state.caps.filter(function (c) { return capsDisp.indexOf(c) !== -1; })
+    : capsDisp;
+  if (!caps.length) caps = capsDisp;
+  var pares = [];
+  caps.forEach(function (c) {
+    var temas = [];
+    var sts = state.stsByCap[c] || [];
+    if (sts.length && cfg.subtemaTemas && cfg.subtemaTemas[c]) {
+      sts.forEach(function (st) {
+        var t = cfg.subtemaTemas[c][st];
+        if (t && t.length) temas = temas.concat(t);
+      });
+    }
+    if (!temas.length) {
+      var n = (cfg.temasCount && cfg.temasCount[c]) || 1;
+      for (var t = 1; t <= n; t++) temas.push(String(t));
+    }
+    temas.forEach(function (tm) { pares.push({ cap: c, tema: String(tm) }); });
+  });
+  return pares;
+}
+
+// Texto-resumo da seleção ("Todos os capítulos", "Cap X · 2 subtemas", …).
+function _selResumo(state, cfg) {
+  var nome = {}; (cfg.capMeta || []).forEach(function (m) { nome[m.n] = m.label; });
+  if (!state.caps.length) return 'Todos os capítulos';
+  if (state.caps.length === 1) {
+    var c = state.caps[0], sts = state.stsByCap[c] || [], subs = cfg.subtemas && cfg.subtemas[c] || [];
+    var base = nome[c] || ('Cap. ' + c);
+    if (sts.length === 1 && subs[sts[0] - 1]) return base + ' · ' + subs[sts[0] - 1];
+    if (sts.length > 1) return base + ' · ' + sts.length + ' subtemas';
+    return base;
+  }
+  return state.caps.length + ' capítulos';
+}
+
+// HTML das duas barras de chips (Capítulos multi + Subtemas multi do cap único).
+// onCap/onSt = nomes de funções globais chamadas com (idx) ou (cap,idx).
+function _selBarsHTML(state, cfg, onCap, onSt) {
+  var capsDisp = _selCapsDisp(cfg);
+  if (!capsDisp.length) return '';
+  var capChips = ['<button class="sel-chip' + (state.caps.length === 0 ? ' active' : '') +
+    '" onclick="' + onCap + '(0)"><i class="ph ph-list"></i> Todos</button>'];
+  capsDisp.forEach(function (m) {
+    var on = state.caps.indexOf(m.n) !== -1;
+    var col = (cfg.capColors && cfg.capColors[m.n]) || '';
+    var style = (on && col) ? ' style="background:' + col + ';border-color:' + col + ';color:#fff"' : '';
+    capChips.push('<button class="sel-chip' + (on ? ' active' : '') + '"' + style +
+      ' onclick="' + onCap + '(' + m.n + ')">' + (m.icon || '') + ' ' + m.label + '</button>');
+  });
+  var bars = '<div class="sel-bar"><span class="sel-label">Capítulos:</span>' + capChips.join('') + '</div>';
+  if (state.caps.length === 1) {
+    var cap = state.caps[0], subs = (cfg.subtemas && cfg.subtemas[cap]) || [];
+    if (subs.length) {
+      var stOn = state.stsByCap[cap] || [];
+      var stChips = ['<button class="sel-chip sel-st' + (stOn.length === 0 ? ' active' : '') +
+        '" onclick="' + onSt + '(' + cap + ',0)"><i class="ph ph-list"></i> Todos</button>'];
+      subs.forEach(function (lab, i) {
+        var st = i + 1, on = stOn.indexOf(st) !== -1;
+        stChips.push('<button class="sel-chip sel-st' + (on ? ' active' : '') +
+          '" onclick="' + onSt + '(' + cap + ',' + st + ')">' + lab + '</button>');
+      });
+      bars += '<div class="sel-bar"><span class="sel-label">Subtemas:</span>' + stChips.join('') + '</div>';
+    }
+  } else if (state.caps.length > 1) {
+    bars += '<div class="sel-bar"><span class="sel-label">Subtemas:</span>' +
+      '<span class="sel-note">Escolhe <b>um único capítulo</b> para filtrar por subtema.</span></div>';
+  }
+  return bars;
+}
+
 function _jogoQFromGerador(genFn, temasCount, banco, level, temasLista) {
   var dif = level === 'facil' ? 'facil' : (level === 'dificil' ? 'dificil' : 'medio');
   // Se há subtema(s) escolhido(s), os temas vêm dessa lista; o banco não está

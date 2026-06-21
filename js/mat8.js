@@ -380,56 +380,36 @@ var _mat8TarefaAtiva=null, _mat8TarefaResp={};
 
 function _mat8PratStorageKey(cap) { return 'edupt_mat8_cap' + cap; }
 
+// Config de seleção multi (capítulos+subtemas) partilhada por este ano.
+function _mat8SelCfg() {
+  return { capMeta: _mat8CapMeta, capColors: _mat8CapColors, subtemas: _mat8Subtemas,
+    subtemaTemas: _mat8SubtemaTemas, temasCount: _mat8TemasCount, gerador: _mat8Gerador };
+}
+// Estado de seleção (multi) da secção Exercícios. Migra o antigo cap/st.
+function _mat8PratSel() {
+  if (!_mat8Prat.sel) {
+    _mat8Prat.sel = _selNew();
+    if (_mat8Prat.cap) { _mat8Prat.sel.caps = [_mat8Prat.cap]; if (_mat8Prat.st) _mat8Prat.sel.stsByCap[_mat8Prat.cap] = [_mat8Prat.st]; }
+  }
+  return _mat8Prat.sel;
+}
+
 function mat8BuildPraticarNav() {
   var capRow = document.getElementById('mat8-praticar-cap-row');
   if (!capRow) return;
-  var activeCap = _mat8Prat.cap || 1;
-  var h = '';
-  _mat8CapMeta.forEach(function(m) {
-    var hasGen = !!_mat8Gerador(m.n);
-    var color = _mat8CapColors[m.n] || '#516860';
-    var isActive = activeCap === m.n;
-    var activeStyle = isActive ? 'background:' + color + ';border-color:' + color + ';color:#fff' : '';
-    var disabledStyle = hasGen ? '' : 'opacity:.45;cursor:not-allowed';
-    var onclick = hasGen ? 'mat8PraticarSelectCap(' + m.n + ',this)' : '';
-    var title = hasGen ? '' : ' title="Em preparação"';
-    h += '<button class="resumo-cap-btn' + (isActive ? ' active' : '') + '" data-cap="' + m.n + '" onclick="' + onclick + '" style="' + activeStyle + ';' + disabledStyle + '"' + title + '>'
-       + '<span class="resumo-cap-icon">' + m.icon + '</span>' + m.label + (hasGen ? '' : ' ·') + '</button>';
-  });
-  capRow.innerHTML = h;
-  mat8PraticarShowSts(activeCap);
-}
-
-function mat8PraticarShowSts(cap) {
   var stRow = document.getElementById('mat8-praticar-st-row');
-  if (!stRow) return;
-  var sts = _mat8Subtemas[cap] || [];
-  if (!sts.length) { stRow.style.display = 'none'; return; }
-  var h = '<div class="resumo-st-label">Subtema</div>';
-  h += '<button class="resumo-st-btn' + (_mat8Prat.st === 0 ? ' active' : '') + '" data-st="0" onclick="mat8PraticarSelectSt(this,0)">Todos</button>';
-  sts.forEach(function(st, i) {
-    h += '<button class="resumo-st-btn' + (_mat8Prat.st === (i + 1) ? ' active' : '') + '" data-st="' + (i + 1) + '" onclick="mat8PraticarSelectSt(this,' + (i + 1) + ')">' + st + '</button>';
-  });
-  stRow.innerHTML = h;
-  stRow.style.display = 'flex';
+  if (stRow) stRow.style.display = 'none'; // o helper desenha as 2 barras juntas
+  capRow.innerHTML = _selBarsHTML(_mat8PratSel(), _mat8SelCfg(), 'mat8PratToggleCap', 'mat8PratToggleSt');
 }
 
-function mat8PraticarSelectCap(cap, btn) {
-  if (!_mat8Gerador(cap)) return;
-  _mat8Prat.cap = cap;
-  _mat8Prat.st = 0;
-  var capRow = document.getElementById('mat8-praticar-cap-row');
-  if (capRow) capRow.querySelectorAll('.resumo-cap-btn').forEach(function(b) { b.classList.remove('active'); b.style.background = ''; b.style.borderColor = ''; b.style.color = ''; });
-  if (btn) { var color = _mat8CapColors[cap] || '#516860'; btn.classList.add('active'); btn.style.background = color; btn.style.borderColor = color; btn.style.color = '#fff'; }
-  mat8PraticarShowSts(cap);
+function mat8PratToggleCap(cap) {
+  _selToggleCap(_mat8PratSel(), _mat8SelCfg(), cap);
+  mat8BuildPraticarNav();
   mat8GerarExercicios();
 }
-
-function mat8PraticarSelectSt(btn, stIdx) {
-  var stRow = document.getElementById('mat8-praticar-st-row');
-  if (stRow) stRow.querySelectorAll('.resumo-st-btn').forEach(function(b) { b.classList.remove('active'); });
-  if (btn) btn.classList.add('active');
-  _mat8Prat.st = stIdx;
+function mat8PratToggleSt(cap, st) {
+  _selToggleSt(_mat8PratSel(), cap, st);
+  mat8BuildPraticarNav();
   mat8GerarExercicios();
 }
 
@@ -477,27 +457,33 @@ var _mat8SubtemaTemas = {
 function mat8GerarExercicios() {
   var dest = document.getElementById('mat8-praticar-content');
   if (!dest) return;
-  var cap = _mat8Prat.cap, gen = _mat8Gerador(cap);
-  if (!gen) { dest.innerHTML = ''; return; }
-
-  // Que temas usar?
-  var temas;
-  if (_mat8Prat.st > 0 && _mat8SubtemaTemas[cap] && _mat8SubtemaTemas[cap][_mat8Prat.st]) {
-    temas = _mat8SubtemaTemas[cap][_mat8Prat.st];
-  } else {
-    temas = [];
-    for (var t = 1; t <= (_mat8TemasCount[cap] || 1); t++) temas.push(String(t));
-  }
+  // Pares (cap,tema) da seleção multi (vários capítulos / vários subtemas).
+  var pares = _selPares(_mat8PratSel(), _mat8SelCfg());
+  if (!pares.length) { dest.innerHTML = ''; return; }
+  // baralha os pares para misturar capítulos/subtemas nas questões
+  pares = pares.slice();
+  for (var p = pares.length - 1; p > 0; p--) { var rr = Math.floor(Math.random() * (p + 1)); var tt = pares[p]; pares[p] = pares[rr]; pares[rr] = tt; }
+  var cap = _mat8PratSel().caps[0] || (pares[0] && pares[0].cap) || 1; // p/ progresso/atribuir
 
   var QTD = 8;
   var tipos = ['mc', 'fill', 'mc', 'vf', 'fill', 'mc', 'fill', 'mc'];
   var geradas = [];
   for (var i = 0; i < QTD; i++) {
-    var tema = temas[i % temas.length];
-    var ex = gen(tema, tipos[i % tipos.length], _mat8Prat.nivel);
+    var par = pares[i % pares.length];
+    var gen = _mat8Gerador(par.cap);
+    if (!gen) continue;
+    var ex = gen(par.tema, tipos[i % tipos.length], _mat8Prat.nivel);
     if (ex) geradas.push(ex);
   }
-  var banco = (typeof _mat8Banco !== "undefined" && _mat8Banco[cap]) ? _mat8Banco[cap].filter(function (q) { return temas.indexOf(q.t) !== -1; }) : [];
+  // Banco: junta os capítulos selecionados, filtrando pelos temas escolhidos.
+  var temasPorCap = {};
+  pares.forEach(function (pr) { (temasPorCap[pr.cap] = temasPorCap[pr.cap] || []).push(pr.tema); });
+  var banco = [];
+  if (typeof _mat8Banco !== "undefined") {
+    Object.keys(temasPorCap).forEach(function (c) {
+      if (_mat8Banco[c]) banco = banco.concat(_mat8Banco[c].filter(function (q) { return temasPorCap[c].indexOf(String(q.t)) !== -1; }));
+    });
+  }
   var exs = (typeof _mixBancoGeradas === "function") ? _mixBancoGeradas(banco, geradas, QTD, 2, _mat8Prat.nivel)
     : geradas.map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
   _mat8Prat.exs = exs;
@@ -516,10 +502,13 @@ function mat8GerarExercicios() {
     ? _capBuildQuizHTML(exs, 'm8ex', 'mat8CheckEx')
     : '<p style="color:var(--ink4)">Motor de exercícios indisponível.</p>';
   dest.innerHTML = scoreBar + '<div id="mat8-atribuir" style="margin:.2rem 0 .8rem"></div>' + quizHTML;
+  _mat8Prat.cap = cap; // capítulo primário (progresso/atribuição)
   if (typeof Atribuir !== 'undefined' && Atribuir.montar) {
     var _cm = _mat8CapMeta.filter(function (m) { return m.n === cap; })[0] || {};
-    var _sn = (_mat8Subtemas[cap] && _mat8Prat.st > 0) ? (_mat8Subtemas[cap][_mat8Prat.st - 1] || '') : '';
-    Atribuir.montar('mat8-atribuir', { curso: 'mat8', cursoNome: 'Matemática 8.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_mat8Prat.st || ''), subNome: _sn, tipo: 'quiz', nivel: _mat8Prat.nivel });
+    var _selA = _mat8PratSel();
+    var _stA = (_selA.caps.length === 1 && (_selA.stsByCap[cap] || []).length === 1) ? _selA.stsByCap[cap][0] : 0;
+    var _sn = (_mat8Subtemas[cap] && _stA > 0) ? (_mat8Subtemas[cap][_stA - 1] || '') : '';
+    Atribuir.montar('mat8-atribuir', { curso: 'mat8', cursoNome: 'Matemática 8.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_stA || ''), subNome: _sn, tipo: 'quiz', nivel: _mat8Prat.nivel });
   }
 }
 
@@ -587,15 +576,22 @@ function _mat8SetActiveCapBtn(rowId, btn, cap) {
   if (btn) { var color = _mat8CapColors[cap] || '#516860'; btn.classList.add('active'); btn.style.background=color; btn.style.borderColor=color; btn.style.color='#fff'; }
 }
 
-// Gera uma questão de escolha múltipla para um capítulo (usada por quiz).
-function _mat8BuildMcQuestion(cap) {
-  var gen = _mat8Gerador(cap);
-  if (!gen) return null;
-  var nTemas = _mat8TemasCount[cap] || 1;
+// Gera uma questão de escolha múltipla a partir de uma lista de pares (cap,tema).
+// Aceita um único cap (retrocompatível) ou um array de pares de _selPares().
+function _mat8BuildMcQuestion(capOrPares) {
+  var pares;
+  if (typeof capOrPares === 'number') {
+    var n = _mat8TemasCount[capOrPares] || 1, arr = [];
+    for (var t = 1; t <= n; t++) arr.push({ cap: capOrPares, tema: String(t) });
+    pares = arr;
+  } else { pares = capOrPares || []; }
+  if (!pares.length) return null;
   var ex = null;
-  for (var i = 0; i < 10; i++) {
-    var tema = String(rnd_m81(1, nTemas));
-    ex = gen(tema, 'mc', 'medio');
+  for (var i = 0; i < 12; i++) {
+    var par = pares[Math.floor(Math.random() * pares.length)];
+    var gen = _mat8Gerador(par.cap);
+    if (!gen) continue;
+    ex = gen(par.tema, 'mc', 'medio');
     if (ex && ex.tipo === 'mc' && ex.opcoes && ex.opcoes.length >= 2) break;
   }
   return (ex && ex.tipo === 'mc' && ex.opcoes && ex.opcoes.length >= 2) ? ex : null;
@@ -1027,6 +1023,7 @@ function mat8RenderProgresso() {
 function mat8TreinarCap(cap) {
   _mat8Prat.cap = cap;
   _mat8Prat.st = 0;
+  _mat8Prat.sel = { caps: [cap], stsByCap: {} }; // seleção multi → só este cap
   mat8SwitchTab('exercicios', null);
 }
 
@@ -2883,7 +2880,7 @@ var _mat8Banco = {
 /* atribuir: deep-link mat8 */
 function _mat8DeepLinkAuto(){ try{ var p=new URLSearchParams(window.location.search); if(p.get('abrir')==='fichas'){ var cs=(p.get('caps')||'').split(',').filter(Boolean); if(_mat8gf){ _mat8gf.caps={}; cs.forEach(function(n){ _mat8gf.caps[parseInt(n,10)]=true; }); if(p.get('dif')) _mat8gf.dif=p.get('dif'); } if(p.get('tarefa'))setTimeout(function(){tarefaEntregaBar(p.get('tarefa'),'Ficha concluída');},400); setTimeout(function(){ mat8SwitchTab('fichas',null); },350); return; }
     if(p.get('abrir')==='jogos'){ var jc=parseInt(p.get('cap'),10); if(jc&&_mat8Prat) _mat8Prat.cap=jc; if(p.get('tarefa'))setTimeout(function(){tarefaEntregaBar(p.get('tarefa'),'Jogo concluído');},400); setTimeout(function(){ mat8SwitchTab('jogos',null); var jg=p.get('jogo'); if(jg&&typeof gTabSwitch==='function')setTimeout(function(){try{gTabSwitch('mat8-jogos-app',jg);}catch(e){}},250); },350); return; }
-    if(p.get('abrir')!=='praticar')return; if(p.get('tarefa')){_mat8TarefaAtiva=p.get('tarefa');_mat8TarefaResp={};} var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat8Prat.cap=cap; _mat8Prat.st=st; _mat8Prat.nivel=nivel; setTimeout(function(){ mat8SwitchTab('exercicios',null); if(typeof mat8GerarExercicios==='function') mat8GerarExercicios(); },350); }catch(e){} }
+    if(p.get('abrir')!=='praticar')return; if(p.get('tarefa')){_mat8TarefaAtiva=p.get('tarefa');_mat8TarefaResp={};} var cap=parseInt(p.get('cap'),10)||1, st=parseInt(p.get('st'),10)||0, nivel=p.get('nivel')||'medio'; _mat8Prat.cap=cap; _mat8Prat.st=st; _mat8Prat.nivel=nivel; _mat8Prat.sel={caps:[cap],stsByCap:(st?(function(){var o={};o[cap]=[st];return o;})():{})}; setTimeout(function(){ mat8SwitchTab('exercicios',null); if(typeof mat8GerarExercicios==='function') mat8GerarExercicios(); },350); }catch(e){} }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(_mat8DeepLinkAuto,300);});else setTimeout(_mat8DeepLinkAuto,300);
 
 function mat8AtribuirFicha(){
