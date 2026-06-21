@@ -1257,6 +1257,15 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 .g-fl-chip.active{background:var(--c2-deep);border-color:var(--c2-deep);color:#fff}
 .g-fl-chip.g-fl-st.active{background:var(--c2-mid);border-color:var(--c2-mid)}
 .g-fl-note{font-size:.76rem;color:var(--ink4);font-style:italic}
+/* ── Seleção multi (capítulos/subtemas) nas secções de estudo ── */
+.sel-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin-bottom:.55rem}
+.sel-bar:last-child{margin-bottom:0}
+.sel-label{font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);margin-right:.15rem;min-width:80px}
+.sel-chip{padding:5px 12px;border-radius:999px;border:1px solid var(--border);background:var(--white);font-family:'Montserrat',sans-serif;font-size:.74rem;font-weight:600;color:var(--ink2);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:4px}
+.sel-chip:hover{border-color:var(--c2-mid);color:var(--ink)}
+.sel-chip.active{background:var(--c2-deep);border-color:var(--c2-deep);color:#fff}
+.sel-chip.sel-st.active{background:var(--c2-mid);border-color:var(--c2-mid)}
+.sel-note{font-size:.76rem;color:var(--ink4);font-style:italic}
 /* ── Cabeçalho "Perguntas sobre:" dentro dos jogos ── */
 .g-tema-head{display:flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--ink2);background:var(--cream2);border:1px solid var(--border);border-radius:10px;padding:.5rem .8rem;margin-bottom:1rem}
 .g-tema-head i{color:var(--c2-deep)}
@@ -2828,6 +2837,33 @@ button:focus-visible,a:focus-visible{outline:2px solid #6b5fa0!important;outline
   border-color: var(--ink3);
   color: var(--ink1);
   background: var(--cream);
+}
+
+/* ── Topbar em telemóvel: cabe tudo numa linha, sem scroll lateral ──
+   No portal a topbar junta logo + chips (🔥/⭐/🏆) + Escuro + nome + Sair.
+   Em ecrãs estreitos isso transbordava e empurrava a página para o lado.
+   Aqui apertamos espaçamentos e escondemos o que é redundante (o nome do
+   aluno já aparece no menu lateral e na saudação). */
+@media(max-width:600px){
+  .site-topbar{padding:0 .75rem;gap:.4rem}
+  .site-topbar-actions{gap:.3rem;min-width:0;flex-wrap:nowrap}
+  /* chips e bloco de auth não esticam para além do espaço disponível */
+  #pm-portal-stats{gap:.3rem!important;flex-shrink:1;min-width:0;overflow:hidden}
+  #auth-bloco{margin-left:.25rem!important;gap:.35rem!important;flex-shrink:0}
+  /* o nome do utilizador na topbar é redundante em telemóvel */
+  #auth-bloco > span{display:none!important}
+  /* chips mais compactos para caberem (🔥/⭐/🏆) */
+  #pm-portal-stats > span{padding:3px 8px!important;font-size:.76rem!important;gap:.18rem!important}
+  /* botão Sair e Escuro mais apertados */
+  #auth-bloco button,#ux-dark-btn{padding:3px 9px!important;font-size:.7rem!important}
+}
+@media(max-width:480px){
+  /* em telemóvel o «Escuro» fica só ícone (regra já existente p/ .ux-btn-lbl);
+     o burger ☰ também encolhe um pouco */
+  #ml-burger{width:34px;height:34px;font-size:1.05rem}
+}
+@media(max-width:380px){
+  .site-topbar-logo .wordmark{display:none}  /* só o mark 3π em ecrãs muito estreitos */
 }
 
 /* ── Page header simples (substitui hero) ── */
