@@ -172,7 +172,9 @@ var _mat8Cards = {
     { st: 4, tag: 'Exemplo', q: 'Problema: 2 cadernos + 1 caneta custam 7 €; 1 caderno + 1 caneta custam 5 €. Preços?', a: 'Sistema { 2x + y = 7 ; x + y = 5 }. Subtraindo: x = 2 (caderno). Logo y = 3 (caneta).' },
     { st: 4, tag: 'Exemplo', q: 'Problema: a soma de dois números é 10 e a diferença é 4. Que números?', a: 'Sistema { x + y = 10 ; x − y = 4 }. Somando: 2x = 14 → x = 7, y = 3.' },
     { st: 3, tag: 'Definição', q: 'Quantas soluções pode ter um sistema do 1.º grau?', a: 'Uma só (retas concorrentes), nenhuma (retas paralelas) ou infinitas (retas coincidentes).' },
-    { st: 4, tag: 'Estratégia', q: 'Método de redução (alternativa à substituição)', a: 'Multiplica as equações para igualar os coeficientes de uma incógnita e soma/subtrai as equações para a eliminar.' }
+    { st: 4, tag: 'Estratégia', q: 'Método de redução (alternativa à substituição)', a: 'Multiplica as equações para igualar os coeficientes de uma incógnita e soma/subtrai as equações para a eliminar.' },
+    { st: 2, tag: 'Exemplo', q: 'Resolve passo a passo { y = 2x ; x + y = 9 } pelo método de substituição.', a: 'A 1.ª equação já dá y = 2x. Substitui na 2.ª: x + 2x = 9 → 3x = 9 → x = 3. Logo y = 2×3 = 6. Solução: (3, 6).' },
+    { st: 4, tag: 'Definição', q: 'Como se classifica um sistema quanto ao número de soluções?', a: 'Possível determinado (1 solução), possível indeterminado (infinitas soluções) ou impossível (nenhuma solução).' }
   ],
   7: [
     { st: 1, tag: 'Fórmula', q: 'Volume de um prisma', a: 'V = área da base × altura. Aplica-se a qualquer prisma (e ao cilindro). Ex: base 12 cm², altura 5 cm → V = 60 cm³.' },

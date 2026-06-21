@@ -100,7 +100,8 @@ var _fq7Cards = {
     { st: 1, tag: 'Exemplo', q: 'No Sol a aquecer a Terra, qual é a fonte e o recetor?', a: 'Fonte: o Sol. Recetor: a Terra. A energia transfere-se por radiação (luz).' },
     { st: 2, tag: 'Exemplo', q: 'Que transformação de energia há numa lâmpada?', a: 'Energia elétrica → energia luminosa (luz) + energia térmica (calor, que é a parte dissipada).' },
     { st: 1, tag: 'Exemplo', q: 'Que energia tem a água no topo de uma barragem?', a: 'Energia potencial gravítica. Ao cair, transforma-se em cinética e depois em elétrica (na central).' },
-    { st: 1, tag: 'Curiosidade', q: 'De onde vem a maior parte da energia na Terra?', a: 'Do Sol — direta ou indiretamente (vento, chuva, plantas e até os combustíveis fósseis têm origem na energia solar).' }
+    { st: 1, tag: 'Curiosidade', q: 'De onde vem a maior parte da energia na Terra?', a: 'Do Sol — direta ou indiretamente (vento, chuva, plantas e até os combustíveis fósseis têm origem na energia solar).' },
+    { st: 3, tag: 'Conversão', q: 'Quantos joules tem 1 quilojoule (kJ)?', a: '1 kJ = 1000 J. O quilojoule usa-se para quantidades maiores de energia, como o valor energético dos alimentos.' }
   ]
 };
 

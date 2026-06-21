@@ -62,7 +62,8 @@ var _fq8Cards = {
     { st: 3, tag: 'Definição', q: 'O que é o ruído e porque é prejudicial?', a: 'Som intenso e desagradável. A exposição prolongada a ruído elevado pode causar perda de audição e stress.' },
     { st: 4, tag: 'Unidade', q: 'Como se mede a intensidade sonora?', a: 'Em decibéis (dB). Acima de ~85 dB de forma prolongada é prejudicial à audição.' },
     { st: 3, tag: 'Exemplo', q: 'Porque vemos o relâmpago antes de ouvir o trovão?', a: 'Porque a luz viaja muito mais depressa (~300 000 km/s) que o som (~340 m/s). Quanto maior o intervalo, mais longe foi a trovoada.' },
-    { st: 3, tag: 'Definição', q: 'O que é o isolamento sonoro?', a: 'Materiais e técnicas que reduzem a passagem do som (ex.: paredes duplas, cortiça, espuma) para diminuir o ruído.' }
+    { st: 3, tag: 'Definição', q: 'O que é o isolamento sonoro?', a: 'Materiais e técnicas que reduzem a passagem do som (ex.: paredes duplas, cortiça, espuma) para diminuir o ruído.' },
+    { st: 4, tag: 'Comparação', q: 'O som propaga-se mais depressa num sólido ou num gás?', a: 'Num sólido. Quanto mais próximas e ligadas estão as partículas (sólido > líquido > gás), mais depressa o som se transmite.' }
   ],
   3: [
     { st: 1, tag: 'Definição', q: 'Como se propaga a luz?', a: 'A luz propaga-se em LINHA RETA, em todas as direções, e — ao contrário do som — também se propaga no vácuo. É muito rápida (~300 000 km/s).' },
@@ -79,7 +80,8 @@ var _fq8Cards = {
     { st: 1, tag: 'Definição', q: 'Porque é que um objeto tem uma certa cor?', a: 'Porque reflete a luz dessa cor e absorve as outras. Um objeto vermelho reflete o vermelho; um objeto preto absorve quase toda a luz.' },
     { st: 1, tag: 'Comparação', q: 'A luz é mais rápida que o som?', a: 'Muito mais. A luz viaja a ~300 000 km/s; o som no ar a ~340 m/s. Por isso vemos antes de ouvir.' },
     { st: 1, tag: 'Aplicação', q: 'Como funciona a visão?', a: 'A luz entra no olho, é focada pelo cristalino (uma lente) na retina, e o nervo ótico leva a informação ao cérebro.' },
-    { st: 1, tag: 'Exemplo', q: 'Porque vemos a Lua se ela não tem luz própria?', a: 'Porque a Lua é uma fonte secundária: reflete a luz do Sol que incide nela.' }
+    { st: 1, tag: 'Exemplo', q: 'Porque vemos a Lua se ela não tem luz própria?', a: 'Porque a Lua é uma fonte secundária: reflete a luz do Sol que incide nela.' },
+    { st: 3, tag: 'Aplicação', q: 'Que tipo de lente se usa para corrigir a miopia?', a: 'Uma lente divergente (côncava), que "abre" os raios para a imagem se formar corretamente na retina.' }
   ]
 };
 

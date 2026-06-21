@@ -64,7 +64,8 @@ var _fq9Cards = {
     { st: 2, tag: 'Definição', q: 'O que é um gerador num circuito?', a: 'O componente que fornece energia elétrica (pilha, bateria, fonte). Cria a diferença de potencial.' },
     { st: 4, tag: 'Símbolo', q: 'O que faz um interruptor?', a: 'Abre ou fecha o circuito, deixando ou não passar a corrente.' },
     { st: 2, tag: 'Segurança', q: 'Para que serve um fusível?', a: 'Protege o circuito: "queima" e corta a corrente quando esta é demasiado intensa, evitando incêndios.' },
-    { st: 2, tag: 'Exemplo', q: 'Num circuito em série com 2 lâmpadas, o que acontece se uma se fundir?', a: 'A outra também apaga, porque o circuito fica aberto (há um só caminho para a corrente).' }
+    { st: 2, tag: 'Exemplo', q: 'Num circuito em série com 2 lâmpadas, o que acontece se uma se fundir?', a: 'A outra também apaga, porque o circuito fica aberto (há um só caminho para a corrente).' },
+    { st: 2, tag: 'Comparação', q: 'Num circuito em paralelo, o que acontece se uma lâmpada se fundir?', a: 'As outras continuam acesas: cada ramo é um caminho independente para a corrente. É assim que se ligam as luzes de uma casa.' }
   ],
   3: [
     { st: 1, tag: 'Definição', q: 'Quais são as partículas do átomo?', a: 'Protões (carga +) e neutrões (sem carga) no núcleo; eletrões (carga −) à volta, na nuvem eletrónica.' },
@@ -81,7 +82,8 @@ var _fq9Cards = {
     { st: 1, tag: 'Regra', q: 'Quantos eletrões cabem nos primeiros níveis?', a: '1.º nível: até 2 eletrões; 2.º nível: até 8; 3.º nível: até 8 (no básico). Preenchem-se de dentro para fora.' },
     { st: 1, tag: 'Definição', q: 'O que são eletrões de valência?', a: 'Os eletrões do último nível de energia. São eles que determinam as ligações químicas e a reatividade do elemento.' },
     { st: 1, tag: 'Exemplo', q: 'O oxigénio tem Z = 8. Qual a sua distribuição eletrónica?', a: '8 eletrões → 2,6. Tem 6 eletrões de valência.' },
-    { st: 2, tag: 'Definição', q: 'O que é um elemento químico?', a: 'Uma substância formada por átomos todos com o mesmo número atómico (Z). Ex.: ferro, oxigénio, ouro.' }
+    { st: 2, tag: 'Definição', q: 'O que é um elemento químico?', a: 'Uma substância formada por átomos todos com o mesmo número atómico (Z). Ex.: ferro, oxigénio, ouro.' },
+    { st: 3, tag: 'Propriedade', q: 'Como variam as propriedades dos elementos de um mesmo grupo da Tabela Periódica?', a: 'Os elementos do mesmo grupo têm propriedades químicas semelhantes, porque têm o mesmo número de eletrões de valência.' }
   ],
   4: [
     { st: 1, tag: 'Definição', q: 'O que é uma ligação química?', a: 'A união entre átomos para formarem substâncias mais estáveis. Os átomos ligam-se para completar o último nível de eletrões.' },
@@ -98,7 +100,8 @@ var _fq9Cards = {
     { st: 1, tag: 'Regra', q: 'Não-metal + não-metal formam que tipo de ligação?', a: 'Ligação covalente (partilha de eletrões). Ex.: O₂, H₂O, CO₂.' },
     { st: 3, tag: 'Exemplo', q: 'Porque é que os gases nobres quase não fazem ligações?', a: 'Já têm o último nível completo (estável), por isso não precisam de ganhar, perder ou partilhar eletrões.' },
     { st: 2, tag: 'Exemplo', q: 'Quantos átomos tem a molécula de dióxido de carbono (CO₂)?', a: 'Três: 1 de carbono (C) e 2 de oxigénio (O).' },
-    { st: 3, tag: 'Síntese', q: 'Porque é que os átomos se ligam?', a: 'Para atingirem maior estabilidade — em geral, ficando com o último nível de eletrões completo (regra do octeto).' }
+    { st: 3, tag: 'Síntese', q: 'Porque é que os átomos se ligam?', a: 'Para atingirem maior estabilidade — em geral, ficando com o último nível de eletrões completo (regra do octeto).' },
+    { st: 2, tag: 'Exemplo', q: 'Na ligação iónica, como se forma o cloreto de sódio (NaCl)?', a: 'O sódio cede 1 eletrão ao cloro: forma-se o ião Na⁺ e o ião Cl⁻, que se atraem por terem cargas opostas.' }
   ]
 };
 
