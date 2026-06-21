@@ -107,7 +107,8 @@ var _port9Cards = {
     { st: 2, tag: 'Estratégia', q: 'Como tornar uma narrativa mais expressiva?', a: 'Mistura narração com descrição e diálogo, usa recursos expressivos (metáfora, comparação) e controla o ritmo das frases.' },
     { st: 2, tag: 'Definição', q: 'O que é o foco/ponto de vista narrativo?', a: 'A perspetiva de quem conta: narrador participante (1.ª pessoa) ou não participante (3.ª), com conhecimento total ou limitado.' },
     { st: 3, tag: 'Estrutura', q: 'Como se organiza um texto expositivo?', a: 'Introdução (apresenta o tema), desenvolvimento (explica por partes, com exemplos e dados) e conclusão (sintetiza). Tom objetivo.' },
-    { st: 3, tag: 'Estratégia', q: 'Que conectores ajudam a explicar num texto expositivo?', a: 'De adição (além disso), de exemplificação (por exemplo), de causa/consequência (por isso, logo) e de síntese (em suma).' }
+    { st: 3, tag: 'Estratégia', q: 'Que conectores ajudam a explicar num texto expositivo?', a: 'De adição (além disso), de exemplificação (por exemplo), de causa/consequência (por isso, logo) e de síntese (em suma).' },
+    { st: 3, tag: 'Definição', q: 'Qual a diferença entre texto expositivo e texto argumentativo?', a: 'O expositivo INFORMA/explica um assunto de forma objetiva; o argumentativo DEFENDE uma tese, procurando convencer com argumentos.' }
   ],
   // ── Domínio 5 · Recursos Expressivos ──
   5: [

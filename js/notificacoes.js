@@ -122,7 +122,14 @@
     if (pop) pop.style.display = 'none';
     _marcarVisto();
     var prof = typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor();
-    if (typeof portalIrPara === 'function') portalIrPara('apoio');
+    // Fora do portal (num hub de curso) portalIrPara não existe: vai ao portal,
+    // secção Turmas. O destino interno (accordion) só faz sentido lá.
+    if (typeof portalIrPara !== 'function') {
+      var base = /\/(mat\d+|port\d+|fq\d+)(\/|$)/.test(window.location.pathname) ? '../' : '';
+      window.location.href = base + 'index.html#apoio';
+      return;
+    }
+    portalIrPara('apoio');
     // a vista re-renderiza; espera e depois abre/realça o destino
     setTimeout(function () {
       if (prof) {

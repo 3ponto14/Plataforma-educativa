@@ -110,7 +110,8 @@ var _port7Cards = {
     { st: 2, tag: 'Estratégia', q: 'Como apoiar uma opinião com um exemplo?', a: 'Depois do argumento, dá um caso concreto: «Por exemplo, …». O exemplo torna a ideia credível e fácil de entender.' },
     { st: 3, tag: 'Estratégia', q: 'Que sentidos usar numa descrição?', a: 'Não descrevas só o que se vê: junta sons, cheiros, texturas e até sabores, para o leitor «entrar» na cena.' },
     { st: 3, tag: 'Regra', q: 'Que classe de palavras é essencial na descrição?', a: 'Os adjetivos (e locuções adjetivais): caracterizam pessoas, lugares e objetos. Escolhe-os com precisão, evitando os banais.' },
-    { st: 3, tag: 'Estratégia', q: 'Como organizar uma descrição de um espaço?', a: 'Segue uma ordem (do geral ao pormenor, ou de cima para baixo, da entrada para o fundo) para o leitor conseguir imaginar o conjunto.' }
+    { st: 3, tag: 'Estratégia', q: 'Como organizar uma descrição de um espaço?', a: 'Segue uma ordem (do geral ao pormenor, ou de cima para baixo, da entrada para o fundo) para o leitor conseguir imaginar o conjunto.' },
+    { st: 2, tag: 'Estrutura', q: 'Como terminar um texto de opinião?', a: 'Com uma conclusão que retoma a tese de forma reforçada, sem repetir tudo: pode acabar com um apelo, uma síntese ou uma frase de impacto.' }
   ],
   // ── Domínio 5 · Recursos Expressivos (7.º) ──
   5: [

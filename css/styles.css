@@ -1247,12 +1247,16 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 .g-tab{flex:1;min-width:90px;padding:8px 10px;border-radius:10px;border:none;background:transparent;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap}
 .g-tab:hover{background:var(--white);color:var(--ink)}
 .g-tab.active{background:var(--white);color:var(--c2-deep);box-shadow:0 2px 8px rgba(81,104,96,.15);border:1px solid rgba(81,104,96,.12)}
-/* ── Filtro de subtema dos jogos ── */
-.g-st-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin-bottom:.85rem}
-.g-st-bar-label{font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);margin-right:.15rem}
-.g-st-chip{padding:5px 12px;border-radius:999px;border:1px solid var(--border);background:var(--white);font-family:'Montserrat',sans-serif;font-size:.74rem;font-weight:600;color:var(--ink2);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:4px}
-.g-st-chip:hover{border-color:var(--c2-mid);color:var(--ink)}
-.g-st-chip.active{background:var(--c2-deep);border-color:var(--c2-deep);color:#fff}
+/* ── Filtro de capítulo/subtema dos jogos (multi-seleção) ── */
+.g-filter{margin-bottom:.85rem}
+.g-fl-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin-bottom:.55rem}
+.g-fl-bar:last-child{margin-bottom:0}
+.g-fl-label{font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);margin-right:.15rem;min-width:80px}
+.g-fl-chip{padding:5px 12px;border-radius:999px;border:1px solid var(--border);background:var(--white);font-family:'Montserrat',sans-serif;font-size:.74rem;font-weight:600;color:var(--ink2);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:4px}
+.g-fl-chip:hover{border-color:var(--c2-mid);color:var(--ink)}
+.g-fl-chip.active{background:var(--c2-deep);border-color:var(--c2-deep);color:#fff}
+.g-fl-chip.g-fl-st.active{background:var(--c2-mid);border-color:var(--c2-mid)}
+.g-fl-note{font-size:.76rem;color:var(--ink4);font-style:italic}
 /* ── Cabeçalho "Perguntas sobre:" dentro dos jogos ── */
 .g-tema-head{display:flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--ink2);background:var(--cream2);border:1px solid var(--border);border-radius:10px;padding:.5rem .8rem;margin-bottom:1rem}
 .g-tema-head i{color:var(--c2-deep)}
@@ -4046,6 +4050,31 @@ body.ml-collapsed #ml-drawer.fixed .ml-foot{justify-content:center; padding:.7re
 body.ml-collapsed #ml-drawer.fixed .ml-user{flex-basis:auto; gap:0;}
 /* o caret do "Recolher" passa a apontar para a direita (expandir) quando já está recolhido */
 body.ml-collapsed #ml-drawer.fixed .ml-toggle i{transform:scaleX(-1);}
+
+/* ── TABLET (900–1200px): barra fixa SEMPRE estreita (só ícones) ──
+   Nestes ecrãs a barra larga de 268px deixava o conteúdo espremido/tapado
+   (chips cortados nas Fichas). Forçamos o modo "só ícones" independentemente
+   da preferência guardada; acima de 1200px o aluno volta a poder expandir.
+   Replica as regras de .ml-collapsed mas só pela largura do ecrã. */
+@media (min-width:900px) and (max-width:1200px){
+  body.ml-fixed-on #ml-drawer.fixed{width:64px;}
+  body.ml-fixed-on #view-portal > *:not(.site-topbar){margin-left:64px;}
+  body.ml-fixed-on .math-view > *:not(.site-topbar){margin-left:64px;}
+  body.ml-fixed-on #ml-drawer.fixed .ml-link span,
+  body.ml-fixed-on #ml-drawer.fixed .ml-toggle span,
+  body.ml-fixed-on #ml-drawer.fixed .ml-user span,
+  body.ml-fixed-on #ml-drawer.fixed .ml-perfil,
+  body.ml-fixed-on #ml-drawer.fixed .ml-sair,
+  body.ml-fixed-on #ml-drawer.fixed .ml-tag{display:none;}
+  body.ml-fixed-on #ml-drawer.fixed .ml-nav{padding:.6rem .35rem;}
+  body.ml-fixed-on #ml-drawer.fixed .ml-link,
+  body.ml-fixed-on #ml-drawer.fixed .ml-toggle{justify-content:center; gap:0; padding:.62rem 0;}
+  body.ml-fixed-on #ml-drawer.fixed .ml-link.ativo{box-shadow:none; background:var(--white); border-radius:10px;}
+  body.ml-fixed-on #ml-drawer.fixed .ml-foot{justify-content:center; padding:.7rem .35rem;}
+  body.ml-fixed-on #ml-drawer.fixed .ml-user{flex-basis:auto; gap:0;}
+  /* O botão "Recolher" não faz sentido quando já está forçado a estreito */
+  body.ml-fixed-on #ml-drawer.fixed .ml-toggle{display:none;}
+}
 
 /* ── Barra de navegação INFERIOR (telemóvel) ── */
 #ml-bottombar{

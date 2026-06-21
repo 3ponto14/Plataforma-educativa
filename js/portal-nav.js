@@ -50,7 +50,12 @@ function portalIrPara(sec) {
 var _pnArrancou = false;
 function _pnAoMudarSessao() {
   if (_pnTemSessao()) {
-    if (!_pnArrancou) { _pnArrancou = true; portalIrPara('inicio'); }
+    if (!_pnArrancou) {
+      _pnArrancou = true;
+      // Respeita #inicio | #cursos | #apoio (ex: vir de um hub de curso pela gaveta).
+      var h = (window.location.hash || '').replace('#', '');
+      portalIrPara(h === 'cursos' || h === 'apoio' ? h : 'inicio');
+    }
   } else {
     _pnArrancou = false;
     var apoio = document.getElementById('sec-apoio');

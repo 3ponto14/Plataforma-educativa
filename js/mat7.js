@@ -546,8 +546,8 @@ function mat7RenderUnifiedJogos(caps, inlineEl) {
 
   // Tell the question provider which caps to mix
   if (typeof _gActiveCaps !== 'undefined') _gActiveCaps = caps;
-  // Reset do filtro de subtema ao mudar de capítulo(s) (evita subtema "preso").
-  if (typeof _gActiveSt !== 'undefined') _gActiveSt['j24-wrap-unified'] = 0;
+  // Reset do filtro (capítulos/subtemas) ao mudar a seleção do hub.
+  if (typeof _gSel !== 'undefined') _gSel['j24-wrap-unified'] = { caps: [], stsByCap: {} };
   if (typeof _gRecent !== 'undefined') _gRecent['j24-wrap-unified'] = [];
 
   inlineEl.innerHTML = [

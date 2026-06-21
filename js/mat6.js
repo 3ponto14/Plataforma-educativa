@@ -829,18 +829,16 @@ function mat6JogosInit() {
   _mat6PM(_mat6Prat.cap || 1, 'jogo');
   if (_mat6JogosInited) return;
   if (typeof _j24AutoInit === 'function') {
-    // Regista o provedor de perguntas DESTE ano (matéria correta nos jogos)
-    if (typeof _gRegisterProvider === 'function') {
-      _gRegisterProvider('mat6-jogos-app', function (level) {
-        var nCaps = _mat6CapMeta.length;
-        for (var att = 0; att < 6; att++) {
-          var cap = 1 + Math.floor(Math.random() * nCaps);
-          var gen = _mat6Gerador(cap);
-          var banco = (typeof _mat6Banco !== 'undefined' && _mat6Banco[cap]) ? _mat6Banco[cap] : null;
-          var q = _jogoQFromGerador(gen, _mat6TemasCount[cap], banco, level);
-          if (q) return q;
-        }
-        return null;
+    // Regista o curso nos jogos (matéria correta + filtro capítulo/subtema).
+    if (typeof _gRegisterGameCourse === 'function') {
+      _gRegisterGameCourse('mat6-jogos-app', {
+        capMeta: _mat6CapMeta,
+        subtemas: _mat6Subtemas,
+        subtemaTemas: (typeof _mat6SubtemaTemas !== 'undefined') ? _mat6SubtemaTemas : null,
+        temasCount: _mat6TemasCount,
+        gerador: _mat6Gerador,
+        banco: (typeof _mat6Banco !== 'undefined') ? _mat6Banco : null,
+        qFor: function (level, sel) { return _jogoQForCourse(this, level, sel); }
       });
     }
     _j24AutoInit('mat6-jogos-app', 'medio');

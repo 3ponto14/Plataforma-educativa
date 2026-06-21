@@ -250,7 +250,11 @@ var _fq8Banco = {
     { t:4, tipo:'mc', enun:'O vinagre e o sumo de limão são:', opcoes:['ácidos','bases','neutros','sais'], resposta:'ácidos', expl:'Têm pH < 7.' },
     { t:4, tipo:'mc', enun:'Para que serve um indicador como o tornesol?', opcoes:['mostrar se é ácido ou básico (muda de cor)','aquecer a solução','medir a massa','filtrar'], resposta:'mostrar se é ácido ou básico (muda de cor)', expl:'Os indicadores mudam de cor conforme o pH.' },
     { t:5, tipo:'mc', enun:'O que torna uma reação química mais RÁPIDA?', opcoes:['aumentar a temperatura','arrefecer','juntar menos reagente','nada'], resposta:'aumentar a temperatura', expl:'Maior temperatura → reação mais rápida.' },
-    { t:5, tipo:'mc', enun:'Um catalisador serve para:', opcoes:['acelerar a reação sem se consumir','travar a reação','mudar a cor','aumentar a massa'], resposta:'acelerar a reação sem se consumir', expl:'O catalisador acelera e não é consumido.' }
+    { t:5, tipo:'mc', enun:'Um catalisador serve para:', opcoes:['acelerar a reação sem se consumir','travar a reação','mudar a cor','aumentar a massa'], resposta:'acelerar a reação sem se consumir', expl:'O catalisador acelera e não é consumido.' },
+    { t:1, tipo:'mc', enun:'Dissolver sal em água é uma transformação:', opcoes:['física','química','combustão','oxidação'], resposta:'física', expl:'Não se formam novas substâncias; o sal pode recuperar-se por evaporação → física.' },
+    { t:2, tipo:'mc', enun:'Na reação «hidrogénio + oxigénio → água», a água é:', opcoes:['o produto','um reagente','um catalisador','um indicador'], resposta:'o produto', expl:'Os reagentes (hidrogénio e oxigénio) transformam-se no produto (água).' },
+    { t:4, tipo:'mc', enun:'Uma reação entre um ácido e uma base chama-se:', opcoes:['neutralização','combustão','oxidação','dissolução'], resposta:'neutralização', expl:'O ácido e a base reagem formando sal e água, aproximando o pH de 7.' },
+    { t:5, tipo:'mc', enun:'Reduzir o tamanho dos pedaços de um reagente sólido faz a reação ficar:', opcoes:['mais rápida','mais lenta','parada','sem alteração'], resposta:'mais rápida', expl:'Mais superfície de contacto → reação mais rápida.' }
   ],
   2: [
     { t:1, tipo:'mc', enun:'O som é produzido por:', opcoes:['vibração de um corpo','luz','calor','eletricidade apenas'], resposta:'vibração de um corpo', expl:'A fonte sonora vibra (ex.: cordas, membranas).' },
@@ -266,7 +270,11 @@ var _fq8Banco = {
     { t:3, tipo:'vf', enun:'A exposição prolongada a ruído elevado pode danificar a audição.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'Pode causar perda de audição e stress.' },
     { t:1, tipo:'mc', enun:'O eco é:', opcoes:['a reflexão do som','a cor do som','a vibração do ar parado','um tipo de luz'], resposta:'a reflexão do som', expl:'O som reflete numa superfície e volta a ser ouvido.' },
     { t:4, tipo:'mc', enun:'Porque vemos o relâmpago antes de ouvir o trovão?', opcoes:['a luz é muito mais rápida que o som','o som não existe','o trovão vem depois','o relâmpago é mais perto'], resposta:'a luz é muito mais rápida que o som', expl:'Luz ~300 000 km/s vs som ~340 m/s.' },
-    { t:1, tipo:'mc', enun:'O som transporta:', opcoes:['energia, sem transportar matéria','matéria','luz','eletrões'], resposta:'energia, sem transportar matéria', expl:'É uma onda: transmite energia através da vibração do meio.' }
+    { t:1, tipo:'mc', enun:'O som transporta:', opcoes:['energia, sem transportar matéria','matéria','luz','eletrões'], resposta:'energia, sem transportar matéria', expl:'É uma onda: transmite energia através da vibração do meio.' },
+    { t:2, tipo:'mc', enun:'Um som GRAVE tem:', opcoes:['frequência baixa','frequência alta','amplitude zero','timbre alto'], resposta:'frequência baixa', expl:'Grave = baixa frequência (ex.: contrabaixo); agudo = alta frequência.' },
+    { t:4, tipo:'mc', enun:'Se um trovão se ouve 3 s depois do relâmpago, está a cerca de (som ~340 m/s):', opcoes:['cerca de 1 km','cerca de 100 m','cerca de 10 km','cerca de 3 m'], resposta:'cerca de 1 km', expl:'Distância = velocidade × tempo = 340 × 3 ≈ 1020 m ≈ 1 km.' },
+    { t:3, tipo:'mc', enun:'Sons com frequência ACIMA de 20 000 Hz chamam-se:', opcoes:['ultrassons','infrassons','ecos','timbres'], resposta:'ultrassons', expl:'Acima do limite audível: ultrassons (usados em ecografias). Abaixo de 20 Hz: infrassons.' },
+    { t:3, tipo:'vf', enun:'Materiais como a cortiça e a espuma ajudam a isolar o som.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'Absorvem as vibrações e reduzem a propagação do som (isolamento sonoro).' }
   ],
   3: [
     { t:1, tipo:'mc', enun:'A luz propaga-se:', opcoes:['em linha reta','sempre em curva','só em líquidos','só no escuro'], resposta:'em linha reta', expl:'A luz propaga-se em linha reta em todas as direções.' },
@@ -282,7 +290,11 @@ var _fq8Banco = {
     { t:4, tipo:'mc', enun:'A separação da luz branca nas suas cores chama-se:', opcoes:['dispersão','reflexão','refração total','absorção'], resposta:'dispersão', expl:'Ex.: o arco-íris ou um prisma.' },
     { t:4, tipo:'mc', enun:'Porque é que um objeto parece vermelho?', opcoes:['reflete o vermelho e absorve as outras cores','emite calor','absorve o vermelho','não recebe luz'], resposta:'reflete o vermelho e absorve as outras cores', expl:'Vemos a cor que o objeto reflete.' },
     { t:4, tipo:'vf', enun:'Um objeto preto absorve quase toda a luz que recebe.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'Por isso aquece mais ao sol.' },
-    { t:1, tipo:'mc', enun:'A luz é mais rápida ou mais lenta que o som?', opcoes:['mais rápida','mais lenta','igual','depende da cor'], resposta:'mais rápida', expl:'~300 000 km/s contra ~340 m/s do som.' }
+    { t:1, tipo:'mc', enun:'A luz é mais rápida ou mais lenta que o som?', opcoes:['mais rápida','mais lenta','igual','depende da cor'], resposta:'mais rápida', expl:'~300 000 km/s contra ~340 m/s do som.' },
+    { t:1, tipo:'mc', enun:'Um corpo OPACO:', opcoes:['não deixa passar a luz','deixa ver através nitidamente','deixa passar luz mas não ver bem','emite luz própria'], resposta:'não deixa passar a luz', expl:'Opaco bloqueia a luz (ex.: madeira); por isso forma sombra.' },
+    { t:2, tipo:'mc', enun:'Quando a luz se reflete numa superfície polida (espelho), a reflexão diz-se:', opcoes:['especular (regular)','difusa','total','nula'], resposta:'especular (regular)', expl:'Superfície lisa → reflexão regular (forma imagem); superfície rugosa → reflexão difusa.' },
+    { t:3, tipo:'mc', enun:'Uma lupa, que aumenta as imagens, é uma lente:', opcoes:['convergente','divergente','plana','opaca'], resposta:'convergente', expl:'A lente convergente (grossa no centro) concentra os raios e amplia.' },
+    { t:4, tipo:'mc', enun:'As três cores primárias da luz são:', opcoes:['vermelho, verde e azul','vermelho, amarelo e azul','preto, branco e cinzento','laranja, verde e roxo'], resposta:'vermelho, verde e azul', expl:'Na síntese aditiva da luz (RGB), a soma das três dá luz branca.' }
   ]
 };
 
@@ -823,18 +835,16 @@ function fq8JogosInit() {
   _fq8PM(_fq8Prat.cap || 1, 'jogo');
   if (_fq8JogosInited) return;
   if (typeof _j24AutoInit === 'function') {
-    // Regista o provedor de perguntas DESTE ano (matéria correta nos jogos)
-    if (typeof _gRegisterProvider === 'function') {
-      _gRegisterProvider('fq8-jogos-app', function (level) {
-        var nCaps = _fq8CapMeta.length;
-        for (var att = 0; att < 6; att++) {
-          var cap = 1 + Math.floor(Math.random() * nCaps);
-          var gen = _fq8Gerador(cap);
-          var banco = (typeof _fq8Banco !== 'undefined' && _fq8Banco[cap]) ? _fq8Banco[cap] : null;
-          var q = _jogoQFromGerador(gen, _fq8TemasCount[cap], banco, level);
-          if (q) return q;
-        }
-        return null;
+    // Regista o curso nos jogos (matéria correta + filtro capítulo/subtema).
+    if (typeof _gRegisterGameCourse === 'function') {
+      _gRegisterGameCourse('fq8-jogos-app', {
+        capMeta: _fq8CapMeta,
+        subtemas: _fq8Subtemas,
+        subtemaTemas: (typeof _fq8SubtemaTemas !== 'undefined') ? _fq8SubtemaTemas : null,
+        temasCount: _fq8TemasCount,
+        gerador: _fq8Gerador,
+        banco: (typeof _fq8Banco !== 'undefined') ? _fq8Banco : null,
+        qFor: function (level, sel) { return _jogoQForCourse(this, level, sel); }
       });
     }
     _j24AutoInit('fq8-jogos-app', 'medio');

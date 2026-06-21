@@ -806,18 +806,16 @@ function mat10JogosInit() {
   _mat10PM(_mat10Prat.cap || 1, 'jogo');
   if (_mat10JogosInited) return;
   if (typeof _j24AutoInit === 'function') {
-    // Regista o provedor de perguntas DESTE ano (matéria correta nos jogos)
-    if (typeof _gRegisterProvider === 'function') {
-      _gRegisterProvider('mat10-jogos-app', function (level) {
-        var nCaps = _mat10CapMeta.length;
-        for (var att = 0; att < 6; att++) {
-          var cap = 1 + Math.floor(Math.random() * nCaps);
-          var gen = _mat10Gerador(cap);
-          var banco = (typeof _mat10Banco !== 'undefined' && _mat10Banco[cap]) ? _mat10Banco[cap] : null;
-          var q = _jogoQFromGerador(gen, _mat10TemasCount[cap], banco, level);
-          if (q) return q;
-        }
-        return null;
+    // Regista o curso nos jogos (matéria correta + filtro capítulo/subtema).
+    if (typeof _gRegisterGameCourse === 'function') {
+      _gRegisterGameCourse('mat10-jogos-app', {
+        capMeta: _mat10CapMeta,
+        subtemas: _mat10Subtemas,
+        subtemaTemas: (typeof _mat10SubtemaTemas !== 'undefined') ? _mat10SubtemaTemas : null,
+        temasCount: _mat10TemasCount,
+        gerador: _mat10Gerador,
+        banco: (typeof _mat10Banco !== 'undefined') ? _mat10Banco : null,
+        qFor: function (level, sel) { return _jogoQForCourse(this, level, sel); }
       });
     }
     _j24AutoInit('mat10-jogos-app', 'medio');

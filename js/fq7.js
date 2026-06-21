@@ -271,7 +271,11 @@ var _fq7Banco = {
     { t:4, tipo:'mc', enun:'No modelo <strong>heliocêntrico</strong>, o que está no centro?', opcoes:['O Sol','A Terra','A Lua','A Via Láctea'], resposta:'O Sol', expl:'Hélio = Sol. Copérnico e Galileu defenderam o Sol no centro do sistema solar.' },
     { t:4, tipo:'mc', enun:'No modelo <strong>geocêntrico</strong>, o que estava no centro?', opcoes:['A Terra','O Sol','Júpiter','A Lua'], resposta:'A Terra', expl:'Geo = Terra. Era o modelo antigo, posto em causa por Galileu.' },
     { t:4, tipo:'mc', enun:'O telescópio Hubble é um telescópio…', opcoes:['espacial (em órbita da Terra)','de bolso','de raios X no solo','submarino'], resposta:'espacial (em órbita da Terra)', expl:'Foi lançado em 1990 e orbita a Terra, fora da atmosfera.' },
-    { t:4, tipo:'vf', enun:'Galileu foi o primeiro a usar o telescópio em observações astronómicas.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'Com o telescópio, Galileu pôs em causa o modelo geocêntrico.' }
+    { t:4, tipo:'vf', enun:'Galileu foi o primeiro a usar o telescópio em observações astronómicas.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'Com o telescópio, Galileu pôs em causa o modelo geocêntrico.' },
+    { t:1, tipo:'mc', enun:'O que é uma <strong>constelação</strong>?', opcoes:['Um grupo de estrelas que forma um desenho no céu','Um planeta com anéis','Uma galáxia pequena','Um satélite artificial'], resposta:'Um grupo de estrelas que forma um desenho no céu', expl:'As constelações (ex.: Ursa Maior) são agrupamentos aparentes de estrelas usados para orientação.' },
+    { t:2, tipo:'mc', enun:'Para distâncias entre estrelas usa-se sobretudo o…', opcoes:['ano-luz','quilómetro','metro','unidade astronómica'], resposta:'ano-luz', expl:'As distâncias entre estrelas são enormes; a UA seria pequena demais.' },
+    { t:3, tipo:'mc', enun:'Os planetas <strong>gasosos</strong> do sistema solar são:', opcoes:['Júpiter, Saturno, Úrano e Neptuno','Mercúrio, Vénus, Terra e Marte','só Júpiter','Terra e Marte'], resposta:'Júpiter, Saturno, Úrano e Neptuno', expl:'Os 4 mais afastados são gigantes gasosos; os 4 interiores são rochosos.' },
+    { t:4, tipo:'vf', enun:'No modelo heliocêntrico, a Terra gira em torno do Sol.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'Heliocêntrico = Sol no centro; os planetas, incluindo a Terra, orbitam-no.' }
   ],
   2: [
     { t:1, tipo:'mc', enun:'O que causa o dia e a noite?', opcoes:['A rotação da Terra','A translação da Terra','As fases da Lua','O movimento do Sol'], resposta:'A rotação da Terra', expl:'A Terra roda sobre si mesma (rotação) em ~24 h → dia e noite.' },
@@ -288,7 +292,11 @@ var _fq7Banco = {
     { t:3, tipo:'mc', enun:'A força mede-se em…', opcoes:['newton (N)','quilograma (kg)','joule (J)','metro (m)'], resposta:'newton (N)', expl:'A unidade de força é o newton (N).' },
     { t:3, tipo:'mc', enun:'Qual é a diferença entre massa e peso?', opcoes:['Massa é a matéria (kg); peso é a força gravítica (N)','São a mesma coisa','Massa mede-se em N','Peso mede-se em kg'], resposta:'Massa é a matéria (kg); peso é a força gravítica (N)', expl:'A massa é constante; o peso varia com o planeta.' },
     { t:3, tipo:'mc', enun:'O que mantém um satélite em órbita da Terra?', opcoes:['A força gravítica da Terra','O vento solar','O magnetismo da Lua','Nada'], resposta:'A força gravítica da Terra', expl:'A gravidade "puxa" o satélite, mantendo-o em órbita.' },
-    { t:3, tipo:'mc', enun:'Dois satélites iguais: A está mais perto, B mais longe da Terra. Em qual a força gravítica é maior?', opcoes:['Em A (mais perto)','Em B (mais longe)','É igual','Não há força'], resposta:'Em A (mais perto)', expl:'Menor distância → maior força gravítica.' }
+    { t:3, tipo:'mc', enun:'Dois satélites iguais: A está mais perto, B mais longe da Terra. Em qual a força gravítica é maior?', opcoes:['Em A (mais perto)','Em B (mais longe)','É igual','Não há força'], resposta:'Em A (mais perto)', expl:'Menor distância → maior força gravítica.' },
+    { t:1, tipo:'mc', enun:'Quanto tempo demora a translação da Terra?', opcoes:['Cerca de 365 dias (1 ano)','Cerca de 24 horas','Cerca de 27 dias','Cerca de 30 dias'], resposta:'Cerca de 365 dias (1 ano)', expl:'A translação é a volta completa ao Sol: dura ~365,25 dias.' },
+    { t:2, tipo:'mc', enun:'Entre o Quarto Crescente e o Quarto Minguante, qual fase ocorre?', opcoes:['Lua Cheia','Lua Nova','Eclipse','Nenhuma'], resposta:'Lua Cheia', expl:'Sequência das fases: Nova → Crescente → Cheia → Minguante → Nova.' },
+    { t:2, tipo:'vf', enun:'A Lua tem luz própria.', opcoes:['Verdadeiro','Falso'], resposta:'Falso', expl:'A Lua não produz luz: apenas reflete a luz do Sol.' },
+    { t:3, tipo:'mc', enun:'Um corpo com 5 kg de massa tem na Terra um peso de cerca de (g ≈ 10 N/kg):', opcoes:['50 N','5 N','0,5 N','500 N'], resposta:'50 N', expl:'Peso = massa × g = 5 × 10 = 50 N.' }
   ],
   3: [
     { t:1, tipo:'mc', enun:'Uma <strong>mistura</strong> é…', opcoes:['duas ou mais substâncias juntas','uma única substância pura','sempre um sólido','sempre líquida'], resposta:'duas ou mais substâncias juntas', expl:'Uma mistura tem mais do que uma substância (ex.: água com sal).' },
@@ -305,7 +313,11 @@ var _fq7Banco = {
     { t:4, tipo:'mc', enun:'A passagem de líquido a gasoso chama-se…', opcoes:['vaporização','condensação','fusão','solidificação'], resposta:'vaporização', expl:'Líquido → gasoso = vaporização (ex.: água a ferver).' },
     { t:5, tipo:'mc', enun:'Como separar areia da água?', opcoes:['Filtração','Destilação','Evaporação do sal','Magnetização'], resposta:'Filtração', expl:'A filtração separa um sólido insolúvel (areia) de um líquido (água).' },
     { t:5, tipo:'mc', enun:'Como separar limalha de ferro de areia?', opcoes:['Com um íman','Filtração','Evaporação','Decantação'], resposta:'Com um íman', expl:'O íman atrai o ferro (separação magnética).' },
-    { t:5, tipo:'mc', enun:'Como recuperar o sal dissolvido em água?', opcoes:['Evaporação','Filtração','Magnetização','Peneiração'], resposta:'Evaporação', expl:'A água evapora e o sal fica.' }
+    { t:5, tipo:'mc', enun:'Como recuperar o sal dissolvido em água?', opcoes:['Evaporação','Filtração','Magnetização','Peneiração'], resposta:'Evaporação', expl:'A água evapora e o sal fica.' },
+    { t:2, tipo:'mc', enun:'Uma solução diz-se <strong>saturada</strong> quando…', opcoes:['já não consegue dissolver mais soluto','tem pouco soluto','está muito quente','é heterogénea'], resposta:'já não consegue dissolver mais soluto', expl:'Atingiu o limite de dissolução: o soluto a mais deposita-se no fundo.' },
+    { t:3, tipo:'mc', enun:'Um objeto de 200 g ocupa 100 cm³. Qual é a sua massa volúmica?', opcoes:['2 g/cm³','0,5 g/cm³','200 g/cm³','20 g/cm³'], resposta:'2 g/cm³', expl:'ρ = m/V = 200 ÷ 100 = 2 g/cm³.' },
+    { t:4, tipo:'mc', enun:'A passagem de gasoso a líquido chama-se…', opcoes:['condensação','vaporização','fusão','sublimação'], resposta:'condensação', expl:'Gasoso → líquido = condensação (ex.: orvalho a formar-se de manhã).' },
+    { t:5, tipo:'mc', enun:'Para separar dois líquidos miscíveis (ex.: água e álcool) usa-se…', opcoes:['destilação','filtração','decantação','um íman'], resposta:'destilação', expl:'A destilação separa líquidos com pontos de ebulição diferentes.' }
   ],
   4: [
     { t:1, tipo:'mc', enun:'Qual destas é uma <strong>fonte de energia renovável</strong>?', opcoes:['O Sol','O carvão','O petróleo','O gás natural'], resposta:'O Sol', expl:'A energia solar é renovável; carvão/petróleo/gás são fósseis (não renováveis).' },
@@ -321,7 +333,11 @@ var _fq7Banco = {
     { t:3, tipo:'mc', enun:'A energia associada ao movimento chama-se energia…', opcoes:['cinética','potencial','química','sonora'], resposta:'cinética', expl:'Energia cinética = energia do movimento.' },
     { t:3, tipo:'mc', enun:'A água no topo de uma barragem tem sobretudo energia…', opcoes:['potencial gravítica','cinética','sonora','elétrica'], resposta:'potencial gravítica', expl:'Por estar em altura; ao cair transforma-se em cinética e depois elétrica.' },
     { t:3, tipo:'vf', enun:'A maior parte da energia na Terra tem origem no Sol.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'Direta ou indiretamente (vento, chuva, plantas, fósseis).' },
-    { t:3, tipo:'mc', enun:'O rendimento de um sistema é sempre…', opcoes:['menor que 100%','igual a 100%','maior que 100%','zero'], resposta:'menor que 100%', expl:'Há sempre energia dissipada (em geral como calor).' }
+    { t:3, tipo:'mc', enun:'O rendimento de um sistema é sempre…', opcoes:['menor que 100%','igual a 100%','maior que 100%','zero'], resposta:'menor que 100%', expl:'Há sempre energia dissipada (em geral como calor).' },
+    { t:1, tipo:'mc', enun:'A energia do Sol é uma forma de energia…', opcoes:['radiante (luminosa)','sonora','química','mecânica'], resposta:'radiante (luminosa)', expl:'A energia solar chega à Terra como radiação (luz e calor).' },
+    { t:2, tipo:'vf', enun:'Numa pilha, a energia química transforma-se em energia elétrica.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'A pilha guarda energia química e fornece-a ao circuito como energia elétrica.' },
+    { t:3, tipo:'mc', enun:'Quanto vale 2 kJ em joules?', opcoes:['2000 J','200 J','20 J','2 J'], resposta:'2000 J', expl:'1 kJ = 1000 J, logo 2 kJ = 2000 J.' },
+    { t:3, tipo:'mc', enun:'Um carro em movimento tem sobretudo energia…', opcoes:['cinética','potencial gravítica','sonora','nuclear'], resposta:'cinética', expl:'A energia cinética está associada ao movimento dos corpos.' }
   ]
 };
 
@@ -862,18 +878,16 @@ function fq7JogosInit() {
   _fq7PM(_fq7Prat.cap || 1, 'jogo');
   if (_fq7JogosInited) return;
   if (typeof _j24AutoInit === 'function') {
-    // Regista o provedor de perguntas DESTE ano (matéria correta nos jogos)
-    if (typeof _gRegisterProvider === 'function') {
-      _gRegisterProvider('fq7-jogos-app', function (level) {
-        var nCaps = _fq7CapMeta.length;
-        for (var att = 0; att < 6; att++) {
-          var cap = 1 + Math.floor(Math.random() * nCaps);
-          var gen = _fq7Gerador(cap);
-          var banco = (typeof _fq7Banco !== 'undefined' && _fq7Banco[cap]) ? _fq7Banco[cap] : null;
-          var q = _jogoQFromGerador(gen, _fq7TemasCount[cap], banco, level);
-          if (q) return q;
-        }
-        return null;
+    // Regista o curso nos jogos (matéria correta + filtro capítulo/subtema).
+    if (typeof _gRegisterGameCourse === 'function') {
+      _gRegisterGameCourse('fq7-jogos-app', {
+        capMeta: _fq7CapMeta,
+        subtemas: _fq7Subtemas,
+        subtemaTemas: (typeof _fq7SubtemaTemas !== 'undefined') ? _fq7SubtemaTemas : null,
+        temasCount: _fq7TemasCount,
+        gerador: _fq7Gerador,
+        banco: (typeof _fq7Banco !== 'undefined') ? _fq7Banco : null,
+        qFor: function (level, sel) { return _jogoQForCourse(this, level, sel); }
       });
     }
     _j24AutoInit('fq7-jogos-app', 'medio');

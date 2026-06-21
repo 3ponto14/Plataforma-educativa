@@ -570,11 +570,10 @@ function gTabSwitch(wrapId, tabName) {
 // Mostra/esconde a barra de subtema e o cabeçalho conforme o jogo activo usa
 // (ou não) perguntas de conteúdo.
 function _gToggleSubtemaUI(wrapId, tabName) {
-  var wrap = document.getElementById(wrapId); if (!wrap) return;
   var show = !!_gContentGames[tabName];
-  var bar = wrap.querySelector('.g-st-bar');
+  var filt = document.getElementById(wrapId + '-filter');
   var head = document.getElementById(wrapId + '-tema-head');
-  if (bar) bar.style.display = show ? '' : 'none';
+  if (filt) filt.style.display = show ? '' : 'none';
   if (head) head.style.display = show ? '' : 'none';
 }
 
@@ -618,6 +617,21 @@ function _gSetFor(wrapId) {
   return ['j24', 'c4', 'mine', 'sdk', 'hanoi', 'escape']; // legado (7.º por capítulo)
 }
 
+// ── Config de filtro por curso (capítulos + subtemas + provider) ──
+// Cada ano regista aqui o que precisa para desenhar os chips de capítulo e
+// subtema e para pedir perguntas filtradas. cfg = {
+//   capMeta:[{n,label}], subtemas:{cap:[labels]},
+//   qFor:function(level, sel){ ... }  // sel = {caps:[], stsByCap:{}}
+// }
+var _gCourseCfg = {};
+function _gRegisterGameCourse(wrapId, cfg) { if (wrapId && cfg) _gCourseCfg[wrapId] = cfg; }
+// Seleção de capítulos/subtemas por wrapper (multi). caps=[] → todos.
+var _gSel = {};
+function _gSelFor(wrapId) {
+  if (!_gSel[wrapId]) _gSel[wrapId] = { caps: [], stsByCap: {} };
+  return _gSel[wrapId];
+}
+
 function _gBuildJogos(wrapId, defaultLevel) {
   var wrap = document.getElementById(wrapId);
   if (!wrap) return;
@@ -626,7 +640,16 @@ function _gBuildJogos(wrapId, defaultLevel) {
   _gInstances[wrapId] = { qFn: function(level){
       var lv = level || defaultLevel || 'medio';
       var q = null;
-      if (_gProviders[wrapId]) { try { q = _gProviders[wrapId](lv); } catch (e) { q = null; } if (q && q.q && q.opts) return q; }
+      // 1) curso com config de filtro (capítulo/subtema multi)
+      var cfg = _gCourseCfg[wrapId];
+      if (cfg && typeof cfg.qFor === 'function') {
+        try { q = cfg.qFor(lv, _gSelFor(wrapId)); } catch (e) { q = null; }
+        q = _gNoRepeat(wrapId, q, cfg, lv);
+        if (q && q.q && q.opts) return q;
+      }
+      // 2) provider antigo (sem filtro) — anos ainda não migrados
+      if (_gProviders[wrapId]) { try { q = _gProviders[wrapId](lv); } catch (e2) { q = null; } if (q && q.q && q.opts) return q; }
+      // 3) pools internos (mat7 por capítulo)
       q = _gGetQuestion(wrapId, lv);
       if (q && q.q && q.opts && q.opts.length) return q;
       // fallback final: pergunta simples garantida
@@ -634,9 +657,8 @@ function _gBuildJogos(wrapId, defaultLevel) {
     }, defaultLevel: defaultLevel || 'medio' };
   var jogos = _gSetFor(wrapId);
   var html = [];
-  // ── Filtro de SUBTEMA (chips) — só quando há 1 capítulo com subtemas ──
-  html.push(_gSubtemaBarHTML(wrapId));
-  // ── Cabeçalho "Tema:" — mostra de onde vêm as perguntas do jogo ──
+  // ── Barras de filtro (capítulos + subtemas, multi-seleção) + cabeçalho ──
+  html.push('<div class="g-filter" id="' + wrapId + '-filter">' + _gFilterBarsHTML(wrapId) + '</div>');
   html.push('<div class="g-tema-head" id="' + wrapId + '-tema-head">' + _gTemaHeadHTML(wrapId) + '</div>');
   var tabs = ['<div class="g-tabs">'], panels = [];
   jogos.forEach(function (id, i) {
@@ -646,61 +668,124 @@ function _gBuildJogos(wrapId, defaultLevel) {
   });
   tabs.push('</div>');
   wrap.innerHTML = html.concat(tabs).concat(panels).join('\n');
-  // esconde a barra de subtema se o 1.º jogo do conjunto não usar perguntas
+  // esconde as barras se o 1.º jogo do conjunto não usar perguntas
   _gToggleSubtemaUI(wrapId, jogos[0]);
   // inicia o primeiro jogo do conjunto
   _gInitTab(wrapId, jogos[0], defaultLevel || 'medio');
 }
 
-// Barra de chips de subtema. Vazia (string '') se o capítulo não tiver subtemas
-// marcados nas perguntas, ou se houver mais do que 1 capítulo activo.
-function _gSubtemaBarHTML(wrapId) {
-  var cap = _gSingleCap(wrapId);
-  if (!cap) return '';
-  var labels = _gSubLabels(cap);
-  if (!labels || !labels.length) return '';
-  var active = _gActiveSt[wrapId] || 0;
-  var chips = ['<button class="g-st-chip' + (active === 0 ? ' active' : '') +
-    '" onclick="gSetSubtema(\'' + wrapId + '\',0,this)"><i class="ph ph-list"></i> Todos</button>'];
-  labels.forEach(function (lab, i) {
-    var st = i + 1;
-    chips.push('<button class="g-st-chip' + (active === st ? ' active' : '') +
-      '" onclick="gSetSubtema(\'' + wrapId + '\',' + st + ',this)">' + lab + '</button>');
+// Memória anti-repetição genérica: tenta até 6× obter uma pergunta inédita.
+function _gNoRepeat(wrapId, q, cfg, lv) {
+  var recent = _gRecent[wrapId] || [];
+  for (var k = 0; k < 6 && q && recent.indexOf(q.q) !== -1; k++) {
+    try { q = cfg.qFor(lv, _gSelFor(wrapId)); } catch (e) { break; }
+  }
+  if (q && q.q) {
+    recent.push(q.q);
+    while (recent.length > 8) recent.shift();
+    _gRecent[wrapId] = recent;
+  }
+  return q;
+}
+
+// Capítulos disponíveis para um wrapper (da config ou dos pools mat7).
+function _gCapsList(wrapId) {
+  var cfg = _gCourseCfg[wrapId];
+  if (cfg && cfg.capMeta && cfg.capMeta.length) {
+    return cfg.capMeta.map(function (m) { return { n: m.n, label: m.label }; });
+  }
+  // mat7: capítulos com pools/subtemas conhecidos (1–5)
+  if (/j24-wrap/.test(wrapId) && typeof _mat7CapNames !== 'undefined') {
+    var caps = (wrapId === 'j24-wrap-unified' && _gActiveCaps && _gActiveCaps.length) ? _gActiveCaps : [1,2,3,4,5];
+    return caps.map(function (n) { return { n: n, label: _mat7CapNames[n] || ('Cap.' + n) }; });
+  }
+  return [];
+}
+// Labels de subtema de um capítulo (config do ano, ou _capStShort/fallback mat7).
+function _gCapSubs(wrapId, cap) {
+  var cfg = _gCourseCfg[wrapId];
+  if (cfg && cfg.subtemas && cfg.subtemas[cap]) return cfg.subtemas[cap];
+  return _gSubLabels(cap) || [];
+}
+
+// Constrói as duas barras: CAPÍTULOS (multi) e SUBTEMAS (multi) dos caps activos.
+function _gFilterBarsHTML(wrapId) {
+  var caps = _gCapsList(wrapId);
+  if (!caps.length) return '';
+  var sel = _gSelFor(wrapId);
+  // — Barra de capítulos —
+  var capChips = ['<button class="g-fl-chip' + (sel.caps.length === 0 ? ' active' : '') +
+    '" onclick="gToggleCap(\'' + wrapId + '\',0)"><i class="ph ph-list"></i> Todos</button>'];
+  caps.forEach(function (c) {
+    var on = sel.caps.indexOf(c.n) !== -1;
+    capChips.push('<button class="g-fl-chip' + (on ? ' active' : '') +
+      '" onclick="gToggleCap(\'' + wrapId + '\',' + c.n + ')">' + c.label + '</button>');
   });
-  return '<div class="g-st-bar"><span class="g-st-bar-label">Subtema:</span>' + chips.join('') + '</div>';
+  var bars = '<div class="g-fl-bar"><span class="g-fl-label">Capítulos:</span>' + capChips.join('') + '</div>';
+  // — Barra de subtemas: une os subtemas dos capítulos selecionados —
+  var capsActivos = sel.caps.length ? sel.caps : caps.map(function (c) { return c.n; });
+  // só faz sentido escolher subtemas quando há 1 capítulo selecionado
+  if (sel.caps.length === 1) {
+    var cap = sel.caps[0];
+    var subs = _gCapSubs(wrapId, cap);
+    if (subs && subs.length) {
+      var stOn = sel.stsByCap[cap] || [];
+      var stChips = ['<button class="g-fl-chip g-fl-st' + (stOn.length === 0 ? ' active' : '') +
+        '" onclick="gToggleSt(\'' + wrapId + '\',' + cap + ',0)"><i class="ph ph-list"></i> Todos</button>'];
+      subs.forEach(function (lab, i) {
+        var st = i + 1, on = stOn.indexOf(st) !== -1;
+        stChips.push('<button class="g-fl-chip g-fl-st' + (on ? ' active' : '') +
+          '" onclick="gToggleSt(\'' + wrapId + '\',' + cap + ',' + st + ')">' + lab + '</button>');
+      });
+      bars += '<div class="g-fl-bar"><span class="g-fl-label">Subtemas:</span>' + stChips.join('') + '</div>';
+    }
+  } else if (sel.caps.length > 1) {
+    bars += '<div class="g-fl-bar g-fl-hint"><span class="g-fl-label">Subtemas:</span>' +
+      '<span class="g-fl-note">Escolhe <b>um único capítulo</b> para filtrar por subtema.</span></div>';
+  }
+  return bars;
 }
 
-// Cabeçalho que diz de onde vêm as perguntas: capítulo + subtema activo.
+// Cabeçalho que diz de onde vêm as perguntas.
 function _gTemaHeadHTML(wrapId) {
-  var cap = _gSingleCap(wrapId);
-  var capNome = '';
-  if (cap && typeof _mat7CapNames !== 'undefined' && _mat7CapNames[cap]) capNome = _mat7CapNames[cap];
-  var st = _gActiveStName(wrapId);
-  var alvo = st ? st : (capNome || (cap ? ('Capítulo ' + cap) : 'Todos os capítulos selecionados'));
-  return '<i class="ph ph-target"></i> Perguntas sobre: <b>' + alvo + '</b>' +
-    (st && capNome ? ' <span class="g-tema-cap">(' + capNome + ')</span>' : '');
+  var sel = _gSelFor(wrapId);
+  var caps = _gCapsList(wrapId);
+  if (!caps.length) return '<i class="ph ph-target"></i> Perguntas variadas do ano';
+  var nome = {};
+  caps.forEach(function (c) { nome[c.n] = c.label; });
+  var alvo;
+  if (sel.caps.length === 0) {
+    alvo = 'Todos os capítulos';
+  } else if (sel.caps.length === 1) {
+    var cap = sel.caps[0];
+    var stOn = sel.stsByCap[cap] || [];
+    var subs = _gCapSubs(wrapId, cap);
+    if (stOn.length === 1 && subs[stOn[0] - 1]) {
+      alvo = subs[stOn[0] - 1] + ' <span class="g-tema-cap">(' + (nome[cap] || ('Cap.' + cap)) + ')</span>';
+    } else if (stOn.length > 1) {
+      alvo = stOn.length + ' subtemas <span class="g-tema-cap">(' + (nome[cap] || ('Cap.' + cap)) + ')</span>';
+    } else {
+      alvo = (nome[cap] || ('Cap.' + cap));
+    }
+  } else {
+    alvo = sel.caps.length + ' capítulos: ' + sel.caps.map(function (c) { return nome[c] || ('Cap.' + c); }).join(', ');
+  }
+  return '<i class="ph ph-target"></i> Perguntas sobre: <b>' + alvo + '</b>';
 }
 
-// Escolhe o subtema activo e reinicia o jogo aberto para usar as novas perguntas.
-function gSetSubtema(wrapId, st, btn) {
-  _gActiveSt[wrapId] = st;
-  _gRecent[wrapId] = []; // limpa histórico de "não repetir" ao mudar de subtema
+// Reinicia o jogo aberto e actualiza barras + cabeçalho após mudar a seleção.
+function _gRefreshAfterFilter(wrapId) {
+  _gRecent[wrapId] = []; // limpa anti-repetição ao mudar de filtro
+  var filt = document.getElementById(wrapId + '-filter');
+  if (filt) filt.innerHTML = _gFilterBarsHTML(wrapId);
   var head = document.getElementById(wrapId + '-tema-head');
   if (head) head.innerHTML = _gTemaHeadHTML(wrapId);
-  // marca o chip activo
-  if (btn) {
-    var bar = btn.parentNode;
-    if (bar) bar.querySelectorAll('.g-st-chip').forEach(function(b){ b.classList.remove('active'); });
-    btn.classList.add('active');
-  }
-  // descobre o jogo aberto e força reinício com o novo conjunto de perguntas
   var wrap = document.getElementById(wrapId);
   if (!wrap) return;
   var activeTab = wrap.querySelector('.g-tab.active');
   var id = activeTab ? activeTab.getAttribute('data-gtab') : null;
   var inst = _gInstances[wrapId];
   if (id && inst) {
-    // limpa a instância do jogo aberto para ser recriado com as perguntas filtradas
     var panel = document.getElementById(wrapId + '-' + id);
     if (panel) panel.innerHTML = '';
     if (id === 'c4') inst.c4 = null;
@@ -710,6 +795,29 @@ function gSetSubtema(wrapId, st, btn) {
     else if (inst['edu_' + id]) inst['edu_' + id] = null;
     _gInitTab(wrapId, id, inst.defaultLevel);
   }
+}
+
+// Liga/desliga um capítulo (cap=0 → "Todos", limpa a seleção).
+function gToggleCap(wrapId, cap) {
+  var sel = _gSelFor(wrapId);
+  if (cap === 0) { sel.caps = []; sel.stsByCap = {}; }
+  else {
+    var i = sel.caps.indexOf(cap);
+    if (i === -1) sel.caps.push(cap);
+    else { sel.caps.splice(i, 1); delete sel.stsByCap[cap]; }
+  }
+  _gRefreshAfterFilter(wrapId);
+}
+// Liga/desliga um subtema de um capítulo (st=0 → "Todos os subtemas").
+function gToggleSt(wrapId, cap, st) {
+  var sel = _gSelFor(wrapId);
+  if (!sel.stsByCap[cap]) sel.stsByCap[cap] = [];
+  if (st === 0) { sel.stsByCap[cap] = []; }
+  else {
+    var arr = sel.stsByCap[cap], i = arr.indexOf(st);
+    if (i === -1) arr.push(st); else arr.splice(i, 1);
+  }
+  _gRefreshAfterFilter(wrapId);
 }
 
 // Pergunta de reserva (nunca falha): uma conta simples com 4 opções.
@@ -783,16 +891,24 @@ function _gGetQuestion(wrapId, level) {
              : wrapId.indexOf('cap8') !== -1 ? 8 : 0;
     caps = cap ? [cap] : [1,2,3,4];
   }
+  // Seleção do utilizador (multi-cap) sobrepõe-se, intersectando com os caps deste wrapper.
+  var sel = _gSelFor(wrapId);
+  if (sel.caps && sel.caps.length) {
+    var inter = sel.caps.filter(function(c){ return caps.indexOf(c) !== -1; });
+    if (inter.length) caps = inter;
+  }
   var pool = [];
   caps.forEach(function(c){ pool = pool.concat(_gQuestionPool(c, level)); });
   if (!pool.length) pool = _gQuestionPool(1, level);
 
-  // Filtro de subtema: se houver 1 capítulo activo e um subtema escolhido,
-  // mantém só as perguntas marcadas com esse st (se existirem marcações).
-  var st = _gActiveSt[wrapId] || 0;
-  if (st && caps.length === 1) {
-    var filtrado = pool.filter(function(q){ return q && q.st === st; });
-    if (filtrado.length) pool = filtrado; // se não houver marcadas, mantém tudo
+  // Filtro de subtema(s): quando há 1 capítulo activo e subtemas escolhidos,
+  // mantém só as perguntas marcadas com esses st (se existirem marcações).
+  if (caps.length === 1) {
+    var stOn = sel.stsByCap[caps[0]] || [];
+    if (stOn.length) {
+      var filtrado = pool.filter(function(q){ return q && stOn.indexOf(q.st) !== -1; });
+      if (filtrado.length) pool = filtrado; // se não houver marcadas, mantém tudo
+    }
   }
 
   // Sem repetições seguidas: evita as últimas perguntas servidas neste jogo.
@@ -812,9 +928,7 @@ function _gGetQuestion(wrapId, level) {
 // Tracks which caps are active for the unified game wrapper
 var _gActiveCaps = [];
 
-// ── Filtro de SUBTEMA nos jogos ─────────────────────────────────
-// Subtema activo por wrapper (0 = Todos os subtemas do capítulo).
-var _gActiveSt = {};
+// ── Filtro por capítulo/subtema nos jogos ───────────────────────
 // Últimas perguntas servidas por wrapper, para não repetir seguidas.
 var _gRecent = {};
 // Labels de subtema por capítulo (mat7). Espelha _capStShort do mat7.js;
@@ -830,22 +944,6 @@ var _gStLabels = {
 function _gSubLabels(cap) {
   if (typeof _capStShort !== 'undefined' && _capStShort[cap]) return _capStShort[cap];
   return _gStLabels[cap] || null;
-}
-// Determina o capítulo ÚNICO de um wrapper (para mostrar chips de subtema).
-// Só faz sentido quando há exactamente 1 capítulo activo.
-function _gSingleCap(wrapId) {
-  if (wrapId === 'j24-wrap-unified') {
-    return (_gActiveCaps && _gActiveCaps.length === 1) ? _gActiveCaps[0] : 0;
-  }
-  for (var c = 1; c <= 8; c++) { if (wrapId.indexOf('cap' + c) !== -1) return c; }
-  return 0;
-}
-// Nome do subtema activo (para o cabeçalho "Tema:" dentro dos jogos).
-function _gActiveStName(wrapId) {
-  var cap = _gSingleCap(wrapId), st = _gActiveSt[wrapId] || 0;
-  if (!cap || !st) return '';
-  var labels = _gSubLabels(cap);
-  return (labels && labels[st - 1]) ? labels[st - 1] : '';
 }
 
 function _gQuestionPool(cap, level) {

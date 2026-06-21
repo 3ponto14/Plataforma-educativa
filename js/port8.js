@@ -109,7 +109,8 @@ var _port8Cards = {
     { st: 2, tag: 'Estratégia', q: 'Como escrever uma boa conclusão num texto de opinião?', a: 'Retoma a tese por outras palavras, sintetiza os argumentos e fecha com uma frase de impacto ou apelo.' },
     { st: 3, tag: 'Regra', q: 'Que pessoa e tempo usar num resumo?', a: 'Usa a 3.ª pessoa e mantém o tempo do texto original. Não dês a tua opinião nem cites diálogos: só o essencial.' },
     { st: 3, tag: 'Estratégia', q: 'Como saber o que cortar num resumo?', a: 'Elimina exemplos, repetições, pormenores e adjetivos dispensáveis. Mantém só as ideias principais e a sua ligação.' },
-    { st: 3, tag: 'Definição', q: 'Qual a extensão certa de um resumo?', a: 'Em regra, cerca de 1/3 do texto original. Deve dar para entender o todo sem ler o original.' }
+    { st: 3, tag: 'Definição', q: 'Qual a extensão certa de um resumo?', a: 'Em regra, cerca de 1/3 do texto original. Deve dar para entender o todo sem ler o original.' },
+    { st: 1, tag: 'Regra', q: 'Como se marca o diálogo numa narrativa?', a: 'Cada fala numa linha nova, iniciada por travessão (—). Os verbos de fala (disse, perguntou, respondeu) tornam claro quem fala.' }
   ],
   // ── Domínio 5 · Recursos Expressivos (8.º) ──
   5: [

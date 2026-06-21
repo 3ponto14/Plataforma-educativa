@@ -1830,10 +1830,51 @@ function _teoriaAccordionHTML(cards, color, tagIcons) {
 // múltipla: {q, opts:[4 strings], ans (índice 0-3)}. Este helper gera uma a
 // partir do gerador do ano (genFn(tema,tipo,dif)) e/ou do banco, garantindo
 // 4 opções e a matéria correta. Devolve null se não conseguir.
-function _jogoQFromGerador(genFn, temasCount, banco, level) {
+// Versão que respeita VÁRIOS capítulos e VÁRIOS subtemas escolhidos nos jogos.
+// cfg = {
+//   capMeta:[{n,label}], subtemas:{cap:[labels]}, subtemaTemas:{cap:{st:[temas]}},
+//   gerador:function(cap)->genFn, temasCount:{cap:n}, banco:{cap:[..]} (opcional)
+// }
+// sel = { caps:[1,3], stsByCap:{1:[2,4], 3:[1]} }
+//   caps vazio  → todos os capítulos.
+//   stsByCap[c] vazio/ausente → todos os subtemas desse capítulo.
+// Devolve {q,opts,ans,cap,st} (cap/st para o cabeçalho dos jogos).
+function _jogoQForCourse(cfg, level, sel) {
+  if (!cfg || typeof cfg.gerador !== 'function') return null;
+  var nCaps = (cfg.capMeta && cfg.capMeta.length) || 8;
+  sel = sel || {};
+  var caps = (sel.caps && sel.caps.length) ? sel.caps : null;
+  var stsByCap = sel.stsByCap || {};
+  for (var att = 0; att < 10; att++) {
+    var c = caps ? caps[Math.floor(Math.random() * caps.length)]
+                 : (1 + Math.floor(Math.random() * nCaps));
+    var gen = cfg.gerador(c);
+    var banco = (cfg.banco && cfg.banco[c]) ? cfg.banco[c] : null;
+    // Junta os temas de TODOS os subtemas escolhidos deste capítulo.
+    var sts = stsByCap[c] || [];
+    var temasLista = null, stUsado = 0;
+    if (sts.length && cfg.subtemaTemas && cfg.subtemaTemas[c]) {
+      temasLista = [];
+      sts.forEach(function (st) {
+        var t = cfg.subtemaTemas[c][st];
+        if (t && t.length) temasLista = temasLista.concat(t);
+      });
+      if (!temasLista.length) temasLista = null;
+      stUsado = (sts.length === 1) ? sts[0] : -1; // -1 = vários subtemas
+    }
+    var q = _jogoQFromGerador(gen, (cfg.temasCount && cfg.temasCount[c]) || 1, banco, level, temasLista);
+    if (q) { q.cap = c; q.st = stUsado; return q; }
+  }
+  return null;
+}
+
+function _jogoQFromGerador(genFn, temasCount, banco, level, temasLista) {
   var dif = level === 'facil' ? 'facil' : (level === 'dificil' ? 'dificil' : 'medio');
+  // Se há subtema(s) escolhido(s), os temas vêm dessa lista; o banco não está
+  // mapeado por subtema, por isso só o usamos quando NÃO há filtro de subtema.
+  var temas = (temasLista && temasLista.length) ? temasLista.map(String) : null;
   // 1) tenta o banco (questões mc com 4 opções) - conteúdo real
-  if (banco && banco.length) {
+  if (!temas && banco && banco.length) {
     var mcs = banco.filter(function (q) { return q.tipo === 'mc' && q.opcoes && q.opcoes.length === 4; });
     if (mcs.length && Math.random() < 0.4) {
       var b = mcs[Math.floor(Math.random() * mcs.length)];
@@ -1846,7 +1887,8 @@ function _jogoQFromGerador(genFn, temasCount, banco, level) {
   if (typeof genFn === 'function') {
     var nT = temasCount || 1;
     for (var tries = 0; tries < 16; tries++) {
-      var tema = String(1 + Math.floor(Math.random() * nT));
+      var tema = temas ? temas[Math.floor(Math.random() * temas.length)]
+                       : String(1 + Math.floor(Math.random() * nT));
       var ex = genFn(tema, 'mc', dif);
       if (!ex) continue;
       // a) já é mc com 4 opções

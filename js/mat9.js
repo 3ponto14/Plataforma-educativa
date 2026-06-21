@@ -833,18 +833,16 @@ function mat9JogosInit() {
   _mat9PM(_mat9Prat.cap || 1, 'jogo');
   if (_mat9JogosInited) return;
   if (typeof _j24AutoInit === 'function') {
-    // Regista o provedor de perguntas DESTE ano (matéria correta nos jogos)
-    if (typeof _gRegisterProvider === 'function') {
-      _gRegisterProvider('mat9-jogos-app', function (level) {
-        var nCaps = _mat9CapMeta.length;
-        for (var att = 0; att < 6; att++) {
-          var cap = 1 + Math.floor(Math.random() * nCaps);
-          var gen = _mat9Gerador(cap);
-          var banco = (typeof _mat9Banco !== 'undefined' && _mat9Banco[cap]) ? _mat9Banco[cap] : null;
-          var q = _jogoQFromGerador(gen, _mat9TemasCount[cap], banco, level);
-          if (q) return q;
-        }
-        return null;
+    // Regista o curso nos jogos (matéria correta + filtro capítulo/subtema).
+    if (typeof _gRegisterGameCourse === 'function') {
+      _gRegisterGameCourse('mat9-jogos-app', {
+        capMeta: _mat9CapMeta,
+        subtemas: _mat9Subtemas,
+        subtemaTemas: (typeof _mat9SubtemaTemas !== 'undefined') ? _mat9SubtemaTemas : null,
+        temasCount: _mat9TemasCount,
+        gerador: _mat9Gerador,
+        banco: (typeof _mat9Banco !== 'undefined') ? _mat9Banco : null,
+        qFor: function (level, sel) { return _jogoQForCourse(this, level, sel); }
       });
     }
     _j24AutoInit('mat9-jogos-app', 'medio');

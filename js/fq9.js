@@ -270,7 +270,11 @@ var _fq9Banco = {
     { t:3, tipo:'vf', enun:'Quanto menor a área, maior a pressão (para a mesma força).', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'p = F/A: área menor → pressão maior (por isso uma faca afiada corta melhor).' },
     { t:4, tipo:'mc', enun:'O trabalho de uma força calcula-se por:', opcoes:['W = F × d','W = F ÷ d','W = m × g','W = F + d'], resposta:'W = F × d', expl:'Trabalho = força × deslocamento (no sentido do movimento). Unidade: joule.' },
     { t:4, tipo:'mc', enun:'A energia cinética depende de:', opcoes:['massa e velocidade','só da altura','só da cor','da temperatura'], resposta:'massa e velocidade', expl:'Ec = ½ m v². Aumenta com a massa e a velocidade.' },
-    { t:4, tipo:'mc', enun:'A energia potencial gravítica depende de:', opcoes:['massa, gravidade e altura','só da velocidade','só do tempo','da área'], resposta:'massa, gravidade e altura', expl:'Ep = m × g × h.' }
+    { t:4, tipo:'mc', enun:'A energia potencial gravítica depende de:', opcoes:['massa, gravidade e altura','só da velocidade','só do tempo','da área'], resposta:'massa, gravidade e altura', expl:'Ep = m × g × h.' },
+    { t:1, tipo:'mc', enun:'Um carro a 90 km/h, em m/s, anda a (÷3,6):', opcoes:['25 m/s','324 m/s','90 m/s','2,5 m/s'], resposta:'25 m/s', expl:'90 ÷ 3,6 = 25 m/s.' },
+    { t:2, tipo:'mc', enun:'Uma força de 20 N atua numa massa de 4 kg. A aceleração é (a = F/m):', opcoes:['5 m/s²','80 m/s²','24 m/s²','0,2 m/s²'], resposta:'5 m/s²', expl:'a = F ÷ m = 20 ÷ 4 = 5 m/s².' },
+    { t:3, tipo:'mc', enun:'Uma força de 100 N aplicada numa área de 2 m² exerce uma pressão de:', opcoes:['50 Pa','200 Pa','98 Pa','0,02 Pa'], resposta:'50 Pa', expl:'p = F ÷ A = 100 ÷ 2 = 50 Pa.' },
+    { t:4, tipo:'mc', enun:'Uma força de 30 N desloca um corpo 4 m. O trabalho realizado é:', opcoes:['120 J','7,5 J','34 J','120 N'], resposta:'120 J', expl:'W = F × d = 30 × 4 = 120 J.' }
   ],
   2: [
     { t:1, tipo:'mc', enun:'A corrente elétrica é:', opcoes:['o movimento orientado de cargas','a cor de um fio','a temperatura do fio','o peso da pilha'], resposta:'o movimento orientado de cargas', expl:'É o movimento de eletrões num condutor. Mede-se em ampere (A).' },
@@ -286,7 +290,11 @@ var _fq9Banco = {
     { t:1, tipo:'mc', enun:'Qual destes é um bom condutor elétrico?', opcoes:['Cobre','Plástico','Vidro','Borracha'], resposta:'Cobre', expl:'Os metais (como o cobre) conduzem bem; plástico/vidro/borracha são isoladores.' },
     { t:4, tipo:'mc', enun:'Uma torradeira usa sobretudo o efeito:', opcoes:['térmico (Joule)','magnético','químico','sonoro'], resposta:'térmico (Joule)', expl:'A corrente aquece a resistência (efeito térmico).' },
     { t:4, tipo:'mc', enun:'Um eletroíman baseia-se no efeito:', opcoes:['magnético','térmico','luminoso','químico'], resposta:'magnético', expl:'A corrente cria um campo magnético (efeito magnético).' },
-    { t:4, tipo:'vf', enun:'A eletrólise e as baterias usam o efeito químico da corrente.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'O efeito químico provoca reações (eletrólise, pilhas).' }
+    { t:4, tipo:'vf', enun:'A eletrólise e as baterias usam o efeito químico da corrente.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'O efeito químico provoca reações (eletrólise, pilhas).' },
+    { t:3, tipo:'mc', enun:'Se U = 9 V e I = 3 A, a resistência R é (R = U/I):', opcoes:['3 Ω','27 Ω','12 Ω','0,3 Ω'], resposta:'3 Ω', expl:'R = U ÷ I = 9 ÷ 3 = 3 Ω.' },
+    { t:1, tipo:'vf', enun:'A borracha e o plástico são bons isoladores elétricos.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'Não deixam passar facilmente a corrente; por isso revestem os fios.' },
+    { t:2, tipo:'mc', enun:'Para que serve um fusível num circuito?', opcoes:['interromper a corrente se for excessiva','aumentar a tensão','medir a corrente','dar luz'], resposta:'interromper a corrente se for excessiva', expl:'Funde-se e abre o circuito, protegendo contra sobrecargas.' },
+    { t:4, tipo:'mc', enun:'Uma lâmpada incandescente transforma energia elétrica sobretudo em:', opcoes:['luz e calor','som','energia química','energia mecânica'], resposta:'luz e calor', expl:'Boa parte da energia dissipa-se como calor (por isso é pouco eficiente).' }
   ],
   3: [
     { t:1, tipo:'mc', enun:'As partículas do núcleo do átomo são:', opcoes:['protões e neutrões','eletrões e protões','só eletrões','só neutrões'], resposta:'protões e neutrões', expl:'No núcleo: protões (+) e neutrões (sem carga). Os eletrões (−) ficam à volta.' },
@@ -302,7 +310,11 @@ var _fq9Banco = {
     { t:3, tipo:'mc', enun:'A distribuição eletrónica do sódio (Z=11) é:', opcoes:['2,8,1','2,8','8,2,1','2,9'], resposta:'2,8,1', expl:'11 eletrões: 2 no 1.º nível, 8 no 2.º, 1 no 3.º.' },
     { t:3, tipo:'mc', enun:'Quantos eletrões cabem no 1.º nível de energia?', opcoes:['2','8','1','18'], resposta:'2', expl:'1.º nível: máximo 2 eletrões.' },
     { t:1, tipo:'mc', enun:'Os eletrões de valência são os que estão:', opcoes:['no último nível','no núcleo','no 1.º nível','entre protões'], resposta:'no último nível', expl:'São os do último nível; determinam as ligações químicas.' },
-    { t:1, tipo:'mc', enun:'O oxigénio (Z=8) tem distribuição eletrónica:', opcoes:['2,6','2,8','6,2','8'], resposta:'2,6', expl:'8 eletrões → 2,6 (6 de valência).' }
+    { t:1, tipo:'mc', enun:'O oxigénio (Z=8) tem distribuição eletrónica:', opcoes:['2,6','2,8','6,2','8'], resposta:'2,6', expl:'8 eletrões → 2,6 (6 de valência).' },
+    { t:1, tipo:'mc', enun:'Quantos eletrões cabem no 2.º nível de energia?', opcoes:['8','2','18','4'], resposta:'8', expl:'1.º nível: 2; 2.º nível: 8; 3.º nível: 18 (mas com 8 já fica estável).' },
+    { t:2, tipo:'mc', enun:'Numa Tabela Periódica, um PERÍODO é:', opcoes:['uma linha','uma coluna','uma diagonal','o canto'], resposta:'uma linha', expl:'Período = linha horizontal; grupo = coluna vertical.' },
+    { t:3, tipo:'mc', enun:'Um elemento com 7 eletrões de valência (ex.: cloro) é um:', opcoes:['não-metal muito reativo','metal alcalino','gás nobre','metal de transição'], resposta:'não-metal muito reativo', expl:'Falta-lhe 1 eletrão para o octeto, por isso reage facilmente (Grupo 17, halogéneos).' },
+    { t:2, tipo:'vf', enun:'Elementos do mesmo grupo têm o mesmo número de eletrões de valência.', opcoes:['Verdadeiro','Falso'], resposta:'Verdadeiro', expl:'É por isso que têm propriedades químicas semelhantes.' }
   ],
   4: [
     { t:3, tipo:'mc', enun:'A regra do octeto diz que os átomos tendem a ficar com:', opcoes:['8 eletrões no último nível','8 protões','8 neutrões','0 eletrões'], resposta:'8 eletrões no último nível', expl:'Ficam estáveis com 8 eletrões de valência (como os gases nobres).' },
@@ -859,18 +871,16 @@ function fq9JogosInit() {
   _fq9PM(_fq9Prat.cap || 1, 'jogo');
   if (_fq9JogosInited) return;
   if (typeof _j24AutoInit === 'function') {
-    // Regista o provedor de perguntas DESTE ano (matéria correta nos jogos)
-    if (typeof _gRegisterProvider === 'function') {
-      _gRegisterProvider('fq9-jogos-app', function (level) {
-        var nCaps = _fq9CapMeta.length;
-        for (var att = 0; att < 6; att++) {
-          var cap = 1 + Math.floor(Math.random() * nCaps);
-          var gen = _fq9Gerador(cap);
-          var banco = (typeof _fq9Banco !== 'undefined' && _fq9Banco[cap]) ? _fq9Banco[cap] : null;
-          var q = _jogoQFromGerador(gen, _fq9TemasCount[cap], banco, level);
-          if (q) return q;
-        }
-        return null;
+    // Regista o curso nos jogos (matéria correta + filtro capítulo/subtema).
+    if (typeof _gRegisterGameCourse === 'function') {
+      _gRegisterGameCourse('fq9-jogos-app', {
+        capMeta: _fq9CapMeta,
+        subtemas: _fq9Subtemas,
+        subtemaTemas: (typeof _fq9SubtemaTemas !== 'undefined') ? _fq9SubtemaTemas : null,
+        temasCount: _fq9TemasCount,
+        gerador: _fq9Gerador,
+        banco: (typeof _fq9Banco !== 'undefined') ? _fq9Banco : null,
+        qFor: function (level, sel) { return _jogoQForCourse(this, level, sel); }
       });
     }
     _j24AutoInit('fq9-jogos-app', 'medio');
