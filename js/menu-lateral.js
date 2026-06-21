@@ -47,7 +47,7 @@
       + '<button class="ml-close" aria-label="Fechar" onclick="menuLateralFechar()"><i class="ph ph-x"></i></button>'
       + '</div>'
       + '<nav class="ml-nav" id="ml-nav">'
-      + '<button class="ml-toggle" id="ml-toggle" type="button" aria-label="Recolher menu" title="Recolher menu" onclick="menuLateralRecolher()"><i class="ph ph-caret-double-left"></i> <span>Recolher</span></button>'
+      + '<button class="ml-toggle" id="ml-toggle" type="button" aria-label="Recolher menu" title="Recolher menu" onclick="menuLateralRecolher()"><i class="ph ph-caret-double-left"></i></button>'
       + '<button class="ml-link" data-sec="inicio" onclick="menuLateralIr(\'inicio\')" title="Início"><i class="ph ph-house"></i> <span>Início</span></button>'
       + '<button class="ml-link" data-sec="cursos" onclick="menuLateralIr(\'cursos\')" title="Cursos"><i class="ph ph-books"></i> <span>Cursos</span></button>'
       + '<button class="ml-link" data-sec="apoio" onclick="menuLateralIr(\'apoio\')" title="Turmas"><i class="ph ph-users-three"></i> <span>Turmas</span></button>'
