@@ -162,16 +162,71 @@ var DESAFIO_POR_ANO = {
     { d: 'MAT', enun: 'A expressão (x + 3)² é igual a:', opcoes: ['x² + 6x + 9', 'x² + 9', 'x² + 6x', 'x² + 3x + 9'], resp: 'x² + 6x + 9', expl: 'Caso notável (a+b)² = a² + 2ab + b² → x² + 6x + 9.' },
     { d: 'MAT', enun: 'A média de 4, 6 e 8 é:', opcoes: ['6', '18', '4', '8'], resp: '6', expl: '(4 + 6 + 8) ÷ 3 = 18 ÷ 3 = 6.' },
     { d: 'MAT', enun: 'A solução da inequação 2x ≤ 8 é:', opcoes: ['x ≤ 4', 'x ≥ 4', 'x ≤ 16', 'x = 4'], resp: 'x ≤ 4', expl: 'x ≤ 8 ÷ 2 → x ≤ 4.' }
+  ],
+  10: [
+    /* Lógica e Conjuntos */
+    { d: 'MAT', enun: 'A negação de «todos os alunos passaram» é:', opcoes: ['existe pelo menos um aluno que não passou', 'nenhum aluno passou', 'todos os alunos reprovaram', 'alguns alunos passaram'], resp: 'existe pelo menos um aluno que não passou', expl: 'A negação de ∀ (todos) é ∃ (existe pelo menos um) com a condição negada.' },
+    { d: 'MAT', enun: 'A proposição «p ∧ q» (p e q) é verdadeira quando:', opcoes: ['p e q são ambas verdadeiras', 'pelo menos uma é verdadeira', 'p é falsa', 'q é falsa'], resp: 'p e q são ambas verdadeiras', expl: 'A conjunção só é verdadeira se as duas proposições forem verdadeiras.' },
+    { d: 'MAT', enun: 'A interseção dos conjuntos {1, 2, 3} e {2, 3, 4} é:', opcoes: ['{2, 3}', '{1, 4}', '{1, 2, 3, 4}', '{ }'], resp: '{2, 3}', expl: 'A interseção contém os elementos comuns aos dois conjuntos: 2 e 3.' },
+    /* Álgebra — radicais, polinómios, equações */
+    { d: 'MAT', enun: 'Simplificando, √50 é igual a:', opcoes: ['5√2', '2√5', '25√2', '√25'], resp: '5√2', expl: '√50 = √(25 × 2) = √25 × √2 = 5√2.' },
+    { d: 'MAT', enun: 'O resto da divisão de P(x) = x² − 3x + 2 por (x − 1) é (regra de Ruffini / teorema do resto):', opcoes: ['0', '1', '2', '−2'], resp: '0', expl: 'Pelo teorema do resto, o resto é P(1) = 1 − 3 + 2 = 0 (logo 1 é raiz).' },
+    { d: 'MAT', enun: 'As soluções de x² − 5x + 6 = 0 são:', opcoes: ['x = 2 ou x = 3', 'x = −2 ou x = −3', 'x = 1 ou x = 6', 'x = 5 ou x = 6'], resp: 'x = 2 ou x = 3', expl: 'Fórmula resolvente ou soma/produto: 2 + 3 = 5 e 2 × 3 = 6.' },
+    { d: 'MAT', enun: 'O binómio discriminante de 2x² + 3x − 5 (Δ = b² − 4ac) vale:', opcoes: ['49', '−31', '9', '29'], resp: '49', expl: 'Δ = 3² − 4 × 2 × (−5) = 9 + 40 = 49.' },
+    /* Geometria Analítica */
+    { d: 'MAT', enun: 'A distância entre A(1, 2) e B(4, 6) é:', opcoes: ['5', '7', '√7', '25'], resp: '5', expl: 'd = √[(4−1)² + (6−2)²] = √(9 + 16) = √25 = 5.' },
+    { d: 'MAT', enun: 'O ponto médio do segmento de A(2, 4) a B(6, 10) é:', opcoes: ['(4, 7)', '(8, 14)', '(2, 3)', '(4, 6)'], resp: '(4, 7)', expl: 'M = ((2+6)/2, (4+10)/2) = (4, 7).' },
+    { d: 'MAT', enun: 'A equação x² + y² = 9 representa uma circunferência de centro (0,0) e raio:', opcoes: ['3', '9', '81', '1,5'], resp: '3', expl: 'x² + y² = r² com r² = 9 → r = 3.' },
+    { d: 'MAT', enun: 'A soma dos vetores u(1, 2) e v(3, −1) é:', opcoes: ['(4, 1)', '(3, −2)', '(2, 3)', '(4, 3)'], resp: '(4, 1)', expl: 'Soma componente a componente: (1+3, 2+(−1)) = (4, 1).' },
+    /* Funções Reais */
+    { d: 'MAT', enun: 'O domínio da função f(x) = 1/(x − 2) é:', opcoes: ['ℝ \\ {2}', 'ℝ', 'ℝ \\ {0}', '[2, +∞[' ], resp: 'ℝ \\ {2}', expl: 'O denominador não pode ser 0: x − 2 ≠ 0 → x ≠ 2.' },
+    { d: 'MAT', enun: 'O vértice da parábola y = (x − 3)² + 1 é o ponto:', opcoes: ['(3, 1)', '(−3, 1)', '(3, −1)', '(1, 3)'], resp: '(3, 1)', expl: 'Na forma y = (x − h)² + k, o vértice é (h, k) = (3, 1).' },
+    /* Estatística */
+    { d: 'MAT', enun: 'A mediana de 3, 5, 7, 9, 11 é:', opcoes: ['7', '5', '9', '35'], resp: '7', expl: 'Com 5 valores ordenados, a mediana é o do meio (3.º): 7.' },
+    /* Trigonometria */
+    { d: 'MAT', enun: 'Num triângulo retângulo, sen θ é igual a:', opcoes: ['cateto oposto / hipotenusa', 'cateto adjacente / hipotenusa', 'cateto oposto / cateto adjacente', 'hipotenusa / cateto oposto'], resp: 'cateto oposto / hipotenusa', expl: 'SOH: seno = oposto sobre hipotenusa.' }
+  ],
+  11: [
+    /* Trigonometria */
+    { d: 'MAT', enun: 'O ângulo de 180° em radianos é:', opcoes: ['π', '2π', 'π/2', 'π/4'], resp: 'π', expl: '180° = π rad (a meia-volta corresponde a π).' },
+    { d: 'MAT', enun: 'Pela fórmula fundamental da trigonometria, se sen x = 0,6, então cos²x é:', opcoes: ['0,64', '0,36', '0,8', '0,4'], resp: '0,64', expl: 'sen²x + cos²x = 1 → cos²x = 1 − 0,36 = 0,64.' },
+    { d: 'MAT', enun: 'O período da função f(x) = sen x é:', opcoes: ['2π', 'π', 'π/2', '1'], resp: '2π', expl: 'A função seno repete-se a cada 2π.' },
+    /* Geometria no espaço / vetores */
+    { d: 'MAT', enun: 'O produto escalar de u(1, 2, 0) e v(3, −1, 4) é:', opcoes: ['1', '5', '7', '0'], resp: '1', expl: 'u·v = 1×3 + 2×(−1) + 0×4 = 3 − 2 + 0 = 1.' },
+    { d: 'MAT', enun: 'Dois vetores são perpendiculares quando o seu produto escalar é:', opcoes: ['0', '1', 'negativo', 'igual ao módulo'], resp: '0', expl: 'u ⊥ v ⇔ u·v = 0.' },
+    /* Sucessões */
+    { d: 'MAT', enun: 'Numa progressão aritmética com a₁ = 2 e razão 3, o termo a₄ é:', opcoes: ['11', '8', '14', '24'], resp: '11', expl: 'aₙ = a₁ + (n−1)r → a₄ = 2 + 3×3 = 11.' },
+    { d: 'MAT', enun: 'Numa progressão geométrica com a₁ = 3 e razão 2, o termo a₃ é:', opcoes: ['12', '7', '6', '24'], resp: '12', expl: 'aₙ = a₁ × rⁿ⁻¹ → a₃ = 3 × 2² = 3 × 4 = 12.' },
+    { d: 'MAT', enun: 'A soma dos 4 primeiros termos da PA 1, 3, 5, 7 é:', opcoes: ['16', '15', '12', '28'], resp: '16', expl: '1 + 3 + 5 + 7 = 16 (ou S₄ = (1+7)/2 × 4 = 16).' },
+    /* Limites e continuidade */
+    { d: 'MAT', enun: 'O limite de (1/n) quando n → +∞ é:', opcoes: ['0', '1', '+∞', 'não existe'], resp: '0', expl: 'Quando n cresce sem limite, 1/n aproxima-se de 0.' },
+    { d: 'MAT', enun: 'lim (x → 2) de (x² − 4)/(x − 2) é (indeterminação 0/0):', opcoes: ['4', '0', '2', 'não existe'], resp: '4', expl: '(x²−4)/(x−2) = (x−2)(x+2)/(x−2) = x+2 → 2+2 = 4.' },
+    { d: 'MAT', enun: 'O limite de uma constante k quando x → a é:', opcoes: ['k', '0', 'a', '+∞'], resp: 'k', expl: 'O limite de uma função constante é a própria constante.' },
+    /* Derivadas */
+    { d: 'MAT', enun: 'A derivada de f(x) = x² é:', opcoes: ['2x', 'x', '2', 'x²/2'], resp: '2x', expl: 'Regra da potência: (xⁿ)′ = n·xⁿ⁻¹ → (x²)′ = 2x.' },
+    { d: 'MAT', enun: 'A derivada de f(x) = 5x + 3 é:', opcoes: ['5', '5x', '3', '8'], resp: '5', expl: 'A derivada de ax + b é a (a constante b desaparece).' },
+    { d: 'MAT', enun: 'A taxa de variação média de f(x) = x² em [1, 3] é:', opcoes: ['4', '8', '2', '9'], resp: '4', expl: '[f(3) − f(1)]/(3 − 1) = (9 − 1)/2 = 8/2 = 4.' },
+    /* Probabilidades e combinatória */
+    { d: 'MAT', enun: 'De quantas formas se podem ordenar 3 livros diferentes numa prateleira?', opcoes: ['6', '3', '9', '27'], resp: '6', expl: '3! = 3 × 2 × 1 = 6 (permutações).' }
   ]
 };
 
-var DESAFIO_ANOS = [5, 6, 7, 8, 9];
+var DESAFIO_ANOS = [5, 6, 7, 8, 9, 10, 11];
 
-/* Ano escolhido (guardado no dispositivo). Sem escolha = 7.º por defeito. */
+/* Ano do desafio. Prioridade:
+   1) escolha manual guardada no dispositivo (o aluno clicou num chip);
+   2) ano da conta (Cloud.alunoAno), para quem fez login não ter de escolher;
+   3) 7.º por defeito.
+   Em qualquer caso, tem de ser um ano com banco (DESAFIO_ANOS). */
 var DESAFIO_ANO_KEY = 'edupt_desafio_ano';
 function _desafioAno() {
   var a = parseInt(localStorage.getItem(DESAFIO_ANO_KEY));
-  return (DESAFIO_ANOS.indexOf(a) !== -1) ? a : 7;
+  if (DESAFIO_ANOS.indexOf(a) !== -1) return a;
+  if (typeof Cloud !== 'undefined' && Cloud.alunoAno) {
+    var c = parseInt(Cloud.alunoAno());
+    if (DESAFIO_ANOS.indexOf(c) !== -1) return c;
+  }
+  return 7;
 }
 function desafioSetAno(ano) {
   localStorage.setItem(DESAFIO_ANO_KEY, ano);
