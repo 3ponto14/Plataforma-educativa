@@ -7,6 +7,10 @@
 <meta name="theme-color" content="#516860">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="3ponto14">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta property="og:title" content="3ponto14 · Centro de Estudos">
 <meta property="og:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano fichas, jogos, quizzes e preparação para exames.">
 <meta property="og:type" content="website">
@@ -337,5 +341,15 @@
 <script src="js/ux-improvements.js?v=20260621"></script>
 <script src="js/fx.js?v=20260621"></script>
 <script src="js/nav.js?v=20260621"></script>
+<!-- PWA: regista o service worker para tornar o site instalável + offline -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('service-worker.js').catch(function (err) {
+        console.warn('Service worker não registado:', err);
+      });
+    });
+  }
+</script>
 </body>
 </html>
