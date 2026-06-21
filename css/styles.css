@@ -1941,6 +1941,9 @@ body.dark-mode{
   background:#1a1a1a!important;
 }
 body.dark-mode .topbar{background:linear-gradient(135deg,rgba(30,30,30,.98),rgba(24,24,24,.97))!important;border-bottom-color:#333!important;}
+/* Topbar unificada e tab bar dos hubs de curso em modo escuro */
+body.dark-mode .site-topbar{background:#242424!important;border-bottom-color:#333!important;}
+body.dark-mode .mat7-hub-tabbar{background:#1a1a1a!important;border-bottom-color:#333!important;}
 body.dark-mode::before,body.dark-mode::after{opacity:.3;}
 body.dark-mode .card,body.dark-mode .def-block,body.dark-mode .quiz-question,
 body.dark-mode .y-card,body.dark-mode .s-item,body.dark-mode .score-bar{
@@ -4144,6 +4147,10 @@ body.ml-bottom-on #ml-bottombar{display:flex;}
    baixo, mesmo quando o conteúdo é curto (ex.: estado «Escolhe o ano»). */
 body.ml-fixed-on #view-portal{display:flex;flex-direction:column;min-height:100vh}
 body.ml-fixed-on #view-portal > footer{margin-top:auto}
+/* O mesmo para os hubs de curso (.math-view): o footer legal cola ao fundo
+   no modo menu fixo, mesmo com conteúdo curto. */
+body.ml-fixed-on .math-view{display:flex;flex-direction:column}
+body.ml-fixed-on .math-view > footer{margin-top:auto}
 body.ml-fixed-on #portal-catalogo{max-width:none;margin:0}
 body.ml-fixed-on #sec-cursos{padding:1.5rem 2.5rem 0}
 body.ml-fixed-on #sec-cursos .portal-search{margin-left:0;margin-right:0;max-width:560px}
