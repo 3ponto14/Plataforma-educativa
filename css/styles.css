@@ -1247,6 +1247,17 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 .g-tab{flex:1;min-width:90px;padding:8px 10px;border-radius:10px;border:none;background:transparent;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap}
 .g-tab:hover{background:var(--white);color:var(--ink)}
 .g-tab.active{background:var(--white);color:var(--c2-deep);box-shadow:0 2px 8px rgba(81,104,96,.15);border:1px solid rgba(81,104,96,.12)}
+/* ── Filtro de subtema dos jogos ── */
+.g-st-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin-bottom:.85rem}
+.g-st-bar-label{font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);margin-right:.15rem}
+.g-st-chip{padding:5px 12px;border-radius:999px;border:1px solid var(--border);background:var(--white);font-family:'Montserrat',sans-serif;font-size:.74rem;font-weight:600;color:var(--ink2);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:4px}
+.g-st-chip:hover{border-color:var(--c2-mid);color:var(--ink)}
+.g-st-chip.active{background:var(--c2-deep);border-color:var(--c2-deep);color:#fff}
+/* ── Cabeçalho "Perguntas sobre:" dentro dos jogos ── */
+.g-tema-head{display:flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--ink2);background:var(--cream2);border:1px solid var(--border);border-radius:10px;padding:.5rem .8rem;margin-bottom:1rem}
+.g-tema-head i{color:var(--c2-deep)}
+.g-tema-head b{color:var(--ink)}
+.g-tema-cap{color:var(--ink3);font-size:.78rem}
 .g-panel{display:none}
 .g-panel.active{display:block}
 
@@ -4000,6 +4011,9 @@ body.dark-mode .resumo-st-btn.active {
 #ml-drawer.fixed .ml-head{display:none;}   /* sem cabeçalho repetido no modo fixo (o logo já está na topbar) */
 /* conteúdo do portal dá lugar à barra (a topbar NÃO é empurrada) */
 body.ml-fixed-on #view-portal > *:not(.site-topbar){margin-left:268px;}
+/* O mesmo, dentro de um hub de curso (matN/portN/fqN): a tab bar e o conteúdo
+   encolhem para dar lugar à barra fixa; a topbar fica à largura toda. */
+body.ml-fixed-on .math-view > *:not(.site-topbar){margin-left:268px;}
 body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
 
 /* ── Barra de navegação INFERIOR (telemóvel) ── */

@@ -561,8 +561,21 @@ function gTabSwitch(wrapId, tabName) {
   var panel = wrap.querySelector('[data-gpanel="'+tabName+'"]');
   if (tab) tab.classList.add('active');
   if (panel) panel.classList.add('active');
+  // Esconde o filtro de subtema + cabeçalho nos jogos sem perguntas (24, Sudoku)
+  _gToggleSubtemaUI(wrapId, tabName);
   // Lazy init do separador escolhido (catálogo data-driven)
   _gInitTab(wrapId, tabName);
+}
+
+// Mostra/esconde a barra de subtema e o cabeçalho conforme o jogo activo usa
+// (ou não) perguntas de conteúdo.
+function _gToggleSubtemaUI(wrapId, tabName) {
+  var wrap = document.getElementById(wrapId); if (!wrap) return;
+  var show = !!_gContentGames[tabName];
+  var bar = wrap.querySelector('.g-st-bar');
+  var head = document.getElementById(wrapId + '-tema-head');
+  if (bar) bar.style.display = show ? '' : 'none';
+  if (head) head.style.display = show ? '' : 'none';
 }
 
 var _gInstances = {};
@@ -593,6 +606,10 @@ var _gSets = {
   ciclo3: ['j24', 'pares', 'c4', 'mine', 'vfrelampago', 'escape'],
   sec:    ['vfrelampago', 'pares', 'c4', 'mine', 'corrida', 'escape']
 };
+// Jogos que usam perguntas de conteúdo (qFn). Só nestes faz sentido o filtro
+// de subtema e o cabeçalho "Perguntas sobre:". j24 e sudoku geram puzzles
+// próprios (sem perguntas), por isso a barra esconde-se nesses separadores.
+var _gContentGames = { c4:1, mine:1, hanoi:1, escape:1, corrida:1, pares:1, vfrelampago:1 };
 function _gSetFor(wrapId) {
   // mat5/mat6 → ciclo2; mat10/mat11 → sec; resto (mat7/8/9) → ciclo3
   if (/mat5|mat6/.test(wrapId)) return _gSets.ciclo2;
@@ -616,6 +633,11 @@ function _gBuildJogos(wrapId, defaultLevel) {
       return _gFallbackQ();
     }, defaultLevel: defaultLevel || 'medio' };
   var jogos = _gSetFor(wrapId);
+  var html = [];
+  // ── Filtro de SUBTEMA (chips) — só quando há 1 capítulo com subtemas ──
+  html.push(_gSubtemaBarHTML(wrapId));
+  // ── Cabeçalho "Tema:" — mostra de onde vêm as perguntas do jogo ──
+  html.push('<div class="g-tema-head" id="' + wrapId + '-tema-head">' + _gTemaHeadHTML(wrapId) + '</div>');
   var tabs = ['<div class="g-tabs">'], panels = [];
   jogos.forEach(function (id, i) {
     var c = _gCatalogo[id]; if (!c) return;
@@ -623,9 +645,71 @@ function _gBuildJogos(wrapId, defaultLevel) {
     panels.push('<div class="g-panel' + (i === 0 ? ' active' : '') + '" data-gpanel="' + id + '" id="' + wrapId + '-' + id + '"></div>');
   });
   tabs.push('</div>');
-  wrap.innerHTML = tabs.concat(panels).join('\n');
+  wrap.innerHTML = html.concat(tabs).concat(panels).join('\n');
+  // esconde a barra de subtema se o 1.º jogo do conjunto não usar perguntas
+  _gToggleSubtemaUI(wrapId, jogos[0]);
   // inicia o primeiro jogo do conjunto
   _gInitTab(wrapId, jogos[0], defaultLevel || 'medio');
+}
+
+// Barra de chips de subtema. Vazia (string '') se o capítulo não tiver subtemas
+// marcados nas perguntas, ou se houver mais do que 1 capítulo activo.
+function _gSubtemaBarHTML(wrapId) {
+  var cap = _gSingleCap(wrapId);
+  if (!cap) return '';
+  var labels = _gSubLabels(cap);
+  if (!labels || !labels.length) return '';
+  var active = _gActiveSt[wrapId] || 0;
+  var chips = ['<button class="g-st-chip' + (active === 0 ? ' active' : '') +
+    '" onclick="gSetSubtema(\'' + wrapId + '\',0,this)"><i class="ph ph-list"></i> Todos</button>'];
+  labels.forEach(function (lab, i) {
+    var st = i + 1;
+    chips.push('<button class="g-st-chip' + (active === st ? ' active' : '') +
+      '" onclick="gSetSubtema(\'' + wrapId + '\',' + st + ',this)">' + lab + '</button>');
+  });
+  return '<div class="g-st-bar"><span class="g-st-bar-label">Subtema:</span>' + chips.join('') + '</div>';
+}
+
+// Cabeçalho que diz de onde vêm as perguntas: capítulo + subtema activo.
+function _gTemaHeadHTML(wrapId) {
+  var cap = _gSingleCap(wrapId);
+  var capNome = '';
+  if (cap && typeof _mat7CapNames !== 'undefined' && _mat7CapNames[cap]) capNome = _mat7CapNames[cap];
+  var st = _gActiveStName(wrapId);
+  var alvo = st ? st : (capNome || (cap ? ('Capítulo ' + cap) : 'Todos os capítulos selecionados'));
+  return '<i class="ph ph-target"></i> Perguntas sobre: <b>' + alvo + '</b>' +
+    (st && capNome ? ' <span class="g-tema-cap">(' + capNome + ')</span>' : '');
+}
+
+// Escolhe o subtema activo e reinicia o jogo aberto para usar as novas perguntas.
+function gSetSubtema(wrapId, st, btn) {
+  _gActiveSt[wrapId] = st;
+  _gRecent[wrapId] = []; // limpa histórico de "não repetir" ao mudar de subtema
+  var head = document.getElementById(wrapId + '-tema-head');
+  if (head) head.innerHTML = _gTemaHeadHTML(wrapId);
+  // marca o chip activo
+  if (btn) {
+    var bar = btn.parentNode;
+    if (bar) bar.querySelectorAll('.g-st-chip').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+  // descobre o jogo aberto e força reinício com o novo conjunto de perguntas
+  var wrap = document.getElementById(wrapId);
+  if (!wrap) return;
+  var activeTab = wrap.querySelector('.g-tab.active');
+  var id = activeTab ? activeTab.getAttribute('data-gtab') : null;
+  var inst = _gInstances[wrapId];
+  if (id && inst) {
+    // limpa a instância do jogo aberto para ser recriado com as perguntas filtradas
+    var panel = document.getElementById(wrapId + '-' + id);
+    if (panel) panel.innerHTML = '';
+    if (id === 'c4') inst.c4 = null;
+    else if (id === 'mine') inst.mine = null;
+    else if (id === 'hanoi') inst.hanoi = null;
+    else if (id === 'escape') inst.escape = null;
+    else if (inst['edu_' + id]) inst['edu_' + id] = null;
+    _gInitTab(wrapId, id, inst.defaultLevel);
+  }
 }
 
 // Pergunta de reserva (nunca falha): uma conta simples com 4 opções.
@@ -702,11 +786,67 @@ function _gGetQuestion(wrapId, level) {
   var pool = [];
   caps.forEach(function(c){ pool = pool.concat(_gQuestionPool(c, level)); });
   if (!pool.length) pool = _gQuestionPool(1, level);
-  return pool[Math.floor(Math.random() * pool.length)];
+
+  // Filtro de subtema: se houver 1 capítulo activo e um subtema escolhido,
+  // mantém só as perguntas marcadas com esse st (se existirem marcações).
+  var st = _gActiveSt[wrapId] || 0;
+  if (st && caps.length === 1) {
+    var filtrado = pool.filter(function(q){ return q && q.st === st; });
+    if (filtrado.length) pool = filtrado; // se não houver marcadas, mantém tudo
+  }
+
+  // Sem repetições seguidas: evita as últimas perguntas servidas neste jogo.
+  var recent = _gRecent[wrapId] || [];
+  var fresco = pool.filter(function(q){ return recent.indexOf(q.q) === -1; });
+  var escolha = (fresco.length ? fresco : pool)[Math.floor(Math.random() * (fresco.length ? fresco.length : pool.length))];
+  if (escolha) {
+    recent.push(escolha.q);
+    // memoriza no máximo metade do pool (mín. 3) para haver sempre variedade
+    var lim = Math.max(3, Math.floor(pool.length / 2));
+    while (recent.length > lim) recent.shift();
+    _gRecent[wrapId] = recent;
+  }
+  return escolha;
 }
 
 // Tracks which caps are active for the unified game wrapper
 var _gActiveCaps = [];
+
+// ── Filtro de SUBTEMA nos jogos ─────────────────────────────────
+// Subtema activo por wrapper (0 = Todos os subtemas do capítulo).
+var _gActiveSt = {};
+// Últimas perguntas servidas por wrapper, para não repetir seguidas.
+var _gRecent = {};
+// Labels de subtema por capítulo (mat7). Espelha _capStShort do mat7.js;
+// se este existir (hub mat7 carregado) usamo-lo, senão caímos neste fallback.
+var _gStLabels = {
+  1: ['Conjunto ℤ','Valor absoluto','Adição','Subtração','Parênteses'],
+  2: ['Comparação','Adição/Subt.','Percentagens','Potências','Not. Científica'],
+  3: ['Ângulos','Triângulos','Semelhança','Áreas','Circunferência'],
+  4: ['Expressões','Simplificação','Equações','Inequações'],
+  5: ['Termo Geral','Problemas com Sequências']
+};
+// Devolve o array de labels de subtema de um capítulo (ou null se não houver).
+function _gSubLabels(cap) {
+  if (typeof _capStShort !== 'undefined' && _capStShort[cap]) return _capStShort[cap];
+  return _gStLabels[cap] || null;
+}
+// Determina o capítulo ÚNICO de um wrapper (para mostrar chips de subtema).
+// Só faz sentido quando há exactamente 1 capítulo activo.
+function _gSingleCap(wrapId) {
+  if (wrapId === 'j24-wrap-unified') {
+    return (_gActiveCaps && _gActiveCaps.length === 1) ? _gActiveCaps[0] : 0;
+  }
+  for (var c = 1; c <= 8; c++) { if (wrapId.indexOf('cap' + c) !== -1) return c; }
+  return 0;
+}
+// Nome do subtema activo (para o cabeçalho "Tema:" dentro dos jogos).
+function _gActiveStName(wrapId) {
+  var cap = _gSingleCap(wrapId), st = _gActiveSt[wrapId] || 0;
+  if (!cap || !st) return '';
+  var labels = _gSubLabels(cap);
+  return (labels && labels[st - 1]) ? labels[st - 1] : '';
+}
 
 function _gQuestionPool(cap, level) {
   // For caps 5-8: pull from their BANCO if available
@@ -722,69 +862,69 @@ function _gQuestionPool(cap, level) {
   var easy = level === 'facil';
   var hard = level === 'dificil';
   var pools = {
-    1: [ // Inteiros
-      {q:'-5 + 3 = ?', opts:['-2','-8','2','8'], ans:0},
-      {q:'|−7| = ?', opts:['7','-7','0','49'], ans:0},
-      {q:'-3 − (−5) = ?', opts:['2','-8','-2','8'], ans:0},
-      {q:'−(−4) = ?', opts:['4','-4','0','-8'], ans:0},
-      {q:'-8 + 12 = ?', opts:['4','-4','20','-20'], ans:0},
-      {q:'|3 − 8| = ?', opts:['5','-5','11','-11'], ans:0},
-      {q:'-2 × (-3) = ?', opts:['6','-6','5','-5'], ans:0},
-      {q:'−4 − 3 + 7 = ?', opts:['0','-14','10','-10'], ans:0},
-      {q:'Simétrico de −9 é?', opts:['9','-9','0','1'], ans:0},
-      {q:'-6 ÷ (-2) = ?', opts:['3','-3','4','-4'], ans:0},
-      {q:'-1 + (-1) + (-1) = ?', opts:['-3','3','-1','1'], ans:0},
-      {q:'|−3| + |4| = ?', opts:['7','-7','1','-1'], ans:0},
+    1: [ // Inteiros — st: 1 Conjunto ℤ, 2 Valor absoluto, 3 Adição, 4 Subtração, 5 Parênteses
+      {st:3, q:'-5 + 3 = ?', opts:['-2','-8','2','8'], ans:0},
+      {st:2, q:'|−7| = ?', opts:['7','-7','0','49'], ans:0},
+      {st:4, q:'-3 − (−5) = ?', opts:['2','-8','-2','8'], ans:0},
+      {st:5, q:'−(−4) = ?', opts:['4','-4','0','-8'], ans:0},
+      {st:3, q:'-8 + 12 = ?', opts:['4','-4','20','-20'], ans:0},
+      {st:2, q:'|3 − 8| = ?', opts:['5','-5','11','-11'], ans:0},
+      {st:3, q:'-2 × (-3) = ?', opts:['6','-6','5','-5'], ans:0},
+      {st:4, q:'−4 − 3 + 7 = ?', opts:['0','-14','10','-10'], ans:0},
+      {st:1, q:'Simétrico de −9 é?', opts:['9','-9','0','1'], ans:0},
+      {st:3, q:'-6 ÷ (-2) = ?', opts:['3','-3','4','-4'], ans:0},
+      {st:3, q:'-1 + (-1) + (-1) = ?', opts:['-3','3','-1','1'], ans:0},
+      {st:2, q:'|−3| + |4| = ?', opts:['7','-7','1','-1'], ans:0},
     ],
-    2: [ // Racionais
-      {q:'1/2 + 1/4 = ?', opts:['3/4','1/2','2/6','1/6'], ans:0},
-      {q:'3/4 − 1/4 = ?', opts:['1/2','2/8','1/4','3/8'], ans:0},
-      {q:'2/3 × 3/4 = ?', opts:['1/2','5/7','6/12','1/3'], ans:0},
-      {q:'0,5 = ?/10', opts:['5','2','50','1'], ans:0},
-      {q:'25% de 80 = ?', opts:['20','25','40','15'], ans:0},
-      {q:'1/3 + 1/6 = ?', opts:['1/2','2/9','1/4','3/9'], ans:0},
-      {q:'10³ = ?', opts:['1000','300','100','10000'], ans:0},
-      {q:'2⁻² = ?', opts:['1/4','-4','1/2','-1/4'], ans:0},
-      {q:'0,001 em notação científica?', opts:['10⁻³','10³','10⁻²','10²'], ans:0},
-      {q:'30% de 150 = ?', opts:['45','30','60','15'], ans:0},
-      {q:'3/5 em decimal = ?', opts:['0,6','0,3','0,5','0,35'], ans:0},
-      {q:'(-2)³ = ?', opts:['-8','8','-6','6'], ans:0},
+    2: [ // Racionais — st: 1 Comparação, 2 Adição/Subt., 3 Percentagens, 4 Potências, 5 Not. Científica
+      {st:2, q:'1/2 + 1/4 = ?', opts:['3/4','1/2','2/6','1/6'], ans:0},
+      {st:2, q:'3/4 − 1/4 = ?', opts:['1/2','2/8','1/4','3/8'], ans:0},
+      {st:2, q:'2/3 × 3/4 = ?', opts:['1/2','5/7','6/12','1/3'], ans:0},
+      {st:1, q:'0,5 = ?/10', opts:['5','2','50','1'], ans:0},
+      {st:3, q:'25% de 80 = ?', opts:['20','25','40','15'], ans:0},
+      {st:2, q:'1/3 + 1/6 = ?', opts:['1/2','2/9','1/4','3/9'], ans:0},
+      {st:4, q:'10³ = ?', opts:['1000','300','100','10000'], ans:0},
+      {st:4, q:'2⁻² = ?', opts:['1/4','-4','1/2','-1/4'], ans:0},
+      {st:5, q:'0,001 em notação científica?', opts:['10⁻³','10³','10⁻²','10²'], ans:0},
+      {st:3, q:'30% de 150 = ?', opts:['45','30','60','15'], ans:0},
+      {st:1, q:'3/5 em decimal = ?', opts:['0,6','0,3','0,5','0,35'], ans:0},
+      {st:4, q:'(-2)³ = ?', opts:['-8','8','-6','6'], ans:0},
     ],
-    3: [ // Geometria
-      {q:'Soma ângulos internos pentágono?', opts:['540°','360°','450°','720°'], ans:0},
-      {q:'Ângulo interno polígono regular hexagonal?', opts:['120°','60°','90°','135°'], ans:0},
-      {q:'Soma ângulos externos de qualquer polígono?', opts:['360°','180°','540°','720°'], ans:0},
-      {q:'Área retângulo 6×4 = ?', opts:['24','20','48','10'], ans:0},
-      {q:'Área triângulo base=8, altura=5 = ?', opts:['20','40','13','80'], ans:0},
-      {q:'Num polígono regular com 8 lados, ângulo externo = ?', opts:['45°','60°','30°','40°'], ans:0},
-      {q:'Ângulos alternos internos são?', opts:['iguais','suplementares','complementares','nulos'], ans:0},
-      {q:'Quadrilátero com 4 lados iguais e 4 ângulos retos?', opts:['Quadrado','Rombo','Retângulo','Losango'], ans:0},
-      {q:'Área paralelogramo base=7, alt=3 = ?', opts:['21','10','42','20'], ans:0},
-      {q:'Polígono com 3 lados tem soma interna de?', opts:['180°','360°','90°','270°'], ans:0},
+    3: [ // Geometria — st: 1 Ângulos, 2 Triângulos, 3 Semelhança, 4 Áreas, 5 Circunferência
+      {st:1, q:'Soma ângulos internos pentágono?', opts:['540°','360°','450°','720°'], ans:0},
+      {st:1, q:'Ângulo interno polígono regular hexagonal?', opts:['120°','60°','90°','135°'], ans:0},
+      {st:1, q:'Soma ângulos externos de qualquer polígono?', opts:['360°','180°','540°','720°'], ans:0},
+      {st:4, q:'Área retângulo 6×4 = ?', opts:['24','20','48','10'], ans:0},
+      {st:4, q:'Área triângulo base=8, altura=5 = ?', opts:['20','40','13','80'], ans:0},
+      {st:1, q:'Num polígono regular com 8 lados, ângulo externo = ?', opts:['45°','60°','30°','40°'], ans:0},
+      {st:1, q:'Ângulos alternos internos são?', opts:['iguais','suplementares','complementares','nulos'], ans:0},
+      {st:2, q:'Quadrilátero com 4 lados iguais e 4 ângulos retos?', opts:['Quadrado','Rombo','Retângulo','Losango'], ans:0},
+      {st:4, q:'Área paralelogramo base=7, alt=3 = ?', opts:['21','10','42','20'], ans:0},
+      {st:1, q:'Polígono com 3 lados tem soma interna de?', opts:['180°','360°','90°','270°'], ans:0},
     ],
-    4: [ // Equações
-      {q:'3x + 5 = 14, x = ?', opts:['3','4','2','5'], ans:0},
-      {q:'2x − 4 = 6, x = ?', opts:['5','2','4','3'], ans:0},
-      {q:'Simplifica: 4x − x = ?', opts:['3x','4x','x','5x'], ans:0},
-      {q:'7 − 2x = 1, x = ?', opts:['3','4','2','6'], ans:0},
-      {q:'Valor de 2x²−1 para x=3?', opts:['17','11','5','19'], ans:0},
-      {q:'Reduz: 5a + 3b − 2a − b = ?', opts:['3a+2b','7a+4b','3a+4b','2a+2b'], ans:0},
-      {q:'Equação impossível: 2x+3=2x+?', opts:['5','3','0','2x'], ans:0},
-      {q:'x + 5 = −2, x = ?', opts:['−7','3','7','−3'], ans:0},
-      {q:'5x = 20, x = ?', opts:['4','5','3','100'], ans:0},
-      {q:'Perímetro pentágono regular = 15, lado = ?', opts:['3','5','10','15'], ans:0},
+    4: [ // Equações — st: 1 Expressões, 2 Simplificação, 3 Equações, 4 Inequações
+      {st:3, q:'3x + 5 = 14, x = ?', opts:['3','4','2','5'], ans:0},
+      {st:3, q:'2x − 4 = 6, x = ?', opts:['5','2','4','3'], ans:0},
+      {st:2, q:'Simplifica: 4x − x = ?', opts:['3x','4x','x','5x'], ans:0},
+      {st:3, q:'7 − 2x = 1, x = ?', opts:['3','4','2','6'], ans:0},
+      {st:1, q:'Valor de 2x²−1 para x=3?', opts:['17','11','5','19'], ans:0},
+      {st:2, q:'Reduz: 5a + 3b − 2a − b = ?', opts:['3a+2b','7a+4b','3a+4b','2a+2b'], ans:0},
+      {st:3, q:'Equação impossível: 2x+3=2x+?', opts:['5','3','0','2x'], ans:0},
+      {st:3, q:'x + 5 = −2, x = ?', opts:['−7','3','7','−3'], ans:0},
+      {st:3, q:'5x = 20, x = ?', opts:['4','5','3','100'], ans:0},
+      {st:3, q:'Perímetro pentágono regular = 15, lado = ?', opts:['3','5','10','15'], ans:0},
     ],
-    5: [ // Sequências
-      {q:'Se aₙ = 2n+1, a₄ = ?', opts:['9','7','8','10'], ans:0},
-      {q:'Se aₙ = 3n−2, a₅ = ?', opts:['13','15','10','12'], ans:0},
-      {q:'Razão da sequência: 5, 8, 11, 14…?', opts:['3','2','4','5'], ans:0},
-      {q:'Se aₙ = 4n−3, a₁₀ = ?', opts:['37','40','33','43'], ans:0},
-      {q:'Sequência: 2, 6, 18, 54… Razão = ?', opts:['3','4','2','6'], ans:0},
-      {q:'Se aₙ = n², a₅ = ?', opts:['25','10','20','15'], ans:0},
-      {q:'Seq. aritmética: 1, 4, 7, 10… a₈ = ?', opts:['22','25','19','28'], ans:0},
-      {q:'Se aₙ = −2n+10, a₃ = ?', opts:['4','6','8','16'], ans:0},
-      {q:'Quantos termos: 1, 3, 5, …, 99?', opts:['49','50','51','99'], ans:0},
-      {q:'Se aₙ = 5n, a₆ = ?', opts:['30','25','35','20'], ans:0},
+    5: [ // Sequências — st: 1 Termo Geral, 2 Problemas com Sequências
+      {st:1, q:'Se aₙ = 2n+1, a₄ = ?', opts:['9','7','8','10'], ans:0},
+      {st:1, q:'Se aₙ = 3n−2, a₅ = ?', opts:['13','15','10','12'], ans:0},
+      {st:1, q:'Razão da sequência: 5, 8, 11, 14…?', opts:['3','2','4','5'], ans:0},
+      {st:1, q:'Se aₙ = 4n−3, a₁₀ = ?', opts:['37','40','33','43'], ans:0},
+      {st:1, q:'Sequência: 2, 6, 18, 54… Razão = ?', opts:['3','4','2','6'], ans:0},
+      {st:1, q:'Se aₙ = n², a₅ = ?', opts:['25','10','20','15'], ans:0},
+      {st:1, q:'Seq. aritmética: 1, 4, 7, 10… a₈ = ?', opts:['22','25','19','28'], ans:0},
+      {st:1, q:'Se aₙ = −2n+10, a₃ = ?', opts:['4','6','8','16'], ans:0},
+      {st:2, q:'Quantos termos: 1, 3, 5, …, 99?', opts:['49','50','51','99'], ans:0},
+      {st:1, q:'Se aₙ = 5n, a₆ = ?', opts:['30','25','35','20'], ans:0},
     ],
   };
   // Multi-cap: mix
