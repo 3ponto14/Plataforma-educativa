@@ -47,9 +47,10 @@
       + '<button class="ml-close" aria-label="Fechar" onclick="menuLateralFechar()"><i class="ph ph-x"></i></button>'
       + '</div>'
       + '<nav class="ml-nav" id="ml-nav">'
-      + '<button class="ml-link" data-sec="inicio" onclick="menuLateralIr(\'inicio\')"><i class="ph ph-house"></i> <span>Início</span></button>'
-      + '<button class="ml-link" data-sec="cursos" onclick="menuLateralIr(\'cursos\')"><i class="ph ph-books"></i> <span>Cursos</span></button>'
-      + '<button class="ml-link" data-sec="apoio" onclick="menuLateralIr(\'apoio\')"><i class="ph ph-users-three"></i> <span>Turmas</span></button>'
+      + '<button class="ml-toggle" id="ml-toggle" type="button" aria-label="Recolher menu" title="Recolher menu" onclick="menuLateralRecolher()"><i class="ph ph-caret-double-left"></i> <span>Recolher</span></button>'
+      + '<button class="ml-link" data-sec="inicio" onclick="menuLateralIr(\'inicio\')" title="Início"><i class="ph ph-house"></i> <span>Início</span></button>'
+      + '<button class="ml-link" data-sec="cursos" onclick="menuLateralIr(\'cursos\')" title="Cursos"><i class="ph ph-books"></i> <span>Cursos</span></button>'
+      + '<button class="ml-link" data-sec="apoio" onclick="menuLateralIr(\'apoio\')" title="Turmas"><i class="ph ph-users-three"></i> <span>Turmas</span></button>'
       + '</nav>'
       + '<div class="ml-foot" id="ml-foot"></div>';
     document.body.appendChild(d);
@@ -116,6 +117,29 @@
     if (foot && !foot.contains(e.target)) fecharPerfil();
   });
 
+  /* ── Modo recolhido (só ícones), apenas na barra fixa do computador ──
+     A preferência fica guardada em localStorage para persistir entre páginas. */
+  var COLAPSADA_KEY = 'ml_colapsada';
+  function _colapsada() {
+    try { return localStorage.getItem(COLAPSADA_KEY) === '1'; } catch (e) { return false; }
+  }
+  function _aplicarColapso() {
+    // só faz sentido com a barra fixa (computador) e sessão iniciada
+    var ligar = _fixo() && _temSessao() && _colapsada();
+    document.body.classList.toggle('ml-collapsed', ligar);
+    var tgl = document.getElementById('ml-toggle');
+    if (tgl) {
+      var rec = _colapsada();
+      tgl.setAttribute('aria-label', rec ? 'Expandir menu' : 'Recolher menu');
+      tgl.setAttribute('title', rec ? 'Expandir menu' : 'Recolher menu');
+    }
+  }
+  function recolher() {
+    try { localStorage.setItem(COLAPSADA_KEY, _colapsada() ? '0' : '1'); } catch (e) {}
+    _aplicarColapso();
+  }
+  window.menuLateralRecolher = recolher;
+
   /* Abrir/fechar só fazem sentido no modo gaveta (telemóvel). */
   function abrir() {
     montar();
@@ -137,8 +161,21 @@
      centro (não faz scroll). A gaveta fecha-se ao navegar em telemóvel. */
   function ir(sec) {
     if (!_fixo()) fechar();
-    if (typeof portalIrPara === 'function') portalIrPara(sec);
-    marcarAtivo(sec);
+    // Dentro do portal: troca a secção sem recarregar.
+    // Dentro de um hub de curso (mat5, port7, …): portalIrPara não existe,
+    // por isso navegamos de volta ao portal, pedindo a secção pelo hash.
+    if (typeof portalIrPara === 'function') {
+      portalIrPara(sec);
+      marcarAtivo(sec);
+    } else {
+      var base = _rootPathML();
+      window.location.href = base + 'index.html#' + sec;
+    }
+  }
+
+  /* Caminho para a raiz do site a partir da página atual (hubs vivem em matN/). */
+  function _rootPathML() {
+    return /\/(mat\d+|port\d+|fq\d+)(\/|$)/.test(window.location.pathname) ? '../' : '';
   }
 
   /* Realça o link ativo na barra lateral E na barra inferior. */
@@ -167,6 +204,7 @@
       // sem sessão: nada de barra, ☰ nem barra inferior; limpa tudo
       document.body.classList.remove('ml-fixed-on');
       document.body.classList.remove('ml-bottom-on');
+      document.body.classList.remove('ml-collapsed');
       if (drawer) drawer.classList.remove('fixed');
       if (burger) burger.style.display = 'none';
       if (bottom) bottom.style.display = 'none';
@@ -183,11 +221,13 @@
       if (drawer) drawer.classList.add('fixed');
       document.body.classList.add('ml-fixed-on');
       _pintarRodape();
+      _aplicarColapso();                     // aplica preferência "só ícones"
     } else {
       // telemóvel: barra de navegação INFERIOR sempre visível (sem ☰)
       if (ABERTA) fechar();
       if (drawer) drawer.classList.remove('fixed');
       document.body.classList.remove('ml-fixed-on');
+      document.body.classList.remove('ml-collapsed'); // "só ícones" é só do modo fixo
       if (burger) burger.style.display = 'none';
       if (bottom) bottom.style.display = 'flex';
       document.body.classList.add('ml-bottom-on');

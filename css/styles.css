@@ -4016,6 +4016,37 @@ body.ml-fixed-on #view-portal > *:not(.site-topbar){margin-left:268px;}
 body.ml-fixed-on .math-view > *:not(.site-topbar){margin-left:268px;}
 body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
 
+/* ── Botão "Recolher / Expandir" (só visível na barra fixa do computador) ── */
+.ml-toggle{
+  display:none; align-items:center; gap:.6rem; width:100%; text-align:left;
+  background:none; border:none; padding:.5rem .8rem; margin-bottom:.25rem;
+  border-radius:10px; cursor:pointer; color:var(--ink4);
+  font-family:'Montserrat',sans-serif; font-size:.78rem; font-weight:700;
+}
+.ml-toggle:hover{background:var(--white); color:var(--ink2);}
+.ml-toggle i{font-size:1.05rem; color:var(--ink4);}
+#ml-drawer.fixed .ml-toggle{display:flex;}   /* aparece só no modo fixo */
+
+/* ── MODO RECOLHIDO (só ícones): barra estreita no computador ── */
+body.ml-collapsed #ml-drawer.fixed{width:64px;}
+body.ml-collapsed #view-portal > *:not(.site-topbar){margin-left:64px;}
+body.ml-collapsed .math-view > *:not(.site-topbar){margin-left:64px;}
+/* esconder todo o texto, deixando apenas os ícones centrados */
+body.ml-collapsed #ml-drawer.fixed .ml-link span,
+body.ml-collapsed #ml-drawer.fixed .ml-toggle span,
+body.ml-collapsed #ml-drawer.fixed .ml-user span,
+body.ml-collapsed #ml-drawer.fixed .ml-perfil,
+body.ml-collapsed #ml-drawer.fixed .ml-sair,
+body.ml-collapsed #ml-drawer.fixed .ml-tag{display:none;}
+body.ml-collapsed #ml-drawer.fixed .ml-nav{padding:.6rem .35rem;}
+body.ml-collapsed #ml-drawer.fixed .ml-link,
+body.ml-collapsed #ml-drawer.fixed .ml-toggle{justify-content:center; gap:0; padding:.62rem 0;}
+body.ml-collapsed #ml-drawer.fixed .ml-link.ativo{box-shadow:none; background:var(--white); border-radius:10px;}
+body.ml-collapsed #ml-drawer.fixed .ml-foot{justify-content:center; padding:.7rem .35rem;}
+body.ml-collapsed #ml-drawer.fixed .ml-user{flex-basis:auto; gap:0;}
+/* o caret do "Recolher" passa a apontar para a direita (expandir) quando já está recolhido */
+body.ml-collapsed #ml-drawer.fixed .ml-toggle i{transform:scaleX(-1);}
+
 /* ── Barra de navegação INFERIOR (telemóvel) ── */
 #ml-bottombar{
   display:none; position:fixed; left:0; right:0; bottom:0; z-index:9990;
