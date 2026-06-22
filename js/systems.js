@@ -1809,8 +1809,9 @@ function _treinoRenderExercicios(exercicios, containerId) {
             + '</div>';
     } else {
       var _exOps = (typeof _normalizaOpcoes==='function') ? _normalizaOpcoes((ex.opcoes||[]).slice(), ex.resposta) : (ex.opcoes||[]);
+      var _vfV = String(ex.resposta==null?'':ex.resposta).trim().toUpperCase().charAt(0)==='V'; // 'V'/'Verdadeiro'
       var opcs = ex.tipo==='vf'
-        ? [{txt:'Verdadeiro',isC:ex.resposta==='V'},{txt:'Falso',isC:ex.resposta==='F'}]
+        ? [{txt:'Verdadeiro',isC:_vfV},{txt:'Falso',isC:!_vfV}]
         : _exOps.map(function(o){ return {txt:o,isC:String(o)===String(ex.resposta)}; });
       html += '<div class="options">';
       opcs.forEach(function(o,k){
@@ -1938,7 +1939,7 @@ function gerarFichaTreino() {
         body += '<div style="display:flex;gap:20px;margin:8px 0 4px 28px">'
               + '<span class="opcao">Verdadeiro</span><span class="opcao">Falso</span>'
               + '</div>';
-        solucoes.push({ n: exNum, v: ex.resposta==='V'?'Verdadeiro':'Falso' });
+        solucoes.push({ n: exNum, v: String(ex.resposta==null?'':ex.resposta).trim().toUpperCase().charAt(0)==='V'?'Verdadeiro':'Falso' });
       } else {
         // mc
         var labels = ['A','B','C','D'];
