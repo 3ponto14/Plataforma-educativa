@@ -29,6 +29,7 @@ var _mat10Path = _inMat(10) ? '' : _coursePath('mat10');
 var _mat11Path = _inMat(11) ? '' : _coursePath('mat11');
 var _mat12Path = _inMat(12) ? '' : _coursePath('mat12');
 var _port9Path = _inPort(9) ? '' : _coursePath('port9');
+var _port1Path = _inPort(1) ? '' : _coursePath('port1');
 var _port7Path = _inPort(7) ? '' : _coursePath('port7');
 var _port8Path = _inPort(8) ? '' : _coursePath('port8');
 var _inFq7 = window.location.pathname.indexOf('/fq7/') !== -1 || window.location.pathname.endsWith('/fq7');
@@ -58,6 +59,8 @@ function showPortalFromMat9() { showPortalView(); }
 /* ── Port9 hub · Português 9.º (mesmo modelo de hub) ── */
 function showPort9View() { window.location.href = _port9Path + 'index.html'; }
 function showPortalFromPort9() { showPortalView(); }
+function showPort1View() { window.location.href = _port1Path + 'index.html'; }
+function showPortalFromPort1() { showPortalView(); }
 function showPort7View() { window.location.href = _port7Path + 'index.html'; }
 function showPortalFromPort7() { showPortalView(); }
 function showPort8View() { window.location.href = _port8Path + 'index.html'; }
