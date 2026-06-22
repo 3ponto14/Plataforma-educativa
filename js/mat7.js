@@ -810,6 +810,12 @@ function _mat7GetActiveCaps(tab) {
   return caps.length ? caps : [1];
 }
 
+// Hook usado por chapter-engine (capExameStart): subtemas activos do cap na
+// tab Exame do hub mat7. Devolve [] (=todos) se não houver restrição.
+function _capExameSubtemas(cap) {
+  return (typeof _mat7GetActiveSts === 'function') ? _mat7GetActiveSts('exame', cap) : [];
+}
+
 // Subtemas activos (índices 1..n) de um capítulo, lidos dos chips do tray.
 // Devolve [] (= todos) se o tray não existir ou estiverem todos activos.
 function _mat7GetActiveSts(tab, cap) {

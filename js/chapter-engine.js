@@ -305,6 +305,15 @@ function capExameStart(n) {
   var qtd=parseInt((_capEl('exame'+pfx+'-qtd')||{}).value||'15'), tempo=parseInt((_capEl('exame'+pfx+'-tempo')||{}).value||'900');
   ex.timeLeft=tempo; ex.answered={}; ex.score={correct:0,total:0};
   var temas=cfg.temas?cfg.temas.map(function(_,i){return String(i+1);}):['1','2','3','4','5'];
+  // Filtro de subtema (opt-in): se o hub do ano expõe os subtemas activos
+  // para a tab exame deste capítulo, restringe os temas a esses (índice=tema).
+  if (typeof _capExameSubtemas === 'function') {
+    var _sts = _capExameSubtemas(n);
+    if (_sts && _sts.length) {
+      var _f = temas.filter(function(t){ return _sts.indexOf(parseInt(t)) !== -1; });
+      if (_f.length) temas = _f;
+    }
+  }
   var tipos=['mc','fill','mc','fill','vf','mc','fill','mc','vf','fill','mc','mc','fill','mc','mc'], exs=[];
   for(var i=0;i<qtd;i++){var e=cfg.buildExercicio(temas[i%temas.length],tipos[i%tipos.length],ex.level);if(e)exs.push(e);}
   ex.exercicios=exs;
