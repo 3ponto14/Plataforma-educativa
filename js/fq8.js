@@ -106,7 +106,7 @@ function fq8SwitchTab(tab, btn) {
 
   var titles = { resumo:'Teoria', praticar:'Praticar', fichas:'Fichas', progresso:'Progresso',
                  exercicios:'Exercícios', quiz:'Quiz', flashcards:'Flashcards', teste:'Teste', jogos:'Jogos' };
-  if (titles[tab]) document.title = 'Mat. 8.º ' + titles[tab] + ' · 3ponto14';
+  if (titles[tab]) document.title = 'Físico-Química 8.º ' + titles[tab] + ' · 3ponto14';
 
   if (tab === 'resumo') fq8BuildResumoNav();
   else if (tab === 'exercicios') fq8BuildPraticarNav();
