@@ -47,7 +47,10 @@ function _capBuildQuizHTML(exs, qidPrefix, checkFnCall) {
       _ops.forEach(function(opt,k) { var isC = String(opt) === String(ex.resposta); html += '<button class="option-btn" data-correct="' + isC + '" onclick="' + checkFnCall + '(\'' + qid + '\',\'mc\',' + isC + ',this)"><span class="opt-label">' + labels[k] + '</span>' + opt + '</button>'; });
       html += '</div>';
     } else if (ex.tipo === 'vf') {
-      var vC = ex.resposta === 'V';
+      // Aceita ambos os formatos de resposta usados nos bancos:
+      // PT usa 'V'/'F'; FQ usa 'Verdadeiro'/'Falso'. Normaliza pela 1.ª letra.
+      var _r = String(ex.resposta == null ? '' : ex.resposta).trim().toUpperCase();
+      var vC = (_r.charAt(0) === 'V');
       html += '<div style="display:flex;gap:.75rem;flex-wrap:wrap"><button class="option-btn" data-correct="' + vC + '" onclick="' + checkFnCall + '(\'' + qid + '\',\'mc\',' + vC + ',this)"><span class="opt-label" style="background:rgba(62,207,142,.2);color:var(--correct)">V</span>Verdadeiro</button><button class="option-btn" data-correct="' + (!vC) + '" onclick="' + checkFnCall + '(\'' + qid + '\',\'mc\',' + (!vC) + ',this)"><span class="opt-label" style="background:rgba(255,107,107,.2);color:var(--wrong)">F</span>Falso</button></div>';
     }
     html += '<div class="feedback" id="' + qid + '-fb"></div><span id="' + qid + '-expl" style="display:none" data-expl="' + (ex.expl||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;') + '"></span></div>';
