@@ -40,6 +40,13 @@
   --m9c5-base:#e8edf4;--m9c5-mid:#5a72a0;--m9c5-deep:#384a72;--m9c5-pale:#eff3fb;
   --m9c6-base:#f4ece6;--m9c6-mid:#a87a4d;--m9c6-deep:#785230;--m9c6-pale:#fbf5ef;
   /* Matemática 5.º Ano - paleta própria (tons verde-fresco), 7 capítulos */
+  /* Matemática 1.º Ano - paleta própria (tons amarelo/dourado, alegres), 6 capítulos */
+  --m1c1-base:#fdf1d8;--m1c1-mid:#e0a32e;--m1c1-deep:#8a6010;--m1c1-pale:#fef8ea;
+  --m1c2-base:#fce8d4;--m1c2-mid:#e08a3e;--m1c2-deep:#8a4e10;--m1c2-pale:#fef3e8;
+  --m1c3-base:#f7e6dc;--m1c3-mid:#d07a52;--m1c3-deep:#7a3e26;--m1c3-pale:#fcf1ea;
+  --m1c4-base:#e9f0d8;--m1c4-mid:#8aa83e;--m1c4-deep:#506010;--m1c4-pale:#f4f8ea;
+  --m1c5-base:#d8f0e4;--m1c5-mid:#3ea878;--m1c5-deep:#106040;--m1c5-pale:#eaf8f1;
+  --m1c6-base:#d8ecf2;--m1c6-mid:#3e94b8;--m1c6-deep:#105066;--m1c6-pale:#eaf5fa;
   --m5c1-base:#e6f3ec;--m5c1-mid:#4a9e6e;--m5c1-deep:#2c6044;--m5c1-pale:#eff9f3;
   --m5c2-base:#e8f1e6;--m5c2-mid:#6a9e4a;--m5c2-deep:#44602c;--m5c2-pale:#f1f8ef;
   --m5c3-base:#e6f0f2;--m5c3-mid:#4a8e9e;--m5c3-deep:#2c5660;--m5c3-pale:#eff7f9;
@@ -3717,6 +3724,7 @@ body.dark-mode .portal-card:hover {
 .portal-ano-link--exam:hover { border-color: #5c4e8a; background: #f3f0fb; }
 
 /* cores por ano (reutilizam os tons de cada curso) */
+.portal-ano-card.y1  { border-left-color: var(--m1c1-mid); }  .y1  .portal-ano-num { color: var(--m1c1-deep); }  .y1  .portal-ano-link-icon { background: var(--m1c1-base); color: var(--m1c1-deep); }
 .portal-ano-card.y5  { border-left-color: var(--m5c1-mid); }  .y5  .portal-ano-num { color: var(--m5c1-deep); }  .y5  .portal-ano-link-icon { background: var(--m5c1-base); color: var(--m5c1-deep); }
 .portal-ano-card.y6  { border-left-color: var(--m6c1-mid); }  .y6  .portal-ano-num { color: var(--m6c1-deep); }  .y6  .portal-ano-link-icon { background: var(--m6c1-base); color: var(--m6c1-deep); }
 .portal-ano-card.y7  { border-left-color: var(--c2-mid); }    .y7  .portal-ano-num { color: var(--c2-deep); }    .y7  .portal-ano-link-icon { background: var(--c2-base); color: var(--c2-deep); }

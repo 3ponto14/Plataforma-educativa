@@ -19,6 +19,7 @@ var _inMat7 = _inMat(7), _inMat8 = _inMat(8), _inMat9 = _inMat(9);
 var _rootPath = _inSub ? '../' : '';
 // Caminho para cada curso, relativo à página atual (raiz ou dentro de matN/).
 function _coursePath(name) { return _inSub ? '../' + name + '/' : name + '/'; }
+var _mat1Path = _inMat(1) ? '' : _coursePath('mat1');
 var _mat5Path = _inMat(5) ? '' : _coursePath('mat5');
 var _mat6Path = _inMat(6) ? '' : _coursePath('mat6');
 var _mat7Path = _inMat7 ? '' : _coursePath('mat7');
@@ -73,6 +74,8 @@ function showFq9View() { window.location.href = _fq9Path + 'index.html'; }
 function showPortalFromFq9() { showPortalView(); }
 
 /* ── Mat5 e Mat6 hubs (2.º ciclo) ── */
+function showMat1View()  { window.location.href = _mat1Path + 'index.html'; }
+function showPortalFromMat1() { showPortalView(); }
 function showMat5View()  { window.location.href = _mat5Path + 'index.html'; }
 function showPortalFromMat5() { showPortalView(); }
 function showMat6View()  { window.location.href = _mat6Path + 'index.html'; }
