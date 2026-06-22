@@ -286,7 +286,7 @@ function _mat7BuildSelectors() {
     {id:'mat7-caps-jogos',       tab:'jogos', opts:{type:'mat7tab'}},
     {id:'mat7-caps-flashcards',  tab:'flashcards', opts:{type:'mat7tab'}},
     {id:'mat7-caps-exame',       tab:'exame', opts:{type:'mat7tab'}},
-    {id:'mat7-caps-quiz',        tab:'quiz', opts:{type:'simple', handler:"qgHubSelectCap({cap},this)"}}
+    {id:'mat7-caps-quiz',        tab:'quiz', opts:{type:'mat7tab'}}
   ];
   sets.forEach(function(s) {
     var el = document.getElementById(s.id);
@@ -579,19 +579,27 @@ function mat7RenderUnifiedExercicios(caps, inlineEl) {
     caps.forEach(function(cap) {
       var capExs = [];
 
+      // Subtemas escolhidos para este cap (índices 1..n; [] = todos).
+      var stsAtivos = (typeof _mat7GetActiveSts === 'function') ? _mat7GetActiveSts('exercicios', cap) : [];
+
       // Geradores próprios dos caps 5-8 (substituem os bancos BANCO5-8)
       var _m7genCap = { 5: (typeof buildEx_m7c5 === 'function' ? buildEx_m7c5 : null), 6: (typeof buildEx_m7c6 === 'function' ? buildEx_m7c6 : null), 7: (typeof buildEx_m7c7 === 'function' ? buildEx_m7c7 : null), 8: (typeof buildEx_m7c8 === 'function' ? buildEx_m7c8 : null) };
       var _m7nTemas = { 5: 2, 6: 6, 7: 6, 8: 5 };
       if (cap >= 5 && cap <= 8 && _m7genCap[cap]) {
         var gen58 = _m7genCap[cap], nT = _m7nTemas[cap];
+        // subtema índice → tema; clampa ao nº de temas reais do cap.
+        var temas58 = stsAtivos.length ? stsAtivos.filter(function(s){ return s >= 1 && s <= nT; }).map(String) : [];
+        if (!temas58.length) { temas58 = []; for (var _t58 = 1; _t58 <= nT; _t58++) temas58.push(String(_t58)); }
         var tipos58 = ['fill', 'mc', 'fill', 'vf', 'mc', 'fill', 'mc', 'fill', 'vf', 'mc'];
         for (var _i58 = 0; _i58 < numPerCap; _i58++) {
-          var ex58 = gen58(String((_i58 % nT) + 1), tipos58[_i58 % tipos58.length], dif) || gen58(String((_i58 % nT) + 1), 'fill', dif);
+          var _tm58 = temas58[_i58 % temas58.length];
+          var ex58 = gen58(_tm58, tipos58[_i58 % tipos58.length], dif) || gen58(_tm58, 'fill', dif);
           if (ex58) { ex58._capId = cap; ex58._capLabel = capNames[cap]; ex58.num = allExs.length + capExs.length + 1; capExs.push(ex58); }
         }
       } else {
-        // Procedural generation for caps 1-4
-        var temas = ['1','2','3','4','5'];
+        // Procedural generation for caps 1-4 (subtema índice = tema, 1:1)
+        var temas = stsAtivos.length ? stsAtivos.filter(function(s){ return s >= 1 && s <= 5; }).map(String) : ['1','2','3','4','5'];
+        if (!temas.length) temas = ['1','2','3','4','5'];
 
         // Build a varied plan mixing fill, mc, vf, contexto
         var tipos = ['fill','mc','fill','mc','vf','fill','mc','fill','mc','fill',
@@ -800,6 +808,21 @@ function _mat7GetActiveCaps(tab) {
     if (!isNaN(n) && caps.indexOf(n) === -1) caps.push(n);
   });
   return caps.length ? caps : [1];
+}
+
+// Subtemas activos (índices 1..n) de um capítulo, lidos dos chips do tray.
+// Devolve [] (= todos) se o tray não existir ou estiverem todos activos.
+function _mat7GetActiveSts(tab, cap) {
+  var tray = document.getElementById('mat7-st-' + cap + '-' + tab);
+  if (!tray) return [];
+  var chips = tray.querySelectorAll('.gf-st-chip');
+  if (!chips.length) return [];
+  var on = [], total = chips.length;
+  chips.forEach(function(c) {
+    if (c.classList.contains('active')) { var s = parseInt(c.dataset.st); if (!isNaN(s)) on.push(s); }
+  });
+  if (!on.length || on.length === total) return []; // nenhum ou todos → todos
+  return on;
 }
 
 function mat7SwitchTab(tab, btn) {
@@ -1139,6 +1162,8 @@ function mat7TabReload(tab) {
       if (activeBtn) _mat7Sel['resumo'] = parseInt(activeBtn.dataset.cap) || 1;
     }
     mat7BuildResumoNav();
+  } else if (tab === 'quiz') {
+    if (typeof qgHubInit === 'function') qgHubInit();
   } else if (_mat7SecMap[tab]) {
     mat7LoadInline(tab);
   }
@@ -1234,9 +1259,9 @@ var _qgHub = {
 };
 
 function qgHubInit() {
-  var row = document.getElementById('mat7-caps-quiz');
-  var active = row ? row.querySelector('.gf-cap-btn.active') : null;
-  _qgHub.cap = active ? (parseInt(active.dataset.cap) || 1) : 1;
+  // Lê os capítulos activos (multi) do seletor; cap primário p/ progresso.
+  var caps = (typeof _mat7GetActiveCaps === 'function') ? _mat7GetActiveCaps('quiz') : [1];
+  _qgHub.cap = caps[0] || 1;
   _qgHub.lives = 3;
   _qgHub.streak = 0;
   _qgHub.maxStreak = 0;
@@ -1246,21 +1271,15 @@ function qgHubInit() {
   _qgHubNext();
 }
 
+// Retrocompatível: se algo ainda chamar qgHubSelectCap, delega no toggle multi.
 function qgHubSelectCap(cap, btn) {
-  var row = document.getElementById('mat7-caps-quiz');
-  if (row) row.querySelectorAll('.gf-cap-btn').forEach(function(b){ b.classList.remove('active'); });
-  if (btn) btn.classList.add('active');
-  _qgHub.cap = cap;
-  _qgHub.lives = 3;
-  _qgHub.streak = 0;
-  _qgHub.maxStreak = 0;
-  _qgHub.score = 0;
-  _qgHub.total = 0;
-  _qgHub.answered = false;
-  _qgHubNext();
+  if (typeof mat7TabCapClick === 'function') mat7TabCapClick('quiz', cap, btn);
+  else qgHubInit();
 }
 
-function _qgHubBuildQuestion(cap) {
+function _qgHubBuildQuestion(cap, sts) {
+  // sts = subtemas activos (1..n); [] = todos. Caps 1-4: índice = tema.
+  // Caps 5-8: o pool relâmpago do BANCO não está mapeado por subtema → ignora-se.
   // Caps 5-8: pull from BANCO relampago pool
   var bancoMap = { 5: (typeof BANCO5 !== 'undefined' ? BANCO5 : null),
                    6: (typeof BANCO6 !== 'undefined' ? BANCO6 : null),
@@ -1281,7 +1300,8 @@ function _qgHubBuildQuestion(cap) {
     };
   }
 
-  var temas = ['1','2','3','4','5'];
+  var temas = (sts && sts.length) ? sts.filter(function(s){ return s >= 1 && s <= 5; }).map(String) : ['1','2','3','4','5'];
+  if (!temas.length) temas = ['1','2','3','4','5'];
   var tema = temas[Math.floor(Math.random() * temas.length)];
   var ex = null;
   if (cap === 4) {
@@ -1316,9 +1336,14 @@ function _qgHubNext() {
     return;
   }
 
-  var ex = _qgHubBuildQuestion(_qgHub.cap);
+  // Escolhe um capítulo entre os activos e os subtemas escolhidos desse cap.
+  var capsAtivos = (typeof _mat7GetActiveCaps === 'function') ? _mat7GetActiveCaps('quiz') : [_qgHub.cap];
+  var capQ = capsAtivos[Math.floor(Math.random() * capsAtivos.length)] || 1;
+  _qgHub.cap = capQ; // primário p/ progresso da resposta
+  var stsQ = (typeof _mat7GetActiveSts === 'function') ? _mat7GetActiveSts('quiz', capQ) : [];
+  var ex = _qgHubBuildQuestion(capQ, stsQ);
   if (!ex) {
-    app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Sem questões disponíveis para este capítulo.</p>';
+    app.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Sem questões disponíveis para esta seleção.</p>';
     return;
   }
   _qgHub.current = ex;

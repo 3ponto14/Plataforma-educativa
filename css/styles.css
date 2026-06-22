@@ -2780,18 +2780,12 @@ button:focus-visible,a:focus-visible{outline:2px solid #6b5fa0!important;outline
   flex-shrink: 0;
 }
 .site-topbar-logo .mark {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: var(--c2-mid);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: .6rem;
-  font-weight: 800;
-  color: #fff;
-  letter-spacing: -.03em;
-  font-family: 'Montserrat', sans-serif;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
 }
 .site-topbar-logo .wordmark {
   font-family: 'Montserrat', sans-serif;

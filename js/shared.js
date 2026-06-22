@@ -425,7 +425,8 @@ function _qzRender(cid) {
       + '<button class="qz-check-btn" data-cid="' + cid + '" data-resp="' + ex.resposta + '" onclick="var i=document.getElementById(this.dataset.cid+\'-fill\');qzCheckFillDirect(this.dataset.cid,parseFloat(i.value.replace(\',\',\'.\'))||i.value,parseFloat(this.dataset.resp))">Verificar</button>'
       + '</div>';
   } else if (tipo === 'vf') {
-    var vC = ex.resposta === 'V';
+    // Aceita 'V'/'F' (bancos PT/Mat) e 'Verdadeiro'/'Falso' (bancos FQ).
+    var vC = String(ex.resposta == null ? '' : ex.resposta).trim().toUpperCase().charAt(0) === 'V';
     optionsHtml = '<div class="qz-options">'
       + '<button class="qz-opt" data-correct="' + vC + '" onclick="qzCheckMC(' + q + ',' + vC + ',this)"><span class="qz-opt-letter">V</span> Verdadeiro</button>'
       + '<button class="qz-opt" data-correct="' + (!vC) + '" onclick="qzCheckMC(' + q + ',' + (!vC) + ',this)"><span class="qz-opt-letter">F</span> Falso</button>'
@@ -1511,7 +1512,8 @@ function _buildStQuizHTML(exercicios) {
       (ex.opcoes||[]).forEach(function(opt, k) { var isC = String(opt)===String(ex.resposta); qhtml += '<button class="option-btn" onclick="stCheck(\'' + qid + '\',\'mc\',' + isC + ',this)"><span class="opt-label">' + labels[k] + '</span>' + formatMath(opt) + '</button>'; });
       qhtml += '</div>';
     } else if (ex.tipo === 'vf') {
-      var vC = ex.resposta==='V';
+      // Aceita 'V'/'F' (PT/Mat) e 'Verdadeiro'/'Falso' (FQ).
+      var vC = String(ex.resposta==null?'':ex.resposta).trim().toUpperCase().charAt(0)==='V';
       qhtml += '<div style="display:flex;gap:.75rem;flex-wrap:wrap"><button class="option-btn" onclick="stCheck(\'' + qid + '\',\'mc\',' + vC + ',this)"><span class="opt-label" style="background:rgba(62,207,142,.2);color:var(--correct)">V</span>Verdadeiro</button><button class="option-btn" onclick="stCheck(\'' + qid + '\',\'mc\',' + (!vC) + ',this)"><span class="opt-label" style="background:rgba(255,107,107,.2);color:var(--wrong)">F</span>Falso</button></div>';
     }
     qhtml += '<div class="feedback" id="' + qid + '-fb"></div><span id="' + qid + '-expl" style="display:none" data-expl="' + (ex.expl||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;') + '"></span></div>';
