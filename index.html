@@ -341,15 +341,7 @@
 <script src="js/ux-improvements.js?v=20260621"></script>
 <script src="js/fx.js?v=20260621"></script>
 <script src="js/nav.js?v=20260621"></script>
-<!-- PWA: regista o service worker para tornar o site instalável + offline -->
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function () {
-      navigator.serviceWorker.register('service-worker.js').catch(function (err) {
-        console.warn('Service worker não registado:', err);
-      });
-    });
-  }
-</script>
+<!-- PWA: manifest + service worker (partilhado, auto-deteta a raiz) -->
+<script src="js/pwa.js?v=20260622"></script>
 </body>
 </html>

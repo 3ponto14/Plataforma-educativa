@@ -65,7 +65,8 @@
       bb.innerHTML =
         '<button class="mlb-link" data-sec="inicio" onclick="menuLateralIr(\'inicio\')"><i class="ph ph-house"></i><span>Início</span></button>'
         + '<button class="mlb-link" data-sec="cursos" onclick="menuLateralIr(\'cursos\')"><i class="ph ph-books"></i><span>Cursos</span></button>'
-        + '<button class="mlb-link" data-sec="apoio" onclick="menuLateralIr(\'apoio\')"><i class="ph ph-users-three"></i><span>Turmas</span></button>';
+        + '<button class="mlb-link" data-sec="apoio" onclick="menuLateralIr(\'apoio\')"><i class="ph ph-users-three"></i><span>Turmas</span></button>'
+        + '<button class="mlb-link" data-sec="perfil" onclick="menuLateralAbrir()"><i class="ph ph-user-circle"></i><span>Perfil</span></button>';
       document.body.appendChild(bb);
     }
   }
