@@ -5,9 +5,11 @@
 #   bash test/run.sh          → testa todos os anos
 #   bash test/run.sh 8        → testa só o 8.º ano
 #
-# Corre headless com o JavaScriptCore (jsc) que já existe no macOS — sem
-# instalar nada. Devolve exit 1 se algum ano tiver bugs estruturais
-# (resposta fora das opções, opção duplicada, Quiz vazio, etc.).
+# Corre headless. Usa o JavaScriptCore (jsc) do macOS se existir (sem
+# instalar nada); caso contrário cai para o node (ex.: no CI Linux do
+# GitHub), carregando um shim que define print()/quit(). Devolve exit 1 se
+# algum ano tiver bugs estruturais (resposta fora das opções, opção
+# duplicada, Quiz vazio, etc.).
 # ════════════════════════════════════════════════════════════════════════
 set -euo pipefail
 
@@ -15,9 +17,29 @@ JS_DIR="$(cd "$(dirname "$0")/../js" && pwd)"
 TEST_DIR="$(cd "$(dirname "$0")" && pwd)"
 JSC="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc"
 
-if [ ! -x "$JSC" ]; then
-  echo "ERRO: jsc não encontrado em $JSC (precisa de macOS)."; exit 2
+# Deteção do motor: jsc (macOS) > node (CI/Linux). ENGINE guarda qual usar.
+if [ -x "$JSC" ]; then
+  ENGINE="jsc"
+elif command -v node >/dev/null 2>&1; then
+  ENGINE="node"
+else
+  echo "ERRO: nenhum motor JS encontrado (precisa do jsc do macOS ou do node)."; exit 2
 fi
+
+# Corre um ficheiro JS no motor detetado. Com node, antepõe o shim que
+# define print()/quit() (o jsc já os tem nativos).
+run_js() {
+  local file="$1"
+  if [ "$ENGINE" = "jsc" ]; then
+    "$JSC" "$file"
+  else
+    local wrapped; wrapped="$(mktemp /tmp/valida_node_XXXX.js)"
+    cat "$TEST_DIR/_shim-node.js" "$file" > "$wrapped"
+    node "$wrapped"; local rc=$?
+    rm -f "$wrapped"
+    return $rc
+  fi
+}
 
 # Config de cada ano: nº de temas por capítulo (tem de espelhar _matNTemasCount).
 # n|"cap:nTemas,cap:nTemas,..."
@@ -82,7 +104,7 @@ run_mat7() {
     echo ""
     cat "$TEST_DIR/validate-mat7.js"
   } > "$tmp"
-  local out; out="$("$JSC" "$tmp" 2>&1)"
+  local out; out="$(run_js "$tmp" 2>&1)"
   echo "$out" | grep -v '__VALIDATION_FAILED__'
   rm -f "$tmp"
   if echo "$out" | grep -q '__VALIDATION_FAILED__'; then return 1; fi
@@ -117,7 +139,7 @@ run_year() {
   } > "$tmp"
 
   # jsc não devolve exit code com quit(1); detetamos a sentinela na saída.
-  local out; out="$("$JSC" "$tmp" 2>&1)"
+  local out; out="$(run_js "$tmp" 2>&1)"
   echo "$out" | grep -v '__VALIDATION_FAILED__'
   rm -f "$tmp"
   if echo "$out" | grep -q '__VALIDATION_FAILED__'; then
