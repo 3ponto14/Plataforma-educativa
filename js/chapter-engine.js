@@ -1,4 +1,4 @@
-// CHAPTER ENGINE — Generic parameterized logic for cap1–cap4
+// CHAPTER ENGINE Generic parameterized logic for cap1-cap4
 // Each chapter registers its data in window.CAP_DATA[n].
 
 window.CAP_DATA = window.CAP_DATA || {};
@@ -30,26 +30,38 @@ function _capBuildQuizHTML(exs, qidPrefix, checkFnCall) {
   var labels = ['A','B','C','D'], html = '';
   exs.forEach(function(ex, i) {
     var qid = qidPrefix + i;
+    // limpa pequenos erros de escrita matemática (1x, − -3, + 0…)
+    if (typeof _limpaMath === 'function') {
+      if (ex.enun) ex.enun = _limpaMath(ex.enun);
+      if (ex.expl) ex.expl = _limpaMath(ex.expl);
+      if (ex.opcoes) ex.opcoes = ex.opcoes.map(function (o) { return _limpaMath(o); });
+    }
     html += '<div class="quiz-question" id="' + qid + '"><div class="q-number">Questão ' + (ex.num || i+1) + ' · ' + (ex.tema||'') + '</div><div class="q-text">' + (ex.enun||'') + '</div>';
+    if (ex.visual) html += ex.visual; // gráfico/tabela/figura SVG (opcional)
     if (ex.tipo === 'fill' || ex.tipo === 'fill_frac') {
       var inpType = ex.tipo === 'fill_frac' ? 'text' : 'number';
       html += '<div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap"><input class="fill-input" id="' + qid + '-in" placeholder="?" type="' + inpType + '" style="width:100px"><button class="check-btn" onclick="' + checkFnCall + '(\'' + qid + '\',\'' + ex.tipo + '\',' + JSON.stringify(String(ex.resposta)).replace(/"/g,"'") + ')">Verificar</button></div>';
     } else if (ex.tipo === 'mc') {
       html += '<div class="options">';
-      (ex.opcoes||[]).forEach(function(opt,k) { var isC = String(opt) === String(ex.resposta); html += '<button class="option-btn" data-correct="' + isC + '" onclick="' + checkFnCall + '(\'' + qid + '\',\'mc\',' + isC + ',this)"><span class="opt-label">' + labels[k] + '</span>' + opt + '</button>'; });
+      var _ops = (typeof _normalizaOpcoes === 'function') ? _normalizaOpcoes(ex.opcoes || [], ex.resposta) : (ex.opcoes || []);
+      _ops.forEach(function(opt,k) { var isC = String(opt) === String(ex.resposta); html += '<button class="option-btn" data-correct="' + isC + '" onclick="' + checkFnCall + '(\'' + qid + '\',\'mc\',' + isC + ',this)"><span class="opt-label">' + labels[k] + '</span>' + opt + '</button>'; });
       html += '</div>';
     } else if (ex.tipo === 'vf') {
-      var vC = ex.resposta === 'V';
+      // Aceita ambos os formatos de resposta usados nos bancos:
+      // PT usa 'V'/'F'; FQ usa 'Verdadeiro'/'Falso'. Normaliza pela 1.ª letra.
+      var _r = String(ex.resposta == null ? '' : ex.resposta).trim().toUpperCase();
+      var vC = (_r.charAt(0) === 'V');
       html += '<div style="display:flex;gap:.75rem;flex-wrap:wrap"><button class="option-btn" data-correct="' + vC + '" onclick="' + checkFnCall + '(\'' + qid + '\',\'mc\',' + vC + ',this)"><span class="opt-label" style="background:rgba(62,207,142,.2);color:var(--correct)">V</span>Verdadeiro</button><button class="option-btn" data-correct="' + (!vC) + '" onclick="' + checkFnCall + '(\'' + qid + '\',\'mc\',' + (!vC) + ',this)"><span class="opt-label" style="background:rgba(255,107,107,.2);color:var(--wrong)">F</span>Falso</button></div>';
     }
-    html += '<div class="feedback" id="' + qid + '-fb"></div><span id="' + qid + '-expl" style="display:none">' + (ex.expl||'').replace(/'/g,"&#39;") + '</span></div>';
+    html += '<div class="feedback" id="' + qid + '-fb"></div><span id="' + qid + '-expl" style="display:none" data-expl="' + (ex.expl||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;') + '"></span></div>';
   });
   return html;
 }
 
 // ── Shared: check an answer (returns {correct:bool} or null if invalid) ──
 function _capCheckAnswer(qid, tipo, val) {
-  var expl = (_capEl(qid + '-expl') || {}).textContent || '';
+  var _explEl = _capEl(qid + '-expl');
+  var expl = _explEl ? (_explEl.getAttribute('data-expl') || _explEl.textContent || '') : '';
   var container = _capEl(qid);
   var correct = false;
   if (tipo === 'fill' || tipo === 'fill_frac') {
@@ -57,7 +69,7 @@ function _capCheckAnswer(qid, tipo, val) {
     if (!inp || !inp.value.trim()) { if (typeof eduToast === 'function') eduToast('Introduz uma resposta!', 'warn'); return null; }
     var uv = inp.value.trim(); inp.disabled = true;
     if (tipo === 'fill_frac') { var norm = function(s) { return s.replace(/\s/g,'').replace(/÷/g,'/'); }; correct = norm(uv) === norm(String(val)); }
-    else correct = parseFloat(uv.replace(',','.')) === Number(val);
+    else { var uNum = parseFloat(uv.replace(',','.')); correct = !isNaN(uNum) && Math.abs(uNum - Number(val)) < 0.001; }
     inp.classList.add(correct ? 'correct' : 'wrong');
   } else {
     if (container) container.querySelectorAll('.option-btn').forEach(function(b) { b.disabled = true; });
@@ -79,7 +91,9 @@ function _capShowFeedback(qid, correct, expl, val, btn) {
 // ── 1. Section navigation ──
 function capShowSection(n, id, btn) {
   var cfg = _getCfg(n); if (!cfg) return;
-  var pfx = _capPfx(n), viewId = cfg.viewId || ('view-math' + (n===1?'':n)), tabsId = cfg.tabsId || ('tabs-cap'+n);
+  var pfx = _capPfx(n), viewId = cfg.viewId || ('view-math' + (n===1?'':n));
+  // tabsId: prefer explicit cfg, then old format (tabs1/tabs2/...) used by cap JS, then tabs-capN
+  var tabsId = cfg.tabsId || ('tabs' + (n===1?'-cap1':n));
   document.querySelectorAll('#'+viewId+' .section').forEach(function(s){s.classList.remove('active');});
   var sec = _capEl('sec-'+id); if (sec) sec.classList.add('active');
   document.querySelectorAll('#'+tabsId+' .tab-btn').forEach(function(b){b.classList.remove('active');});
@@ -100,8 +114,9 @@ function capShowSection(n, id, btn) {
 // ── 2. Navigate to theory topic ──
 function capGoToTopic(n, topicNum) {
   var cfg = _getCfg(n); if (!cfg) return;
-  var pfx = _capPfx(n), tabsId = cfg.tabsId||('tabs-cap'+n);
-  capShowSection(n, 'teoria'+pfx, document.querySelector('#'+tabsId+' .tab-btn:nth-child(2)'));
+  var pfx = _capPfx(n);
+  // Pass null as btn tab active state handled by capShowSection internals
+  capShowSection(n, 'teoria'+pfx, null);
   setTimeout(function(){ var el = _capEl('topic'+(pfx?pfx+'-':'-')+topicNum) || _capEl('topic-'+topicNum); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
 }
 
@@ -246,7 +261,7 @@ function capCheckGen(n, qid, tipo, val, btn) {
 // ── 11. Flashcards ──
 function _capFcKey(n){ var c=_getCfg(n); return c?c.storageKey+'_fc':'edupt_fc'+n; }
 function _capFcLoadStats(n){ var st=_getState(n); try{var r=localStorage.getItem(_capFcKey(n));if(r)st.fcState.stats=JSON.parse(r);}catch(e){} }
-function _capFcSaveStats(n){ var st=_getState(n); try{localStorage.setItem(_capFcKey(n),JSON.stringify(st.fcState.stats));}catch(e){} }
+function _capFcSaveStats(n){ var st=_getState(n); try{localStorage.setItem(_capFcKey(n),JSON.stringify(st.fcState.stats));}catch(e){} try{document.dispatchEvent(new CustomEvent('edupt:progress'));}catch(e){} }
 function capFcRender(n) {
   var cfg=_getCfg(n); if(!cfg||!cfg.flashcards)return;
   var st=_getState(n), fc=st.fcState, pfx=_capPfx(n);
@@ -274,6 +289,10 @@ function capFcFlip(n) {
 function capFcNext(n){var fc=_getState(n).fcState;fc.idx=(fc.idx+1)%(fc.cards.length||1);capFcRender(n);}
 function capFcPrev(n){var fc=_getState(n).fcState;fc.idx=(fc.idx-1+(fc.cards.length||1))%(fc.cards.length||1);capFcRender(n);}
 function capFcGoTo(n,i){_getState(n).fcState.idx=i;capFcRender(n);}
+function capFcStartSession(n){var fc=_getState(n).fcState,cfg=_getCfg(n);if(!cfg||!cfg.flashcards)return;fc.cards=cfg.flashcards.map(function(c,i){return Object.assign({},c,{_idx:i});});fc.idx=0;fc.flipped=false;capFcRender(n);}
+function capFcSetMode(n,mode){var fc=_getState(n).fcState,cfg=_getCfg(n);if(!cfg||!cfg.flashcards)return;var all=cfg.flashcards.map(function(c,i){return Object.assign({},c,{_idx:i});});if(mode==='all'){fc.cards=all;}else if(mode==='weak'){fc.cards=all.filter(function(c){var s=fc.stats&&fc.stats[c._idx];return !s||s<2;});}else{fc.cards=all;}fc.idx=0;fc.flipped=false;capFcRender(n);}
+function capFcRate(n,r){var fc=_getState(n).fcState;if(!fc.cards.length)return;if(!fc.stats)fc.stats={};var card=fc.cards[fc.idx];fc.stats[card._idx]=(fc.stats[card._idx]||0)+r;capFcNext(n);}
+function capFcResetStats(n){var st=_getState(n);st.fcState.stats={};st.fcState.idx=0;capFcStartSession(n);}
 
 // ── 12. Timed exam ──
 function capExameSetLevel(n,btn){
@@ -286,6 +305,15 @@ function capExameStart(n) {
   var qtd=parseInt((_capEl('exame'+pfx+'-qtd')||{}).value||'15'), tempo=parseInt((_capEl('exame'+pfx+'-tempo')||{}).value||'900');
   ex.timeLeft=tempo; ex.answered={}; ex.score={correct:0,total:0};
   var temas=cfg.temas?cfg.temas.map(function(_,i){return String(i+1);}):['1','2','3','4','5'];
+  // Filtro de subtema (opt-in): se o hub do ano expõe os subtemas activos
+  // para a tab exame deste capítulo, restringe os temas a esses (índice=tema).
+  if (typeof _capExameSubtemas === 'function') {
+    var _sts = _capExameSubtemas(n);
+    if (_sts && _sts.length) {
+      var _f = temas.filter(function(t){ return _sts.indexOf(parseInt(t)) !== -1; });
+      if (_f.length) temas = _f;
+    }
+  }
   var tipos=['mc','fill','mc','fill','vf','mc','fill','mc','vf','fill','mc','mc','fill','mc','mc'], exs=[];
   for(var i=0;i<qtd;i++){var e=cfg.buildExercicio(temas[i%temas.length],tipos[i%tipos.length],ex.level);if(e)exs.push(e);}
   ex.exercicios=exs;
@@ -337,7 +365,7 @@ function capExameReset(n){
 
 // ── 13. Progress ──
 function _capProgKey(n){var c=_getCfg(n);return c?c.storageKey:'edupt_cap'+n;}
-function _capSaveProgData(n){var st=_getState(n);try{localStorage.setItem(_capProgKey(n),JSON.stringify({sections:st.progData.sections,log:st.progData.log,lastActivity:Date.now()}));}catch(e){}}
+function _capSaveProgData(n){var st=_getState(n);try{localStorage.setItem(_capProgKey(n),JSON.stringify({sections:st.progData.sections,log:st.progData.log,lastActivity:Date.now()}));}catch(e){} try{document.dispatchEvent(new CustomEvent('edupt:progress'));}catch(e){}}
 function _capLoadProgData(n){var st=_getState(n);try{var r=localStorage.getItem(_capProgKey(n));if(!r)return;var s=JSON.parse(r);if(s.sections)Object.assign(st.progData.sections,s.sections);if(s.log)st.progData.log=s.log;}catch(e){}}
 function capProgLog(n,section,correct){
   var pd=_getState(n).progData;
@@ -388,6 +416,15 @@ function _capRegisterWrappers(n, extra) {
   w['fcNext'+s] = function(){capFcNext(n)};
   w['fcPrev'+s] = function(){capFcPrev(n)};
   w['fcGoTo'+s] = function(i){capFcGoTo(n,i)};
+  w['fcStartSession'+s] = function(){capFcStartSession(n)};
+  w['fcSetMode'+s] = function(mode){capFcSetMode(n,mode)};
+  w['fcRate'+s] = function(r){capFcRate(n,r)};
+  w['fcResetStats'+s] = function(){capFcResetStats(n)};
+  w['gerarTeste'+s] = function(){capGerarTeste(n)};
+  w['setGenLevel'+s] = function(btn){capSetGenLevel(n,btn)};
+  w['gerarLocal'+s] = function(){capGerarExercicios(n)};
+  if (n === 1) { w['setLevel'] = function(btn){capSetGenLevel(1,btn)}; }
+  w['setTeste'+s+'Subtema'] = function(i,btn){capSetTesteSubtema(n,i,btn)};
   w['exame'+s+'SetLevel'] = function(btn){capExameSetLevel(n,btn)};
   w['exame'+s+'Start'] = function(){capExameStart(n)};
   w['exame'+s+'Stop'] = function(){capExameStop(n)};

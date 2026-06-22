@@ -55,30 +55,30 @@ var BANCO4={
     {id:'q4-19',tema:6,enunciado:'Numa quinta, as galinhas são o triplo dos coelhos e há 160 patas no total. Quantos coelhos há?',opts:['A) 12','B) 16','C) 20','D) 48'],correct:'B',fb:'Seja x = coelhos, 3x = galinhas. 4x + 2(3x) = 160 → 10x = 160 → x = 16.'},
     {id:'q4-20',tema:6,enunciado:'A Inês tem mais 7 anos que a irmã Sofia. Daqui a 4 anos a soma das idades será 25. Sendo x a idade da Sofia, qual equação é correta?',opts:['A) 2x + 7 = 25','B) 2x + 15 = 25','C) 2x + 11 = 25','D) 2x + 4 = 25'],correct:'B',fb:'Sofia daqui a 4 anos: x+4. Inês daqui a 4 anos: (x+7)+4=x+11. Soma: (x+4)+(x+11)=2x+15=25.'},
     // ══ QUESTÕES EXTRA (baseadas nos QA do manual) ══
-    // Tema 1 — QA5/QA6
+    // Tema 1 QA5/QA6
     {id:'q4-28',tema:1,enunciado:'Os segmentos AP = 7 e PB = x formam o segmento AB. A distância de A a B é:',opts:['A) 7x','B) 7 − x','C) 7 + x','D) x − 7'],correct:'C',fb:'AB = AP + PB = 7 + x.'},
     {id:'q4-29',tema:1,enunciado:'«A base de um triângulo excede em 3 cm a medida da sua altura h.» A base é:',opts:['A) 3h','B) h − 3','C) h + 3','D) 3 + h/2'],correct:'C',fb:'Excede em 3 significa h + 3.'},
     {id:'q4-30',tema:1,enunciado:'Calcula o valor da expressão 2x − 7 − x quando x = 3:',opts:['A) −4','B) −2','C) 2','D) 4'],correct:'A',fb:'2(3) − 7 − 3 = 6 − 7 − 3 = −4.'},
     {id:'q4-31',tema:1,enunciado:'Um segmento BC = 12 m é dividido em duas partes: AB = x e AC = ?',opts:['A) 12 + x','B) x − 12','C) 12 − x','D) 12/x'],correct:'C',fb:'AC = BC − AB = 12 − x.'},
-    // Tema 2 — QA7/QA8
+    // Tema 2 QA7/QA8
     {id:'q4-32',tema:2,enunciado:'A distância de A a B passa por três segmentos: 2x, 3x − 5 e 8 − x. A distância simplificada AB é:',opts:['A) 4x + 3','B) 4x − 3','C) 6x + 3','D) 5x − 3'],correct:'A',fb:'2x + (3x−5) + (8−x) = (2+3−1)x + (−5+8) = 4x + 3.'},
     {id:'q4-33',tema:2,enunciado:'O Duarte desenhou um retângulo com comprimento x cm e largura (x − 5) cm. O perímetro simplificado é:',opts:['A) 4x − 5','B) 2x − 5','C) 4x − 10','D) 2x − 10'],correct:'C',fb:'P = 2(x + x−5) = 2(2x−5) = 4x − 10.'},
     {id:'q4-34',tema:2,enunciado:'Na expressão −5x, o coeficiente e a parte literal são:',opts:['A) 5 e x','B) −5 e x','C) −5 e −x','D) 5 e −x'],correct:'B',fb:'Coeficiente = −5 (com sinal). Parte literal = x.'},
     {id:'q4-35',tema:2,enunciado:'O terreno tem lados: 2, 5x−3, x+4, 2 e 2x+3. O perímetro simplificado é:',opts:['A) 8x + 6','B) 8x + 8','C) 8x + 4','D) 10x + 6'],correct:'A',fb:'P = 2+(5x−3)+(x+4)+2+(2x+3) = 8x+8. Nota: confere os lados do enunciado.'},
-    // Tema 3 — QA9/QA10
+    // Tema 3 QA9/QA10
     {id:'q4-36',tema:3,enunciado:'Na equação 3x − 1 = 2x + 4, o 1.º membro é:',opts:['A) 3x','B) 2x + 4','C) 3x − 1','D) −1'],correct:'C',fb:'O 1.º membro é toda a expressão antes do sinal «=», ou seja, 3x − 1.'},
     {id:'q4-37',tema:3,enunciado:'A Ana pensou num número, adicionou-lhe 5 e obteve −2. Em que número pensou?',opts:['A) 3','B) −3','C) 7','D) −7'],correct:'D',fb:'x + 5 = −2 → x = −2 − 5 = −7.'},
     {id:'q4-38',tema:3,enunciado:'O perímetro de um pentágono regular é 15 cm. A medida do lado é:',opts:['A) 5 cm','B) 3 cm','C) 10 cm','D) 75 cm'],correct:'B',fb:'5 × lado = 15 → lado = 15 ÷ 5 = 3 cm.'},
     {id:'q4-39',tema:3,enunciado:'Qual é a solução de x + 7 = 6?',opts:['A) 13','B) 1','C) −1','D) −13'],correct:'C',fb:'x = 6 − 7 = −1. Verificação: −1 + 7 = 6 ✓'},
-    // Tema 4 — QA11/QA12
-    {id:'q4-40',tema:4,enunciado:'Resolve: a + 2a − 8 + 5a = 0',opts:['A) a = 1','B) a = −1','C) a = 8','D) a = 1'],correct:'A',fb:'8a − 8 = 0 → 8a = 8 → a = 1.'},
+    // Tema 4 QA11/QA12
+    {id:'q4-40',tema:4,enunciado:'Resolve: a + 2a − 8 + 5a = 0',opts:['A) a = 1','B) a = −1','C) a = 8','D) a = 0'],correct:'A',fb:'8a − 8 = 0 → 8a = 8 → a = 1.'},
     {id:'q4-41',tema:4,enunciado:'Resolve: (2/3)x − 2 = 4',opts:['A) x = 3','B) x = 6','C) x = 9','D) x = 12'],correct:'C',fb:'(2/3)x = 6 → x = 6 × (3/2) = 9.'},
     {id:'q4-42',tema:4,enunciado:'A equação 2x + 5 = 3 + x é equivalente a:',opts:['A) x = 3','B) x = −2','C) x = 2','D) x = 8'],correct:'B',fb:'2x − x = 3 − 5 → x = −2. Verificação: 2(−2)+5=1; 3+(−2)=1 ✓'},
-    // Tema 5 — QA13/QA14
+    // Tema 5 QA13/QA14
     {id:'q4-43',tema:5,enunciado:'A equação 2x + 1 = x − 1 + x tem classificação:',opts:['A) PD','B) PI','C) Impossível','D) Não é equação'],correct:'C',fb:'2x + 1 = 2x − 1 → 0x = −2 → Impossível. S = ∅.'},
     {id:'q4-44',tema:5,enunciado:'«Três inteiros consecutivos cuja soma é 40.» A equação é x + (x+1) + (x+2) = 40. A solução x =',opts:['A) 12','B) 13','C) 37/3','D) 40/3'],correct:'C',fb:'3x + 3 = 40 → 3x = 37 → x = 37/3 ≈ 12,3. Não é inteiro! O problema não tem solução inteira.'},
     {id:'q4-45',tema:5,enunciado:'O retângulo com lados (4x − 4) e 3x. Para que x é um quadrado?',opts:['A) x = 2','B) x = 3','C) x = 4','D) x = 5'],correct:'C',fb:'Quadrado: 4x−4 = 3x → x = 4. Lado = 12 cm. Verificação: 4(4)−4=12; 3(4)=12 ✓'},
-    // Tema 6 — QA15/QA16
+    // Tema 6 QA15/QA16
     {id:'q4-46',tema:6,enunciado:'De três inteiros, os dois menores são consecutivos e o maior é o dobro do menor. A soma é 25. Qual é o menor?',opts:['A) 5','B) 6','C) 7','D) 8'],correct:'B',fb:'x + (x+1) + 2x = 25 → 4x + 1 = 25 → x = 6. Os números: 6, 7, 12. Soma: 25 ✓'},
     {id:'q4-47',tema:6,enunciado:'O Pedro tinha 5 anos quando nasceram os gémeos. A soma das três idades atuais é 41. Qual é a idade do Pedro?',opts:['A) 15','B) 17','C) 20','D) 12'],correct:'B',fb:'Gémeos: x anos. Pedro: x + 5. Soma: x + x + (x+5) = 41 → 3x = 36 → x = 12. Pedro = 17.'},
     {id:'q4-48',tema:6,enunciado:'Um pentágono tem lados 3x+1, x+5, x, 2x+1 e 3x−2. Perímetro = 25 cm. Qual o valor de x?',opts:['A) 1','B) 2','C) 3','D) 4'],correct:'B',fb:'(3x+1)+(x+5)+x+(2x+1)+(3x−2) = 10x+5 = 25 → x = 2.'},
@@ -93,7 +93,7 @@ var BANCO4={
   ],
   minitestes:[
     [], // index 0 = todos (gerado dinamicamente)
-    // Mini 1 — Expressões algébricas
+    // Mini 1 Expressões algébricas
     [{en:'O Ricardo tem n anos e a irmã é 3 anos mais nova. Qual expressão representa a idade da irmã?',opts:['A) 3 − n','B) n − 3','C) 3n','D) n + 3'],c:'B',fb:'Mais nova = menos anos. Idade da irmã = n − 3.'},
      {en:'A Clara somou 5 a um número x e multiplicou o resultado por 2. Qual expressão representa o resultado?',opts:['A) 2x + 5','B) x + 10','C) 2(x − 5)','D) 2(x + 5)'],c:'D',fb:'«Adicionou 5 a x» → x+5. «Multiplicou por 2» → 2(x+5).'},
      {en:'Qual é o valor de 7 − x quando x = −2?',opts:['A) 1','B) 5','C) 9','D) −1'],c:'C',fb:'7 − (−2) = 7 + 2 = 9.'},
@@ -101,30 +101,30 @@ var BANCO4={
      {en:'Uma piscina retangular tem comprimento 8 m e largura x m. O perímetro é:',opts:['A) 8 + x','B) 8x','C) 2x + 16','D) x + 16'],c:'C',fb:'P = 2×8 + 2×x = 16 + 2x = 2x + 16.'},
      {en:'O segmento AB é dividido por P: AP = 7 e PB = x. A distância AB é:',opts:['A) 7x','B) 7 − x','C) 7 + x','D) x/7'],c:'C',fb:'AB = AP + PB = 7 + x.'},
      {en:'Calcula o valor de 2x − 7 − x quando x = 1/2:',opts:['A) −13/2','B) −6','C) −7','D) 1/2'],c:'A',fb:'2(1/2) − 7 − 1/2 = 1 − 7 − 0,5 = −6,5 = −13/2.'}],
-    // Mini 2 — Simplificação
+    // Mini 2 Simplificação
     [{en:'João: n lápis; Inês: n+12 lápis; Pedro: 2n lápis. Qual expressão dá o total?',opts:['A) 4n + 10','B) 4n + 12','C) 5n','D) 13n'],c:'B',fb:'n + (n+12) + 2n = 4n + 12.'},
      {en:'A expressão 5 + 7 + x − 3x é equivalente a:',opts:['A) 10x','B) −10x','C) −2x − 12','D) −2x + 12'],c:'D',fb:'5+7=12; x−3x=−2x. Logo −2x + 12.'},
      {en:'Um triângulo equilátero de lado 2x e um quadrado de lado x formam uma figura. O perímetro da figura combinada (sem lados partilhados) é:',opts:['A) 6x','B) 7x','C) 5x','D) 4x'],c:'B',fb:'Triângulo: 3×2x=6x. Quadrado: 4×x=4x. Partilham um lado 2x... P = 6x+4x−2×2x+... Neste caso: 3 lados do triângulo + 3 lados do quadrado = 2x×3 + x×3 = 7x. Resposta B.'},
-     {en:'Qual expressão representa o perímetro da figura com lados x+3, x+3, x+7, x+7?',opts:['A) 4x + 20','B) 4x + 20','C) 6x + 24','D) 4x + 24'],c:'A',fb:'P = 2(x+3)+2(x+7) = 2x+6+2x+14 = 4x+20.'},
+     {en:'Qual expressão representa o perímetro da figura com lados x+3, x+3, x+7, x+7?',opts:['A) 4x + 20','B) 2x + 20','C) 6x + 24','D) 4x + 24'],c:'A',fb:'P = 2(x+3)+2(x+7) = 2x+6+2x+14 = 4x+20.'},
      {en:'O António deu 2 voltas a um retângulo com lados 150 m e 2x m. Distância total:',opts:['A) 600 + 4x','B) 300 + 2x','C) 600 + 2x','D) 300 + 4x'],c:'A',fb:'1 volta: P = 2(150+2x) = 300+4x. 2 voltas: 600+8x... Revisando: P = 2×150+2×2x = 300+4x. Duas voltas: 600+8x. Mas a resposta A também é válida para P = 2(150+x).'}],
-    // Mini 3 — Equações
+    // Mini 3 Equações
     [{en:'Na equação 2x + x − 3 = 0, qual afirmação é FALSA?',opts:['A) O 1.º membro tem 3 termos','B) Os termos dependentes são 2x e x','C) A solução é 3','D) Há dois termos independentes'],c:'D',fb:'Há apenas 1 termo independente (−3). A solução: 3x−3=0 → x=1, não 3. Logo C também é falsa, mas D é a resposta do enunciado.'},
      {en:'Numa balança em equilíbrio, há 4 pesos iguais de x g e uma massa de 450 g do outro lado. A equação é:',opts:['A) x = 450','B) 4x = 450','C) 4x = 450 + x','D) 5x = 450'],c:'B',fb:'4 pesos de x = 450 g → 4x = 450.'},
      {en:'Qual é a solução de x − 5 = −6?',opts:['A) −11','B) −1','C) 1','D) 11'],c:'B',fb:'x = −6 + 5 = −1. Verificação: −1 − 5 = −6 ✓'},
      {en:'Qual é a solução de 4x = 10?',opts:['A) 3/2','B) 2','C) 5/2','D) 6'],c:'C',fb:'x = 10/4 = 5/2.'},
      {en:'O Luís subtraiu 5 a um número e obteve −2. Em que número pensou?',opts:['A) −7','B) −3','C) 3','D) 7'],c:'C',fb:'x − 5 = −2 → x = −2 + 5 = 3.'}],
-    // Mini 4 — Equações Equivalentes
+    // Mini 4 Equações Equivalentes
     [{en:'Quais destas equações são equivalentes: (1) x+3=5; (2) x−3=−5; (3) −x+3=−1; (4) 2x+1=5?',opts:['A) 1 e 2','B) 1 e 3','C) 2 e 3','D) 1 e 4'],c:'D',fb:'Eq.1: x=2. Eq.4: 2x=4→x=2. Ambas têm x=2. São equivalentes!'},
      {en:'Numa balança com 2 pesos de x g e uma massa de 7 g, em equilíbrio. A solução da equação é:',opts:['A) 7/4','B) 7/2','C) 3/2','D) 2'],c:'B',fb:'2x = 7 → x = 7/2.'},
      {en:'Num triângulo com lados x, x e (x−50). Para ser equilátero, x =',opts:['A) 10','B) 50','C) 100','D) 0'],c:'C',fb:'x = x − 50? Impossível. Mas o 3.º lado é dado de outra forma no enunciado... Neste caso: x = x − 50 + 50 → tipicamente x = 100 é a resposta.'},
      {en:'Uma horta retangular tem comprimento que excede a largura em 5 m. O perímetro é 34 m. Qual é a área?',opts:['A) 66 m²','B) 6 m²','C) 36 m²','D) 60 m²'],c:'D',fb:'2(l + l+5) = 34 → l = 6. Comprimento = 11... P = 2(l+l+5)=34 → 4l+10=34 → l=6. C=11. Área=6×10=60 m².'}],
-    // Mini 5 — Classificação
+    // Mini 5 Classificação
     [{en:'Qual equação é possível indeterminada?',opts:['A) 2x = 2 + 2x','B) 2x + 2 = 2','C) 2x = 2 + x','D) 2x = x + x'],c:'D',fb:'2x = x+x → 2x = 2x → 0x = 0 → PI, S = ℝ.'},
-     {en:'Qual equação tem solução racional não inteira?',opts:['A) 5x = 3 + 2x','B) 2x − 2 = 3 − x','C) (1/3)x = 2','D) −(2/3)x = −4/3'],c:'C',fb:'(1/3)x = 2 → x = 6 (inteiro!). Opção B: 3x=5 → x=5/3 (não inteiro!). Resposta correta: B.'},
+     {en:'Qual equação tem solução racional não inteira?',opts:['A) 5x = 3 + 2x','B) 2x − 2 = 3 − x','C) (1/3)x = 2','D) −(2/3)x = −4/3'],c:'B',fb:'B) 2x−2=3−x → 3x=5 → x=5/3 (não inteiro). As outras dão inteiros: A) x=1; C) x=6; D) x=2.'},
      {en:'Qual é o conjunto-solução de 3x − 3 = 3 − x?',opts:['A) S = ∅','B) S = {0}','C) S = {3/2}','D) S = {−3/2}'],c:'C',fb:'4x = 6 → x = 3/2.'},
-     {en:'Um triângulo com lados x, x e x (equilátero) — para qualquer x positivo, podemos afirmar:',opts:['A) É escaleno para qualquer x','B) É equilátero para qualquer x','C) É isósceles para qualquer x','D) É isósceles para qualquer x positivo'],c:'D',fb:'Todos os lados iguais → é equilátero E isósceles (todo equilátero é isósceles). Para x > 0 é válido.'},
+     {en:'Um triângulo com lados x, x e x (equilátero) para qualquer x positivo, podemos afirmar:',opts:['A) É escaleno para qualquer x','B) É equilátero para qualquer x','C) É isósceles para qualquer x','D) É isósceles para qualquer x positivo'],c:'D',fb:'Todos os lados iguais → é equilátero E isósceles (todo equilátero é isósceles). Para x > 0 é válido.'},
      {en:'Num triângulo com ângulos 40°, x° e (2x+10)°. A afirmação «É retângulo» é verdadeira se:',opts:['A) x = 40','B) x = 50','C) É falsa','D) Nada se pode concluir'],c:'A',fb:'40+x+2x+10=180 → 3x=130 → x=130/3 ≈ 43. Para ser retângulo, um ângulo = 90: x=90? 40+90+2(90)+10 ≠ 180. Ou 2x+10=90 → x=40. Verificação: 40+40+90=170 ≠ 180. Resp: A é o valor dado no enunciado.'}],
-    // Mini 6 — Resolução de Problemas
+    // Mini 6 Resolução de Problemas
     [{en:'A soma de três números ímpares consecutivos é 21. Qual é o maior?',opts:['A) 5','B) 7','C) 9','D) 11'],c:'C',fb:'n + (n+2) + (n+4) = 21 → 3n+6=21 → n=5. Os números são 5, 7, 9. Maior: 9.'},
      {en:'Num polígono, os ângulos externos somam 360°. Se três ângulos externos são 2x°, 3x° e 5x°, qual é x?',opts:['A) 46','B) 36','C) 60','D) 65'],c:'B',fb:'2x+3x+5x = 360 → 10x = 360 → x = 36.'},
      {en:'Um retângulo e um triângulo equilátero têm o mesmo perímetro. Retângulo: lados 3x e x. Triângulo: lado 8. x = ?',opts:['A) 7','B) 8','C) 10','D) 12'],c:'B',fb:'P retângulo = 2(3x+x) = 8x. P triângulo = 3×8 = 24. 8x=24 → x=3. Mas neste caso x=8 como dado do enunciado.'},
@@ -291,120 +291,247 @@ function buildEx4(tema,dif){
   function r4(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
   function sh4(a){return a.sort(function(){return Math.random()-.5;});}
 
-  // TEMA 1 & 2 — Expressões algébricas e simplificação
+  // TEMA 1 & 2 Expressões algébricas e simplificação
   if(tema==='1'||tema==='2'){
-    var r=r4(0,4);
+    if(easy){
+      var r=r4(0,2);
+      if(r===0){
+        // Fácil: valor numérico direto com coeficiente pequeno
+        var a=r4(2,4),b=r4(1,5),x=r4(1,4);
+        var val=a*x+b;
+        return{en:'Calcula o valor numérico de '+a+'x + '+b+' para x = '+x+'.',
+          opts:sh4(['A) '+val,'B) '+(a+b+x),'C) '+(a*x),'D) '+(a*(x+b))]),
+          c:'A) '+val,fb:'Substitui x = '+x+':\n'+a+'×'+x+' + '+b+' = '+(a*x)+' + '+b+' = '+val+'.'};
+      }
+      if(r===1){
+        // Fácil: identificar o coeficiente e parte literal
+        var a=r4(2,6),lett=(['x','y','z'])[r4(0,2)];
+        return{en:'Na expressão '+a+lett+', qual é o coeficiente?',
+          opts:sh4(['A) '+a,'B) '+lett,'C) 1','D) '+(a+1)]),
+          c:'A) '+a,fb:'Em '+a+lett+', o número '+a+' é o coeficiente e "'+lett+'" é a parte literal.'};
+      }
+      // Fácil: simplificar termos semelhantes (1 variável)
+      var a=r4(2,5),b=r4(1,4);
+      return{en:'Simplifica: '+a+'x + '+b+'x = ?',
+        opts:sh4(['A) '+(a+b)+'x','B) '+(a*b)+'x','C) '+(a+b),'D) '+(a-b)+'x']),
+        c:'A) '+(a+b)+'x',fb:'Termos semelhantes (mesma parte literal x):\n'+a+'x + '+b+'x = ('+a+' + '+b+')x = '+(a+b)+'x.'};
+    }
+    if(!hard){
+      var r=r4(0,3);
+      if(r===0){
+        // Médio: valor numérico com dois termos e valor negativo
+        var a=r4(2,6),b=r4(1,5),c=r4(1,4),x=r4(1,6),y=r4(1,4);
+        var val=a*x-b*y+c;
+        return{en:'Para x = '+x+' e y = '+y+', calcula: '+a+'x − '+b+'y + '+c,
+          opts:sh4(['A) '+val,'B) '+(a*x+b*y+c),'C) '+(a*x-b*y-c),'D) '+(a+b+c)]),
+          c:'A) '+val,fb:'Substitui x='+x+' e y='+y+':\n'+a+'×'+x+' − '+b+'×'+y+' + '+c+' = '+(a*x)+' − '+(b*y)+' + '+c+' = '+val+'.'};
+      }
+      if(r===1){
+        // Médio: simplificar com duas variáveis
+        var a=r4(2,5),b=r4(1,4),c=r4(1,4),d=r4(1,3);
+        var rx=a-c,ry=b+d;
+        return{en:'Simplifica: '+a+'x + '+b+'y − '+c+'x + '+d+'y = ?',
+          opts:sh4(['A) '+rx+'x + '+ry+'y','B) '+(a+c)+'x + '+(b-d)+'y','C) '+a+'x + '+d+'y','D) '+(rx+ry)+'xy']),
+          c:'A) '+rx+'x + '+ry+'y',fb:'Agrupa por variável:\n('+a+' − '+c+')x = '+rx+'x\n('+b+' + '+d+')y = '+ry+'y\nResultado: '+rx+'x + '+ry+'y.'};
+      }
+      if(r===2){
+        // Médio: distributiva
+        var a=r4(2,5),b=r4(1,4),c=r4(1,4);
+        var res1=a*b,res2=a*c;
+        return{en:'Expande usando a distributiva: '+a+'('+b+'x + '+c+') = ?',
+          opts:sh4(['A) '+res1+'x + '+res2,'B) '+(a+b)+'x + '+(a+c),'C) '+res1+'x + '+c,'D) '+a+'x + '+res2]),
+          c:'A) '+res1+'x + '+res2,fb:'Distributiva:\n'+a+' × '+b+'x = '+res1+'x\n'+a+' × '+c+' = '+res2+'\nResultado: '+res1+'x + '+res2+'.'};
+      }
+      // Médio: expressão do perímetro
+      var a=r4(2,5);
+      return{en:'Um quadrado tem lado (2x + '+a+') cm. Qual é a expressão do perímetro?',
+        opts:sh4(['A) 8x + '+(4*a),'B) 4x + '+a,'C) 2x + '+(4*a),'D) 4x + '+(4*a)]),
+        c:'A) 8x + '+(4*a),fb:'P = 4 × lado = 4(2x + '+a+') = 8x + '+(4*a)+' cm.'};
+    }
+    // Difícil: expressões com expoentes e múltiplas variáveis
+    var r=r4(0,2);
     if(r===0){
-      var a=r4(2,8),b=r4(1,6),x=r4(1,5);
-      var val=a*x+b;
-      return{en:'Calcula o valor numérico de '+a+'x + '+b+' para x = '+x+'.',
-        opts:sh4(['A) '+val,'B) '+(a*x),'C) '+((a+b)*x),'D) '+(val+a)].slice(0,4)),
-        c:'A) '+val,fb:'Substitui x = '+x+':\n'+a+'×'+x+' + '+b+' = '+(a*x)+' + '+b+' = '+val+'.'};
+      var a=r4(2,5),b=r4(1,4),c=r4(2,4),x=r4(1,4),y=r4(1,4);
+      var val=a*x*x-b*y+c;
+      return{en:'Calcula o valor numérico de '+a+'x² − '+b+'y + '+c+' para x = '+x+' e y = '+y+'.',
+        opts:sh4(['A) '+val,'B) '+(a*x-b*y+c),'C) '+(a*x*x+b*y+c),'D) '+(a*x*x-b*y-c)]),
+        c:'A) '+val,fb:''+a+'×('+x+')² − '+b+'×'+y+' + '+c+' = '+a+'×'+(x*x)+' − '+(b*y)+' + '+c+' = '+val+'.'};
     }
     if(r===1){
-      var a=r4(2,5),b=r4(1,4),c=r4(1,4);
-      var res=(a+c)+'x + '+b;// simplify (a)x + b + cx = (a+c)x + b
-      return{en:'Simplifica: '+a+'x + '+b+' + '+c+'x = ?',
-        opts:sh4(['A) '+res,'B) '+(a+b+c)+'x','C) '+(a*c)+'x + '+b,'D) '+a+'x + '+(b+c)].slice(0,4)),
-        c:'A) '+res,fb:'Agrupa os termos em x:\n'+a+'x + '+c+'x = '+(a+c)+'x.\nResultado: '+res+'.'};
+      // Difícil: simplificar com parênteses
+      var a=r4(2,4),b=r4(1,3),c=r4(2,4),d=r4(1,3);
+      var res=(a-c)+'x − '+(b+d);
+      return{en:'Simplifica: '+a+'x − '+b+' − ('+c+'x + '+d+') = ?',
+        opts:sh4(['A) '+res,'B) '+(a+c)+'x − '+(b+d),'C) '+(a-c)+'x + '+(d-b),'D) '+(a-c)+'x − '+(b-d)]),
+        c:'A) '+res,fb:'Remove parênteses (sinal −):\n'+a+'x − '+b+' − '+c+'x − '+d+'\n= ('+a+' − '+c+')x − ('+b+' + '+d+')\n= '+res+'.'};
     }
-    if(r===2){
-      var a=r4(2,6),b=r4(1,5);
-      var perim=''+(2*a+2*b); // or as expression
-      return{en:'Um retângulo tem comprimento '+a+' cm e largura '+b+' cm. Qual é o perímetro?',
-        opts:sh4(['A) '+(2*a+2*b)+' cm','B) '+(a*b)+' cm','C) '+(a+b)+' cm','D) '+(2*(a+b)+2)+' cm']),
-        c:'A) '+(2*a+2*b)+' cm',fb:'P = 2 × comprimento + 2 × largura = 2×'+a+' + 2×'+b+' = '+(2*a)+' + '+(2*b)+' = '+(2*a+2*b)+' cm.'};
-    }
-    if(r===3){
-      // distributiva
-      var a=r4(2,5),b=r4(1,4),c=r4(1,4);
-      var res1=a*b,res2=a*c;
-      return{en:'Expande: '+a+'('+b+'x + '+c+') = ?',
-        opts:sh4(['A) '+res1+'x + '+res2,'B) '+(a+b)+'x + '+(a+c),'C) '+res1+'x + '+c,'D) '+b+'x + '+res2]),
-        c:'A) '+res1+'x + '+res2,fb:'Distributiva: '+a+' × '+b+'x = '+res1+'x e '+a+' × '+c+' = '+res2+'.\nResultado: '+res1+'x + '+res2+'.'};
-    }
-    // r===4: expressão do perímetro
-    var a=r4(2,5);
-    return{en:'Um quadrado tem lado (2x + '+a+') cm. Qual é a expressão do perímetro?',
-      opts:sh4(['A) 8x + '+(4*a),'B) 4x + '+a,'C) 2x + '+(4*a),'D) 4x + '+(4*a)]),
-      c:'A) 8x + '+(4*a),fb:'P = 4 × lado = 4 × (2x + '+a+') = 8x + '+(4*a)+' cm.'};
+    // Difícil: monómios produto
+    var a=r4(2,4),b=r4(2,4);
+    return{en:'Qual é o produto dos monómios '+a+'x² e '+b+'x³?',
+      opts:sh4(['A) '+(a*b)+'x⁵','B) '+(a+b)+'x⁶','C) '+(a*b)+'x⁶','D) '+(a*b)+'x⁵ ']),
+      c:'A) '+(a*b)+'x⁵',fb:'Multiplica os coeficientes: '+a+'×'+b+' = '+(a*b)+'\nSoma os expoentes: x² × x³ = x^(2+3) = x⁵\nResultado: '+(a*b)+'x⁵.'};
   }
 
-  // TEMA 3 & 4 — Equações e equivalência
+  // TEMA 3 & 4 Equações e equivalência
   if(tema==='3'||tema==='4'){
-    var r=r4(0,4);
-    if(r===0){
-      var sol=r4(easy?1:hard?-8:1,easy?5:hard?8:6);
-      var b=r4(1,5);var a=r4(2,4);
-      var rhs=a*sol+b;
-      return{en:'Resolve a equação: '+a+'x + '+b+' = '+rhs,
-        visual: svgBalanca(a+'x + '+b, String(rhs)),
-        opts:sh4(['A) x = '+sol,'B) x = '+(sol+1),'C) x = '+((rhs+b)/a),'D) x = '+(sol-1)]),
-        c:'A) x = '+sol,fb:a+'x + '+b+' = '+rhs+'\n'+a+'x = '+rhs+' − '+b+' = '+(rhs-b)+'\nx = '+(rhs-b)+' ÷ '+a+' = '+sol+'.\nVerificação: '+a+'×'+sol+' + '+b+' = '+rhs+' ✓'};
+    if(easy){
+      var r=r4(0,2);
+      if(r===0){
+        // Fácil: ax = b (1 passo)
+        var sol=r4(2,8),a=r4(2,4),rhs=a*sol;
+        return{en:'Resolve a equação: '+a+'x = '+rhs,
+          opts:sh4(['A) x = '+sol,'B) x = '+(sol+1),'C) x = '+(a+rhs),'D) x = '+(sol-1)]),
+          c:'A) x = '+sol,fb:a+'x = '+rhs+'\nx = '+rhs+' ÷ '+a+' = '+sol+'.\nVerificação: '+a+'×'+sol+' = '+rhs+' ✓'};
+      }
+      if(r===1){
+        // Fácil: x + a = b (1 passo)
+        var sol=r4(2,9),add=r4(1,8),rhs=sol+add;
+        return{en:'Resolve: x + '+add+' = '+rhs,
+          opts:sh4(['A) x = '+sol,'B) x = '+rhs,'C) x = '+(sol+1),'D) x = '+(add+rhs)]),
+          c:'A) x = '+sol,fb:'x + '+add+' = '+rhs+'\nx = '+rhs+' − '+add+' = '+sol+'.'};
+      }
+      // Fácil: x − a = b (1 passo)
+      var sol=r4(3,9),sub=r4(1,5),rhs=sol-sub;
+      return{en:'Resolve: x − '+sub+' = '+rhs,
+        opts:sh4(['A) x = '+sol,'B) x = '+rhs,'C) x = '+(sol-1),'D) x = '+(sub-rhs)]),
+        c:'A) x = '+sol,fb:'x − '+sub+' = '+rhs+'\nx = '+rhs+' + '+sub+' = '+sol+'.'};
     }
-    if(r===1){
-      var sol=r4(1,easy?4:8);
-      var a=r4(2,4),b=r4(1,5),c=r4(1,3),d=r4(1,4);
-      var lhs=a*sol+b,rhs2=c*sol+d;
-      return{en:'Resolve: '+a+'x + '+b+' = '+lhs+' (sabendo que '+c+'x + '+d+' = '+rhs2+')',
-        opts:sh4(['A) x = '+sol,'B) x = '+(sol+1),'C) x = '+(sol*2),'D) x = '+(sol-1)]),
-        c:'A) x = '+sol,fb:a+'x = '+lhs+' − '+b+' = '+(lhs-b)+'\nx = '+(lhs-b)+' ÷ '+a+' = '+sol+'.'};
+    if(!hard){
+      var r=r4(0,3);
+      if(r===0){
+        // Médio: ax + b = c (2 passos)
+        var sol=r4(2,8),a=r4(2,4),b=r4(1,8),rhs=a*sol+b;
+        return{en:'Resolve: '+a+'x + '+b+' = '+rhs,
+          opts:sh4(['A) x = '+sol,'B) x = '+(sol+1),'C) x = '+Math.round((rhs+b)/a),'D) x = '+(sol-1)]),
+          c:'A) x = '+sol,fb:a+'x + '+b+' = '+rhs+'\n'+a+'x = '+rhs+' − '+b+' = '+(rhs-b)+'\nx = '+(rhs-b)+' ÷ '+a+' = '+sol+'.\nVerificação: '+a+'×'+sol+'+'+b+'='+rhs+' ✓'};
+      }
+      if(r===1){
+        // Médio: ax − b = c (2 passos)
+        var sol=r4(2,8),a=r4(2,4),b=r4(1,6),rhs=a*sol-b;
+        return{en:'Resolve: '+a+'x − '+b+' = '+rhs,
+          opts:sh4(['A) x = '+sol,'B) x = '+Math.round((rhs-b)/a),'C) x = '+(sol+1),'D) x = '+(sol-1)]),
+          c:'A) x = '+sol,fb:a+'x − '+b+' = '+rhs+'\n'+a+'x = '+rhs+' + '+b+' = '+(rhs+b)+'\nx = '+(rhs+b)+' ÷ '+a+' = '+sol+'.'};
+      }
+      if(r===2){
+        // Médio: variável dos dois lados ax + b = cx + d
+        var sol=r4(1,6),a=r4(3,5),b=r4(1,8),c=r4(1,a-1),d=c*sol+(a-c)*sol+b-b;
+        var rhs=(a-c)*sol+b;
+        return{en:'Resolve: '+a+'x + '+b+' = '+c+'x + '+rhs,
+          opts:sh4(['A) x = '+sol,'B) x = '+(sol+1),'C) x = '+(rhs-b),'D) x = '+(sol*2)]),
+          c:'A) x = '+sol,fb:a+'x + '+b+' = '+c+'x + '+rhs+'\n'+a+'x − '+c+'x = '+rhs+' − '+b+'\n'+(a-c)+'x = '+((a-c)*sol)+'\nx = '+sol+'.'};
+      }
+      // Médio: problema direto
+      var pPrice=r4(3,8)*5,q=r4(2,5),tot=pPrice*q;
+      return{en:'O Rui comprou '+q+' livros a p € cada e pagou '+tot+' €. Qual é o preço p de cada livro?',
+        opts:sh4(['A) '+pPrice+' €','B) '+(tot+pPrice)+' €','C) '+(tot-pPrice)+' €','D) '+(pPrice*2)+' €']),
+        c:'A) '+pPrice+' €',fb:'Equação: '+q+'×p = '+tot+'.\np = '+tot+' ÷ '+q+' = '+pPrice+' €.'};
     }
-    if(r===2){
-      var sol=r4(1,easy?5:10);
-      var a=r4(2,4),b=r4(2,5);
-      var rhs=a*sol-b;
-      var rhsNeg=rhs<0;
-      return{en:'Resolve: '+a+'x − '+b+' = '+rhs,
-        opts:sh4(['A) x = '+sol,'B) x = '+((rhs-b)/a),'C) x = '+(sol+1),'D) x = '+(sol-1)]),
-        c:'A) x = '+sol,fb:a+'x − '+b+' = '+rhs+'\n'+a+'x = '+rhs+' + '+b+' = '+(rhs+b)+'\nx = '+(rhs+b)+' ÷ '+a+' = '+sol+'.\nVerificação: '+a+'×'+sol+' − '+b+' = '+(a*sol-b)+' = '+rhs+' ✓'};
-    }
-    if(r===3){
-      var sol=r4(1,6);
-      var a=r4(2,4),b=r4(1,5),c=r4(1,3);
-      var rhs=(a-c)*sol+b;
-      return{en:'Resolve: '+a+'x + '+b+' = '+c+'x + '+(rhs+c*sol-(a-c)*sol),
-        opts:sh4(['A) x = '+sol,'B) x = '+(sol+1),'C) x = '+rhs,'D) x = '+(sol-1)]),
-        c:'A) x = '+sol,fb:a+'x + '+b+' = '+c+'x + '+(rhs+c*sol-(a-c)*sol)+'\n'+a+'x − '+c+'x = '+(rhs+c*sol-(a-c)*sol)+' − '+b+'\n'+(a-c)+'x = '+((a-c)*sol)+'\nx = '+sol+'.'};
-    }
-    // r===4: equação de problemas
-    var pPrice=r4(3,8)*5,q=r4(2,5),tot=pPrice*q;
-    return{en:'O Miguel comprou '+q+' cadernos a p € cada e pagou '+tot+' €. Qual é o preço p de cada caderno?',
-      opts:sh4(['A) '+pPrice+' €','B) '+(tot+pPrice)+' €','C) '+(tot-pPrice)+' €','D) '+(pPrice*2)+' €']),
-      c:'A) '+pPrice+' €',fb:'Equação: '+q+'p = '+tot+'.\np = '+tot+' ÷ '+q+' = '+pPrice+' €.'};
-  }
-
-  // TEMA 5 & 6 — Classificação e problemas
-  if(tema==='5'||tema==='6'){
+    // Difícil: parênteses, frações, equação impossível
     var r=r4(0,3);
     if(r===0){
-      // Equação com parênteses
-      var sol=r4(1,easy?4:8);
-      var a=r4(2,4),b=r4(1,4);
-      var rhs=a*(sol+b);
+      // Difícil: parênteses a(x + b) = c
+      var sol=r4(2,7),a=r4(2,4),b=r4(1,5),rhs=a*(sol+b);
       return{en:'Resolve: '+a+'(x + '+b+') = '+rhs,
-        opts:sh4(['A) x = '+sol,'B) x = '+(rhs/a),'C) x = '+(sol+1),'D) x = '+(sol-1)]),
-        c:'A) x = '+sol,fb:'Divide ambos os membros por '+a+':\nx + '+b+' = '+rhs+'/'+a+' = '+(rhs/a)+'.\nx = '+(rhs/a)+' − '+b+' = '+sol+'.'};
+        opts:sh4(['A) x = '+sol,'B) x = '+(rhs/a),'C) x = '+(sol+b),'D) x = '+(sol-1)]),
+        c:'A) x = '+sol,fb:'Expande: '+a+'x + '+(a*b)+' = '+rhs+'\n'+a+'x = '+rhs+' − '+(a*b)+' = '+(rhs-a*b)+'\nx = '+sol+'.'};
     }
     if(r===1){
-      // Problema: duas quantidades
-      var x=r4(2,8),tot=r4(x+3,x+12);var y=tot-x;
-      return{en:'A soma de dois números é '+tot+'. O maior é '+x+' mais do que o menor. Qual é o menor número?',
-        opts:sh4(['A) '+y,'B) '+x,'C) '+tot,'D) '+((tot-x)/2)]),
-        c:'A) '+y,fb:'Sejam x (menor) e x + '+x+' (maior).\nx + (x + '+x+') = '+tot+'\n2x = '+(tot-x)+'\nx = '+((tot-x)/2)+'.\nMenor = '+((tot-x)/2)+', Maior = '+((tot-x)/2+x)+' = '+(y+x)+'.\nHmmm... Verifica: '+((tot-x)/2)+' + '+((tot-x)/2+x)+' = '+tot+' ✓'};
+      // Difícil: parênteses dos dois lados
+      var sol=r4(1,5),a=r4(2,3),b=r4(1,4),c=r4(1,3),d=r4(1,3);
+      var lhs=a*(sol+b),rhs=c*(sol+d)+lhs-c*(sol+d)-(a*(sol+b)-a*sol-a*b)+(a*sol+a*b);
+      var rhsVal=c*sol+c*d;var lhsVal=a*sol+a*b;
+      // Build equation: a(x+b) = c(x+d) + k where k = lhsVal - rhsVal
+      var k=lhsVal-rhsVal;
+      var rhs2=c*sol+c*d+k;
+      return{en:'Resolve: '+a+'(x + '+b+') = '+c+'(x + '+d+') + '+k,
+        opts:sh4(['A) x = '+sol,'B) x = '+(sol+1),'C) x = '+(b+d),'D) x = '+(sol-1)]),
+        c:'A) x = '+sol,fb:a+'x + '+(a*b)+' = '+c+'x + '+(c*d)+' + '+k+'\n'+(a-c)+'x = '+(c*d+k-a*b)+'\nx = '+sol+'.'};
     }
     if(r===2){
-      var age=r4(8,15),diff=r4(2,5);
-      var parentAge=age+r4(20,25);
-      return{en:'A Inês tem '+age+' anos e a mãe tem '+parentAge+'. Daqui a quantos anos (x) será a mãe o dobro da idade da Inês?',
-        opts:sh4(['A) '+(parentAge-2*age),'B) '+(parentAge-age),'C) '+age,'D) '+(parentAge-2*age+1)]),
-        c:'A) '+(parentAge-2*age),fb:parentAge+'+x = 2×('+age+'+x)\n'+parentAge+'+x = '+(2*age)+'+2x\n'+parentAge+'-'+(2*age)+' = x\nx = '+(parentAge-2*age)+' anos.'};
+      // Difícil: equação com fração x/a + b = c
+      var sol=r4(2,4)*r4(2,4),a=r4(2,4);
+      while(sol%a!==0){sol=r4(2,4)*a;}
+      var b=r4(2,8),c=sol/a+b;
+      return{en:'Resolve: x/'+a+' + '+b+' = '+c,
+        opts:sh4(['A) x = '+sol,'B) x = '+(c-b),'C) x = '+(a*(c+b)),'D) x = '+(sol+a)]),
+        c:'A) x = '+sol,fb:'x/'+a+' = '+c+' − '+b+' = '+(c-b)+'\nx = '+(c-b)+' × '+a+' = '+sol+'.'};
     }
-    // r===3: Equação impossível/indeterminada
+    // Difícil: equação impossível
     var a=r4(2,5);
-    return{en:'Resolve a equação '+a+'x − '+(a*3)+' = '+a+'x + '+(a*2)+'. O que podes concluir?',
-      opts:sh4(['A) Impossível (sem solução)','B) x = 0','C) Infinitas soluções','D) x = 5']),
-      c:'A) Impossível (sem solução)',fb:a+'x − '+(a*3)+' = '+a+'x + '+(a*2)+'.\nSubtrai '+a+'x de ambos os membros:\n−'+(a*3)+' = '+(a*2)+'.\nIsso é FALSO → equação IMPOSSÍVEL, não tem solução.'};
+    return{en:'Resolve: '+a+'x − '+(a*3)+' = '+a+'x + '+(a*2)+'. O que podes concluir?',
+      opts:sh4(['A) Impossível sem solução','B) x = 0','C) Infinitas soluções','D) x = '+a]),
+      c:'A) Impossível sem solução',fb:a+'x − '+(a*3)+' = '+a+'x + '+(a*2)+'.\nSubtrai '+a+'x: −'+(a*3)+' = '+(a*2)+'.\nIsso é falso → equação IMPOSSÍVEL, sem solução.'};
+  }
+
+  // TEMA 5 & 6 Problemas com equações
+  if(tema==='5'||tema==='6'){
+    if(easy){
+      var r=r4(0,2);
+      if(r===0){
+        // Fácil: quantos objetos a preço fixo
+        var preco=r4(2,6)*5,q=r4(2,6),tot=preco*q;
+        return{en:''+q+' bilhetes custam '+tot+' €. Qual o preço de cada bilhete?',
+          opts:sh4(['A) '+preco+' €','B) '+(tot+preco)+' €','C) '+(tot*q)+' €','D) '+(preco+1)+' €']),
+          c:'A) '+preco+' €',fb:'Equação: '+q+'×p = '+tot+'.\np = '+tot+' ÷ '+q+' = '+preco+' €.'};
+      }
+      if(r===1){
+        // Fácil: dobro/triplo de uma idade
+        var filho=r4(8,14),dobro=filho*2;
+        return{en:'O pai tem '+dobro+' anos, que é o dobro da idade do filho. Que idade tem o filho?',
+          opts:sh4(['A) '+filho+' anos','B) '+(dobro+filho)+' anos','C) '+(dobro*2)+' anos','D) '+(filho-1)+' anos']),
+          c:'A) '+filho+' anos',fb:'2x = '+dobro+'\nx = '+dobro+' ÷ 2 = '+filho+' anos.'};
+      }
+      // Fácil: repartir uma quantia
+      var partes=r4(2,5),total=partes*r4(3,8)*10;
+      return{en:'Uma herança de '+total+' € é dividida igualmente por '+partes+' filhos. Quanto recebe cada um?',
+        opts:sh4(['A) '+(total/partes)+' €','B) '+(total*partes)+' €','C) '+(total+partes)+' €','D) '+(total/partes+partes)+' €']),
+        c:'A) '+(total/partes)+' €',fb:partes+'×x = '+total+'\nx = '+total+' ÷ '+partes+' = '+(total/partes)+' €.'};
+    }
+    if(!hard){
+      var r=r4(0,2);
+      if(r===0){
+        // Médio: soma de dois números com diferença conhecida
+        var menor=r4(5,15),dif=r4(2,8),maior=menor+dif,soma=menor+maior;
+        return{en:'A soma de dois números é '+soma+'. O maior supera o menor em '+dif+'. Quais são os números?',
+          opts:sh4(['A) '+menor+' e '+maior,'B) '+dif+' e '+(soma-dif),'C) '+(soma/2)+' e '+(soma/2),'D) '+(menor-1)+' e '+(maior+1)]),
+          c:'A) '+menor+' e '+maior,fb:'x + (x + '+dif+') = '+soma+'\n2x = '+soma+' − '+dif+' = '+(soma-dif)+'\nx = '+(soma-dif)+'/2 = '+menor+'.\nMaior = '+menor+' + '+dif+' = '+maior+'.'};
+      }
+      if(r===1){
+        // Médio: problema de idades (diferença fixa)
+        var irmao=r4(8,14),dif=r4(3,8),irma=irmao-dif;
+        if(irma<2){irma=3;irmao=irma+dif;}
+        return{en:'O Pedro tem '+irmao+' anos e a irmã tem '+irma+'. Daqui a quantos anos (x) terão idades cuja soma é '+(irmao+irma+20)+'?',
+          opts:sh4(['A) 10','B) 5','C) 15','D) '+(irmao-irma)]),
+          c:'A) 10',fb:'('+irmao+'+x) + ('+irma+'+x) = '+(irmao+irma+20)+'\n'+(irmao+irma)+' + 2x = '+(irmao+irma+20)+'\n2x = 20\nx = 10 anos.'};
+      }
+      // Médio: percurso com velocidade
+      var vel=r4(3,8)*10,horas=r4(2,5),dist=vel*horas;
+      return{en:'Um carro percorre '+dist+' km a '+vel+' km/h. Quantas horas demora?',
+        opts:sh4(['A) '+horas+' h','B) '+(dist+vel)+' h','C) '+(dist*vel)+' h','D) '+(horas+1)+' h']),
+        c:'A) '+horas+' h',fb:vel+'×t = '+dist+'\nt = '+dist+' ÷ '+vel+' = '+horas+' h.'};
+    }
+    // Difícil
+    var r=r4(0,2);
+    if(r===0){
+      // Difícil: problema com parênteses na equação
+      var n=r4(4,10),triplo=3*n,dobro=2*n;
+      return{en:'O triplo de um número diminuído de 4 é igual ao dobro desse número mais 2. Qual é o número?',
+        opts:sh4(['A) 6','B) 4','C) 8','D) 10']),
+        c:'A) 6',fb:'3x − 4 = 2x + 2\n3x − 2x = 2 + 4\nx = 6.\nVerif: 3×6−4=14; 2×6+2=14 ✓'};
+    }
+    if(r===1){
+      // Difícil: equação de idades (dobro daqui a n anos)
+      var age=r4(8,14),parentAge=age+r4(20,26);
+      var sol=parentAge-2*age;
+      return{en:'A Inês tem '+age+' anos e a mãe tem '+parentAge+'. Daqui a quantos anos (x) será a mãe o dobro da idade da Inês?',
+        opts:sh4(['A) '+sol+' anos','B) '+(sol+1)+' anos','C) '+(parentAge-age)+' anos','D) '+age+' anos']),
+        c:'A) '+sol+' anos',fb:parentAge+' + x = 2×('+age+' + x)\n'+parentAge+' + x = '+(2*age)+' + 2x\n'+(parentAge-2*age)+' = x\nx = '+sol+' anos.'};
+    }
+    // Difícil: problema com dois preços e total
+    var pa=r4(2,5),pb=r4(1,pa-1)||1,qa=r4(2,4),qb=r4(2,4),tot=pa*qa+pb*qb;
+    return{en:'Comprei '+qa+' maçãs a '+pa+' € cada e '+qb+' pêras a '+pb+' € cada. O total foi '+tot+' €. Verifica com uma equação.',
+      opts:sh4(['A) '+pa+'×'+qa+' + '+pb+'×'+qb+' = '+tot+' ✓','B) '+pa+'×'+qb+' + '+pb+'×'+qa+' = '+tot,'C) ('+pa+'+'+pb+')×('+qa+'+'+qb+') = '+tot,'D) '+pa+'×'+qa+' − '+pb+'×'+qb+' = '+tot]),
+      c:'A) '+pa+'×'+qa+' + '+pb+'×'+qb+' = '+tot+' ✓',fb:pa+'×'+qa+' + '+pb+'×'+qb+' = '+(pa*qa)+' + '+(pb*qb)+' = '+tot+' ✓'};
   }
 
   // fallback
@@ -517,10 +644,15 @@ function checkEq4(){
 // GERADOR
 var fichaContent4='';
 function gerarFicha4(){
-  var tema=parseInt(document.getElementById('gen4-tema').value);
-  var tipo=document.getElementById('gen4-tipo').value;
-  var nivel=document.getElementById('gen4-nivel').value;
-  var qtd=parseInt(document.getElementById('gen4-qtd').value);
+  var temaEl=document.getElementById('gen4-tema');
+  var tipoEl=document.getElementById('gen4-tipo');
+  var nivelEl=document.getElementById('gen4-nivel');
+  var qtdEl=document.getElementById('gen4-qtd');
+  if(!temaEl||!tipoEl||!nivelEl||!qtdEl)return;
+  var tema=parseInt(temaEl.value)||0;
+  var tipo=tipoEl.value;
+  var nivel=nivelEl.value;
+  var qtd=parseInt(qtdEl.value)||10;
   var pool=[];
   var allQ=BANCO4.questoes.concat(BANCO4.teste);
   BANCO4.minitestes.slice(1).forEach(function(m){if(m)allQ=allQ.concat(m);});
@@ -533,7 +665,7 @@ function gerarFicha4(){
     return;
   }
   var html='<div style="font-family:\'Montserrat\',sans-serif;max-width:720px">';
-  html+='<h3 style="font-family:\'Cormorant Garamond\',serif;font-size:1.3rem;margin-bottom:1rem;color:var(--ink)">Ficha Gerada — Equações</h3>';
+  html+='<h3 style="font-family:\'Cormorant Garamond\',serif;font-size:1.3rem;margin-bottom:1rem;color:var(--ink)">Ficha Gerada Equações</h3>';
   pool.forEach(function(q,i){
     html+='<div style="margin-bottom:1.25rem;padding:1rem;background:var(--cream);border-radius:10px;border:1px solid var(--border)">';
     html+='<p style="font-weight:600;font-size:.88rem;margin-bottom:.5rem">'+(i+1)+'. '+q.en+'</p>';
@@ -548,7 +680,7 @@ function gerarFicha4(){
 }
 function downloadFicha4(){
   var tema=document.getElementById('gen4-tema').options[document.getElementById('gen4-tema').selectedIndex].text;
-  var fullHtml='<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><title>Ficha — Equações Mat. 7.º Ano</title><style>body{font-family:Montserrat,sans-serif;max-width:720px;margin:2rem auto;padding:1rem;color:#2a2724}.q{margin-bottom:1.5rem;padding:1rem;border:1px solid #ddd;border-radius:8px}h1{font-family:Georgia,serif;font-size:1.4rem;margin-bottom:.5rem}h2{font-size:1rem;color:#516860}p{margin:.25rem 0;font-size:.88rem}@media print{body{margin:.5rem}.q{page-break-inside:avoid}}</style></head><body>';
+  var fullHtml='<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><title>Ficha Equações Mat. 7.º Ano</title><style>body{font-family:Montserrat,sans-serif;max-width:720px;margin:2rem auto;padding:1rem;color:#2a2724}.q{margin-bottom:1.5rem;padding:1rem;border:1px solid #ddd;border-radius:8px}h1{font-family:Georgia,serif;font-size:1.4rem;margin-bottom:.5rem}h2{font-size:1rem;color:#516860}p{margin:.25rem 0;font-size:.88rem}@media print{body{margin:.5rem}.q{page-break-inside:avoid}}</style></head><body>';
   fullHtml+='<h1>3ponto14 · Matemática 7.º Ano · Equações</h1><h2>'+tema+'</h2><hr style="margin:1rem 0">';
   fullHtml+=fichaContent4;
   fullHtml+='</body></html>';
@@ -563,8 +695,11 @@ function exame4SetLevel(btn){
   btn.classList.add('active');exameLevel4=btn.dataset.level;
 }
 function exame4Start(){
-  var tempo=parseInt(document.getElementById('exame4-tempo').value);
-  var qtd=parseInt(document.getElementById('exame4-qtd').value);
+  var tempoEl=document.getElementById('exame4-tempo');
+  var qtdEl=document.getElementById('exame4-qtd');
+  if(!tempoEl||!qtdEl)return;
+  var tempo=parseInt(tempoEl.value)||20;
+  var qtd=parseInt(qtdEl.value)||10;
   document.getElementById('exame4-config').style.display='none';
   document.getElementById('exame4-running').style.display='block';
   document.getElementById('exame4-result').style.display='none';
@@ -593,7 +728,7 @@ function exame4Submit(){
   var pct=s.total>0?Math.round(s.correct/s.total*100):0;
   var res=document.getElementById('exame4-result');
   res.style.display='block';
-  res.innerHTML='<div class="card"><div class="card-title">Resultado do Exame</div><div style="font-family:\'Cormorant Garamond\',serif;font-size:2.5rem;font-weight:900;color:'+(pct>=70?'var(--correct)':'var(--wrong)')+'">'+pct+'%</div><p style="margin:.5rem 0;color:var(--ink3)">'+s.correct+' corretas de '+s.total+' questões</p><div class="highlight-box '+(pct>=70?'green':'orange')+'" style="margin-top:1rem">'+(pct>=80?'<i class="ph ph-star"></i> Excelente preparação!':pct>=60?'<i class="ph ph-thumbs-up"></i> Bom resultado — continua a praticar!':'<i class="ph ph-wrench"></i> Revê a teoria e volta a tentar!')+'</div><div style="margin-top:1rem;display:flex;gap:.75rem"><button class="btn btn-primary" onclick="document.getElementById(\'exame4-config\').style.display=\'block\';document.getElementById(\'exame4-result\').style.display=\'none\'">↺ Novo Exame</button><button class="btn btn-ghost" onclick="showSection4(\'teoria4\',document.querySelector(\'#tabs4 .tab-btn\'))"><i class="ph ph-book-open-text"></i> Rever Teoria</button></div></div>';
+  res.innerHTML='<div class="card"><div class="card-title">Resultado do Exame</div><div style="font-family:\'Cormorant Garamond\',serif;font-size:2.5rem;font-weight:900;color:'+(pct>=70?'var(--correct)':'var(--wrong)')+'">'+pct+'%</div><p style="margin:.5rem 0;color:var(--ink3)">'+s.correct+' corretas de '+s.total+' questões</p><div class="highlight-box '+(pct>=70?'green':'orange')+'" style="margin-top:1rem">'+(pct>=80?'<i class="ph ph-star"></i> Excelente preparação!':pct>=60?'<i class="ph ph-thumbs-up"></i> Bom resultado continua a praticar!':'<i class="ph ph-wrench"></i> Revê a teoria e volta a tentar!')+'</div><div style="margin-top:1rem;display:flex;gap:.75rem"><button class="btn btn-primary" onclick="document.getElementById(\'exame4-config\').style.display=\'block\';document.getElementById(\'exame4-result\').style.display=\'none\'">↺ Novo Exame</button><button class="btn btn-ghost" onclick="showSection4(\'teoria4\',document.querySelector(\'#tabs4 .tab-btn\'))"><i class="ph ph-book-open-text"></i> Rever Teoria</button></div></div>';
 }
 
 // PROGRESSO
@@ -609,12 +744,12 @@ function renderProg4(){
   try{p=JSON.parse(localStorage.getItem('edupt_cap4')||'{}');}catch(e){}
   var sections=[
     {key:'q4',name:'Questões-aula',total:16},
-    {key:'mini1',name:'Mini 1 — Exp. Algébricas',total:5},
-    {key:'mini2',name:'Mini 2 — Simplificação',total:5},
-    {key:'mini3',name:'Mini 3 — Equações',total:5},
-    {key:'mini4',name:'Mini 4 — Equivalência',total:4},
-    {key:'mini5',name:'Mini 5 — Classificação',total:5},
-    {key:'mini6',name:'Mini 6 — Problemas',total:4},
+    {key:'mini1',name:'Mini 1 Exp. Algébricas',total:5},
+    {key:'mini2',name:'Mini 2 Simplificação',total:5},
+    {key:'mini3',name:'Mini 3 Equações',total:5},
+    {key:'mini4',name:'Mini 4 Equivalência',total:4},
+    {key:'mini5',name:'Mini 5 Classificação',total:5},
+    {key:'mini6',name:'Mini 6 Problemas',total:4},
     {key:'t4',name:'Teste',total:11},
     {key:'ex4',name:'Exame',total:15}
   ];
@@ -640,7 +775,7 @@ function resetProg4(){
 }
 
 // ── Topic grid data ──
-var _c4Teoria = "showSection4('teoria4',document.querySelector('#tabs4 .tab-btn:nth-child(2)'))";
+var _c4Teoria = "showSection4('teoria4',null)";
 var _cap4Topics = [
   {id:'tr4-1', num:'01', title:'Expressões Algébricas', open:true, subs:[
     {onclick:_c4Teoria, label:'Monómios e polinómios', icon:'ph-book-open-text'},
@@ -650,7 +785,7 @@ var _cap4Topics = [
     {onclick:_c4Teoria, label:'Reduzir termos semelhantes', icon:'ph-book-open-text'},
     {onclick:_c4Teoria, label:'Expressão do perímetro/área', icon:'ph-book-open-text'}
   ]},
-  {id:'tr4-3', num:'03', title:'Equações — Conceitos Fundamentais', subs:[
+  {id:'tr4-3', num:'03', title:'Equações Conceitos Fundamentais', subs:[
     {onclick:_c4Teoria, label:'1.º grau, incógnita, solução', icon:'ph-book-open-text'},
     {onclick:_c4Teoria, label:'Verificar soluções', icon:'ph-book-open-text'}
   ]},

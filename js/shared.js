@@ -1,3 +1,65 @@
+/* ── Disciplinas do currículo português (1.º ciclo → Secundário) ──────
+   Lista canónica única, usada no perfil do professor (disciplinas que
+   leciona) e na pergunta pública do aluno (disciplina da dúvida). As que
+   têm curso na plataforma estão no início para aparecerem primeiro. */
+var EDU_DISCIPLINAS = [
+  // com curso na plataforma
+  'Matemática', 'Português', 'Físico-Química',
+  // 1.º ciclo
+  'Estudo do Meio',
+  // 2.º/3.º ciclo
+  'Inglês', 'Francês', 'Espanhol', 'Alemão',
+  'Ciências Naturais', 'História', 'Geografia',
+  'História e Geografia de Portugal',
+  'Educação Visual', 'Educação Tecnológica', 'Educação Física',
+  'Educação Musical', 'Tecnologias da Informação e Comunicação (TIC)',
+  'Cidadania e Desenvolvimento', 'Educação Moral e Religiosa',
+  'Complemento à Educação Artística',
+  // Secundário — gerais e específicas
+  'Matemática A', 'Matemática B', 'Matemática Aplicada às Ciências Sociais (MACS)',
+  'Biologia e Geologia', 'Biologia', 'Geologia',
+  'Física', 'Química', 'Física e Química A',
+  'Filosofia', 'Psicologia',
+  'História A', 'História B', 'História da Cultura e das Artes',
+  'Geografia A', 'Geografia C',
+  'Economia A', 'Economia C', 'Direito', 'Contabilidade',
+  'Literatura Portuguesa', 'Latim', 'Grego',
+  'Geometria Descritiva', 'Desenho A', 'História e Cultura das Artes',
+  'Aplicações Informáticas B'
+];
+
+/* ── localStorage à prova de falha ───────────────────────────────────
+   Em Safari/iOS no modo privado (ou com cookies/armazenamento bloqueados)
+   o acesso a localStorage LANÇA exceção. Como há muitas chamadas pela app,
+   instalamos aqui — antes de tudo o resto (shared.js carrega primeiro em
+   todas as páginas) — um substituto em memória quando o real não funciona.
+   Assim nenhuma chamada existente rebenta e a app continua a abrir; o
+   progresso desse separador fica só em memória (não persiste), o que é o
+   comportamento esperado em modo privado. */
+(function () {
+  function _testaLS() {
+    try {
+      var k = '__ls_test__';
+      window.localStorage.setItem(k, '1');
+      window.localStorage.removeItem(k);
+      return true;
+    } catch (e) { return false; }
+  }
+  if (_testaLS()) return; // localStorage real funciona → nada a fazer
+  // fallback em memória com a mesma API mínima usada na app
+  var _mem = {};
+  var shim = {
+    getItem: function (k) { return Object.prototype.hasOwnProperty.call(_mem, k) ? _mem[k] : null; },
+    setItem: function (k, v) { _mem[k] = String(v); },
+    removeItem: function (k) { delete _mem[k]; },
+    clear: function () { _mem = {}; },
+    key: function (i) { return Object.keys(_mem)[i] || null; },
+    get length() { return Object.keys(_mem).length; }
+  };
+  try { Object.defineProperty(window, 'localStorage', { value: shim, configurable: true }); }
+  catch (e) { try { window.localStorage = shim; } catch (e2) {} }
+})();
+
 /* ── Block 1 (from line 26) ── */
 /* ── Toast notification system ── */
 var _toastTimer=null;
@@ -10,12 +72,87 @@ function eduToast(msg,type){
   requestAnimationFrame(function(){t.classList.add('show');});
   _toastTimer=setTimeout(function(){t.classList.remove('show');},2800);
 }
+/* ── Modal de formulário reutilizável (substitui os prompt() do browser) ──
+   eduFormModal(titulo, campos, onSubmit, opts)
+     campos: [{ id, label, tipo:'text'|'textarea'|'date'|'select', placeholder,
+                valor, obrig, opcoes:[{value,label}], dica }]
+     onSubmit(valores) — objeto {id: valor}; devolver string = mensagem de erro
+       a mostrar (não fecha); devolver Promise = espera; senão fecha.
+   Acessível: Esc fecha, Enter submete (exceto em textarea), foco no 1.º campo. */
+function eduFormModal(titulo, campos, onSubmit, opts) {
+  opts = opts || {};
+  var ov = document.createElement('div');
+  ov.className = 'edu-fm-ov';
+  function fechar() { if (ov.parentNode) ov.parentNode.removeChild(ov); document.removeEventListener('keydown', onKey); }
+  function onKey(e) {
+    if (e.key === 'Escape') fechar();
+    else if (e.key === 'Enter' && e.target && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); submeter(); }
+  }
+  function _esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function _escA(s) { return _esc(s).replace(/"/g, '&quot;'); }
+  var corpo = campos.map(function (c) {
+    var lab = '<label class="edu-fm-lab">' + _esc(c.label) + (c.obrig ? ' <span style="color:#c0392b">*</span>' : '') + '</label>';
+    var campo;
+    if (c.tipo === 'textarea') campo = '<textarea id="efm-' + c.id + '" class="edu-fm-inp" rows="3" placeholder="' + _escA(c.placeholder || '') + '">' + _esc(c.valor || '') + '</textarea>';
+    else if (c.tipo === 'select') campo = '<select id="efm-' + c.id + '" class="edu-fm-inp">' + (c.opcoes || []).map(function (o) { return '<option value="' + _escA(o.value) + '"' + (o.value === c.valor ? ' selected' : '') + '>' + _esc(o.label) + '</option>'; }).join('') + '</select>';
+    else campo = '<input id="efm-' + c.id + '" class="edu-fm-inp" type="' + (c.tipo || 'text') + '" placeholder="' + _escA(c.placeholder || '') + '" value="' + _escA(c.valor || '') + '">';
+    return '<div class="edu-fm-row">' + lab + campo + (c.dica ? '<div class="edu-fm-dica">' + _esc(c.dica) + '</div>' : '') + '</div>';
+  }).join('');
+  ov.innerHTML = '<div class="edu-fm" role="dialog" aria-modal="true">'
+    + '<div class="edu-fm-tit">' + _esc(titulo) + '</div>'
+    + corpo
+    + '<div class="edu-fm-erro" id="efm-erro" style="display:none"></div>'
+    + '<div class="edu-fm-acts"><button class="edu-fm-cancel" id="efm-cancel">Cancelar</button>'
+    + '<button class="edu-fm-ok" id="efm-ok">' + _esc(opts.botao || 'Guardar') + '</button></div>'
+    + '</div>';
+  document.body.appendChild(ov);
+  document.addEventListener('keydown', onKey);
+  ov.addEventListener('mousedown', function (e) { if (e.target === ov) fechar(); });
+  document.getElementById('efm-cancel').onclick = fechar;
+  var primeiro = document.getElementById('efm-' + campos[0].id); if (primeiro) primeiro.focus();
+  function _erro(msg) { var e = document.getElementById('efm-erro'); if (e) { e.textContent = msg; e.style.display = 'block'; } }
+  function submeter() {
+    var vals = {};
+    for (var i = 0; i < campos.length; i++) {
+      var el = document.getElementById('efm-' + campos[i].id);
+      var v = el ? (el.value || '').trim() : '';
+      if (campos[i].obrig && !v) { _erro('Preenche: ' + campos[i].label); if (el) el.focus(); return; }
+      vals[campos[i].id] = v;
+    }
+    var r = onSubmit(vals);
+    if (typeof r === 'string') { _erro(r); return; }
+    if (r && typeof r.then === 'function') {
+      var ok = document.getElementById('efm-ok'); if (ok) { ok.disabled = true; ok.textContent = 'A guardar…'; }
+      r.then(function () { fechar(); }).catch(function (e) { _erro((e && e.message) || 'Não foi possível guardar.'); if (ok) { ok.disabled = false; ok.textContent = opts.botao || 'Guardar'; } });
+      return;
+    }
+    fechar();
+  }
+  document.getElementById('efm-ok').onclick = submeter;
+}
+
+/* Linha "Aluno: Nome · 7.º ano" para o cabeçalho dos relatórios de progresso
+   em PDF, vinda da conta com sessão iniciada. Devolve '' se não houver sessão
+   ou nome (ex.: a usar sem conta), para o relatório continuar a sair na mesma.
+   Centraliza isto para não duplicar em mat5–mat11, fq7–fq9, port7–port9. */
+function eduAlunoLinhaPDF() {
+  if (typeof Cloud === 'undefined' || !Cloud.utilizador || !Cloud.utilizador()) return '';
+  var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : '') || '';
+  if (!nome) return '';
+  var ano = (typeof Cloud.alunoAno === 'function' ? Cloud.alunoAno() : '') || '';
+  var esc = function (s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+  return '<div style="font-size:14px;color:#333;margin:-8px 0 14px"><strong>Aluno:</strong> '
+    + esc(nome) + (ano ? ' &middot; ' + esc(ano) + '.º ano' : '') + '</div>';
+}
+
 function htmlToPdfDownload(htmlContent, filename) {
-  // Prefix filename
-  if (_n) {
-    var _safe = _n.replace(/[^a-zA-Z0-9áéíóúâêîôûãõàèìòùçÁÉÍÓÚÂÊÎÔÛÃÕÀÈÌÒÙÇ]/g,'_').replace(/_+/g,'_').replace(/^_|_$/g,'');
+  // Prefix filename with user/role if available (optional, may not be set)
+  var _userName = (typeof window !== 'undefined' && (window._n || window.userName)) || null;
+  var _userRole = (typeof window !== 'undefined' && (window._role || window.userRole)) || null;
+  if (_userName) {
+    var _safe = String(_userName).replace(/[^a-zA-Z0-9áéíóúâêîôûãõàèìòùçÁÉÍÓÚÂÊÎÔÛÃÕÀÈÌÒÙÇ]/g,'_').replace(/_+/g,'_').replace(/^_|_$/g,'');
     if (_safe) {
-      var _prefix = _role === 'professor' ? 'prof_' + _safe + '_' : _safe + '_';
+      var _prefix = _userRole === 'professor' ? 'prof_' + _safe + '_' : _safe + '_';
       filename = _prefix + filename;
     }
   }
@@ -55,8 +192,22 @@ function htmlToPdfDownload(htmlContent, filename) {
     '<\/script>'
   ].join('\n');
 
+  // Nome sugerido ao "Guardar como PDF" = título do documento.
+  // Sem isto, o browser usa o id do blob (ex: 8e46c8a1-...). Por isso
+  // injetamos um <title> com o nome do ficheiro (sem extensão).
+  var tituloDoc = String(filename || 'ficha').replace(/\.(pdf|html)$/i, '');
+  var headTitulo = '<title>' + tituloDoc.replace(/</g, '&lt;') + '</title>';
+
   // Inject the bar into the HTML document
   var html = htmlContent;
+  // garantir um <title> correto (substitui se existir, senão adiciona ao <head> ou ao topo)
+  if (/<title>[\s\S]*?<\/title>/i.test(html)) {
+    html = html.replace(/<title>[\s\S]*?<\/title>/i, headTitulo);
+  } else if (html.indexOf('<head>') !== -1) {
+    html = html.replace('<head>', '<head>' + headTitulo);
+  } else {
+    html = headTitulo + html;
+  }
   if (html.indexOf('<body>') !== -1) {
     html = html.replace('<body>', '<body>' + printBtn);
   } else if (html.indexOf('<body ') !== -1) {
@@ -70,6 +221,12 @@ function htmlToPdfDownload(htmlContent, filename) {
   var blob = new Blob([html], {type: 'text/html;charset=utf-8'});
   var url = URL.createObjectURL(blob);
   var win = window.open(url, '_blank');
+  if (win) {
+    // reforça o título da nova janela (nome sugerido ao guardar PDF)
+    try {
+      win.addEventListener('load', function () { try { win.document.title = tituloDoc; } catch (e) {} });
+    } catch (e) {}
+  }
   if (!win) {
     // If still blocked, try <a download> as fallback
     var a = document.createElement('a');
@@ -83,28 +240,36 @@ function htmlToPdfDownload(htmlContent, filename) {
   setTimeout(function() { URL.revokeObjectURL(url); }, 120000);
 }
 
-// SHARED UTILITIES — used across chapter files
+// SHARED UTILITIES used across chapter files
 function rnd(min,max){return Math.floor(Math.random()*(max-min+1))+min}
 function rndNZ(min,max){var v;do{v=rnd(min,max)}while(v===0);return v}
-function shuffle(arr){return arr.slice().sort(function(){return Math.random()-.5})}
+function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function fmt(n){return n>0?'+'+n:''+n}
 function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t}return a}
 function lcm(a,b){return Math.abs(a*b)/gcd(a,b)}
 
+// Deteção de contexto de página (uma única fonte de verdade).
+// Os hubs de curso vivem em subpastas (matN/, portN/, fqN/); o portal e as
+// páginas de exame estão na raiz. Usar em vez de repetir a regex por todo o lado.
+function eduIsCourseHub() { return /\/(mat\d+|port\d+|fq\d+|em\d+)(\/|$)/.test(window.location.pathname); }
+function eduRootPath() { return eduIsCourseHub() ? '../' : ''; }
+window.eduIsCourseHub = eduIsCourseHub;
+window.eduRootPath = eduRootPath;
+
 // localStorage abstraction
 var store = {
-  get: function(key, fallback) { try { return JSON.parse(localStorage.getItem('edupt_'+key)) } catch(e) { return fallback !== undefined ? fallback : null } },
-  set: function(key, val) { localStorage.setItem('edupt_'+key, JSON.stringify(val)) },
-  remove: function(key) { localStorage.removeItem('edupt_'+key) }
+  get: function(key, fallback) { try { return JSON.parse(localStorage.getItem('edupt_'+key)); } catch(e) { return fallback !== undefined ? fallback : null; } },
+  set: function(key, val) { try { localStorage.setItem('edupt_'+key, JSON.stringify(val)); } catch(e) { /* quota exceeded falha silenciosa */ } },
+  remove: function(key) { try { localStorage.removeItem('edupt_'+key); } catch(e) {} }
 };
 
-// QUIZ ENGINE — Uma questão de cada vez, com barra de progresso
+// QUIZ ENGINE Uma questão de cada vez, com barra de progresso
 // Usa os mesmos exercícios gerados por buildExercicio / BANCO4
 var _qzState = {};
 
 // Helper: parse fill-input value tolerating PT decimal comma
 function _parseFillVal(v) { return parseFloat(String(v).replace(',', '.')); }
-// EDUPT — PROGRESS MANAGER v2  (localStorage persistente)
+// EDUPT PROGRESS MANAGER v2  (localStorage persistente)
 var ProgressManager = (function () {
   var KEY = 'edupt_progress_v2';
   var XP = { teoria:10, quiz:20, quiz_bonus:15, jogo:15, flashcard:8, ficha:5 };
@@ -201,12 +366,12 @@ var ProgressManager = (function () {
   return { record:record, getCap:getCap, getCapPct:getCapPct, getSummary:getSummary, exportJSON:exportJSON, reset:reset, CAP_NAMES:CAP_NAMES };
 })();
 
-// _pmRecord — convenience wrapper
+// _pmRecord convenience wrapper
 function _pmRecord() {
   ProgressManager.record.apply(ProgressManager, arguments);
 }
 
-// ── Safe ErrorTracker proxy — queues calls until ErrorTracker is defined ──
+// ── Safe ErrorTracker proxy queues calls until ErrorTracker is defined ──
 var _etQueue = [];
 function _etRecord() {
   var args = Array.prototype.slice.call(arguments);
@@ -224,6 +389,7 @@ function qzInit(containerId, exercicios, sec, onFinish) {
     score: { correct: 0, total: 0 },
     answered: false,
     sec: sec,
+    detalhe: [], // por-pergunta: { q: enunciado, certo: bool } — usado no modo-tarefa das Turmas
     onFinish: onFinish || null
   };
   _qzState[containerId] = st;
@@ -259,7 +425,8 @@ function _qzRender(cid) {
       + '<button class="qz-check-btn" data-cid="' + cid + '" data-resp="' + ex.resposta + '" onclick="var i=document.getElementById(this.dataset.cid+\'-fill\');qzCheckFillDirect(this.dataset.cid,parseFloat(i.value.replace(\',\',\'.\'))||i.value,parseFloat(this.dataset.resp))">Verificar</button>'
       + '</div>';
   } else if (tipo === 'vf') {
-    var vC = ex.resposta === 'V';
+    // Aceita 'V'/'F' (bancos PT/Mat) e 'Verdadeiro'/'Falso' (bancos FQ).
+    var vC = String(ex.resposta == null ? '' : ex.resposta).trim().toUpperCase().charAt(0) === 'V';
     optionsHtml = '<div class="qz-options">'
       + '<button class="qz-opt" data-correct="' + vC + '" onclick="qzCheckMC(' + q + ',' + vC + ',this)"><span class="qz-opt-letter">V</span> Verdadeiro</button>'
       + '<button class="qz-opt" data-correct="' + (!vC) + '" onclick="qzCheckMC(' + q + ',' + (!vC) + ',this)"><span class="qz-opt-letter">F</span> Falso</button>'
@@ -300,7 +467,7 @@ function _qzRender(cid) {
     +   optionsHtml
     +   '<div class="qz-feedback" id="' + cid + '-fb"></div>'
     +   '<div class="qz-next-row">'
-    +     '<div id="' + cid + '-expl-store" style="display:none">' + (ex.expl || '').replace(/'/g,"&#39;") + '</div>'
+    +     '<div id="' + cid + '-expl-store" style="display:none" data-expl="' + (ex.expl || '').replace(/"/g,'&quot;').replace(/'/g,'&#39;') + '"></div>'
     +     '<button class="qz-next-btn" id="' + cid + '-next" onclick="qzNext(' + q + ')">'
     +       (cur < total ? 'Próxima <i class="ph ph-arrow-right"></i>' : 'Ver resultados <i class="ph ph-check-circle"></i>')
     +     '</button>'
@@ -331,13 +498,17 @@ function _qzShowFeedback(cid, correct, correctVal) {
   st.answered = true;
   st.score.total++;
   if (correct) st.score.correct++;
+  // Registar resultado por-pergunta (modo-tarefa das Turmas)
+  var _exNow = st.exercises[st.current];
+  st.detalhe.push({ q: (_exNow && (_exNow.enun || _exNow.en)) || ('Pergunta ' + (st.current + 1)), certo: !!correct });
 
   // Update live score
   var sl = document.getElementById(cid + '-scorelive');
   if (sl) sl.textContent = '✓ ' + st.score.correct;
 
   // Build feedback
-  var expl = (document.getElementById(cid + '-expl-store') || {}).textContent || '';
+  var explEl = document.getElementById(cid + '-expl-store');
+  var expl = explEl ? (explEl.getAttribute('data-expl') || explEl.textContent || '') : '';
   var fb = document.getElementById(cid + '-fb');
   if (fb) {
     fb.className = 'qz-feedback show ' + (correct ? 'correct-fb' : 'wrong-fb');
@@ -355,9 +526,12 @@ function _qzShowFeedback(cid, correct, correctVal) {
   var capNum = '1';
   if (ex && (ex._capId || ex.capId)) {
     capNum = String(ex._capId || ex.capId).replace('cap','');
-  } else if (sec.indexOf('2') !== -1) { capNum = '2'; }
-  else if (sec.indexOf('3') !== -1) { capNum = '3'; }
-  else if (sec.indexOf('4') !== -1 || sec.indexOf('mini') !== -1 || sec === 't4') { capNum = '4'; }
+  } else {
+    // Detect cap from sec string (e.g. 'q5', 'mini6', 't7')
+    var capMatch = sec && sec.match(/[1-9]/);
+    if (capMatch) capNum = capMatch[0];
+    else if (sec && sec.indexOf('mini') !== -1) capNum = '4';
+  }
 
   // ErrorTracker
   if (ex && typeof ErrorTracker !== 'undefined') {
@@ -379,7 +553,7 @@ function _qzShowFeedback(cid, correct, correctVal) {
   } else if (capNum === '3' && typeof progLog3 === 'function') {
     progLog3(secLabel, correct);
   } else if (capNum === '4' && typeof saveProgData4 === 'function') {
-    // Cap4 uses a different system — save score object
+    // Cap4 uses a different system save score object
     var p4key = sec || 'q4';
     saveProgData4(p4key, st.score);
   }
@@ -470,8 +644,8 @@ function _qzShowResults(cid) {
 function _qzRestart(cid) {
   var st = _qzState[cid];
   if (!st) return;
-  // Shuffle exercises and restart
-  st.exercises = st.exercises.sort(function(){ return Math.random() - .5; });
+  // Shuffle exercises and restart (Fisher-Yates)
+  st.exercises = shuffle(st.exercises);
   st.current = 0;
   st.score = { correct: 0, total: 0 };
   st.answered = false;
@@ -676,8 +850,8 @@ function _qzRestart(cid) {
 })();
 
 /* ── Block 9 (from line 16882) ── */
-// MELHORIA 1 — Enter para verificar em qualquer fill-input
-// MELHORIA 2 — Vírgula → ponto (padrão PT) em fill-inputs
+// MELHORIA 1 Enter para verificar em qualquer fill-input
+// MELHORIA 2 Vírgula → ponto (padrão PT) em fill-inputs
 (function() {
   // Delegate: Enter on any .fill-input triggers adjacent verify button
   document.addEventListener('keydown', function(e) {
@@ -1069,10 +1243,10 @@ window._mathEval = function(expr) {
 (function(){
   // Map of keyword → dica
   var TIPS = {
-    'A = b × h': '💡 Base vezes altura — só funciona em retângulos e paralelogramos!',
+    'A = b × h': '💡 Base vezes altura só funciona em retângulos e paralelogramos!',
     'A = (b × h) / 2': '💡 Triângulo: metade do paralelogramo equivalente.',
     '(b₁ + b₂)': '💡 Trapézio: soma das bases paralelas, dividida por 2, vezes a altura.',
-    'π': '💡 π ≈ 3,14159… — número irracional, constante para todos os círculos.',
+    'π': '💡 π ≈ 3,14159… número irracional, constante para todos os círculos.',
     'A = π × r²': '💡 Área do círculo. Raio ao quadrado, multiplicado por π.',
     'C = 2 × π × r': '💡 Comprimento da circunferência. Também: C = π × d.',
     'mmc': '💡 Mínimo múltiplo comum: o menor número divisível pelos dois.',
@@ -1109,7 +1283,7 @@ window._mathEval = function(expr) {
 
   document.addEventListener('DOMContentLoaded', function() {
     wrapFormulas();
-    // Also wrap on navigation (dynamic sections) — debounced to avoid thrashing
+    // Also wrap on navigation (dynamic sections) debounced to avoid thrashing
     var _wrapTimer = null;
     var obs = new MutationObserver(function(muts) {
       var hasAdded = muts.some(function(m) { return m.addedNodes.length > 0; });
@@ -1165,7 +1339,7 @@ window._mathEval = function(expr) {
   else inject();
 })();
 
-// ═══ wrapPrintDoc — HTML document wrapper for printable sheets ═══
+// ═══ wrapPrintDoc HTML document wrapper for printable sheets ═══
 function wrapPrintDoc(title, content) {
   return '<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><title>' + title + '</title><style>'
     + 'body{font-family:Georgia,serif;max-width:800px;margin:0 auto;padding:2rem;color:#2a2724}'
@@ -1200,9 +1374,11 @@ function formatMath(s) {
   // Must be: optional sign + (digits or ?) / (digits or ?)
   // Avoid matching things already inside HTML tags
   s = s.replace(/(?<![<\w\/])(-?)(\d+|\?)\/(\d+|\?)(?![>\w])/g, function(match, sign, num, den) {
-    return '<span class="mfrac" style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1;margin:0 .1em">'
-      + '<span style="border-bottom:1.5px solid currentColor;padding:0 .15em .05em;font-size:.85em;text-align:center">' + sign + num + '</span>'
-      + '<span style="padding:.05em .15em 0;font-size:.85em;text-align:center">' + den + '</span>'
+    // sinal negativo fica À ESQUERDA da fração inteira (não dentro do numerador)
+    var pre = sign ? '<span style="vertical-align:middle">&minus;</span>' : '';
+    return pre + '<span class="mfrac" style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1;margin:0 .12em">'
+      + '<span style="border-bottom:1.5px solid currentColor;padding:0 .25em .04em;font-size:.82em;text-align:center">' + num + '</span>'
+      + '<span style="padding:.04em .25em 0;font-size:.82em;text-align:center">' + den + '</span>'
       + '</span>';
   });
   // Exponents
@@ -1264,7 +1440,7 @@ function makeFeedbackHTML(isCorrect, expl, val, fbId) {
   var status = isCorrect
     ? '✓ Correto!'
     : (val !== undefined && val !== null && val !== ''
-        ? '✗ Incorreto — a resposta certa é: <strong style="font-size:1.05em">' + val + '</strong>'
+        ? '✗ Incorreto a resposta certa é: <strong style="font-size:1.05em">' + val + '</strong>'
         : '✗ Incorreto.');
 
   var explHtml = '';
@@ -1313,13 +1489,13 @@ function makeFeedbackHTML(isCorrect, expl, val, fbId) {
     '</div></div>';
 }
 
-// ═══ toggleTemaRow — used by topic rows across all chapters ═══
+// ═══ toggleTemaRow used by topic rows across all chapters ═══
 function toggleTemaRow(id) {
   var row = document.getElementById(id);
   if (row) row.classList.toggle('open');
 }
 
-// ═══ _buildStQuizHTML — shared quiz HTML builder for subtema modals ═══
+// ═══ _buildStQuizHTML shared quiz HTML builder for subtema modals ═══
 function _buildStQuizHTML(exercicios) {
   var labels = ['A','B','C','D'], qhtml = '';
   exercicios.forEach(function(ex, i) {
@@ -1336,15 +1512,16 @@ function _buildStQuizHTML(exercicios) {
       (ex.opcoes||[]).forEach(function(opt, k) { var isC = String(opt)===String(ex.resposta); qhtml += '<button class="option-btn" onclick="stCheck(\'' + qid + '\',\'mc\',' + isC + ',this)"><span class="opt-label">' + labels[k] + '</span>' + formatMath(opt) + '</button>'; });
       qhtml += '</div>';
     } else if (ex.tipo === 'vf') {
-      var vC = ex.resposta==='V';
+      // Aceita 'V'/'F' (PT/Mat) e 'Verdadeiro'/'Falso' (FQ).
+      var vC = String(ex.resposta==null?'':ex.resposta).trim().toUpperCase().charAt(0)==='V';
       qhtml += '<div style="display:flex;gap:.75rem;flex-wrap:wrap"><button class="option-btn" onclick="stCheck(\'' + qid + '\',\'mc\',' + vC + ',this)"><span class="opt-label" style="background:rgba(62,207,142,.2);color:var(--correct)">V</span>Verdadeiro</button><button class="option-btn" onclick="stCheck(\'' + qid + '\',\'mc\',' + (!vC) + ',this)"><span class="opt-label" style="background:rgba(255,107,107,.2);color:var(--wrong)">F</span>Falso</button></div>';
     }
-    qhtml += '<div class="feedback" id="' + qid + '-fb"></div><span id="' + qid + '-expl" style="display:none">' + (ex.expl||'').replace(/'/g,"&#39;") + '</span></div>';
+    qhtml += '<div class="feedback" id="' + qid + '-fb"></div><span id="' + qid + '-expl" style="display:none" data-expl="' + (ex.expl||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;') + '"></span></div>';
   });
   return qhtml;
 }
 
-// ═══ _bancoToSubtemaExs — convert BANCO to subtema exercise list ═══
+// ═══ _bancoToSubtemaExs convert BANCO to subtema exercise list ═══
 function _bancoToSubtemaExs(banco, temaNum) {
   var pool = (banco.questoes || []).filter(function(q){ return String(q.tema) === String(temaNum); });
   if (banco.minitestes && banco.minitestes[parseInt(temaNum)]) {
@@ -1367,7 +1544,7 @@ function _bancoToSubtemaExs(banco, temaNum) {
   });
 }
 
-// ═══ criarModalSubtema — subtema practice modal (shared across chapters) ═══
+// ═══ criarModalSubtema subtema practice modal (shared across chapters) ═══
 function criarModalSubtema(titulo, exercicios) {
   var old = document.getElementById('subtema-modal');
   if (old) old.remove();
@@ -1394,7 +1571,7 @@ function criarModalSubtema(titulo, exercicios) {
   window._stContext = { titulo: titulo, gerador: null };
 }
 
-// ═══ stCheck / stNovas — subtema modal interaction (shared) ═══
+// ═══ stCheck / stNovas subtema modal interaction (shared) ═══
 var _stAnswered = {};
 var _stScore = { correct: 0, total: 0 };
 
@@ -1402,7 +1579,7 @@ function stCheck(qid, tipo, val, btn) {
   if (_stAnswered[qid]) return;
   _stAnswered[qid] = true;
   var explEl = document.getElementById(qid + '-expl');
-  var expl = explEl ? explEl.textContent : '';
+  var expl = explEl ? (explEl.getAttribute('data-expl') || explEl.textContent || '') : '';
   var container = document.getElementById(qid);
   var correct = false;
   if (tipo === 'fill' || tipo === 'fill_frac') {
@@ -1421,24 +1598,33 @@ function stCheck(qid, tipo, val, btn) {
   if (correct) _stScore.correct++;
   _stScore.total++;
   var fb = document.getElementById(qid + '-fb');
-  fb.className = 'feedback show ' + (correct ? 'correct-fb' : 'wrong-fb');
-  fb.innerHTML = makeFeedbackHTML(correct, expl, tipo==='fill'?val:undefined);
-  document.getElementById('st-score').textContent = _stScore.correct;
-  document.getElementById('st-total').textContent = '/ ' + _stScore.total;
-  document.getElementById('st-prog').style.width = (_stScore.total > 0 ? _stScore.correct/_stScore.total*100 : 0) + '%';
+  if (fb) {
+    fb.className = 'feedback show ' + (correct ? 'correct-fb' : 'wrong-fb');
+    fb.innerHTML = makeFeedbackHTML(correct, expl, tipo==='fill'?val:undefined);
+  }
+  var stScore = document.getElementById('st-score');
+  var stTotal = document.getElementById('st-total');
+  var stProg  = document.getElementById('st-prog');
+  if (stScore) stScore.textContent = _stScore.correct;
+  if (stTotal) stTotal.textContent = '/ ' + _stScore.total;
+  if (stProg)  stProg.style.width = (_stScore.total > 0 ? _stScore.correct/_stScore.total*100 : 0) + '%';
 }
 
 function stNovas() {
   if (window._stContext && window._stContext.gerador) {
     _stAnswered = {}; _stScore = { correct: 0, total: 0 };
-    document.getElementById('subtema-body').innerHTML = _buildStQuizHTML(window._stContext.gerador());
-    document.getElementById('st-score').textContent = '0';
-    document.getElementById('st-total').textContent = '/ 0';
-    document.getElementById('st-prog').style.width = '0%';
+    var sbody = document.getElementById('subtema-body');
+    var sc = document.getElementById('st-score');
+    var st = document.getElementById('st-total');
+    var sp = document.getElementById('st-prog');
+    if (sbody) sbody.innerHTML = _buildStQuizHTML(window._stContext.gerador());
+    if (sc) sc.textContent = '0';
+    if (st) st.textContent = '/ 0';
+    if (sp) sp.style.width = '0%';
   }
 }
 
-// ═══ calcExpression — safe math expression evaluator UI ═══
+// ═══ calcExpression safe math expression evaluator UI ═══
 function calcExpression() {
   var inp = document.getElementById('calc-expr');
   var res = document.getElementById('calc-expr-result');
@@ -1458,7 +1644,7 @@ function calcExpression() {
   }
 }
 
-// ═══ QUIZ GAME (qgStartForCap) — arcade quiz for chapter pages ═══
+// ═══ QUIZ GAME (qgStartForCap) arcade quiz for chapter pages ═══
 // State for the per-chapter arcade quiz
 var _qgCap = { cap: 0, lives: 3, streak: 0, maxStreak: 0, score: 0, total: 0, current: null, answered: false, pool: [] };
 
@@ -1475,7 +1661,7 @@ function _qgBuildPool(cap) {
         // relampago format
         return { q: q.q || '', opts: q.opts, ans: q.opts[q.c], fb: q.fb || '' };
       }
-      // questoes format — c is a letter like 'B'; find the full option text starting with 'B)'
+      // questoes format c is a letter like 'B'; find the full option text starting with 'B)'
       var letter = q.correct || q.c || '';
       var opts = q.opts || [];
       var ans = letter;
@@ -1489,7 +1675,7 @@ function _qgBuildPool(cap) {
       return { q: q.enunciado || q.en || '', opts: opts, ans: ans, fb: q.fb || '' };
     });
   }
-  // caps 1–4: no pool, will generate procedurally each question
+  // caps 1-4: no pool, will generate procedurally each question
   return null;
 }
 
@@ -1499,7 +1685,7 @@ function _qgBuildQuestion(cap) {
     var idx = Math.floor(Math.random() * pool.length);
     return pool[idx];
   }
-  // Procedural for caps 1–4
+  // Procedural for caps 1-4
   var temas = ['1','2','3','4','5'];
   var tema = temas[Math.floor(Math.random() * temas.length)];
   var ex = null;
@@ -1610,7 +1796,641 @@ function qgStartForCap(cap) {
   _qgRenderQuestion(appEl);
 }
 
-// ═══ CHAPTER NAV BAR — generated from data ═══
+// ═══ TEORIA: acordeão de cards (partilhado por todos os cursos) ═══
+// Recebe os cards [{tag,q,a}], a cor do capítulo e o mapa de ícones por tag.
+// Devolve HTML: grupos colapsáveis (1.º aberto); cada pergunta abre a resposta.
+function _teoriaAccordionHTML(cards, color, tagIcons) {
+  tagIcons = tagIcons || {};
+  var groups = {}, order = [];
+  cards.forEach(function(card) {
+    var t = card.tag || 'Geral';
+    if (!groups[t]) { groups[t] = []; order.push(t); }
+    groups[t].push(card);
+  });
+  var h = '<div class="teoria-acc">';
+  order.forEach(function(tag, gi) {
+    var icon = tagIcons[tag] || 'ph-note';
+    var open = (gi === 0); // primeiro grupo aberto, restantes fechados
+    var gid = 'teoria-g-' + gi;
+    h += '<div class="teoria-group' + (open ? ' open' : '') + '" id="' + gid + '">'
+      + '<button class="teoria-group-head" onclick="_teoriaToggleGroup(\'' + gid + '\')" style="--acc:' + color + '">'
+      + '<i class="ph ' + icon + ' teoria-group-icon"></i>'
+      + '<span class="teoria-group-title">' + tag + '</span>'
+      + '<span class="teoria-group-count">' + groups[tag].length + '</span>'
+      + '<i class="ph ph-caret-down teoria-group-caret"></i>'
+      + '</button>'
+      + '<div class="teoria-group-body">';
+    groups[tag].forEach(function(card) {
+      var answer = (card.a || '').replace(/\n/g, '<br>');
+      // card.v (opcional) = visual SVG (tabela/gráfico/figura) a mostrar na resposta
+      if (card.v) answer += card.v;
+      h += '<div class="teoria-item">'
+        + '<button class="teoria-q" onclick="_teoriaToggleItem(this)" style="--acc:' + color + '">'
+        + '<span>' + (card.q || '') + '</span><i class="ph ph-plus teoria-q-icon"></i></button>'
+        + '<div class="teoria-a">' + answer + '</div>'
+        + '</div>';
+    });
+    h += '</div></div>';
+  });
+  h += '</div>';
+  return h;
+}
+// ═══ Provedor de perguntas para JOGOS, a partir do conteúdo de cada ano ═══
+// Os jogos (4 em Linha, Campo Minado, Escape) precisam de questões de escolha
+// múltipla: {q, opts:[4 strings], ans (índice 0-3)}. Este helper gera uma a
+// partir do gerador do ano (genFn(tema,tipo,dif)) e/ou do banco, garantindo
+// 4 opções e a matéria correta. Devolve null se não conseguir.
+// Versão que respeita VÁRIOS capítulos e VÁRIOS subtemas escolhidos nos jogos.
+// cfg = {
+//   capMeta:[{n,label}], subtemas:{cap:[labels]}, subtemaTemas:{cap:{st:[temas]}},
+//   gerador:function(cap)->genFn, temasCount:{cap:n}, banco:{cap:[..]} (opcional)
+// }
+// sel = { caps:[1,3], stsByCap:{1:[2,4], 3:[1]} }
+//   caps vazio  → todos os capítulos.
+//   stsByCap[c] vazio/ausente → todos os subtemas desse capítulo.
+// Devolve {q,opts,ans,cap,st} (cap/st para o cabeçalho dos jogos).
+function _jogoQForCourse(cfg, level, sel) {
+  if (!cfg || typeof cfg.gerador !== 'function') return null;
+  var nCaps = (cfg.capMeta && cfg.capMeta.length) || 8;
+  sel = sel || {};
+  var caps = (sel.caps && sel.caps.length) ? sel.caps : null;
+  var stsByCap = sel.stsByCap || {};
+  for (var att = 0; att < 10; att++) {
+    var c = caps ? caps[Math.floor(Math.random() * caps.length)]
+                 : (1 + Math.floor(Math.random() * nCaps));
+    var gen = cfg.gerador(c);
+    var banco = (cfg.banco && cfg.banco[c]) ? cfg.banco[c] : null;
+    // Junta os temas de TODOS os subtemas escolhidos deste capítulo.
+    var sts = stsByCap[c] || [];
+    var temasLista = null, stUsado = 0;
+    if (sts.length && cfg.subtemaTemas && cfg.subtemaTemas[c]) {
+      temasLista = [];
+      sts.forEach(function (st) {
+        var t = cfg.subtemaTemas[c][st];
+        if (t && t.length) temasLista = temasLista.concat(t);
+      });
+      if (!temasLista.length) temasLista = null;
+      stUsado = (sts.length === 1) ? sts[0] : -1; // -1 = vários subtemas
+    }
+    var q = _jogoQFromGerador(gen, (cfg.temasCount && cfg.temasCount[c]) || 1, banco, level, temasLista);
+    if (q) { q.cap = c; q.st = stUsado; return q; }
+  }
+  return null;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SELEÇÃO MULTI (capítulos + subtemas) — componente partilhado
+   Usado pelas secções de estudo (Exercícios, Quiz, Teste, Fichas) de
+   todos os anos, para o aluno montar a sua própria combinação.
+   Estado: { caps:[1,3], stsByCap:{1:[2,4], 3:[]} }
+     caps vazio        → todos os capítulos disponíveis.
+     stsByCap[c] vazio → todos os subtemas desse capítulo.
+   cfg: { capMeta, capColors, subtemas, subtemaTemas, temasCount, gerador }
+   ════════════════════════════════════════════════════════════════ */
+function _selNew() { return { caps: [], stsByCap: {} }; }
+
+// Capítulos que têm gerador (jogáveis); ignora os "em preparação".
+function _selCapsDisp(cfg) {
+  var out = [];
+  (cfg.capMeta || []).forEach(function (m) {
+    var tem = !cfg.gerador || !!cfg.gerador(m.n);
+    if (tem) out.push(m);
+  });
+  return out;
+}
+
+// Liga/desliga um capítulo. cap=0 → "Todos" (limpa seleção).
+function _selToggleCap(state, cfg, cap) {
+  if (cap === 0) { state.caps = []; state.stsByCap = {}; return; }
+  if (cfg.gerador && !cfg.gerador(cap)) return; // capítulo sem gerador
+  var i = state.caps.indexOf(cap);
+  if (i === -1) state.caps.push(cap);
+  else { state.caps.splice(i, 1); delete state.stsByCap[cap]; }
+}
+// Liga/desliga um subtema de um capítulo. st=0 → "Todos os subtemas".
+function _selToggleSt(state, cap, st) {
+  if (!state.stsByCap[cap]) state.stsByCap[cap] = [];
+  if (st === 0) { state.stsByCap[cap] = []; return; }
+  var arr = state.stsByCap[cap], i = arr.indexOf(st);
+  if (i === -1) arr.push(st); else arr.splice(i, 1);
+}
+
+// Expande a seleção numa lista de pares { cap, tema } a gerar, percorrendo
+// os capítulos escolhidos (ou todos) e, dentro de cada um, os temas dos
+// subtemas escolhidos (ou todos os temas do capítulo).
+function _selPares(state, cfg) {
+  var capsDisp = _selCapsDisp(cfg).map(function (m) { return m.n; });
+  var caps = (state.caps && state.caps.length)
+    ? state.caps.filter(function (c) { return capsDisp.indexOf(c) !== -1; })
+    : capsDisp;
+  if (!caps.length) caps = capsDisp;
+  var pares = [];
+  caps.forEach(function (c) {
+    var temas = [];
+    var sts = state.stsByCap[c] || [];
+    if (sts.length && cfg.subtemaTemas && cfg.subtemaTemas[c]) {
+      sts.forEach(function (st) {
+        var t = cfg.subtemaTemas[c][st];
+        if (t && t.length) temas = temas.concat(t);
+      });
+    }
+    if (!temas.length) {
+      var n = (cfg.temasCount && cfg.temasCount[c]) || 1;
+      for (var t = 1; t <= n; t++) temas.push(String(t));
+    }
+    temas.forEach(function (tm) { pares.push({ cap: c, tema: String(tm) }); });
+  });
+  return pares;
+}
+
+// Texto-resumo da seleção ("Todos os capítulos", "Cap X · 2 subtemas", …).
+function _selResumo(state, cfg) {
+  var nome = {}; (cfg.capMeta || []).forEach(function (m) { nome[m.n] = m.label; });
+  if (!state.caps.length) return 'Todos os capítulos';
+  if (state.caps.length === 1) {
+    var c = state.caps[0], sts = state.stsByCap[c] || [], subs = cfg.subtemas && cfg.subtemas[c] || [];
+    var base = nome[c] || ('Cap. ' + c);
+    if (sts.length === 1 && subs[sts[0] - 1]) return base + ' · ' + subs[sts[0] - 1];
+    if (sts.length > 1) return base + ' · ' + sts.length + ' subtemas';
+    return base;
+  }
+  return state.caps.length + ' capítulos';
+}
+
+// Gera uma questão de escolha múltipla respeitando a seleção (cap+subtema).
+// fillToMc (opcional): função que converte uma questão 'fill' em 'mc' (alguns
+// anos usam-na como recurso quando o tema não tem mc nativo).
+function _selMcQuestion(state, cfg, fillToMc) {
+  var pares = _selPares(state, cfg);
+  if (!pares.length) return null;
+  var ex = null, i;
+  for (i = 0; i < 14; i++) {
+    var par = pares[Math.floor(Math.random() * pares.length)];
+    var gen = cfg.gerador && cfg.gerador(par.cap);
+    if (!gen) continue;
+    ex = gen(par.tema, 'mc', 'medio');
+    if (ex && ex.tipo === 'mc' && ex.opcoes && ex.opcoes.length >= 2) return ex;
+  }
+  // recurso: converte uma 'fill' em 'mc'
+  if (typeof fillToMc === 'function') {
+    for (i = 0; i < 14; i++) {
+      var par2 = pares[Math.floor(Math.random() * pares.length)];
+      var gen2 = cfg.gerador && cfg.gerador(par2.cap);
+      if (!gen2) continue;
+      var mc = fillToMc(gen2(par2.tema, 'fill', 'medio'));
+      if (mc && mc.opcoes && mc.opcoes.length >= 2) return mc;
+    }
+  }
+  return null;
+}
+
+// HTML das duas barras de chips (Capítulos multi + Subtemas multi do cap único).
+// onCap/onSt = nomes de funções globais chamadas com (idx) ou (cap,idx).
+function _selBarsHTML(state, cfg, onCap, onSt) {
+  var capsDisp = _selCapsDisp(cfg);
+  if (!capsDisp.length) return '';
+  var capChips = ['<button class="sel-chip' + (state.caps.length === 0 ? ' active' : '') +
+    '" onclick="' + onCap + '(0)"><i class="ph ph-list"></i> Todos</button>'];
+  capsDisp.forEach(function (m) {
+    var on = state.caps.indexOf(m.n) !== -1;
+    var col = (cfg.capColors && cfg.capColors[m.n]) || '';
+    var style = (on && col) ? ' style="background:' + col + ';border-color:' + col + ';color:#fff"' : '';
+    capChips.push('<button class="sel-chip' + (on ? ' active' : '') + '"' + style +
+      ' onclick="' + onCap + '(' + m.n + ')">' + (m.icon || '') + ' ' + m.label + '</button>');
+  });
+  var bars = '<div class="sel-bar"><span class="sel-label">Capítulos:</span>' + capChips.join('') + '</div>';
+  if (state.caps.length === 1) {
+    var cap = state.caps[0], subs = (cfg.subtemas && cfg.subtemas[cap]) || [];
+    if (subs.length) {
+      var stOn = state.stsByCap[cap] || [];
+      var stChips = ['<button class="sel-chip sel-st' + (stOn.length === 0 ? ' active' : '') +
+        '" onclick="' + onSt + '(' + cap + ',0)"><i class="ph ph-list"></i> Todos</button>'];
+      subs.forEach(function (lab, i) {
+        var st = i + 1, on = stOn.indexOf(st) !== -1;
+        stChips.push('<button class="sel-chip sel-st' + (on ? ' active' : '') +
+          '" onclick="' + onSt + '(' + cap + ',' + st + ')">' + lab + '</button>');
+      });
+      bars += '<div class="sel-bar"><span class="sel-label">Subtemas:</span>' + stChips.join('') + '</div>';
+    }
+  } else if (state.caps.length > 1) {
+    bars += '<div class="sel-bar"><span class="sel-label">Subtemas:</span>' +
+      '<span class="sel-note">Escolhe <b>um único capítulo</b> para filtrar por subtema.</span></div>';
+  }
+  return bars;
+}
+
+function _jogoQFromGerador(genFn, temasCount, banco, level, temasLista) {
+  var dif = level === 'facil' ? 'facil' : (level === 'dificil' ? 'dificil' : 'medio');
+  // Se há subtema(s) escolhido(s), os temas vêm dessa lista; o banco não está
+  // mapeado por subtema, por isso só o usamos quando NÃO há filtro de subtema.
+  var temas = (temasLista && temasLista.length) ? temasLista.map(String) : null;
+  // 1) tenta o banco (questões mc com 4 opções) - conteúdo real
+  if (!temas && banco && banco.length) {
+    var mcs = banco.filter(function (q) { return q.tipo === 'mc' && q.opcoes && q.opcoes.length === 4; });
+    if (mcs.length && Math.random() < 0.4) {
+      var b = mcs[Math.floor(Math.random() * mcs.length)];
+      var ai = b.opcoes.map(String).indexOf(String(b.resposta));
+      if (ai >= 0) return { q: b.enun, opts: b.opcoes.slice(), ans: ai };
+    }
+  }
+  // 2) tenta o gerador: questões mc com 4 opções, OU fabrica opções a partir
+  //    de uma questão numérica (fill) com resposta inteira/decimal.
+  if (typeof genFn === 'function') {
+    var nT = temasCount || 1;
+    for (var tries = 0; tries < 16; tries++) {
+      var tema = temas ? temas[Math.floor(Math.random() * temas.length)]
+                       : String(1 + Math.floor(Math.random() * nT));
+      var ex = genFn(tema, 'mc', dif);
+      if (!ex) continue;
+      // a) já é mc com 4 opções
+      if (ex.opcoes && ex.opcoes.length === 4) {
+        var idx = ex.opcoes.map(String).indexOf(String(ex.resposta));
+        if (idx >= 0) return { q: (ex.enun || ex.pergunta || ''), opts: ex.opcoes.slice(), ans: idx };
+      }
+      // b) fill numérico → fabricar 4 opções (resposta + 3 distratores)
+      var fab = _fabricarOpcoes(ex.resposta);
+      if (fab && fab.ans >= 0) {
+        return { q: (ex.enun || ex.pergunta || ''), opts: fab.opts, ans: fab.ans };
+      }
+    }
+  }
+  return null;
+}
+
+// Gera um nome de ficheiro no formato ano_disciplina_tema_data.
+// ano: '9' · disc: 'matematica' · temas: ['Funções', …] · ext: 'pdf'/'html'
+// Ex.: 9ano_matematica_funcoes_2026-06-07.pdf
+function _nomeFicha(ano, disc, temas, ext) {
+  function slug(s) {
+    return String(s).toLowerCase()
+      .replace(/[áàâãä]/g, 'a').replace(/[éèêë]/g, 'e').replace(/[íìîï]/g, 'i')
+      .replace(/[óòôõö]/g, 'o').replace(/[úùûü]/g, 'u').replace(/ç/g, 'c')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+  var d = new Date();
+  var data = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+  var tema;
+  if (!temas || !temas.length) tema = 'geral';
+  else if (temas.length === 1) tema = slug(temas[0]);
+  else tema = slug(temas[0]) + '-mais' + (temas.length - 1); // ex: funcoes-mais2
+  return ano + 'ano_' + slug(disc) + '_' + tema + '_' + data + '.' + (ext === 'html' ? 'html' : 'pdf');
+}
+
+// Garante que uma pergunta de escolha múltipla (mc) tem 4 opções.
+// Perguntas binárias legítimas (Sim/Não, Verdadeiro/Falso, finita/infinita…)
+// ficam com 2. As que têm 3 (falta um distrator) são completadas para 4.
+// Recebe e devolve o array de opções (modifica/retorna novo).
+function _normalizaOpcoes(opcoes, resposta) {
+  if (!opcoes || !opcoes.length) return opcoes;
+  // pares binários genuínos (V/F, Sim/Não): mantêm-se com 2 opções.
+  if (opcoes.length === 2) return opcoes;
+  // 0) remove opções DUPLICADAS (mantém a 1.ª ocorrência; a correta nunca se perde).
+  var vistos = {}, dedup = [];
+  for (var z = 0; z < opcoes.length; z++) {
+    var key = String(opcoes[z]).trim();
+    if (!vistos[key]) { vistos[key] = 1; dedup.push(opcoes[z]); }
+  }
+  opcoes = dedup;
+  if (opcoes.length >= 4) return opcoes.slice(0, 4);
+  // < 4 (originalmente ≥3, possivelmente reduzido por dedup): completar para 4.
+  var out = opcoes.slice();
+  // 1) distrator numérico simples
+  var fab = _fabricarOpcoes(resposta);
+  if (fab && fab.opts) {
+    for (var i = 0; i < fab.opts.length && out.length < 4; i++) {
+      if (out.map(String).indexOf(String(fab.opts[i])) < 0) out.push(fab.opts[i]);
+    }
+  }
+  // 2) ainda falta? deriva de uma opção existente (troca de sinal / inverte fração)
+  while (out.length < 4) {
+    var cand = _distratorDe(out);
+    if (cand && out.map(String).indexOf(String(cand)) < 0) { out.push(cand); }
+    else break;
+  }
+  // 3) garante a presença da resposta correta (dedup nunca a deve ter perdido, mas por segurança)
+  if (resposta !== undefined && resposta !== null && out.map(String).indexOf(String(resposta)) < 0) out.unshift(resposta);
+  // 4) último recurso: rótulo neutro para nunca deixar a mc com menos de 4
+  var neutros = ['Nenhuma das anteriores', 'Outro valor', 'Não é possível determinar'];
+  for (var w = 0; out.length < 4 && w < neutros.length; w++) {
+    if (out.map(String).indexOf(neutros[w]) < 0) out.push(neutros[w]);
+  }
+  return out.slice(0, 4);
+}
+
+// Deriva um distrator a partir de opções existentes: troca o sinal,
+// inverte uma fração a/b → b/a, ou soma 1 a um número. Devolve string ou null.
+function _distratorDe(opcoes) {
+  var have = {}; opcoes.forEach(function (o) { have[String(o).trim()] = 1; });
+  for (var i = 0; i < opcoes.length; i++) {
+    var o = String(opcoes[i]).trim();
+    var mf = o.match(/^(-?)(\d+)\/(\d+)$/);
+    if (mf) {
+      var sign = mf[1], num = parseInt(mf[2], 10), den = parseInt(mf[3], 10);
+      // candidatos: inverte, troca sinal, numerador±1, denominador±1
+      var cands = [(sign ? '' : '-') + num + '/' + den, den + '/' + num,
+                   sign + (num + 1) + '/' + den, sign + num + '/' + (den + 1),
+                   sign + (num > 1 ? num - 1 : num + 2) + '/' + den];
+      for (var c = 0; c < cands.length; c++) { if (!have[cands[c]]) return cands[c]; }
+    }
+    var mn = o.match(/^(-?)(\d+)$/);
+    if (mn) {
+      var n = parseInt(o, 10);
+      var ns = [n + 1, n - 1, n + 2, n - 2];
+      for (var j = 0; j < ns.length; j++) { if (!have[String(ns[j])]) return String(ns[j]); }
+    }
+  }
+  return null;
+}
+
+// A partir de uma resposta numérica, cria 4 opções (a correta + 3 distratores
+// plausíveis), baralhadas. Devolve {opts:[4 strings], ans} ou null se não numérica.
+function _fabricarOpcoes(resp) {
+  var s = String(resp).replace(',', '.');
+  if (!/^-?\d+(\.\d+)?$/.test(s)) return null; // só respostas numéricas simples
+  var n = parseFloat(s);
+  var decimais = (s.indexOf('.') >= 0) ? (s.split('.')[1].length) : 0;
+  // formata a resposta correta no mesmo estilo dos distratores (vírgula decimal)
+  var ordem = (decimais === 0) ? String(Math.round(n)) : n.toFixed(decimais).replace('.', ',');
+  var set = {}; set[String(n)] = true; set[ordem] = true;
+  // distratores: ±1, ±2, ±10%, dobro/metade - só os que forem distintos
+  var base = Math.abs(n) || 1;
+  var cands = [n + 1, n - 1, n + 2, n - 2, Math.round(n * 1.1 * Math.pow(10, decimais)) / Math.pow(10, decimais),
+               n * 2, (decimais === 0 && n % 2 === 0) ? n / 2 : n + 3, n - 3];
+  var out = [ordem];
+  for (var i = 0; i < cands.length && out.length < 4; i++) {
+    var c = cands[i];
+    if (decimais === 0) c = Math.round(c);
+    var cs = (decimais === 0) ? String(c) : c.toFixed(decimais).replace('.', ',');
+    var csKey = String(c);
+    if (!set[csKey] && !set[cs] && isFinite(c)) { set[csKey] = true; set[cs] = true; out.push(cs); }
+  }
+  if (out.length < 4) return null;
+  // baralhar
+  for (var j = out.length - 1; j > 0; j--) { var k = Math.floor(Math.random() * (j + 1)); var t = out[j]; out[j] = out[k]; out[k] = t; }
+  return { opts: out, ans: out.indexOf(ordem) };
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Converte uma questão de resposta aberta (fill/fill_frac) em escolha múltipla,
+// com distratores PLAUSÍVEIS (parecidos com erros típicos de aluno). Partilhado
+// por todos os anos (5.º–11.º) via _matNFillToMc → _fillParaMc.
+//
+// Cobre: números (reaproveita _fabricarOpcoes), frações a/b, coordenadas 2D e
+// 3D, e termos "kπ/n". Devolve um objeto-questão MC ou null se não converter.
+// ─────────────────────────────────────────────────────────────────────────
+function _fillParaMc(ex) {
+  if (!ex || ex.resposta === undefined || ex.resposta === null || ex.resposta === '') return null;
+  var correta = String(ex.resposta).trim();
+  var opcoes = [correta], mm;
+  function _shuf(arr) { for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; } return arr; }
+
+  // Quantidades limitadas: deduz [min,max] do enunciado/tema para não gerar
+  // distratores impossíveis (ex: cos = 2,6 ou probabilidade = 5/3).
+  var ctx = ((ex.enun || '') + ' ' + (ex.tema || '')).toLowerCase();
+  var lim = null;
+  if (/\bsen\b|\bcos\b|seno|cosseno|sen\(|cos\(/.test(ctx)) lim = /agudo/.test(ctx) ? [0, 1] : [-1, 1];
+  else if (/probabilidad|frequência relativa|\bp\(a/.test(ctx)) lim = [0, 1];
+  function valorDe(str) { var t = String(str).trim(); var mfr = t.match(/^(-?\d+)\/(-?\d+)$/); if (mfr) return (+mfr[1]) / (+mfr[2]); return parseFloat(t.replace(',', '.')); }
+  function dentro(str) { if (!lim) return true; var v = valorDe(str); if (isNaN(v)) return true; return v >= lim[0] - 1e-9 && v <= lim[1] + 1e-9; }
+
+  function add(arr) { for (var i = 0; i < arr.length && opcoes.length < 4; i++) { var v = arr[i]; if (v != null && opcoes.indexOf(v) === -1 && v !== correta && dentro(v)) opcoes.push(v); } }
+  function pack() {
+    if (opcoes.length < 2) return null;
+    return { enun: ex.enun, tipo: 'mc', opcoes: _shuf(opcoes.slice()), resposta: correta, expl: ex.expl, tema: ex.tema, visual: ex.visual };
+  }
+
+  // 1) Número → distratores pedagógicos (±1, ±2, ±10%, dobro/metade, troca de sinal).
+  if (/^-?\d+(?:[.,]\d+)?$/.test(correta)) {
+    var fab = (typeof _fabricarOpcoes === 'function') ? _fabricarOpcoes(correta) : null;
+    if (fab && fab.opts && fab.ans >= 0 && (!lim || fab.opts.every(dentro))) {
+      // _fabricarOpcoes formata com vírgula decimal; a resposta TEM de ser a
+      // mesma string que está nas opções (senão nenhuma opção corresponde).
+      return { enun: ex.enun, tipo: 'mc', opcoes: fab.opts.slice(), resposta: fab.opts[fab.ans], expl: ex.expl, tema: ex.tema, visual: ex.visual };
+    }
+    // distratores próprios (respeitam o limite via add→dentro).
+    var num = parseFloat(correta.replace(',', '.'));
+    var inteiro = (num % 1 === 0);
+    var p = inteiro ? (Math.abs(num) >= 100 ? 10 : (Math.abs(num) >= 20 ? 5 : (Math.abs(num) >= 8 ? 2 : 1))) : (Math.abs(num) < 1 ? 0.1 : 1);
+    var cand = inteiro ? [num + p, num - p, num + 2 * p, num - 2 * p, -num, num + 3 * p]
+                       : [num + p, num - p, num + 2 * p, num - 2 * p, num + 3 * p, num - 3 * p];
+    add(cand.map(function (v) { return inteiro ? String(Math.round(v)) : (Math.round(v * 100) / 100).toString().replace('.', ','); }));
+    return pack();
+  }
+  // 2) Fração a/b → erros típicos: inverter, trocar sinal, ±1 no numerador/denominador.
+  //    (add→dentro descarta distratores impossíveis quando é probabilidade.)
+  if (mm = correta.match(/^(-?)(\d+)\/(\d+)$/)) {
+    var s = mm[1], a = parseInt(mm[2], 10), b = parseInt(mm[3], 10);
+    add([b + '/' + a, (s ? '' : '-') + a + '/' + b, (a + 1) + '/' + b, (a > 1 ? a - 1 : a + 2) + '/' + b, a + '/' + (b + 1), (a > 1 ? a - 1 : a + 2) + '/' + (b + 1)]);
+    return pack();
+  }
+  // 3) Coordenada 3D (x,y,z) → mexe numa componente / troca sinais / troca ordem.
+  if (mm = correta.match(/^\(\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*\)$/)) {
+    var x = +mm[1], y = +mm[2], z = +mm[3];
+    add(['(' + (x + 1) + ', ' + y + ', ' + z + ')', '(' + x + ', ' + (y + 1) + ', ' + z + ')', '(' + x + ', ' + y + ', ' + (z + 1) + ')', '(' + (-x) + ', ' + (-y) + ', ' + (-z) + ')', '(' + z + ', ' + y + ', ' + x + ')']);
+    return pack();
+  }
+  // 4) Coordenada 2D (x,y).
+  if (mm = correta.match(/^\(\s*(-?\d+)\s*,\s*(-?\d+)\s*\)$/)) {
+    var x2 = +mm[1], y2 = +mm[2];
+    add(['(' + (x2 + 1) + ', ' + y2 + ')', '(' + x2 + ', ' + (y2 + 1) + ')', '(' + (-x2) + ', ' + (-y2) + ')', '(' + y2 + ', ' + x2 + ')']);
+    return pack();
+  }
+  // 5) Termo com π (ex: 3π/4, π/6, 5π) → mexe no denominador / valores notáveis.
+  if (/π/.test(correta)) {
+    var mden = correta.match(/π\/(\d+)/);
+    if (mden) { var dn = parseInt(mden[1], 10); add([correta.replace('/' + dn, '/' + (dn + 1)), correta.replace('/' + dn, '/' + (dn === 2 ? 3 : 2)), 'π/' + dn]); }
+    add(['π', '2π', 'π/2', 'π/3', 'π/4', '3π/4', 'π/6', '5π/6']);
+    return pack();
+  }
+  return null; // tipo de resposta não suportado → não converte
+}
+
+// ═══ Banco de questões: mistura questões fixas (reais, multi-passo) com geradas ═══
+// banco: array de questões {tema?, tipo, enun, opcoes?, resposta, expl, visual?} para um capítulo.
+// Devolve até `qtd` questões: algumas do banco (baralhadas) + o resto geradas.
+// Limpa pequenos erros de escrita matemática no texto já montado:
+//  "1x" → "x" ; "− -3" / "−-3" → "+ 3" ; "+ -3" → "− 3" ; "+ 0" isolado → "" ;
+//  "× -3" → "× (-3)". Não altera números dentro de palavras nem casas decimais.
+function _limpaMath(s) {
+  if (s == null) return s;
+  s = String(s);
+  // coeficiente 1 antes de x: "1x" → "x" (mas não "11x", "0,1x")
+  s = s.replace(/([+−–\-(\s×])1x(?![0-9])/g, '$1x');
+  // "− -3" ou "−-3" (subtração de negativo) → "+ 3"
+  s = s.replace(/[−\-]\s*-(\d)/g, '+ $1');
+  // "+ -3" → "− 3"
+  s = s.replace(/\+\s*-(\d)/g, '− $1');
+  // "+ 0" ou "− 0" isolado (termo nulo) → remove
+  s = s.replace(/\s[+−\-]\s*0(?![0-9,.])/g, '');
+  // multiplicação/divisão por negativo: "× -3" → "× (-3)"
+  s = s.replace(/([×÷])\s*-(\d+)/g, '$1 (-$2)');
+  return s;
+}
+
+// Formata "+ bx" corretamente: b=1 → "+ x"; b=-1 → "− x"; b=0 → ""; senão "+ bx"/"− |b|x".
+function _termoX(b) {
+  if (b === 0) return '';
+  if (b === 1) return ' + x';
+  if (b === -1) return ' − x';
+  return b > 0 ? ' + ' + b + 'x' : ' − ' + Math.abs(b) + 'x';
+}
+// Formata "+ c" corretamente: c=0 → ""; senão "+ c"/"− |c|".
+function _termoC(c) {
+  if (c === 0) return '';
+  return c > 0 ? ' + ' + c : ' − ' + Math.abs(c);
+}
+// Escreve um número entre parênteses se for negativo: -1 → "(-1)"; 3 → "3".
+function _parenSeNeg(n) { return n < 0 ? '(' + n + ')' : '' + n; }
+
+// Escala de números por nível de dificuldade. Devolve um inteiro aleatório
+// num intervalo que cresce com a dificuldade. Usar nos geradores para que
+// difícil tenha números maiores que fácil.
+// _escalaNum('facil') ~ [1,10]; 'medio' ~ [5,50]; 'dificil' ~ [10,100]
+function _escalaNum(dif, base) {
+  var r;
+  if (dif === 'dificil') r = [10, 100];
+  else if (dif === 'medio') r = [5, 50];
+  else r = [1, 10];
+  if (base) { r = [Math.round(r[0] * base / 10), Math.round(r[1] * base / 10)]; }
+  return r[0] + Math.floor(Math.random() * (r[1] - r[0] + 1));
+}
+
+// Classifica a dificuldade de uma questão (do banco): 'facil' | 'medio' | 'dificil'.
+// Usa: se já tem campo .dif, respeita; senão estima por contexto e nº de passos.
+function _nivelQuestao(q) {
+  if (q.dif) return q.dif;
+  var e = String(q.enun || '');
+  var x = String(q.expl || '');
+  var passos = (x.match(/Passo \d/g) || []).length;
+  var temContexto = /[Uu]m[a]? |custa|comprou|tem |escola|loja|euros|€| metros| km|caixa|aluno|saco|carteira|terreno|rampa|escada|bola|drone|temperatura|mergulhador|comboio|receita|farol|cromos|piza|agricultor|lan[çc]a/.test(e);
+  var afirmacoes = /I\.|II\.|III\.|afirma[çc]/.test(e);
+  if (passos >= 2 || afirmacoes || (temContexto && e.length > 80)) return 'dificil';
+  if (passos === 1 || temContexto || e.length > 70) return 'medio';
+  return 'facil';
+}
+
+// banco: questões. geradas: array. qtd: total. nBanco: quantas do banco.
+// nivel (opcional): 'facil'|'medio'|'dificil' — filtra o banco para esse nível
+// (no fácil só questões simples; no difícil só as de contexto/multi-passo).
+function _mixBancoGeradas(banco, geradas, qtd, nBanco, nivel) {
+  qtd = qtd || 8;
+  var out = [];
+  // filtrar o banco pelo nível pedido (mantém só as adequadas; se ficar vazio, usa todas)
+  if (banco && banco.length && nivel) {
+    var ordem = { facil: 0, medio: 1, dificil: 2 };
+    var alvo = ordem[nivel];
+    var filtrado = banco.filter(function (q) {
+      var nq = ordem[_nivelQuestao(q)];
+      // fácil: só fáceis; médio: médias e fáceis; difícil: médias e difíceis
+      if (nivel === 'facil') return nq === 0;
+      if (nivel === 'dificil') return nq >= 1;
+      return true; // médio: aceita tudo, mas dará prioridade às médias
+    });
+    if (filtrado.length) banco = filtrado;
+  }
+  // no difícil, puxa MAIS questões do banco (que são as de contexto/multi-passo);
+  // no fácil, menos. Cria uma diferença de nível mais marcada.
+  if (nivel === 'dificil') nBanco = Math.max(nBanco || 0, Math.ceil(qtd / 2));
+  else if (nivel === 'facil') nBanco = Math.min(nBanco || 1, Math.max(1, Math.floor(qtd / 4)));
+  // escolhe nBanco questões do banco (sem repetir)
+  if (banco && banco.length) {
+    var pool = banco.slice();
+    // baralha
+    for (var i = pool.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = pool[i]; pool[i] = pool[j]; pool[j] = t; }
+    var take = Math.min(nBanco || Math.floor(qtd / 2), pool.length);
+    for (var k = 0; k < take; k++) out.push(Object.assign({}, pool[k]));
+  }
+  // completa com geradas, evitando enunciados repetidos
+  var vistos = {};
+  out.forEach(function (e) { vistos[String(e.enun || '').replace(/<[^>]+>/g, '').trim()] = 1; });
+  var gi = 0;
+  while (out.length < qtd && gi < geradas.length) {
+    var ch = String(geradas[gi].enun || '').replace(/<[^>]+>/g, '').trim();
+    if (!vistos[ch]) { vistos[ch] = 1; out.push(geradas[gi]); }
+    gi++;
+  }
+  // se ainda faltar (poucas distintas), completa mesmo com repetidas
+  gi = 0;
+  while (out.length < qtd && gi < geradas.length) { out.push(geradas[gi]); gi++; }
+  // baralha o conjunto final e numera
+  for (var m = out.length - 1; m > 0; m--) { var nn = Math.floor(Math.random() * (m + 1)); var s = out[m]; out[m] = out[nn]; out[nn] = s; }
+  return out.map(function (e, idx) { return Object.assign({}, e, { num: idx + 1 }); });
+}
+
+// Junta a um array de cards de teoria de Estatística 3 exemplos visuais
+// (gráfico de barras, circular e tabela). Usado pelos inits dos cursos.
+function _addStatsTeoriaVisuais(cardsArr, color) {
+  if (typeof EduVisual === 'undefined' || !cardsArr) return;
+  // evita duplicar se a função for chamada duas vezes
+  if (cardsArr._visuais) return; cardsArr._visuais = true;
+  cardsArr.push({
+    tag: 'Exemplo', q: 'Como se lê um gráfico de barras?',
+    a: 'A altura de cada barra indica a frequência. Exemplo do desporto preferido:',
+    v: EduVisual.barras([{ label: 'Futebol', value: 12 }, { label: 'Natação', value: 7 }, { label: 'Ténis', value: 5 }, { label: 'Dança', value: 6 }], color || '#5a7fa8')
+  });
+  cardsArr.push({
+    tag: 'Exemplo', q: 'O que é um gráfico circular?',
+    a: 'Cada setor é uma fração do total (frequência relativa × 360°). Exemplo de meios de transporte:',
+    v: EduVisual.circular([{ label: 'A pé', value: 40 }, { label: 'Autocarro', value: 35 }, { label: 'Carro', value: 25 }])
+  });
+  cardsArr.push({
+    tag: 'Exemplo', q: 'Como organizar dados numa tabela de frequências?',
+    a: 'Cada linha tem o valor e quantas vezes ocorre. Exemplo das idades de uma equipa:',
+    v: EduVisual.tabela(['Idade', 'N.º'], [['14', '4'], ['15', '6'], ['16', '8'], ['17', '5']], color || '#5a7fa8')
+  });
+}
+
+// Junta a um array de cards de teoria de Geometria exemplos visuais
+// (triângulo, círculo, retângulo). cap pode ser 'pitagoras' p/ tri retângulo.
+function _addGeoTeoriaVisuais(cardsArr, color, opts) {
+  if (typeof EduVisual === 'undefined' || !cardsArr || cardsArr._visuaisG) return;
+  cardsArr._visuaisG = true; opts = opts || {};
+  if (opts.pitagoras) {
+    cardsArr.push({
+      tag: 'Exemplo', q: 'Como aplicar o Teorema de Pitágoras num triângulo?',
+      a: 'Num triângulo retângulo, hipotenusa² = cateto² + cateto². Ex: catetos 3 e 4 → hipotenusa = √(9+16) = 5.',
+      v: EduVisual.triangulo({ right: true, aLabel: '5', bLabel: '4', cLabel: '3', color: color })
+    });
+  } else {
+    cardsArr.push({
+      tag: 'Exemplo', q: 'Como é um retângulo e o seu perímetro/área?',
+      a: 'Perímetro = 2×(comp+larg); Área = comp×larg. Exemplo de 6 cm por 4 cm:',
+      v: EduVisual.retangulo(6, 4, { compLabel: '6 cm', largLabel: '4 cm', color: color })
+    });
+    cardsArr.push({
+      tag: 'Exemplo', q: 'O que é o raio de um círculo?',
+      a: 'A distância do centro à circunferência. Perímetro = 2πr; Área = πr².',
+      v: EduVisual.circulo({ rLabel: 'r', color: color })
+    });
+  }
+}
+
+// Junta cards de teoria com gráficos de funções (reta e parábola).
+function _addFuncTeoriaVisuais(cardsArr, color) {
+  if (typeof EduVisual === 'undefined' || !cardsArr || cardsArr._visuaisF) return;
+  cardsArr._visuaisF = true;
+  cardsArr.push({
+    tag: 'Exemplo', q: 'Como é o gráfico de uma função afim?',
+    a: 'É uma reta y = mx + b. Aqui f(x) = x + 1 (declive 1, ordenada na origem 1):',
+    v: EduVisual.grafico(function (x) { return x + 1; }, { range: 5, color: color })
+  });
+  cardsArr.push({
+    tag: 'Exemplo', q: 'Como é o gráfico de uma função quadrática?',
+    a: 'É uma parábola. Aqui f(x) = x² − 4, com vértice (0, −4) e zeros −2 e 2:',
+    v: EduVisual.grafico(function (x) { return x * x - 4; }, { range: 5, color: color, markers: [{ x: 0, y: -4, label: 'V' }, { x: -2, y: 0 }, { x: 2, y: 0 }] })
+  });
+}
+
+function _teoriaToggleGroup(gid) {
+  var g = document.getElementById(gid);
+  if (g) g.classList.toggle('open');
+}
+function _teoriaToggleItem(btn) {
+  var item = btn.parentNode;
+  if (item) item.classList.toggle('open');
+}
+
+// ═══ CHAPTER NAV BAR generated from data ═══
 function _buildChapterNav(activeCap) {
   var caps = [
     {n:1, label:'Números Inteiros'},
@@ -1618,7 +2438,9 @@ function _buildChapterNav(activeCap) {
     {n:3, label:'Geometria'},
     {n:4, label:'Equações'},
     {n:5, label:'Sequências'},
-    {n:6, label:'Estatística', locked:true}
+    {n:6, label:'Funções'},
+    {n:7, label:'Figuras Semelhantes'},
+    {n:8, label:'Dados e Prob.'}
   ];
   var h = '<button class="ch-back-link" onclick="showMat7View()">← Capítulos</button><div class="ch-nav-divider"></div>';
   caps.forEach(function(c) {
@@ -1638,6 +2460,83 @@ function _initChapterNav() {
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _initChapterNav);
 else _initChapterNav();
+
+// ── Cap group tabs sub-nav ──────────────────────────────────────────────────
+// Quando se clica num botão de grupo (Aprender, Praticar, Testar),
+// mostra uma sub-barra com as secções desse grupo
+(function() {
+  var SEC_LABELS = {
+    // cap1
+    temas:'Temas', teoria:'Teoria', questoes:'Exercícios', minitestes:'Minitestes',
+    gerador:'Gerador', reta:'Reta Numérica', 'calc-expr':'Calculadora',
+    teste:'Teste', 'quiz-game':'⚡ Quiz', flashcards:'Flashcards', exame:'Exame Cronometrado',
+    jogos:'Jogos', progresso:'Progresso',
+  };
+  // Adicionar labels com sufixo numérico
+  [2,3,4,5,6,7,8].forEach(function(n) {
+    Object.keys(SEC_LABELS).forEach(function(k) {
+      SEC_LABELS[k+n] = SEC_LABELS[k];
+    });
+  });
+
+  function initGroupTabs() {
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('.cap-group-btn');
+      if (!btn) return;
+      var secsStr = btn.getAttribute('data-secs');
+      if (!secsStr) return;
+      var secs = secsStr.split(',');
+      if (secs.length <= 1) return; // só 1 secção, sem sub-nav necessário
+
+      // Encontrar a sub-nav mais próxima
+      var tabsNav = btn.closest('nav.tabs');
+      if (!tabsNav) return;
+      var subNav = tabsNav.nextElementSibling;
+      if (!subNav || !subNav.classList.contains('cap-subnav')) return;
+
+      // Marcar botão activo
+      tabsNav.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+
+      // Construir sub-nav
+      var h = '';
+      secs.forEach(function(secId, i) {
+        var lbl = SEC_LABELS[secId] || secId;
+        var activeClass = i === 0 ? ' active' : '';
+        h += '<button class="cap-subnav-btn' + activeClass + '" onclick="capSubNavClick(this,\'' + secId + '\')">' + lbl + '</button>';
+      });
+      subNav.innerHTML = h;
+      subNav.style.display = 'flex';
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initGroupTabs);
+  else initGroupTabs();
+})();
+
+window.capSubNavClick = function(btn, secId) {
+  var subNav = btn.parentElement;
+  subNav.querySelectorAll('.cap-subnav-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  // Encontrar a função showSection correcta
+  var tabsNav = subNav.previousElementSibling;
+  if (tabsNav) {
+    var groupBtn = tabsNav.querySelector('.cap-group-btn.active');
+    if (groupBtn) {
+      var fn = groupBtn.getAttribute('onclick');
+      if (fn) {
+        // Extrair nome da função: showSection4('...', this) → showSection4
+        var fnName = fn.match(/^(\w+)\s*\(/);
+        if (fnName && typeof window[fnName[1]] === 'function') {
+          window[fnName[1]](secId, null);
+          return;
+        }
+      }
+    }
+  }
+  // Fallback: tentar showSection genérico
+  if (typeof showSection === 'function') showSection(secId, null);
+};
 
 // ── SVG Visual Helpers ──────────────────────────────────────────────────────
 
@@ -1828,79 +2727,7 @@ function svgPiecewiseGraph(opts) {
   return svg;
 }
 
-// Two parallel lines cut by a transversal — 8 labeled angles
-// opts: {markedAngle:0-7, markedValue:65, width:320, height:200}
-function svgParallelLines(opts) {
-  opts = opts || {};
-  var W = opts.width || 320;
-  var H = opts.height || 200;
-  var marked = opts.markedAngle || 0; // 0-7
-  var val = opts.markedValue || 65;
-  var markedColor = '#e05c5c';
-
-  // Two horizontal parallel lines y1=60, y2=140; transversal from (60,20) to (260,180)
-  var y1 = Math.round(H * 0.30), y2 = Math.round(H * 0.70);
-  var tx1 = Math.round(W * 0.18), ty1 = Math.round(H * 0.08);
-  var tx2 = Math.round(W * 0.82), ty2 = Math.round(H * 0.92);
-
-  // Intersection points
-  // Line from (tx1,ty1) to (tx2,ty2): parametric t=0..1
-  // At y=y1: t1 = (y1-ty1)/(ty2-ty1)
-  var t1 = (y1 - ty1) / (ty2 - ty1);
-  var ix1 = Math.round(tx1 + t1 * (tx2 - tx1));
-  var t2 = (y2 - ty1) / (ty2 - ty1);
-  var ix2 = Math.round(tx1 + t2 * (tx2 - tx1));
-
-  var svg = '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;background:#fafafa;border-radius:8px;border:1px solid #e0e0e0">';
-
-  // Parallel lines r and s
-  svg += '<line x1="20" y1="' + y1 + '" x2="' + (W-20) + '" y2="' + y1 + '" stroke="#444" stroke-width="1.8"/>';
-  svg += '<line x1="20" y1="' + y2 + '" x2="' + (W-20) + '" y2="' + y2 + '" stroke="#444" stroke-width="1.8"/>';
-  svg += '<text x="14" y="' + (y1+4) + '" font-size="12" font-style="italic" fill="#444">r</text>';
-  svg += '<text x="14" y="' + (y2+4) + '" font-size="12" font-style="italic" fill="#444">s</text>';
-
-  // Transversal t
-  svg += '<line x1="' + tx1 + '" y1="' + ty1 + '" x2="' + tx2 + '" y2="' + ty2 + '" stroke="#444" stroke-width="1.8"/>';
-  svg += '<text x="' + (tx2+4) + '" y="' + (ty2+4) + '" font-size="12" font-style="italic" fill="#444">t</text>';
-
-  // Angle arc helper: draw small arc at intersection (cx,cy) for angle index 0-3 (top) or 4-7 (bottom)
-  // Angles at each intersection: 0=top-right, 1=bottom-right, 2=bottom-left, 3=top-left (top intersection)
-  //                               4=top-right, 5=bottom-right, 6=bottom-left, 7=top-left (bottom intersection)
-  var r = 14;
-  var intersections = [
-    {cx:ix1, cy:y1, angles:[
-      {label:'\u03b11', ax:ix1+r+2, ay:y1-8},
-      {label:'\u03b12', ax:ix1+r+2, ay:y1+14},
-      {label:'\u03b13', ax:ix1-r-14, ay:y1+14},
-      {label:'\u03b14', ax:ix1-r-14, ay:y1-8}
-    ]},
-    {cx:ix2, cy:y2, angles:[
-      {label:'\u03b21', ax:ix2+r+2, ay:y2-8},
-      {label:'\u03b22', ax:ix2+r+2, ay:y2+14},
-      {label:'\u03b23', ax:ix2-r-14, ay:y2+14},
-      {label:'\u03b24', ax:ix2-r-14, ay:y2-8}
-    ]}
-  ];
-
-  var i, j;
-  for (i = 0; i < 2; i++) {
-    var inter = intersections[i];
-    for (j = 0; j < 4; j++) {
-      var globalIdx = i * 4 + j;
-      var isMarked = (globalIdx === marked);
-      var a = inter.angles[j];
-      if (isMarked) {
-        svg += '<circle cx="' + inter.cx + '" cy="' + inter.cy + '" r="' + r + '" fill="' + markedColor + '" opacity="0.18"/>';
-      }
-      svg += '<text x="' + a.ax + '" y="' + a.ay + '" font-size="10" fill="' + (isMarked ? markedColor : '#555') + '" font-weight="' + (isMarked ? '700' : '400') + '">' + a.label + (isMarked ? '=' + val + '\u00b0' : '') + '</text>';
-    }
-  }
-
-  svg += '</svg>';
-  return svg;
-}
-
-// ── Inline worksheet generator for individual chapter pages (caps 5–8) ──
+// ── Inline worksheet generator for individual chapter pages (caps 5-8) ──
 // Calls _dinamico(cap, dif) from gf.js if available; otherwise calls window['_dinamicoN'](dif) directly.
 function _capGerarFichaInline(cap, nivelSelId, outputId, dlBtnId, capNome) {
   var nivelSel = document.getElementById(nivelSelId);
@@ -1952,7 +2779,7 @@ function _capGerarFichaInline(cap, nivelSelId, outputId, dlBtnId, capNome) {
 function _capDownloadFicha(cap, capNome) {
   var content = window['_fichaContent' + cap] || '';
   var fullHtml = '<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8">'
-    + '<title>Ficha — ' + capNome + ' · Mat. 7.º Ano</title>'
+    + '<title>Ficha ' + capNome + ' · Mat. 7.º Ano</title>'
     + '<style>body{font-family:Montserrat,sans-serif;max-width:720px;margin:2rem auto;padding:1rem;color:#2a2724}'
     + '.ex{margin-bottom:1.5rem;padding:1rem;border:1px solid #e0dbd4;border-radius:6px}'
     + '.ex-num{font-weight:700;color:#516860;font-size:.85rem;margin-bottom:.5rem}'

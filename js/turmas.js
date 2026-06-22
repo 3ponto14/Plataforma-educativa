@@ -1,0 +1,942 @@
+/* ════════════════════════════════════════════════════════════════
+   turmas.js — Apoio ao Estudo (espaço PARTILHADO)
+   Modelo (decidido com a dona): um único espaço "Apoio ao Estudo".
+     • Os alunos entram automaticamente ao criar conta (auto-inscrição).
+     • TODOS os professores veem TODOS os alunos (são colegas; um aluno
+       pode ter vários professores). Lista única, pesquisável.
+     • Recursos (fichas) partilhados por LINK (Drive, etc.) — não se
+       guardam ficheiros, só o endereço. Qualquer professor adiciona;
+       todos os alunos veem.
+   Segurança garantida pelas políticas RLS no Supabase (ver
+   docs/supabase-setup.md): só professores leem a lista de alunos e o
+   progresso; alunos só inscrevem/veem a si próprios e leem recursos.
+   ════════════════════════════════════════════════════════════════ */
+
+var Turmas = (function () {
+  function _sb() { return (typeof Cloud !== 'undefined' && Cloud._sb) ? Cloud._sb() : null; }
+
+  /* Cache curta partilhada: o sino, a lista de dúvidas e o painel Início
+     pedem as dúvidas quase ao mesmo tempo. Sem isto eram 3 scans seguidos da
+     tabela mensagens. Com 60 profs/300 alunos a tabela cresce, por isso isto
+     evita carga repetida (TTL curto p/ continuar fresco). */
+  var _duvCache = null, _duvCacheAt = 0;
+  var DUV_TTL = 15000; // 15s
+  function _invalidaDuvidas() { _duvCache = null; _duvCacheAt = 0; }
+
+  /* Cache da lista de alunos (com progresso): é pesada (300 alunos × JSON de
+     progresso) e a vista das Turmas re-renderiza com frequência. TTL curto. */
+  var _alunosCache = null, _alunosCacheAt = 0;
+  var ALUNOS_TTL = 20000; // 20s
+
+  /* ── Classificação de um capId numa DISCIPLINA legível ──
+     Os IDs de progresso trazem o ano/disciplina no prefixo:
+       mat7cap3, mat8cap1, m8cap2, port7, port9, cap1 (mat7 legado)… */
+  function _disciplinaDeCap(capId) {
+    var id = String(capId || '');
+    var m;
+    if ((m = id.match(/^mat(\d+)/i)) || (m = id.match(/^m(\d+)cap/i))) return 'Matemática ' + m[1] + '.º';
+    if ((m = id.match(/^port(\d+)/i)) || (m = id.match(/^p(\d+)cap/i))) return 'Português ' + m[1] + '.º';
+    if (/^cap\d/i.test(id)) return 'Matemática 7.º';          // mat7 legado (cap1..cap8)
+    if (/exame|prova/i.test(id)) return 'Exames';
+    return 'Outros';
+  }
+
+  /* Agrupa os caps de um aluno por disciplina, somando XP e contando
+     atividades. Devolve [{disciplina, xp, topicos}] ordenado por XP. */
+  function _resumoPorDisciplina(caps) {
+    caps = caps || {};
+    var por = {};
+    Object.keys(caps).forEach(function (id) {
+      var disc = _disciplinaDeCap(id);
+      var c = caps[id] || {};
+      if (!por[disc]) por[disc] = { disciplina: disc, xp: 0, topicos: 0 };
+      por[disc].xp += (c.xp || 0);
+      por[disc].topicos += 1;
+    });
+    return Object.keys(por).map(function (k) { return por[k]; })
+      .sort(function (a, b) { return b.xp - a.xp; });
+  }
+
+  /* "Onde erra mais": capítulos onde o aluno já tentou quizzes mas tem a
+     melhor pontuação mais baixa (< 70%). Devolve até 3, do pior para o
+     melhor, com a disciplina a que pertencem. */
+  function _pontosFracos(caps) {
+    caps = caps || {};
+    var lista = [];
+    Object.keys(caps).forEach(function (id) {
+      var c = caps[id] || {};
+      var q = c.quiz || {};
+      if ((q.tentativas || 0) > 0 && (q.melhorPct || 0) < 70) {
+        lista.push({ cap: id, disciplina: _disciplinaDeCap(id), pct: q.melhorPct || 0, tentativas: q.tentativas });
+      }
+    });
+    lista.sort(function (a, b) { return a.pct - b.pct; });
+    return lista.slice(0, 3);
+  }
+
+  /* ── ALUNO: auto-inscrição no Apoio ao Estudo ──
+     Chamado no login. Idempotente (upsert). Guarda o nome/email para o
+     professor identificar o aluno. Só inscreve contas de ALUNO. */
+  function autoInscrever() {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.resolve();
+    if (typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor()) return Promise.resolve();
+    var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+    var ano = (typeof Cloud.alunoAno === 'function' ? Cloud.alunoAno() : '') || null;
+    var base = { aluno: u.id, nome_aluno: nome, email: u.email || null };
+    var comAno = { aluno: u.id, nome_aluno: nome, email: u.email || null, ano: ano };
+    return sb.from('apoio_alunos').upsert(comAno, { onConflict: 'aluno' }).then(function (r) {
+      // coluna 'ano' ainda não criada na BD → reinscreve sem ela (não bloqueia)
+      if (r && r.error && /ano/.test(r.error.message || '')) {
+        return sb.from('apoio_alunos').upsert(base, { onConflict: 'aluno' });
+      }
+      return r;
+    }).catch(function () {});
+  }
+
+  /* Propaga o ano do aluno para as tabelas de turmas (apoio_alunos +
+     grupo_membros). Chamado quando o aluno define/atualiza o ano. */
+  function sincronizarAno() {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.resolve();
+    if (typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor()) return Promise.resolve();
+    var ano = (typeof Cloud.alunoAno === 'function' ? Cloud.alunoAno() : '') || null;
+    // se a coluna 'ano' ainda não existir na BD, o update falha em silêncio
+    // (o .catch trata) e o ano fica nos metadados até o SQL ser corrido.
+    var p1 = sb.from('apoio_alunos').update({ ano: ano }).eq('aluno', u.id);
+    var p2 = sb.from('grupo_membros').update({ ano: ano }).eq('aluno', u.id);
+    return Promise.all([p1.catch(function () {}), p2.catch(function () {})]).catch(function () {});
+  }
+
+  /* ── PROFESSOR: lista única de todos os alunos do Apoio ao Estudo ──
+     Cada aluno vem com totais (XP, ofensiva, desafios) e o resumo por
+     disciplina, para o professor ver "o que ele andou a fazer". */
+  /* PROFESSOR: os alunos DOS SEUS GRUPOS (não todos os da plataforma). Junta
+     os membros de todos os grupos onde é professor, sem repetidos, e traz o
+     progresso de cada um. (RLS deixa o prof ler os membros dos seus grupos.) */
+  function todosOsAlunos() {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.resolve([]);
+    if (_alunosCache && (Date.now() - _alunosCacheAt) < ALUNOS_TTL) return Promise.resolve(_alunosCache);
+    // 1) grupos do professor → 2) membros desses grupos
+    return sb.from('grupo_professores').select('grupo_id').eq('prof', u.id).then(function (gp) {
+      var gids = (gp.error ? [] : (gp.data || [])).map(function (g) { return g.grupo_id; });
+      if (!gids.length) { _alunosCache = []; _alunosCacheAt = Date.now(); return []; }
+      return sb.from('grupo_membros').select('aluno, nome_aluno, ano').in('grupo_id', gids).then(function (gm) {
+        var seen = {}, lista = [];
+        (gm.error ? [] : (gm.data || [])).forEach(function (m) {
+          if (m.aluno && !seen[m.aluno]) { seen[m.aluno] = 1; lista.push({ aluno: m.aluno, nome_aluno: m.nome_aluno, ano: m.ano || '', email: '' }); }
+        });
+        if (!lista.length) { _alunosCache = []; _alunosCacheAt = Date.now(); return []; }
+        var ids = lista.map(function (a) { return a.aluno; });
+        return sb.from('progresso').select('user_id, dados, desafio').in('user_id', ids).then(function (p) {
+        var prog = {};
+        (p.data || []).forEach(function (row) { prog[row.user_id] = row; });
+        var out = lista.map(function (a) {
+          var d = (prog[a.aluno] && prog[a.aluno].dados) || {};
+          var des = (prog[a.aluno] && prog[a.aluno].desafio) || {};
+          var caps = d.caps || {};
+          return {
+            aluno: a.aluno,
+            nome: a.nome_aluno || (a.email || '').split('@')[0] || '(aluno)',
+            ano: a.ano || '',
+            email: a.email || '',
+            xp: d.totalXp || 0,
+            streak: d.streak || 0,
+            lastDay: d.lastDay || null,
+            desafios: des.feitos || 0,
+            topicos: Object.keys(caps).length,
+            disciplinas: _resumoPorDisciplina(caps),
+            caps: caps,                          // bruto, para "onde erra mais"
+            dificuldades: _pontosFracos(caps)    // capítulos com pior quiz
+          };
+        }).sort(function (a, b) { return b.xp - a.xp; }); // ranking por XP
+        _alunosCache = out; _alunosCacheAt = Date.now();
+        return out;
+        });
+      });
+    });
+  }
+
+  /* ── RECURSOS (fichas por link), por grupo ou aluno ── */
+  function recursos() {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('recursos').select('*, grupos(nome)').order('criado', { ascending: false })
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* Adiciona uma ficha. dest = {grupoId, paraAluno} — obrigatório um dos
+     dois (a ficha é privada ao destinatário). */
+  function adicionarRecurso(titulo, url, disciplina, dest) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    titulo = (titulo || '').trim();
+    url = (url || '').trim();
+    dest = dest || {};
+    if (!titulo) return Promise.reject(new Error('Dá um nome à ficha.'));
+    if (!/^https?:\/\//i.test(url)) return Promise.reject(new Error('O link tem de começar por http:// ou https://'));
+    if (!dest.grupoId && !dest.paraAluno) return Promise.reject(new Error('Escolhe para quem é a ficha (um grupo ou um aluno).'));
+    var autor = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+    return sb.from('recursos').insert({
+      titulo: titulo, url: url, disciplina: (disciplina || '').trim() || null,
+      autor: u.id, autor_nome: autor,
+      grupo_id: dest.grupoId || null, para_aluno: dest.paraAluno || null
+    }).select().single().then(function (r) {
+      if (r.error) throw r.error;
+      return r.data;
+    });
+  }
+
+  function apagarRecurso(id) {
+    var sb = _sb();
+    if (!sb) return Promise.reject(new Error('Sem ligação.'));
+    return sb.from('recursos').delete().eq('id', id);
+  }
+
+  /* ════════════ TAREFAS (trabalho atribuído) ════════════ */
+
+  /* PROFESSOR cria uma tarefa. opts: {titulo, instrucoes, url, curso,
+     cursoNome, prazo, paraAluno}. paraAluno null/undefined = turma toda. */
+  function criarTarefa(opts) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    opts = opts || {};
+    var titulo = (opts.titulo || '').trim();
+    if (!titulo) return Promise.reject(new Error('Dá um título à tarefa.'));
+    var url = (opts.url || '').trim();
+    if (url && !/^https?:\/\//i.test(url)) return Promise.reject(new Error('O link tem de começar por http:// ou https://'));
+    if (!opts.grupoId && !opts.paraAluno) return Promise.reject(new Error('Escolhe para quem é o trabalho (um grupo ou um aluno).'));
+    var profNome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+    return sb.from('tarefas').insert({
+      professor: u.id, prof_nome: profNome, titulo: titulo,
+      instrucoes: (opts.instrucoes || '').trim() || null,
+      url: url || null,
+      curso: (opts.curso || '').trim() || null,
+      curso_nome: (opts.cursoNome || '').trim() || null,
+      prazo: opts.prazo || null,
+      grupo_id: opts.grupoId || null,
+      para_aluno: opts.paraAluno || null
+    }).select().single().then(function (r) { if (r.error) throw r.error; return r.data; });
+  }
+
+  /* Atualiza o url de uma tarefa (usado p/ juntar &tarefa=<id> ao link). */
+  function atualizarUrlTarefa(id, url) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve();
+    return sb.from('tarefas').update({ url: url }).eq('id', id);
+  }
+
+  function apagarTarefa(id) {
+    var sb = _sb();
+    if (!sb) return Promise.reject(new Error('Sem ligação.'));
+    return sb.from('tarefas').delete().eq('id', id);
+  }
+
+  /* PROFESSOR: as tarefas que ELE atribuiu (mais recentes primeiro).
+     Filtra no servidor pelo próprio professor — a vista é «o que atribuíste»
+     e evita puxar as tarefas de todos os 60 professores. */
+  function tarefasDoProf() {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.resolve([]);
+    return sb.from('tarefas').select('*').eq('professor', u.id).order('criado', { ascending: false }).limit(300)
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* PROFESSOR: quem já marcou uma tarefa como feita (lista de alunos). */
+  function quemFez(tarefaId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('tarefas_estado').select('aluno, feito_em').eq('tarefa_id', tarefaId).eq('feito', true)
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* PROFESSOR: quem ainda NÃO entregou uma tarefa. Calcula a lista de
+     alunos esperados (grupo, aluno único, ou turma toda) e subtrai os que
+     já a fizeram. Devolve [{aluno, nome_aluno}]. */
+  function quemFalta(tarefaId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('tarefas').select('para_aluno, grupo_id').eq('id', tarefaId).maybeSingle().then(function (res) {
+      var t = res.data; if (!t) return [];
+      // lista de esperados
+      var pEsperados;
+      if (t.grupo_id) {
+        pEsperados = sb.from('grupo_membros').select('aluno, nome_aluno').eq('grupo_id', t.grupo_id)
+          .then(function (r) { return r.error ? [] : (r.data || []); });
+      } else if (t.para_aluno) {
+        pEsperados = sb.from('apoio_alunos').select('aluno, nome_aluno').eq('aluno', t.para_aluno)
+          .then(function (r) { return (r.error || !r.data) ? [{ aluno: t.para_aluno, nome_aluno: null }] : (r.data || []); });
+      } else {
+        pEsperados = sb.from('apoio_alunos').select('aluno, nome_aluno')
+          .then(function (r) { return r.error ? [] : (r.data || []); });
+      }
+      return Promise.all([pEsperados, quemFez(tarefaId)]).then(function (a) {
+        var fez = {}; a[1].forEach(function (x) { fez[x.aluno] = true; });
+        return a[0].filter(function (m) { return !fez[m.aluno]; });
+      });
+    });
+  }
+
+  /* ALUNO grava o resultado de uma tarefa (nota + detalhe). Fica a MELHOR
+     tentativa (mais acertos). Também marca a tarefa como feita. */
+  function guardarResultado(tarefaId, certas, total, detalhe) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+    // lê o resultado atual para manter a melhor tentativa
+    return sb.from('tarefa_resultado').select('certas').eq('tarefa_id', tarefaId).eq('aluno', u.id).maybeSingle().then(function (r) {
+      var anterior = (r.data && typeof r.data.certas === 'number') ? r.data.certas : -1;
+      var p = Promise.resolve();
+      if (certas >= anterior) {
+        p = sb.from('tarefa_resultado').upsert({
+          tarefa_id: tarefaId, aluno: u.id, aluno_nome: nome,
+          certas: certas, total: total, detalhe: detalhe || null,
+          entregue: new Date().toISOString()
+        }, { onConflict: 'tarefa_id,aluno' });
+      }
+      // marca também como feita (estado)
+      return p.then(function () {
+        return sb.from('tarefas_estado').upsert(
+          { tarefa_id: tarefaId, aluno: u.id, feito: true, feito_em: new Date().toISOString() },
+          { onConflict: 'tarefa_id,aluno' }
+        );
+      });
+    });
+  }
+
+  /* PROFESSOR: resultados de uma tarefa (todos os alunos que entregaram). */
+  function resultadosDaTarefa(tarefaId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('tarefa_resultado').select('*').eq('tarefa_id', tarefaId).order('certas', { ascending: false })
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* ALUNO: as tarefas que lhe dizem respeito (dele + da turma), já com o
+     estado "feito". Ordenadas por prazo (as com prazo primeiro). */
+  function tarefasDoAluno() {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.resolve([]);
+    return sb.from('tarefas').select('*').order('criado', { ascending: false }).limit(200).then(function (res) {
+      var ts = res.error ? [] : (res.data || []);
+      if (!ts.length) return [];
+      return sb.from('tarefas_estado').select('tarefa_id, feito').eq('aluno', u.id).then(function (e) {
+        var feito = {};
+        (e.data || []).forEach(function (row) { if (row.feito) feito[row.tarefa_id] = true; });
+        ts.forEach(function (t) { t.feito = !!feito[t.id]; });
+        // ordena: por fazer primeiro, depois por prazo
+        ts.sort(function (a, b) {
+          if (a.feito !== b.feito) return a.feito ? 1 : -1;
+          return (a.prazo || '9999') < (b.prazo || '9999') ? -1 : 1;
+        });
+        return ts;
+      });
+    });
+  }
+
+  /* ALUNO marca/desmarca uma tarefa como feita. */
+  function marcarTarefa(tarefaId, feita) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    if (feita === false) {
+      return sb.from('tarefas_estado').delete().eq('tarefa_id', tarefaId).eq('aluno', u.id);
+    }
+    return sb.from('tarefas_estado').upsert(
+      { tarefa_id: tarefaId, aluno: u.id, feito: true, feito_em: new Date().toISOString() },
+      { onConflict: 'tarefa_id,aluno' }
+    );
+  }
+
+  /* PROFESSOR: resumo de tarefas de um aluno {total, feitas}. Conta as
+     tarefas que lhe dizem respeito (turma toda + dele) e quantas marcou. */
+  function resumoTarefasAluno(alunoId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve({ total: 0, feitas: 0 });
+    // só as que dizem respeito a este aluno: para todos (para_aluno null) OU para ele
+    return sb.from('tarefas').select('id, para_aluno').or('para_aluno.is.null,para_aluno.eq.' + alunoId).then(function (res) {
+      var ts = (res.error ? [] : (res.data || []));
+      var total = ts.length;
+      if (!total) return { total: 0, feitas: 0 };
+      return sb.from('tarefas_estado').select('tarefa_id').eq('aluno', alunoId).eq('feito', true).then(function (e) {
+        var ids = {}; (e.data || []).forEach(function (r) { ids[r.tarefa_id] = 1; });
+        var feitas = 0; ts.forEach(function (t) { if (ids[t.id]) feitas++; });
+        return { total: total, feitas: feitas };
+      });
+    });
+  }
+
+  /* PROFESSOR: lista detalhada das tarefas de um aluno — cada tarefa que
+     lhe diz respeito + se a fez + o resultado (nota + detalhe onde
+     errou/acertou). Para a página do aluno. */
+  function tarefasComResultadoDoAluno(alunoId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('tarefas').select('*').or('para_aluno.is.null,para_aluno.eq.' + alunoId).order('criado', { ascending: false }).limit(300).then(function (res) {
+      var ts = (res.error ? [] : (res.data || []));
+      if (!ts.length) return [];
+      var ids = ts.map(function (t) { return t.id; });
+      var pEstado = sb.from('tarefas_estado').select('tarefa_id, feito, feito_em').eq('aluno', alunoId).in('tarefa_id', ids)
+        .then(function (e) { return e.error ? [] : (e.data || []); });
+      var pResult = sb.from('tarefa_resultado').select('*').eq('aluno', alunoId).in('tarefa_id', ids)
+        .then(function (r) { return r.error ? [] : (r.data || []); });
+      return Promise.all([pEstado, pResult]).then(function (r) {
+        var est = {}; r[0].forEach(function (x) { est[x.tarefa_id] = x; });
+        var resu = {}; r[1].forEach(function (x) { resu[x.tarefa_id] = x; });
+        ts.forEach(function (t) {
+          var e = est[t.id]; t.feito = !!(e && e.feito); t.feito_em = e && e.feito_em;
+          t.resultado = resu[t.id] || null;
+        });
+        return ts;
+      });
+    });
+  }
+
+  /* Nº de tarefas por fazer do aluno (para o badge no Início). */
+  function tarefasPendentes() {
+    return tarefasDoAluno().then(function (ts) {
+      var n = 0; ts.forEach(function (t) { if (!t.feito) n++; }); return n;
+    });
+  }
+
+  /* ════════════ GRUPOS (turmas a sério) ════════════ */
+
+  /* Código curto e legível: 2-3 letras do nome + 4 carateres aleatórios. */
+  function _gerarCodigo(nome) {
+    var base = (nome || 'G').replace(/[^A-Za-zÀ-ÿ0-9]/g, '').toUpperCase().slice(0, 3) || 'G';
+    var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // sem 0/O/1/I
+    var s = '';
+    for (var i = 0; i < 4; i++) s += chars.charAt(Math.floor(Math.random() * chars.length));
+    return base + '-' + s;
+  }
+
+  function _meuNome() {
+    var u = Cloud.utilizador();
+    return (typeof Cloud.nome === 'function' ? Cloud.nome() : ((u && u.email) || '').split('@')[0]);
+  }
+
+  /* PROFESSOR cria um grupo (com código automático). Fica como DONO em
+     grupo_professores. */
+  function criarGrupo(nome) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    nome = (nome || '').trim();
+    if (!nome) return Promise.reject(new Error('Dá um nome ao grupo.'));
+    var profNome = _meuNome();
+    var codigo = _gerarCodigo(nome);
+    return sb.from('grupos').insert({ professor: u.id, prof_nome: profNome, nome: nome, codigo: codigo })
+      .select().single().then(function (r) {
+        if (r.error) {
+          if (/duplicate|unique/i.test(r.error.message || '')) return criarGrupo(nome); // colisão rara
+          throw r.error;
+        }
+        // regista o criador como professor-dono do grupo (best-effort)
+        return sb.from('grupo_professores').upsert(
+          { grupo_id: r.data.id, prof: u.id, prof_nome: profNome, papel: 'dono' },
+          { onConflict: 'grupo_id,prof' }
+        ).then(function () { return r.data; }).catch(function () { return r.data; });
+      });
+  }
+
+  function apagarGrupo(id) {
+    var sb = _sb();
+    if (!sb) return Promise.reject(new Error('Sem ligação.'));
+    return sb.from('grupos').delete().eq('id', id);
+  }
+
+  /* PROFESSOR: renomear um grupo. */
+  function renomearGrupo(id, novoNome) {
+    var sb = _sb();
+    if (!sb) return Promise.reject(new Error('Sem ligação.'));
+    novoNome = (novoNome || '').trim();
+    if (!novoNome) return Promise.reject(new Error('Escreve um nome.'));
+    return sb.from('grupos').update({ nome: novoNome }).eq('id', id);
+  }
+
+  /* PROFESSOR: todos os grupos (espaço partilhado). */
+  function todosOsGrupos() {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('grupos').select('*').order('criado', { ascending: false })
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* Membros de um grupo (com nome). */
+  function alunosDoGrupo(grupoId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('grupo_membros').select('aluno, nome_aluno, ano, entrou').eq('grupo_id', grupoId)
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* PROFESSOR: tudo o que toca a um grupo, para a página do grupo:
+     alunos + trabalho atribuído + fichas + avisos enviados. Faz os
+     pedidos em paralelo e filtra por grupo_id. */
+  function resumoDoGrupo(grupoId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve({ alunos: [], tarefas: [], recursos: [], avisos: [] });
+    var pAlunos = alunosDoGrupo(grupoId);
+    var pTarefas = sb.from('tarefas').select('*').eq('grupo_id', grupoId).order('criado', { ascending: false })
+      .then(function (r) { return r.error ? [] : (r.data || []); });
+    var pRecursos = sb.from('recursos').select('*').eq('grupo_id', grupoId).order('criado', { ascending: false })
+      .then(function (r) { return r.error ? [] : (r.data || []); });
+    var pAvisos = sb.from('mensagens').select('*').eq('grupo_id', grupoId).eq('alcance', 'grupo')
+      .order('criado', { ascending: false })
+      .then(function (r) { return r.error ? [] : (r.data || []); });
+    return Promise.all([pAlunos, pTarefas, pRecursos, pAvisos]).then(function (r) {
+      return { alunos: r[0], tarefas: r[1], recursos: r[2], avisos: r[3] };
+    });
+  }
+
+  /* PROFESSOR adiciona um aluno (da lista) a um grupo. */
+  function adicionarAoGrupo(grupoId, alunoId, nomeAluno) {
+    var sb = _sb();
+    if (!sb) return Promise.reject(new Error('Sem ligação.'));
+    return sb.from('grupo_membros').upsert(
+      { grupo_id: grupoId, aluno: alunoId, nome_aluno: nomeAluno || null },
+      { onConflict: 'grupo_id,aluno' }
+    );
+  }
+
+  /* PROFESSOR remove um aluno de um grupo. */
+  function removerDoGrupo(grupoId, alunoId) {
+    var sb = _sb();
+    if (!sb) return Promise.reject(new Error('Sem ligação.'));
+    return sb.from('grupo_membros').delete().eq('grupo_id', grupoId).eq('aluno', alunoId);
+  }
+
+  /* ALUNO entra num grupo pelo código. */
+  function entrarPorCodigo(codigo) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    codigo = (codigo || '').trim().toUpperCase();
+    if (!codigo) return Promise.reject(new Error('Escreve o código do grupo.'));
+    return sb.from('grupos').select('id, nome').eq('codigo', codigo).maybeSingle().then(function (res) {
+      if (res.error) throw res.error;
+      if (!res.data) throw new Error('Não existe nenhum grupo com esse código.');
+      var g = res.data;
+      var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+      var ano = (typeof Cloud.alunoAno === 'function' ? Cloud.alunoAno() : '') || null;
+      var base = { grupo_id: g.id, aluno: u.id, nome_aluno: nome };
+      return sb.from('grupo_membros').upsert(
+        { grupo_id: g.id, aluno: u.id, nome_aluno: nome, ano: ano },
+        { onConflict: 'grupo_id,aluno' }
+      ).then(function (r2) {
+        // coluna 'ano' ainda não criada → entra sem o ano (não bloqueia a entrada no grupo)
+        if (r2 && r2.error && /ano/.test(r2.error.message || '')) {
+          return sb.from('grupo_membros').upsert(base, { onConflict: 'grupo_id,aluno' }).then(function (r3) { if (r3.error) throw r3.error; return g; });
+        }
+        if (r2.error) throw r2.error; return g;
+      });
+    });
+  }
+
+  /* ALUNO: os grupos a que pertence (com nome do grupo). */
+  function gruposDoAluno() {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.resolve([]);
+    return sb.from('grupo_membros').select('grupo_id, grupos(nome, codigo, prof_nome)').eq('aluno', u.id)
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* ALUNO: os professores a quem pode dirigir uma dúvida — os professores
+     dos grupos onde está inscrito (sem repetidos). [{prof, prof_nome}] */
+  function professoresDoAluno() {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return gruposDoAluno().then(function (gs) {
+      var gids = gs.map(function (g) { return g.grupo_id; });
+      if (!gids.length) return [];
+      return sb.from('grupo_professores').select('prof, prof_nome').in('grupo_id', gids).then(function (res) {
+        var vistos = {}, out = [];
+        (res.data || []).forEach(function (p) {
+          if (p.prof && !vistos[p.prof]) { vistos[p.prof] = 1; out.push({ prof: p.prof, prof_nome: p.prof_nome || 'Professor(a)' }); }
+        });
+        return out;
+      });
+    });
+  }
+
+  /* ALUNO sai de um grupo. */
+  function sairDoGrupo(grupoId) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    return sb.from('grupo_membros').delete().eq('grupo_id', grupoId).eq('aluno', u.id);
+  }
+
+  /* ════════ PROFESSORES DO GRUPO + REGISTO DE SESSÕES ════════ */
+
+  /* Garante que o utilizador atual está em grupo_professores deste grupo
+     (auto-corrige grupos antigos: quem o criou entra como dono). */
+  function garantirProfDoGrupo(grupo) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u || !grupo) return Promise.resolve();
+    var papel = (grupo.professor === u.id) ? 'dono' : 'convidado';
+    return sb.from('grupo_professores').upsert(
+      { grupo_id: grupo.id, prof: u.id, prof_nome: _meuNome(), papel: papel },
+      { onConflict: 'grupo_id,prof' }
+    ).then(function (r) { return r; }).catch(function () {});
+  }
+
+  /* Lista de professores de um grupo. */
+  function profsDoGrupo(grupoId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('grupo_professores').select('prof, prof_nome, papel').eq('grupo_id', grupoId)
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* Convidar outro professor para o grupo, pelo email. Procura o aluno/
+     conta? Não temos lookup por email no client — por isso o convite é
+     feito com o ID. Em alternativa simples: o professor convidado entra
+     pelo CÓDIGO do grupo (ver entrarComoProf). Mantém-se esta função para
+     quando houver lookup. */
+  function entrarComoProf(codigo) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    codigo = (codigo || '').trim().toUpperCase();
+    if (!codigo) return Promise.reject(new Error('Escreve o código do grupo.'));
+    return sb.from('grupos').select('id, nome, professor').eq('codigo', codigo).maybeSingle().then(function (res) {
+      if (res.error) throw res.error;
+      if (!res.data) throw new Error('Não existe nenhum grupo com esse código.');
+      var g = res.data;
+      return sb.from('grupo_professores').upsert(
+        { grupo_id: g.id, prof: u.id, prof_nome: _meuNome(), papel: 'convidado' },
+        { onConflict: 'grupo_id,prof' }
+      ).then(function (r2) { if (r2.error) throw r2.error; return g; });
+    });
+  }
+
+  /* Grupos onde o utilizador é PROFESSOR (para a vista do professor). */
+  function gruposDoProf() {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.resolve([]);
+    return sb.from('grupo_professores').select('grupo_id, papel, grupos(id, nome, codigo, professor, prof_nome)').eq('prof', u.id)
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* PROFESSOR: os MEUS grupos onde este aluno também está. Para registar uma
+     sessão a partir da página do aluno (precisa de um grupo_id). Devolve
+     [{grupo_id, nome}]. */
+  function gruposComAluno(alunoId) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u || !alunoId) return Promise.resolve([]);
+    return sb.from('grupo_professores').select('grupo_id, grupos(nome)').eq('prof', u.id).then(function (gp) {
+      var meus = (gp.error ? [] : (gp.data || []));
+      var byId = {}; meus.forEach(function (g) { byId[g.grupo_id] = (g.grupos && g.grupos.nome) || 'Grupo'; });
+      var gids = Object.keys(byId);
+      if (!gids.length) return [];
+      return sb.from('grupo_membros').select('grupo_id').eq('aluno', alunoId).in('grupo_id', gids).then(function (gm) {
+        var out = [], seen = {};
+        (gm.error ? [] : (gm.data || [])).forEach(function (m) {
+          if (!seen[m.grupo_id]) { seen[m.grupo_id] = 1; out.push({ grupo_id: m.grupo_id, nome: byId[m.grupo_id] }); }
+        });
+        return out;
+      });
+    });
+  }
+
+  /* Criar um registo de sessão com um aluno (dentro de um grupo).
+     opts: {grupoId, aluno, quando(ISO), disciplina, material, notas}. */
+  function criarSessao(opts) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    opts = opts || {};
+    if (!opts.grupoId) return Promise.reject(new Error('Falta o grupo.'));
+    if (!opts.aluno) return Promise.reject(new Error('Falta o aluno.'));
+    if (!(opts.disciplina || opts.material || opts.notas)) return Promise.reject(new Error('Escreve pelo menos a disciplina, o material ou as notas.'));
+    return sb.from('sessoes').insert({
+      grupo_id: opts.grupoId, aluno: opts.aluno, prof: u.id, prof_nome: _meuNome(),
+      quando: opts.quando || new Date().toISOString(),
+      disciplina: (opts.disciplina || '').trim() || null,
+      material: (opts.material || '').trim() || null,
+      notas: (opts.notas || '').trim() || null
+    }).select().single().then(function (r) { if (r.error) throw r.error; return r.data; });
+  }
+
+  /* Registo RÁPIDO de sessão para vários alunos de uma vez (apoio com vários
+     alunos ao mesmo tempo). opts: {grupoId, quando, disciplina, alunos:[{aluno,
+     notas}]}. Grava só os que têm nota escrita. Devolve nº gravado. */
+  function criarSessoesLote(opts) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    opts = opts || {};
+    if (!opts.grupoId) return Promise.reject(new Error('Falta o grupo.'));
+    if (!opts.disciplina) return Promise.reject(new Error('Escolhe a disciplina da sessão.'));
+    var quando = opts.quando || new Date().toISOString();
+    var nome = _meuNome();
+    var linhas = (opts.alunos || [])
+      .filter(function (a) { return a.aluno && (a.notas || '').trim(); })
+      .map(function (a) {
+        return { grupo_id: opts.grupoId, aluno: a.aluno, prof: u.id, prof_nome: nome,
+          quando: quando, disciplina: opts.disciplina, material: (opts.material || '').trim() || null,
+          notas: (a.notas || '').trim() };
+      });
+    if (!linhas.length) return Promise.reject(new Error('Escreve a nota de pelo menos um aluno.'));
+    return sb.from('sessoes').insert(linhas).then(function (r) {
+      if (r.error) throw r.error; return linhas.length;
+    });
+  }
+
+  function apagarSessao(id) {
+    var sb = _sb();
+    if (!sb) return Promise.reject(new Error('Sem ligação.'));
+    return sb.from('sessoes').delete().eq('id', id);
+  }
+
+  /* Histórico de sessões de um aluno (mais recentes primeiro). Opcional:
+     filtrar por grupo. Funciona para professor (do grupo) e para o aluno. */
+  function sessoesDoAluno(alunoId, grupoId) {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    var q = sb.from('sessoes').select('*, grupos(nome)').eq('aluno', alunoId);
+    if (grupoId) q = q.eq('grupo_id', grupoId);
+    return q.order('quando', { ascending: false }).then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* ALUNO: as suas próprias sessões (para o seu registo). */
+  function minhasSessoes() {
+    var u = Cloud.utilizador();
+    if (!u) return Promise.resolve([]);
+    return sessoesDoAluno(u.id, null);
+  }
+
+  /* ════════════ MENSAGENS (avisos + feedback) ════════════ */
+
+  /* PROFESSOR envia. opts: {texto, alcance:'geral'|'grupo'|'aluno',
+     grupoId, paraAluno, respostaA}. respostaA liga a resposta do prof à
+     mensagem do aluno (conversa). */
+  function enviarMensagem(opts) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    opts = opts || {};
+    var texto = (opts.texto || '').trim();
+    if (!texto) return Promise.reject(new Error('Escreve a mensagem.'));
+    var alcance = opts.alcance || 'geral';
+    var profNome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+    return sb.from('mensagens').insert({
+      professor: u.id, prof_nome: profNome, alcance: alcance, autor_tipo: 'professor',
+      grupo_id: alcance === 'grupo' ? (opts.grupoId || null) : null,
+      para_aluno: alcance === 'aluno' ? (opts.paraAluno || null) : null,
+      resposta_a: opts.respostaA || null,
+      texto: texto
+    }).select().single().then(function (r) { if (r.error) throw r.error; _invalidaDuvidas(); return r.data; });
+  }
+
+  function apagarMensagem(id) {
+    var sb = _sb();
+    if (!sb) return Promise.reject(new Error('Sem ligação.'));
+    return sb.from('mensagens').delete().eq('id', id);
+  }
+
+  /* PROFESSOR: as mensagens que enviou (mais recentes primeiro). */
+  function mensagensDoProf() {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    return sb.from('mensagens').select('*, grupos(nome)').order('criado', { ascending: false })
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* ALUNO: o seu mural (avisos gerais + dos seus grupos + feedback a si +
+     o que ele próprio escreveu). A RLS filtra; aqui só ordena. */
+  function muralDoAluno() {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.resolve([]);
+    return sb.from('mensagens').select('*, grupos(nome)').order('criado', { ascending: true })
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* ALUNO responde a uma mensagem do professor. Vai para o professor
+     dessa mensagem (msg.professor). */
+  function responder(msg, texto) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    texto = (texto || '').trim();
+    if (!texto) return Promise.reject(new Error('Escreve a resposta.'));
+    var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+    return sb.from('mensagens').insert({
+      autor_tipo: 'aluno', de_aluno: u.id, de_nome: nome,
+      professor: msg.professor || null, resposta_a: msg.id,
+      alcance: 'resposta', texto: texto
+    }).then(function (r) { if (r.error) throw r.error; _invalidaDuvidas(); return r; });
+  }
+
+  /* ALUNO abre uma dúvida nova (sem mensagem-mãe → visível a todos os
+     professores). */
+  /* ALUNO abre uma dúvida DIRIGIDA: a um grupo seu (a veem os professores
+     desse grupo) OU a um professor específico do seu grupo. Já não há
+     "dúvida para todos os professores". dest = {grupoId} ou {professor}. */
+  function criarDuvida(texto, dest) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    texto = (texto || '').trim();
+    if (!texto) return Promise.reject(new Error('Escreve a dúvida.'));
+    dest = dest || {};
+    if (!dest.grupoId && !dest.professor) {
+      return Promise.reject(new Error('Escolhe a quem queres enviar a dúvida (um grupo ou um professor).'));
+    }
+    var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+    return sb.from('mensagens').insert({
+      autor_tipo: 'aluno', de_aluno: u.id, de_nome: nome,
+      professor: dest.professor || null,
+      grupo_id: dest.grupoId || null,
+      resposta_a: null, alcance: 'duvida', texto: texto
+    }).then(function (r) { if (r.error) throw r.error; _invalidaDuvidas(); return r; });
+  }
+
+  /* ALUNO abre uma dúvida PÚBLICA e ANÓNIMA: não vai para um grupo nem para
+     um prof específico — fica disponível a qualquer professor da DISCIPLINA
+     escolhida, que pode responder. O nome do aluno NÃO é gravado (anonimato);
+     o aluno recebe a resposta no seu sino (ligação por de_aluno, que só ele vê
+     via RLS). disciplina obrigatória; ano opcional. */
+  function criarDuvidaPublica(texto, disciplina, ano) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    texto = (texto || '').trim();
+    if (!texto) return Promise.reject(new Error('Escreve a dúvida.'));
+    if (!disciplina) return Promise.reject(new Error('Escolhe a disciplina da dúvida.'));
+    return sb.from('mensagens').insert({
+      autor_tipo: 'aluno', de_aluno: u.id, de_nome: null,   // anónima: sem nome
+      professor: null, grupo_id: null, resposta_a: null,
+      alcance: 'duvida_publica', disciplina: disciplina, ano: ano || null,
+      texto: texto
+    }).then(function (r) { if (r.error) throw r.error; _invalidaDuvidas(); return r; });
+  }
+
+  /* PROFESSOR: dúvidas públicas anónimas das suas DISCIPLINAS (e anos, se os
+     definiu). Vêm sem nome do aluno. Junta as respostas já dadas. */
+  function duvidasPublicas() {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    // mapa disciplina→anos do professor (anos por disciplina)
+    var map = (typeof Cloud.profDisciplinasAnos === 'function') ? Cloud.profDisciplinasAnos() : {};
+    var discs = Object.keys(map);
+    var q = sb.from('mensagens').select('*').eq('alcance', 'duvida_publica').order('criado', { ascending: false }).limit(300);
+    if (discs.length) q = q.in('disciplina', discs); // filtra pelas disciplinas do prof
+    return q.then(function (res) {
+      // coluna disciplina ainda não criada (SQL por correr) → não rebenta o painel
+      if (res.error) return [];
+      var todas = res.data || [];
+      // filtra por ANO conforme a disciplina: a dúvida de "Matemática 9.º" só
+      // aparece a quem dá Matemática ao 9.º. Dúvida sem ano passa sempre.
+      if (discs.length) {
+        todas = todas.filter(function (m) {
+          var anosDaDisc = (map[m.disciplina] || []).map(String);
+          if (!m.ano) return true;            // sem ano → mostra
+          if (!anosDaDisc.length) return true; // disciplina sem anos definidos → mostra
+          return anosDaDisc.indexOf(String(m.ano)) !== -1;
+        });
+      }
+      if (!todas.length) return [];
+      // junta as respostas já dadas a cada pergunta pública (resposta_publica)
+      var ids = todas.map(function (m) { return m.id; });
+      return sb.from('mensagens').select('*').eq('alcance', 'resposta_publica').in('resposta_a', ids)
+        .then(function (rr) {
+          var porDuvida = {};
+          (rr.error ? [] : (rr.data || [])).forEach(function (r) {
+            (porDuvida[r.resposta_a] = porDuvida[r.resposta_a] || []).push(r);
+          });
+          todas.forEach(function (m) {
+            var rs = porDuvida[m.id] || [];
+            rs.sort(function (a, b) { return (a.criado || '') < (b.criado || '') ? -1 : 1; });
+            m.respostas = rs;
+            m.respondido = rs.length > 0;
+          });
+          return todas;
+        });
+    });
+  }
+
+  /* PROFESSOR responde a uma dúvida pública. A resposta liga-se à dúvida
+     (resposta_a) e vai para o aluno (para_aluno = de_aluno da dúvida), que a
+     vê no sino. O prof identifica-se (tem nome); o aluno continua anónimo. */
+  function responderDuvidaPublica(duvida, texto) {
+    var sb = _sb(); var u = Cloud.utilizador();
+    if (!sb || !u) return Promise.reject(new Error('Inicia sessão.'));
+    texto = (texto || '').trim();
+    if (!texto) return Promise.reject(new Error('Escreve a resposta.'));
+    var profNome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+    return sb.from('mensagens').insert({
+      autor_tipo: 'professor', professor: u.id, prof_nome: profNome,
+      para_aluno: duvida.de_aluno || null, resposta_a: duvida.id,
+      alcance: 'resposta_publica', disciplina: duvida.disciplina || null,
+      texto: texto
+    }).then(function (r) { if (r.error) throw r.error; _invalidaDuvidas(); return r; });
+  }
+
+  /* PROFESSOR: a conversa com UM aluno específico — o feedback que lhe
+     deu (para_aluno = aluno) + as respostas/dúvidas que o aluno escreveu
+     (de_aluno = aluno). A RLS garante que só vê o que lhe diz respeito.
+     Ordem cronológica (antigas primeiro), para ler como conversa. */
+  function conversaComAluno(alunoId) {
+    var sb = _sb();
+    if (!sb || !alunoId) return Promise.resolve([]);
+    return sb.from('mensagens').select('*')
+      .or('para_aluno.eq.' + alunoId + ',de_aluno.eq.' + alunoId)
+      .order('criado', { ascending: true })
+      .then(function (res) { return res.error ? [] : (res.data || []); });
+  }
+
+  /* PROFESSOR: respostas e dúvidas escritas por alunos (para si ou
+     livres). Mais recentes primeiro. Cada uma traz `respondido` = true
+     se já existe uma resposta do professor a ela (resposta_a = id). */
+  function respostasDeAlunos() {
+    var sb = _sb();
+    if (!sb) return Promise.resolve([]);
+    // serve da cache se ainda fresca (sino + lista + painel pedem quase juntos)
+    if (_duvCache && (Date.now() - _duvCacheAt) < DUV_TTL) return Promise.resolve(_duvCache);
+    // só as 400 mensagens mais recentes (cobre dúvidas recentes + respostas);
+    // evita puxar a conversa inteira da escola a cada render.
+    return sb.from('mensagens').select('*').order('criado', { ascending: false }).limit(400).then(function (res) {
+      var todas = res.error ? [] : (res.data || []);
+      // respostas do professor agrupadas pela dúvida a que respondem
+      var respostas = {};
+      todas.forEach(function (m) {
+        if (m.autor_tipo !== 'aluno' && m.resposta_a) {
+          (respostas[m.resposta_a] = respostas[m.resposta_a] || []).push(m);
+        }
+      });
+      // dúvidas/respostas de aluno DIRIGIDAS (grupo/prof) — exclui as públicas,
+      // que têm painel próprio («Perguntas públicas»).
+      var doAluno = todas.filter(function (m) { return m.autor_tipo === 'aluno' && m.alcance !== 'duvida_publica'; });
+      doAluno.forEach(function (m) {
+        var rs = respostas[m.id] || [];
+        // mais antiga primeiro (ordem natural da conversa)
+        rs.sort(function (a, b) { return (a.criado || '') < (b.criado || '') ? -1 : 1; });
+        m.respostas = rs;            // respostas dadas a esta dúvida
+        m.respondido = rs.length > 0;
+      });
+      _duvCache = doAluno; _duvCacheAt = Date.now();
+      return doAluno;
+    });
+  }
+
+  return {
+    enviarMensagem: enviarMensagem, apagarMensagem: apagarMensagem,
+    mensagensDoProf: mensagensDoProf, muralDoAluno: muralDoAluno,
+    responder: responder, criarDuvida: criarDuvida, respostasDeAlunos: respostasDeAlunos,
+    criarDuvidaPublica: criarDuvidaPublica, duvidasPublicas: duvidasPublicas, responderDuvidaPublica: responderDuvidaPublica,
+    conversaComAluno: conversaComAluno,
+    criarGrupo: criarGrupo, apagarGrupo: apagarGrupo, renomearGrupo: renomearGrupo, todosOsGrupos: todosOsGrupos,
+    alunosDoGrupo: alunosDoGrupo, resumoDoGrupo: resumoDoGrupo, adicionarAoGrupo: adicionarAoGrupo, removerDoGrupo: removerDoGrupo,
+    entrarPorCodigo: entrarPorCodigo, gruposDoAluno: gruposDoAluno, professoresDoAluno: professoresDoAluno, sairDoGrupo: sairDoGrupo,
+    garantirProfDoGrupo: garantirProfDoGrupo, profsDoGrupo: profsDoGrupo,
+    entrarComoProf: entrarComoProf, gruposDoProf: gruposDoProf, gruposComAluno: gruposComAluno,
+    criarSessao: criarSessao, criarSessoesLote: criarSessoesLote, apagarSessao: apagarSessao,
+    sessoesDoAluno: sessoesDoAluno, minhasSessoes: minhasSessoes,
+    criarTarefa: criarTarefa, apagarTarefa: apagarTarefa, atualizarUrlTarefa: atualizarUrlTarefa,
+    tarefasDoProf: tarefasDoProf, quemFez: quemFez, quemFalta: quemFalta,
+    tarefasDoAluno: tarefasDoAluno, marcarTarefa: marcarTarefa,
+    tarefasPendentes: tarefasPendentes, resumoTarefasAluno: resumoTarefasAluno,
+    tarefasComResultadoDoAluno: tarefasComResultadoDoAluno,
+    guardarResultado: guardarResultado, resultadosDaTarefa: resultadosDaTarefa,
+    autoInscrever: autoInscrever,
+    sincronizarAno: sincronizarAno,
+    todosOsAlunos: todosOsAlunos,
+    recursos: recursos,
+    adicionarRecurso: adicionarRecurso,
+    apagarRecurso: apagarRecurso,
+    _resumoPorDisciplina: _resumoPorDisciplina,
+    _disciplinaDeCap: _disciplinaDeCap
+  };
+})();

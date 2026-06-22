@@ -30,7 +30,7 @@ function toggleChP(e,el){
   }
 }
 
-// ═══ SEARCH (stubs — only used on index.html, full impl in systems.js) ═══
+// ═══ SEARCH (stubs only used on index.html, full impl in systems.js) ═══
 function doSearch(val){
   var cards=document.querySelectorAll('.y-card');
   var noRes=document.getElementById('no-results');
@@ -56,7 +56,10 @@ function filterBy(f,btn){
 
 // ═══ PROGRESS DASHBOARD (stub for index.html where systems.js isn't loaded) ═══
 if(typeof pmToggleDashboard==='undefined'){
-  window.pmToggleDashboard=function(){ window.location.href='mat7/index.html'; };
+  window.pmToggleDashboard=function(){
+    var path=(typeof _mat7Path!=='undefined')?_mat7Path:'mat7/';
+    window.location.href=path+'index.html';
+  };
 }
 
 // ═══ PORTAL RENDER ═══
@@ -64,6 +67,9 @@ var totalDisc=0,totalAvail=0,totalChapters=0;
 function portalRender(){
   var main=document.getElementById('portal-main');
   if(!main)return;
+  // Reset totals so repeated calls don't accumulate
+  totalDisc=0; totalAvail=0; totalChapters=0;
+  main.innerHTML='';
   CYCLES.forEach(function(cycle){
     var block=document.createElement('div');
     block.className='cycle-block '+cycle.cls;
@@ -140,10 +146,11 @@ function portalRenderProgress() {
           total   += (d.sections[k].total   || 0);
         });
       }
-      if (d.log && d.log.length) total = total || 1; // has activity even without sections
-      if (total > 0 || (d.log && d.log.length)) {
+      // Só conta como progresso se o aluno respondeu mesmo a questões.
+      // Abrir uma secção (entrada no log sem respostas) NÃO conta.
+      if (total > 0) {
         caps.push({ cap: cap, correct: correct, total: total,
-                    pct: total > 0 ? Math.round(correct / total * 100) : 0 });
+                    pct: Math.round(correct / total * 100) });
       }
     } catch(e) {}
   }
@@ -176,10 +183,210 @@ function portalRenderProgress() {
     + '</div>';
 }
 
+// ═══ Catálogo do portal: pesquisa + filtros (disciplina, ano) ═══
+var _portalFilters = { disc: '', ano: '', q: '' };
+
+// Define um filtro (disc ou ano) e atualiza o chip ativo, depois re-filtra.
+function portalSetFilter(tipo, valor, btn) {
+  // Voltar a clicar no filtro já ativo desliga-o (volta ao estado inicial).
+  var jaAtivo = (_portalFilters[tipo] === valor) && btn && btn.classList.contains('active');
+  _portalFilters[tipo] = jaAtivo ? '' : valor;
+  // mudar de disciplina recomeça a escolha do ano (volta ao passo «Escolhe o ano»)
+  if (tipo === 'disc') {
+    _portalFilters.ano = '';
+    var anoR = document.getElementById('portal-filter-ano');
+    if (anoR) anoR.querySelectorAll('.portal-chip').forEach(function(c) { c.classList.remove('active'); });
+  }
+  // ativa só o chip clicado dentro da sua linha
+  var rowId = tipo === 'disc' ? 'portal-filter-disc' : 'portal-filter-ano';
+  var row = document.getElementById(rowId);
+  if (row) row.querySelectorAll('.portal-chip').forEach(function(c) { c.classList.remove('active'); });
+  if (btn && !jaAtivo) btn.classList.add('active');
+  portalSearch();
+}
+
+// Aplica pesquisa + filtros ao catálogo agrupado por ciclo.
+// Filtra oferta a oferta (.portal-ano-link); um cartão-ano esconde-se quando
+// fica sem ofertas visíveis e uma secção-ciclo quando fica sem cartões.
+function portalSearch() {
+  var input = document.getElementById('portal-search-input');
+  _portalFilters.q = input ? input.value.toLowerCase().trim() : '';
+  var f = _portalFilters;
+  var grid = document.getElementById('portal-grid');
+  var empty = document.getElementById('portal-empty');
+  var noRes = document.getElementById('portal-no-results');
+  var anoRow = document.getElementById('portal-filter-ano');
+  var eTit = document.getElementById('portal-empty-title');
+  var eSub = document.getElementById('portal-empty-sub');
+  var eIc = document.getElementById('portal-empty-icon');
+
+  // Qualquer opção escolhida (disciplina, Exames ou Ver todos) exige depois
+  // escolher também o ano antes de mostrar o catálogo.
+  var precisaAno = f.disc !== '';
+  // 'all' = todos os anos (já escolhido); '' = ainda não escolheu o ano.
+  var anoEscolhido = f.ano !== '';
+
+  function mostraConvite(passo) {
+    if (grid) grid.style.display = 'none';
+    if (empty) empty.style.display = '';
+    if (noRes) noRes.style.display = 'none';
+    if (passo === 'ano') {
+      if (anoRow) anoRow.style.display = ''; // mostra os botões de ano para escolher
+      if (eIc) eIc.className = 'ph ph-calendar-blank';
+      if (eTit) eTit.textContent = 'Escolhe o ano';
+      if (eSub) eSub.innerHTML = 'Seleciona o <strong>ano</strong> em cima — ou <strong>Todos os anos</strong> para veres toda a oferta da disciplina.';
+    } else {
+      if (anoRow) anoRow.style.display = 'none';
+      if (eIc) eIc.className = 'ph ph-hand-pointing';
+      if (eTit) eTit.textContent = 'Escolhe uma opção para ver os cursos';
+      if (eSub) eSub.innerHTML = 'Seleciona <strong>Matemática</strong>, <strong>Português</strong>, <strong>Físico-Química</strong> ou <strong>Exames Nacionais</strong> em cima — ou <strong>Ver todos</strong>. Também podes pesquisar diretamente.';
+    }
+  }
+
+  // Passo 1 — nada escolhido e sem pesquisa.
+  if (f.disc === '' && f.q === '') { mostraConvite('inicial'); return; }
+  // Passo 2 — opção escolhida mas ainda sem ano (e sem pesquisa).
+  if (precisaAno && !anoEscolhido && f.q === '') { mostraConvite('ano'); return; }
+
+  if (grid) grid.style.display = '';
+  if (empty) empty.style.display = 'none';
+  if (anoRow) anoRow.style.display = '';
+
+  // 'todas' = ver tudo; 'exames' = só a secção de exames; '' com pesquisa = procura em tudo.
+  var soExames = (f.disc === 'exames');
+  function discOk(disc) {
+    if (soExames) return false;                 // cursos normais escondidos no modo exames
+    if (f.disc === '' || f.disc === 'todas') return true;
+    return disc === f.disc;
+  }
+  function examesOk(disc) {
+    if (soExames) return true;                   // todos os exames
+    if (f.disc === '' || f.disc === 'todas') return true;
+    return disc === f.disc;                       // exames da disciplina escolhida
+  }
+  // 'all' e '' equivalem a "todos os anos" na correspondência.
+  function anoMatch(ano) { return f.ano === '' || f.ano === 'all' || ano === f.ano; }
+
+  var visiveis = 0;
+  document.querySelectorAll('.portal-ano-card').forEach(function(card) {
+    var ano = card.getAttribute('data-ano') || '';
+    var okAno = anoMatch(ano);
+    var linksVisiveis = 0;
+    card.querySelectorAll('.portal-ano-link').forEach(function(link) {
+      var disc = link.getAttribute('data-disc') || '';
+      var hay = ((link.getAttribute('data-search') || '') + ' ' + link.textContent).toLowerCase();
+      var ok = okAno && discOk(disc) && (f.q === '' || hay.indexOf(f.q) !== -1);
+      link.style.display = ok ? '' : 'none';
+      if (ok) linksVisiveis++;
+    });
+    card.style.display = linksVisiveis ? '' : 'none';
+    visiveis += linksVisiveis;
+  });
+  // Secção "Preparação para Exames": cartões soltos (.portal-exam-card)
+  document.querySelectorAll('.portal-exam-card').forEach(function(link) {
+    var ano = link.getAttribute('data-ano') || '';
+    var disc = link.getAttribute('data-disc') || '';
+    var hay = ((link.getAttribute('data-search') || '') + ' ' + link.textContent).toLowerCase();
+    var ok = anoMatch(ano) && examesOk(disc) && (f.q === '' || hay.indexOf(f.q) !== -1);
+    link.style.display = ok ? '' : 'none';
+    if (ok) visiveis++;
+  });
+  document.querySelectorAll('.portal-ciclo').forEach(function(sec) {
+    var temCard = false;
+    sec.querySelectorAll('.portal-ano-card, .portal-exam-card').forEach(function(c) {
+      if (c.style.display !== 'none') temCard = true;
+    });
+    sec.style.display = temCard ? '' : 'none';
+  });
+  if (noRes) noRes.style.display = (visiveis === 0) ? 'block' : 'none';
+}
+
 // ═══ AUTO-INIT ═══
+/* ── Porta de entrada: sem sessão, esconde a montra (cursos, pesquisa,
+   filtros, progresso) e mostra o cartão de convite. O Desafio do Dia
+   fica sempre livre. Se o Cloud estiver indisponível (offline), NÃO
+   tranca — mostra tudo, para nunca deixar ninguém fechado por falha de
+   rede. ──────────────────────────────────────────────────────────── */
+function portalAplicarSessao() {
+  // sem Cloud disponível → comporta-se como dantes (tudo visível)
+  var temCloud = typeof Cloud !== 'undefined' && Cloud.disponivel && Cloud.disponivel();
+  var sessao = temCloud && Cloud.utilizador && Cloud.utilizador();
+  var fechado = temCloud && !sessao; // só fecha se o serviço existe e não há sessão
+
+  function mostra(id, on) { var el = document.getElementById(id); if (el) el.style.display = on ? '' : 'none'; }
+  function mostraCls(cls, on) {
+    var els = document.querySelectorAll('.' + cls);
+    for (var i = 0; i < els.length; i++) els[i].style.display = on ? '' : 'none';
+  }
+
+  // Três estados:
+  //  • fechado (Cloud ok, sem sessão): hero + cartão de entrada (com o
+  //    Desafio lá dentro). Montra escondida.
+  //  • com sessão: hero escondido, painel de boas-vindas visível (que
+  //    trata do Desafio, via painel-inicio.js). Montra visível.
+  //  • offline (sem Cloud): tudo visível, Desafio no lugar normal.
+  var entrada = document.getElementById('portal-entrada');
+  var desafio = document.getElementById('portal-desafio');
+  var dentro = document.getElementById('portal-entrada-desafio');
+  var hero = document.getElementById('portal-hero');
+
+  if (entrada) entrada.style.display = fechado ? '' : 'none';
+  if (hero) hero.style.display = sessao ? 'none' : ''; // com sessão é o painel que saúda
+
+  if (desafio && dentro) {
+    if (fechado && desafio.parentNode !== dentro) {
+      // sem sessão: Desafio dentro do cartão de entrada
+      desafio.style.maxWidth = 'none'; desafio.style.margin = '0';
+      dentro.appendChild(desafio);
+    } else if (!fechado && !sessao && desafio.parentNode === dentro) {
+      // offline: repõe o Desafio no lugar normal do portal
+      desafio.style.maxWidth = '540px'; desafio.style.margin = '0 auto 1.75rem';
+      var cat = document.getElementById('portal-catalogo');
+      if (cat) cat.insertBefore(desafio, entrada ? entrada.nextSibling : cat.firstChild);
+    }
+    // com sessão: o painel-inicio.js move o Desafio para o painel (aluno)
+  }
+
+  // Conteúdo interno da montra: visível exceto na porta de entrada.
+  // (A secção #sec-cursos como um todo é mostrada/escondida pela
+  //  navegação por secções — portal-nav.js — quando há sessão.)
+  // O grid não é mostrado diretamente: quem decide se aparece (e o quê) é
+  // portalSearch() conforme o filtro/pesquisa. Na porta de entrada, esconde-se.
+  if (fechado) { mostra('portal-grid', false); mostra('portal-empty', false); }
+  else if (typeof portalSearch === 'function') { portalSearch(); }
+  mostraCls('portal-search', !fechado);
+  mostraCls('portal-filters', !fechado);
+  if (fechado) mostra('portal-no-results', false);
+  if (fechado) { var pw = document.getElementById('portal-progress-widget'); if (pw) pw.style.display = 'none'; }
+
+  var secCursos = document.getElementById('sec-cursos');
+  var secApoio = document.getElementById('sec-apoio');
+  if (fechado) {
+    // porta de entrada: esconde as secções "com sessão"
+    if (secCursos) secCursos.style.display = 'none';
+    if (secApoio) secApoio.style.display = 'none';
+  } else if (!sessao) {
+    // offline (sem Cloud): mostra a montra como dantes
+    if (secCursos) secCursos.style.display = '';
+  }
+  // com sessão: quem decide a secção visível é portal-nav.js (portalIrPara)
+
+  // painel de boas-vindas (com sessão) e cartão do Desafio adaptam-se
+  if (typeof painelInicioRender === 'function') painelInicioRender();
+  if (typeof desafioRender === 'function') desafioRender();
+}
+
 document.addEventListener('DOMContentLoaded', function(){
   if(document.getElementById('portal-main')) portalRender();
   portalRenderProgress();
+  if(typeof desafioRender === 'function') desafioRender();
+  portalSearch(); // estado inicial: catálogo escondido até escolher um filtro
+  portalAplicarSessao();
+  // o Cloud arranca de forma assíncrona; reaplica quando a sessão resolver
+  setTimeout(portalAplicarSessao, 600);
+  setTimeout(portalAplicarSessao, 1400);
 });
+/* reage a login/logout */
+document.addEventListener('cloud:auth', function(){ portalAplicarSessao(); });
 
 /* Visual effects loaded from fx.js */

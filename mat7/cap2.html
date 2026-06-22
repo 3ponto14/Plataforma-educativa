@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Exercícios interativos sobre Números Racionais para o 7.º ano — frações, decimais, comparação e operações com racionais.">
+<meta name="description" content="Exercícios interativos sobre Números Racionais para o 7.º ano frações, decimais, comparação e operações com racionais.">
 <meta name="theme-color" content="#516860">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta property="og:title" content="3ponto14 · Centro de Estudos">
-<meta property="og:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano — fichas, jogos, quizzes e preparação para exames.">
+<meta property="og:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano fichas, jogos, quizzes e preparação para exames.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_PT">
 <meta property="og:url" content="https://3ponto14.pt/mat7">
@@ -17,7 +17,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="3ponto14 · Centro de Estudos">
-<meta name="twitter:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano — fichas, jogos, quizzes e preparação para exames.">
+<meta name="twitter:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano fichas, jogos, quizzes e preparação para exames.">
 <meta name="twitter:image" content="https://3ponto14.pt/og-mat7.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23516860'/><text x='50' y='68' font-size='48' font-weight='900' text-anchor='middle' fill='white' font-family='serif'>eP</text></svg>">
 <title>Números Racionais · Matemática 7.º Ano · 3ponto14</title>
@@ -48,34 +48,42 @@
   <p>Teoria, exercícios interativos, minitestes, jogos e fichas para imprimir</p>
 </header>
 
-<nav class="tabs hidden" id="tabs2">
-  <button class="tab-btn active" onclick="showSection2('temas2', this)">Temas</button>
-  <button class="tab-btn" onclick="showSection2('teoria2', this)">Teoria</button>
-  <button class="tab-btn" onclick="showSection2('questoes2', this)">Exercícios</button>
-  <button class="tab-btn" onclick="showSection2('minitestes2', this)"><i class="ph ph-file-text"></i> Minitestes</button>
-  <button class="tab-btn" onclick="showSection2('teste2', this)">Teste</button>
-  <button class="tab-btn" onclick="showSection2('gerador2', this)">Gerador</button>
-  <button class="tab-btn" onclick="showSection2('jogos2', this)">Jogos</button>
-  <button class="tab-btn" onclick="showSection2('quiz-game2', this)">⚡ Quiz</button>
-  <button class="tab-btn" onclick="showSection2('flashcards2', this)">Flashcards</button>
-  <button class="tab-btn" onclick="showSection2('exame2', this)">Exame</button>
-  <button class="tab-btn" onclick="showSection2('progresso2', this)">Progresso</button>
+<nav class="tabs" id="tabs2">
+  <button class="tab-btn cap-group-btn active" data-group="aprender" onclick="showSection2('temas2', this)" data-secs="temas2,teoria2"><i class="ph ph-book-open-text"></i> Aprender</button>
+  <button class="tab-btn cap-group-btn" data-group="praticar" onclick="showSection2('questoes2', this)" data-secs="questoes2,minitestes2,gerador2"><i class="ph ph-pencil-simple"></i> Praticar</button>
+  <button class="tab-btn cap-group-btn" data-group="testar" onclick="showSection2('teste2', this)" data-secs="teste2,quiz-game2,flashcards2,exame2"><i class="ph ph-timer"></i> Testar</button>
+  <button class="tab-btn" onclick="showSection2('jogos2', this)"><i class="ph ph-game-controller"></i> Jogos</button>
+  <button class="tab-btn" onclick="showSection2('progresso2', this)"><i class="ph ph-chart-bar"></i> Progresso</button>
 </nav>
+<div class="cap-subnav" id="cap-subnav-2" style="display:none"></div>
+
 
 <main>
 
 <!-- ══════════ TEMAS ══════════ -->
+
+<div class="teacher-strip" id="ts-2-resumo">
+  <button class="teacher-toggle" onclick="toggleTeacher(this)">
+    <span class="teacher-arrow">▸</span> Para o professor
+  </button>
+  <div class="teacher-content">
+    <div class="teacher-section">
+      <div class="teacher-section-title">Objetivos DGE (PMEB)</div>
+      <p>Representar e comparar números racionais; converter entre frações, dízimas finitas e infinitas periódicas; efetuar operações com racionais; resolver problemas em contexto com números racionais.</p>
+    </div>
+    <div class="teacher-section">
+      <div class="teacher-section-title">Sequência pedagógica sugerida</div>
+      <p>1.º Rever frações equivalentes e simplificação → 2.º Representar racionais na reta numérica → 3.º Converter fração ↔ dízima (com calculadora) → 4.º Dízimas infinitas periódicas → 5.º Adição e subtração de frações com denominadores diferentes → 6.º Multiplicação e divisão de frações → 7.º Problemas de proporcionalidade direta e inversa.</p>
+    </div>
+    <div class="teacher-criteria">Critérios de classificação: Simplificação correta (1pt) · conversão fração/dízima (1pt) · operação desenvolvida (2pt) · resultado final com representação pedida (1pt).</div>
+  </div>
+</div>
+
 <div class="section active" id="sec-temas2">
   <div class="sec-header sec-header--compact">
     <h2><span class="num"><i class="ph ph-file-text"></i></span> Temas</h2>
   </div>
   <div class="topics-grid" id="cap2-topics-grid"><!-- Generated by cap2.js --></div>
-  <hr class="topics-sep">
-  <div class="topics-grid mt-2">
-    <div class="topic-tool" onclick="showSection2('gerador2', document.querySelector('#tabs2 .tab-btn:nth-child(6)'))"><span class="tt-icon"><i class="ph ph-dice-five"></i></span> Gerador</div>
-    <div class="topic-tool" onclick="showSection2('jogos2', document.querySelector('#tabs2 .tab-btn:nth-child(7)'))"><span class="tt-icon"><i class="ph ph-game-controller"></i></span> Jogos</div>
-    <div class="topic-tool" onclick="showSection2('flashcards2', document.querySelector('#tabs2 .tab-btn:nth-child(8)'))"><span class="tt-icon"><i class="ph ph-stack"></i></span> Flashcards</div>
-
   </div>
 </div>
 
@@ -281,13 +289,12 @@
   </div>
 
 </div>
-</div>
 
 <!-- ══════════ QUESTÕES-AULA ══════════ -->
 <div class="section" id="sec-questoes2">
   <div class="sec-header">
     <div class="flex-1"><h2><span class="num"><i class="ph ph-pencil-simple"></i></span> Questões-aula</h2>
-    <p>Exercícios pelos 9 temas — escolhe o nível e gera novas questões a qualquer momento</p></div>
+    <p>Exercícios pelos 9 temas escolhe o nível e gera novas questões a qualquer momento</p></div>
   </div>
   <div class="level-bar">
     <div class="gen-level-group">
@@ -313,7 +320,7 @@
 <div class="section-divider section" id="sec-minitestes2" >
 <div class="sec-header">
     <div class="flex-1"><h2><span class="num"><i class="ph ph-file-text"></i></span> Minitestes</h2>
-    <p>9 minitestes, um por tema — escolhe o nível e gera novas questões</p></div>
+    <p>9 minitestes, um por tema escolhe o nível e gera novas questões</p></div>
   </div>
   <div class="level-bar">
     <div class="gen-level-group">
@@ -326,15 +333,15 @@
   </div>
   <div class="flex-tabs" id="mini2-tabs">
     <button class="tab-btn active" onclick="showMiniDyn2(0,this)"><i class="ph ph-book-open-text"></i> Capítulo completo</button>
-    <button class="tab-btn" onclick="showMiniDyn2(1,this)">① Mini 1 — Racionais</button>
-    <button class="tab-btn" onclick="showMiniDyn2(2,this)">② Mini 2 — Ordenação</button>
-    <button class="tab-btn" onclick="showMiniDyn2(3,this)">③ Mini 3 — Adição</button>
-    <button class="tab-btn" onclick="showMiniDyn2(4,this)">④ Mini 4 — Problemas</button>
-    <button class="tab-btn" onclick="showMiniDyn2(5,this)">⑤ Mini 5 — %</button>
-    <button class="tab-btn" onclick="showMiniDyn2(6,this)"><span class="text-sm"><i class="ph ph-notebook"></i></span> Mini 6 — Prob. %</button>
-    <button class="tab-btn" onclick="showMiniDyn2(7,this)">① Mini 7 — Potências</button>
-    <button class="tab-btn" onclick="showMiniDyn2(8,this)">② Mini 8 — Not. Cient.</button>
-    <button class="tab-btn" onclick="showMiniDyn2(9,this)">③ Mini 9 — Op. Not. Cient.</button>
+    <button class="tab-btn" onclick="showMiniDyn2(1,this)">① Mini 1 Racionais</button>
+    <button class="tab-btn" onclick="showMiniDyn2(2,this)">② Mini 2 Ordenação</button>
+    <button class="tab-btn" onclick="showMiniDyn2(3,this)">③ Mini 3 Adição</button>
+    <button class="tab-btn" onclick="showMiniDyn2(4,this)">④ Mini 4 Problemas</button>
+    <button class="tab-btn" onclick="showMiniDyn2(5,this)">⑤ Mini 5 %</button>
+    <button class="tab-btn" onclick="showMiniDyn2(6,this)"><span class="text-sm"><i class="ph ph-notebook"></i></span> Mini 6 Prob. %</button>
+    <button class="tab-btn" onclick="showMiniDyn2(7,this)">① Mini 7 Potências</button>
+    <button class="tab-btn" onclick="showMiniDyn2(8,this)">② Mini 8 Not. Cient.</button>
+    <button class="tab-btn" onclick="showMiniDyn2(9,this)">③ Mini 9 Op. Not. Cient.</button>
   </div>
   <div class="score-bar">
     <div><div class="score-num" id="m2-score">0</div><div class="score-label">pontos</div></div>
@@ -377,7 +384,6 @@
   <div id="t2-container"></div>
 </div>
 </div>
-</div>
 
 <!-- ══════════ GERADOR ══════════ -->
 <div class="section" id="sec-gerador2">
@@ -396,13 +402,13 @@
       </div>
       <select class="ai-select" id="gen2-tema">
         <option value="todos">Todos os temas</option>
-        <option value="1">Tema 1 — Racionais</option>
-        <option value="2">Tema 2 — Ordenação</option>
-        <option value="3">Tema 3 — Adição</option>
-        <option value="5">Tema 5 — Percentagens</option>
-        <option value="7">Tema 7 — Potências</option>
-        <option value="8">Tema 8 — Not. Científica</option>
-        <option value="9">Tema 9 — Op. Not. Científica</option>
+        <option value="1">Tema 1 Racionais</option>
+        <option value="2">Tema 2 Ordenação</option>
+        <option value="3">Tema 3 Adição</option>
+        <option value="5">Tema 5 Percentagens</option>
+        <option value="7">Tema 7 Potências</option>
+        <option value="8">Tema 8 Not. Científica</option>
+        <option value="9">Tema 9 Op. Not. Científica</option>
       </select>
       <select class="ai-select" id="gen2-qtd">
         <option value="5">5 exercícios</option>
@@ -422,13 +428,12 @@
     <button class="btn btn-ghost" onclick="typeof gerarExercicios2==='function'&&gerarExercicios2()">↺ Gerar Novos</button>
   </div>
 </div>
-</div>
 
 <!-- ══════════ JOGOS ══════════ -->
 <div class="section" id="sec-jogos2">
   <div class="sec-header">
     <h2><span class="num"><i class="ph ph-game-controller"></i></span> Jogos</h2>
-    <p>5 jogos matemáticos interativos — treina com números racionais</p>
+    <p>5 jogos matemáticos interativos treina com números racionais</p>
   </div>
   <div id="j24-wrap-cap2"></div>
   <div id="triangulo-fb" class="feedback mt-4"></div>
@@ -438,7 +443,7 @@
 <div class="section" id="sec-quiz-game2">
   <div class="sec-header">
     <h2><span class="num"><i class="ph ph-trophy"></i></span> ⚡ Modo Quiz</h2>
-    <p>Questões de escolha múltipla — Números Racionais — 3 vidas, streak e game over</p>
+    <p>Questões de escolha múltipla Números Racionais 3 vidas, streak e game over</p>
   </div>
   <div id="qg-app2"></div>
 </div>
@@ -447,7 +452,7 @@
 <div class="section" id="sec-flashcards2">
   <div class="sec-header">
     <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards</h2>
-    <p>Revê as definições e fórmulas principais — carrega para virar o cartão</p>
+    <p>Revê as definições e fórmulas principais carrega para virar o cartão</p>
   </div>
   <div class="card card-narrow">
     <div class="flex items-center justify-between mb-3">
@@ -471,7 +476,6 @@
     </div>
     <div id="fc2-dots" class="flex flex-wrap gap-1.5 justify-center mt-3"></div>
   
-</div>
 </div>
 </div>
 
@@ -546,26 +550,30 @@
 </div>
 
 <div style="display:flex;justify-content:space-between;padding:1.5rem 2rem 2rem;border-top:1px solid var(--border);margin-top:2rem;">
-  <button class="btn btn-ghost ch-back-link" onclick="goToChapter(1)">← Cap. 1 — Números Inteiros</button>
-  <button class="btn btn-ghost ch-back-link" onclick="goToChapter(3)">Cap. 3 — Geometria →</button>
+  <button class="btn btn-ghost ch-back-link" onclick="goToChapter(1)">← Cap. 1 Números Inteiros</button>
+  <button class="btn btn-ghost ch-back-link" onclick="goToChapter(3)">Cap. 3 Geometria →</button>
 </div>
 </main>
-</div><!-- /view-math2 -->
 
 
 <!-- ═══════════════════════════════════════
-     CAP. 3 — GEOMETRIA · 7.º ANO
+     CAP. 3 GEOMETRIA · 7.º ANO
 ════════════════════════════════════════════ -->
 
 
 
 
-<script src="../js/shared.js"></script>
-<script src="../js/chapter-engine.js"></script>
-<script src="../js/cap2.js"></script>
-<script src="../js/systems.js"></script>
-<script src="../js/widgets.js"></script>
-<script src="../js/fx.js"></script>
-<script src="../js/nav.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/cloud.js"></script>
+<script src="../js/guard.js"></script>
+<script src="../js/shared.js?v=20260621"></script>
+<script src="../js/chapter-engine.js?v=20260621"></script>
+<script src="../js/cap2.js?v=20260621"></script>
+<script src="../js/systems.js?v=20260621"></script>
+<script src="../js/widgets.js?v=20260621"></script>
+<script src="../js/fx.js?v=20260621"></script>
+<script src="../js/ux-improvements.js?v=20260621"></script>
+<script src="../js/nav.js?v=20260621"></script>
 </body>
 </html>

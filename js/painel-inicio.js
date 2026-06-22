@@ -1,0 +1,521 @@
+/* ════════════════════════════════════════════════════════════════
+   painel-inicio.js — Painel de boas-vindas (só COM sessão)
+   Substitui o hero genérico por uma saudação personalizada:
+     • Olá, [Nome] + o dia de hoje (por extenso).
+     • Aluno:     mensagem + o Desafio do Dia (movido para o centro).
+     • Professor: mensagem + resumo dos alunos do Apoio ao Estudo.
+   A barra lateral continua com Apoio ao Estudo / Cursos (menu-lateral.js).
+   ════════════════════════════════════════════════════════════════ */
+
+(function () {
+  var MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+    'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+  var DIAS = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira',
+    'quinta-feira', 'sexta-feira', 'sábado'];
+
+  function _temSessao() {
+    return typeof Cloud !== 'undefined' && Cloud.disponivel && Cloud.disponivel() && Cloud.utilizador && Cloud.utilizador();
+  }
+  function _dataExtenso() {
+    var d = new Date();
+    return DIAS[d.getDay()] + ', ' + d.getDate() + ' de ' + MESES[d.getMonth()];
+  }
+  function _saudacaoHora() {
+    var h = new Date().getHours();
+    if (h < 13) return 'Bom dia';
+    if (h < 20) return 'Boa tarde';
+    return 'Boa noite';
+  }
+  function _esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  /* ── Momento do Professor: JOGO de 3 perguntas por dia. O professor
+     RESPONDE (V/F ou escolha múltipla), vê se acertou e a explicação, e
+     ganha XP/ofensiva próprios. Conteúdo determinístico por dia.
+     Cada item: { tipo:'vf'|'mc', q, opcoes[], resp, expl }. Sem travessões. ── */
+  var MOMENTO_BANCO = [
+    // ── Verdadeiro / Falso (pedagogia) ──
+    { tipo: 'vf', q: 'Começar a aula com uma pergunta prende mais a atenção do que começar com uma definição.', resp: 'Verdadeiro', expl: 'A curiosidade abre a porta à regra: a definição faz mais sentido depois de existir vontade de saber.' },
+    { tipo: 'vf', q: 'Elogiar a inteligência ("és muito inteligente") motiva mais, a longo prazo, do que elogiar o esforço.', resp: 'Falso', expl: 'Elogiar o esforço ("trabalhaste bem isto") cria mentalidade de crescimento; elogiar só o talento pode gerar medo de falhar.' },
+    { tipo: 'vf', q: 'Dar 5 segundos de silêncio depois de uma pergunta faz mais alunos pensar do que aceitar logo a 1.ª resposta.', resp: 'Verdadeiro', expl: 'O "tempo de espera" aumenta a participação e a qualidade das respostas. O silêncio trabalha a favor.' },
+    { tipo: 'vf', q: 'Mostrar e corrigir um erro comum no quadro é menos eficaz do que evitar falar de erros.', resp: 'Falso', expl: 'Os erros são informação. Analisá-los em conjunto ensina mais do que escondê-los.' },
+    { tipo: 'vf', q: 'Pedir a um aluno que explique a matéria a um colega ajuda a consolidar o que ele próprio aprendeu.', resp: 'Verdadeiro', expl: 'Ensinar é a melhor forma de aprender: obriga a organizar e a clarificar as ideias.' },
+    { tipo: 'vf', q: 'Nos problemas com enunciado, ir direto às contas costuma dar melhores resultados do que organizar os dados primeiro.', resp: 'Falso', expl: 'Escrever "o que sei" e "o que quero descobrir" antes das contas reduz erros e organiza o raciocínio.' },
+    // ── Escolha múltipla (cultura geral para partilhar) ──
+    { tipo: 'mc', q: 'Quantas estrofes têm, aproximadamente, "Os Lusíadas" de Camões?', opcoes: ['1102', '500', '3000', '250'], resp: '1102', expl: '1102 estrofes e 8816 versos. Um bom mote para falar de persistência com a turma!' },
+    { tipo: 'mc', q: 'De que língua vem a palavra "álgebra"?', opcoes: ['Árabe', 'Latim', 'Grego', 'Francês'], resp: 'Árabe', expl: 'Vem do árabe "al-jabr", "reunião de partes partidas". Matemática e história de mãos dadas.' },
+    { tipo: 'mc', q: 'Que valor de π chega para os cálculos do 3.º ciclo?', opcoes: ['3,14', '3,0', '4,0', '2,72'], resp: '3,14', expl: 'π já foi calculado com mais de 60 biliões de casas, mas 3,14 basta nestes anos.' },
+    { tipo: 'mc', q: 'Em que século foi inventado o sinal de igual (=)?', opcoes: ['Século XVI', 'Século XIX', 'Século XX', 'Antiguidade'], resp: 'Século XVI', expl: 'Em 1557, por Robert Recorde, com duas linhas paralelas porque "nada é mais igual do que duas retas gémeas".' },
+    { tipo: 'mc', q: 'Qual destas é a melhor forma de terminar uma aula para perceber quem precisa de reforço?', opcoes: ['Bilhete de saída (1 frase do que aprenderam)', 'Marcar muitos trabalhos de casa', 'Repetir a matéria toda', 'Acabar mais cedo'], resp: 'Bilhete de saída (1 frase do que aprenderam)', expl: 'Em 2 minutos, o "bilhete de saída" mostra logo quem percebeu e quem precisa de apoio.' },
+    { tipo: 'mc', q: 'Para introduzir percentagens e estatística de forma próxima dos alunos, o que funciona melhor?', opcoes: ['Exemplos do dia a dia deles (jogos, desporto)', 'Só fórmulas no quadro', 'Decorar definições', 'Saltar os exemplos'], resp: 'Exemplos do dia a dia deles (jogos, desporto)', expl: 'Partir do que lhes é familiar torna o abstrato concreto e aumenta o interesse.' }
+  ];
+
+  function _hojeISO() { return new Date().toISOString().slice(0, 10); }
+  function _seedDoDia() {
+    var d = _hojeISO(); var s = 0;
+    for (var i = 0; i < d.length; i++) s = (s * 31 + d.charCodeAt(i)) % 100000;
+    return s;
+  }
+  /* As 3 perguntas de hoje (determinísticas, sem repetir). */
+  function _perguntasDeHoje() {
+    var s = _seedDoDia(), n = MOMENTO_BANCO.length, out = [], usados = {};
+    for (var i = 0; i < 3 && out.length < n; i++) {
+      var idx = (s + i * 37) % n;
+      while (usados[idx]) idx = (idx + 1) % n;
+      usados[idx] = 1; out.push(MOMENTO_BANCO[idx]);
+    }
+    return out;
+  }
+
+  /* ── Gamificação própria do professor (separada dos alunos) ── */
+  var PROF_KEY = 'edupt_prof';
+  function _profLoad() { try { return JSON.parse(localStorage.getItem(PROF_KEY)) || {}; } catch (e) { return {}; } }
+  function _profSave(o) {
+    try { localStorage.setItem(PROF_KEY, JSON.stringify(o)); } catch (e) {}
+    // sincroniza com a conta (nuvem), para não se perder ao limpar a cache
+    if (typeof Cloud !== 'undefined' && Cloud.enviarDebounce) { try { Cloud.enviarDebounce(); } catch (e) {} }
+  }
+  function _profFeitoHoje() { return _profLoad().dia === _hojeISO(); }
+  /* Marca o momento de hoje como concluído: +XP (conforme acertos) e
+     atualiza a ofensiva. certas = nº de respostas certas (0..3). */
+  function _profConcluir(certas) {
+    var o = _profLoad();
+    if (o.dia === _hojeISO()) return o;            // já contou hoje
+    var ontem = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+    o.streak = (o.dia === ontem ? (o.streak || 0) : 0) + 1;
+    o.dia = _hojeISO();
+    o.xp = (o.xp || 0) + 10 + (certas || 0) * 5;    // 10 base + 5 por acerto (máx 25)
+    o.maxStreak = Math.max(o.maxStreak || 0, o.streak);
+    _profSave(o);
+    return o;
+  }
+
+  /* Estado do jogo do dia (em memória, durante a sessão). */
+  var _pjEstado = { idx: 0, certas: 0, qs: [], respondido: false };
+
+  /* HTML do Momento do Professor (jogo de 3 perguntas) + barra de XP/🔥. */
+  function _profMomentoHTML() {
+    var o = _profLoad();
+    var cab = '<div class="pi-prof-wrap" id="pi-prof-wrap">'
+      + '<div class="pi-prof-head">'
+      + '<span class="pi-prof-titulo">🎓 Momento do Professor</span>'
+      + '<span class="pi-prof-pts">🔥 ' + (o.streak || 0) + ' · ⭐ ' + (o.xp || 0) + '</span>'
+      + '</div>'
+      + '<div id="pi-prof-jogo"></div></div>';
+    return cab;
+  }
+
+  /* Desenha o estado atual do jogo dentro de #pi-prof-jogo. */
+  function _pjRender() {
+    var box = document.getElementById('pi-prof-jogo');
+    if (!box) return;
+    if (_profFeitoHoje()) {
+      var o = _profLoad();
+      box.innerHTML = '<div class="pj-fim"><div class="pj-fim-ic">✅</div>'
+        + '<div class="pj-fim-h">Momento de hoje concluído!</div>'
+        + '<div class="pj-fim-sub">Ofensiva de <strong>' + (o.streak || 1) + ' dia' + ((o.streak || 1) === 1 ? '' : 's') + '</strong> 🔥 · ⭐ ' + (o.xp || 0) + '</div>'
+        + '<div class="pj-fim-foot">Volta amanhã para um novo desafio.</div></div>';
+      return;
+    }
+    if (!_pjEstado.qs.length) { _pjEstado = { idx: 0, certas: 0, qs: _perguntasDeHoje(), respondido: false }; }
+    var i = _pjEstado.idx, q = _pjEstado.qs[i];
+    var opcoes = q.tipo === 'vf' ? ['Verdadeiro', 'Falso'] : q.opcoes;
+    var h = '<div class="pj-prog">Pergunta ' + (i + 1) + ' de ' + _pjEstado.qs.length + '</div>'
+      + '<div class="pj-q">' + _esc(q.q) + '</div>'
+      + '<div class="pj-opts" id="pj-opts">';
+    for (var k = 0; k < opcoes.length; k++) {
+      h += '<button class="pj-opt" onclick="profResponder(' + k + ')">' + _esc(opcoes[k]) + '</button>';
+    }
+    h += '</div><div class="pj-fb" id="pj-fb"></div>';
+    box.innerHTML = h;
+  }
+
+  /* Responde à pergunta atual: mostra acerto + explicação, depois avança. */
+  window.profResponder = function (k) {
+    if (_pjEstado.respondido) return;
+    _pjEstado.respondido = true;
+    var q = _pjEstado.qs[_pjEstado.idx];
+    var opcoes = q.tipo === 'vf' ? ['Verdadeiro', 'Falso'] : q.opcoes;
+    var escolha = opcoes[k];
+    var certo = (escolha === q.resp);
+    if (certo) _pjEstado.certas++;
+    // pinta os botões
+    var opts = document.getElementById('pj-opts');
+    if (opts) {
+      var bs = opts.querySelectorAll('.pj-opt');
+      for (var j = 0; j < bs.length; j++) {
+        bs[j].disabled = true;
+        if (opcoes[j] === q.resp) bs[j].classList.add('certa');
+        else if (j === k) bs[j].classList.add('errada');
+      }
+    }
+    var fb = document.getElementById('pj-fb');
+    if (fb) {
+      fb.innerHTML = '<div class="pj-fb-in ' + (certo ? 'ok' : 'no') + '">'
+        + '<strong>' + (certo ? 'Certo! 🎉' : 'Quase!') + '</strong> ' + _esc(q.expl) + '</div>'
+        + '<button class="pj-next" onclick="profAvancar()">' + (_pjEstado.idx + 1 < _pjEstado.qs.length ? 'Próxima →' : 'Concluir') + '</button>';
+    }
+  };
+
+  /* Avança para a próxima pergunta ou conclui o momento. */
+  window.profAvancar = function () {
+    if (_pjEstado.idx + 1 < _pjEstado.qs.length) {
+      _pjEstado.idx++; _pjEstado.respondido = false; _pjRender();
+      return;
+    }
+    // concluir: XP conforme acertos + ofensiva
+    var o = _profConcluir(_pjEstado.certas);
+    var head = document.querySelector('.pi-prof-pts');
+    if (head) head.innerHTML = '🔥 ' + o.streak + ' · ⭐ ' + o.xp;
+    var box = document.getElementById('pi-prof-jogo');
+    if (box) {
+      box.innerHTML = '<div class="pj-fim"><div class="pj-fim-ic">' + (_pjEstado.certas === _pjEstado.qs.length ? '🏆' : '✅') + '</div>'
+        + '<div class="pj-fim-h">Acertaste ' + _pjEstado.certas + ' de ' + _pjEstado.qs.length + '!</div>'
+        + '<div class="pj-fim-sub">+' + (10 + _pjEstado.certas * 5) + ' XP · ofensiva de <strong>' + o.streak + ' dia' + (o.streak === 1 ? '' : 's') + '</strong> 🔥</div>'
+        + '<div class="pj-fim-foot">Volta amanhã para um novo desafio.</div></div>';
+    }
+    if (typeof eduToast === 'function') eduToast('Momento do Professor concluído! +' + (10 + _pjEstado.certas * 5) + ' XP ⭐', 'success');
+    if (typeof pmUpdateTopbar === 'function') pmUpdateTopbar();
+  };
+
+  function render() {
+    var sec = document.getElementById('portal-saudacao');
+    if (!sec) return;
+    var u = _temSessao();
+    if (!u) {
+      // sem sessão: resgata o Desafio (se estava no painel) e esconde o painel
+      var d0 = document.getElementById('portal-desafio');
+      var cat0 = document.getElementById('portal-catalogo');
+      if (d0 && sec.contains(d0) && cat0) cat0.appendChild(d0);
+      sec.innerHTML = '';
+      sec.style.display = 'none';
+      return; // fica o hero / cartão de entrada (tratado por portalAplicarSessao)
+    }
+
+    var nome = (typeof Cloud.nome === 'function' ? Cloud.nome() : (u.email || '').split('@')[0]);
+    var prof = (typeof Cloud.ehProfessor === 'function' && Cloud.ehProfessor());
+
+    // Gate: professor tem de ter o mapa disciplina→anos definido antes de
+    // usar a plataforma (filtra as dúvidas/acompanhamento pela disciplina e
+    // ano certos). Apanha também contas antigas que só tinham a lista plana
+    // de disciplinas (sem os anos por disciplina) — pedimos que reconfirmem.
+    if (prof && _profPrecisaDisciplinas()) {
+      _pintarOnboardingProf(sec, nome);
+      return;
+    }
+
+    var h = '<div class="pi-wrap">'
+      + '<div class="pi-cab">'
+      + '<div class="pi-dia">' + _dataExtenso() + '</div>'
+      + '<h1 class="pi-ola">' + _saudacaoHora() + ', ' + _esc(nome) + ' 👋</h1>'
+      + '<div class="pi-sub">' + (prof
+          ? 'O teu momento de hoje. As tuas turmas estão na barra Turmas.'
+          : 'Pronto para estudar? Começa pelo desafio de hoje.') + '</div>'
+      + '</div>';
+
+    if (prof) {
+      h += '<div id="pi-prof-resumo" class="pi-prof-resumo-slot"></div>';
+      h += _profMomentoHTML();
+    } else {
+      // "O que tenho para fazer" + Desafio. (As mensagens do professor
+      // vivem agora na secção Turmas, junto ao registo do aluno.)
+      h += '<div id="pi-ano-aluno" class="pi-ano-aluno-slot"></div>';
+      h += '<div id="pi-tarefas" class="pi-tarefas-slot"></div>';
+      h += '<div id="pi-desafio-slot" class="pi-desafio-slot"></div>';
+    }
+    h += '</div>';
+
+    // Antes de reconstruir o painel, resgata o #portal-desafio se já cá
+    // estava (de um render anterior), senão seria destruído pelo innerHTML.
+    var desafioOrf = document.getElementById('portal-desafio');
+    var catalogo = document.getElementById('portal-catalogo');
+    if (desafioOrf && sec.contains(desafioOrf) && catalogo) catalogo.appendChild(desafioOrf);
+
+    sec.innerHTML = h;
+    // NÃO força display: a visibilidade da secção é decidida pela
+    // navegação por secções (portal-nav.js). Aqui só se preenche.
+
+    if (prof) {
+      _pintarResumoProf(); // «as tuas turmas hoje» (dúvidas/entregas)
+      _pjRender(); // desenha o jogo do dia dentro do painel
+      // o Desafio (dos alunos) não faz parte do painel do professor
+      var des = document.getElementById('portal-desafio');
+      if (des) des.style.display = 'none';
+    } else {
+      var des2 = document.getElementById('portal-desafio');
+      if (des2) des2.style.display = '';
+      _moverDesafio();
+      _pintarAnoAluno();
+      _pintarTarefasAluno();
+    }
+  }
+
+  /* Aluno sem ano definido (conta criada antes deste campo): pede uma vez,
+     de forma simpática, que escolha o ano. É das infos mais importantes da
+     escola — fica ao lado do nome para os professores. Some assim que escolhe. */
+  function _pintarAnoAluno() {
+    var box = document.getElementById('pi-ano-aluno');
+    if (!box) return;
+    if (typeof Cloud.alunoAno !== 'function' || Cloud.alunoAno()) { box.innerHTML = ''; return; }
+    var anos = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+    var pills = anos.map(function (a) {
+      return '<button type="button" onclick="alunoEscolherAno(\'' + a + '\')" style="background:var(--white);border:1.5px solid var(--border);color:var(--ink3);border-radius:999px;padding:5px 11px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">' + a + '.º</button>';
+    }).join('');
+    box.innerHTML = '<div class="pi-tar-card" style="border-color:#ddd8f5">'
+      + '<div class="pi-tar-h"><span><i class="ph ph-graduation-cap" style="color:#4a3f7a"></i> Em que ano andas?</span></div>'
+      + '<div style="font-size:.82rem;color:var(--ink3);line-height:1.5;margin:.2rem 0 .6rem">Escolhe o teu ano de escolaridade. Aparece ao lado do teu nome para os teus professores saberem quem és.</div>'
+      + '<div style="display:flex;flex-wrap:wrap;gap:.3rem">' + pills + '</div></div>';
+  }
+
+  /* Aluno escolhe/atualiza o ano: grava nos metadados + tabelas das turmas. */
+  window.alunoEscolherAno = function (ano) {
+    if (typeof Cloud === 'undefined' || !Cloud.atualizarAnoAluno) return;
+    Cloud.atualizarAnoAluno(ano).then(function () {
+      if (typeof eduToast === 'function') eduToast('Ano guardado: ' + ano + '.º 🎓', 'success');
+      _pintarAnoAluno();
+    }).catch(function (e) {
+      if (typeof eduToast === 'function') eduToast((e && e.message) || 'Não foi possível guardar. Verifica a ligação.', 'error');
+    });
+  };
+
+  /* Professor: «as tuas turmas hoje» — dúvidas por responder + entregas,
+     com link direto para as Turmas. Só aparece se houver algo. */
+  function _pintarResumoProf() {
+    var box = document.getElementById('pi-prof-resumo');
+    if (!box || typeof Turmas === 'undefined' || !Turmas.respostasDeAlunos) return;
+    Turmas.respostasDeAlunos().then(function (ms) {
+      if (!box) return;
+      var porResp = (ms || []).filter(function (m) { return m.alcance === 'duvida' && !m.respondido; }).length;
+      var itens = '';
+      if (porResp) {
+        itens += '<button class="pi-pr-item" onclick="if(typeof portalIrPara===\'function\')portalIrPara(\'apoio\')">'
+          + '<span class="pi-pr-ic" style="background:#fdf3e7;color:#9a6a1a">⚠️</span>'
+          + '<span class="pi-pr-txt">' + porResp + (porResp === 1 ? ' dúvida por responder' : ' dúvidas por responder') + '</span>'
+          + '<i class="ph ph-arrow-right pi-pr-seta"></i></button>';
+      }
+      // atalho sempre útil: abrir Turmas
+      itens += '<button class="pi-pr-item" onclick="if(typeof portalIrPara===\'function\')portalIrPara(\'apoio\')">'
+        + '<span class="pi-pr-ic" style="background:#e8f5ee;color:#2e7d52">👥</span>'
+        + '<span class="pi-pr-txt">' + (porResp ? 'Ver as turmas' : 'Tudo em dia — ver as turmas') + '</span>'
+        + '<i class="ph ph-arrow-right pi-pr-seta"></i></button>';
+      box.innerHTML = '<div class="pi-pr-card"><div class="pi-pr-h"><i class="ph ph-chalkboard-teacher"></i> As tuas turmas</div>' + itens + '</div>';
+    });
+  }
+
+  /* Aluno: "O que tenho para fazer" (tarefas do professor). */
+  function _pintarTarefasAluno() {
+    var box = document.getElementById('pi-tarefas');
+    if (!box || typeof Turmas === 'undefined' || !Turmas.tarefasDoAluno) return;
+    Turmas.tarefasDoAluno().then(function (ts) {
+      if (!box) return;
+      var pend = ts.filter(function (t) { return !t.feito; });
+      if (!ts.length) { box.innerHTML = ''; return; } // sem tarefas: não ocupa espaço
+      var h = '<div class="pi-tar-card">'
+        + '<div class="pi-tar-h"><span><i class="ph ph-clipboard-text"></i> O que tenho para fazer</span>'
+        + '<span class="pi-tar-num">' + (pend.length ? pend.length + ' por fazer' : 'tudo feito ✅') + '</span></div>';
+      ts.forEach(function (t) {
+        var prazo = t.prazo ? _esc(_tarPrazo(t.prazo)) : '';
+        h += '<div class="pi-tar-row' + (t.feito ? ' feita' : '') + '">'
+          + '<button class="pi-tar-chk" onclick="alunoMarcarTarefa(\'' + t.id + '\',' + (t.feito ? 'false' : 'true') + ')" title="' + (t.feito ? 'Marcar por fazer' : 'Marcar como feito') + '">' + (t.feito ? '✅' : '⬜') + '</button>'
+          + '<div class="pi-tar-info">'
+          + '<div class="pi-tar-tit">' + _esc(t.titulo) + (t.curso_nome ? ' <span class="pi-tar-tag">' + _esc(t.curso_nome) + '</span>' : '') + '</div>'
+          + (t.instrucoes ? '<div class="pi-tar-desc">' + _esc(t.instrucoes) + '</div>' : '')
+          + '<div class="pi-tar-meta">' + (prazo ? prazo + ' · ' : '') + 'por ' + _esc(t.prof_nome || 'professor')
+          + (t.url ? ' · <a href="' + _escAttr(_tarUrlComId(t.url, t.id)) + '" target="_blank" rel="noopener">abrir trabalho</a>' : '') + '</div>'
+          + '</div></div>';
+      });
+      h += '</div>';
+      box.innerHTML = h;
+    });
+  }
+  /* Garante que o link do trabalho leva &tarefa=<id>, para o aluno entrar
+     sempre em modo-tarefa (e poder entregar) — mesmo em tarefas antigas
+     cujo url foi guardado sem o tarefa=. Funciona em todos os anos. */
+  function _tarUrlComId(url, id) {
+    if (!url || !id) return url;
+    if (url.indexOf('tarefa=') !== -1) return url;            // já tem
+    var sep = url.indexOf('?') === -1 ? '?' : '&';
+    return url + sep + 'tarefa=' + id;
+  }
+
+  function _tarPrazo(p) {
+    var hoje = new Date().toISOString().slice(0, 10);
+    if (p < hoje) return '⚠️ prazo passou';
+    if (p === hoje) return '⏰ entrega hoje';
+    return 'até ' + p;
+  }
+  function _escAttr(s) { return _esc(s).replace(/"/g, '&quot;'); }
+
+  /* Aluno marca/desmarca uma tarefa e repinta. */
+  window.alunoMarcarTarefa = function (id, feita) {
+    if (typeof Turmas === 'undefined' || !Turmas.marcarTarefa) return;
+    Turmas.marcarTarefa(id, feita).then(function () {
+      _pintarTarefasAluno();
+      if (typeof _alunoPintaTrabalho === 'function') _alunoPintaTrabalho(); // refresca a lista nas Turmas
+      if (feita && typeof eduToast === 'function') eduToast('Trabalho marcado como feito! ✅', 'success');
+    }).catch(function (e) {
+      if (typeof eduToast === 'function') eduToast((e && e.message) || 'Não foi possível guardar. Verifica a ligação.', 'error');
+    });
+  };
+
+  /* Aluno: traz o cartão do Desafio (#portal-desafio) para o painel. */
+  function _moverDesafio() {
+    var slot = document.getElementById('pi-desafio-slot');
+    var des = document.getElementById('portal-desafio');
+    if (slot && des && des.parentNode !== slot) {
+      des.style.maxWidth = 'none'; des.style.margin = '0';
+      slot.appendChild(des);
+    }
+    if (typeof desafioRender === 'function') desafioRender();
+  }
+
+  /* ── Editor de disciplinas COM anos por disciplina ──
+     Cada disciplina é uma linha: clicar nela liga/desliga; quando ligada,
+     mostra os chips de ANOS só dessa disciplina. Reutilizado no onboarding
+     (obrigatório) e no modal de edição. `atual` = mapa disciplina→[anos]. */
+  var _PI_ANOS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+  function _piDiscAnosHTML(atual) {
+    atual = atual || {};
+    var discs = (typeof EDU_DISCIPLINAS !== 'undefined') ? EDU_DISCIPLINAS : ['Matemática', 'Português', 'Físico-Química'];
+    return discs.map(function (d) {
+      var on = !!atual[d];
+      var anosSel = atual[d] || [];
+      var sty = on ? 'background:#2e7d52;border:1.5px solid #2e7d52;color:#fff' : 'background:var(--white);border:1.5px solid var(--border);color:var(--ink3)';
+      var anosHTML = _PI_ANOS.map(function (a) {
+        var aon = anosSel.indexOf(a) !== -1;
+        var asty = aon ? 'background:#dff0e6;border:1.5px solid #2e7d52;color:#1a4a2e' : 'background:var(--white);border:1.5px solid var(--border);color:var(--ink4)';
+        return '<button type="button" class="pi-ano" data-ano="' + a + '" onclick="piAnoToggle(this)" style="' + asty + ';border-radius:999px;padding:3px 9px;font-size:.74rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">' + a + '.º</button>';
+      }).join('');
+      return '<div class="pi-disc-row" data-disc="' + _esc(d) + '" style="border:1.5px solid var(--border);border-radius:12px;padding:.5rem .6rem;margin-bottom:.45rem">'
+        + '<button type="button" class="pi-disc-btn" onclick="piDiscToggle(this)" style="' + sty + ';border-radius:999px;padding:5px 13px;font-size:.82rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">' + _esc(d) + '</button>'
+        + '<div class="pi-disc-anos" style="display:' + (on ? 'flex' : 'none') + ';flex-wrap:wrap;gap:.3rem;margin-top:.5rem">'
+        + '<span style="font-size:.7rem;color:var(--ink4);align-self:center;margin-right:.2rem">anos:</span>' + anosHTML
+        + '</div></div>';
+    }).join('');
+  }
+  // liga/desliga uma disciplina (mostra/esconde os anos dessa linha)
+  window.piDiscToggle = function (btn) {
+    var on = btn.classList.toggle('on');
+    btn.style.cssText = (on ? 'background:#2e7d52;border:1.5px solid #2e7d52;color:#fff' : 'background:var(--white);border:1.5px solid var(--border);color:var(--ink3)') + ';border-radius:999px;padding:5px 13px;font-size:.82rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif';
+    var row = btn.closest('.pi-disc-row'); var anos = row && row.querySelector('.pi-disc-anos');
+    if (anos) anos.style.display = on ? 'flex' : 'none';
+  };
+  window.piAnoToggle = function (btn) {
+    var on = btn.classList.toggle('on');
+    btn.style.cssText = (on ? 'background:#dff0e6;border:1.5px solid #2e7d52;color:#1a4a2e' : 'background:var(--white);border:1.5px solid var(--border);color:var(--ink4)') + ';border-radius:999px;padding:3px 9px;font-size:.74rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif';
+  };
+  /* Lê o mapa disciplina→[anos] das linhas ativas dentro de um contentor. */
+  function _piLerDiscAnos(containerId) {
+    var box = document.getElementById(containerId); if (!box) return {};
+    var map = {};
+    box.querySelectorAll('.pi-disc-row').forEach(function (row) {
+      var btn = row.querySelector('.pi-disc-btn');
+      if (!btn || !btn.classList.contains('on')) return;
+      var d = row.getAttribute('data-disc');
+      var anos = [];
+      row.querySelectorAll('.pi-ano.on').forEach(function (a) { anos.push(a.getAttribute('data-ano')); });
+      map[d] = anos;
+    });
+    return map;
+  }
+
+  /* Precisa de (re)definir o perfil? Sim se não tem disciplinas, OU se tem a
+     lista antiga de disciplinas mas ainda não o mapa disciplina→anos (contas
+     criadas antes de os anos por disciplina existirem). Assim, professores
+     já registados são convidados a preencher os anos de cada disciplina. */
+  function _profPrecisaDisciplinas() {
+    if (typeof Cloud.profDisciplinas !== 'function') return false;
+    if (!Cloud.profDisciplinas().length) return true;
+    var u = (typeof Cloud.utilizador === 'function') ? Cloud.utilizador() : null;
+    var map = u && u.user_metadata && u.user_metadata.disciplinas_anos;
+    // sem mapa explícito (só listas planas) → reconfirma para escolher os anos
+    if (!map || typeof map !== 'object' || Array.isArray(map)) return true;
+    // mapa existe mas alguma disciplina ficou sem anos → reconfirma
+    var discs = Object.keys(map);
+    if (!discs.length) return true;
+    for (var i = 0; i < discs.length; i++) {
+      if (!Array.isArray(map[discs[i]]) || !map[discs[i]].length) return true;
+    }
+    return false;
+  }
+
+  /* Onboarding obrigatório: escolher disciplinas E os anos de cada uma.
+     Pré-preenche com o que o professor já tinha (contas antigas que só
+     escolheram disciplinas, sem os anos), para só confirmarem/completarem. */
+  function _pintarOnboardingProf(sec, nome) {
+    var atual = (Cloud.profDisciplinasAnos && Cloud.profDisciplinasAnos()) || {};
+    var jaTinha = Object.keys(atual).length > 0;
+    var titulo = jaTinha ? 'Completa o teu perfil, ' + _esc(nome) + ' 👋' : 'Bem-vindo, ' + _esc(nome) + '! 👋';
+    var intro = jaTinha
+      ? 'Atualizámos o perfil: agora indicas <strong>os anos</strong> que lecionas em cada disciplina. Confirma os anos de cada disciplina abaixo (ex.: Matemática no 1.º ciclo, Português só no 9.º). Usa-se para te mostrar só as dúvidas e o acompanhamento que te dizem respeito.'
+      : 'Escolhe <strong>as disciplinas que lecionas</strong> e, em cada uma, <strong>os anos</strong>. Ex.: Matemática no 1.º ciclo, Português só no 9.º. Usa-se para te mostrar só as dúvidas que te dizem respeito.';
+    var h = '<div class="pi-wrap"><div style="background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.5rem 1.6rem;max-width:680px;margin:0 auto">'
+      + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.7rem;font-weight:700;color:var(--ink1);margin-bottom:.2rem">' + titulo + '</div>'
+      + '<div style="font-size:.9rem;color:var(--ink3);line-height:1.5;margin-bottom:1.2rem">' + intro + '</div>'
+      + '<div id="pi-onb-discs">' + _piDiscAnosHTML(atual) + '</div>'
+      + '<div id="pi-onb-erro" style="display:none;color:#c0392b;font-size:.82rem;margin:.4rem 0 .7rem"></div>'
+      + '<button id="pi-onb-btn" onclick="piOnbGuardar()" style="width:100%;margin-top:.6rem;background:linear-gradient(135deg,#2e7d52,#3da06a);color:#fff;border:none;border-radius:12px;padding:.85rem;font-family:Montserrat,sans-serif;font-size:.92rem;font-weight:800;cursor:pointer">Guardar e continuar</button>'
+      + '</div></div>';
+    sec.innerHTML = h;
+    sec.style.display = '';
+  }
+
+  window.piOnbGuardar = function () {
+    var map = _piLerDiscAnos('pi-onb-discs');
+    var erro = document.getElementById('pi-onb-erro');
+    if (!Object.keys(map).length) { if (erro) { erro.textContent = 'Escolhe pelo menos uma disciplina.'; erro.style.display = ''; } return; }
+    var semAno = Object.keys(map).filter(function (d) { return !map[d].length; });
+    if (semAno.length) { if (erro) { erro.textContent = 'Escolhe os anos de: ' + semAno.join(', ') + '.'; erro.style.display = ''; } return; }
+    var btn = document.getElementById('pi-onb-btn');
+    if (btn) { btn.disabled = true; btn.textContent = 'A guardar…'; }
+    Cloud.atualizarPerfilProf(map).then(function () {
+      if (typeof eduToast === 'function') eduToast('Perfil guardado! ✅', 'success');
+      render();
+    }).catch(function (e) {
+      if (btn) { btn.disabled = false; btn.textContent = 'Guardar e continuar'; }
+      if (erro) { erro.textContent = (e && e.message) || 'Não foi possível guardar. Tenta de novo.'; erro.style.display = ''; }
+    });
+  };
+
+  /* EDITAR a qualquer momento (modal), pré-preenchido com o mapa atual. */
+  window.profEditarDisciplinas = function () {
+    if (typeof Cloud === 'undefined' || !Cloud.ehProfessor || !Cloud.ehProfessor()) return;
+    if (typeof menuLateralFechar === 'function') { try { menuLateralFechar(); } catch (e) {} }
+    var atual = (Cloud.profDisciplinasAnos && Cloud.profDisciplinasAnos()) || {};
+    var ov = document.createElement('div');
+    ov.id = 'pi-edit-ov';
+    ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:4vh 1rem';
+    ov.innerHTML = '<div style="background:var(--white);border-radius:18px;max-width:600px;width:100%;padding:1.4rem 1.5rem;box-shadow:0 10px 40px rgba(0,0,0,.25)">'
+      + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.5rem;font-weight:700;color:var(--ink1);margin-bottom:.2rem"><i class="ph ph-sliders-horizontal" style="color:#2e7d52"></i> As minhas disciplinas</div>'
+      + '<div style="font-size:.85rem;color:var(--ink3);margin-bottom:1.1rem">Em cada disciplina, escolhe os anos que lecionas. Usa-se para filtrar as dúvidas e o acompanhamento.</div>'
+      + '<div id="pi-onb-discs" style="max-height:54vh;overflow:auto">' + _piDiscAnosHTML(atual) + '</div>'
+      + '<div id="pi-onb-erro" style="display:none;color:#c0392b;font-size:.82rem;margin:.4rem 0 .7rem"></div>'
+      + '<div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:.8rem">'
+      + '<button onclick="(function(){var o=document.getElementById(\'pi-edit-ov\');if(o)o.remove();})()" style="background:var(--white);border:1.5px solid var(--border);color:var(--ink3);border-radius:999px;padding:8px 16px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:Montserrat,sans-serif">Cancelar</button>'
+      + '<button id="pi-edit-btn" onclick="piEditGuardar()" style="background:linear-gradient(135deg,#2e7d52,#3da06a);color:#fff;border:none;border-radius:999px;padding:8px 18px;font-size:.85rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">Guardar</button>'
+      + '</div></div>';
+    document.body.appendChild(ov);
+    ov.addEventListener('click', function (e) { if (e.target === ov) ov.remove(); });
+  };
+
+  window.piEditGuardar = function () {
+    var map = _piLerDiscAnos('pi-onb-discs');
+    var erro = document.getElementById('pi-onb-erro');
+    if (!Object.keys(map).length) { if (erro) { erro.textContent = 'Escolhe pelo menos uma disciplina.'; erro.style.display = ''; } return; }
+    var semAno = Object.keys(map).filter(function (d) { return !map[d].length; });
+    if (semAno.length) { if (erro) { erro.textContent = 'Escolhe os anos de: ' + semAno.join(', ') + '.'; erro.style.display = ''; } return; }
+    var btn = document.getElementById('pi-edit-btn');
+    if (btn) { btn.disabled = true; btn.textContent = 'A guardar…'; }
+    Cloud.atualizarPerfilProf(map).then(function () {
+      var o = document.getElementById('pi-edit-ov'); if (o) o.remove();
+      if (typeof eduToast === 'function') eduToast('Disciplinas atualizadas! ✅', 'success');
+      render();
+    }).catch(function (e) {
+      if (btn) { btn.disabled = false; btn.textContent = 'Guardar'; }
+      if (erro) { erro.textContent = (e && e.message) || 'Não foi possível guardar.'; erro.style.display = ''; }
+    });
+  };
+
+  window.painelInicioRender = render;
+  document.addEventListener('cloud:auth', render);
+  document.addEventListener('DOMContentLoaded', function () { setTimeout(render, 550); });
+})();

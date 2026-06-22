@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Exercícios interativos sobre Equações para o 7.º ano — resolução de equações do 1.º grau e problemas com equações.">
+<meta name="description" content="Exercícios interativos sobre Equações para o 7.º ano resolução de equações do 1.º grau e problemas com equações.">
 <meta name="theme-color" content="#516860">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta property="og:title" content="3ponto14 · Centro de Estudos">
-<meta property="og:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano — fichas, jogos, quizzes e preparação para exames.">
+<meta property="og:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano fichas, jogos, quizzes e preparação para exames.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_PT">
 <meta property="og:url" content="https://3ponto14.pt/mat7">
@@ -17,7 +17,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="3ponto14 · Centro de Estudos">
-<meta name="twitter:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano — fichas, jogos, quizzes e preparação para exames.">
+<meta name="twitter:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano fichas, jogos, quizzes e preparação para exames.">
 <meta name="twitter:image" content="https://3ponto14.pt/og-mat7.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23516860'/><text x='50' y='68' font-size='48' font-weight='900' text-anchor='middle' fill='white' font-family='serif'>eP</text></svg>">
 <title>Equações · Matemática 7.º Ano · 3ponto14</title>
@@ -62,34 +62,40 @@
     </div>
   </header>
 
-  <!-- Tabs (hidden — navigation is now via chapter nav bar + scroll) -->
-  <div class="tabs-wrap4 hidden" id="tabs4">
-    <button class="tab-btn active" onclick="showSection4('temas4',this)">Temas</button>
-    <button class="tab-btn" onclick="showSection4('teoria4',this)">Teoria</button>
-    <button class="tab-btn" onclick="showSection4('questoes4',this)">Exercícios</button>
-    <button class="tab-btn" onclick="showSection4('minitestes4',this)"><i class="ph ph-file-text"></i> Minitestes</button>
-    <button class="tab-btn" onclick="showSection4('teste4',this)">Teste</button>
-    <button class="tab-btn" onclick="showSection4('gerador4',this)">Gerador</button>
-    <button class="tab-btn" onclick="showSection4('jogos4',this)">Jogos</button>
-    <button class="tab-btn" onclick="showSection4('quiz-game4',this)">⚡ Quiz</button>
-    <button class="tab-btn" onclick="showSection4('flashcards4',this)">Flashcards</button>
-    <button class="tab-btn" onclick="showSection4('exame4',this)">Teste</button>
-    <button class="tab-btn" onclick="showSection4('progresso4',this)">Progresso</button>
-  </div>
-
+  <!-- Tabs (hidden navigation is now via chapter nav bar + scroll) -->
+  <nav class="tabs" id="tabs4">
+  <button class="tab-btn cap-group-btn active" data-group="aprender" onclick="showSection4('temas4', this)" data-secs="temas4,teoria4"><i class="ph ph-book-open-text"></i> Aprender</button>
+  <button class="tab-btn cap-group-btn" data-group="praticar" onclick="showSection4('questoes4', this)" data-secs="questoes4,minitestes4,gerador4"><i class="ph ph-pencil-simple"></i> Praticar</button>
+  <button class="tab-btn cap-group-btn" data-group="testar" onclick="showSection4('teste4', this)" data-secs="teste4,quiz-game4,flashcards4,exame4"><i class="ph ph-timer"></i> Testar</button>
+  <button class="tab-btn" onclick="showSection4('jogos4', this)"><i class="ph ph-game-controller"></i> Jogos</button>
+  <button class="tab-btn" onclick="showSection4('progresso4', this)"><i class="ph ph-chart-bar"></i> Progresso</button>
+</nav>
+<div class="cap-subnav" id="cap-subnav-4" style="display:none"></div>
   <div class="sections4">
 
   <!-- ══ TEMAS ══ -->
+
+<div class="teacher-strip" id="ts-4-resumo">
+  <button class="teacher-toggle" onclick="toggleTeacher(this)">
+    <span class="teacher-arrow">▸</span> Para o professor
+  </button>
+  <div class="teacher-content">
+    <div class="teacher-section">
+      <div class="teacher-section-title">Objetivos DGE (PMEB)</div>
+      <p>Resolver equações do 1.º grau a uma incógnita; aplicar as propriedades de equivalência; formular e resolver problemas usando equações; interpretar o conjunto solução.</p>
+    </div>
+    <div class="teacher-section">
+      <div class="teacher-section-title">Sequência pedagógica sugerida</div>
+      <p>1.º Conceito de equação e incógnita com exemplos reais → 2.º Princípio da adição e multiplicação → 3.º Equações com parênteses e frações → 4.º Traduzir linguagem natural em equação → 5.º Problemas em contexto (idades, dinheiro, geometria) → 6.º Verificação da solução → 7.º Exercícios de consolidação e miniteste.</p>
+    </div>
+    <div class="teacher-criteria">Critérios de classificação: Equação corretamente formulada (1pt) · resolução por etapas (2pt) · verificação (1pt) · resposta no contexto do problema (1pt).</div>
+  </div>
+</div>
   <div class="section4 active" id="sec-temas4">
     <div class="sec-header sec-header--compact">
       <h2><span class="num"><i class="ph ph-file-text"></i></span> Temas</h2>
     </div>
     <div class="topics-grid" id="cap4-topics-grid"><!-- Generated by cap4.js --></div>
-    <hr class="topics-sep">
-    <div class="topics-grid mt-2">
-      <div class="topic-tool" onclick="showSection4('gerador4',document.querySelector('#tabs4 .tab-btn:nth-child(6)'))"><span class="tt-icon"><i class="ph ph-dice-five"></i></span> Gerador</div>
-      <div class="topic-tool" onclick="showSection4('jogos4',document.querySelector('#tabs4 .tab-btn:nth-child(7)'))"><span class="tt-icon"><i class="ph ph-game-controller"></i></span> Jogos</div>
-      <div class="topic-tool" onclick="showSection4('flashcards4',document.querySelector('#tabs4 .tab-btn:nth-child(8)'))"><span class="tt-icon"><i class="ph ph-stack"></i></span> Flashcards</div>
     </div>
   </div>
 
@@ -97,13 +103,13 @@
   <div class="section4" id="sec-teoria4">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-book-open-text"></i></span> Teoria</h2>
-      <p>6 subtemas — das expressões algébricas à resolução de problemas com equações</p>
+      <p>6 subtemas das expressões algébricas à resolução de problemas com equações</p>
     </div>
     <div class="topic-tools">
-      <div class="topic-tool" onclick="showSection4('questoes4',document.querySelector('#tabs4 .tab-btn:nth-child(3)'))"><span class="tt-icon"><i class="ph ph-pencil-simple"></i></span> Questões-aula</div>
-      <div class="topic-tool" onclick="showSection4('gerador4',document.querySelector('#tabs4 .tab-btn:nth-child(6)'))"><span class="tt-icon"><i class="ph ph-dice-five"></i></span> Gerador</div>
-      <div class="topic-tool" onclick="showSection4('jogos4',document.querySelector('#tabs4 .tab-btn:nth-child(7)'))"><span class="tt-icon"><i class="ph ph-game-controller"></i></span> Jogos</div>
-      <div class="topic-tool" onclick="showSection4('flashcards4',document.querySelector('#tabs4 .tab-btn:nth-child(8)'))"><span class="tt-icon"><i class="ph ph-stack"></i></span> Flashcards</div>
+      <div class="topic-tool" onclick="showSection4('questoes4', null)"><span class="tt-icon"><i class="ph ph-pencil-simple"></i></span> Questões-aula</div>
+      <div class="topic-tool" onclick="showSection4('gerador4', null)"><span class="tt-icon"><i class="ph ph-dice-five"></i></span> Gerador</div>
+      <div class="topic-tool" onclick="showSection4('jogos4', null)"><span class="tt-icon"><i class="ph ph-game-controller"></i></span> Jogos</div>
+      <div class="topic-tool" onclick="showSection4('flashcards4', null)"><span class="tt-icon"><i class="ph ph-stack"></i></span> Flashcards</div>
 
     </div>
 
@@ -130,16 +136,16 @@
       <div class="subtema-title">Simplificação de Expressões Algébricas</div>
     </div>
     <div class="def-block">
-      <div class="def-row"><span class="def-tag def">Definição</span><div class="def-text"><strong>Termos semelhantes</strong> são termos que têm a mesma parte literal (mesmas variáveis com os mesmos expoentes). Só é possível somar ou subtrair termos semelhantes — soma-se/subtrai-se os coeficientes mantendo a parte literal.</div></div>
+      <div class="def-row"><span class="def-tag def">Definição</span><div class="def-text"><strong>Termos semelhantes</strong> são termos que têm a mesma parte literal (mesmas variáveis com os mesmos expoentes). Só é possível somar ou subtrair termos semelhantes soma-se/subtrai-se os coeficientes mantendo a parte literal.</div></div>
       <div class="def-row"><span class="def-tag ex">Exemplo</span><div class="def-text">5x + 3y − 2x + y = (5−2)x + (3+1)y = <strong>3x + 4y</strong><br>Expressão do perímetro: 2(x) + 2(x−5) = 2x + 2x − 10 = <strong>4x − 10</strong></div></div>
-      <div class="highlight-box green"><i class="ph ph-lightbulb"></i> Dica: agrupa sempre os termos semelhantes — primeiro os termos em x, depois os independentes. Assim é mais difícil cometer erros de sinal.</div>
+      <div class="highlight-box green"><i class="ph ph-lightbulb"></i> Dica: agrupa sempre os termos semelhantes primeiro os termos em x, depois os independentes. Assim é mais difícil cometer erros de sinal.</div>
       <div class="def-row"><span class="def-tag prop">Aplicação</span><div class="def-text">Perímetro de figuras: a soma de todos os lados pode ser simplificada. Ex: terreno com lados x+4, 2, 5x−3, 2, 2x+3 → P = (x+4)+(2)+(5x−3)+(2)+(2x+3) = <strong>8x + 8</strong></div></div>
     </div>
 
     <!-- SUBTEMA 3 -->
     <div class="subtema-header">
       <div class="subtema-num">3</div>
-      <div class="subtema-title">Equações — Conceitos Fundamentais</div>
+      <div class="subtema-title">Equações Conceitos Fundamentais</div>
     </div>
     <div class="def-block">
       <div class="def-row"><span class="def-tag def">Definição</span><div class="def-text">Uma <strong>equação</strong> é uma igualdade com uma ou mais <strong>incógnitas</strong> (variáveis desconhecidas). A incógnita mais comum é x. Ex: 3x − 1 = 2x + 4.</div></div>
@@ -157,13 +163,13 @@
     <!-- SUBTEMA 4 -->
     <div class="subtema-header">
       <div class="subtema-num">4</div>
-      <div class="subtema-title">Equações Equivalentes — Princípios de Equivalência</div>
+      <div class="subtema-title">Equações Equivalentes Princípios de Equivalência</div>
     </div>
     <div class="def-block">
       <div class="def-row"><span class="def-tag def">Definição</span><div class="def-text"><strong>Equações equivalentes</strong> são equações que têm exatamente a mesma solução (ou conjunto-solução). Escreve-se: equação1 ⟺ equação2.</div></div>
       <div class="def-row"><span class="def-tag prop">Princípio Aditivo</span><div class="def-text">Se adicionarmos (ou subtrairmos) o <strong>mesmo número</strong> a ambos os membros de uma equação, obtemos uma equação equivalente.</div></div>
       <div class="def-row"><span class="def-tag prop">Princípio Multiplicativo</span><div class="def-text">Se multiplicarmos (ou dividirmos) ambos os membros pelo <strong>mesmo número ≠ 0</strong>, obtemos uma equação equivalente.</div></div>
-      <div class="highlight-box green"><i class="ph ph-flask"></i> Método prático: <strong>transpor</strong> um termo — mudar de membro e trocar o sinal. É uma consequência direta do princípio aditivo: ax + b = c ⟺ ax = c − b ⟺ x = (c−b)/a</div>
+      <div class="highlight-box green"><i class="ph ph-flask"></i> Método prático: <strong>transpor</strong> um termo mudar de membro e trocar o sinal. É uma consequência direta do princípio aditivo: ax + b = c ⟺ ax = c − b ⟺ x = (c−b)/a</div>
       <div class="def-row"><span class="def-tag ex">Exemplo</span><div class="def-text">Resolve 5x − 3 = 7 − x:<br>5x + x = 7 + 3 (transposição) → 6x = 10 → x = 10/6 = <strong>5/3</strong> · S = {5/3}</div></div>
       <div class="def-row"><span class="def-tag ex">Exemplo</span><div class="def-text">Resolve (2/3)x − 2 = 4:<br>(2/3)x = 6 → x = 6 ÷ (2/3) = 6 × (3/2) = <strong>9</strong> · S = {9}</div></div>
     </div>
@@ -192,7 +198,7 @@
     </div>
     <div class="def-block">
       <div class="def-row"><span class="def-tag prop">Estratégia</span><div class="def-text"><strong>1.</strong> Lê o problema e identifica o que se pede. <strong>2.</strong> Define a variável (ex: «seja x o número de ...»). <strong>3.</strong> Traduz as condições numa equação. <strong>4.</strong> Resolve a equação. <strong>5.</strong> Verifica se a solução faz sentido no contexto.</div></div>
-      <div class="def-row"><span class="def-tag ex">Exemplo</span><div class="def-text">«A Rute multiplicou um número por 4 e subtraiu 10 — obteve 30.»<br>Seja x o número: 4x − 10 = 30 → 4x = 40 → <strong>x = 10</strong>.</div></div>
+      <div class="def-row"><span class="def-tag ex">Exemplo</span><div class="def-text">«A Rute multiplicou um número por 4 e subtraiu 10 obteve 30.»<br>Seja x o número: 4x − 10 = 30 → 4x = 40 → <strong>x = 10</strong>.</div></div>
       <div class="def-row"><span class="def-tag ex">Exemplo</span><div class="def-text">«Galinhas = triplo dos coelhos. Total de patas = 160.»<br>Seja x = n.º de coelhos, 3x = n.º de galinhas.<br>Coelhos têm 4 patas, galinhas têm 2: 4x + 2(3x) = 160 → 10x = 160 → <strong>x = 16 coelhos, 48 galinhas</strong>.</div></div>
       <div class="highlight-box pink"><i class="ph ph-flask"></i> Números consecutivos: n, n+1, n+2, … · Números pares consecutivos: n, n+2, n+4, … · Números ímpares consecutivos: n, n+2, n+4, … (com n ímpar)</div>
     </div>
@@ -204,7 +210,7 @@
         <span class="desafio-star">★</span>
         Zona de Desafio Avançado
       </h3>
-      <p class="desafio-sub">Para alunos que querem ir mais longe — preparação para provas de aferição e testes exigentes.</p>
+      <p class="desafio-sub">Para alunos que querem ir mais longe preparação para provas de aferição e testes exigentes.</p>
       <div class="def-block desafio-card">
         <div class="def-row"><span class="def-tag prop">Avançado</span><div class="def-text"><strong>Equações com parâmetros:</strong> Em (a−k)x = b, o tipo depende de (a−k): se ≠0 → PD; se =0 e b≠0 → I; se =0 e b=0 → PI.</div></div>
         <div class="def-row"><span class="def-tag prop">Avançado</span><div class="def-text"><strong>Equações com parênteses:</strong> Usa a propriedade distributiva antes de resolver. Ex: 3(2x − 1) − 2(x + 4) = 5 → 6x − 3 − 2x − 8 = 5 → 4x = 16 → x = 4.</div></div>
@@ -220,11 +226,10 @@
     </div>
 
   
-</div></div>
 
   <!-- ══ QUESTÕES-AULA ══ -->
   <div class="section4" id="sec-questoes4">
-    <div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-pencil-simple"></i></span> Questões-aula</h2><p>16 questões pelos 8 subtemas — corrige automaticamente com feedback</p></div></div>
+    <div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-pencil-simple"></i></span> Questões-aula</h2><p>16 questões pelos 8 subtemas corrige automaticamente com feedback</p></div></div>
     <div class="score-bar">
       <div><div class="score-num" id="q4-score">0</div><div class="score-label">certas</div></div>
       <div><div class="score-num icon-muted" id="q4-total">/ 0</div><div class="score-label">respondidas</div></div>
@@ -254,7 +259,7 @@
 
 
 <div class="section-divider section4" id="sec-minitestes4" >
-<div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-file-text"></i></span> Minitestes</h2><p>6 minitestes, um por subtema — 4 a 5 questões de escolha múltipla cada</p></div></div>
+<div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-file-text"></i></span> Minitestes</h2><p>6 minitestes, um por subtema 4 a 5 questões de escolha múltipla cada</p></div></div>
     <div id="mini-tabs4">
       <button class="tab-btn active" onclick="showMini4(0,this)"><i class="ph ph-book-open-text"></i> Todos os subtemas</button>
       <button class="tab-btn" onclick="showMini4(1,this)">① Exp. Algébricas</button>
@@ -275,7 +280,7 @@
 
 
 <div class="section-divider section4" id="sec-teste4" >
-<div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-target"></i></span> Teste de Avaliação</h2><p>11 questões de dificuldade progressiva — escolha múltipla e resposta aberta</p></div></div>
+<div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-target"></i></span> Teste de Avaliação</h2><p>11 questões de dificuldade progressiva escolha múltipla e resposta aberta</p></div></div>
     <div class="score-bar">
       <div><div class="score-num" id="t4-score">0</div><div class="score-label">certas</div></div>
       <div><div class="score-num icon-muted" id="t4-total">/ 0</div><div class="score-label">respondidas</div></div>
@@ -284,7 +289,6 @@
     </div>
     <div id="t4-container"></div>
 </div>
-</div></div>
 
   <!-- ══ GERADOR ══ -->
   <div class="section4" id="sec-gerador4">
@@ -298,12 +302,12 @@
         <div><div class="ai-label">Subtema</div>
           <select class="ai-select" id="gen4-tema">
             <option value="0">Todos os subtemas</option>
-            <option value="1">1 — Expressões Algébricas</option>
-            <option value="2">2 — Simplificação</option>
-            <option value="3">3 — Equações</option>
-            <option value="4">4 — Equações Equivalentes</option>
-            <option value="5">5 — Classificação</option>
-            <option value="6">6 — Problemas com Equações</option>
+            <option value="1">1 Expressões Algébricas</option>
+            <option value="2">2 Simplificação</option>
+            <option value="3">3 Equações</option>
+            <option value="4">4 Equações Equivalentes</option>
+            <option value="5">5 Classificação</option>
+            <option value="6">6 Problemas com Equações</option>
           </select>
         </div>
         <div><div class="ai-label">Tipo</div>
@@ -342,7 +346,7 @@
   <div class="section4" id="sec-jogos4">
   <div class="sec-header">
     <h2><span class="num"><i class="ph ph-game-controller"></i></span> Jogos</h2>
-    <p>5 jogos matemáticos interativos — treina equações</p>
+    <p>5 jogos matemáticos interativos treina equações</p>
   </div>
   <div id="j24-wrap-cap4"></div>
 </div>
@@ -351,7 +355,7 @@
   <div class="section4" id="sec-quiz-game4">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-trophy"></i></span> ⚡ Modo Quiz</h2>
-      <p>Questões de escolha múltipla — Equações — 3 vidas, streak e game over</p>
+      <p>Questões de escolha múltipla Equações 3 vidas, streak e game over</p>
     </div>
     <div id="qg-app4"></div>
   </div>
@@ -360,7 +364,7 @@
   <div class="section4" id="sec-flashcards4">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards de Revisão</h2>
-      <p>15 cartões — clica para virar e ver a resposta</p>
+      <p>15 cartões clica para virar e ver a resposta</p>
     </div>
     <div class="flex flex-wrap gap-3 items-center mb-6">
       <span id="fc4-counter" class="fc-counter">1 / 15</span>
@@ -385,13 +389,12 @@
     </div>
     <div id="fc4-dots" class="flex flex-wrap gap-1 justify-center mt-5"></div>
   
-</div></div>
 
   <!-- ══ EXAME ══ -->
   <div class="section4" id="sec-exame4">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame</h2>
-      <p>Simulação cronometrada — sem feedback durante o exame, nota final no fim</p>
+      <p>Simulação cronometrada sem feedback durante o exame, nota final no fim</p>
     </div>
     <div id="exame4-config" class="card">
       <div class="card-title">Configurar Exame</div>
@@ -437,7 +440,7 @@
   <div class="section4" id="sec-progresso4">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-trophy"></i></span> O Meu Progresso</h2>
-      <p>Registo das tuas atividades — guardado localmente neste browser</p>
+      <p>Registo das tuas atividades guardado localmente neste browser</p>
     </div>
     <div class="alert-warning">
       <span>O progresso é guardado <strong>apenas neste browser e neste dispositivo</strong>. Se mudares de browser ou de computador, o registo começa do zero.</span>
@@ -446,7 +449,7 @@
       <div class="card-title">Desempenho por Capítulo</div>
       <div id="prog4-caps" class="flex-col-list"></div>
       <div class="mt-5 border-t border-[var(--border)] pt-4">
-      <div class="card-title text-xs mb-2">Detalhe — Equações</div>
+      <div class="card-title text-xs mb-2">Detalhe Equações</div>
       <div id="prog4-rows"></div>
       </div>
       <div class="mt-5 pt-4 border-t border-[var(--border)] flex flex-wrap gap-3">        <button class="btn btn-ghost" onclick="progDownloadPDF()" title="Gerar PDF para imprimir"><i class="ph ph-file"></i> PDF</button>
@@ -460,22 +463,25 @@
   </div>
 
 
-  </div><!-- /sections4 -->
 <div style="display:flex;justify-content:space-between;padding:1.5rem 2rem 2rem;border-top:1px solid var(--border);margin-top:2rem;">
-  <button class="btn btn-ghost ch-back-link" onclick="goToChapter(3)">← Cap. 3 — Geometria</button>
-  <button class="btn btn-ghost ch-back-link" onclick="goToChapter(5)">Cap. 5 — Sequências →</button>
+  <button class="btn btn-ghost ch-back-link" onclick="goToChapter(3)">← Cap. 3 Geometria</button>
+  <button class="btn btn-ghost ch-back-link" onclick="goToChapter(5)">Cap. 5 Sequências →</button>
 </div>
+
+
+
+
 </div><!-- /view-math4 -->
-
-
-
-
-<script src="../js/shared.js"></script>
-<script src="../js/chapter-engine.js"></script>
-<script src="../js/cap4.js"></script>
-<script src="../js/systems.js"></script>
-<script src="../js/widgets.js"></script>
-<script src="../js/fx.js"></script>
-<script src="../js/nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/cloud.js"></script>
+<script src="../js/guard.js"></script>
+<script src="../js/shared.js?v=20260621"></script>
+<script src="../js/chapter-engine.js?v=20260621"></script>
+<script src="../js/cap4.js?v=20260621"></script>
+<script src="../js/systems.js?v=20260621"></script>
+<script src="../js/widgets.js?v=20260621"></script>
+<script src="../js/fx.js?v=20260621"></script>
+<script src="../js/ux-improvements.js?v=20260621"></script>
+<script src="../js/nav.js?v=20260621"></script>
 </body>
 </html>

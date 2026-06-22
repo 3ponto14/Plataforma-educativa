@@ -1,4 +1,4 @@
-/* ── systems-games.js — Game constructors (lazy-loaded from systems.js) ── */
+/* ── systems-games.js - Game constructors (lazy-loaded from systems.js) ── */
 function _gameLevelBar(fnKey, prefix, currentLevel, labels) {
   var lvs = ['facil','medio','dificil'];
   var cols = ['#4caf50','#f59e0b','#ef4444'];
@@ -13,7 +13,7 @@ function _gameLevelBar(fnKey, prefix, currentLevel, labels) {
   return html;
 }
 
-// JOGO 1 — 4 EM LINHA
+// JOGO 1 - 4 EM LINHA
 function Game4Linha(containerId, qFn) {
   var ROWS = 6, COLS = 7;
   var self = this;
@@ -36,15 +36,15 @@ function Game4Linha(containerId, qFn) {
     for (var r = 0; r < ROWS; r++) { self.board[r] = []; for (var col = 0; col < COLS; col++) self.board[r][col] = 0; }
     self.turn = 1; self.over = false; self.pendingCol = null; self._answerLocked = false;
     render();
-    msg(NAMES[1] + ' — escolhe uma coluna!');
+    msg(NAMES[1] + ' - escolhe uma coluna!');
   }
 
   function render() {
     var statusTxt = '';
     if (!self.over) {
       statusTxt = self.pendingCol !== null
-        ? NAMES[self.turn] + ' — responde à pergunta…'
-        : NAMES[self.turn] + ' — escolhe uma coluna!';
+        ? NAMES[self.turn] + ' - responde à pergunta…'
+        : NAMES[self.turn] + ' - escolhe uma coluna!';
     }
     var fnKey = containerId.replace(/-/g,'_');
     var html = [
@@ -115,13 +115,13 @@ function Game4Linha(containerId, qFn) {
     if (!correct) {
       var opts = document.querySelectorAll('#'+containerId+'-q .c4-opt');
       if (opts[self.currentQ.ans]) opts[self.currentQ.ans].classList.add('correct');
-      msg('<i class="ph ph-x-circle"></i> Errado! Vez perdida — '+NAMES[nextTurn]+' joga a seguir.');
+      msg('<i class="ph ph-x-circle"></i> Errado! Vez perdida - '+NAMES[nextTurn]+' joga a seguir.');
       setTimeout(function(){
         self._answerLocked = false;
         self.pendingCol = null;
         self.turn = nextTurn;
         render();
-        msg(NAMES[self.turn]+' — escolhe uma coluna!');
+        msg(NAMES[self.turn]+' - escolhe uma coluna!');
       }, 1100);
     } else {
       var col = self.pendingCol;
@@ -140,7 +140,7 @@ function Game4Linha(containerId, qFn) {
         else {
           self.turn = nextTurn;
           render();
-          msg(NAMES[self.turn]+' — escolhe uma coluna!');
+          msg(NAMES[self.turn]+' - escolhe uma coluna!');
         }
       }
     }
@@ -184,7 +184,7 @@ function Game4Linha(containerId, qFn) {
   init();
 }
 
-// JOGO 2 — CAMPO MINADO
+// JOGO 2 - CAMPO MINADO
 function GameMine(containerId, qFn) {
   var self = this;
   var ROWS = 6, COLS = 8, MINES = 8;
@@ -270,7 +270,7 @@ function GameMine(containerId, qFn) {
   window[fnKey+'_mineClick'] = function(r, col) {
     if (self.over || self.revealed[r][col] || self.flagged[r][col] || self.pendingCell) return;
     if (self.grid[r][col] === -1) {
-      // It's a mine — ask question to defuse!
+      // It's a mine - ask question to defuse!
       self.pendingCell = [r, col];
       var q = self.qFn(self.level); self.currentQ = q;
       var qBox = document.getElementById(containerId+'-q');
@@ -312,7 +312,7 @@ function GameMine(containerId, qFn) {
         self.over = true;
         render();
         var msg = document.getElementById(containerId+'-msg');
-        if (msg) msg.innerHTML = '<i class="ph ph-explosion"></i> Respondeste errado — mina explodiu! Pontos: <strong>'+self.score+'</strong>';
+        if (msg) msg.innerHTML = '<i class="ph ph-explosion"></i> Respondeste errado - mina explodiu! Pontos: <strong>'+self.score+'</strong>';
       }, 800);
     } else {
       self.score += (self.level==='facil'?1:self.level==='medio'?2:3);
@@ -353,7 +353,7 @@ function GameMine(containerId, qFn) {
   init();
 }
 
-// JOGO 3 — SUDOKU 4×4 COM OPERAÇÕES (KenKen)
+// JOGO 3 - SUDOKU 4×4 COM OPERAÇÕES (KenKen)
 function GameSudoku(containerId) {
   var self = this;
   self.selected = null;
@@ -450,7 +450,7 @@ function GameSudoku(containerId) {
     var selVal = (sr >= 0 && self.userGrid[sr][sc]) ? self.userGrid[sr][sc] : 0;
 
     var html = [
-      '<p style="font-size:.82rem;color:var(--ink3);margin-bottom:.5rem">Preenche a grelha — cada linha, coluna e bloco 3×3 deve ter os números 1 a 9.</p>',
+      '<p style="font-size:.82rem;color:var(--ink3);margin-bottom:.5rem">Preenche a grelha - cada linha, coluna e bloco 3×3 deve ter os números 1 a 9.</p>',
       '<div class="sdk-difficulty">',
         '<button class="sdk-dif-btn'+(self.level==='facil'?' active':'')+'" onclick="'+fnKey+'_sdkLevel(\'facil\')"><span style="display:inline-block;width:.6em;height:.6em;border-radius:50%;background:#4caf50;vertical-align:middle;flex-shrink:0;margin-right:1px"></span> Fácil</button>',
         '<button class="sdk-dif-btn'+(self.level==='medio'?' active':'')+'" onclick="'+fnKey+'_sdkLevel(\'medio\')"><span style="display:inline-block;width:.6em;height:.6em;border-radius:50%;background:#f59e0b;vertical-align:middle;flex-shrink:0;margin-right:1px"></span> Médio</button>',
@@ -541,7 +541,7 @@ function GameSudoku(containerId) {
     if (!msg) return;
     if (!allFilled) msg.innerHTML = '<i class="ph ph-warning"></i> Preenche todas as células primeiro.';
     else if (allCorrect) msg.innerHTML = '<i class="ph ph-trophy"></i> Parabéns! Sudoku resolvido corretamente!';
-    else msg.innerHTML = '<i class="ph ph-x-circle"></i> Há erros — verifica as células marcadas a vermelho.';
+    else msg.innerHTML = '<i class="ph ph-x-circle"></i> Há erros - verifica as células marcadas a vermelho.';
   };
 
   window[fnKey+'_sdkNew'] = function() { init(); };
@@ -549,7 +549,7 @@ function GameSudoku(containerId) {
   init();
 }
 
-// JOGO 4 — TORRE DE HANOI COM QUESTÕES
+// JOGO 4 - TORRE DE HANOI COM QUESTÕES
 function GameHanoi(containerId, qFn) {
   var self = this;
   self.level = 'medio';
@@ -680,7 +680,7 @@ function GameHanoi(containerId, qFn) {
     var qDiv = document.getElementById(containerId+'-q');
     if (!correct) {
       if (qDiv) { var opts=qDiv.querySelectorAll('.c4-opt'); if(opts[self.currentQ.ans])opts[self.currentQ.ans].classList.add('correct'); }
-      setMsg('<i class="ph ph-x-circle"></i> Errado — movimento cancelado!');
+      setMsg('<i class="ph ph-x-circle"></i> Errado - movimento cancelado!');
       setTimeout(function(){
         self.pendingFrom = null; self.pendingTo = null;
         self._hanoiAnsLocked = false;

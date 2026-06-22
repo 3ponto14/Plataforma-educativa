@@ -1,4 +1,4 @@
-/* ── widgets.js — Shared widgets injected into every chapter page ──
+/* ── widgets.js Shared widgets injected into every chapter page ──
    Print header, Pomodoro timer, Scientific calculator, Unified flashcard stub
    ─────────────────────────────────────────────────────────────────── */
 (function(){
@@ -111,7 +111,7 @@ function _injectCalc() {
         '<button class="calc-btn fn" onclick="calcFn(\'pct\')">%</button>' +
         '<button class="calc-btn fn" onclick="calcFn(\'pm\')">\u00b1</button>' +
         '<button class="calc-btn fn" onclick="calcNum(\'(\')">( </button>' +
-        '<button class="calc-btn fn" onclick="calcNum(\')\'"> )</button>' +
+        '<button class="calc-btn fn" onclick="calcNum(\')\')"> )</button>' +
         '<button class="calc-btn fn" onclick="calcDel()">\u232b</button>' +
         '<button class="calc-btn op" onclick="calcOp(\'/\')">\u00f7</button>' +
         '<button class="calc-btn op" onclick="calcOp(\'*\')">\u00d7</button>' +
@@ -144,6 +144,6 @@ function _injectCalc() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  _injectPomodoro();
+  if (!document.body.dataset.noPomodoro) _injectPomodoro();
   _injectCalc();
 });

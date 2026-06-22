@@ -452,17 +452,8 @@ semelhanca: [
     fig: true,
     enun: 'Os tri\u00e2ngulos [ABC] e [PQR] s\u00e3o semelhantes, com raz\u00e3o de semelhan\u00e7a 0,5 e QR\u0305 = 5.\n\nCalcula o per\u00edmetro do tri\u00e2ngulo [ABC].',
     resolucao: 'Raz\u00e3o de semelhan\u00e7a k\u2009=\u20090,5, significa [ABC] \u00e9 redu\u00e7\u00e3o de [PQR].\nO per\u00edmetro de [ABC]\u2009=\u2009k\u00b7per\u00edmetro [PQR].\nQR\u2009=\u20095, e como o tri\u00e2ngulo \u00e9 semelhante, usa a figura para obter todos os lados de [PQR].\n(Sem a figura completa, o per\u00edmetro de [PQR] n\u00e3o \u00e9 determin\u00e1vel s\u00f3 com QR.)\n<em>Processo:</em> Per\u00edmetro [ABC]\u2009=\u20090,5\u00b7per\u00edmetro [PQR].'
-  },
-  {
-    id: 'sem-47',
-    fonte: 'Prova de Aferi\u00e7\u00e3o \u2013 2002',
-    tipo: 'escolha',
-    fig: true,
-    enun: 'Qual das figuras seguintes \u00e9 uma redu\u00e7\u00e3o da figura ao lado (selo Pedro Nunes)?\n\n[Figura necess\u00e1ria \u2014 ver enunciado original]',
-    opts: ['(A)', '(B)', '(C)', '(D)'],
-    correct: 'B',
-    resolucao: 'Uma redu\u00e7\u00e3o mant\u00e9m as propor\u00e7\u00f5es da figura original \u2014 todos os lados reduzidos pela mesma raz\u00e3o. A op\u00e7\u00e3o <strong>(B)</strong> \u00e9 a \u00fanica que mant\u00e9m as propor\u00e7\u00f5es do selo.'
   }
+  // sem-47 removida \u2014 depende de figura externa que n\u00e3o \u00e9 mostrada e tinha op\u00e7\u00f5es vazias
 ],
 
 areas: [
@@ -608,7 +599,7 @@ otd: [
     enun: 'O gr\u00e1fico de barras mostra o n\u00famero de livros lidos por 20 alunos durante o ver\u00e3o.\n\nN.\u00ba de livros: 0, 1, 2, 3, 4\nN.\u00ba de alunos: 2, 5, 7, 4, 2\n\nQual \u00e9 a m\u00e9dia de livros lidos por aluno?',
     opts: ['(A) 1,8', '(B) 2', '(C) 2,1', '(D) 2,5'],
     correct: 'B',
-    resolucao: 'Calcula a soma total de livros lidos:\n0 \u00d7 2 = 0 &nbsp;&nbsp;(2 alunos leram 0 livros)\n1 \u00d7 5 = 5 &nbsp;&nbsp;(5 alunos leram 1 livro)\n2 \u00d7 7 = 14 &nbsp;(7 alunos leram 2 livros)\n3 \u00d7 4 = 12 &nbsp;(4 alunos leram 3 livros)\n4 \u00d7 2 = 8 &nbsp;&nbsp;(2 alunos leram 4 livros)\n\nTotal de livros = 0 + 5 + 14 + 12 + 8 = <strong>39 livros</strong>\nTotal de alunos = 2 + 5 + 7 + 4 + 2 = <strong>20 alunos</strong>\n\nM\u00e9dia = 39 \u00f7 20 = <strong>1,95</strong>\n\nNota: 1,95 arredonda para 2,0, mas a resposta exata mais pr\u00f3xima das op\u00e7\u00f5es \u00e9 <strong>2,0 \u2248 (B)</strong>.\nVerifica o enunciado original — pode haver ligeiras diferen\u00e7as nos dados.'
+    resolucao: 'Calcula a soma total de livros lidos:\n0 \u00d7 2 = 0 &nbsp;&nbsp;(2 alunos leram 0 livros)\n1 \u00d7 5 = 5 &nbsp;&nbsp;(5 alunos leram 1 livro)\n2 \u00d7 7 = 14 &nbsp;(7 alunos leram 2 livros)\n3 \u00d7 4 = 12 &nbsp;(4 alunos leram 3 livros)\n4 \u00d7 2 = 8 &nbsp;&nbsp;(2 alunos leram 4 livros)\n\nTotal de livros = 0 + 5 + 14 + 12 + 8 = <strong>39 livros</strong>\nTotal de alunos = 2 + 5 + 7 + 4 + 2 = <strong>20 alunos</strong>\n\nM\u00e9dia = 39 \u00f7 20 = <strong>1,95</strong>\n\nNota: 1,95 arredonda para 2,0, mas a resposta exata mais pr\u00f3xima das op\u00e7\u00f5es \u00e9 <strong>2,0 \u2248 (B)</strong>.\nVerifica o enunciado original - pode haver ligeiras diferen\u00e7as nos dados.'
   },
   {
     id: 'otd-8',
@@ -1179,7 +1170,7 @@ not_cientifica: [
     id: 'nc-9',
     fonte: 'Prova Final 3.\u00ba Ciclo \u2013 2020',
     tipo: 'escolha',
-    enun: 'Qual \u00e9 o resultado de 10\u00b4 \u00d7 10\u207b\u00b2?',
+    enun: 'Qual \u00e9 o resultado de 10\u2074 \u00d7 10\u207b\u00b2?',
     opts: ['(A) 10\u207b\u2078', '(B) 10\u00b2', '(C) 10\u2076', '(D) 10\u207b\u00b2'],
     correct: 'B',
     resolucao: '10\u00b4 \u00d7 10\u207b\u00b2 = 10^(4+(\u22122)) = <strong>10\u00b2</strong> = 100.'

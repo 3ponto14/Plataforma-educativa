@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Exercícios interativos sobre Dados e Probabilidades para o 7.º ano — estatística, gráficos, medidas e probabilidade.">
+<meta name="description" content="Exercícios interativos sobre Dados e Probabilidades para o 7.º ano estatística, gráficos, medidas e probabilidade.">
 <meta name="theme-color" content="#516860">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta property="og:title" content="3ponto14 · Centro de Estudos">
-<meta property="og:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano — fichas, jogos, quizzes e preparação para exames.">
+<meta property="og:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano fichas, jogos, quizzes e preparação para exames.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_PT">
 <meta property="og:url" content="https://3ponto14.pt/mat7">
@@ -17,7 +17,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="3ponto14 · Centro de Estudos">
-<meta name="twitter:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano — fichas, jogos, quizzes e preparação para exames.">
+<meta name="twitter:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano fichas, jogos, quizzes e preparação para exames.">
 <meta name="twitter:image" content="https://3ponto14.pt/og-mat7.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23516860'/><text x='50' y='68' font-size='48' font-weight='900' text-anchor='middle' fill='white' font-family='serif'>eP</text></svg>">
 <title>Dados e Probabilidades · Matemática 7.º Ano · 3ponto14</title>
@@ -61,34 +61,40 @@
     </div>
   </header>
 
-  <!-- Tabs (hidden — navigation is now via chapter nav bar + scroll) -->
-  <div class="tabs-wrap4 hidden" id="tabs8">
-    <button class="tab-btn active" onclick="showSection8('temas8',this)">Temas</button>
-    <button class="tab-btn" onclick="showSection8('teoria8',this)">Teoria</button>
-    <button class="tab-btn" onclick="showSection8('questoes8',this)">Exercícios</button>
-    <button class="tab-btn" onclick="showSection8('minitestes8',this)"><i class="ph ph-file-text"></i> Minitestes</button>
-    <button class="tab-btn" onclick="showSection8('teste8',this)">Teste</button>
-    <button class="tab-btn" onclick="showSection8('gerador8',this)">Gerador</button>
-    <button class="tab-btn" onclick="showSection8('jogos8',this)">Jogos</button>
-    <button class="tab-btn" onclick="showSection8('quiz-game8',this)">⚡ Quiz</button>
-    <button class="tab-btn" onclick="showSection8('flashcards8',this)">Flashcards</button>
-    <button class="tab-btn" onclick="showSection8('exame8',this)">Exame</button>
-    <button class="tab-btn" onclick="showSection8('progresso8',this)">Progresso</button>
-  </div>
-
+  <!-- Tabs (hidden navigation is now via chapter nav bar + scroll) -->
+  <nav class="tabs" id="tabs8">
+  <button class="tab-btn cap-group-btn active" data-group="aprender" onclick="showSection8('temas8', this)" data-secs="temas8,teoria8"><i class="ph ph-book-open-text"></i> Aprender</button>
+  <button class="tab-btn cap-group-btn" data-group="praticar" onclick="showSection8('questoes8', this)" data-secs="questoes8,minitestes8,gerador8"><i class="ph ph-pencil-simple"></i> Praticar</button>
+  <button class="tab-btn cap-group-btn" data-group="testar" onclick="showSection8('teste8', this)" data-secs="teste8,quiz-game8,flashcards8,exame8"><i class="ph ph-timer"></i> Testar</button>
+  <button class="tab-btn" onclick="showSection8('jogos8', this)"><i class="ph ph-game-controller"></i> Jogos</button>
+  <button class="tab-btn" onclick="showSection8('progresso8', this)"><i class="ph ph-chart-bar"></i> Progresso</button>
+</nav>
+<div class="cap-subnav" id="cap-subnav-8" style="display:none"></div>
   <div class="sections4">
 
   <!-- ══ TEMAS ══ -->
+
+<div class="teacher-strip" id="ts-8-resumo">
+  <button class="teacher-toggle" onclick="toggleTeacher(this)">
+    <span class="teacher-arrow">▸</span> Para o professor
+  </button>
+  <div class="teacher-content">
+    <div class="teacher-section">
+      <div class="teacher-section-title">Objetivos DGE (PMEB)</div>
+      <p>Organizar e representar dados em tabelas e gráficos; calcular e interpretar medidas de tendência central (média, mediana, moda) e quartis; construir diagramas de caixa; calcular probabilidades simples usando a regra de Laplace.</p>
+    </div>
+    <div class="teacher-section">
+      <div class="teacher-section-title">Sequência pedagógica sugerida</div>
+      <p>1.º Recolha de dados reais (turma) e organização em tabelas → 2.º Gráficos de barras, histogramas e gráficos circulares → 3.º Média, mediana e moda diferenças e usos → 4.º Quartis e diagrama de caixa → 5.º Espaço amostral e eventos → 6.º Regra de Laplace probabilidade clássica → 7.º Questões de exame (OTD é o tema mais frequente na Prova Final de 9.º).</p>
+    </div>
+    <div class="teacher-criteria">Critérios de classificação: Medida de tendência central correta com cálculo mostrado (2pt) · quartis corretos (2pt) · probabilidade em fração irredutível (2pt) · interpretação em contexto (1pt).</div>
+  </div>
+</div>
   <div class="section4 active" id="sec-temas8">
     <div class="sec-header sec-header--compact">
       <h2><span class="num"><i class="ph ph-file-text"></i></span> Temas</h2>
     </div>
     <div class="topics-grid" id="cap8-topics-grid"><!-- Generated by cap8.js --></div>
-    <hr class="topics-sep">
-    <div class="topics-grid mt-2">
-      <div class="topic-tool" onclick="showSection8('gerador8',document.querySelector('#tabs8 .tab-btn:nth-child(6)'))"><span class="tt-icon"><i class="ph ph-dice-five"></i></span> Gerador</div>
-      <div class="topic-tool" onclick="showSection8('jogos8',document.querySelector('#tabs8 .tab-btn:nth-child(7)'))"><span class="tt-icon"><i class="ph ph-game-controller"></i></span> Jogos</div>
-      <div class="topic-tool" onclick="showSection8('flashcards8',document.querySelector('#tabs8 .tab-btn:nth-child(9)'))"><span class="tt-icon"><i class="ph ph-stack"></i></span> Flashcards</div>
     </div>
   </div>
 
@@ -96,13 +102,13 @@
   <div class="section4" id="sec-teoria8">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-book-open-text"></i></span> Teoria</h2>
-      <p>5 subtemas — de população e amostra à probabilidade composta</p>
+      <p>5 subtemas de população e amostra à probabilidade composta</p>
     </div>
     <div class="topic-tools">
-      <div class="topic-tool" onclick="showSection8('questoes8',document.querySelector('#tabs8 .tab-btn:nth-child(3)'))"><span class="tt-icon"><i class="ph ph-pencil-simple"></i></span> Questões-aula</div>
-      <div class="topic-tool" onclick="showSection8('gerador8',document.querySelector('#tabs8 .tab-btn:nth-child(6)'))"><span class="tt-icon"><i class="ph ph-dice-five"></i></span> Gerador</div>
-      <div class="topic-tool" onclick="showSection8('jogos8',document.querySelector('#tabs8 .tab-btn:nth-child(7)'))"><span class="tt-icon"><i class="ph ph-game-controller"></i></span> Jogos</div>
-      <div class="topic-tool" onclick="showSection8('flashcards8',document.querySelector('#tabs8 .tab-btn:nth-child(9)'))"><span class="tt-icon"><i class="ph ph-stack"></i></span> Flashcards</div>
+      <div class="topic-tool" onclick="showSection8('questoes8', null)"><span class="tt-icon"><i class="ph ph-pencil-simple"></i></span> Questões-aula</div>
+      <div class="topic-tool" onclick="showSection8('gerador8', null)"><span class="tt-icon"><i class="ph ph-dice-five"></i></span> Gerador</div>
+      <div class="topic-tool" onclick="showSection8('jogos8', null)"><span class="tt-icon"><i class="ph ph-game-controller"></i></span> Jogos</div>
+      <div class="topic-tool" onclick="showSection8('flashcards8', null)"><span class="tt-icon"><i class="ph ph-stack"></i></span> Flashcards</div>
     </div>
 
     <!-- SUBTEMA 1 -->
@@ -180,7 +186,7 @@
         <span class="desafio-star">★</span>
         Zona de Desafio Avançado
       </h3>
-      <p class="desafio-sub">Para alunos que querem ir mais longe — preparação para provas de aferição e testes exigentes.</p>
+      <p class="desafio-sub">Para alunos que querem ir mais longe preparação para provas de aferição e testes exigentes.</p>
       <div class="def-block desafio-card">
         <div class="def-row"><span class="def-tag prop">Avançado</span><div class="def-text"><strong>Amplitude interquartil:</strong> Q3 − Q1, onde Q1 é a mediana da metade inferior e Q3 da metade superior dos dados ordenados. Mede a dispersão central dos dados.</div></div>
         <div class="def-row"><span class="def-tag prop">Avançado</span><div class="def-text"><strong>Probabilidade condicional:</strong> P(B|A) = P(A ∩ B) / P(A). A probabilidade de B dado que A já ocorreu. Usada em problemas com extração sem reposição.</div></div>
@@ -200,7 +206,7 @@
 
   <!-- ══ QUESTÕES-AULA ══ -->
   <div class="section4" id="sec-questoes8">
-    <div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-pencil-simple"></i></span> Questões-aula</h2><p>Questões pelos 5 subtemas — corrige automaticamente com feedback</p></div></div>
+    <div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-pencil-simple"></i></span> Questões-aula</h2><p>Questões pelos 5 subtemas corrige automaticamente com feedback</p></div></div>
     <div class="score-bar">
       <div><div class="score-num" id="q8-score">0</div><div class="score-label">certas</div></div>
       <div><div class="score-num icon-muted" id="q8-total">/ 0</div><div class="score-label">respondidas</div></div>
@@ -211,7 +217,7 @@
 
 
 <div class="section-divider section4" id="sec-minitestes8" >
-<div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-file-text"></i></span> Minitestes</h2><p>5 minitestes por subtema — 5 questões de escolha múltipla cada</p></div></div>
+<div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-file-text"></i></span> Minitestes</h2><p>5 minitestes por subtema 5 questões de escolha múltipla cada</p></div></div>
     <div id="mini-tabs8">
       <button class="tab-btn active" onclick="showMini8(0,this)"><i class="ph ph-book-open-text"></i> Todos os subtemas</button>
       <button class="tab-btn" onclick="showMini8(1,this)">① População e Amostra</button>
@@ -231,7 +237,7 @@
 
 
 <div class="section-divider section4" id="sec-teste8" >
-<div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-target"></i></span> Teste de Avaliação</h2><p>Questões de dificuldade progressiva — escolha múltipla e resposta aberta</p></div></div>
+<div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-target"></i></span> Teste de Avaliação</h2><p>Questões de dificuldade progressiva escolha múltipla e resposta aberta</p></div></div>
     <div class="score-bar">
       <div><div class="score-num" id="t8-score">0</div><div class="score-label">certas</div></div>
       <div><div class="score-num icon-muted" id="t8-total">/ 0</div><div class="score-label">respondidas</div></div>
@@ -240,7 +246,6 @@
     </div>
     <div id="t8-container"></div>
 </div>
-</div></div>
 
   <!-- ══ GERADOR ══ -->
   <div class="section4" id="sec-gerador8">
@@ -254,11 +259,11 @@
         <div><div class="ai-label">Subtema</div>
           <select class="ai-select" id="gen8-tema">
             <option value="0">Todos os subtemas</option>
-            <option value="1">1 — População e Amostra</option>
-            <option value="2">2 — Mediana, Média e Moda</option>
-            <option value="3">3 — Representações Gráficas</option>
-            <option value="4">4 — Probabilidade</option>
-            <option value="5">5 — Probabilidade Composta</option>
+            <option value="1">1 População e Amostra</option>
+            <option value="2">2 Mediana, Média e Moda</option>
+            <option value="3">3 Representações Gráficas</option>
+            <option value="4">4 Probabilidade</option>
+            <option value="5">5 Probabilidade Composta</option>
           </select>
         </div>
         <div><div class="ai-label">Tipo</div>
@@ -297,7 +302,7 @@
   <div class="section4" id="sec-jogos8">
   <div class="sec-header">
     <h2><span class="num"><i class="ph ph-game-controller"></i></span> Jogos</h2>
-    <p>5 jogos matemáticos interativos — treina dados e probabilidades</p>
+    <p>5 jogos matemáticos interativos treina dados e probabilidades</p>
   </div>
   <div id="j24-wrap-cap8"></div>
 </div>
@@ -306,7 +311,7 @@
   <div class="section4" id="sec-quiz-game8">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-trophy"></i></span> ⚡ Modo Quiz</h2>
-      <p>Questões de escolha múltipla — Dados e Probabilidades — 3 vidas, streak e game over</p>
+      <p>Questões de escolha múltipla Dados e Probabilidades 3 vidas, streak e game over</p>
     </div>
     <div id="qg-app8"></div>
   </div>
@@ -315,7 +320,7 @@
   <div class="section4" id="sec-flashcards8">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards de Revisão</h2>
-      <p>Cartões — clica para virar e ver a resposta</p>
+      <p>Cartões clica para virar e ver a resposta</p>
     </div>
     <div class="flex flex-wrap gap-3 items-center mb-6">
       <span id="fc8-counter" class="fc-counter">1 / ?</span>
@@ -340,13 +345,12 @@
     </div>
     <div id="fc8-dots" class="flex flex-wrap gap-1 justify-center mt-5"></div>
 
-</div></div>
 
   <!-- ══ EXAME ══ -->
   <div class="section4" id="sec-exame8">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame</h2>
-      <p>Simulação cronometrada — sem feedback durante o exame, nota final no fim</p>
+      <p>Simulação cronometrada sem feedback durante o exame, nota final no fim</p>
     </div>
     <div id="exame8-config" class="card">
       <div class="card-title">Configurar Exame</div>
@@ -401,7 +405,7 @@
   <div class="section4" id="sec-progresso8">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-trophy"></i></span> O Meu Progresso</h2>
-      <p>Registo das tuas atividades — guardado localmente neste browser</p>
+      <p>Registo das tuas atividades guardado localmente neste browser</p>
     </div>
     <div class="alert-warning">
       <span>O progresso é guardado <strong>apenas neste browser e neste dispositivo</strong>. Se mudares de browser ou de computador, o registo começa do zero.</span>
@@ -426,21 +430,24 @@
   </div>
 
 
-  </div><!-- /sections4 -->
 <div style="display:flex;justify-content:flex-start;padding:1.5rem 2rem 2rem;border-top:1px solid var(--border);margin-top:2rem;">
-  <button class="btn btn-ghost ch-back-link" onclick="goToChapter(7)">← Cap. 7 — Figuras Semelhantes</button>
+  <button class="btn btn-ghost ch-back-link" onclick="goToChapter(7)">← Cap. 7 Figuras Semelhantes</button>
 </div>
+
+
+
+
 </div><!-- /view-math8 -->
-
-
-
-
-<script src="../js/shared.js"></script>
-<script src="../js/chapter-engine.js"></script>
-<script src="../js/cap8.js"></script>
-<script src="../js/systems.js"></script>
-<script src="../js/widgets.js"></script>
-<script src="../js/fx.js"></script>
-<script src="../js/nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/cloud.js"></script>
+<script src="../js/guard.js"></script>
+<script src="../js/shared.js?v=20260621"></script>
+<script src="../js/chapter-engine.js?v=20260621"></script>
+<script src="../js/cap8.js?v=20260621"></script>
+<script src="../js/systems.js?v=20260621"></script>
+<script src="../js/widgets.js?v=20260621"></script>
+<script src="../js/fx.js?v=20260621"></script>
+<script src="../js/ux-improvements.js?v=20260621"></script>
+<script src="../js/nav.js?v=20260621"></script>
 </body>
 </html>

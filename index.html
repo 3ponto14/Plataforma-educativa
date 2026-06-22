@@ -3,12 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="3ponto14 — Centro de Estudos. Recursos interativos, exercícios, fichas e explicações para Matemática 7.º ano, alinhados com o currículo português.">
+<meta name="description" content="3ponto14 Centro de Estudos. Recursos interativos, exercícios, fichas e explicações para Matemática 7.º ano, alinhados com o currículo português.">
 <meta name="theme-color" content="#516860">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="3ponto14">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta property="og:title" content="3ponto14 · Centro de Estudos">
-<meta property="og:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano — fichas, jogos, quizzes e preparação para exames.">
+<meta property="og:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano fichas, jogos, quizzes e preparação para exames.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_PT">
 <meta property="og:url" content="https://3ponto14.pt/mat7">
@@ -17,14 +21,14 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="3ponto14 · Centro de Estudos">
-<meta name="twitter:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano — fichas, jogos, quizzes e preparação para exames.">
+<meta name="twitter:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano fichas, jogos, quizzes e preparação para exames.">
 <meta name="twitter:image" content="https://3ponto14.pt/og-mat7.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23516860'/><text x='50' y='68' font-size='48' font-weight='900' text-anchor='middle' fill='white' font-family='serif'>eP</text></svg>">
 <title>3ponto14 · Centro de Estudos</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/styles.css?v=20260621">
 <link
       rel="stylesheet"
       type="text/css"
@@ -44,83 +48,343 @@
 
 <div id="view-portal">
 
-<nav class="topbar">
-  <a class="topbar-logo" href="#">
-    <div class="mark bg-gradient-to-br from-[#77998E] to-[#516860] rounded-[10px] w-[38px] h-[38px] flex items-center justify-center text-[.65rem] font-extrabold text-white font-[Montserrat,sans-serif] tracking-tight shadow-[0_3px_12px_rgba(119,153,142,.35)]">3π</div>
+<!-- Topbar simples -->
+<nav class="site-topbar">
+  <a href="#" class="site-topbar-logo">
+    <img class="mark" src="icons/logo-3ponto14.png" alt="3ponto14">
     <span class="wordmark">3ponto<em>14</em></span>
   </a>
-  <div class="topbar-divider"></div>
-  <span class="topbar-sub">Matemática 7.º Ano</span>
+  <div class="site-topbar-actions"></div>
 </nav>
 
-<section class="hero">
-  <div class="hero-blob hero-blob-1"></div><div class="hero-blob hero-blob-2"></div><div class="hero-blob hero-blob-3"></div>
-  <div class="deco deco-1"></div><div class="deco deco-2"></div>
-  <div class="deco deco-3"></div><div class="deco deco-4"></div>
-  <div class="deco deco-5"></div><div class="deco deco-6"></div>
-  <div class="hero-eyebrow"><div class="dot"></div>Matemática · 7.º Ano</div>
-  <h1>3ponto<span class="line2 italic font-normal">14</span> <span class="line3">Matemática 7.º Ano</span></h1>
-  <p class="hero-sub">Exercícios interativos, fichas, jogos e preparação para exames — tudo o que precisas para arrasar em Matemática.</p>
-  <div class="hero-stats">
-    <div class="hero-stat"><div class="n text-[var(--c2-mid)]">12</div><div class="l">Anos letivos</div></div>
-    <div class="hero-stat"><div class="n">1</div><div class="l">Disciplina</div></div>
-    
+<!-- Hero do portal (só SEM sessão; com sessão é substituído pelo painel
+     de boas-vindas #portal-saudacao). -->
+<section class="portal-hero" id="portal-hero">
+  <div class="portal-hero-inner">
+    <div class="portal-hero-brand">3ponto<em>14</em></div>
+    <h1 class="portal-hero-title">Estuda melhor.<br>Vai mais longe.</h1>
+    <p class="portal-hero-sub">Exercícios interativos, fichas, jogos e preparação para os exames nacionais de Matemática e Português, tudo num só lugar.</p>
   </div>
 </section>
 
-<div class="featured-wrap">
-  <button class="featured-card" onclick="showMat7View()">
-    <div class="featured-icon-lg"><i class="ph ph-calculator text-[2.8em] text-white/85"></i></div>
-    <div class="featured-body">
-      <div class="featured-badge"><i class="ph ph-sparkle"></i> 8 capítulos disponíveis</div>
-      <h3>Matemática · 7.º Ano</h3>
-      <p>Conteúdo completo com teoria, exercícios interativos, minitestes, jogos e fichas — seleciona um capítulo ou estuda vários de uma vez.</p>
-      <div class="featured-chips">
-        <span class="chip green">✓ Números Inteiros</span>
-        <span class="chip green">✓ Números Racionais</span>
-        <span class="chip green">✓ Geometria</span>
-        <span class="chip green">✓ Equações</span>
-        <span class="chip green">✓ Sequências</span>
-        <span class="chip green">✓ Funções</span>
-        <span class="chip green">✓ Figuras Semelhantes</span>
-        <span class="chip green">✓ Dados e Probabilidades</span>
-        <span class="chip"><i class="ph ph-file-text"></i> Teoria</span>
-        <span class="chip"><i class="ph ph-target"></i> Exercícios</span>
+<!-- Painel de boas-vindas (só COM sessão): «Olá, Nome» + dia de hoje +
+     Desafio (aluno) ou resumo dos alunos (professor). Preenchido por
+     js/painel-inicio.js. -->
+<section id="portal-saudacao" style="display:none"></section>
+
+<!-- Cards de acesso -->
+<div class="portal-section" id="portal-catalogo">
+
+  <!-- Apoio ao Estudo vive agora na GAVETA LATERAL (☰), não aqui no
+       meio do portal — ver js/menu-lateral.js. O #portal-turmas é
+       movido para dentro da gaveta pelo menu-lateral no arranque. -->
+  <div id="portal-turmas" style="display:none"></div>
+
+  <!-- Porta de entrada CLEAN (só SEM sessão): um único cartão central
+       que junta o convite a entrar + o Desafio do Dia (amostra). O
+       #portal-desafio é movido para dentro de #portal-entrada-desafio
+       por portalAplicarSessao(); com sessão volta ao sítio normal. -->
+  <div id="portal-entrada" style="display:none;max-width:480px;margin:0 auto 1.75rem">
+    <div class="portal-entrada-card">
+      <div class="portal-entrada-top">
+        <div class="portal-entrada-emoji">📚</div>
+        <div class="portal-entrada-h">Bem-vindo!</div>
+        <div class="portal-entrada-p">Entra para acederes a todos os cursos, fichas e ao teu progresso.</div>
+        <button class="portal-entrada-btn" onclick="if(typeof authAbrir==='function')authAbrir('criar')"><i class="ph ph-user-plus"></i> Criar conta e entrar</button>
+        <a href="#" class="portal-entrada-login" onclick="if(typeof authAbrir==='function')authAbrir('entrar');return false">Já tenho conta? Entrar</a>
       </div>
+      <div class="portal-entrada-sep"><span>experimenta sem conta</span></div>
+      <div id="portal-entrada-desafio"></div>
     </div>
-    <div class="featured-btn-ui">Escolher capítulo <span class="arrow">→</span></div>
-  </button>
+  </div>
+
+  <!-- Desafio do Dia (com sessão fica aqui; sem sessão é movido para o
+       cartão de entrada acima). -->
+  <div id="portal-desafio" style="max-width:540px;margin:0 auto 1.75rem"></div>
+
+  <!-- ═══ SECÇÃO CURSOS (com sessão, isolada pela navegação) ═══ -->
+  <div id="sec-cursos">
+
+  <!-- Pesquisa -->
+  <div class="portal-search">
+    <i class="ph ph-magnifying-glass portal-search-icon"></i>
+    <input type="text" id="portal-search-input" placeholder="Pesquisar… (ex: 8.º, frações, Os Lusíadas, derivadas)" autocomplete="off" oninput="portalSearch()">
+  </div>
+
+  <!-- Filtros: disciplina + ano -->
+  <div class="portal-filters">
+    <div class="portal-filter-row" id="portal-filter-disc">
+      <span class="portal-filter-label">Escolhe</span>
+      <button class="portal-chip" data-disc="matematica" onclick="portalSetFilter('disc','matematica',this)"><i class="ph ph-math-operations"></i> Matemática</button>
+      <button class="portal-chip" data-disc="portugues" onclick="portalSetFilter('disc','portugues',this)"><i class="ph ph-book-open-text"></i> Português</button>
+      <button class="portal-chip" data-disc="fisico-quimica" onclick="portalSetFilter('disc','fisico-quimica',this)"><i class="ph ph-flask"></i> Físico-Química</button>
+      <button class="portal-chip" data-disc="estudo-do-meio" onclick="portalSetFilter('disc','estudo-do-meio',this)"><i class="ph ph-globe-hemisphere-west"></i> Estudo do Meio</button>
+      <button class="portal-chip portal-chip--exames" data-disc="exames" onclick="portalSetFilter('disc','exames',this)"><i class="ph ph-graduation-cap"></i> Exames Nacionais</button>
+      <button class="portal-chip" data-disc="todas" onclick="portalSetFilter('disc','todas',this)">Ver todos</button>
+    </div>
+    <div class="portal-filter-row" id="portal-filter-ano">
+      <span class="portal-filter-label">Ano</span>
+      <button class="portal-chip" data-ano="all" onclick="portalSetFilter('ano','all',this)">Todos os anos</button>
+      <button class="portal-chip" data-ano="1" onclick="portalSetFilter('ano','1',this)">1.º</button>
+      <button class="portal-chip" data-ano="5" onclick="portalSetFilter('ano','5',this)">5.º</button>
+      <button class="portal-chip" data-ano="6" onclick="portalSetFilter('ano','6',this)">6.º</button>
+      <button class="portal-chip" data-ano="7" onclick="portalSetFilter('ano','7',this)">7.º</button>
+      <button class="portal-chip" data-ano="8" onclick="portalSetFilter('ano','8',this)">8.º</button>
+      <button class="portal-chip" data-ano="9" onclick="portalSetFilter('ano','9',this)">9.º</button>
+      <button class="portal-chip" data-ano="10" onclick="portalSetFilter('ano','10',this)">10.º</button>
+      <button class="portal-chip" data-ano="11" onclick="portalSetFilter('ano','11',this)">11.º</button>
+      <button class="portal-chip" data-ano="12" onclick="portalSetFilter('ano','12',this)">12.º</button>
+    </div>
+  </div>
+
+  <!-- Estado inicial: nada selecionado → catálogo escondido e convite a escolher.
+       Mostra-se/esconde-se em portalSearch() conforme há (ou não) filtro/pesquisa. -->
+  <div class="portal-empty" id="portal-empty">
+    <div class="portal-empty-ic"><i class="ph ph-hand-pointing" id="portal-empty-icon"></i></div>
+    <div class="portal-empty-title" id="portal-empty-title">Escolhe uma opção para ver os cursos</div>
+    <div class="portal-empty-sub" id="portal-empty-sub">Seleciona <strong>Matemática</strong>, <strong>Português</strong>, <strong>Físico-Química</strong> ou <strong>Exames Nacionais</strong> em cima — ou <strong>Ver todos</strong>. Também podes pesquisar diretamente.</div>
+  </div>
+
+  <!-- Catálogo agrupado por ciclo de ensino: um cartão por ano, com tudo o
+       que esse ano tem lá dentro (cursos + exames). Filtros e pesquisa atuam
+       sobre cada oferta (.portal-ano-link); ver portalSearch() em portal.js. -->
+  <div id="portal-grid">
+
+    <!-- ── 1.º CICLO ── -->
+    <section class="portal-ciclo">
+      <div class="portal-ciclo-head"><span class="portal-ciclo-title">1.º Ciclo</span><span class="portal-ciclo-range">1.º ao 4.º anos</span></div>
+      <div class="portal-ano-grid">
+        <article class="portal-ano-card y1" data-ano="1">
+          <div class="portal-ano-head"><span class="portal-ano-num">1.º</span><span class="portal-ano-lbl">Ano</span></div>
+          <div class="portal-ano-links">
+            <button class="portal-ano-link" onclick="showMat1View()" data-disc="matematica" data-search="1.º ano matemática números até 100 contar adição somar subtração tirar formas figuras sólidos medida horas dinheiro euros dados tabelas 1.º ciclo primária">
+              <span class="portal-ano-link-icon"><i class="ph ph-plus-minus"></i></span>
+              <span class="portal-ano-link-name">Matemática</span>
+              <span class="portal-ano-link-meta">6 capítulos</span>
+              <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+            </button>
+            <button class="portal-ano-link" onclick="showPort1View()" data-disc="portugues" data-search="1.º ano português iniciação leitura escrita sons letras vogais consoantes sílabas palavras frases pontuação histórias rimas 1.º ciclo primária aprender a ler">
+              <span class="portal-ano-link-icon"><i class="ph ph-book-open-text"></i></span>
+              <span class="portal-ano-link-name">Português</span>
+              <span class="portal-ano-link-meta">5 domínios</span>
+              <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+            </button>
+            <button class="portal-ano-link" onclick="showEm1View()" data-disc="estudo-do-meio" data-search="1.º ano estudo do meio corpo sentidos família escola estações tempo animais plantas natureza segurança 1.º ciclo primária ciências">
+              <span class="portal-ano-link-icon"><i class="ph ph-globe-hemisphere-west"></i></span>
+              <span class="portal-ano-link-name">Estudo do Meio</span>
+              <span class="portal-ano-link-meta">5 temas</span>
+              <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ── 2.º CICLO ── -->
+    <section class="portal-ciclo">
+      <div class="portal-ciclo-head"><span class="portal-ciclo-title">2.º Ciclo</span><span class="portal-ciclo-range">5.º e 6.º anos</span></div>
+      <div class="portal-ano-grid">
+        <article class="portal-ano-card y5" data-ano="5">
+          <div class="portal-ano-head"><span class="portal-ano-num">5.º</span><span class="portal-ano-lbl">Ano</span></div>
+          <div class="portal-ano-links">
+            <button class="portal-ano-link" onclick="showMat5View()" data-disc="matematica" data-search="5.º ano matemática números naturais frações decimais percentagens figuras sólidos sequências dados 2.º ciclo">
+              <span class="portal-ano-link-icon"><i class="ph ph-plus-minus"></i></span>
+              <span class="portal-ano-link-name">Matemática</span>
+              <span class="portal-ano-link-meta">7 capítulos</span>
+              <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+            </button>
+          </div>
+        </article>
+        <article class="portal-ano-card y6" data-ano="6">
+          <div class="portal-ano-head"><span class="portal-ano-num">6.º</span><span class="portal-ano-lbl">Ano</span></div>
+          <div class="portal-ano-links">
+            <button class="portal-ano-link" onclick="showMat6View()" data-disc="matematica" data-search="6.º ano matemática primos divisibilidade frações potências racionais perímetros áreas volumes proporcionalidade dados 2.º ciclo">
+              <span class="portal-ano-link-icon"><i class="ph ph-divide"></i></span>
+              <span class="portal-ano-link-name">Matemática</span>
+              <span class="portal-ano-link-meta">7 capítulos</span>
+              <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ── 3.º CICLO ── -->
+    <section class="portal-ciclo">
+      <div class="portal-ciclo-head"><span class="portal-ciclo-title">3.º Ciclo</span><span class="portal-ciclo-range">7.º, 8.º e 9.º anos</span></div>
+      <div class="portal-ano-grid">
+        <article class="portal-ano-card y7" data-ano="7">
+          <div class="portal-ano-head"><span class="portal-ano-num">7.º</span><span class="portal-ano-lbl">Ano</span></div>
+          <div class="portal-ano-links">
+            <button class="portal-ano-link" onclick="showMat7View()" data-disc="matematica" data-search="7.º ano matemática números inteiros racionais geometria equações sequências funções figuras semelhantes dados 3.º ciclo">
+              <span class="portal-ano-link-icon"><i class="ph ph-calculator"></i></span>
+              <span class="portal-ano-link-name">Matemática</span>
+              <span class="portal-ano-link-meta">8 capítulos</span>
+              <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+            </button>
+            <button class="portal-ano-link portal-ano-link--pt" onclick="showPort7View()" data-disc="portugues" data-search="7.º ano português narrativas tradicionais contos fábulas lendas poesia texto dramático gramática leitura escrita 3.º ciclo">
+              <span class="portal-ano-link-icon"><i class="ph ph-book-open-text"></i></span>
+              <span class="portal-ano-link-name">Português</span>
+              <span class="portal-ano-link-meta">5 domínios</span>
+              <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+            </button>
+            <button class="portal-ano-link portal-ano-link--fq" onclick="showFq7View()" data-disc="fisico-quimica" data-search="7.º ano físico-química fq universo astros galáxias sistema solar terra lua forças gravidade materiais substâncias misturas soluções densidade estados físicos energia 3.º ciclo">
+              <span class="portal-ano-link-icon"><i class="ph ph-flask"></i></span>
+              <span class="portal-ano-link-name">Físico-Química</span>
+              <span class="portal-ano-link-meta">4 temas</span>
+              <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+            </button>
+          </div>
+        </article>
+        <article class="portal-ano-card y8" data-ano="8">
+          <div class="portal-ano-head"><span class="portal-ano-num">8.º</span><span class="portal-ano-lbl">Ano</span></div>
+          <div class="portal-ano-links">
+            <button class="portal-ano-link" onclick="showMat8View()" data-disc="matematica" data-search="8.º ano matemática números vetores polinómios pitágoras funções sistemas volumes probabilidades 3.º ciclo">
+              <span class="portal-ano-link-icon"><i class="ph ph-function"></i></span>
+              <span class="portal-ano-link-name">Matemática</span>
+              <span class="portal-ano-link-meta">8 capítulos</span>
+              <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+            </button>
+            <button class="portal-ano-link portal-ano-link--pt" onclick="showPort8View()" data-disc="portugues" data-search="8.º ano português anne frank gato malhado andorinha jorge amado natal torga adamastor texto dramático poesia gramática leitura escrita 3.º ciclo">
+              <span class="portal-ano-link-icon"><i class="ph ph-book-open-text"></i></span>
+              <span class="portal-ano-link-name">Português</span>
+              <span class="portal-ano-link-meta">5 domínios</span>
+              <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+            </button>
+            <button class="portal-ano-link portal-ano-link--fq" onclick="showFq8View()" data-disc="fisico-quimica" data-search="8.º ano físico-química fq reações químicas transformações reagentes produtos ácidos bases ph combustão som propagação frequência luz reflexão refração espelhos lentes cor 3.º ciclo">
+              <span class="portal-ano-link-icon"><i class="ph ph-flask"></i></span>
+              <span class="portal-ano-link-name">Físico-Química</span>
+              <span class="portal-ano-link-meta">3 temas</span>
+              <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+            </button>
+          </div>
+        </article>
+        <article class="portal-ano-card y9 portal-ano-card--wide" data-ano="9">
+          <div class="portal-ano-head"><span class="portal-ano-num">9.º</span><span class="portal-ano-lbl">Ano</span></div>
+          <div class="portal-ano-links">
+            <button class="portal-ano-link" onclick="showMat9View()" data-disc="matematica" data-search="9.º ano matemática reais inequações equações 2.º grau funções trigonometria circunferência probabilidades estatística 3.º ciclo">
+              <span class="portal-ano-link-icon"><i class="ph ph-chart-line-up"></i></span>
+              <span class="portal-ano-link-name">Matemática</span>
+              <span class="portal-ano-link-meta">6 capítulos</span>
+              <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+            </button>
+            <button class="portal-ano-link portal-ano-link--pt" onclick="showPort9View()" data-disc="portugues" data-search="9.º ano português educação literária os lusíadas auto da barca gramática leitura escrita figuras de estilo recursos expressivos 3.º ciclo">
+              <span class="portal-ano-link-icon"><i class="ph ph-book-open-text"></i></span>
+              <span class="portal-ano-link-name">Português</span>
+              <span class="portal-ano-link-meta">5 domínios</span>
+              <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+            </button>
+            <button class="portal-ano-link portal-ano-link--fq" onclick="showFq9View()" data-disc="fisico-quimica" data-search="9.º ano físico-química fq movimento forças velocidade newton fluidos energia eletricidade corrente circuitos lei de ohm estrutura atómica tabela periódica ligação química iões moléculas 3.º ciclo">
+              <span class="portal-ano-link-icon"><i class="ph ph-atom"></i></span>
+              <span class="portal-ano-link-name">Físico-Química</span>
+              <span class="portal-ano-link-meta">4 temas</span>
+              <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ── SECUNDÁRIO ── -->
+    <section class="portal-ciclo">
+      <div class="portal-ciclo-head"><span class="portal-ciclo-title">Secundário</span><span class="portal-ciclo-range">10.º, 11.º e 12.º anos</span></div>
+      <div class="portal-ano-grid">
+        <article class="portal-ano-card y10" data-ano="10">
+          <div class="portal-ano-head"><span class="portal-ano-num">10.º</span><span class="portal-ano-lbl">Ano</span></div>
+          <div class="portal-ano-links">
+            <button class="portal-ano-link" onclick="showMat10View()" data-disc="matematica" data-search="10.º ano matemática a lógica conjuntos álgebra radicais polinómios geometria analítica vetores funções trigonometria estatística secundário">
+              <span class="portal-ano-link-icon"><i class="ph ph-math-operations"></i></span>
+              <span class="portal-ano-link-name">Matemática A</span>
+              <span class="portal-ano-link-meta">6 capítulos</span>
+              <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+            </button>
+          </div>
+        </article>
+        <article class="portal-ano-card y11" data-ano="11">
+          <div class="portal-ano-head"><span class="portal-ano-num">11.º</span><span class="portal-ano-lbl">Ano</span></div>
+          <div class="portal-ano-links">
+            <button class="portal-ano-link" onclick="showMat11View()" data-disc="matematica" data-search="11.º ano matemática a geometria trigonometria produto escalar sucessões limites continuidade derivadas funções probabilidades combinatória secundário">
+              <span class="portal-ano-link-icon"><i class="ph ph-chart-polar"></i></span>
+              <span class="portal-ano-link-name">Matemática A</span>
+              <span class="portal-ano-link-meta">6 capítulos</span>
+              <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+            </button>
+          </div>
+        </article>
+        <article class="portal-ano-card y12" data-ano="12">
+          <div class="portal-ano-head"><span class="portal-ano-num">12.º</span><span class="portal-ano-lbl">Ano</span></div>
+          <div class="portal-ano-links">
+            <button class="portal-ano-link" onclick="showMat12View()" data-disc="matematica" data-search="12.º ano matemática a cálculo combinatório arranjos permutações combinações binómio newton probabilidades condicionada funções limites continuidade bolzano derivadas assíntotas trigonometria exponenciais logaritmos primitivas integral números complexos secundário exame nacional">
+              <span class="portal-ano-link-icon"><i class="ph ph-chart-polar"></i></span>
+              <span class="portal-ano-link-name">Matemática A</span>
+              <span class="portal-ano-link-meta">7 capítulos</span>
+              <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ── PREPARAÇÃO PARA EXAMES ── -->
+    <section class="portal-ciclo" id="portal-ciclo-exames">
+      <div class="portal-ciclo-head"><span class="portal-ciclo-title"><i class="ph ph-graduation-cap" style="font-size:1.1rem;vertical-align:-2px"></i> Preparação para Exames</span><span class="portal-ciclo-range">Provas finais · Exames nacionais</span></div>
+      <div class="portal-ano-grid portal-ano-grid--exames">
+        <button class="portal-exam-card" onclick="window.location.href='exames.html'" data-disc="matematica" data-ano="9" data-search="exames nacionais 9.º ano matemática provas finais questões reais simulador">
+          <span class="portal-exam-card-ic"><i class="ph ph-exam"></i></span>
+          <span class="portal-exam-card-body"><span class="portal-exam-card-title">Matemática · 9.º</span><span class="portal-exam-card-meta">Provas finais 2019-2024 · 147+ questões</span></span>
+          <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+        </button>
+        <button class="portal-exam-card" onclick="window.location.href='exames-pt.html'" data-disc="portugues" data-ano="9" data-search="exames nacionais 9.º ano português provas finais compreensão gramática lusíadas figuras de estilo composição simulador">
+          <span class="portal-exam-card-ic"><i class="ph ph-exam"></i></span>
+          <span class="portal-exam-card-body"><span class="portal-exam-card-title">Português · 9.º</span><span class="portal-exam-card-meta">Provas finais · Os Lusíadas</span></span>
+          <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+        </button>
+        <button class="portal-exam-card" onclick="window.location.href='exames12.html'" data-disc="matematica" data-ano="12" data-search="exames nacionais 12.º ano matemática a derivadas geometria probabilidades funções sucessões trigonometria secundário">
+          <span class="portal-exam-card-ic"><i class="ph ph-exam"></i></span>
+          <span class="portal-exam-card-body"><span class="portal-exam-card-title">Matemática A · 12.º</span><span class="portal-exam-card-meta">Exames 2020-2025 · 13 temas</span></span>
+          <i class="ph ph-arrow-right portal-ano-link-arrow"></i>
+        </button>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="portal-no-results" id="portal-no-results">Nenhum resultado. Tenta outro termo ou limpa os filtros.</div>
+
+  </div><!-- /sec-cursos -->
+
+  <!-- ═══ SECÇÃO APOIO AO ESTUDO (centro) — o #portal-turmas é movido
+       para aqui pela navegação quando esta secção está ativa ═══ -->
+  <div id="sec-apoio" style="display:none"></div>
+
 </div>
 
-<!-- ── Progresso rápido (injectado por portal.js) ── -->
+<!-- Progresso rápido -->
 <div id="portal-progress-widget" style="display:none;max-width:760px;margin:.5rem auto 0;padding:0 1rem"></div>
+<main id="portal-main" style="display:none"></main>
 
-<div class="controls-wrap">
-  <div class="search-box">
-    <span class="search-icon"><i class="ph ph-magnifying-glass"></i></span>
-    <input type="text" id="s-input" placeholder="Pesquisar disciplina, ano ou conteúdo…" oninput="doSearch(this.value)" onkeydown="searchKeyNav(event)" autocomplete="off">
-    <div class="search-results" id="searchResults"></div>
-  </div>
-  <div class="filters">
-    <button class="f-btn active c3" onclick="filterBy('all',this)">Matemática 7.º Ano</button>
-  </div>
-</div>
-
-<main id="portal-main"></main>
-<div class="no-results" id="no-results">
-  <div class="nr-icon"><i class="ph ph-magnifying-glass text-[2.8em] text-[var(--ink4)]"></i></div>
-  <h3>Sem resultados</h3>
-  <p>Tenta pesquisar com outro termo.</p>
-</div>
-
-<footer>
-  <strong>3ponto14</strong> · Centro de Estudos · Construído com <i class="ph ph-heart" aria-hidden="true"></i> para alunos e professores de Portugal
+<footer class="portal-footer">
+  <strong>3ponto14</strong> · Feito com <i class="ph ph-heart"></i> para alunos e professores de Portugal
+  <br><a href="termos.html">Termos de Utilização</a> · <a href="privacidade.html">Política de Privacidade</a>
 </footer>
 </div>
 
-<script src="js/shared.js"></script>
-<script src="js/portal.js"></script>
-<script src="js/fx.js"></script>
-<script src="js/nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/shared.js?v=20260621"></script>
+<script src="js/cloud.js?v=20260621"></script>
+<script src="js/auth-ui.js?v=20260621"></script>
+<script src="js/turmas.js?v=20260621"></script>
+<script src="js/turmas-ui.js?v=20260621"></script>
+<script src="js/notificacoes.js?v=20260621"></script>
+<script src="js/menu-lateral.js?v=20260621"></script>
+<script src="js/desafio.js?v=20260621"></script>
+<script src="js/painel-inicio.js?v=20260621"></script>
+<script src="js/portal-nav.js?v=20260621"></script>
+<script src="js/portal.js?v=20260621"></script>
+<script src="js/ux-improvements.js?v=20260621"></script>
+<script src="js/fx.js?v=20260621"></script>
+<script src="js/nav.js?v=20260621"></script>
+<!-- PWA: manifest + service worker (partilhado, auto-deteta a raiz) -->
+<script src="js/pwa.js?v=20260622"></script>
 </body>
 </html>

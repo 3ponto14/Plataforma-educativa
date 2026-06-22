@@ -1,0 +1,36 @@
+name: Testes dos geradores
+
+# Corre a rede de testes (test/run.sh) que valida os geradores de
+# exercícios de todos os anos — apanha regressões na matemática
+# (resposta fora das opções, opções duplicadas, Quiz vazio, etc.).
+#
+# Dispara em cada push e em pull requests que toquem no código JS ou
+# nos próprios testes. Em runner Linux não há jsc; o run.sh deteta isso
+# e usa o node (com o shim test/_shim-node.js).
+
+on:
+  push:
+    paths:
+      - 'js/**'
+      - 'test/**'
+      - '.github/workflows/testes.yml'
+  pull_request:
+    paths:
+      - 'js/**'
+      - 'test/**'
+      - '.github/workflows/testes.yml'
+
+jobs:
+  geradores:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Instalar node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Correr a rede de testes
+        run: bash test/run.sh

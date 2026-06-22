@@ -1,14 +1,47 @@
+/* ── Entrega genérica de trabalho sem nota (fichas, jogos) ──
+   Mostra uma barra fixa «✓ Já fiz — entregar» quando o aluno abriu um
+   trabalho atribuído que não dá nota X/Y. Reutilizado por todos os cursos.
+   `tarefaId` vem do &tarefa= do link; `oque` é o rótulo (ex.: 'a ficha'). */
+function tarefaEntregaBar(tarefaId, oque) {
+  if (!tarefaId) return;
+  if (document.getElementById('edu-entrega-bar')) return;
+  var bar = document.createElement('div');
+  bar.id = 'edu-entrega-bar';
+  bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:9000;background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;padding:.7rem 1rem;display:flex;align-items:center;justify-content:center;gap:.8rem;flex-wrap:wrap;box-shadow:0 -4px 16px rgba(0,0,0,.18);font-family:Montserrat,sans-serif';
+  bar.innerHTML = '<span style="font-weight:700;font-size:.86rem">Trabalho atribuído pelo teu professor</span>'
+    + '<button id="edu-entrega-btn" style="background:#fff;color:#1a4a2e;border:none;border-radius:999px;padding:7px 16px;font-size:.84rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">✓ Já fiz — entregar</button>';
+  document.body.appendChild(bar);
+  bar.querySelector('#edu-entrega-btn').onclick = function () {
+    if (typeof Turmas === 'undefined' || !Turmas.guardarResultado) return;
+    var lbl = oque || 'Trabalho concluído';
+    Turmas.guardarResultado(tarefaId, 1, 1, [{ q: lbl, certo: true }]).then(function () {
+      if (typeof eduToast === 'function') eduToast('Entregue ao professor! ✅', 'success');
+      var b = document.getElementById('edu-entrega-bar'); if (b) b.parentNode.removeChild(b);
+    }).catch(function () { if (typeof eduToast === 'function') eduToast('Não foi possível entregar.', 'error'); });
+  };
+}
+
 /* ── Block 2 (from line 4431) ── */
 // Lazy loader for game scripts
 function lazyLoad(src, callback) {
-  var _jsPrefix = (window.location.pathname.indexOf('/mat7/') !== -1 ||
-                   window.location.pathname.endsWith('/mat7')) ? '../js/' : 'js/';
+  // Páginas de curso vivem num subdiretório (mat7/, …, port9/) e precisam de '../js/'.
+  // Deteção via fonte única em shared.js (fallback à regex se faltar).
+  var _inCourseDir = (typeof eduIsCourseHub === 'function') ? eduIsCourseHub()
+    : /\/(mat\d+|port\d+|fq\d+|em\d+)(\/|$)/.test(window.location.pathname);
+  var _jsPrefix = _inCourseDir ? '../js/' : 'js/';
   var fullSrc = _jsPrefix + src;
   var existing = document.querySelector('script[src="' + fullSrc + '"]');
   if (existing) { if(callback) callback(); return; }
   var s = document.createElement('script');
   s.src = fullSrc;
-  if(callback) s.onload = callback;
+  if(callback) {
+    s.onload = callback;
+    s.onerror = function() {
+      console.warn('lazyLoad: failed to load ' + fullSrc);
+      // Call callback anyway so the UI doesn't hang
+      callback();
+    };
+  }
   document.head.appendChild(s);
 }
 
@@ -107,7 +140,7 @@ function _maybeShowNextStep(sec, correct, total) {
   showNextStep(container, map.msg, map.btn, map.act);
 }
 
-// JOGO DO 24 — Mecânica passo-a-passo (calculadora progressiva)
+// JOGO DO 24 Mecânica passo-a-passo (calculadora progressiva)
 
 var _j24Levels = {
   facil:   { label:'<span style="display:inline-block;width:.6em;height:.6em;border-radius:50%;background:#4caf50;vertical-align:middle;flex-shrink:0;margin-right:1px"></span> Fácil',   nums: function(){ return _j24Pick4([1,2,3,4,5,6,7,8,9,1,2,3,4,6,8]); }, time: 90 },
@@ -429,7 +462,7 @@ function j24Hint(cid) {
   if (!s) return;
   var hint = _j24Hint(s.origNums);
   if (hint) _j24ShowResult(cid, 'hint', '<i class="ph ph-lightbulb"></i> Uma solução: ' + hint.replace(/\*/g,'×').replace(/\//g,'÷'));
-  else _j24ShowResult(cid, 'hint', '<i class="ph ph-lightbulb"></i> Este puzzle não tem solução — gera um novo!');
+  else _j24ShowResult(cid, 'hint', '<i class="ph ph-lightbulb"></i> Este puzzle não tem solução gera um novo!');
 }
 
 function j24New(cid) {
@@ -455,7 +488,7 @@ function _j24ShowResult(cid, type, msg) {
   var el = c.querySelector('.j24-result');
   if (!el) return;
   el.className = 'j24-result ' + type;
-  el.textContent = msg || '';
+  el.innerHTML = msg || ''; // msg é HTML interno (ícones Phosphor + expressão), não input do utilizador
   el.style.display = 'block';
 }
 
@@ -477,7 +510,7 @@ function _j24BuildHTML(cid, defaultLevel) {
     '      <button class="btn btn-ghost" style="padding:6px 14px;font-size:.78rem" onclick="j24New(\''+cid+'\')">↺ Novo puzzle</button>',
     '    </div>',
     '  </div>',
-    '  <p style="font-size:.85rem;color:var(--ink3);margin-bottom:1rem">Usa os <strong>4 números</strong> exactamente uma vez — combina dois de cada vez com +, −, ×, ÷. O resultado substitui os dois números. Chega ao <strong>24</strong>!</p>',
+    '  <p style="font-size:.85rem;color:var(--ink3);margin-bottom:1rem">Usa os <strong>4 números</strong> exactamente uma vez combina dois de cada vez com +, −, ×, ÷. O resultado substitui os dois números. Chega ao <strong>24</strong>!</p>',
     '  <div class="level-bar" style="margin-bottom:1.25rem">',
     '    <div class="gen-level-group">',
     '      <span class="gen-level-label">Nível:</span>',
@@ -517,7 +550,7 @@ function _j24BuildHTML(cid, defaultLevel) {
 
 var _j24Inited = {}; // legacy tracker (superseded by _gInited in the new game system)
 
-// JOGOS — SISTEMA DE TABS + 4 JOGOS
+// JOGOS SISTEMA DE TABS + 4 JOGOS
 
 // ── Tab switcher ──
 function gTabSwitch(wrapId, tabName) {
@@ -529,66 +562,308 @@ function gTabSwitch(wrapId, tabName) {
   var panel = wrap.querySelector('[data-gpanel="'+tabName+'"]');
   if (tab) tab.classList.add('active');
   if (panel) panel.classList.add('active');
-  // Lazy init
-  var inst = _gInstances[wrapId];
-  if (!inst) return;
-  if (tabName === 'j24'  && !_j24State[wrapId+'-j24-game']) {
-    var _j24GameId = wrapId+'-j24-game';
-    var _j24Panel  = document.getElementById(wrapId+'-j24');
-    if (_j24Panel && !_j24Panel.querySelector('.j24-card')) {
-      _j24Panel.innerHTML = _j24BuildHTML(_j24GameId, inst.defaultLevel || 'medio');
-      _j24Init(_j24GameId, inst.defaultLevel || 'medio');
-    }
-  }
-  // Games from systems-games.js (lazy-loaded)
-  var _needsGames = (tabName === 'c4' && !inst.c4) || (tabName === 'mine' && !inst.mine) ||
-                    (tabName === 'sdk' && !inst.sdk) || (tabName === 'hanoi' && !inst.hanoi);
-  if (_needsGames) {
-    lazyLoad('systems-games.js', function() {
-      if (tabName === 'c4'   && !inst.c4)   { inst.c4   = new Game4Linha(wrapId+'-c4',   inst.qFn); }
-      if (tabName === 'mine' && !inst.mine) { inst.mine = new GameMine(wrapId+'-mine', inst.qFn); }
-      if (tabName === 'sdk'  && !inst.sdk)  { inst.sdk  = new GameSudoku(wrapId+'-sdk'); }
-      if (tabName === 'hanoi'&& !inst.hanoi){ inst.hanoi= new GameHanoi(wrapId+'-hanoi', inst.qFn); }
-    });
-    return;
-  }
-  if (tabName === 'escape' && !inst.escape) {
-    lazyLoad('games.js', function() {
-      inst.escape = new GameEscapeRoom(wrapId+'-escape', inst.qFn);
-    });
-  }
+  // Esconde o filtro de subtema + cabeçalho nos jogos sem perguntas (24, Sudoku)
+  _gToggleSubtemaUI(wrapId, tabName);
+  // Lazy init do separador escolhido (catálogo data-driven)
+  _gInitTab(wrapId, tabName);
+}
+
+// Mostra/esconde a barra de subtema e o cabeçalho conforme o jogo activo usa
+// (ou não) perguntas de conteúdo.
+function _gToggleSubtemaUI(wrapId, tabName) {
+  var show = !!_gContentGames[tabName];
+  var filt = document.getElementById(wrapId + '-filter');
+  var head = document.getElementById(wrapId + '-tema-head');
+  if (filt) filt.style.display = show ? '' : 'none';
+  if (head) head.style.display = show ? '' : 'none';
 }
 
 var _gInstances = {};
 
+// Provedores de perguntas por wrapId. Cada ano (mat5..mat11) regista aqui
+// uma função (level) → {q, opts:[4], ans} que usa o conteúdo DESSE ano,
+// para os jogos (4 em Linha, Campo Minado, Escape) usarem a matéria certa.
+var _gProviders = {};
+function _gRegisterProvider(wrapId, fn) { if (wrapId && typeof fn === 'function') _gProviders[wrapId] = fn; }
+
 // Build the full jogos HTML for a wrapper div
+// ── Catálogo de jogos (label + ícone HTML do separador) ──
+var _gCatalogo = {
+  j24:    { label: '24',            icon: '<i class="ph ph-dice-five"></i> ' },
+  c4:     { label: '4 em Linha',    icon: '<span style="display:inline-block;width:.6em;height:.6em;border-radius:50%;background:#ef4444;vertical-align:middle;flex-shrink:0;margin-right:1px"></span> ' },
+  mine:   { label: 'Campo Minado',  icon: '<i class="ph ph-bomb"></i> ' },
+  sdk:    { label: 'Sudoku',        icon: '<i class="ph ph-grid-four"></i> ' },
+  hanoi:  { label: 'Hanói',         icon: '<i class="ph ph-tree-structure"></i> ' },
+  escape: { label: 'Escape Room',   icon: '🔐 ' },
+  corrida:{ label: 'Corrida de Cálculo', icon: '<i class="ph ph-timer"></i> ' },
+  pares:  { label: 'Caça ao Par',   icon: '<i class="ph ph-cards"></i> ' },
+  vfrelampago: { label: 'V/F Relâmpago', icon: '<i class="ph ph-lightning"></i> ' }
+};
+// ── Conjuntos de jogos por faixa etária ──
+// 2.º ciclo (5.º/6.º), 3.º ciclo (7.º/8.º/9.º), secundário (10.º/11.º).
+var _gSets = {
+  ciclo2: ['j24', 'corrida', 'pares', 'c4', 'mine', 'escape'],
+  ciclo3: ['j24', 'pares', 'c4', 'mine', 'vfrelampago', 'escape'],
+  sec:    ['vfrelampago', 'pares', 'c4', 'mine', 'corrida', 'escape']
+};
+// Jogos que usam perguntas de conteúdo (qFn). Só nestes faz sentido o filtro
+// de subtema e o cabeçalho "Perguntas sobre:". j24 e sudoku geram puzzles
+// próprios (sem perguntas), por isso a barra esconde-se nesses separadores.
+var _gContentGames = { c4:1, mine:1, hanoi:1, escape:1, corrida:1, pares:1, vfrelampago:1 };
+function _gSetFor(wrapId) {
+  // mat5/mat6 → ciclo2; mat10/mat11 → sec; resto (mat7/8/9) → ciclo3
+  if (/mat5|mat6/.test(wrapId)) return _gSets.ciclo2;
+  if (/mat10|mat11/.test(wrapId)) return _gSets.sec;
+  if (/mat7|mat8|mat9/.test(wrapId)) return _gSets.ciclo3;
+  return ['j24', 'c4', 'mine', 'sdk', 'hanoi', 'escape']; // legado (7.º por capítulo)
+}
+
+// ── Config de filtro por curso (capítulos + subtemas + provider) ──
+// Cada ano regista aqui o que precisa para desenhar os chips de capítulo e
+// subtema e para pedir perguntas filtradas. cfg = {
+//   capMeta:[{n,label}], subtemas:{cap:[labels]},
+//   qFor:function(level, sel){ ... }  // sel = {caps:[], stsByCap:{}}
+// }
+var _gCourseCfg = {};
+function _gRegisterGameCourse(wrapId, cfg) { if (wrapId && cfg) _gCourseCfg[wrapId] = cfg; }
+// Seleção de capítulos/subtemas por wrapper (multi). caps=[] → todos.
+var _gSel = {};
+function _gSelFor(wrapId) {
+  if (!_gSel[wrapId]) _gSel[wrapId] = { caps: [], stsByCap: {} };
+  return _gSel[wrapId];
+}
+
 function _gBuildJogos(wrapId, defaultLevel) {
   var wrap = document.getElementById(wrapId);
   if (!wrap) return;
-  // Store question function and defaultLevel
-  _gInstances[wrapId] = { qFn: function(level){ return _gGetQuestion(wrapId, level || defaultLevel || 'medio'); }, defaultLevel: defaultLevel || 'medio' };
-  wrap.innerHTML = [
-    '<div class="g-tabs">',
-    '  <button class="g-tab active" data-gtab="j24"  onclick="gTabSwitch(\''+wrapId+'\',\'j24\')"><i class="ph ph-dice-five"></i> 24</button>',
-    '  <button class="g-tab"        data-gtab="c4"   onclick="gTabSwitch(\''+wrapId+'\',\'c4\')"><span style="display:inline-block;width:.6em;height:.6em;border-radius:50%;background:#ef4444;vertical-align:middle;flex-shrink:0;margin-right:1px"></span> 4 em Linha</button>',
-    '  <button class="g-tab"        data-gtab="mine" onclick="gTabSwitch(\''+wrapId+'\',\'mine\')"><i class="ph ph-bomb"></i> Campo Minado</button>',
-    '  <button class="g-tab"        data-gtab="sdk"  onclick="gTabSwitch(\''+wrapId+'\',\'sdk\')"><i class="ph ph-grid-four"></i> Sudoku</button>',
-    '  <button class="g-tab"        data-gtab="hanoi" onclick="gTabSwitch(\''+wrapId+'\',\'hanoi\')"><i class="ph ph-tree-structure"></i> Hanoi</button>',
-    '  <button class="g-tab"        data-gtab="escape" onclick="gTabSwitch(\''+wrapId+'\',\'escape\')">🔐 Escape Room</button>',
-    '</div>',
-    '<div class="g-panel active" data-gpanel="j24"  id="'+wrapId+'-j24"></div>',
-    '<div class="g-panel"        data-gpanel="c4"   id="'+wrapId+'-c4"></div>',
-    '<div class="g-panel"        data-gpanel="mine" id="'+wrapId+'-mine"></div>',
-    '<div class="g-panel"        data-gpanel="sdk"  id="'+wrapId+'-sdk"></div>',
-    '<div class="g-panel"        data-gpanel="hanoi" id="'+wrapId+'-hanoi"></div>',
-    '<div class="g-panel"        data-gpanel="escape" id="'+wrapId+'-escape"></div>',
-  ].join('\n');
-  // Init j24 immediately (default tab)
-  // Must build the HTML first (like the old _j24AutoInit did), then init
-  var _j24GameId = wrapId+'-j24-game';
-  var _j24Panel  = document.getElementById(wrapId+'-j24');
-  if (_j24Panel) { _j24Panel.innerHTML = _j24BuildHTML(_j24GameId, defaultLevel || 'medio'); }
-  _j24Init(_j24GameId, defaultLevel || 'medio');
+  // Store question function and defaultLevel. Usa provedor do ano se registado.
+  // NUNCA devolve null (os jogos antigos assumem q.q válido).
+  _gInstances[wrapId] = { qFn: function(level){
+      var lv = level || defaultLevel || 'medio';
+      var q = null;
+      // 1) curso com config de filtro (capítulo/subtema multi)
+      var cfg = _gCourseCfg[wrapId];
+      if (cfg && typeof cfg.qFor === 'function') {
+        try { q = cfg.qFor(lv, _gSelFor(wrapId)); } catch (e) { q = null; }
+        q = _gNoRepeat(wrapId, q, cfg, lv);
+        if (q && q.q && q.opts) return q;
+      }
+      // 2) provider antigo (sem filtro) — anos ainda não migrados
+      if (_gProviders[wrapId]) { try { q = _gProviders[wrapId](lv); } catch (e2) { q = null; } if (q && q.q && q.opts) return q; }
+      // 3) pools internos (mat7 por capítulo)
+      q = _gGetQuestion(wrapId, lv);
+      if (q && q.q && q.opts && q.opts.length) return q;
+      // fallback final: pergunta simples garantida
+      return _gFallbackQ();
+    }, defaultLevel: defaultLevel || 'medio' };
+  var jogos = _gSetFor(wrapId);
+  var html = [];
+  // ── Barras de filtro (capítulos + subtemas, multi-seleção) + cabeçalho ──
+  html.push('<div class="g-filter" id="' + wrapId + '-filter">' + _gFilterBarsHTML(wrapId) + '</div>');
+  html.push('<div class="g-tema-head" id="' + wrapId + '-tema-head">' + _gTemaHeadHTML(wrapId) + '</div>');
+  var tabs = ['<div class="g-tabs">'], panels = [];
+  jogos.forEach(function (id, i) {
+    var c = _gCatalogo[id]; if (!c) return;
+    tabs.push('  <button class="g-tab' + (i === 0 ? ' active' : '') + '" data-gtab="' + id + '" onclick="gTabSwitch(\'' + wrapId + '\',\'' + id + '\')">' + c.icon + c.label + '</button>');
+    panels.push('<div class="g-panel' + (i === 0 ? ' active' : '') + '" data-gpanel="' + id + '" id="' + wrapId + '-' + id + '"></div>');
+  });
+  tabs.push('</div>');
+  wrap.innerHTML = html.concat(tabs).concat(panels).join('\n');
+  // esconde as barras se o 1.º jogo do conjunto não usar perguntas
+  _gToggleSubtemaUI(wrapId, jogos[0]);
+  // inicia o primeiro jogo do conjunto
+  _gInitTab(wrapId, jogos[0], defaultLevel || 'medio');
+}
+
+// Memória anti-repetição genérica: tenta até 6× obter uma pergunta inédita.
+function _gNoRepeat(wrapId, q, cfg, lv) {
+  var recent = _gRecent[wrapId] || [];
+  // Tenta várias vezes obter uma pergunta que não esteja nas recentes. Em pools
+  // pequenos pode não conseguir; aí mantém-se uma janela curta para, no mínimo,
+  // alternar e nunca repetir a IMEDIATAMENTE anterior.
+  var melhor = q;
+  for (var k = 0; k < 14 && q && recent.indexOf(q.q) !== -1; k++) {
+    try { q = cfg.qFor(lv, _gSelFor(wrapId)); } catch (e) { break; }
+    if (q && q.q && (!recent.length || q.q !== recent[recent.length - 1])) melhor = q;
+  }
+  if (q && recent.indexOf(q.q) === -1) melhor = q; // encontrou inédita
+  q = melhor;
+  if (q && q.q) {
+    recent.push(q.q);
+    while (recent.length > 3) recent.shift(); // janela curta (alternância)
+    _gRecent[wrapId] = recent;
+  }
+  return q;
+}
+
+// Capítulos disponíveis para um wrapper (da config ou dos pools mat7).
+function _gCapsList(wrapId) {
+  var cfg = _gCourseCfg[wrapId];
+  if (cfg && cfg.capMeta && cfg.capMeta.length) {
+    return cfg.capMeta.map(function (m) { return { n: m.n, label: m.label }; });
+  }
+  // mat7: capítulos com pools/subtemas conhecidos (1–5)
+  if (/j24-wrap/.test(wrapId) && typeof _mat7CapNames !== 'undefined') {
+    var caps = (wrapId === 'j24-wrap-unified' && _gActiveCaps && _gActiveCaps.length) ? _gActiveCaps : [1,2,3,4,5];
+    return caps.map(function (n) { return { n: n, label: _mat7CapNames[n] || ('Cap.' + n) }; });
+  }
+  return [];
+}
+// Labels de subtema de um capítulo (config do ano, ou _capStShort/fallback mat7).
+function _gCapSubs(wrapId, cap) {
+  var cfg = _gCourseCfg[wrapId];
+  if (cfg && cfg.subtemas && cfg.subtemas[cap]) return cfg.subtemas[cap];
+  return _gSubLabels(cap) || [];
+}
+
+// Constrói as duas barras: CAPÍTULOS (multi) e SUBTEMAS (multi) dos caps activos.
+function _gFilterBarsHTML(wrapId) {
+  var caps = _gCapsList(wrapId);
+  if (!caps.length) return '';
+  var sel = _gSelFor(wrapId);
+  // — Barra de capítulos —
+  var capChips = ['<button class="g-fl-chip' + (sel.caps.length === 0 ? ' active' : '') +
+    '" onclick="gToggleCap(\'' + wrapId + '\',0)"><i class="ph ph-list"></i> Todos</button>'];
+  caps.forEach(function (c) {
+    var on = sel.caps.indexOf(c.n) !== -1;
+    capChips.push('<button class="g-fl-chip' + (on ? ' active' : '') +
+      '" onclick="gToggleCap(\'' + wrapId + '\',' + c.n + ')">' + c.label + '</button>');
+  });
+  var bars = '<div class="g-fl-bar"><span class="g-fl-label">Capítulos:</span>' + capChips.join('') + '</div>';
+  // — Barra de subtemas: une os subtemas dos capítulos selecionados —
+  var capsActivos = sel.caps.length ? sel.caps : caps.map(function (c) { return c.n; });
+  // só faz sentido escolher subtemas quando há 1 capítulo selecionado
+  if (sel.caps.length === 1) {
+    var cap = sel.caps[0];
+    var subs = _gCapSubs(wrapId, cap);
+    if (subs && subs.length) {
+      var stOn = sel.stsByCap[cap] || [];
+      var stChips = ['<button class="g-fl-chip g-fl-st' + (stOn.length === 0 ? ' active' : '') +
+        '" onclick="gToggleSt(\'' + wrapId + '\',' + cap + ',0)"><i class="ph ph-list"></i> Todos</button>'];
+      subs.forEach(function (lab, i) {
+        var st = i + 1, on = stOn.indexOf(st) !== -1;
+        stChips.push('<button class="g-fl-chip g-fl-st' + (on ? ' active' : '') +
+          '" onclick="gToggleSt(\'' + wrapId + '\',' + cap + ',' + st + ')">' + lab + '</button>');
+      });
+      bars += '<div class="g-fl-bar"><span class="g-fl-label">Subtemas:</span>' + stChips.join('') + '</div>';
+    }
+  } else if (sel.caps.length > 1) {
+    bars += '<div class="g-fl-bar g-fl-hint"><span class="g-fl-label">Subtemas:</span>' +
+      '<span class="g-fl-note">Escolhe <b>um único capítulo</b> para filtrar por subtema.</span></div>';
+  }
+  return bars;
+}
+
+// Cabeçalho que diz de onde vêm as perguntas.
+function _gTemaHeadHTML(wrapId) {
+  var sel = _gSelFor(wrapId);
+  var caps = _gCapsList(wrapId);
+  if (!caps.length) return '<i class="ph ph-target"></i> Perguntas variadas do ano';
+  var nome = {};
+  caps.forEach(function (c) { nome[c.n] = c.label; });
+  var alvo;
+  if (sel.caps.length === 0) {
+    alvo = 'Todos os capítulos';
+  } else if (sel.caps.length === 1) {
+    var cap = sel.caps[0];
+    var stOn = sel.stsByCap[cap] || [];
+    var subs = _gCapSubs(wrapId, cap);
+    if (stOn.length === 1 && subs[stOn[0] - 1]) {
+      alvo = subs[stOn[0] - 1] + ' <span class="g-tema-cap">(' + (nome[cap] || ('Cap.' + cap)) + ')</span>';
+    } else if (stOn.length > 1) {
+      alvo = stOn.length + ' subtemas <span class="g-tema-cap">(' + (nome[cap] || ('Cap.' + cap)) + ')</span>';
+    } else {
+      alvo = (nome[cap] || ('Cap.' + cap));
+    }
+  } else {
+    alvo = sel.caps.length + ' capítulos: ' + sel.caps.map(function (c) { return nome[c] || ('Cap.' + c); }).join(', ');
+  }
+  return '<i class="ph ph-target"></i> Perguntas sobre: <b>' + alvo + '</b>';
+}
+
+// Reinicia o jogo aberto e actualiza barras + cabeçalho após mudar a seleção.
+function _gRefreshAfterFilter(wrapId) {
+  _gRecent[wrapId] = []; // limpa anti-repetição ao mudar de filtro
+  var filt = document.getElementById(wrapId + '-filter');
+  if (filt) filt.innerHTML = _gFilterBarsHTML(wrapId);
+  var head = document.getElementById(wrapId + '-tema-head');
+  if (head) head.innerHTML = _gTemaHeadHTML(wrapId);
+  var wrap = document.getElementById(wrapId);
+  if (!wrap) return;
+  var activeTab = wrap.querySelector('.g-tab.active');
+  var id = activeTab ? activeTab.getAttribute('data-gtab') : null;
+  var inst = _gInstances[wrapId];
+  if (id && inst) {
+    var panel = document.getElementById(wrapId + '-' + id);
+    if (panel) panel.innerHTML = '';
+    if (id === 'c4') inst.c4 = null;
+    else if (id === 'mine') inst.mine = null;
+    else if (id === 'hanoi') inst.hanoi = null;
+    else if (id === 'escape') inst.escape = null;
+    else if (inst['edu_' + id]) inst['edu_' + id] = null;
+    _gInitTab(wrapId, id, inst.defaultLevel);
+  }
+}
+
+// Liga/desliga um capítulo (cap=0 → "Todos", limpa a seleção).
+function gToggleCap(wrapId, cap) {
+  var sel = _gSelFor(wrapId);
+  if (cap === 0) { sel.caps = []; sel.stsByCap = {}; }
+  else {
+    var i = sel.caps.indexOf(cap);
+    if (i === -1) sel.caps.push(cap);
+    else { sel.caps.splice(i, 1); delete sel.stsByCap[cap]; }
+  }
+  _gRefreshAfterFilter(wrapId);
+}
+// Liga/desliga um subtema de um capítulo (st=0 → "Todos os subtemas").
+function gToggleSt(wrapId, cap, st) {
+  var sel = _gSelFor(wrapId);
+  if (!sel.stsByCap[cap]) sel.stsByCap[cap] = [];
+  if (st === 0) { sel.stsByCap[cap] = []; }
+  else {
+    var arr = sel.stsByCap[cap], i = arr.indexOf(st);
+    if (i === -1) arr.push(st); else arr.splice(i, 1);
+  }
+  _gRefreshAfterFilter(wrapId);
+}
+
+// Pergunta de reserva (nunca falha): uma conta simples com 4 opções.
+function _gFallbackQ() {
+  var a = 2 + Math.floor(Math.random() * 9), b = 2 + Math.floor(Math.random() * 9);
+  var r = a * b, opts = [String(r)], set = {}; set[r] = true;
+  while (opts.length < 4) {
+    var d = r + (Math.floor(Math.random() * 9) - 4);
+    if (d > 0 && !set[d]) { set[d] = true; opts.push(String(d)); }
+  }
+  for (var i = opts.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = opts[i]; opts[i] = opts[j]; opts[j] = t; }
+  return { q: 'Quanto é ' + a + ' × ' + b + '?', opts: opts, ans: opts.indexOf(String(r)) };
+}
+
+// Inicializa um separador de jogo (usado no build e no switch).
+function _gInitTab(wrapId, id, level) {
+  var inst = _gInstances[wrapId]; if (!inst) return;
+  level = level || inst.defaultLevel || 'medio';
+  if (id === 'j24') {
+    var gid = wrapId + '-j24-game', p = document.getElementById(wrapId + '-j24');
+    if (p && !p.querySelector('.j24-card')) { p.innerHTML = _j24BuildHTML(gid, level); _j24Init(gid, level); }
+  } else if (id === 'c4' && !inst.c4) {
+    lazyLoad('systems-games.js', function () { if (!inst.c4) inst.c4 = new Game4Linha(wrapId + '-c4', inst.qFn); });
+  } else if (id === 'mine' && !inst.mine) {
+    lazyLoad('systems-games.js', function () { if (!inst.mine) inst.mine = new GameMine(wrapId + '-mine', inst.qFn); });
+  } else if (id === 'sdk' && !inst.sdk) {
+    lazyLoad('systems-games.js', function () { if (!inst.sdk) inst.sdk = new GameSudoku(wrapId + '-sdk'); });
+  } else if (id === 'hanoi' && !inst.hanoi) {
+    lazyLoad('systems-games.js', function () { if (!inst.hanoi) inst.hanoi = new GameHanoi(wrapId + '-hanoi', inst.qFn); });
+  } else if (id === 'escape' && !inst.escape) {
+    lazyLoad('games.js', function () { if (!inst.escape) inst.escape = new GameEscapeRoom(wrapId + '-escape', inst.qFn); });
+  } else if (id === 'corrida' || id === 'pares' || id === 'vfrelampago') {
+    if (!inst['edu_' + id]) {
+      lazyLoad('games-edu.js', function () {
+        if (!inst['edu_' + id] && typeof GameEdu === 'function') inst['edu_' + id] = new GameEdu(wrapId + '-' + id, id, inst.qFn, level);
+      });
+    }
+  }
 }
 
 // ── Question provider: pulls from cap-specific question banks ──
@@ -624,14 +899,68 @@ function _gGetQuestion(wrapId, level) {
              : wrapId.indexOf('cap8') !== -1 ? 8 : 0;
     caps = cap ? [cap] : [1,2,3,4];
   }
+  // Seleção do utilizador (multi-cap) sobrepõe-se, intersectando com os caps deste wrapper.
+  var sel = _gSelFor(wrapId);
+  if (sel.caps && sel.caps.length) {
+    var inter = sel.caps.filter(function(c){ return caps.indexOf(c) !== -1; });
+    if (inter.length) caps = inter;
+  }
   var pool = [];
   caps.forEach(function(c){ pool = pool.concat(_gQuestionPool(c, level)); });
   if (!pool.length) pool = _gQuestionPool(1, level);
-  return pool[Math.floor(Math.random() * pool.length)];
+
+  // Filtro de subtema(s): quando há 1 capítulo activo e subtemas escolhidos,
+  // mantém só as perguntas marcadas com esses st (se existirem marcações).
+  if (caps.length === 1) {
+    var stOn = sel.stsByCap[caps[0]] || [];
+    if (stOn.length) {
+      var filtrado = pool.filter(function(q){ return q && stOn.indexOf(q.st) !== -1; });
+      if (filtrado.length) pool = filtrado; // se não houver marcadas, mantém tudo
+    }
+  }
+
+  // Sem repetições seguidas: evita as últimas perguntas servidas neste jogo.
+  var recent = _gRecent[wrapId] || [];
+  var fresco = pool.filter(function(q){ return recent.indexOf(q.q) === -1; });
+  // Se não há frescas (pool pequeno já todo visto), pelo menos não repetir a
+  // ÚLTIMA pergunta servida quando há alternativa no pool.
+  if (!fresco.length && pool.length > 1) {
+    var ultima = recent[recent.length - 1];
+    fresco = pool.filter(function(q){ return q.q !== ultima; });
+  }
+  var base = fresco.length ? fresco : pool;
+  var escolha = base[Math.floor(Math.random() * base.length)];
+  if (escolha) {
+    recent.push(escolha.q);
+    // memoriza no máximo metade do pool (mín. 1) para haver sempre variedade;
+    // com pool pequeno guarda menos, para não bloquear a escolha.
+    var lim = Math.max(1, Math.min(8, Math.floor(pool.length / 2)));
+    while (recent.length > lim) recent.shift();
+    _gRecent[wrapId] = recent;
+  }
+  return escolha;
 }
 
 // Tracks which caps are active for the unified game wrapper
 var _gActiveCaps = [];
+
+// ── Filtro por capítulo/subtema nos jogos ───────────────────────
+// Últimas perguntas servidas por wrapper, para não repetir seguidas.
+var _gRecent = {};
+// Labels de subtema por capítulo (mat7). Espelha _capStShort do mat7.js;
+// se este existir (hub mat7 carregado) usamo-lo, senão caímos neste fallback.
+var _gStLabels = {
+  1: ['Conjunto ℤ','Valor absoluto','Adição','Subtração','Parênteses'],
+  2: ['Comparação','Adição/Subt.','Percentagens','Potências','Not. Científica'],
+  3: ['Ângulos','Triângulos','Semelhança','Áreas','Circunferência'],
+  4: ['Expressões','Simplificação','Equações','Inequações'],
+  5: ['Termo Geral','Problemas com Sequências']
+};
+// Devolve o array de labels de subtema de um capítulo (ou null se não houver).
+function _gSubLabels(cap) {
+  if (typeof _capStShort !== 'undefined' && _capStShort[cap]) return _capStShort[cap];
+  return _gStLabels[cap] || null;
+}
 
 function _gQuestionPool(cap, level) {
   // For caps 5-8: pull from their BANCO if available
@@ -647,69 +976,69 @@ function _gQuestionPool(cap, level) {
   var easy = level === 'facil';
   var hard = level === 'dificil';
   var pools = {
-    1: [ // Inteiros
-      {q:'-5 + 3 = ?', opts:['-2','-8','2','8'], ans:0},
-      {q:'|−7| = ?', opts:['7','-7','0','49'], ans:0},
-      {q:'-3 − (−5) = ?', opts:['2','-8','-2','8'], ans:0},
-      {q:'−(−4) = ?', opts:['4','-4','0','-8'], ans:0},
-      {q:'-8 + 12 = ?', opts:['4','-4','20','-20'], ans:0},
-      {q:'|3 − 8| = ?', opts:['5','-5','11','-11'], ans:0},
-      {q:'-2 × (-3) = ?', opts:['6','-6','5','-5'], ans:0},
-      {q:'−4 − 3 + 7 = ?', opts:['0','-14','10','-10'], ans:0},
-      {q:'Simétrico de −9 é?', opts:['9','-9','0','1'], ans:0},
-      {q:'-6 ÷ (-2) = ?', opts:['3','-3','4','-4'], ans:0},
-      {q:'-1 + (-1) + (-1) = ?', opts:['-3','3','-1','1'], ans:0},
-      {q:'|−3| + |4| = ?', opts:['7','-7','1','-1'], ans:0},
+    1: [ // Inteiros — st: 1 Conjunto ℤ, 2 Valor absoluto, 3 Adição, 4 Subtração, 5 Parênteses
+      {st:3, q:'-5 + 3 = ?', opts:['-2','-8','2','8'], ans:0},
+      {st:2, q:'|−7| = ?', opts:['7','-7','0','49'], ans:0},
+      {st:4, q:'-3 − (−5) = ?', opts:['2','-8','-2','8'], ans:0},
+      {st:5, q:'−(−4) = ?', opts:['4','-4','0','-8'], ans:0},
+      {st:3, q:'-8 + 12 = ?', opts:['4','-4','20','-20'], ans:0},
+      {st:2, q:'|3 − 8| = ?', opts:['5','-5','11','-11'], ans:0},
+      {st:3, q:'-2 × (-3) = ?', opts:['6','-6','5','-5'], ans:0},
+      {st:4, q:'−4 − 3 + 7 = ?', opts:['0','-14','10','-10'], ans:0},
+      {st:1, q:'Simétrico de −9 é?', opts:['9','-9','0','1'], ans:0},
+      {st:3, q:'-6 ÷ (-2) = ?', opts:['3','-3','4','-4'], ans:0},
+      {st:3, q:'-1 + (-1) + (-1) = ?', opts:['-3','3','-1','1'], ans:0},
+      {st:2, q:'|−3| + |4| = ?', opts:['7','-7','1','-1'], ans:0},
     ],
-    2: [ // Racionais
-      {q:'1/2 + 1/4 = ?', opts:['3/4','1/2','2/6','1/6'], ans:0},
-      {q:'3/4 − 1/4 = ?', opts:['1/2','2/8','1/4','3/8'], ans:0},
-      {q:'2/3 × 3/4 = ?', opts:['1/2','5/7','6/12','1/3'], ans:0},
-      {q:'0,5 = ?/10', opts:['5','2','50','1'], ans:0},
-      {q:'25% de 80 = ?', opts:['20','25','40','15'], ans:0},
-      {q:'1/3 + 1/6 = ?', opts:['1/2','2/9','1/4','3/9'], ans:0},
-      {q:'10³ = ?', opts:['1000','300','100','10000'], ans:0},
-      {q:'2⁻² = ?', opts:['1/4','-4','1/2','-1/4'], ans:0},
-      {q:'0,001 em notação científica?', opts:['10⁻³','10³','10⁻²','10²'], ans:0},
-      {q:'30% de 150 = ?', opts:['45','30','60','15'], ans:0},
-      {q:'3/5 em decimal = ?', opts:['0,6','0,3','0,5','0,35'], ans:0},
-      {q:'(-2)³ = ?', opts:['-8','8','-6','6'], ans:0},
+    2: [ // Racionais — st: 1 Comparação, 2 Adição/Subt., 3 Percentagens, 4 Potências, 5 Not. Científica
+      {st:2, q:'1/2 + 1/4 = ?', opts:['3/4','1/2','2/6','1/6'], ans:0},
+      {st:2, q:'3/4 − 1/4 = ?', opts:['1/2','2/8','1/4','3/8'], ans:0},
+      {st:2, q:'2/3 × 3/4 = ?', opts:['1/2','5/7','6/12','1/3'], ans:0},
+      {st:1, q:'0,5 = ?/10', opts:['5','2','50','1'], ans:0},
+      {st:3, q:'25% de 80 = ?', opts:['20','25','40','15'], ans:0},
+      {st:2, q:'1/3 + 1/6 = ?', opts:['1/2','2/9','1/4','3/9'], ans:0},
+      {st:4, q:'10³ = ?', opts:['1000','300','100','10000'], ans:0},
+      {st:4, q:'2⁻² = ?', opts:['1/4','-4','1/2','-1/4'], ans:0},
+      {st:5, q:'0,001 em notação científica?', opts:['10⁻³','10³','10⁻²','10²'], ans:0},
+      {st:3, q:'30% de 150 = ?', opts:['45','30','60','15'], ans:0},
+      {st:1, q:'3/5 em decimal = ?', opts:['0,6','0,3','0,5','0,35'], ans:0},
+      {st:4, q:'(-2)³ = ?', opts:['-8','8','-6','6'], ans:0},
     ],
-    3: [ // Geometria
-      {q:'Soma ângulos internos pentágono?', opts:['540°','360°','450°','720°'], ans:0},
-      {q:'Ângulo interno polígono regular hexagonal?', opts:['120°','60°','90°','135°'], ans:0},
-      {q:'Soma ângulos externos de qualquer polígono?', opts:['360°','180°','540°','720°'], ans:0},
-      {q:'Área retângulo 6×4 = ?', opts:['24','20','48','10'], ans:0},
-      {q:'Área triângulo base=8, altura=5 = ?', opts:['20','40','13','80'], ans:0},
-      {q:'Num polígono regular com 8 lados, ângulo externo = ?', opts:['45°','60°','30°','40°'], ans:0},
-      {q:'Ângulos alternos internos são?', opts:['iguais','suplementares','complementares','nulos'], ans:0},
-      {q:'Quadrilátero com 4 lados iguais e 4 ângulos retos?', opts:['Quadrado','Rombo','Retângulo','Losango'], ans:0},
-      {q:'Área paralelogramo base=7, alt=3 = ?', opts:['21','10','42','20'], ans:0},
-      {q:'Polígono com 3 lados tem soma interna de?', opts:['180°','360°','90°','270°'], ans:0},
+    3: [ // Geometria — st: 1 Ângulos, 2 Triângulos, 3 Semelhança, 4 Áreas, 5 Circunferência
+      {st:1, q:'Soma ângulos internos pentágono?', opts:['540°','360°','450°','720°'], ans:0},
+      {st:1, q:'Ângulo interno polígono regular hexagonal?', opts:['120°','60°','90°','135°'], ans:0},
+      {st:1, q:'Soma ângulos externos de qualquer polígono?', opts:['360°','180°','540°','720°'], ans:0},
+      {st:4, q:'Área retângulo 6×4 = ?', opts:['24','20','48','10'], ans:0},
+      {st:4, q:'Área triângulo base=8, altura=5 = ?', opts:['20','40','13','80'], ans:0},
+      {st:1, q:'Num polígono regular com 8 lados, ângulo externo = ?', opts:['45°','60°','30°','40°'], ans:0},
+      {st:1, q:'Ângulos alternos internos são?', opts:['iguais','suplementares','complementares','nulos'], ans:0},
+      {st:2, q:'Quadrilátero com 4 lados iguais e 4 ângulos retos?', opts:['Quadrado','Rombo','Retângulo','Losango'], ans:0},
+      {st:4, q:'Área paralelogramo base=7, alt=3 = ?', opts:['21','10','42','20'], ans:0},
+      {st:1, q:'Polígono com 3 lados tem soma interna de?', opts:['180°','360°','90°','270°'], ans:0},
     ],
-    4: [ // Equações
-      {q:'3x + 5 = 14, x = ?', opts:['3','4','2','5'], ans:0},
-      {q:'2x − 4 = 6, x = ?', opts:['5','2','4','3'], ans:0},
-      {q:'Simplifica: 4x − x = ?', opts:['3x','4x','x','5x'], ans:0},
-      {q:'7 − 2x = 1, x = ?', opts:['3','4','2','6'], ans:0},
-      {q:'Valor de 2x²−1 para x=3?', opts:['17','11','5','19'], ans:0},
-      {q:'Reduz: 5a + 3b − 2a − b = ?', opts:['3a+2b','7a+4b','3a+4b','2a+2b'], ans:0},
-      {q:'Equação impossível: 2x+3=2x+?', opts:['5','3','0','2x'], ans:0},
-      {q:'x + 5 = −2, x = ?', opts:['−7','3','7','−3'], ans:0},
-      {q:'5x = 20, x = ?', opts:['4','5','3','100'], ans:0},
-      {q:'Perímetro pentágono regular = 15, lado = ?', opts:['3','5','10','15'], ans:0},
+    4: [ // Equações — st: 1 Expressões, 2 Simplificação, 3 Equações, 4 Inequações
+      {st:3, q:'3x + 5 = 14, x = ?', opts:['3','4','2','5'], ans:0},
+      {st:3, q:'2x − 4 = 6, x = ?', opts:['5','2','4','3'], ans:0},
+      {st:2, q:'Simplifica: 4x − x = ?', opts:['3x','4x','x','5x'], ans:0},
+      {st:3, q:'7 − 2x = 1, x = ?', opts:['3','4','2','6'], ans:0},
+      {st:1, q:'Valor de 2x²−1 para x=3?', opts:['17','11','5','19'], ans:0},
+      {st:2, q:'Reduz: 5a + 3b − 2a − b = ?', opts:['3a+2b','7a+4b','3a+4b','2a+2b'], ans:0},
+      {st:3, q:'Equação impossível: 2x+3=2x+?', opts:['5','3','0','2x'], ans:0},
+      {st:3, q:'x + 5 = −2, x = ?', opts:['−7','3','7','−3'], ans:0},
+      {st:3, q:'5x = 20, x = ?', opts:['4','5','3','100'], ans:0},
+      {st:3, q:'Perímetro pentágono regular = 15, lado = ?', opts:['3','5','10','15'], ans:0},
     ],
-    5: [ // Sequências
-      {q:'Se aₙ = 2n+1, a₄ = ?', opts:['9','7','8','10'], ans:0},
-      {q:'Se aₙ = 3n−2, a₅ = ?', opts:['13','15','10','12'], ans:0},
-      {q:'Razão da sequência: 5, 8, 11, 14…?', opts:['3','2','4','5'], ans:0},
-      {q:'Se aₙ = 4n−3, a₁₀ = ?', opts:['37','40','33','43'], ans:0},
-      {q:'Sequência: 2, 6, 18, 54… Razão = ?', opts:['3','4','2','6'], ans:0},
-      {q:'Se aₙ = n², a₅ = ?', opts:['25','10','20','15'], ans:0},
-      {q:'Seq. aritmética: 1, 4, 7, 10… a₈ = ?', opts:['22','25','19','28'], ans:0},
-      {q:'Se aₙ = −2n+10, a₃ = ?', opts:['4','6','8','16'], ans:0},
-      {q:'Quantos termos: 1, 3, 5, …, 99?', opts:['49','50','51','99'], ans:0},
-      {q:'Se aₙ = 5n, a₆ = ?', opts:['30','25','35','20'], ans:0},
+    5: [ // Sequências — st: 1 Termo Geral, 2 Problemas com Sequências
+      {st:1, q:'Se aₙ = 2n+1, a₄ = ?', opts:['9','7','8','10'], ans:0},
+      {st:1, q:'Se aₙ = 3n−2, a₅ = ?', opts:['13','15','10','12'], ans:0},
+      {st:1, q:'Razão da sequência: 5, 8, 11, 14…?', opts:['3','2','4','5'], ans:0},
+      {st:1, q:'Se aₙ = 4n−3, a₁₀ = ?', opts:['37','40','33','43'], ans:0},
+      {st:1, q:'Sequência: 2, 6, 18, 54… Razão = ?', opts:['3','4','2','6'], ans:0},
+      {st:1, q:'Se aₙ = n², a₅ = ?', opts:['25','10','20','15'], ans:0},
+      {st:1, q:'Seq. aritmética: 1, 4, 7, 10… a₈ = ?', opts:['22','25','19','28'], ans:0},
+      {st:1, q:'Se aₙ = −2n+10, a₃ = ?', opts:['4','6','8','16'], ans:0},
+      {st:2, q:'Quantos termos: 1, 3, 5, …, 99?', opts:['49','50','51','99'], ans:0},
+      {st:1, q:'Se aₙ = 5n, a₆ = ?', opts:['30','25','35','20'], ans:0},
     ],
   };
   // Multi-cap: mix
@@ -722,7 +1051,7 @@ function _gQuestionPool(cap, level) {
 }
 
 // Game constructors (Game4Linha, GameMine, GameSudoku, GameHanoi)
-// moved to systems-games.js — loaded on demand via lazyLoad()
+// moved to systems-games.js loaded on demand via lazyLoad()
 
 // ── Updated _j24AutoInit to use new system ──
 var _gInited = {};
@@ -801,7 +1130,7 @@ Object.keys(professorMode).forEach(function(k){
 // ── Professor Mode: Answer Keys ──
 var profAnswers = {
   1: { // Cap 1 - Números Inteiros
-    titulo: 'Números Inteiros (ℤ) — 7.º Ano',
+    titulo: 'Números Inteiros (ℤ) 7.º Ano',
     respostas: [
       {q:'1', r:'−8, +500, −200, −4, +10000, −75', expl:'Abaixo de zero / perda / profundidade → negativo. Lucro / ganho / altitude → positivo.'},
       {q:'2', r:'a) F  b) V  c) V  d) F  e) V', expl:'a) 0 não pertence a ℤ⁺ (apenas ℤ₀⁺). d) O menor inteiro positivo é 1, não existe "menor" em ℤ⁻.'},
@@ -826,7 +1155,7 @@ var profAnswers = {
     ]
   },
   2: { // Cap 2 - Números Racionais
-    titulo: 'Números Racionais (ℚ) — 7.º Ano',
+    titulo: 'Números Racionais (ℚ) 7.º Ano',
     respostas: [
       {q:'Frações equivalentes', r:'Multiplica ou divide numerador e denominador pelo mesmo número ≠ 0', expl:'Ex: 2/3 = 4/6 = 6/9. Para simplificar: divide pelo MDC.'},
       {q:'Comparação de frações', r:'Reduzir ao mesmo denominador (MMC) e comparar numeradores', expl:'Ex: 2/3 vs 3/5 → 10/15 vs 9/15 → 2/3 > 3/5.'},
@@ -840,7 +1169,7 @@ var profAnswers = {
     ]
   },
   3: { // Cap 3 - Geometria
-    titulo: 'Geometria — 7.º Ano',
+    titulo: 'Geometria 7.º Ano',
     respostas: [
       {q:'Soma ângulos internos', r:'S = (n−2) × 180°', expl:'Triângulo: 180° | Quadrilátero: 360° | Pentágono: 540° | Hexágono: 720°. Cada ângulo regular = S ÷ n.'},
       {q:'Ângulos externos', r:'Soma sempre = 360°', expl:'Qualquer polígono convexo. Cada ângulo externo regular = 360° ÷ n. Interno + Externo = 180°.'},
@@ -860,7 +1189,7 @@ var profAnswers = {
     ]
   },
   4: { // Cap 4 - Equações
-    titulo: 'Expressões Algébricas e Equações — 7.º Ano',
+    titulo: 'Expressões Algébricas e Equações 7.º Ano',
     respostas: [
       {q:'Expressões algébricas', r:'Simplificar juntando termos semelhantes', expl:'Ex: 3x + 2y − x + 5y = 2x + 7y. Só se juntam termos com a mesma parte literal.'},
       {q:'Equações 1.º grau', r:'Isolar a incógnita: passar termos, dividir pelo coeficiente', expl:'Ex: 2x + 3 = 11 → 2x = 8 → x = 4. Verificação: 2(4)+3 = 11 ✓.'},
@@ -871,7 +1200,7 @@ var profAnswers = {
     ]
   },
   5: { // Cap 5 - Sequências
-    titulo: 'Sequências e Termo Geral — 7.º Ano',
+    titulo: 'Sequências e Termo Geral 7.º Ano',
     respostas: [
       {q:'Termo geral', r:'Encontrar a regra que dá o n-ésimo termo', expl:'Ex: 2, 5, 8, 11… → aₙ = 3n − 1. Verificar: a₁ = 3(1)−1 = 2 ✓'},
       {q:'Sequências aritméticas', r:'Diferença constante entre termos consecutivos', expl:'aₙ = a₁ + (n−1)×r. Verificar sempre com n=1,2,3.'},
@@ -882,7 +1211,7 @@ var profAnswers = {
     ]
   },
   6: { // Cap 6 - Funções
-    titulo: 'Funções — 7.º Ano',
+    titulo: 'Funções 7.º Ano',
     respostas: [
       {q:'Referencial cartesiano', r:'Par ordenado (x, y): abcissa x, ordenada y', expl:'Mover x na horizontal, y na vertical a partir da origem.'},
       {q:'Função', r:'A cada x do domínio corresponde exatamente um y', expl:'Verificar: um x não pode ter duas imagens diferentes.'},
@@ -898,7 +1227,7 @@ var profAnswers = {
 function injectProfSolutions(html, cap) {
   if (!cap || !professorMode[cap]) return html;
   
-  var profBar = '<div style="background:#c62828;color:white;padding:14px 24px;font-family:sans-serif;font-weight:700;font-size:15px;text-align:center;margin-bottom:24px;border-radius:8px;letter-spacing:.5px">VERSÃO PROFESSOR — COM SOLUÇÕES DETALHADAS</div>';
+  var profBar = '<div style="background:#c62828;color:white;padding:14px 24px;font-family:sans-serif;font-weight:700;font-size:15px;text-align:center;margin-bottom:24px;border-radius:8px;letter-spacing:.5px">VERSÃO PROFESSOR COM SOLUÇÕES DETALHADAS</div>';
   html = html.replace('<body>', '<body>' + profBar);
   
   var answers = profAnswers[cap];
@@ -907,7 +1236,7 @@ function injectProfSolutions(html, cap) {
     html = html.replace('</head>', solStyle + '</head>');
     
     // Build detailed answer key
-    var keyHTML = '<div class="prof-key"><h2>Resolução Completa — ' + (answers.titulo || 'Capítulo ' + cap) + '</h2>';
+    var keyHTML = '<div class="prof-key"><h2>Resolução Completa ' + (answers.titulo || 'Capítulo ' + cap) + '</h2>';
     
     if (answers.respostas && answers.respostas.length) {
       keyHTML += '<h3 style="color:#c62828;margin:20px 0 12px;font-size:1.05rem">Ficha de Trabalho</h3>';
@@ -947,17 +1276,17 @@ htmlToPdfDownload=function(html,filename){
 
 // UX 6: FUNCTIONAL SEARCH
 var searchIdx=[
-  {t:'Números Inteiros — Conjunto ℤ',k:'inteiros conjuntos Z ordenação',c:1,a:'math'},
+  {t:'Números Inteiros Conjunto ℤ',k:'inteiros conjuntos Z ordenação',c:1,a:'math'},
   {t:'Valor Absoluto e Simétrico',k:'valor absoluto simétrico módulo',c:1,a:'math'},
   {t:'Adição e Subtração de Inteiros',k:'adição subtração inteiros soma',c:1,a:'math'},
   {t:'Questões-aula Inteiros',k:'questões exercícios quiz inteiros',c:1,a:'math'},
   {t:'Minitestes Inteiros',k:'miniteste teste rápido',c:1,a:'math'},
   {t:'Jogos Inteiros',k:'jogos interativo',c:1,a:'math'},
-  {t:'Números Racionais — Frações',k:'racionais frações Q comparar',c:2,a:'math2'},
+  {t:'Números Racionais Frações',k:'racionais frações Q comparar',c:2,a:'math2'},
   {t:'Percentagens',k:'percentagem desconto aumento',c:2,a:'math2'},
   {t:'Potências e Notação Científica',k:'potências notação científica expoente',c:2,a:'math2'},
   {t:'Questões-aula Racionais',k:'questões exercícios racionais',c:2,a:'math2'},
-  {t:'Geometria — Ângulos',k:'geometria ângulos graus triângulo',c:3,a:'math3'},
+  {t:'Geometria Ângulos',k:'geometria ângulos graus triângulo',c:3,a:'math3'},
   {t:'Quadriláteros e Áreas',k:'quadriláteros área perímetro retângulo',c:3,a:'math3'},
   {t:'Questões-aula Geometria',k:'questões geometria',c:3,a:'math3'},
   {t:'Sequências e Termo Geral',k:'sequência termo geral sucessão aritmética',c:5,a:'math5'},
@@ -970,13 +1299,13 @@ var searchIdx=[
   {t:'Downloads Geometria',k:'download ficha PDF geometria',c:3,a:'math3'},
   {t:'Downloads Equações',k:'download ficha PDF equações',c:4,a:'math4'},
   {t:'Flashcards Equações',k:'flashcards cartões revisão equações',c:4,a:'math4'},
-  {t:'Sequências — Teoria',k:'sequência termo geral aritmética geométrica razão',c:5,a:'math5'},
+  {t:'Sequências Teoria',k:'sequência termo geral aritmética geométrica razão',c:5,a:'math5'},
   {t:'Questões Sequências',k:'questões exercícios sequências termo',c:5,a:'math5'},
   {t:'Downloads Sequências',k:'download ficha PDF sequências',c:5,a:'math5'},
   {t:'Flashcards Sequências',k:'flashcards cartões revisão sequências',c:5,a:'math5'},
-  {t:'Funções — Referencial Cartesiano',k:'funções referencial cartesiano eixos abcissa ordenada ponto',c:6,a:'math6'},
-  {t:'Funções — Conceito',k:'função domínio contradomínio imagem f(x) relação',c:6,a:'math6'},
-  {t:'Funções — Gráficos',k:'gráfico função reta linear proporcionalidade',c:6,a:'math6'},
+  {t:'Funções Referencial Cartesiano',k:'funções referencial cartesiano eixos abcissa ordenada ponto',c:6,a:'math6'},
+  {t:'Funções Conceito',k:'função domínio contradomínio imagem f(x) relação',c:6,a:'math6'},
+  {t:'Funções Gráficos',k:'gráfico função reta linear proporcionalidade',c:6,a:'math6'},
   {t:'Proporcionalidade Direta',k:'proporcionalidade direta y=kx constante razão',c:6,a:'math6'},
   {t:'Questões Funções',k:'questões exercícios funções gráficos',c:6,a:'math6'},
   {t:'Downloads Funções',k:'download ficha PDF funções',c:6,a:'math6'},
@@ -1041,7 +1370,7 @@ var examActive=false;
   if(typeof window[fn]==='function'){var o=window[fn];window[fn]=function(){examActive=false;o.apply(this,arguments);};}
 });
 window.addEventListener('beforeunload',function(e){
-  if(examActive){e.preventDefault();e.returnValue='Exame em curso — perdes o progresso se saíres.';return e.returnValue;}
+  if(examActive){e.preventDefault();e.returnValue='Exame em curso perdes o progresso se saíres.';return e.returnValue;}
 });
 // Protect tab switching during exam
 ['showSection','showSection2','showSection3','showSection4'].forEach(function(fn){
@@ -1210,13 +1539,10 @@ setTimeout(function(){
   });
 },1500);
 
-// ISSUES 1–4: SELEÇÃO MULTI-CAPÍTULO + MEGAGERADOR
+// ISSUES 1-4: SELEÇÃO MULTI-CAPÍTULO + MEGAGERADOR
 // ── Actualiza o botão no topbar ──────────────
-function pmUpdateTopbar() {
-  var s = ProgressManager.getSummary();
-  var el = document.getElementById('pm-topbar-xp-label');
-  if (el) el.textContent = s.totalXp + ' XP';
-}
+// (pmUpdateTopbar vive em desafio.js — versão completa com chips 🔥/⭐/🏆.
+//  O stub antigo daqui foi removido: era código morto e escondia a versão boa.)
 
 // ── Widget de progresso inline por capítulo ──
 function pmRenderWidget(capId, containerEl) {
@@ -1340,36 +1666,7 @@ document.addEventListener('edupt:progress', function() {
 });
 
 // ── Init: actualiza topbar ao carregar ────────
-document.addEventListener('DOMContentLoaded', function() { pmUpdateTopbar(); });
-
-// ═══ CHAPTER NAV BAR — goToChapter ═══
-function goToChapter(n) {
-  // Map chapter number to view IDs and show functions
-  var viewMap = {
-    1: { id: 'view-math',  fn: function() { showMathView && showMathView() || (document.getElementById('view-math').style.display='block') } },
-    2: { id: 'view-math2', fn: function() { showMathView2 && showMathView2() || (document.getElementById('view-math2').style.display='block') } },
-    3: { id: 'view-math3', fn: function() { showMathView3 && showMathView3() || (document.getElementById('view-math3').style.display='block') } },
-    4: { id: 'view-math4', fn: function() { showMathView4 && showMathView4() || (document.getElementById('view-math4').style.display='block') } }
-  };
-  var allViews = ['view-portal','view-mat7','view-math','view-math2','view-math3','view-math4'];
-  // Hide all views
-  allViews.forEach(function(id) {
-    var el = document.getElementById(id);
-    if (el) el.style.display = 'none';
-  });
-  // Show the target view
-  var target = document.getElementById('view-math' + (n > 1 ? n : ''));
-  if (target) {
-    target.style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-  // Use viewMap fn to run the proper show/init function
-  if (viewMap[n] && typeof viewMap[n].fn === 'function') viewMap[n].fn();
-  // For chapters 2/3/4 activate first section
-  if (n === 2 && typeof showSection2 === 'function') showSection2('temas2', null);
-  if (n === 3 && typeof showSection3 === 'function') showSection3('temas3', null);
-  if (n === 4 && typeof showSection4 === 'function') showSection4('temas4', null);
-}
+document.addEventListener('DOMContentLoaded', function() { if (typeof pmUpdateTopbar === 'function') pmUpdateTopbar(); });
 
 // ═══ TEACHER STRIP TOGGLE ═══
 function toggleTeacher(btn) {
@@ -1379,108 +1676,42 @@ function toggleTeacher(btn) {
 }
 
 
-// DOWNLOAD PROGRESSO — JSON e PDF
-function _progRecolherTudo() {
-  // Junta dados dos 4 caps + ProgressManager XP
-  var cap4raw = {};
-  try { cap4raw = JSON.parse(localStorage.getItem('edupt_cap4') || '{}'); } catch(e) {}
-  var pm = {};
-  try { pm = JSON.parse(localStorage.getItem('edupt_progress_v2') || '{}'); } catch(e) {}
-
-  function secTotals(data) {
-    var c=0,t=0;
-    if (data && data.sections) Object.values(data.sections).forEach(function(s){ c+=s.correct||0; t+=s.total||0; });
-    return { corretas: c, total: t, taxa: t>0 ? Math.round(c/t*100)+'%' : '—', detalhe: data && data.sections ? data.sections : {} };
-  }
-  function cap4Totals() {
-    var c=0,t=0,det={};
-    Object.entries(cap4raw).forEach(function(kv) {
-      var k=kv[0], v=kv[1];
-      if (v && typeof v.correct==='number') { c+=v.correct; t+=v.total||0; det[k]={corretas:v.correct,total:v.total||0}; }
-    });
-    return { corretas: c, total: t, taxa: t>0 ? Math.round(c/t*100)+'%' : '—', detalhe: det };
-  }
-
-  return {
-    exportadoEm: new Date().toLocaleString('pt-PT'),
-    xpTotal: (pm.totalXp || 0),
-    streakDias: (pm.streak || 0),
-    capitulos: {
-      'Números Inteiros':  secTotals(typeof _progData  !== 'undefined' ? _progData  : null),
-      'Números Racionais': secTotals(typeof _progData2 !== 'undefined' ? _progData2 : null),
-      'Geometria': secTotals(typeof _progData3 !== 'undefined' ? _progData3 : null),
-      'Equações':   cap4Totals(),
-      'Sequências': (function(){ var p={}; try{p=JSON.parse(localStorage.getItem('edupt_cap5')||'{}');}catch(e){} return p; })(),
-      'Funções':    (function(){ var p={}; try{p=JSON.parse(localStorage.getItem('edupt_cap6')||'{}');}catch(e){} return p; })(),
-      'Figuras Semelhantes': (function(){ var p={}; try{p=JSON.parse(localStorage.getItem('edupt_cap7')||'{}');}catch(e){} return p; })(),
-      'Dados e Probabilidades': (function(){ var p={}; try{p=JSON.parse(localStorage.getItem('edupt_cap8')||'{}');}catch(e){} return p; })()
-    },
-    historico: {
-      cap1: (typeof _progData  !== 'undefined' ? _progData.log  : []),
-      cap2: (typeof _progData2 !== 'undefined' ? _progData2.log : []),
-      cap3: (typeof _progData3 !== 'undefined' ? _progData3.log : []),
-      cap4: (function(){ var p={}; try{p=JSON.parse(localStorage.getItem('edupt_cap4')||'{}');}catch(e){} return p.last_updated ? p : null; })(),
-      cap5: (function(){ var p={}; try{p=JSON.parse(localStorage.getItem('edupt_cap5')||'{}');}catch(e){} return p.last_updated ? p : null; })()
-    }
-  };
-}
-
+// DOWNLOAD PROGRESSO PDF
 function progDownloadPDF() {
-  var d = _progRecolherTudo();
-  var caps = d.capitulos;
-  var cor = function(taxa) {
-    if (taxa==='—') return '#9e9e9e';
-    var n = parseInt(taxa);
-    return n>=80 ? '#516860' : n>=50 ? '#c4a030' : '#c4796e';
-  };
-  var barraHtml = function(taxa) {
-    if (taxa==='—') return '<div style="width:100%;height:8px;background:#eee;border-radius:4px"></div>';
-    var n = parseInt(taxa);
-    return '<div style="width:100%;height:8px;background:#eee;border-radius:4px;overflow:hidden"><div style="height:100%;width:'+n+'%;background:'+cor(taxa)+';border-radius:4px"></div></div>';
-  };
+  // Mesmo formato dos restantes anos (mat5–mat11, fq, port): cabeçalho com
+  // título + data + linha do aluno, caixa da taxa global e tabela por capítulo,
+  // exportado via htmlToPdfDownload (coerência entre todos os relatórios).
+  var caps = _progGetCapTotals();
+  var totalC = 0, totalT = 0;
+  caps.forEach(function(c){ totalC += c.data.correct; totalT += c.data.total; });
+  var globalPct = totalT > 0 ? Math.round(totalC / totalT * 100) : 0;
 
-  var capsHtml = Object.entries(caps).map(function(kv) {
-    var nome = kv[0], c = kv[1];
-    return '<tr><td style="padding:10px 14px;font-weight:600;color:#2a2724">'+nome+'</td>'
-      +'<td style="padding:10px 14px;text-align:center;font-family:monospace">'+c.corretas+'/'+c.total+'</td>'
-      +'<td style="padding:10px 14px;text-align:center;font-weight:700;color:'+cor(c.taxa)+'">'+c.taxa+'</td>'
-      +'<td style="padding:10px 24px 10px 14px;min-width:120px">'+barraHtml(c.taxa)+'</td></tr>';
+  var rows = caps.map(function(c) {
+    var pct = c.data.total > 0 ? Math.round(c.data.correct / c.data.total * 100) : 0;
+    return '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">' + c.name + '</td>'
+      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.data.total > 0 ? c.data.correct + ' / ' + c.data.total : '-') + '</td>'
+      + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.data.total > 0 ? pct + '%' : '-') + '</td></tr>';
   }).join('');
 
-  var totalCorretas = Object.values(caps).reduce(function(s,c){return s+c.corretas;},0);
-  var totalQs       = Object.values(caps).reduce(function(s,c){return s+c.total;},0);
-  var taxaGlobal    = totalQs>0 ? Math.round(totalCorretas/totalQs*100)+'%' : '—';
+  var html = '<div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;padding:24px">'
+    + '<h1 style="font-size:20px;margin:0 0 4px">Relatório de Progresso · Matemática 7.º Ano</h1>'
+    + '<div style="color:#666;font-size:13px;margin-bottom:16px">3ponto14 · ' + new Date().toLocaleString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' }) + '</div>'
+    + eduAlunoLinhaPDF()
+    + '<div style="background:#eef2f0;border:1px solid #9ab5aa;border-radius:8px;padding:12px 16px;margin-bottom:16px">'
+    + '<strong>Taxa global:</strong> ' + (totalT > 0 ? globalPct + '%' : '-') + ' &nbsp;·&nbsp; ' + totalC + ' certas em ' + totalT + ' questões.</div>'
+    + '<table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr style="background:#516860;color:#fff">'
+    + '<th style="padding:8px 10px;text-align:left">Capítulo</th><th style="padding:8px 10px">Certas</th><th style="padding:8px 10px">%</th></tr></thead>'
+    + '<tbody>' + rows + '</tbody></table></div>';
 
-  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8">'
-    + '<title>Progresso 3ponto14 · Mat 7</title>'
-    + '</head><body>'
-    + '<h1>3ponto14 · Matemática 7.º ano</h1>'
-    + ''
-    + '<p class="sub">Relatório de progresso exportado em '+d.exportadoEm+'</p>'
-    + '<div class="stat-grid">'
-    +   '<div class="stat"><div class="n">'+totalCorretas+'</div><div class="l">Respostas certas</div></div>'
-    +   '<div class="stat"><div class="n">'+taxaGlobal+'</div><div class="l">Taxa global</div></div>'
-    +   '<div class="stat"><div class="n">'+d.xpTotal+'</div><div class="l">XP total</div></div>'
-    + '</div>'
-    + '<h2>Desempenho por Capítulo</h2>'
-    + '<table><thead><tr><th>Capítulo</th><th style="text-align:center">Certas / Total</th><th style="text-align:center">Taxa</th><th>Barra</th></tr></thead>'
-    + '<tbody>'+capsHtml+'</tbody></table>'
-    + '<div class="footer"><span>3ponto14.pt</span><span>Progresso guardado localmente neste browser</span></div>'
-    + '</body></html>';
-
-  var win = window.open('', '_blank', 'width=720,height=900');
-  if (!win) { alert('Permite popups para gerar o PDF.'); return; }
-  win.document.write(html);
-  win.document.close();
-  win.focus();
-  setTimeout(function(){ win.print(); }, 400);
+  if (typeof htmlToPdfDownload === 'function') htmlToPdfDownload(html, 'progresso-mat7.pdf');
+  else if (typeof eduToast === 'function') eduToast('Geração de PDF indisponível.', 'warn');
 }
 
-// PROGRESSO UNIFICADO — hub tab "Progresso" (todos os capítulos)
+// PROGRESSO UNIFICADO hub tab "Progresso" (todos os capítulos)
 
 var _treinoState = {};
 
-// ── Builders para cada cap — output formato padrão ──
+// ── Builders para cada cap output formato padrão ──
 var _TREINO_BUILDERS = {
   cap1: function(temaNum, dif) {
     try {
@@ -1566,7 +1797,7 @@ function _treinoRenderExercicios(exercicios, containerId) {
     var qid = 'treino-q-' + i;
     _treinoState[qid] = { answered: false };
     var capLabel = {cap1:'Inteiros',cap2:'Racionais',cap3:'Geometria',cap4:'Equações',cap5:'Sequências',cap6:'Funções',cap7:'Semelhantes',cap8:'Dados/Prob.'}[ex._capId]||'';
-    var temaShort = (ex.tema||'').replace(/^(Tema \d+\s*[—\-]?\s*)/,'').trim() || ex.tema;
+    var temaShort = (ex.tema||'').replace(/^(Tema \d+\s*[-\-]?\s*)/,'').trim() || ex.tema;
     html += '<div class="quiz-question" id="' + qid + '" style="margin-bottom:1rem">';
     html += '<div class="q-number" style="color:var(--cs-deep)">' + capLabel + ' · ' + (temaShort||ex.tema||'') + '</div>';
     if (ex.visual) html += '<div class="q-visual">' + ex.visual + '</div>';
@@ -1577,9 +1808,11 @@ function _treinoRenderExercicios(exercicios, containerId) {
             + '<button class="check-btn" onclick="checkTreino(\''+qid+'\',\'fill\','+ex.resposta+')">Verificar</button>'
             + '</div>';
     } else {
+      var _exOps = (typeof _normalizaOpcoes==='function') ? _normalizaOpcoes((ex.opcoes||[]).slice(), ex.resposta) : (ex.opcoes||[]);
+      var _vfV = String(ex.resposta==null?'':ex.resposta).trim().toUpperCase().charAt(0)==='V'; // 'V'/'Verdadeiro'
       var opcs = ex.tipo==='vf'
-        ? [{txt:'Verdadeiro',isC:ex.resposta==='V'},{txt:'Falso',isC:ex.resposta==='F'}]
-        : (ex.opcoes||[]).map(function(o){ return {txt:o,isC:String(o)===String(ex.resposta)}; });
+        ? [{txt:'Verdadeiro',isC:_vfV},{txt:'Falso',isC:!_vfV}]
+        : _exOps.map(function(o){ return {txt:o,isC:String(o)===String(ex.resposta)}; });
       html += '<div class="options">';
       opcs.forEach(function(o,k){
         var lbl = ex.tipo==='vf'?(k===0?'V':'F'):labels[k];
@@ -1590,8 +1823,7 @@ function _treinoRenderExercicios(exercicios, containerId) {
       });
       html += '</div>';
     }
-    var explEsc = (ex.expl||'').replace(/'/g,"&#39;").replace(/"/g,'&quot;');
-    html += '<span id="'+qid+'-expl" style="display:none">'+explEsc+'</span>';
+    html += '<span id="'+qid+'-expl" style="display:none" data-expl="'+(ex.expl||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;')+'"></span>';
     html += '<div class="feedback" id="'+qid+'-fb"></div>';
     html += '</div>';
   });
@@ -1603,7 +1835,7 @@ function checkTreino(qid, tipo, val, btn) {
   if (!st || st.answered) return;
   st.answered = true;
   var explEl = document.getElementById(qid+'-expl');
-  var explTxt = explEl ? explEl.textContent : '';
+  var explTxt = explEl ? (explEl.getAttribute('data-expl') || explEl.textContent || '') : '';
   var fb = document.getElementById(qid+'-fb');
   var correct;
   if (tipo === 'fill') {
@@ -1673,13 +1905,13 @@ function gerarFichaTreino() {
 
   // Nota de contexto
   body += '<div class="nota" style="margin-bottom:24px">Esta ficha foi gerada automaticamente com base nos temas onde registaste mais erros. '
-        + 'Os exercícios são semelhantes mas diferentes dos que erraste — treina com atenção!</div>';
+        + 'Os exercícios são semelhantes mas diferentes dos que erraste treina com atenção!</div>';
 
   // Temas em foco
   body += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px">';
   grupos.forEach(function(g) {
     var capLabel = {cap1:'Inteiros',cap2:'Racionais',cap3:'Geometria',cap4:'Equações',cap5:'Sequências',cap6:'Funções',cap7:'Semelhantes',cap8:'Dados/Prob.'}[g.capId]||'';
-    var temaLabel = g.tema ? g.tema.replace(/^Tema \d+\s*[—\-]?\s*/,'').trim() : 'Tema '+g.temaNum;
+    var temaLabel = g.tema ? g.tema.replace(/^Tema \d+\s*[-\-]?\s*/,'').trim() : 'Tema '+g.temaNum;
     body += '<span style="font-size:.72rem;font-weight:700;background:#f5f0ee;color:#7a6860;border:1px solid #e0d8d4;padding:3px 10px;border-radius:999px">'
           + capLabel+' · '+temaLabel+' ('+g.erros+'✗)</span>';
   });
@@ -1692,7 +1924,7 @@ function gerarFichaTreino() {
     body += '<h2>' + (capNames[capId]||capId) + '</h2>';
     exs.forEach(function(ex) {
       exNum++;
-      var temaShort = (ex.tema||'').replace(/^(Tema \d+\s*[—\-]?\s*)/,'').trim()||ex.tema||'';
+      var temaShort = (ex.tema||'').replace(/^(Tema \d+\s*[-\-]?\s*)/,'').trim()||ex.tema||'';
       body += '<div class="ex">'
             + '<div class="ex-num"><span class="n">'+exNum+'</span> '+temaShort+'</div>';
 
@@ -1707,15 +1939,16 @@ function gerarFichaTreino() {
         body += '<div style="display:flex;gap:20px;margin:8px 0 4px 28px">'
               + '<span class="opcao">Verdadeiro</span><span class="opcao">Falso</span>'
               + '</div>';
-        solucoes.push({ n: exNum, v: ex.resposta==='V'?'Verdadeiro':'Falso' });
+        solucoes.push({ n: exNum, v: String(ex.resposta==null?'':ex.resposta).trim().toUpperCase().charAt(0)==='V'?'Verdadeiro':'Falso' });
       } else {
         // mc
         var labels = ['A','B','C','D'];
-        (ex.opcoes||[]).forEach(function(o, k) {
+        var _mcOps = (typeof _normalizaOpcoes==='function') ? _normalizaOpcoes((ex.opcoes||[]).slice(), ex.resposta) : (ex.opcoes||[]);
+        _mcOps.forEach(function(o, k) {
           var optClean = String(o).replace(/<[^>]+>/g,'').trim();
           body += '<div class="opcao">'+labels[k]+') '+optClean+'</div>';
         });
-        var correctIdx = (ex.opcoes||[]).findIndex(function(o){ return String(o)===String(ex.resposta); });
+        var correctIdx = _mcOps.findIndex(function(o){ return String(o)===String(ex.resposta); });
         solucoes.push({ n: exNum, v: correctIdx>=0 ? labels[correctIdx]+') '+String(ex.resposta).replace(/<[^>]+>/g,'').trim() : String(ex.resposta).replace(/<[^>]+>/g,'').trim() });
       }
       body += '</div>';
@@ -1732,9 +1965,9 @@ function gerarFichaTreino() {
     body += '</ul>';
   }
 
-  body += '<div class="doc-footer"><span>3ponto14.pt</span><span>Ficha de Treino Direcionado — Matemática 7.º Ano</span><span>'+now+'</span></div>';
+  body += '<div class="doc-footer"><span>3ponto14.pt</span><span>Ficha de Treino Direcionado Matemática 7.º Ano</span><span>'+now+'</span></div>';
 
-  var html = wrapPrintDoc('Ficha de Treino — 3ponto14', '<div class="page">'+body+'</div>');
+  var html = wrapPrintDoc('Ficha de Treino 3ponto14', '<div class="page">'+body+'</div>');
   var win = window.open('','_blank','width=820,height=1000');
   if (!win) { alert('Permite popups para gerar a ficha.'); return; }
   win.document.write(html);
@@ -1747,11 +1980,11 @@ function gerarFichaTreino() {
 // ── Reset all progress atomically.
 // Clears ErrorTracker first (in-memory), then the per-cap localStorage keys
 // (via progReset* which also re-render their widgets), then the shared
-// progress_v2 key, and only then re-renders the unified dashboard — avoiding
+// progress_v2 key, and only then re-renders the unified dashboard avoiding
 // a race where renderProgressoUnificado runs while resets are still in flight.
 function _limparTudoProgresso() {
   if (!confirm('Apagar todo o progresso e erros?')) return;
-  // 1. Clear ErrorTracker (in-memory only — no re-render triggered here)
+  // 1. Clear ErrorTracker (in-memory only no re-render triggered here)
   ['cap1','cap2','cap3','cap4'].forEach(function(c){ ErrorTracker.clearCap(c); });
   // 2. Reset per-cap progress stores + their localStorage keys.
   //    Each progReset* clears its own localStorage key and re-renders its own widget.
@@ -1813,39 +2046,6 @@ function renderProgressoUnificado() {
   caps.forEach(function(c){ totalC += c.data.correct; totalT += c.data.total; });
   var globalPct = totalT>0 ? Math.round(totalC/totalT*100) : 0;
 
-  var _capColors = ['c1','c2','c3','c4','c5','c6','c7','c8'];
-
-  var cardsHtml = caps.map(function(cap) {
-    var ci = _capColors[cap.num - 1] || 'c1';
-    var sem = cap.data.total === 0;
-    var pct = sem ? 0 : Math.round(cap.data.correct/cap.data.total*100);
-    var barCol = sem ? 'var(--cream3)' : pct>=80 ? 'var(--'+ci+'-mid)' : pct>=50 ? 'var(--'+ci+'-mid)' : 'var(--cs-mid)';
-    var badgeLabel = sem ? 'Sem dados' : pct>=80 ? 'Bom domínio' : pct>=50 ? 'A melhorar' : 'Precisa de treino';
-    var badgeBg = sem ? 'var(--cream3)' : pct>=80 ? 'var(--'+ci+'-base)' : pct>=50 ? 'var(--'+ci+'-pale)' : 'var(--cs-base)';
-    var badgeCol = sem ? 'var(--ink4)' : pct>=80 ? 'var(--'+ci+'-deep)' : pct>=50 ? 'var(--'+ci+'-deep)' : 'var(--cs-deep)';
-    return '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.1rem 1.1rem .9rem;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:.7rem;border-top:4px solid var(--'+ci+'-mid)">'
-      + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem">'
-      +   '<div>'
-      +     '<div style="font-size:.68rem;font-weight:700;color:var(--'+ci+'-mid);text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px">Cap. '+cap.num+'</div>'
-      +     '<div style="font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.2">'+cap.name+'</div>'
-      +   '</div>'
-      +   '<span style="flex-shrink:0;font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:999px;background:'+badgeBg+';color:'+badgeCol+'">'+badgeLabel+'</span>'
-      + '</div>'
-      + '<div>'
-      +   '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">'
-      +     '<span style="font-family:\'JetBrains Mono\',monospace;font-size:.78rem;color:var(--ink3)">'+(sem ? '— / —' : cap.data.correct+'/'+cap.data.total+' certas')+'</span>'
-      +     '<span style="font-family:\'JetBrains Mono\',monospace;font-size:.82rem;font-weight:700;color:var(--'+ci+'-mid)">'+(sem ? '' : pct+'%')+'</span>'
-      +   '</div>'
-      +   '<div style="height:8px;background:var(--cream3);border-radius:999px;overflow:hidden">'
-      +     '<div style="height:100%;width:'+pct+'%;background:'+barCol+';border-radius:999px;transition:width .6s cubic-bezier(.4,0,.2,1)"></div>'
-      +   '</div>'
-      + '</div>'
-      + '<button onclick="goToChapter('+cap.num+')" style="margin-top:auto;width:100%;padding:7px 0;background:var(--'+ci+'-base);border:1.5px solid var(--'+ci+'-mid);color:var(--'+ci+'-deep);border-radius:10px;font-family:\'Montserrat\',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;justify-content:center;gap:5px" onmouseover="this.style.background=\'var(--'+ci+'-mid)\';this.style.color=\'#fff\'" onmouseout="this.style.background=\'var(--'+ci+'-base)\';this.style.color=\'var(--'+ci+'-deep)\'">'
-      +   '<i class="ph ph-arrow-right"></i> Ir estudar'
-      + '</button>'
-      + '</div>';
-  }).join('');
-
   var grupos = _treinoGetGrupos();
   var pm = typeof ProgressManager !== 'undefined' ? ProgressManager.getSummary() : {totalXp:0,streak:0};
 
@@ -1854,18 +2054,28 @@ function renderProgressoUnificado() {
     : globalPct >= 80 ? 'Excelente trabalho! Estás a dominar a matéria.'
     : globalPct >= 60 ? 'Bom progresso! Continua a praticar para consolidar.'
     : globalPct >= 40 ? 'A progredir! Há capítulos que pedem mais atenção.'
-    : 'Começaste! Pratica com regularidade — cada questão conta.';
+    : 'Começaste! Pratica com regularidade cada questão conta.';
   var _motivIcon = totalT === 0 ? 'ph-rocket-launch' : globalPct >= 80 ? 'ph-trophy' : globalPct >= 60 ? 'ph-star' : globalPct >= 40 ? 'ph-trend-up' : 'ph-book-open';
 
   var html = '';
 
-  // ── Aviso localStorage ──
-  html += '<div style="display:flex;align-items:center;gap:.75rem;background:#fdf0ef;border:1px solid #e8b4b0;border-radius:10px;padding:.65rem 1rem;margin-bottom:1.25rem;font-size:.82rem;color:#8b3a35;flex-wrap:wrap">'
-        + '<i class="ph ph-info" style="flex-shrink:0"></i>'
-        + '<span style="flex:1">O progresso é guardado <strong>apenas neste browser e neste dispositivo</strong>. Se mudares de browser ou de computador, o registo começa do zero. '
-        + '<button onclick="progDownloadPDF()" style="font-family:\'Montserrat\',sans-serif;font-size:.82rem;font-weight:700;color:#8b3a35;background:none;border:none;cursor:pointer;text-decoration:underline;padding:0">Guarda o relatório PDF</button>'
-        + ' para ficares sempre com o registo do teu progresso.</span>'
-        + '</div>';
+  // ── Aviso sobre guardar o progresso ──
+  // Com sessão iniciada, o progresso sincroniza na conta (segue-te entre
+  // dispositivos). Sem sessão, fica só neste browser.
+  var _temSessao = (typeof Cloud !== 'undefined' && Cloud.utilizador && Cloud.utilizador());
+  if (_temSessao) {
+    html += '<div style="display:flex;align-items:center;gap:.75rem;background:#eef7f0;border:1px solid #bfe3c9;border-radius:10px;padding:.65rem 1rem;margin-bottom:1.25rem;font-size:.82rem;color:#2e5d44;flex-wrap:wrap">'
+          + '<i class="ph ph-cloud-check" style="flex-shrink:0"></i>'
+          + '<span style="flex:1">O teu progresso fica guardado <strong>na tua conta</strong> e acompanha-te em qualquer dispositivo. Também podes '
+          + '<button onclick="progDownloadPDF()" style="font-family:\'Montserrat\',sans-serif;font-size:.82rem;font-weight:700;color:#2e5d44;background:none;border:none;cursor:pointer;text-decoration:underline;padding:0">descarregar o relatório PDF</button>.</span>'
+          + '</div>';
+  } else {
+    html += '<div style="display:flex;align-items:center;gap:.75rem;background:#fdf0ef;border:1px solid #e8b4b0;border-radius:10px;padding:.65rem 1rem;margin-bottom:1.25rem;font-size:.82rem;color:#8b3a35;flex-wrap:wrap">'
+          + '<i class="ph ph-info" style="flex-shrink:0"></i>'
+          + '<span style="flex:1"><strong>Inicia sessão</strong> para o teu progresso ficar guardado na conta e te seguir entre dispositivos. Sem sessão, fica só neste browser. '
+          + '<button onclick="progDownloadPDF()" style="font-family:\'Montserrat\',sans-serif;font-size:.82rem;font-weight:700;color:#8b3a35;background:none;border:none;cursor:pointer;text-decoration:underline;padding:0">Guarda o relatório PDF</button>.</span>'
+          + '</div>';
+  }
 
   // ── Resumo geral ──
   html += '<div style="background:var(--c2-pale);border:1.5px solid var(--c2-mid);border-radius:16px;padding:1.1rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap">'
@@ -1873,7 +2083,7 @@ function renderProgressoUnificado() {
         +     '<i class="ph '+_motivIcon+'" style="font-size:1.4rem;color:#fff"></i>'
         +   '</div>'
         +   '<div style="flex:1;min-width:180px">'
-        +     '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.6rem;font-weight:900;color:var(--ink);line-height:1;letter-spacing:-.02em">'+(totalT>0 ? globalPct+'<span style="font-size:1rem">%</span>' : '—')+'</div>'
+        +     '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.6rem;font-weight:900;color:var(--ink);line-height:1;letter-spacing:-.02em">'+(totalT>0 ? globalPct+'<span style="font-size:1rem">%</span>' : '-')+'</div>'
         +     '<div style="font-size:.82rem;color:var(--ink2);margin-top:3px">'+_motivMsg+'</div>'
         +   '</div>'
         +   '<div style="display:flex;gap:.6rem;flex-wrap:wrap">'
@@ -1885,7 +2095,7 @@ function renderProgressoUnificado() {
 
   // ── Stat chips ──
   html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem;margin-bottom:1.5rem">';
-  [{v:totalT,l:'Questões respondidas'},{v:totalC,l:'Respostas certas'},{v:totalT>0?globalPct+'%':'—',l:'Taxa global'},{v:pm.totalXp+' XP',l:'XP total'},{v:pm.streak+(pm.streak===1?' dia':' dias'),l:'Streak atual'}]
+  [{v:totalT,l:'Questões respondidas'},{v:totalC,l:'Respostas certas'},{v:totalT>0?globalPct+'%':'-',l:'Taxa global'},{v:pm.totalXp+' XP',l:'XP total'},{v:pm.streak+(pm.streak===1?' dia':' dias'),l:'Streak atual'}]
   .forEach(function(s){
     html += '<div class="card" style="text-align:center;padding:1rem .75rem">'
           + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.75rem;font-weight:900;color:var(--ink);letter-spacing:-.03em;line-height:1">'+s.v+'</div>'
@@ -1894,16 +2104,10 @@ function renderProgressoUnificado() {
   });
   html += '</div>';
 
-  // ── Chapter cards grid ──
-  html += '<div style="margin-bottom:1.5rem">'
-        + '<div style="font-size:.78rem;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">Progresso por capítulo</div>'
-        + '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.85rem">'+cardsHtml+'</div>'
-        + '</div>';
-
   // ── Atualização timestamp ──
   html += '<div style="font-size:.72rem;color:var(--ink4);margin-bottom:1.25rem">Última atualização: '+new Date().toLocaleString('pt-PT',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit'})+'</div>';
 
-  // ── Treino direcionado + erros — card único ──
+  // ── Treino direcionado + erros card único ──
   html += '<div class="card" style="margin-bottom:1.25rem;border-color:var(--cs-mid)">';
   html += '<div class="card-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;color:var(--cs-deep)">'
         + '<span>🎯 Treino Direcionado</span>'
@@ -1919,7 +2123,7 @@ function renderProgressoUnificado() {
   html += '</div></div>';
 
   if (grupos.length === 0) {
-    html += '<p style="color:var(--ink4);font-size:.88rem;font-style:italic">Ainda sem erros registados — responde a questões para o treino aparecer aqui.</p>';
+    html += '<p style="color:var(--ink4);font-size:.88rem;font-style:italic">Ainda sem erros registados responde a questões para o treino aparecer aqui.</p>';
   } else {
     html += '<div id="treino-exercicios-container"></div>';
   }
@@ -1938,7 +2142,7 @@ function renderProgressoUnificado() {
   }
 }
 
-// ═══ KEYBOARD NAVIGATION — Tabs de todos os capítulos ═══
+// ═══ KEYBOARD NAVIGATION Tabs de todos os capítulos ═══
 (function(){
   // Map: tab container selector → click handler pattern
   var tabSets = [
@@ -1968,5 +2172,20 @@ function renderProgressoUnificado() {
     next.click();
     next.focus();
   });
+})();
+
+// Auto-render progresso se for o painel activo ao carregar a página
+(function() {
+  function _tryRenderProgresso() {
+    var panel = document.getElementById('mat7p-progresso');
+    if (panel && panel.classList.contains('active')) {
+      renderProgressoUnificado();
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', _tryRenderProgresso);
+  } else {
+    _tryRenderProgresso();
+  }
 })();
 

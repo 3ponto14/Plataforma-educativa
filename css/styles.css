@@ -12,8 +12,8 @@
   --sage:#77998E;--sage-light:#9ab5aa;--sage-dark:#516860;
   --rose:#AB9790;--rose-light:#c4b0a9;--charcoal:#4D4D4D;--blush:#D7BDB2;
   --cream:#f7f5f2;--cream2:#ede9e4;--cream3:#e0dbd4;
-  --ink:#2a2724;--ink2:#3d3a38;--ink3:#6b6560;--ink4:#a09890;
-  --white:#ffffff;--border:#ddd8d2;--border2:#ccc6bf;
+  --ink:#2a2724;--ink1:#2a2724;--ink2:#3d3a38;--ink3:#6b6560;--ink4:#a09890;
+  --white:#ffffff;--surface:#f7f5f2;--border:#ddd8d2;--border2:#ccc6bf;
   --c1-base:#edf4f1;--c1-mid:#77998E;--c1-deep:#3d5c54;--c1-pale:#f2f8f6;
   --c2-base:#f0eeec;--c2-mid:#516860;--c2-deep:#2e4039;--c2-pale:#f6f4f2;
   --c3-base:#f5f0ee;--c3-mid:#AB9790;--c3-deep:#7a6860;--c3-pale:#faf7f6;
@@ -23,6 +23,66 @@
   --c6-base:#e8f4f2;--c6-mid:#5a9e94;--c6-deep:#33706a;--c6-pale:#f0f9f8;
   --c7-base:#f0eaf8;--c7-mid:#7c5ea8;--c7-deep:#52397a;--c7-pale:#f8f4fc;
   --c8-base:#fdf0e8;--c8-mid:#c4733a;--c8-deep:#8a4d1f;--c8-pale:#fef7f2;
+  /* Matemática 8.º Ano - paleta própria (tons azul/teal/índigo) */
+  --m8c1-base:#e9f0f6;--m8c1-mid:#5a7fa8;--m8c1-deep:#36527a;--m8c1-pale:#f1f6fb;
+  --m8c2-base:#e6f2f1;--m8c2-mid:#4d978f;--m8c2-deep:#2e645e;--m8c2-pale:#eff9f8;
+  --m8c3-base:#eee9f6;--m8c3-mid:#7d6aa8;--m8c3-deep:#50407a;--m8c3-pale:#f5f1fb;
+  --m8c4-base:#f6ecec;--m8c4-mid:#b06a6a;--m8c4-deep:#7a4242;--m8c4-pale:#fbf3f3;
+  --m8c5-base:#e9f1ec;--m8c5-mid:#5e9676;--m8c5-deep:#3a6450;--m8c5-pale:#f1f8f4;
+  --m8c6-base:#f4eee6;--m8c6-mid:#a8854d;--m8c6-deep:#7a5e30;--m8c6-pale:#fbf6ef;
+  --m8c7-base:#e6eef4;--m8c7-mid:#4f86b0;--m8c7-deep:#305a7a;--m8c7-pale:#eff6fb;
+  --m8c8-base:#f2eaf2;--m8c8-mid:#9a5e96;--m8c8-deep:#6a3c66;--m8c8-pale:#faf2f9;
+  /* Matemática 9.º Ano - paleta própria (tons terracota/verde/borgonha), 6 capítulos */
+  --m9c1-base:#f6ece6;--m9c1-mid:#b06a3a;--m9c1-deep:#7a4420;--m9c1-pale:#fbf4ef;
+  --m9c2-base:#eef0e6;--m9c2-mid:#7f8a4d;--m9c2-deep:#545c30;--m9c2-pale:#f6f8ef;
+  --m9c3-base:#e6f0ee;--m9c3-mid:#4d8f87;--m9c3-deep:#2e5e58;--m9c3-pale:#eff8f6;
+  --m9c4-base:#f3e9ef;--m9c4-mid:#9c5e80;--m9c4-deep:#6a3c54;--m9c4-pale:#faf2f7;
+  --m9c5-base:#e8edf4;--m9c5-mid:#5a72a0;--m9c5-deep:#384a72;--m9c5-pale:#eff3fb;
+  --m9c6-base:#f4ece6;--m9c6-mid:#a87a4d;--m9c6-deep:#785230;--m9c6-pale:#fbf5ef;
+  /* Matemática 5.º Ano - paleta própria (tons verde-fresco), 7 capítulos */
+  /* Matemática 1.º Ano - paleta própria (tons amarelo/dourado, alegres), 6 capítulos */
+  --m1c1-base:#fdf1d8;--m1c1-mid:#e0a32e;--m1c1-deep:#8a6010;--m1c1-pale:#fef8ea;
+  --m1c2-base:#fce8d4;--m1c2-mid:#e08a3e;--m1c2-deep:#8a4e10;--m1c2-pale:#fef3e8;
+  --m1c3-base:#f7e6dc;--m1c3-mid:#d07a52;--m1c3-deep:#7a3e26;--m1c3-pale:#fcf1ea;
+  --m1c4-base:#e9f0d8;--m1c4-mid:#8aa83e;--m1c4-deep:#506010;--m1c4-pale:#f4f8ea;
+  --m1c5-base:#d8f0e4;--m1c5-mid:#3ea878;--m1c5-deep:#106040;--m1c5-pale:#eaf8f1;
+  --m1c6-base:#d8ecf2;--m1c6-mid:#3e94b8;--m1c6-deep:#105066;--m1c6-pale:#eaf5fa;
+  --m5c1-base:#e6f3ec;--m5c1-mid:#4a9e6e;--m5c1-deep:#2c6044;--m5c1-pale:#eff9f3;
+  --m5c2-base:#e8f1e6;--m5c2-mid:#6a9e4a;--m5c2-deep:#44602c;--m5c2-pale:#f1f8ef;
+  --m5c3-base:#e6f0f2;--m5c3-mid:#4a8e9e;--m5c3-deep:#2c5660;--m5c3-pale:#eff7f9;
+  --m5c4-base:#eef0e6;--m5c4-mid:#8a9e4a;--m5c4-deep:#56602c;--m5c4-pale:#f6f8ef;
+  --m5c5-base:#e6f2ee;--m5c5-mid:#4a9e88;--m5c5-deep:#2c6054;--m5c5-pale:#eff9f6;
+  --m5c6-base:#eaf0e6;--m5c6-mid:#7a9e4a;--m5c6-deep:#4e602c;--m5c6-pale:#f3f8ef;
+  --m5c7-base:#e6f1ea;--m5c7-mid:#4a9e72;--m5c7-deep:#2c6046;--m5c7-pale:#eff9f3;
+  /* Matemática 6.º Ano - paleta própria (tons laranja/coral), 7 capítulos */
+  --m6c1-base:#f6ece6;--m6c1-mid:#c47a4a;--m6c1-deep:#7a4a2c;--m6c1-pale:#fbf4ef;
+  --m6c2-base:#f6e8e6;--m6c2-mid:#c45a4a;--m6c2-deep:#7a342c;--m6c2-pale:#fbf1ef;
+  --m6c3-base:#f6eee6;--m6c3-mid:#c48e4a;--m6c3-deep:#7a562c;--m6c3-pale:#fbf6ef;
+  --m6c4-base:#f6e6ea;--m6c4-mid:#c44a6a;--m6c4-deep:#7a2c44;--m6c4-pale:#fbeff3;
+  --m6c5-base:#f4e6f0;--m6c5-mid:#a84a8e;--m6c5-deep:#682c56;--m6c5-pale:#faeff7;
+  --m6c6-base:#f6ebe6;--m6c6-mid:#c4684a;--m6c6-deep:#7a3e2c;--m6c6-pale:#fbf2ef;
+  --m6c7-base:#f6e6e8;--m6c7-mid:#c44a5a;--m6c7-deep:#7a2c38;--m6c7-pale:#fbeff1;
+  /* Matemática 10.º Ano - paleta própria (azul-petróleo/marinho), 6 capítulos */
+  --m10c1-base:#e6edf2;--m10c1-mid:#3f6b8a;--m10c1-deep:#264458;--m10c1-pale:#eff4f8;
+  --m10c2-base:#e6f0f0;--m10c2-mid:#3f8a84;--m10c2-deep:#265854;--m10c2-pale:#eff8f7;
+  --m10c3-base:#e8ecf4;--m10c3-mid:#4a5ea0;--m10c3-deep:#2e3a66;--m10c3-pale:#eff2fb;
+  --m10c4-base:#e6eef2;--m10c4-mid:#3f7a9a;--m10c4-deep:#264e64;--m10c4-pale:#eff6fa;
+  --m10c5-base:#e9eaf2;--m10c5-mid:#5a5ea0;--m10c5-deep:#383a66;--m10c5-pale:#f1f1fb;
+  --m10c6-base:#e6f1ee;--m10c6-mid:#3f9a7e;--m10c6-deep:#266450;--m10c6-pale:#eff9f5;
+  /* Matemática 11.º Ano - paleta própria (ardósia/grafite-azulado), 6 capítulos */
+  --m11c1-base:#eaedef;--m11c1-mid:#5a6e7e;--m11c1-deep:#36454f;--m11c1-pale:#f2f5f6;
+  --m11c2-base:#ece9ef;--m11c2-mid:#6e5a7e;--m11c2-deep:#45364f;--m11c2-pale:#f5f2f6;
+  --m11c3-base:#e9eef0;--m11c3-mid:#4a7a8a;--m11c3-deep:#2e4e58;--m11c3-pale:#f1f7f8;
+  --m11c4-base:#eeebe8;--m11c4-mid:#8a7058;--m11c4-deep:#564636;--m11c4-pale:#f7f4f1;
+  --m11c5-base:#e9eeec;--m11c5-mid:#4a8a74;--m11c5-deep:#2e584a;--m11c5-pale:#f1f8f5;
+  --m11c6-base:#edeaef;--m11c6-mid:#7a5a8a;--m11c6-deep:#4e3658;--m11c6-pale:#f6f2f8;
+  --m12c1-base:#eaedef;--m12c1-mid:#5a6e7e;--m12c1-deep:#36454f;--m12c1-pale:#f2f5f6;
+  --m12c2-base:#edeaef;--m12c2-mid:#7a5a8a;--m12c2-deep:#4e3658;--m12c2-pale:#f6f2f8;
+  --m12c3-base:#e9eef0;--m12c3-mid:#4a7a8a;--m12c3-deep:#2e4e58;--m12c3-pale:#f1f7f8;
+  --m12c4-base:#eeebe8;--m12c4-mid:#8a7058;--m12c4-deep:#564636;--m12c4-pale:#f7f4f1;
+  --m12c5-base:#e9eeec;--m12c5-mid:#4a8a74;--m12c5-deep:#2e584a;--m12c5-pale:#f1f8f5;
+  --m12c6-base:#efeae9;--m12c6-mid:#8a5a5a;--m12c6-deep:#583636;--m12c6-pale:#f8f2f1;
+  --m12c7-base:#e9efec;--m12c7-mid:#5a7a6e;--m12c7-deep:#364e45;--m12c7-pale:#f1f8f5;
   --available:#516860;--avail-bg:#edf4f1;
   --progress:#AB9790;--prog-bg:#f5f0ee;--soon:#9e9e9e;
   --p-radius:16px;--radius-sm:10px;
@@ -182,7 +242,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 .mat7-chk-box.checked::after{content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:.65rem;color:#fff;font-weight:900;line-height:1}
 
 
-/* ═══ MATH VIEW — Portal Theme ═══ */
+/* ═══ MATH VIEW - Portal Theme ═══ */
 .math-view{background:var(--cream);color:var(--ink);font-family:'Montserrat',sans-serif;min-height:100vh;overflow-x:hidden}
 .math-view::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(circle at 10% 15%,rgba(81,104,96,.05) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(171,151,144,.04) 0%,transparent 40%)}
 
@@ -199,7 +259,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 .math-view header h1 em{display:block;color:var(--c2-mid);font-style:normal}
 .math-view header p{color:var(--ink3);font-size:1rem;margin-top:.75rem;font-style:italic}
 
-/* tabs — mobile-first scroll */
+/* tabs - mobile-first scroll */
 .tabs{position:sticky;top:60px;z-index:90;display:flex;gap:.5rem;padding:.75rem 1.25rem;border-bottom:1px solid var(--border);background:rgba(253,249,243,.97);backdrop-filter:blur(12px);overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;scrollbar-width:none;justify-content:flex-start}
 .tabs::-webkit-scrollbar{display:none}
 .tabs::after{content:'';flex-shrink:0;width:.5rem}
@@ -309,7 +369,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 :focus-visible{outline:3px solid var(--c2-mid);outline-offset:2px}
 .option-btn:focus-visible{outline:3px solid var(--c2-mid);outline-offset:2px;border-color:var(--c2-mid)}
 .fill-input:focus-visible{outline:3px solid var(--c2-mid);outline-offset:1px}
-/* Fix contrast: ink4 was too light — boost to ink3 for body text contexts */
+/* Fix contrast: ink4 was too light - boost to ink3 for body text contexts */
 .hero-stat .l,.score-label{color:var(--ink3)!important}
 /* ── Timeline component ── */
 .tl-item{display:flex;gap:1.1rem;align-items:flex-start;margin-bottom:1.25rem;position:relative}
@@ -403,6 +463,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 .gf-dif-btn.active[data-dif="facil"]{background:#e8f5e9;border-color:#4caf50;color:#2e7d32}
 .gf-dif-btn.active[data-dif="medio"]{background:#fff8e1;border-color:#ff9800;color:#e65100}
 .gf-dif-btn.active[data-dif="dificil"]{background:#fce4ec;border-color:#e91e63;color:#880e4f}
+.gf-dif-btn.active[data-qty]{background:var(--c2-mid);border-color:var(--c2-mid);color:#fff}
 
 .gf-gen-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--c2-mid),var(--c1-mid));color:#fff;border:none;padding:12px 28px;border-radius:999px;font-family:'Montserrat',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(81,104,96,.25)}
 .gf-gen-btn:hover{opacity:.88;transform:translateY(-1px)}
@@ -410,7 +471,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 .gf-share-btn:hover{background:var(--c2-pale)}
 .gf-share-btn.copied{background:var(--c2-mid);color:#fff;border-color:var(--c2-mid)}
 
-/* ═══ DESIGN — Original colours + Dynamic floating elements ═══ */
+/* ═══ DESIGN - Original colours + Dynamic floating elements ═══ */
 
 /* Confetti burst on correct answer */
 @keyframes confettiBurst {
@@ -458,7 +519,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
   animation: floatUp linear infinite;
 }
 
-/* ── Option buttons — more tactile ── */
+/* ── Option buttons - more tactile ── */
 .option-btn {
   border-radius: 14px !important;
   padding: 13px 18px !important;
@@ -488,7 +549,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 }
 .option-btn.wrong .opt-label { background: #f87171 !important; color:#fff !important; }
 
-/* ── Fill input — bigger ── */
+/* ── Fill input - bigger ── */
 .fill-input {
   border-radius: 14px !important;
   padding: 11px 18px !important;
@@ -511,7 +572,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
   border-color: #f87171 !important; color: #7f1d1d !important;
 }
 
-/* ── Buttons — bounce ── */
+/* ── Buttons - bounce ── */
 .check-btn {
   border-radius: 14px !important;
   padding: 12px 28px !important;
@@ -696,6 +757,7 @@ body::before{content:'';position:fixed;inset:0;background:
   radial-gradient(ellipse 50% 40% at 70% 10%,rgba(215,189,178,.10) 0%,transparent 45%),
   radial-gradient(ellipse 40% 50% at 15% 85%,rgba(81,104,96,.08) 0%,transparent 45%);
   pointer-events:none;z-index:0;animation:bgPulse 14s ease-in-out infinite alternate}
+@keyframes bgPulse{0%{opacity:.8}50%{opacity:1}100%{opacity:.8}}
 @keyframes bgPulse2{0%{opacity:.7}50%{opacity:1}100%{opacity:.7}}
 
 body::after{content:'';position:fixed;inset:0;
@@ -874,7 +936,7 @@ footer{background:linear-gradient(135deg,#4D4D4D,#2a3330,#516860)!important}
 /* Cap 4: tab-based sections */
 #view-math4 .section4 { display: none; }
 #view-math4 .section4.active { display: block; }
-/* Tabs are available but hidden by default — only shown when navigating directly */
+/* Tabs are available but hidden by default - only shown when navigating directly */
 #view-math .tabs, #view-math #tabs-cap1 { display: none; }
 #view-math2 #tabs2 { display: none; }
 #view-math3 #tabs3 { display: none; }
@@ -970,7 +1032,7 @@ footer{background:linear-gradient(135deg,#4D4D4D,#2a3330,#516860)!important}
 .gen-level-btn{height:34px;padding:0 14px;background:var(--cream);border:1.5px solid var(--border);border-radius:999px;font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:600;color:var(--ink3);cursor:pointer;transition:all .2s;flex-shrink:0}
 .gen-level-btn.active{background:linear-gradient(135deg,#516860,#77998E);color:#fff;border-color:transparent}
 .btn{height:40px;padding:0 18px;border-radius:999px;font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
-.btn-primary{background:linear-gradient(135deg,#516860,#77998E);color:#fff;border:none;box-shadow:0 4px 16px rgba(81,104,96,.3)}
+.btn-primary{background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;box-shadow:0 4px 16px rgba(74,63,122,.3)}
 .btn-primary:hover{opacity:.9;transform:translateY(-1px)}
 .btn-ghost{background:var(--white);border:1.5px solid var(--border2);color:var(--ink2)}
 .btn-ghost:hover{border-color:var(--c2-mid);color:var(--c2-mid)}
@@ -984,12 +1046,12 @@ footer{background:linear-gradient(135deg,#4D4D4D,#2a3330,#516860)!important}
 #fc4-front,#fc4-back{position:absolute;inset:0;border-radius:var(--p-radius);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 #fc4-front{background:var(--white);border:1.5px solid var(--border)}
 #fc4-back{background:var(--c2-pale);border:1.5px solid rgba(81,104,96,.2);transform:rotateY(180deg)}
-/* FLASHCARD SRS — modo selector */
+/* FLASHCARD SRS - modo selector */
 .fc-mode-btn{padding:6px 14px;background:var(--white);border:1.5px solid var(--border);border-radius:999px;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;color:var(--ink3);cursor:pointer;transition:all .18s}
 .fc-mode-btn:hover{border-color:var(--c2-mid);color:var(--c2-mid)}
 .fc-mode-btn.active{background:var(--c2-mid);border-color:var(--c2-mid);color:#fff;box-shadow:0 3px 10px rgba(81,104,96,.25)}
-/* FLASHCARD SRS — estado da carta (badge canto) */
-/* FLASHCARD SRS — botões de confiança */
+/* FLASHCARD SRS - estado da carta (badge canto) */
+/* FLASHCARD SRS - botões de confiança */
 .fc-conf-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:.55rem .8rem;background:var(--white);border:1.5px solid var(--border);border-radius:12px;font-family:'Montserrat',sans-serif;cursor:pointer;transition:all .18s;min-width:72px}
 .fc-conf-btn span{font-size:.78rem;font-weight:700;color:var(--ink2)}
 .fc-conf-btn small{font-size:.62rem;color:var(--ink4);font-weight:500}
@@ -998,15 +1060,15 @@ footer{background:linear-gradient(135deg,#4D4D4D,#2a3330,#516860)!important}
 .fc-conf-1:hover,.fc-conf-1.selected{border-color:#e67e22;background:#fff3e0}
 .fc-conf-2:hover,.fc-conf-2.selected{border-color:#3498db;background:#e8f4fd}
 .fc-conf-3:hover,.fc-conf-3.selected{border-color:var(--correct);background:#edf4f1}
-/* FLASHCARD SRS — dots coloridos por estado */
+/* FLASHCARD SRS - dots coloridos por estado */
 /* EXAME TIMER */
 .exame-timer-bar{position:sticky;top:120px;z-index:50;background:rgba(253,249,243,.95);backdrop-filter:blur(8px);border:1.5px solid var(--border);border-radius:var(--p-radius);padding:.9rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;box-shadow:var(--shadow)}
 /* PROGRESSO */
 .prog-section-row{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}
 .prog-section-name{font-size:.82rem;font-weight:600;color:var(--ink2);min-width:140px}
 .prog-pct{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--ink4);min-width:36px;text-align:right}
-/* DOWNLOAD CARD — flex layout (Cap 4 style with dl-icon/dl-body/dl-btn) */
-/* DOWNLOAD CARD — grid layout (Cap 1-3 style inside download-grid) */
+/* DOWNLOAD CARD - flex layout (Cap 4 style with dl-icon/dl-body/dl-btn) */
+/* DOWNLOAD CARD - grid layout (Cap 1-3 style inside download-grid) */
 .dl-btn{background:linear-gradient(135deg,#516860,#77998E);color:#fff;border:none;border-radius:999px;padding:8px 18px;font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;flex-shrink:0;transition:opacity .2s}
 .dl-btn:hover{opacity:.9}
 /* JOGO */
@@ -1153,7 +1215,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 }
 
 /* ══════════════════════════════════════════
-   JOGO DO 24 — CSS
+   JOGO DO 24 - CSS
 ══════════════════════════════════════════ */
 .j24-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--p-radius);padding:1.5rem 1.75rem;box-shadow:var(--shadow);margin-top:1.5rem}
 .j24-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
@@ -1191,14 +1253,38 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 .j24-status.step3{color:var(--c2-deep)}
 
 /* ══════════════════════════════════════════
-   JOGOS — TABS + 4 GAMES
+   JOGOS - TABS + 4 GAMES
 ══════════════════════════════════════════ */
 
 /* ── Game tab bar ── */
-.g-tabs{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:1.5rem;padding:.35rem;background:var(--cream2);border-radius:14px;border:1px solid var(--border)}
-.g-tab{flex:1;min-width:90px;padding:8px 10px;border-radius:10px;border:none;background:transparent;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap}
+.g-tabs{display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:1.5rem;padding:.4rem;background:var(--cream2);border-radius:14px;border:1px solid var(--border)}
+.g-tab{flex:0 1 auto;padding:8px 14px;border-radius:10px;border:none;background:transparent;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
 .g-tab:hover{background:var(--white);color:var(--ink)}
 .g-tab.active{background:var(--white);color:var(--c2-deep);box-shadow:0 2px 8px rgba(81,104,96,.15);border:1px solid rgba(81,104,96,.12)}
+/* ── Filtro de capítulo/subtema dos jogos (multi-seleção) ── */
+.g-filter{margin-bottom:.85rem}
+.g-fl-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin-bottom:.55rem}
+.g-fl-bar:last-child{margin-bottom:0}
+.g-fl-label{font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);margin-right:.15rem;min-width:80px}
+.g-fl-chip{padding:5px 12px;border-radius:999px;border:1px solid var(--border);background:var(--white);font-family:'Montserrat',sans-serif;font-size:.74rem;font-weight:600;color:var(--ink2);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:4px}
+.g-fl-chip:hover{border-color:var(--c2-mid);color:var(--ink)}
+.g-fl-chip.active{background:var(--c2-deep);border-color:var(--c2-deep);color:#fff}
+.g-fl-chip.g-fl-st.active{background:var(--c2-mid);border-color:var(--c2-mid)}
+.g-fl-note{font-size:.76rem;color:var(--ink4);font-style:italic}
+/* ── Seleção multi (capítulos/subtemas) nas secções de estudo ── */
+.sel-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin-bottom:.55rem}
+.sel-bar:last-child{margin-bottom:0}
+.sel-label{font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);margin-right:.15rem;min-width:80px}
+.sel-chip{padding:5px 12px;border-radius:999px;border:1px solid var(--border);background:var(--white);font-family:'Montserrat',sans-serif;font-size:.74rem;font-weight:600;color:var(--ink2);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:4px}
+.sel-chip:hover{border-color:var(--c2-mid);color:var(--ink)}
+.sel-chip.active{background:var(--c2-deep);border-color:var(--c2-deep);color:#fff}
+.sel-chip.sel-st.active{background:var(--c2-mid);border-color:var(--c2-mid)}
+.sel-note{font-size:.76rem;color:var(--ink4);font-style:italic}
+/* ── Cabeçalho "Perguntas sobre:" dentro dos jogos ── */
+.g-tema-head{display:flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--ink2);background:var(--cream2);border:1px solid var(--border);border-radius:10px;padding:.5rem .8rem;margin-bottom:1rem}
+.g-tema-head i{color:var(--c2-deep)}
+.g-tema-head b{color:var(--ink)}
+.g-tema-cap{color:var(--ink3);font-size:.78rem}
 .g-panel{display:none}
 .g-panel.active{display:block}
 
@@ -1270,7 +1356,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 .hanoi-moves{font-family:'JetBrains Mono',monospace;font-size:.88rem;color:var(--ink3);font-weight:600}
 
 /* ═══ MAT7 HUB STYLES ═══ */
-/* ═══ 3ponto14 HUB — youthful redesign ═══ */
+/* ═══ 3ponto14 HUB - youthful redesign ═══ */
 
 /* ── Top bar ── */
 .mat7-hub-bar {
@@ -1312,7 +1398,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
   letter-spacing: .03em;
 }
 
-/* ── Tab bar — pill style ── */
+/* ── Tab bar - pill style ── */
 .mat7-hub-tabbar {
   display: flex; gap: 6px; overflow-x: auto;
   padding: .65rem 1.5rem;
@@ -1353,6 +1439,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
   max-width: 880px; margin: 0 auto;
   padding: 1.75rem 1.75rem 6rem;
 }
+#mat7-hub-stubs { display: none !important; }
 .mat7-panel { display: none; }
 .mat7-panel.active { display: block; animation: pfadeUp .2s ease; }
 
@@ -1368,7 +1455,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
   line-height: 1.5;
 }
 
-/* ── Chapter selector — capsule toggles ── */
+/* ── Chapter selector - capsule toggles ── */
 .mat7-cap-btn {
   display: inline-flex; align-items: center; gap: .4rem;
   padding: .5rem .9rem;
@@ -1495,6 +1582,117 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
   box-shadow: 0 4px 12px rgba(0,0,0,.1) !important;
   transform: translateY(-2px);
 }
+
+/* ── Visuais (tabelas e gráficos SVG nos exercícios e teoria) ── */
+.edv-wrap {
+  display: flex;
+  justify-content: center;
+  margin: .75rem 0;
+}
+.edv-svg {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 6px;
+}
+.edv-table {
+  border-collapse: collapse;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .8rem;
+  min-width: 200px;
+  background: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+.edv-table th {
+  background: var(--edv, var(--c2-mid));
+  color: #fff;
+  font-weight: 700;
+  padding: .45rem .7rem;
+  text-align: center;
+  font-size: .76rem;
+}
+.edv-table td {
+  padding: .4rem .7rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink2);
+}
+.edv-table tbody tr:last-child td { border-bottom: none; }
+.edv-table tbody tr:nth-child(even) td { background: var(--surface); }
+
+/* ── Teoria: acordeão (grupos colapsáveis + perguntas que abrem a resposta) ── */
+.teoria-acc { display: flex; flex-direction: column; gap: .6rem; padding: .25rem 0 1.5rem; }
+.teoria-group {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--white);
+}
+.teoria-group-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .8rem 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  text-align: left;
+  transition: background .15s;
+}
+.teoria-group-head:hover { background: var(--surface); }
+.teoria-group-icon { font-size: 1.05rem; color: var(--acc, var(--ink3)); flex-shrink: 0; }
+.teoria-group-title {
+  font-size: .8rem; font-weight: 800; text-transform: uppercase; letter-spacing: .07em;
+  color: var(--ink2); flex: 1;
+}
+.teoria-group-count {
+  font-size: .68rem; font-weight: 700; color: var(--ink4);
+  background: var(--surface); border-radius: 999px; padding: 2px 9px;
+}
+.teoria-group-caret { font-size: .9rem; color: var(--ink4); transition: transform .2s; }
+.teoria-group.open .teoria-group-caret { transform: rotate(180deg); }
+/* corpo do grupo: colapsado por defeito */
+.teoria-group-body { display: none; padding: 0 .65rem .65rem; flex-direction: column; gap: .35rem; }
+.teoria-group.open .teoria-group-body { display: flex; }
+
+.teoria-item { border-top: 1px solid var(--border); }
+.teoria-item:first-child { border-top: none; }
+.teoria-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .6rem .55rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--ink1);
+  text-align: left;
+  line-height: 1.35;
+  transition: color .15s;
+}
+.teoria-q:hover { color: var(--acc, var(--ink1)); }
+.teoria-q-icon { font-size: .9rem; color: var(--acc, var(--ink4)); flex-shrink: 0; transition: transform .2s; }
+.teoria-item.open .teoria-q-icon { transform: rotate(45deg); } /* + vira × */
+.teoria-a {
+  display: none;
+  font-size: .82rem;
+  color: var(--ink3);
+  line-height: 1.55;
+  padding: 0 .55rem .7rem 1.6rem;
+}
+.teoria-item.open .teoria-a { display: block; }
 
 #view-math:not([style*="display: none"]):not([style*="display:none"]) #sec-questoes.active,
 #view-math:not([style*="display: none"]):not([style*="display:none"]) #sec-minitestes.active,
@@ -1673,7 +1871,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
   }
   .card { border-radius: 8px !important; }
 
-  /* Options — show answers clearly */
+  /* Options - show answers clearly */
   .option-btn { border: 1px solid #ddd !important; background: #fafafa !important; box-shadow: none !important; }
   .option-btn.correct { background: #edf4f1 !important; border-color: #516860 !important; }
 
@@ -1692,7 +1890,7 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
   @page { size: A4; margin: 18mm 16mm 18mm 16mm; }
 }
 
-/* Print header — hidden on screen, shown on print */
+/* Print header - hidden on screen, shown on print */
 #print-header {
   display: none;
   border-bottom: 2px solid #516860;
@@ -1744,7 +1942,7 @@ body.tab-hidden *::after {
 body.dark-mode{
   --cream:#1a1a1a;--cream2:#242424;--cream3:#2e2e2e;
   --white:#242424;--border:#3a3a3a;--border2:#444;
-  --ink:#e8e4df;--ink2:#ccc8c2;--ink3:#a09890;--ink4:#706860;
+  --ink:#e8e4df;--ink1:#e8e4df;--ink2:#ccc8c2;--ink3:#a09890;--ink4:#706860;
   --avail-bg:#1a2e28;--available:#77998E;
   --c1-base:#1a2e28;--c1-pale:#162420;--c1-mid:#77998E;--c1-deep:#9ab5aa;
   --c2-base:#1a2420;--c2-pale:#141e1b;--c2-mid:#77998E;--c2-deep:#9ab5aa;
@@ -1757,6 +1955,9 @@ body.dark-mode{
   background:#1a1a1a!important;
 }
 body.dark-mode .topbar{background:linear-gradient(135deg,rgba(30,30,30,.98),rgba(24,24,24,.97))!important;border-bottom-color:#333!important;}
+/* Topbar unificada e tab bar dos hubs de curso em modo escuro */
+body.dark-mode .site-topbar{background:#242424!important;border-bottom-color:#333!important;}
+body.dark-mode .mat7-hub-tabbar{background:#1a1a1a!important;border-bottom-color:#333!important;}
 body.dark-mode::before,body.dark-mode::after{opacity:.3;}
 body.dark-mode .card,body.dark-mode .def-block,body.dark-mode .quiz-question,
 body.dark-mode .y-card,body.dark-mode .s-item,body.dark-mode .score-bar{
@@ -1874,6 +2075,17 @@ body.dark-mode .pom-mode-btn.active{background:#2e2e2e!important;}
 .calc-btn.eq:active{opacity:.85;}
 .calc-btn.clr{background:var(--cs-base);color:var(--cs-deep);}
 .calc-btn.zero{grid-column:span 2;}
+/* Calculadora roxa - página de exames */
+[data-no-pomodoro] #calc-fab{background:linear-gradient(135deg,#7570a8,#9b96d4);box-shadow:0 6px 20px rgba(117,112,168,.4);}
+[data-no-pomodoro] #calc-fab:hover{box-shadow:0 10px 28px rgba(117,112,168,.55);}
+[data-no-pomodoro] #calc-display{background:linear-gradient(135deg,#2a2848,#484580);}
+[data-no-pomodoro] .calc-btn.op{background:var(--c4-base);color:var(--c4-deep);}
+[data-no-pomodoro] .calc-btn.op:active{background:var(--c4-mid);color:#fff;}
+[data-no-pomodoro] .calc-btn.eq{background:linear-gradient(135deg,#484580,#7570a8);}
+[data-no-pomodoro] .calc-btn.clr{background:#f0eef8;color:#484580;}
+/* posição mais baixa pois não há pomodoro */
+[data-no-pomodoro] #calc-fab{bottom:24px;}
+[data-no-pomodoro] #calc-widget{bottom:88px;}
 
 /* ──────────────────────────────────────────
    7. TOOLTIPS DE FÓRMULAS
@@ -1980,7 +2192,7 @@ body.dark-mode .pom-mode-btn.active{background:#2e2e2e!important;}
 .er2-modal-footer{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;}
 .er2-unlocked-msg{text-align:center;padding:.6rem;background:#1a3a1a;border:2px solid #0a2a0a;color:#80e080;font-weight:800;font-size:.84rem;margin-bottom:.6rem;}
 
-/* Final lock — chest style */
+/* Final lock - chest style */
 .er2-final-lock{margin-top:.7rem;padding:.9rem 1rem;background:#8b7355;border:3px solid #3d2e0a;box-shadow:inset 0 0 0 2px #a08860,2px 2px 0 #2a1e06;}
 .er2-final-lock h3{font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:900;color:#3d2e0a;margin-bottom:.2rem;text-transform:uppercase;letter-spacing:.05em;}
 .er2-final-lock p{font-size:.73rem;color:#5c4a1e;margin-bottom:.7rem;line-height:1.5;}
@@ -2200,7 +2412,7 @@ body.dark-mode .pom-mode-btn.active{background:#2e2e2e!important;}
 .pn-prog-fill{height:100%;background:var(--sage-dark);border-radius:999px;transition:width .4s ease}
 .pn-prog-label{font-size:.78rem;font-weight:700;color:var(--ink4);white-space:nowrap}
 
-/* Provas panel wrapper — aligns everything to same width */
+/* Provas panel wrapper - aligns everything to same width */
 .pn-panel-wrap{max-width:680px;margin:0 auto}
 /* Question card */
 .pn-practice-wrap{max-width:680px;margin:0 auto}
@@ -2212,6 +2424,22 @@ body.dark-mode .pom-mode-btn.active{background:#2e2e2e!important;}
 .pn-badge--open{background:rgba(166,130,92,.15);color:#8a6530}
 .pn-badge--fig{background:rgba(150,150,150,.1);color:var(--ink4)}
 .pn-enun{font-family:'Montserrat',sans-serif;font-size:.95rem;font-weight:500;color:var(--ink);line-height:1.65}
+
+/* Textarea de resposta aberta */
+.pn-open-textarea{width:100%;min-height:120px;border:1.5px solid #ddd;border-radius:10px;padding:.8rem 1rem;font-family:'Montserrat',sans-serif;font-size:.95rem;resize:vertical;outline:none;background:#fafafa;transition:border-color .2s;box-sizing:border-box;margin-bottom:.8rem}
+.pn-open-textarea:focus{border-color:#6b5fa0;background:#fff}
+.pn-open-textarea::placeholder{color:#bbb}
+
+/* Frações matemáticas inline */
+.pn-frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .1em;font-family:'JetBrains Mono',monospace}
+.pn-frac-n{border-bottom:1.5px solid currentColor;padding:0 .15em;line-height:1.2;font-size:.9em}
+.pn-frac-d{padding:0 .15em;line-height:1.2;font-size:.9em}
+
+/* Figura recortada do exame */
+.pn-fig-wrap{margin:.9rem 0 .5rem;border-radius:10px;overflow:hidden;border:1.5px solid #ddd;background:#fff}
+.pn-fig-img{width:100%;display:block}
+.pn-exam-img-wrap{background:#fff}
+.pn-exam-img{width:100%;display:block;max-height:80vh;object-fit:contain;background:#fff}
 
 /* MC options */
 .pn-opts{display:flex;flex-direction:column;gap:.5rem;margin-top:1.1rem}
@@ -2229,11 +2457,13 @@ body.dark-mode .pom-mode-btn.active{background:#2e2e2e!important;}
 .pn-icon-err{color:#e53935;font-size:1.1rem;margin-left:auto}
 
 .pn-confirm-btn{margin-top:.85rem;font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:700;padding:9px 22px;border-radius:999px;border:none;background:var(--sage-dark);color:#fff;cursor:pointer;transition:all .15s}
-.pn-confirm-btn:hover{background:var(--sage-mid)}
+.pn-confirm-btn:hover{background:var(--sage-dark)}
 
 .pn-feedback{display:flex;align-items:center;gap:.5rem;margin-top:.85rem;font-family:'Montserrat',sans-serif;font-size:.88rem;font-weight:700;padding:8px 14px;border-radius:10px}
 .pn-feedback--ok{background:#f0faf0;color:#2e7d32}
 .pn-feedback--err{background:#fff5f5;color:#c62828}
+.pn-tip{display:flex;align-items:center;gap:.5rem;margin:.6rem 0 .9rem;padding:.65rem 1rem;background:linear-gradient(135deg,#edf4f1,#f2f8f6);border-radius:10px;border-left:3px solid var(--sage);font-size:.82rem;color:var(--sage-dark);font-weight:500;font-family:'Montserrat',sans-serif;line-height:1.4}
+.pn-tip .ph{font-size:1.05rem;flex-shrink:0;color:var(--sage)}
 
 /* Open question */
 .pn-open-box{margin-top:1rem;padding:1rem 1.1rem;background:var(--cream2);border-radius:12px;border-left:3px solid var(--border2)}
@@ -2283,3 +2513,1972 @@ body.dark-mode .pom-mode-btn.active{background:#2e2e2e!important;}
 .pn-rev-enun{font-family:'Montserrat',sans-serif;font-size:.85rem;color:var(--ink);line-height:1.55;margin-bottom:.4rem}
 .pn-rev-ans{font-family:'Montserrat',sans-serif;font-size:.82rem;color:var(--ink3)}
 .pn-ans-wrong{color:#c62828}
+
+/* ══════════════════════════════════════════════════════
+   UX IMPROVEMENTS - Melhorias globais de UX
+   Adicionado para melhor experiência em todas as páginas
+══════════════════════════════════════════════════════ */
+
+/* Scroll-to-top button melhorado */
+.scroll-top-btn{position:fixed;bottom:1.5rem;right:1.5rem;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#516860,#77998E);color:#fff;border:none;font-size:1.1rem;cursor:pointer;z-index:9000;opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .3s,transform .3s,box-shadow .2s;box-shadow:0 4px 16px rgba(81,104,96,.35);display:flex;align-items:center;justify-content:center}
+.scroll-top-btn:hover{box-shadow:0 6px 24px rgba(81,104,96,.5);transform:translateY(-2px)!important}
+
+/* Topbar UX controls */
+#ux-topbar-controls .ux-btn-lbl{display:none}
+@media(min-width:480px){#ux-topbar-controls .ux-btn-lbl{display:inline}}
+#ux-dark-btn.active{background:rgba(74,63,122,.12)!important;border-color:#8b7cc0!important;color:#5c4e8a!important}
+
+/* Tab scroll fade indicator */
+.ex-tabs-wrap{overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.ex-tabs-wrap::-webkit-scrollbar{display:none}
+
+/* Card entrance animations */
+.ux-anim-ready{opacity:0;transform:translateY(16px);transition:opacity .4s ease,transform .4s ease}
+.ux-anim-in{opacity:1!important;transform:none!important}
+
+/* Quiz option hover melhorado */
+.pn-opt:hover:not(:disabled){border-color:#8b7cc0!important;background:#faf9ff!important;transform:translateX(3px)}
+.pn-opt{transition:all .15s!important}
+
+/* Feedback de resposta com animação */
+@keyframes uxFeedbackIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+#pt-gram-feedback,#pt-fig-feedback,#pt-disc-feedback,#pt-con-feedback,#pt-lus-feedback,#pt-feedback,#pt-sim-feedback{animation:uxFeedbackIn .25s ease}
+
+/* Streak badge animação */
+@keyframes uxStreak{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+#ux-toast{animation:none}
+
+/* Progress bar animação */
+.ex-progress-fill,.ex-sim-timer-bar{transition:width .6s cubic-bezier(.4,0,.2,1)!important}
+
+/* Dark mode - ex-topbar */
+body.dark-mode .ex-topbar{background:rgba(18,16,32,.97)!important;border-bottom-color:#2a2840!important}
+body.dark-mode .ex-topbar-back{border-color:#3a3060!important;color:#9080c0!important}
+body.dark-mode .ex-topbar-back:hover{background:rgba(107,95,160,.15)!important}
+
+/* Dark mode - hero das páginas de exames */
+body.dark-mode .ex-hero{background:linear-gradient(150deg,#050310 0%,#0e0b20 35%,#1a1540 70%,#2a2058 100%)!important}
+body.dark-mode .ex-hstat{background:rgba(255,255,255,.05)!important;border-color:rgba(255,255,255,.08)!important}
+body.dark-mode .ex-hstat-n{color:#e0d8ff!important}
+body.dark-mode .ex-hstat-l{color:rgba(255,255,255,.4)!important}
+
+/* Dark mode - tabs */
+body.dark-mode .ex-tabs-wrap{background:rgba(20,18,36,.9)!important;border-color:#2a2840!important}
+body.dark-mode .ex-tab{color:#908890!important}
+body.dark-mode .ex-tab:hover:not(.active){background:rgba(107,95,160,.12)!important;color:#c0b8e0!important}
+body.dark-mode .ex-tab.active{color:#fff!important}
+
+/* Dark mode - cards de tema */
+body.dark-mode .ex-topic-card,body.dark-mode .pt-topic-card{background:#1e1c2e!important;border-color:#2a2840!important}
+body.dark-mode .ex-topic-label,body.dark-mode .pt-topic-label,.dark-mode .ex-topic-card *{color:#e0daf0!important}
+body.dark-mode .ex-topic-sub,body.dark-mode .pt-topic-sub{color:#8080a0!important}
+body.dark-mode .ex-topic-icon,body.dark-mode .pt-topic-icon{filter:brightness(.85)}
+
+/* Dark mode - year rows */
+body.dark-mode .pt-year-row,body.dark-mode .ex-year-row{background:#1e1c2e!important;border-color:#2a2840!important}
+body.dark-mode .pt-year-label,body.dark-mode .ex-year-label{color:#e0daf0!important}
+body.dark-mode .pt-year-sub,body.dark-mode .ex-year-sub{color:#7070a0!important}
+body.dark-mode .pt-year-btn-view{background:#252340!important;border-color:#3a3860!important;color:#a0a0c0!important}
+
+/* Dark mode - progress section */
+body.dark-mode .ex-progress-bar-section{background:#1e1c2e!important;border-color:#2a2840!important}
+body.dark-mode .ex-progress-bar{background:#2a2840!important}
+body.dark-mode .ex-progress-topic-label{color:#c0b8e0!important}
+
+/* Dark mode - simulador */
+body.dark-mode .pt-sim-card,body.dark-mode .ex-sim-card{background:#1e1c2e!important;border-color:#2a2840!important}
+body.dark-mode .pt-sim-opt,body.dark-mode .ex-sim-opt{background:#252340!important;border-color:#3a3860!important;color:#e0daf0!important}
+body.dark-mode .pt-sim-opt:hover,body.dark-mode .ex-sim-opt:hover{border-color:#6b5fa0!important;background:#2d2a50!important}
+body.dark-mode .pt-sim-opt.active,body.dark-mode .ex-sim-opt.active{border-color:#8b7cc0!important;background:#2d2a50!important}
+body.dark-mode .ex-sim-tema-pill{background:#1e1c2e!important;border-color:#3a3860!important;color:#a090d0!important}
+body.dark-mode .ex-sim-tema-pill.active{background:#5c4e8a!important;border-color:#5c4e8a!important;color:#fff!important}
+
+/* Dark mode - question cards */
+body.dark-mode #pt-inline-engine .pn-question-card,
+body.dark-mode #pt-gram-engine>div>div,
+body.dark-mode #pt-fig-engine>div>div{background:#1e1c2e!important;border-color:#2a2840!important}
+body.dark-mode .pn-opt{background:#252340!important;border-color:#3a3860!important;color:#e0daf0!important}
+body.dark-mode .pn-opt:hover:not(:disabled){background:#2d2a50!important;border-color:#6b5fa0!important}
+
+/* Dark mode - texto boxes */
+body.dark-mode .pt-texto-box{background:#151325!important;border-color:#2a2840!important}
+body.dark-mode .pt-texto-box-content{color:#e0daf0!important}
+body.dark-mode .pt-toggle-texto{background:#1e1c2e!important;border-color:#3a3860!important;color:#9080c0!important}
+
+/* Dark mode - composição */
+body.dark-mode .pt-composicao-card{background:linear-gradient(135deg,#080618,#150f30)!important}
+body.dark-mode textarea{background:#1a1830!important;border-color:#3a3860!important;color:#e0daf0!important}
+
+/* Dark mode - result hero */
+body.dark-mode .ex-result-hero{background:linear-gradient(135deg,#0a0618,#1a1440)!important}
+
+/* Dark mode - overlay */
+body.dark-mode .pt-overlay,body.dark-mode .ex-overlay{background:rgba(4,3,12,.96)!important}
+body.dark-mode .pt-overlay-bar,body.dark-mode .ex-overlay-bar{background:rgba(4,3,12,.98)!important;border-bottom-color:#1a1840!important}
+
+/* Melhorias de acessibilidade - foco visível */
+button:focus-visible,a:focus-visible{outline:2px solid #6b5fa0!important;outline-offset:2px}
+
+/* Touch - botões maiores em mobile */
+@media(max-width:480px){
+  .pt-year-btn,.ex-year-btn{padding:8px 14px!important;font-size:.75rem!important}
+  .ex-tab{padding:.65rem .35rem!important;font-size:.72rem!important}
+  .pn-opt{padding:.85rem 1rem!important}
+}
+
+/* Animação suave para painéis */
+.ex-panel.active{animation:uxPanelIn .2s ease}
+@keyframes uxPanelIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* Indicador de progresso no hero */
+.ex-hstat{cursor:default}
+.ex-hstat[style*="cursor:pointer"]{cursor:pointer}
+.ex-hstat[style*="cursor:pointer"]:hover{background:rgba(255,255,255,.16)!important;transform:translateY(-3px)}
+
+/* ══ PT GRAMÁTICA - melhorar sublinhado mobile ══ */
+/* O sublinhado nas frases de gramática precisa ser bem visível */
+.pt-gram-frase u, .pt-gram-frase ins {
+  text-decoration: underline;
+  text-decoration-color: #5c4e8a;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  font-weight: 700;
+  color: #4a3f7a;
+}
+/* Garantir que <u> em todas as frases de questões PT é visível */
+#pt-gram-engine u, #pt-fig-engine u, #pt-lus-engine u,
+#pt-inline-engine u, #pt-disc-engine u, #pt-con-engine u {
+  text-decoration: underline;
+  text-decoration-color: #5c4e8a;
+  text-decoration-thickness: 2.5px;
+  text-underline-offset: 3px;
+  font-weight: 700;
+}
+
+/* ══ TEACHER STRIP - design melhorado ══ */
+/* Torna a secção "Para o professor" mais visível e distinta */
+.teacher-strip {
+  margin: 1.25rem 0 .5rem !important;
+  border: 2px solid rgba(81,104,96,.35) !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  box-shadow: 0 2px 12px rgba(81,104,96,.08);
+}
+.teacher-toggle {
+  font-size: .8rem !important;
+  padding: .85rem 1.1rem !important;
+  background: linear-gradient(135deg, #edf4f1, #f2f8f6) !important;
+  color: #2e4039 !important;
+  border-bottom: 1px solid rgba(81,104,96,.15);
+  gap: .7rem !important;
+}
+.teacher-toggle::before {
+  content: '🖊' !important;
+  width: auto !important;
+  height: auto !important;
+  background: none !important;
+  font-size: .95rem;
+  border-radius: 0 !important;
+}
+.teacher-toggle::after {
+  content: 'Objetivos DGE · Sequência pedagógica · Critérios';
+  font-size: .65rem;
+  font-weight: 500;
+  color: #516860;
+  margin-left: auto;
+  white-space: nowrap;
+  opacity: .8;
+}
+@media(max-width:560px){ .teacher-toggle::after { display: none; } }
+.teacher-toggle:hover {
+  background: linear-gradient(135deg, #d9ede5, #e8f4ef) !important;
+}
+.teacher-content {
+  background: #f8fcfa !important;
+  border-top: 1.5px solid rgba(81,104,96,.12) !important;
+  padding: 1.1rem 1.25rem 1.25rem !important;
+}
+.teacher-section-title {
+  font-size: .72rem !important;
+  color: #2e4039 !important;
+}
+.teacher-criteria {
+  background: rgba(46,64,57,.06) !important;
+  border: 1.5px solid rgba(81,104,96,.25) !important;
+  border-radius: 10px !important;
+  padding: .7rem 1rem !important;
+  font-size: .8rem !important;
+  color: #2e4039 !important;
+  font-weight: 600;
+}
+
+/* ══ CAP GROUP TABS - Sub-nav ══ */
+/* Sub-barra que aparece quando se clica em Aprender/Praticar/Testar */
+.cap-subnav {
+  display: none;
+  align-items: center;
+  gap: .3rem;
+  padding: .4rem .75rem;
+  background: var(--cream2);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex-wrap: nowrap;
+}
+.cap-subnav::-webkit-scrollbar { display: none; }
+.cap-subnav-btn {
+  background: transparent;
+  border: 1.5px solid var(--border2);
+  border-radius: 999px;
+  padding: 4px 13px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--ink3);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s;
+  flex-shrink: 0;
+}
+.cap-subnav-btn:hover { border-color: var(--c2-mid); color: var(--c2-mid); }
+.cap-subnav-btn.active {
+  background: var(--c2-mid);
+  border-color: var(--c2-mid);
+  color: #fff;
+}
+
+/* Hub mat7 tabs - 4 tabs mais largas e visíveis */
+.mat7-hub-tabbar .mat7-hub-tab {
+  flex: 1;
+}
+
+/* Cap page tabs - 5 tabs mais limpas */
+.tabs .tab-btn.cap-group-btn {
+  position: relative;
+}
+.tabs .tab-btn.cap-group-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 2px;
+  background: var(--c2-mid);
+  border-radius: 2px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SISTEMA MINIMALISTA UNIFICADO
+   Substitui os heróis pesados e as topbars inconsistentes
+══════════════════════════════════════════════════════════════ */
+
+/* ── Topbar única para todas as páginas ── */
+.site-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  height: 56px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  gap: .75rem;
+}
+.site-topbar-logo {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.site-topbar-logo .mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+}
+.site-topbar-logo .wordmark {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--ink1);
+}
+.site-topbar-logo .wordmark em {
+  color: var(--c2-mid);
+  font-style: normal;
+}
+.site-topbar-sep {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+.site-topbar-title {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--ink3);
+}
+.site-topbar-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+.site-topbar-back {
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--ink3);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  transition: all .15s;
+  background: none;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+}
+.site-topbar-back:hover {
+  border-color: var(--ink3);
+  color: var(--ink1);
+  background: var(--cream);
+}
+
+/* ── Topbar em telemóvel: cabe tudo numa linha, sem scroll lateral ──
+   No portal a topbar junta logo + chips (🔥/⭐/🏆) + Escuro + nome + Sair.
+   Em ecrãs estreitos isso transbordava e empurrava a página para o lado.
+   Aqui apertamos espaçamentos e escondemos o que é redundante (o nome do
+   aluno já aparece no menu lateral e na saudação). */
+@media(max-width:600px){
+  .site-topbar{padding:0 .75rem;gap:.4rem}
+  .site-topbar-actions{gap:.3rem;min-width:0;flex-wrap:nowrap}
+  /* chips e bloco de auth não esticam para além do espaço disponível */
+  #pm-portal-stats{gap:.3rem!important;flex-shrink:1;min-width:0;overflow:hidden}
+  #auth-bloco{margin-left:.25rem!important;gap:.35rem!important;flex-shrink:0}
+  /* o nome do utilizador na topbar é redundante em telemóvel */
+  #auth-bloco > span{display:none!important}
+  /* chips mais compactos para caberem (🔥/⭐/🏆) */
+  #pm-portal-stats > span{padding:3px 8px!important;font-size:.76rem!important;gap:.18rem!important}
+  /* botão Sair e Escuro mais apertados */
+  #auth-bloco button,#ux-dark-btn{padding:3px 9px!important;font-size:.7rem!important}
+}
+@media(max-width:480px){
+  /* em telemóvel o «Escuro» fica só ícone (regra já existente p/ .ux-btn-lbl);
+     o burger ☰ também encolhe um pouco */
+  #ml-burger{width:34px;height:34px;font-size:1.05rem}
+}
+@media(max-width:380px){
+  .site-topbar-logo .wordmark{display:none}  /* só o mark 3π em ecrãs muito estreitos */
+}
+
+/* ── Page header simples (substitui hero) ── */
+.page-header {
+  padding: 2rem 1.5rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+.page-header-inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+.page-header-eyebrow {
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--c2-mid);
+  margin-bottom: .4rem;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+.page-header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ink1);
+  line-height: 1.15;
+  margin-bottom: .35rem;
+}
+.page-header h1 em {
+  font-style: italic;
+  color: var(--c2-mid);
+}
+.page-header-sub {
+  font-size: .85rem;
+  color: var(--ink3);
+  line-height: 1.6;
+  max-width: 520px;
+}
+
+/* ── Variante para exames PT (cor diferente) ── */
+.page-header--pt .page-header-eyebrow { color: #5c4e8a; }
+.page-header--pt h1 em { color: #5c4e8a; }
+
+/* ── Content wrapper ── */
+.page-content {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 1.75rem 1.25rem 5rem;
+}
+
+/* ── Dark mode adaptations ── */
+body.dark-mode .site-topbar {
+  background: #1a1a1a !important;
+  border-bottom-color: #2a2a2a !important;
+}
+body.dark-mode .page-header {
+  background: #1a1a1a !important;
+  border-bottom-color: #2a2a2a !important;
+}
+body.dark-mode .site-topbar-back {
+  border-color: #2a2a2a !important;
+  color: var(--ink3) !important;
+}
+body.dark-mode .site-topbar-back:hover {
+  background: #242424 !important;
+}
+
+
+/* ══ EXAMES-PT - classes extraídas dos inline styles ══ */
+
+/* Gramática - cards de categoria */
+.pt-gram-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
+  padding: 1.4rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all .2s;
+  width: 100%;
+}
+.pt-gram-card:hover { transform: translateY(-2px); }
+.pt-gram-card-icon { font-size: 1.4rem; margin-bottom: .6rem; }
+.pt-gram-card-title { font-size: .92rem; font-weight: 800; color: var(--ink1); margin-bottom: .25rem; }
+.pt-gram-card-sub { font-size: .74rem; color: var(--ink4); margin-bottom: .6rem; }
+.pt-gram-card-meta { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+.pt-gram-card-count { font-size: .68rem; font-weight: 700; border-radius: 999px; padding: 2px 8px; }
+.pt-gram-card-time { font-size: .68rem; color: var(--ink4); }
+.pt-gram-card-diff { font-size: .68rem; font-weight: 700; border-radius: 999px; padding: 2px 8px; }
+
+/* Progresso - tabela */
+.pt-prog-table-row {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: .5rem;
+}
+.pt-prog-table-label {
+  font-size: .74rem;
+  font-weight: 700;
+  color: var(--ink2);
+  min-width: 130px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Composição - secção de critérios (complementa .pt-composicao-card existente) */
+.pt-comp-section-title {
+  font-size: .68rem;
+  font-weight: 800;
+  color: rgba(255,255,255,.6);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: .6rem;
+}
+.pt-comp-theme-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+  margin-top: 1rem;
+}
+@media(max-width:480px){ .pt-comp-theme-grid { grid-template-columns: 1fr; } }
+
+/* Sub-selector Por Tema / Por Prova (exames.html e exames-pt.html) */
+.ex-sub-selector {
+  display: flex;
+  gap: .4rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: .75rem;
+}
+.ex-sub-btn {
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 18px;
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  transition: all .15s;
+  background: transparent;
+  color: var(--ink3);
+}
+.ex-sub-btn.active {
+  background: var(--c4-mid, #7570a8);
+  border-color: var(--c4-mid, #7570a8);
+  color: #fff;
+}
+.ex-sub-btn:hover:not(.active) {
+  border-color: var(--ink3);
+  color: var(--ink1);
+}
+
+/* Discurso - tabela de regras */
+.pt-disc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .82rem;
+}
+.pt-disc-table th {
+  padding: .5rem .75rem;
+  text-align: left;
+  font-weight: 800;
+  color: #4a3f7a;
+  border-bottom: 2px solid #d4cdf0;
+  background: #f8f6ff;
+}
+.pt-disc-table td {
+  padding: .4rem .75rem;
+  border-bottom: 1px solid var(--border);
+}
+.pt-disc-table td:last-child { color: #5c4e8a; font-weight: 700; }
+
+/* Overlay visual melhorado */
+.pt-overlay-pg { width: 100%; border-radius: 8px; margin-bottom: .75rem; display: block; box-shadow: 0 4px 24px rgba(0,0,0,.5); }
+
+
+/* ══ PORTAL CARDS - novo design minimalista ══ */
+.portal-cards {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+.portal-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+  font-family: 'Montserrat', sans-serif;
+}
+.portal-card:hover {
+  border-color: var(--c2-mid);
+  box-shadow: 0 4px 16px rgba(0,0,0,.07);
+  transform: translateY(-1px);
+}
+.portal-card-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  color: #fff;
+}
+.portal-card-icon--mat    { background: var(--c2-mid); }
+.portal-card-icon--exmat  { background: #5c4e8a; }
+.portal-card-icon--expt   { background: #4a3f7a; }
+.portal-card-body { flex: 1; }
+.portal-card-title {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--ink1);
+  margin-bottom: .15rem;
+}
+.portal-card-sub {
+  font-size: .76rem;
+  color: var(--ink4);
+  line-height: 1.4;
+}
+.portal-card-arrow {
+  color: var(--border2);
+  font-size: 1rem;
+  flex-shrink: 0;
+  transition: color .15s, transform .15s;
+}
+.portal-card:hover .portal-card-arrow {
+  color: var(--c2-mid);
+  transform: translateX(3px);
+}
+
+/* Dark mode portal */
+body.dark-mode .portal-card {
+  background: #242424 !important;
+  border-color: #2a2a2a !important;
+}
+body.dark-mode .portal-card:hover {
+  border-color: var(--c2-mid) !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   PORTAL - Redesign
+══════════════════════════════════════════════════════════════ */
+
+/* ── Hero ── */
+.portal-hero {
+  background: var(--cream);
+  padding: 3.5rem 1.5rem 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.portal-hero-inner {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+.portal-hero-brand {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--c2-mid);
+  margin-bottom: .75rem;
+}
+.portal-hero-brand em { font-style: normal; }
+.portal-hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--ink1);
+  line-height: 1.15;
+  margin-bottom: .75rem;
+}
+@media(max-width:480px){ .portal-hero-title { font-size: 2rem; } }
+.portal-hero-sub {
+  font-size: .88rem;
+  color: var(--ink3);
+  line-height: 1.7;
+  max-width: 460px;
+  margin: 0 auto;
+}
+/* Porta de entrada CLEAN — um cartão central (entrar + Desafio amostra) */
+.portal-entrada-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  box-shadow: 0 12px 36px rgba(0,0,0,.07);
+  overflow: hidden;
+}
+.portal-entrada-top { padding: 2rem 1.75rem 1.6rem; text-align: center; }
+.portal-entrada-emoji { font-size: 2.1rem; }
+.portal-entrada-h {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--ink1);
+  margin-top: .35rem;
+}
+.portal-entrada-p {
+  font-size: .88rem;
+  color: var(--ink3);
+  line-height: 1.6;
+  max-width: 320px;
+  margin: .45rem auto 1.3rem;
+}
+.portal-entrada-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  width: 100%;
+  justify-content: center;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #4a3f7a, #6b5fa0);
+  color: #fff;
+  border: none;
+  border-radius: 13px;
+  padding: .9rem 1.4rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .95rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(74,63,122,.25);
+  transition: transform .15s, box-shadow .15s;
+}
+.portal-entrada-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(74,63,122,.32); }
+.portal-entrada-login {
+  display: inline-block;
+  margin-top: .85rem;
+  font-size: .84rem;
+  font-weight: 700;
+  color: var(--ink3);
+  text-decoration: none;
+}
+.portal-entrada-login:hover { color: #4a3f7a; }
+/* separador "experimenta sem conta" */
+.portal-entrada-sep {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  padding: 0 1.75rem;
+  color: var(--ink4);
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.portal-entrada-sep::before,
+.portal-entrada-sep::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+/* o Desafio (amostra) encaixa sem margens dentro do cartão */
+#portal-entrada-desafio { padding: 1rem 1.25rem 1.5rem; }
+#portal-entrada-desafio #portal-desafio { max-width: none; margin: 0; }
+
+/* ── Section wrapper ── */
+.portal-section {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+}
+.portal-section-label {
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  margin-bottom: .75rem;
+}
+
+/* ── Grid de cards de curso (7.º + 8.º lado a lado) ── */
+.portal-main-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 900px) {
+  .portal-main-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .portal-main-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Card grande: Matemática 7.º ── */
+.portal-main-card {
+  display: block;
+  width: 100%;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+  font-family: 'Montserrat', sans-serif;
+  border-left: 4px solid var(--c2-mid);
+}
+.portal-main-card:hover {
+  border-color: var(--c2-mid);
+  box-shadow: 0 6px 24px rgba(81,104,96,.12);
+  transform: translateY(-2px);
+}
+.portal-main-card-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.portal-main-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--c2-base);
+  color: var(--c2-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.portal-main-card--mat .portal-main-card-icon { background: var(--c2-base); color: var(--c2-deep); }
+/* Card 8.º ano - cor própria (índigo/azul) */
+.portal-main-card--mat8 { border-left-color: var(--m8c1-mid); }
+.portal-main-card--mat8:hover { border-color: var(--m8c1-mid); box-shadow: 0 6px 24px rgba(90,127,168,.14); }
+.portal-main-card--mat8 .portal-main-card-icon { background: var(--m8c1-base); color: var(--m8c1-deep); }
+.portal-main-card--mat8 .portal-main-card-chips span { color: var(--m8c1-deep); background: var(--m8c1-base); }
+.portal-main-card--mat8 .portal-main-card-cta { color: var(--m8c1-mid); }
+/* Card 9.º ano - cor própria (terracota) */
+.portal-main-card--mat9 { border-left-color: var(--m9c1-mid); }
+.portal-main-card--mat9:hover { border-color: var(--m9c1-mid); box-shadow: 0 6px 24px rgba(176,106,58,.14); }
+.portal-main-card--mat9 .portal-main-card-icon { background: var(--m9c1-base); color: var(--m9c1-deep); }
+.portal-main-card--mat9 .portal-main-card-chips span { color: var(--m9c1-deep); background: var(--m9c1-base); }
+.portal-main-card--mat9 .portal-main-card-cta { color: var(--m9c1-mid); }
+/* Card 5.º ano - verde-fresco */
+.portal-main-card--mat5 { border-left-color: var(--m5c1-mid); }
+.portal-main-card--mat5:hover { border-color: var(--m5c1-mid); box-shadow: 0 6px 24px rgba(74,158,110,.14); }
+.portal-main-card--mat5 .portal-main-card-icon { background: var(--m5c1-base); color: var(--m5c1-deep); }
+.portal-main-card--mat5 .portal-main-card-chips span { color: var(--m5c1-deep); background: var(--m5c1-base); }
+.portal-main-card--mat5 .portal-main-card-cta { color: var(--m5c1-mid); }
+/* Card 6.º ano - laranja/coral */
+.portal-main-card--mat6 { border-left-color: var(--m6c1-mid); }
+.portal-main-card--mat6:hover { border-color: var(--m6c1-mid); box-shadow: 0 6px 24px rgba(196,122,74,.14); }
+.portal-main-card--mat6 .portal-main-card-icon { background: var(--m6c1-base); color: var(--m6c1-deep); }
+.portal-main-card--mat6 .portal-main-card-chips span { color: var(--m6c1-deep); background: var(--m6c1-base); }
+.portal-main-card--mat6 .portal-main-card-cta { color: var(--m6c1-mid); }
+.portal-main-card-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--ink1);
+  margin-bottom: .25rem;
+}
+.portal-main-card-sub {
+  font-size: .82rem;
+  color: var(--ink3);
+  line-height: 1.55;
+}
+.portal-main-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-bottom: .9rem;
+}
+.portal-main-card-chips span {
+  font-size: .68rem;
+  font-weight: 700;
+  color: var(--c2-deep);
+  background: var(--c2-base);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.portal-main-card-cta {
+  font-size: .8rem;
+  font-weight: 800;
+  color: var(--c2-mid);
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+}
+
+/* ── Grid de exames ── */
+.portal-exam-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+}
+@media(max-width:520px){ .portal-exam-grid { grid-template-columns: 1fr; } }
+
+.portal-exam-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 1.4rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+.portal-exam-card:hover {
+  box-shadow: 0 6px 24px rgba(0,0,0,.09);
+  transform: translateY(-2px);
+}
+.portal-exam-card--mat { border-top: 3px solid #5c4e8a; }
+.portal-exam-card--mat:hover { border-color: #5c4e8a; }
+.portal-exam-card--pt  { border-top: 3px solid #4a3f7a; }
+.portal-exam-card--pt:hover  { border-color: #4a3f7a; }
+
+.portal-exam-card-icon {
+  font-size: 1.5rem;
+  margin-bottom: .25rem;
+}
+.portal-exam-card--mat .portal-exam-card-icon { color: #5c4e8a; }
+.portal-exam-card--pt  .portal-exam-card-icon { color: #4a3f7a; }
+
+.portal-exam-card-subject {
+  font-size: .65rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink4);
+}
+.portal-exam-card-title {
+  font-size: .9rem;
+  font-weight: 800;
+  color: var(--ink1);
+  line-height: 1.2;
+}
+.portal-exam-card-desc {
+  font-size: .78rem;
+  color: var(--ink3);
+  line-height: 1.55;
+  flex: 1;
+}
+.portal-exam-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem;
+  margin-top: .25rem;
+}
+.portal-exam-card-tags span {
+  font-size: .63rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+.portal-exam-card--mat .portal-exam-card-tags span { background: #f0edf7; color: #5c4e8a; }
+.portal-exam-card--pt  .portal-exam-card-tags span { background: #ede8f5; color: #4a3f7a; }
+
+.portal-exam-card-cta {
+  font-size: .76rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  margin-top: .4rem;
+}
+.portal-exam-card--mat .portal-exam-card-cta { color: #5c4e8a; }
+.portal-exam-card--pt  .portal-exam-card-cta { color: #4a3f7a; }
+
+/* ── Hub 8.º ano: grelha de capítulos ── */
+.m8-cap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.m8-cap-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-left: 4px solid var(--ink4);
+  border-radius: 14px;
+  padding: 1.1rem 1.25rem;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.m8-cap-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.m8-cap-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--ink4);
+  line-height: 1;
+  min-width: 2ch;
+}
+.m8-cap-icon {
+  width: 42px; height: 42px;
+  border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+.m8-cap-body { flex: 1; min-width: 0; }
+.m8-cap-title { font-size: .95rem; font-weight: 800; color: var(--ink1); margin-bottom: .15rem; }
+.m8-cap-desc { font-size: .74rem; color: var(--ink3); line-height: 1.45; }
+.m8-cap-arrow { color: var(--ink4); font-size: 1.1rem; flex-shrink: 0; transition: transform .2s; }
+.m8-cap-card:hover .m8-cap-arrow { transform: translateX(3px); }
+/* Cores por capítulo */
+.m8-cap-card.m8c1 { border-left-color: var(--m8c1-mid); } .m8-cap-card.m8c1:hover { border-color: var(--m8c1-mid); } .m8c1 .m8-cap-icon { background: var(--m8c1-base); color: var(--m8c1-deep); } .m8c1 .m8-cap-num { color: var(--m8c1-mid); }
+.m8-cap-card.m8c2 { border-left-color: var(--m8c2-mid); } .m8-cap-card.m8c2:hover { border-color: var(--m8c2-mid); } .m8c2 .m8-cap-icon { background: var(--m8c2-base); color: var(--m8c2-deep); } .m8c2 .m8-cap-num { color: var(--m8c2-mid); }
+.m8-cap-card.m8c3 { border-left-color: var(--m8c3-mid); } .m8-cap-card.m8c3:hover { border-color: var(--m8c3-mid); } .m8c3 .m8-cap-icon { background: var(--m8c3-base); color: var(--m8c3-deep); } .m8c3 .m8-cap-num { color: var(--m8c3-mid); }
+.m8-cap-card.m8c4 { border-left-color: var(--m8c4-mid); } .m8-cap-card.m8c4:hover { border-color: var(--m8c4-mid); } .m8c4 .m8-cap-icon { background: var(--m8c4-base); color: var(--m8c4-deep); } .m8c4 .m8-cap-num { color: var(--m8c4-mid); }
+.m8-cap-card.m8c5 { border-left-color: var(--m8c5-mid); } .m8-cap-card.m8c5:hover { border-color: var(--m8c5-mid); } .m8c5 .m8-cap-icon { background: var(--m8c5-base); color: var(--m8c5-deep); } .m8c5 .m8-cap-num { color: var(--m8c5-mid); }
+.m8-cap-card.m8c6 { border-left-color: var(--m8c6-mid); } .m8-cap-card.m8c6:hover { border-color: var(--m8c6-mid); } .m8c6 .m8-cap-icon { background: var(--m8c6-base); color: var(--m8c6-deep); } .m8c6 .m8-cap-num { color: var(--m8c6-mid); }
+.m8-cap-card.m8c7 { border-left-color: var(--m8c7-mid); } .m8-cap-card.m8c7:hover { border-color: var(--m8c7-mid); } .m8c7 .m8-cap-icon { background: var(--m8c7-base); color: var(--m8c7-deep); } .m8c7 .m8-cap-num { color: var(--m8c7-mid); }
+.m8-cap-card.m8c8 { border-left-color: var(--m8c8-mid); } .m8-cap-card.m8c8:hover { border-color: var(--m8c8-mid); } .m8c8 .m8-cap-icon { background: var(--m8c8-base); color: var(--m8c8-deep); } .m8c8 .m8-cap-num { color: var(--m8c8-mid); }
+
+/* ── Portal: barra de pesquisa ── */
+.portal-search {
+  position: relative;
+  max-width: 520px;
+  margin: 0 auto 1.75rem;
+}
+.portal-search input {
+  width: 100%;
+  padding: .8rem 1rem .8rem 2.6rem;
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .9rem;
+  color: var(--ink1);
+  background: var(--white);
+  transition: border-color .2s, box-shadow .2s;
+}
+.portal-search input:focus {
+  outline: none;
+  border-color: var(--c2-mid);
+  box-shadow: 0 0 0 3px rgba(81,104,96,.1);
+}
+.portal-search .portal-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink4);
+  font-size: 1.1rem;
+  pointer-events: none;
+}
+
+/* ── Portal: filtros (chips de disciplina e ano) ── */
+.portal-filters {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  max-width: 760px;
+  margin: 0 auto 1.5rem;
+}
+.portal-filter-row {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  flex-wrap: wrap;
+}
+.portal-filter-label {
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  margin-right: .25rem;
+  min-width: 68px;
+}
+.portal-chip {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--ink2);
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  padding: .35rem .85rem;
+  cursor: pointer;
+  transition: all .18s;
+}
+.portal-chip:hover { border-color: var(--ink4); }
+.portal-chip.active {
+  background: var(--c2-deep);
+  border-color: var(--c2-deep);
+  color: #fff;
+}
+.portal-chip i { font-size: .95rem; vertical-align: -1px; margin-right: .15rem; }
+/* chip de Exames Nacionais — destaca-se dos de disciplina */
+.portal-chip--exames { border-color: #cdbfe9; color: #5c4e8a; }
+.portal-chip--exames:hover { border-color: #5c4e8a; }
+.portal-chip--exames.active { background: #5c4e8a; border-color: #5c4e8a; color: #fff; }
+
+/* ── Portal: estado vazio (convite a escolher um filtro) ── */
+.portal-empty {
+  text-align: center;
+  padding: 3.5rem 1.5rem 4rem;
+  max-width: 540px;
+  margin: 0 auto;
+}
+.portal-empty-ic {
+  width: 76px; height: 76px; margin: 0 auto 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; background: var(--cream, #f5f1e8);
+  color: var(--c2-deep); font-size: 2.1rem;
+}
+.portal-empty-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem; font-weight: 700; color: var(--ink1);
+  margin-bottom: .5rem;
+}
+.portal-empty-sub { font-size: .9rem; color: var(--ink3); line-height: 1.55; }
+.portal-empty-sub strong { color: var(--ink2); font-weight: 700; }
+
+/* ── Portal: cabeçalho de ciclo ── */
+.portal-cycle {
+  margin-top: 1.75rem;
+}
+.portal-cycle:first-of-type { margin-top: 0; }
+.portal-cycle-head {
+  display: flex;
+  align-items: baseline;
+  gap: .6rem;
+  margin-bottom: .85rem;
+  padding-bottom: .4rem;
+  border-bottom: 1px solid var(--border);
+}
+.portal-cycle-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--ink1);
+  letter-spacing: -.01em;
+}
+.portal-cycle-sub {
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--ink4);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+/* ── Portal: catálogo agrupado por ciclo de ensino ──
+   Secção (.portal-ciclo) → grelha de cartões-ano (.portal-ano-card) →
+   uma linha por oferta (.portal-ano-link: curso ou zona de exames). */
+.portal-ciclo { margin-bottom: 2rem; }
+.portal-ciclo-head {
+  display: flex; align-items: baseline; gap: .65rem;
+  margin-bottom: .85rem; padding-bottom: .45rem;
+  border-bottom: 1.5px solid var(--border);
+}
+.portal-ciclo-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem; font-weight: 700; color: var(--ink1);
+}
+.portal-ciclo-range { font-size: .7rem; font-weight: 700; color: var(--ink4); text-transform: uppercase; letter-spacing: .07em; }
+
+.portal-ano-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  align-items: stretch;   /* cards da mesma linha com a mesma altura */
+}
+/* cada card de ano ocupa toda a altura da sua célula (alinhados) */
+.portal-ano-card { display: flex; flex-direction: column; height: 100%; }
+.portal-ano-card .portal-ano-links { flex: 1; }
+/* grelha dos exames (cards simples, alinhados) */
+.portal-ano-grid--exames { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.portal-exam-card {
+  display: flex; align-items: center; gap: .8rem; width: 100%; text-align: left;
+  background: var(--white); border: 1.5px solid var(--border); border-left: 4px solid #5c4e8a;
+  border-radius: 16px; padding: 1rem 1.1rem; cursor: pointer; font-family: 'Montserrat', sans-serif;
+  transition: border-color .2s, box-shadow .2s;
+}
+.portal-exam-card:hover { border-color: #5c4e8a; box-shadow: var(--shadow-md); }
+.portal-exam-card-ic { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 12px; background: #f0edf7; color: #5c4e8a; font-size: 1.3rem; flex-shrink: 0; }
+.portal-exam-card-body { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.portal-exam-card-title { font-weight: 800; color: var(--ink1); font-size: .95rem; }
+.portal-exam-card-meta { font-size: .76rem; color: var(--ink4); margin-top: .1rem; }
+.portal-ano-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-left: 4px solid var(--ink4);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color .2s, box-shadow .2s;
+}
+.portal-ano-card:hover { box-shadow: var(--shadow-md); }
+/* o cartão do 9.º (4 ofertas) ocupa a largura toda da secção */
+.portal-ano-card--wide { grid-column: 1 / -1; }
+.portal-ano-card--wide .portal-ano-links { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+
+.portal-ano-head { display: flex; align-items: center; gap: .45rem; padding: .8rem 1rem .55rem; }
+.portal-ano-num { font-size: 1.25rem; font-weight: 800; color: var(--ink1); line-height: 1; }
+.portal-ano-lbl { font-size: .78rem; font-weight: 700; color: var(--ink3); }
+.portal-exam-badge {
+  margin-left: auto;
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-size: .62rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
+  color: #5c4e8a; background: #f0edf7; border: 1px solid #ddd8f5;
+  border-radius: 999px; padding: 3px 9px; white-space: nowrap;
+}
+
+.portal-ano-links { display: flex; flex-direction: column; gap: .4rem; padding: 0 .65rem .7rem; }
+.portal-ano-link {
+  display: flex; align-items: center; gap: .55rem;
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: .55rem .7rem;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  transition: border-color .15s, background .15s, transform .15s;
+}
+.portal-ano-link:hover { transform: translateX(2px); background: var(--surface); }
+.portal-ano-link-icon {
+  width: 30px; height: 30px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+  background: var(--surface); color: var(--ink2);
+}
+.portal-ano-link-name { font-size: .8rem; font-weight: 800; color: var(--ink1); white-space: nowrap; }
+.portal-ano-link-meta { font-size: .66rem; color: var(--ink4); margin-left: auto; text-align: right; line-height: 1.3; }
+.portal-ano-link-arrow { color: var(--ink4); font-size: .85rem; flex-shrink: 0; transition: transform .2s; }
+.portal-ano-link:hover .portal-ano-link-arrow { transform: translateX(2px); }
+/* ofertas de Português e de exames com identidade própria */
+.portal-ano-link--pt .portal-ano-link-icon { background: #ede8f5; color: #4a3f7a; }
+.portal-ano-link--pt:hover { border-color: #4a3f7a; }
+.portal-ano-link--fq .portal-ano-link-icon { background: #e3eff0; color: #2f7d86; }
+.portal-ano-link--fq:hover { border-color: #2f7d86; }
+.portal-ano-card .portal-ano-link--fq .portal-ano-link-icon { background: #e3eff0; color: #2f7d86; }
+.portal-ano-link--exam { background: #faf9ff; border-style: dashed; border-color: #ddd8f5; }
+.portal-ano-link--exam .portal-ano-link-icon { background: #f0edf7; color: #5c4e8a; }
+.portal-ano-link--exam:hover { border-color: #5c4e8a; background: #f3f0fb; }
+
+/* cores por ano (reutilizam os tons de cada curso) */
+.portal-ano-card.y1  { border-left-color: var(--m1c1-mid); }  .y1  .portal-ano-num { color: var(--m1c1-deep); }  .y1  .portal-ano-link-icon { background: var(--m1c1-base); color: var(--m1c1-deep); }
+.portal-ano-card.y5  { border-left-color: var(--m5c1-mid); }  .y5  .portal-ano-num { color: var(--m5c1-deep); }  .y5  .portal-ano-link-icon { background: var(--m5c1-base); color: var(--m5c1-deep); }
+.portal-ano-card.y6  { border-left-color: var(--m6c1-mid); }  .y6  .portal-ano-num { color: var(--m6c1-deep); }  .y6  .portal-ano-link-icon { background: var(--m6c1-base); color: var(--m6c1-deep); }
+.portal-ano-card.y7  { border-left-color: var(--c2-mid); }    .y7  .portal-ano-num { color: var(--c2-deep); }    .y7  .portal-ano-link-icon { background: var(--c2-base); color: var(--c2-deep); }
+.portal-ano-card.y8  { border-left-color: var(--m8c1-mid); }  .y8  .portal-ano-num { color: var(--m8c1-deep); }  .y8  .portal-ano-link-icon { background: var(--m8c1-base); color: var(--m8c1-deep); }
+.portal-ano-card.y9  { border-left-color: var(--m9c1-mid); }  .y9  .portal-ano-num { color: var(--m9c1-deep); }  .y9  .portal-ano-link-icon { background: var(--m9c1-base); color: var(--m9c1-deep); }
+.portal-ano-card.y10 { border-left-color: var(--m10c1-mid); } .y10 .portal-ano-num { color: var(--m10c1-deep); } .y10 .portal-ano-link-icon { background: var(--m10c1-base); color: var(--m10c1-deep); }
+.portal-ano-card.y11 { border-left-color: var(--m11c1-mid); } .y11 .portal-ano-num { color: var(--m11c1-deep); } .y11 .portal-ano-link-icon { background: var(--m11c1-base); color: var(--m11c1-deep); }
+.portal-ano-card.y12 { border-left-color: var(--m12c4-mid); } .y12 .portal-ano-num { color: var(--m12c4-deep); } .y12 .portal-ano-link-icon { background: var(--m12c4-base); color: var(--m12c4-deep); }
+.portal-ano-card.y12 { border-left-color: #5c4e8a; }          .y12 .portal-ano-num { color: #5c4e8a; }
+/* nas linhas de PT/exames, a identidade própria ganha à cor do ano */
+.portal-ano-card .portal-ano-link--pt .portal-ano-link-icon { background: #ede8f5; color: #4a3f7a; }
+.portal-ano-card .portal-ano-link--exam .portal-ano-link-icon { background: #f0edf7; color: #5c4e8a; }
+
+/* No telemóvel, o cartão de ano empilha (nome em cima, detalhe por baixo)
+   e o texto cresce para leitura confortável — alvos de toque maiores. */
+@media (max-width: 560px) {
+  .portal-ano-link { flex-wrap: wrap; padding: .7rem .8rem; }
+  .portal-ano-link-name { font-size: .9rem; white-space: normal; }
+  .portal-ano-link-meta { font-size: .76rem; margin-left: auto; flex-basis: 100%; text-align: left; margin-top: .1rem; padding-left: 2.5rem; }
+  .portal-ano-link-arrow { font-size: 1rem; }
+  .portal-ciclo-title { font-size: 1.5rem; }
+}
+/* estado "sem resultados" da pesquisa */
+.portal-no-results {
+  display: none;
+  text-align: center;
+  color: var(--ink4);
+  font-size: .9rem;
+  padding: 2rem 1rem;
+}
+
+/* ── Footer ── */
+.portal-footer {
+  text-align: center;
+  font-size: .75rem;
+  color: var(--ink4);
+  padding: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Dark mode ── */
+body.dark-mode .portal-hero { background: #1a1a1a !important; border-bottom-color: #2a2a2a !important; }
+body.dark-mode .portal-main-card,
+body.dark-mode .portal-exam-card { background: #1e1e1e !important; border-color: #2a2a2a !important; }
+body.dark-mode .portal-main-card:hover { border-color: var(--c2-mid) !important; }
+
+
+/* ══ RESUMO/TEORIA HUB - novo seletor ══ */
+.resumo-nav {
+  margin-bottom: 1.5rem;
+}
+
+/* Linha de capítulos - scroll horizontal */
+.resumo-cap-row {
+  display: flex;
+  gap: .4rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin-bottom: .75rem;
+  padding-bottom: .25rem;
+}
+.resumo-cap-row::-webkit-scrollbar { display: none; }
+
+.resumo-cap-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .5rem 1rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  font-family: 'Montserrat', sans-serif;
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--ink2);
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.resumo-cap-btn:hover {
+  border-color: var(--c2-mid);
+  color: var(--c2-mid);
+  background: var(--c2-pale);
+}
+.resumo-cap-btn.active {
+  background: var(--c2-mid);
+  border-color: var(--c2-mid);
+  color: #fff;
+}
+.resumo-cap-btn .resumo-cap-icon {
+  font-size: .85rem;
+  opacity: .85;
+}
+
+/* No telemóvel, os botões de domínio QUEBRAM em vez de scroll lateral
+   (o aluno vê logo todos os domínios) e encolhem para caber. */
+@media (max-width: 560px) {
+  .resumo-cap-row { flex-wrap: wrap; overflow-x: visible; }
+  .resumo-cap-btn { font-size: .72rem; padding: .45rem .7rem; flex: 0 1 auto; }
+  .resumo-cap-btn .resumo-cap-icon { font-size: .8rem; }
+}
+
+/* Subtemas */
+.resumo-st-row {
+  display: flex;
+  gap: .4rem;
+  flex-wrap: wrap;
+  padding: .75rem 1rem;
+  background: var(--cream);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.resumo-st-label {
+  font-size: .68rem;
+  font-weight: 800;
+  color: var(--ink4);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  width: 100%;
+  margin-bottom: .2rem;
+}
+.resumo-st-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .35rem .85rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--border2);
+  background: var(--white);
+  font-family: 'Montserrat', sans-serif;
+  font-size: .76rem;
+  font-weight: 600;
+  color: var(--ink2);
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.resumo-st-btn:hover {
+  border-color: var(--c2-mid);
+  color: var(--c2-mid);
+}
+.resumo-st-btn.active {
+  background: var(--c2-mid);
+  border-color: var(--c2-mid);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Empty state */
+.resumo-empty {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--ink4);
+}
+.resumo-empty-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: .75rem;
+  opacity: .4;
+}
+.resumo-empty-title {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--ink3);
+  margin-bottom: .3rem;
+}
+.resumo-empty-sub {
+  font-size: .78rem;
+}
+
+/* Dark mode */
+body.dark-mode .resumo-cap-btn {
+  background: #1e1e1e !important;
+  border-color: #2a2a2a !important;
+  color: var(--ink2) !important;
+}
+body.dark-mode .resumo-cap-btn.active {
+  background: var(--c2-mid) !important;
+  color: #fff !important;
+}
+body.dark-mode .resumo-st-row {
+  background: #1a1a1a !important;
+  border-color: #2a2a2a !important;
+}
+body.dark-mode .resumo-st-btn {
+  background: #242424 !important;
+  border-color: #333 !important;
+  color: var(--ink2) !important;
+}
+body.dark-mode .resumo-st-btn.active {
+  background: var(--c2-mid) !important;
+  color: #fff !important;
+}
+
+/* ═══ Jogos educativos por faixa etária (games-edu.js) ═══ */
+.edu-game-card{background:var(--card,#fff);border:1px solid var(--line,#e8e2d9);border-radius:18px;padding:1.6rem;text-align:center;max-width:560px;margin:0 auto}
+.edu-game-head{font-size:1.15rem;font-weight:800;color:var(--eg,#2f9e63);display:flex;align-items:center;justify-content:center;gap:.5rem;margin-bottom:.6rem}
+.edu-game-head i{font-size:1.4rem}
+.edu-game-desc{font-size:.9rem;color:var(--ink3,#6b6357);line-height:1.5;margin-bottom:1.2rem}
+.edu-game-start{font-size:.95rem}
+.edu-game-bar{display:flex;justify-content:space-between;align-items:center;font-size:.9rem;color:var(--ink3,#6b6357);margin-bottom:1rem;padding-bottom:.7rem;border-bottom:1px dashed var(--line,#e8e2d9)}
+.edu-game-bar b{color:var(--ink,#2c2418);font-size:1.05rem}
+.edu-time{background:var(--eg,#2f9e63);color:#fff;padding:.25rem .8rem;border-radius:999px;font-weight:800;font-variant-numeric:tabular-nums}
+.edu-q{font-size:1.05rem;font-weight:600;color:var(--ink,#2c2418);margin:.6rem 0 1.2rem;line-height:1.45;min-height:2.2em;display:flex;align-items:center;justify-content:center}
+.edu-opts{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.edu-opt{padding:.8rem;border:2px solid var(--line,#e8e2d9);border-radius:12px;background:var(--cream,#faf7f2);font-size:1rem;font-weight:700;color:var(--ink,#2c2418);cursor:pointer;transition:all .15s}
+.edu-opt:hover{border-color:var(--eg,#2f9e63);background:#fff;transform:translateY(-2px)}
+.edu-vf-btns{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-top:.5rem}
+.edu-vf{padding:1rem;border:none;border-radius:14px;font-size:1.05rem;font-weight:800;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem;transition:transform .12s}
+.edu-vf:hover{transform:translateY(-2px)}
+.edu-vf-v{background:#2f9e63}.edu-vf-f{background:#d9534f}
+.edu-mem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem}
+.edu-card{aspect-ratio:1;border:2px solid var(--line,#e8e2d9);border-radius:12px;background:var(--eg,#7b61c4);color:#fff;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:.35rem;transition:all .2s;overflow:hidden;text-align:center;line-height:1.15}
+.edu-card.up{background:#fff;color:var(--ink,#2c2418);font-weight:700;border-color:var(--eg,#7b61c4)}
+.edu-card-txt{font-size:.72rem;line-height:1.2;font-weight:700;word-break:break-word;overflow-wrap:anywhere;hyphens:auto;max-width:100%;display:block}
+.edu-card.isr.up{background:#f3eefb}
+.edu-card.isr.up .edu-card-txt{font-size:.98rem;color:var(--eg,#7b61c4)}
+.edu-card.done{opacity:.45;cursor:default}
+.edu-game-end h3{font-size:1.2rem;color:var(--ink,#2c2418);margin:.5rem 0}
+.edu-end-emoji{font-size:2.6rem;margin-bottom:.3rem}
+.edu-rules{background:var(--cream,#faf7f2);border:1px dashed var(--line,#e8e2d9);border-radius:12px;padding:.7rem .9rem;margin:0 auto 1.1rem;max-width:440px;font-size:.8rem;color:var(--ink3,#6b6357);text-align:left;line-height:1.5}
+.edu-rules b{color:var(--ink,#2c2418)}
+.edu-help{background:none;border:none;color:var(--ink3,#6b6357);cursor:pointer;font-size:.82rem;padding:.2rem .5rem;text-decoration:underline}
+@media(max-width:480px){.edu-mem-grid{gap:.4rem}.edu-card{font-size:1rem}.edu-card-txt{font-size:.58rem}.edu-card.isr.up .edu-card-txt{font-size:.8rem}}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   PT · COMPONENTES PARTILHADOS (zona de exame exames-pt.html + curso port9/)
+   Realojados do <style> de exames-pt.html quando o conteúdo de estudo
+   (gramática, figuras, obras, composição) passou para o curso port9.
+   ═══════════════════════════════════════════════════════════════════ */
+.ex-sec-head{margin-bottom:1.5rem}
+.ex-sec-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--ink1);margin-bottom:.2rem}
+.ex-sec-sub{font-size:.83rem;color:var(--ink3);line-height:1.5}
+
+.pt-topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-bottom:1.5rem}
+.pt-topic-card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.4rem 1.5rem;cursor:pointer;transition:all .22s;text-align:left;width:100%;position:relative;overflow:hidden}
+.pt-topic-card:hover{border-color:#8b7cc0;transform:translateY(-3px);box-shadow:0 12px 32px rgba(92,78,138,.14)}
+.pt-topic-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:.9rem;font-size:1.3rem}
+.pt-topic-label{font-size:.95rem;font-weight:800;color:var(--ink1);margin-bottom:.25rem;line-height:1.2}
+.pt-topic-sub{font-size:.74rem;color:var(--ink4);line-height:1.45;margin-bottom:.9rem}
+.pt-topic-count{font-size:.7rem;font-weight:700;color:var(--ink4)}
+@media(max-width:640px){.pt-topic-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:400px){.pt-topic-grid{grid-template-columns:1fr}}
+
+/* Composição (curso port9 · domínio Escrita) */
+.pt-composicao-card{background:linear-gradient(135deg,#1e1640,#3a2d6e);border-radius:20px;padding:2rem;color:#fff;margin-bottom:1rem}
+.pt-composicao-card h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;margin-bottom:.5rem}
+.pt-composicao-card p{font-size:.85rem;color:rgba(255,255,255,.7);line-height:1.7;margin-bottom:1rem}
+.pt-crit-item{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.6rem}
+.pt-crit-icon{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.pt-crit-text{font-size:.81rem;color:rgba(255,255,255,.8);line-height:1.5}
+.pt-crit-text strong{color:#fff}
+.pt-counter-wrap{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:1rem 1.25rem;margin-top:1rem}
+.pt-counter-num{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:700;color:#fff}
+.pt-counter-label{font-size:.68rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.1em}
+.pt-themes-composicao{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1rem}
+.pt-theme-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:1rem;cursor:pointer;transition:all .18s;text-align:left}
+.pt-theme-btn:hover{background:rgba(255,255,255,.14)}
+.pt-theme-btn-icon{font-size:1.4rem;margin-bottom:.4rem}
+.pt-theme-btn-title{font-size:.82rem;font-weight:700;color:#fff;margin-bottom:.15rem}
+.pt-theme-btn-sub{font-size:.68rem;color:rgba(255,255,255,.5)}
+@media(max-width:640px){.pt-themes-composicao{grid-template-columns:1fr}}
+
+/* Botão "voltar" claro (obras/composição em fundo claro do curso) */
+.pt-back-light{display:inline-flex;align-items:center;gap:.4rem;background:var(--white);border:1.5px solid var(--border);border-radius:999px;padding:.5rem .9rem;font-size:.76rem;font-weight:700;color:var(--ink2);cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s}
+.pt-back-light:hover{border-color:#8b7cc0;color:#5c4e8a}
+
+/* ════════════════════════════════════════════════════════════════
+   Menu lateral (gaveta ☰) do portal — Apoio ao Estudo
+   ════════════════════════════════════════════════════════════════ */
+#ml-burger{display:none;align-items:center;justify-content:center;width:38px;height:38px;border:1.5px solid var(--border);background:var(--white);border-radius:11px;color:var(--ink2);font-size:1.15rem;cursor:pointer;transition:background .15s,border-color .15s}
+#ml-burger:hover{background:var(--cream);border-color:var(--border2)}
+
+#ml-overlay{position:fixed;inset:0;background:rgba(20,16,40,.45);backdrop-filter:blur(2px);opacity:0;visibility:hidden;transition:opacity .25s;z-index:9990}
+#ml-overlay.on{opacity:1;visibility:visible}
+
+#ml-drawer{position:fixed;top:0;left:0;height:100%;width:360px;max-width:86vw;background:var(--cream);border-right:1px solid var(--border);box-shadow:6px 0 28px rgba(0,0,0,.16);transform:translateX(-104%);transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:9991;display:flex;flex-direction:column}
+#ml-drawer.on{transform:translateX(0)}
+
+.ml-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.1rem;border-bottom:1px solid var(--border);background:var(--white)}
+.ml-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--ink1);display:flex;align-items:center;gap:.5rem}
+.ml-title i{color:var(--sage-dark)}
+.ml-close{width:34px;height:34px;border:none;background:var(--cream);border-radius:9px;color:var(--ink3);font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.ml-close:hover{background:var(--cream2)}
+
+.ml-nav{display:flex;flex-direction:column;padding:.6rem .7rem;gap:.25rem;flex:1}
+.ml-link{display:flex;align-items:center;gap:.6rem;width:100%;text-align:left;background:none;border:none;padding:.62rem .8rem;border-radius:10px;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;color:var(--ink2);cursor:pointer;transition:background .15s}
+.ml-link:hover{background:var(--white)}
+.ml-link i{font-size:1.1rem;color:var(--sage-dark)}
+.ml-link.ativo{background:var(--white);color:var(--ink1);box-shadow:inset 3px 0 0 var(--sage-dark)}
+.ml-link.ativo i{color:var(--sage-dark)}
+
+.ml-body{flex:1;overflow-y:auto;padding:.9rem .8rem}
+/* o painel do Apoio (#portal-turmas) vive aqui dentro: tira margens/larguras do portal */
+.ml-body #portal-turmas{max-width:none;margin:0}
+
+.ml-foot{border-top:1px solid var(--border);background:var(--white);padding:.7rem 1.1rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap}
+.ml-user{font-size:.82rem;font-weight:700;color:var(--ink2);display:flex;align-items:center;gap:.35rem;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-basis:100%}
+.ml-user i{color:var(--sage-dark);font-size:1.05rem}
+.ml-tag{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;background:#e8f5ee;color:#2e7d52;border:1px solid #bfe3c9;border-radius:999px;padding:1px 7px}
+.ml-perfil{display:inline-flex;align-items:center;gap:.35rem;font-size:.74rem;font-weight:700;color:var(--ink3);background:none;border:1px solid var(--border);border-radius:999px;padding:4px 12px;cursor:pointer;font-family:'Montserrat',sans-serif}
+.ml-perfil:hover{color:var(--ink2);border-color:var(--border2)}
+.ml-perfil-caret{font-size:.8rem;transition:transform .18s}
+.ml-perfil[aria-expanded="true"] .ml-perfil-caret{transform:rotate(180deg)}
+.ml-sair{font-size:.74rem;font-weight:700;color:var(--ink4);background:none;border:1px solid var(--border);border-radius:999px;padding:4px 12px;cursor:pointer;font-family:'Montserrat',sans-serif;flex-shrink:0}
+.ml-sair:hover{color:var(--ink2);border-color:var(--border2)}
+.ml-perfil-menu{flex-basis:100%;display:flex;flex-direction:column;gap:.15rem;margin-top:.4rem}
+.ml-perfil-menu[hidden]{display:none}
+.ml-perfil-item{display:flex;align-items:center;gap:.5rem;width:100%;text-align:left;font-size:.76rem;font-weight:600;color:var(--ink3);background:none;border:none;border-radius:8px;padding:.4rem .5rem;cursor:pointer;font-family:'Montserrat',sans-serif}
+.ml-perfil-item i{font-size:1rem;color:var(--ink4)}
+.ml-perfil-item:hover{background:var(--cream);color:var(--ink2)}
+.ml-perfil-danger:hover{background:#fdecea;color:#c0392b}
+.ml-perfil-danger:hover i{color:#c0392b}
+
+@media(max-width:560px){
+  #ml-drawer{width:340px}
+  .ml-body{padding:.7rem .6rem}
+}
+
+/* ── MODO FIXO (computador ≥900px): barra sempre visível à esquerda ──
+   A topbar (sticky, 56px, z-index 200) fica por cima a toda a largura.
+   A barra começa abaixo da topbar (z-index menor). O conteúdo do portal
+   é empurrado para a direita; a topbar fica full-width (não é empurrada,
+   por ser sticky e ter padding próprio). */
+#ml-drawer.fixed{
+  position:fixed;top:56px;left:0;        /* abaixo da topbar */
+  height:calc(100% - 56px);
+  transform:none;                        /* sempre aberta */
+  box-shadow:none;
+  border-right:1px solid var(--border);
+  z-index:120;                           /* abaixo da topbar (200) */
+  width:268px;
+}
+#ml-drawer.fixed .ml-close{display:none;}  /* não há "fechar" no modo fixo */
+#ml-drawer.fixed .ml-head{display:none;}   /* sem cabeçalho repetido no modo fixo (o logo já está na topbar) */
+/* conteúdo do portal dá lugar à barra (a topbar NÃO é empurrada) */
+body.ml-fixed-on #view-portal > *:not(.site-topbar){margin-left:268px;}
+/* O mesmo, dentro de um hub de curso (matN/portN/fqN): a tab bar e o conteúdo
+   encolhem para dar lugar à barra fixa; a topbar fica à largura toda. */
+body.ml-fixed-on .math-view > *:not(.site-topbar){margin-left:268px;}
+body.ml-fixed-on #ml-overlay{display:none;}   /* sem overlay no modo fixo */
+
+/* ── Botão "Recolher / Expandir" (só visível na barra fixa do computador) ── */
+.ml-toggle{
+  display:none; align-items:center; justify-content:flex-end; width:100%;
+  background:none; border:none; padding:.4rem .8rem; margin-bottom:.25rem;
+  border-radius:10px; cursor:pointer; color:var(--ink4);
+}
+.ml-toggle:hover{background:var(--white); color:var(--ink2);}
+.ml-toggle i{font-size:1.05rem; color:var(--ink4);}
+#ml-drawer.fixed .ml-toggle{display:flex;}   /* aparece só no modo fixo */
+
+/* ── MODO RECOLHIDO (só ícones): barra estreita no computador ── */
+body.ml-collapsed #ml-drawer.fixed{width:64px;}
+body.ml-collapsed #view-portal > *:not(.site-topbar){margin-left:64px;}
+body.ml-collapsed .math-view > *:not(.site-topbar){margin-left:64px;}
+/* esconder todo o texto, deixando apenas os ícones centrados */
+body.ml-collapsed #ml-drawer.fixed .ml-link span,
+body.ml-collapsed #ml-drawer.fixed .ml-user span,
+body.ml-collapsed #ml-drawer.fixed .ml-perfil,
+body.ml-collapsed #ml-drawer.fixed .ml-sair,
+body.ml-collapsed #ml-drawer.fixed .ml-tag{display:none;}
+body.ml-collapsed #ml-drawer.fixed .ml-nav{padding:.6rem .35rem;}
+body.ml-collapsed #ml-drawer.fixed .ml-link{justify-content:center; gap:0; padding:.62rem 0;}
+body.ml-collapsed #ml-drawer.fixed .ml-toggle{justify-content:center; padding:.4rem 0;}
+body.ml-collapsed #ml-drawer.fixed .ml-link.ativo{box-shadow:none; background:var(--white); border-radius:10px;}
+body.ml-collapsed #ml-drawer.fixed .ml-foot{justify-content:center; padding:.7rem .35rem;}
+body.ml-collapsed #ml-drawer.fixed .ml-user{flex-basis:auto; gap:0;}
+/* o caret do "Recolher" passa a apontar para a direita (expandir) quando já está recolhido */
+body.ml-collapsed #ml-drawer.fixed .ml-toggle i{transform:scaleX(-1);}
+
+/* ── TABLET (900–1200px): barra fixa SEMPRE estreita (só ícones) ──
+   Nestes ecrãs a barra larga de 268px deixava o conteúdo espremido/tapado
+   (chips cortados nas Fichas). Forçamos o modo "só ícones" independentemente
+   da preferência guardada; acima de 1200px o aluno volta a poder expandir.
+   Replica as regras de .ml-collapsed mas só pela largura do ecrã. */
+@media (min-width:900px) and (max-width:1200px){
+  body.ml-fixed-on #ml-drawer.fixed{width:64px;}
+  body.ml-fixed-on #view-portal > *:not(.site-topbar){margin-left:64px;}
+  body.ml-fixed-on .math-view > *:not(.site-topbar){margin-left:64px;}
+  body.ml-fixed-on #ml-drawer.fixed .ml-link span,
+  body.ml-fixed-on #ml-drawer.fixed .ml-toggle span,
+  body.ml-fixed-on #ml-drawer.fixed .ml-user span,
+  body.ml-fixed-on #ml-drawer.fixed .ml-perfil,
+  body.ml-fixed-on #ml-drawer.fixed .ml-sair,
+  body.ml-fixed-on #ml-drawer.fixed .ml-tag{display:none;}
+  body.ml-fixed-on #ml-drawer.fixed .ml-nav{padding:.6rem .35rem;}
+  body.ml-fixed-on #ml-drawer.fixed .ml-link,
+  body.ml-fixed-on #ml-drawer.fixed .ml-toggle{justify-content:center; gap:0; padding:.62rem 0;}
+  body.ml-fixed-on #ml-drawer.fixed .ml-link.ativo{box-shadow:none; background:var(--white); border-radius:10px;}
+  body.ml-fixed-on #ml-drawer.fixed .ml-foot{justify-content:center; padding:.7rem .35rem;}
+  body.ml-fixed-on #ml-drawer.fixed .ml-user{flex-basis:auto; gap:0;}
+  /* O botão "Recolher" não faz sentido quando já está forçado a estreito */
+  body.ml-fixed-on #ml-drawer.fixed .ml-toggle{display:none;}
+}
+
+/* ── Barra de navegação INFERIOR (telemóvel) ── */
+#ml-bottombar{
+  display:none; position:fixed; left:0; right:0; bottom:0; z-index:9990;
+  background:var(--white); border-top:1px solid var(--border);
+  box-shadow:0 -2px 14px rgba(0,0,0,.06);
+  padding-bottom:env(safe-area-inset-bottom,0); /* iPhone com barra inferior */
+}
+.mlb-link{
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+  background:none; border:none; cursor:pointer; font-family:'Montserrat',sans-serif;
+  color:var(--ink4); font-size:.66rem; font-weight:700; padding:.5rem 0 .55rem;
+}
+.mlb-link i{font-size:1.35rem; line-height:1;}
+.mlb-link.ativo{color:var(--sage-dark);}
+.mlb-link.ativo i{color:var(--sage-dark);}
+/* conteúdo não fica tapado pela barra inferior */
+body.ml-bottom-on{padding-bottom:60px;}
+body.ml-bottom-on #ml-bottombar{display:flex;}
+/* Telemóvel: portal em coluna a 100vh para o footer ficar SEMPRE colado em
+   baixo, mesmo quando o conteúdo é curto (ex.: só saudação + desafio). Sem
+   isto o footer subia para o meio do ecrã. Espelha o modo menu fixo. */
+body.ml-bottom-on #view-portal{display:flex;flex-direction:column;min-height:100vh}
+body.ml-bottom-on #view-portal > footer{margin-top:auto}
+body.ml-bottom-on .math-view{display:flex;flex-direction:column;min-height:100vh}
+body.ml-bottom-on .math-view > footer{margin-top:auto}
+
+/* A secção Turmas usa toda a largura disponível (até um máximo confortável)
+   e fica centrada, com algum respiro lateral. Antes ficava espremida. */
+#sec-apoio{padding:1.5rem 2.5rem 4rem}
+#sec-apoio #portal-turmas{max-width:none;margin:0;width:100%}
+@media (max-width:900px){ #sec-apoio{padding:1rem 1rem 3rem} }
+
+/* No modo fixo (computador), a secção Cursos alinha a pesquisa e os filtros
+   à esquerda (em vez de centrados), para acompanharem a grelha e não ficarem
+   a flutuar no meio com branco à direita. */
+/* Com menu fixo (desktop) o catálogo ocupa a largura toda, não os 720px
+   herdados de .portal-section. */
+/* Menu fixo: portal em coluna a 100vh para o footer ficar sempre colado em
+   baixo, mesmo quando o conteúdo é curto (ex.: estado «Escolhe o ano»). */
+body.ml-fixed-on #view-portal{display:flex;flex-direction:column;min-height:100vh}
+body.ml-fixed-on #view-portal > footer{margin-top:auto}
+/* O mesmo para os hubs de curso (.math-view): o footer legal cola ao fundo
+   no modo menu fixo, mesmo com conteúdo curto. */
+body.ml-fixed-on .math-view{display:flex;flex-direction:column}
+body.ml-fixed-on .math-view > footer{margin-top:auto}
+body.ml-fixed-on #portal-catalogo{max-width:none;margin:0}
+body.ml-fixed-on #sec-cursos{padding:1.5rem 2.5rem 0}
+body.ml-fixed-on #sec-cursos .portal-search{margin-left:0;margin-right:0;max-width:560px}
+body.ml-fixed-on #sec-cursos .portal-filters{margin-left:0;margin-right:0;max-width:none}
+@media (max-width:900px){ body.ml-fixed-on #sec-cursos{padding:1rem 1rem 0} }
+
+/* ════════════════════════════════════════════════════════════════
+   Painel de boas-vindas (com sessão) — js/painel-inicio.js
+   ════════════════════════════════════════════════════════════════ */
+#portal-saudacao{padding:2rem 1.5rem .5rem}
+.pi-wrap{max-width:620px;margin:0 auto}
+.pi-cab{text-align:center;margin-bottom:1.4rem}
+.pi-dia{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink4)}
+.pi-ola{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:700;color:var(--ink1);line-height:1.15;margin:.2rem 0 .15rem}
+.pi-sub{font-size:.9rem;color:var(--ink3)}
+.pi-desafio-slot{max-width:540px;margin:0 auto}
+
+/* Mural de avisos/feedback (aluno no Início) */
+.pi-mural-slot{max-width:540px;margin:0 auto 1rem}
+.pi-mural-card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.1rem 1.3rem;box-shadow:0 8px 24px rgba(0,0,0,.05)}
+.pi-mural-h{font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.7rem}
+.pi-mural-h i{color:#2e7d52}
+.pi-mural-msg{border-left:3px solid #2e7d52;background:var(--cream);border-radius:0 10px 10px 0;padding:.55rem .8rem;margin-bottom:.5rem}
+.pi-mural-msg.fb{border-left-color:#4a3f7a;background:#f4f2fa}
+.pi-mural-tag{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink4);margin-bottom:.15rem}
+.pi-mural-txt{font-size:.88rem;color:var(--ink1);line-height:1.5}
+.pi-mural-de{font-size:.72rem;color:var(--ink4);margin-top:.2rem}
+.pi-mural-msg.meu{border-left-color:#a8854d;background:#faf6ee}
+.pi-mural-msg.resp{margin-left:1.2rem}
+.pi-resp-acao{margin:-.2rem 0 .6rem 0}
+.pi-resp-acao a{font-size:.76rem;font-weight:700;color:#4a3f7a;text-decoration:none}
+.pi-duvida-btn{width:100%;margin-top:.5rem;background:var(--white);border:1.5px dashed #b9b1d6;color:#4a3f7a;border-radius:12px;padding:.65rem;font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:800;cursor:pointer}
+.pi-duvida-btn:hover{background:#f4f2fa}
+
+/* "O que tenho para fazer" (tarefas do aluno no Início) */
+.pi-tarefas-slot{max-width:540px;margin:0 auto 1rem}
+.pi-tar-card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.1rem 1.3rem;box-shadow:0 8px 24px rgba(0,0,0,.05)}
+.pi-tar-h{display:flex;align-items:center;justify-content:space-between;font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.6rem}
+.pi-tar-h i{color:#4a3f7a}
+.pi-tar-num{font-size:.74rem;font-weight:800;color:#4a3f7a;background:#f0edf7;border:1px solid #ddd8f5;border-radius:999px;padding:2px 10px}
+.pi-tar-row{display:flex;align-items:flex-start;gap:.6rem;padding:.55rem 0;border-top:1px dashed var(--border)}
+.pi-tar-row.feita .pi-tar-tit{text-decoration:line-through;color:var(--ink4)}
+.pi-tar-chk{background:none;border:none;font-size:1.15rem;cursor:pointer;line-height:1;padding:0;flex-shrink:0}
+.pi-tar-info{min-width:0}
+.pi-tar-tit{font-weight:700;color:var(--ink1);font-size:.9rem}
+.pi-tar-tag{font-size:.68rem;font-weight:800;color:#2e7d52;background:#e8f5ee;border:1px solid #bfe3c9;border-radius:6px;padding:1px 6px}
+.pi-tar-desc{font-size:.8rem;color:var(--ink3);line-height:1.45;margin-top:.15rem}
+.pi-tar-meta{font-size:.72rem;color:var(--ink4);margin-top:.15rem}
+.pi-tar-meta a{color:#4a3f7a;font-weight:700}
+
+/* Momento do Professor: JOGO de 3 perguntas (V/F + escolha) */
+.pi-prof-wrap{max-width:560px;margin:0 auto;background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:1.4rem 1.5rem;box-shadow:0 10px 28px rgba(0,0,0,.06)}
+.pi-prof-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.pi-prof-titulo{font-weight:800;color:var(--ink1);font-size:1rem}
+.pi-prof-pts{font-size:.8rem;font-weight:800;color:#2e7d52;background:#e8f5ee;border:1px solid #bfe3c9;border-radius:999px;padding:3px 11px}
+
+.pj-prog{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink4);margin-bottom:.5rem}
+.pj-q{font-size:1.05rem;font-weight:700;color:var(--ink1);line-height:1.5;margin-bottom:1rem}
+.pj-opts{display:flex;flex-direction:column;gap:.55rem}
+.pj-opt{text-align:left;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:.8rem 1rem;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:600;color:var(--ink2);cursor:pointer;transition:border-color .15s,background .15s}
+.pj-opt:hover:not(:disabled){border-color:#2e7d52;background:#f3faf5}
+.pj-opt:disabled{cursor:default}
+.pj-opt.certa{border-color:#2e7d52;background:#e8f5ee;color:#1a4a2e;font-weight:800}
+.pj-opt.errada{border-color:#e0a8a0;background:#fdecea;color:#922b21}
+.pj-fb{margin-top:.9rem}
+.pj-fb-in{font-size:.86rem;line-height:1.55;color:var(--ink2);border-radius:12px;padding:.8rem 1rem}
+.pj-fb-in.ok{background:#e8f5ee;border:1px solid #bfe3c9}
+.pj-fb-in.no{background:#fff5ec;border:1px solid #f3d6b3}
+.pj-fb-in strong{color:var(--ink1)}
+.pj-next{margin-top:.8rem;width:100%;background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:12px;padding:.75rem;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer}
+.pj-fim{text-align:center;padding:.8rem 0}
+.pj-fim-ic{font-size:2.4rem}
+.pj-fim-h{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--ink1);margin-top:.2rem}
+.pj-fim-sub{font-size:.9rem;color:var(--ink3);margin-top:.3rem}
+.pj-fim-sub strong{color:var(--ink1)}
+.pj-fim-foot{font-size:.8rem;color:var(--ink4);margin-top:.7rem}
+
+/* Cartão do resumo do professor */
+.pi-card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1.25rem 1.4rem;box-shadow:0 8px 24px rgba(0,0,0,.05)}
+.pi-card-load{color:var(--ink4);font-size:.85rem}
+.pi-card-h{display:flex;align-items:center;justify-content:space-between;font-weight:800;color:var(--ink1);font-size:1rem;margin-bottom:.5rem}
+.pi-card-h i{color:var(--sage-dark)}
+.pi-num{font-size:.78rem;font-weight:800;color:#2e7d52;background:#e8f5ee;border:1px solid #bfe3c9;border-radius:999px;padding:2px 10px}
+.pi-stat{font-size:.85rem;color:var(--ink3);margin-bottom:.9rem}
+.pi-top-h{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink4);margin-bottom:.4rem}
+.pi-top{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.9rem}
+.pi-top-row{display:flex;justify-content:space-between;font-size:.88rem;color:var(--ink2);border-bottom:1px dashed var(--border);padding-bottom:.3rem}
+.pi-top-row span:first-child{font-weight:700;color:var(--ink1)}
+.pi-top-xp{color:var(--ink3)}
+.pi-card-foot{font-size:.8rem;color:var(--ink4);line-height:1.5;border-top:1px solid var(--border);padding-top:.7rem}
+.pi-vazio{font-size:.85rem;color:var(--ink4);line-height:1.55}
+@media(max-width:560px){ .pi-ola{font-size:1.7rem} #portal-saudacao{padding:1.4rem 1rem .3rem} }
+
+/* Detalhe rico do aluno (Turmas, vista do professor) */
+.al-linha{font-size:.8rem;color:var(--ink3);background:var(--cream);border-radius:8px;padding:.4rem .7rem;margin-bottom:.7rem}
+.al-sec{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink4);margin:.7rem 0 .4rem}
+.al-tarefas{font-size:.82rem;color:var(--ink2)}
+
+/* Accordion das secções das Turmas (professor) */
+.acc{border:1.5px solid var(--border);border-radius:12px;margin-bottom:.6rem;overflow:hidden}
+.acc-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;width:100%;background:var(--white);border:none;padding:.8rem 1rem;cursor:pointer;font-family:'Montserrat',sans-serif}
+.acc-head:hover{background:var(--cream)}
+.acc-tit{display:flex;align-items:center;gap:.5rem;font-weight:800;color:var(--ink1);font-size:.92rem}
+.acc-caret{color:var(--ink4);transition:transform .15s}
+.acc-extra{display:flex;gap:.35rem;flex-shrink:0}
+.acc-body{padding:.2rem 1rem 1rem 1rem}
+
+/* Botão «Atribuir a aluno/grupo» (gerador/quiz/jogos, vista do professor) */
+.atr-btn{display:inline-flex;align-items:center;gap:.4rem;background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:7px 15px;font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(46,125,82,.2)}
+.atr-btn:hover{filter:brightness(1.05)}
+
+/* ── Modal de formulário reutilizável (eduFormModal) ── */
+.edu-fm-ov{position:fixed;inset:0;background:rgba(30,28,40,.55);display:flex;align-items:center;justify-content:center;z-index:10000;padding:1rem}
+.edu-fm{background:var(--white);border-radius:18px;max-width:400px;width:100%;padding:1.5rem;box-shadow:0 20px 60px rgba(0,0,0,.3);font-family:'Montserrat',sans-serif;max-height:90vh;overflow-y:auto}
+.edu-fm-tit{font-weight:800;font-size:1.1rem;color:var(--ink1);margin-bottom:1rem}
+.edu-fm-row{margin-bottom:.8rem}
+.edu-fm-lab{display:block;font-size:.78rem;font-weight:700;color:var(--ink3);margin-bottom:.3rem}
+.edu-fm-inp{width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:10px;padding:.6rem .8rem;font-family:'Montserrat',sans-serif;font-size:.9rem;color:var(--ink1);background:var(--white);outline:none}
+.edu-fm-inp:focus{border-color:#2e7d52;box-shadow:0 0 0 3px rgba(46,125,82,.1)}
+textarea.edu-fm-inp{resize:vertical;min-height:60px}
+.edu-fm-dica{font-size:.72rem;color:var(--ink4);margin-top:.25rem;line-height:1.4}
+.edu-fm-erro{font-size:.82rem;color:#c0392b;background:#fdecea;border:1px solid #f0b8b0;border-radius:8px;padding:.5rem .7rem;margin-bottom:.7rem}
+.edu-fm-acts{display:flex;gap:.5rem;justify-content:flex-end;margin-top:.4rem}
+.edu-fm-cancel{background:none;border:1.5px solid var(--border);color:var(--ink3);border-radius:999px;padding:.55rem 1.1rem;font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer}
+.edu-fm-cancel:hover{color:var(--ink1);border-color:var(--border2)}
+.edu-fm-ok{background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:999px;padding:.55rem 1.3rem;font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:800;cursor:pointer}
+.edu-fm-ok:hover{filter:brightness(1.05)}
+.edu-fm-ok:disabled{opacity:.6;cursor:default}
+.dest-opt:hover{border-color:#bfe3c9 !important;background:#e8f5ee !important}
+
+/* ── «As tuas turmas» no Início do professor ── */
+.pi-prof-resumo-slot{max-width:540px;margin:0 auto 1rem}
+.pi-pr-card{background:var(--white);border:1.5px solid var(--border);border-radius:18px;padding:1rem 1.1rem;box-shadow:0 8px 24px rgba(0,0,0,.05)}
+.pi-pr-h{font-weight:800;color:var(--ink1);font-size:.95rem;margin-bottom:.6rem}
+.pi-pr-h i{color:#2e7d52}
+.pi-pr-item{display:flex;align-items:center;gap:.7rem;width:100%;text-align:left;background:none;border:none;border-radius:12px;padding:.6rem .5rem;cursor:pointer;font-family:'Montserrat',sans-serif}
+.pi-pr-item:hover{background:var(--cream)}
+.pi-pr-ic{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;font-size:1.05rem;flex-shrink:0}
+.pi-pr-txt{flex:1;font-size:.88rem;font-weight:700;color:var(--ink1)}
+.pi-pr-seta{color:var(--ink4)}
+
+/* ── Grupos das Turmas (vista do professor) ── */
+.grp{border:1.5px solid var(--border);border-radius:12px;margin-bottom:.5rem;overflow:hidden}
+.grp-head{display:flex;align-items:center;gap:.5rem;padding:.7rem 1rem}
+.grp-head-main{display:flex;align-items:center;gap:.45rem;cursor:pointer;min-width:0;flex:1}
+.grp-caret{color:var(--ink4);transition:transform .15s;flex-shrink:0}
+.grp-nome{font-weight:800;color:var(--ink1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.grp-count{font-size:.74rem;font-weight:700;color:var(--ink4);flex-shrink:0}
+.grp-x{color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;width:26px;height:26px;font-size:.78rem;cursor:pointer;font-family:'Montserrat',sans-serif;flex-shrink:0;line-height:1}
+.grp-body{padding:0 1rem .8rem 1rem}
+.grp-meta{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;border-top:1px dashed var(--border);padding-top:.6rem;margin-bottom:.5rem;font-size:.74rem;color:var(--ink4)}
+.grp-code{font-family:'JetBrains Mono',monospace;font-size:.74rem;font-weight:800;color:#2e7d52;background:#e8f5ee;border:1px solid #bfe3c9;border-radius:6px;padding:1px 7px}
+.grp-send{font-size:.74rem;font-weight:700;color:#1a4a2e;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:3px 11px;cursor:pointer;font-family:'Montserrat',sans-serif}
+.grp-send:hover{background:#e8f5ee}
+/* linha de aluno dentro do grupo */
+.grp-aluno{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;border-bottom:1px dashed var(--border);padding:.45rem 0}
+.grp-aluno-nome{flex:1;min-width:0;font-weight:700;color:var(--ink1);font-size:.86rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.grp-aluno-mail{font-weight:500;font-size:.74rem;color:var(--ink4)}
+.grp-acts{display:flex;gap:.25rem;flex-shrink:0}
+.grp-ic{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;background:var(--white);border:1.5px solid var(--border);color:var(--ink3);font-size:1rem;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .12s}
+.grp-ic:hover{background:var(--cream);color:var(--ink1)}
+.grp-ic.is-reg:hover{border-color:#ddd8f5;color:#4a3f7a}
+.grp-ic.is-msg:hover,.grp-ic.is-add:hover{border-color:#bfe3c9;color:#2e7d52}
+.grp-ic.is-rem:hover{border-color:#e8a8a0;color:#c0392b}
+.grp-procura{width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:8px;padding:6px 12px;font-size:.84rem;font-family:'Montserrat',sans-serif;margin-bottom:.6rem}
+/* blocos da página do grupo: trabalho / avisos / fichas */
+.grp-bloco{border-top:1px dashed var(--border);padding-top:.6rem;margin-top:.6rem}
+.grp-bloco-h{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:.4rem}
+.grp-bloco-h>span{font-weight:800;color:var(--ink1);font-size:.84rem;display:flex;align-items:center;gap:.4rem}
+.grp-bloco-h i{color:#2e7d52}
+.grp-bloco-n{font-size:.72rem;font-weight:700;color:var(--ink4);background:var(--cream);border-radius:999px;padding:0 7px;min-width:18px;text-align:center}
+.grp-bloco-add{font-size:.74rem;font-weight:700;color:#1a4a2e;background:var(--white);border:1.5px solid #bfe3c9;border-radius:999px;padding:3px 11px;cursor:pointer;font-family:'Montserrat',sans-serif}
+.grp-bloco-add:hover{background:#e8f5ee}
+.grp-bloco-vazio{font-size:.78rem;color:var(--ink4);padding:.2rem 0 .4rem}
+.grp-item{display:flex;align-items:center;gap:.5rem;justify-content:space-between;padding:.35rem 0;border-bottom:1px dashed var(--border)}
+.grp-item:last-child{border-bottom:none}
+.grp-item-tit{font-size:.82rem;color:var(--ink1);font-weight:600;text-decoration:none;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+a.grp-item-tit:hover{color:#2e7d52;text-decoration:underline}
+.grp-item-tag{font-size:.68rem;color:#2e7d52;background:#e8f5ee;border:1px solid #bfe3c9;border-radius:6px;padding:0 6px;font-weight:700}
+.grp-item-data{font-size:.72rem;color:var(--ink4);flex-shrink:0}
+.grp-item-x{color:#c0392b;background:none;border:1px solid #e8a8a0;border-radius:999px;width:24px;height:24px;font-size:.72rem;cursor:pointer;font-family:'Montserrat',sans-serif;flex-shrink:0;line-height:1}
+
+/* ── Tooltip leve (qualquer elemento com data-tip) ── */
+[data-tip]{position:relative}
+[data-tip]::after{
+  content:attr(data-tip);
+  position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%) translateY(4px);
+  background:#2a2620;color:#fff;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:600;
+  line-height:1.2;white-space:nowrap;padding:5px 9px;border-radius:7px;
+  opacity:0;pointer-events:none;transition:opacity .14s,transform .14s;z-index:50;
+  box-shadow:0 4px 14px rgba(0,0,0,.18)}
+[data-tip]::before{
+  content:'';position:absolute;bottom:calc(100% + 2px);left:50%;transform:translateX(-50%) translateY(4px);
+  border:5px solid transparent;border-top-color:#2a2620;
+  opacity:0;pointer-events:none;transition:opacity .14s,transform .14s;z-index:50}
+[data-tip]:hover::after,[data-tip]:focus-visible::after,
+[data-tip]:hover::before,[data-tip]:focus-visible::before{
+  opacity:1;transform:translateX(-50%) translateY(0)}
+/* variante para ícones encostados à direita: tooltip alinhado à direita (não corta) */
+[data-tip].tip-end::after{left:auto;right:0;transform:translateX(0) translateY(4px)}
+[data-tip].tip-end:hover::after,[data-tip].tip-end:focus-visible::after{transform:translateX(0) translateY(0)}
+/* chips da topbar (🔥 ofensiva / ⭐ pontos): estão colados ao topo do ecrã,
+   por isso o tooltip tem de abrir PARA BAIXO (senão fica cortado), alinhado à
+   direita e a quebrar linha (texto longo). */
+.site-topbar-actions [data-tip]::after{
+  bottom:auto;top:calc(100% + 7px);left:auto;right:0;
+  transform:translateY(-4px);
+  white-space:normal;width:max-content;max-width:240px;text-align:left;
+  background:#fff;color:var(--ink1,#2a2620);border:1px solid var(--border,#e6e0d8);
+  box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.site-topbar-actions [data-tip]::before{
+  bottom:auto;top:calc(100% + 2px);left:auto;right:14px;
+  transform:translateY(-4px);
+  border-top-color:transparent;border-bottom-color:#fff}
+.site-topbar-actions [data-tip]:hover::after,.site-topbar-actions [data-tip]:focus-visible::after,
+.site-topbar-actions [data-tip]:hover::before,.site-topbar-actions [data-tip]:focus-visible::before{
+  transform:translateY(0)}
+
+/* ════════════════════════════════════════════════════════════════
+   APRENDER — explicadores lúdicos (aprender.html)
+   ════════════════════════════════════════════════════════════════ */
+.apr-page{max-width:760px;margin:0 auto;padding:1.5rem 1.1rem 4rem}
+.apr-hero{text-align:center;padding:1.5rem 0 2rem}
+.apr-hero-badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.74rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#2a8a99;background:#e6f6f9;border:1px solid #bfe8ef;border-radius:999px;padding:.35rem .85rem;margin-bottom:1rem}
+.apr-hero-title{font-family:'Cormorant Garamond',serif;font-size:2.3rem;line-height:1.1;font-weight:800;color:var(--ink);margin:.2rem 0 .7rem}
+.apr-hero-sub{color:var(--ink3);font-size:1rem;line-height:1.55;max-width:560px;margin:0 auto}
+
+/* — catálogo — */
+.apr-cat-group{margin-bottom:1.6rem}
+.apr-cat-curso{font-size:.78rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);margin:0 0 .7rem;padding-left:.2rem}
+.apr-cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.7rem}
+.apr-cat-card{display:flex;align-items:center;gap:.8rem;text-align:left;background:var(--white);border:1px solid var(--border);border-left:4px solid var(--ac,#516860);border-radius:14px;padding:.85rem 1rem;cursor:pointer;transition:all .16s;font-family:'Montserrat',sans-serif}
+.apr-cat-card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.08);border-color:var(--ac)}
+.apr-cat-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--ac) 14%,#fff);color:var(--ac);font-size:1.35rem;flex-shrink:0}
+.apr-cat-txt{flex:1;display:flex;flex-direction:column}
+.apr-cat-txt b{font-size:.95rem;font-weight:800;color:var(--ink)}
+.apr-cat-txt span{font-size:.78rem;color:var(--ink3)}
+.apr-cat-play{font-size:1.5rem;color:var(--ac);opacity:.7}
+
+/* — cabeçalho do explicador — */
+.apr-head{margin-bottom:1.1rem;position:relative}
+.apr-back-cat{background:none;border:none;color:var(--ink3);font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:.3rem;padding:.2rem 0;margin-bottom:.5rem}
+.apr-back-cat:hover{color:var(--ink)}
+.apr-eyebrow{font-size:.72rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#2a8a99}
+.apr-title{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:800;color:var(--ink);margin:.1rem 0 0}
+.apr-progress{display:flex;align-items:center;gap:.35rem;margin-top:.7rem}
+.apr-dot{width:9px;height:9px;border-radius:50%;background:var(--border);transition:all .2s}
+.apr-dot.done{background:#56b6c2}
+.apr-dot.now{background:#2a8a99;transform:scale(1.35)}
+.apr-step{margin-left:.5rem;font-size:.74rem;font-weight:700;color:var(--ink4)}
+
+/* — cartões de bloco — */
+.apr-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:1.3rem 1.3rem 1.4rem;box-shadow:0 4px 18px rgba(0,0,0,.04)}
+.apr-anim{animation:aprIn .32s ease}
+@keyframes aprIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.apr-bloco-title{font-size:1.05rem;font-weight:800;color:var(--ink);margin:0 0 .7rem}
+.apr-prose{color:var(--ink2);font-size:.98rem;line-height:1.6}
+.apr-prose p{margin:0 0 .7rem}
+.apr-prose b{color:var(--ink);font-weight:700}
+.apr-formula{font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;color:#1f7a49;background:#eaf7f0;border:1px dashed #b6e2cb;border-radius:10px;padding:.7rem 1rem;text-align:center;margin:.8rem 0}
+.apr-visual{margin-top:1rem;display:flex;justify-content:center}
+
+/* — máquina de funções — */
+.apr-maq{display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap;margin:.4rem 0}
+.apr-maq-static{margin-top:.4rem}
+.apr-maq-in,.apr-maq-out{display:flex;flex-direction:column;align-items:center;gap:.15rem}
+.apr-maq-lbl{font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink4)}
+.apr-maq-num{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:700;color:var(--ink);background:var(--cream2);border:1.5px solid var(--border);border-radius:10px;min-width:46px;text-align:center;padding:.25rem .5rem}
+.apr-maq-out-num{color:#1f7a49;background:#eaf7f0;border-color:#b6e2cb}
+.apr-maq-box{display:flex;flex-direction:column;align-items:center;gap:.15rem;background:linear-gradient(135deg,#56b6c2,#2a8a99);color:#fff;border-radius:12px;padding:.7rem 1rem;box-shadow:0 4px 12px rgba(42,138,153,.3)}
+.apr-maq-gear{font-size:1.5rem;animation:aprSpin 4s linear infinite}
+@keyframes aprSpin{to{transform:rotate(360deg)}}
+.apr-maq-rule{font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:700}
+.apr-maq-hint{margin-bottom:.9rem}
+.apr-slider-row{display:flex;align-items:center;gap:.9rem;margin:1rem 0;font-size:1rem;color:var(--ink2)}
+.apr-slider-row b{font-family:'JetBrains Mono',monospace;color:#1f7a49;font-size:1.15rem}
+.apr-slider{flex:1;accent-color:#2a8a99;height:6px}
+.apr-maq-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:.6rem}
+.apr-maq-cap{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink4);margin-bottom:.4rem;text-align:center}
+.apr-mini-tab{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:.82rem}
+.apr-mini-tab th{background:var(--cream2);color:var(--ink3);font-weight:700;padding:.3rem;border:1px solid var(--border)}
+.apr-mini-tab td{text-align:center;padding:.3rem;border:1px solid var(--border);color:var(--ink2);transition:all .15s}
+.apr-tab-x.on{background:#56b6c2;color:#fff;font-weight:800}
+.apr-tab-y.on{background:#eaf7f0;color:#1f7a49;font-weight:800}
+@media(max-width:520px){.apr-maq-grid{grid-template-columns:1fr}}
+
+/* — confirmação — */
+.apr-confirma-q{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:1rem;line-height:1.5}
+.apr-opts{display:flex;flex-direction:column;gap:.5rem}
+.apr-opt{text-align:left;background:var(--white);border:1.5px solid var(--border);border-radius:11px;padding:.7rem 1rem;font-family:'Montserrat',sans-serif;font-size:.95rem;font-weight:600;color:var(--ink2);cursor:pointer;transition:all .14s}
+.apr-opt:hover:not(:disabled){border-color:#56b6c2;background:#f4fbfc}
+.apr-opt-ok{background:#eaf7f0!important;border-color:#3ecf8e!important;color:#1f7a49!important;font-weight:800}
+.apr-opt-no{background:#fdeceb!important;border-color:#ff6b6b!important;color:#c0392b!important}
+.apr-fb{display:none;margin-top:.9rem;font-size:.9rem;line-height:1.5;color:var(--ink2);background:var(--cream2);border-radius:10px;padding:.7rem .9rem}
+.apr-fb-ok{color:#1f7a49;font-weight:800}.apr-fb-no{color:#c0392b;font-weight:800}
+
+/* — navegação e fim — */
+.apr-nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.1rem}
+.apr-btn{display:inline-flex;align-items:center;gap:.4rem;border-radius:999px;padding:.6rem 1.3rem;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;border:none;transition:all .15s;text-decoration:none}
+.apr-btn-primary{background:#2a8a99;color:#fff;margin-left:auto}
+.apr-btn-primary:hover{background:#23717d;transform:translateY(-1px)}
+.apr-btn-ghost{background:var(--cream2);color:var(--ink2);border:1px solid var(--border)}
+.apr-btn-ghost:hover{background:var(--white);color:var(--ink)}
+.apr-fim{text-align:center}
+.apr-fim-emoji{font-size:3rem;margin-bottom:.4rem}
+.apr-fim h3{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:800;color:var(--ink);margin:.2rem 0 .6rem}
+
+/* — Aprender: widgets extra (balança, sequência) — */
+.apr-bal{display:flex;align-items:center;justify-content:center;gap:1rem;margin:1rem 0}
+.apr-bal-prato{min-width:90px;text-align:center;background:var(--cream2);border:2px solid var(--border);border-radius:12px;padding:.9rem .6rem;font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--ink);box-shadow:0 4px 0 rgba(0,0,0,.06)}
+.apr-bal-eq{font-size:1.6rem;font-weight:800;color:#7d6aa8}
+.apr-seq-row{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.4rem;margin:.6rem 0}
+.apr-seq-bola{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:#eaf7f0;border:2px solid #2f9e63;color:#1f7a49;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:1rem}
+.apr-seq-seta{font-size:.78rem;font-weight:700;color:var(--ink4)}

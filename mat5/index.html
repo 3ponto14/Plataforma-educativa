@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Hub de estudo de Matemática 5.º ano: teoria, exercícios, fichas e progresso para todos os 8 capítulos do programa.">
+<meta name="theme-color" content="#2c6044">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta property="og:title" content="3ponto14 · Matemática 5.º Ano">
+<meta property="og:description" content="Recursos interativos com exercícios práticos de Matemática 5.º ano.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_PT">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232c6044'/><text x='50' y='68' font-size='48' font-weight='900' text-anchor='middle' fill='white' font-family='serif'>eP</text></svg>">
+<title>Matemática 5.º Ano · Hub de Estudo · 3ponto14</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+</head>
+<body>
+
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">↑</button>
+<div class="section-indicator" id="sectionIndicator"></div>
+
+<div id="view-mat5" class="math-view active">
+
+<!-- ── Topbar unificada ── -->
+<nav class="site-topbar">
+  <a href="../index.html" class="site-topbar-logo">
+    <img class="mark" src="../icons/logo-3ponto14.png" alt="3ponto14">
+    <span class="wordmark">3ponto<em>14</em></span>
+  </a>
+  <div class="site-topbar-sep"></div>
+  <span class="site-topbar-title">Matemática 5.º Ano</span>
+  <div class="site-topbar-actions"></div>
+  <button class="site-topbar-back" onclick="showPortalFromMat5()"><i class="ph ph-arrow-left"></i> Início</button>
+</nav>
+
+<!-- ── Tab bar 4 tabs ── -->
+<div class="mat7-hub-tabbar" id="mat5-hub-tabbar">
+  <button class="mat7-hub-tab active" data-tab="resumo"    onclick="mat5SwitchTab('resumo',this)">   <span class="mat7-hub-tab-icon"><i class="ph ph-book-open-text"></i></span> Teoria</button>
+  <button class="mat7-hub-tab"        data-tab="praticar"  onclick="mat5SwitchTab('praticar',this)"> <span class="mat7-hub-tab-icon"><i class="ph ph-pencil-simple"></i></span> Praticar</button>
+  <button class="mat7-hub-tab"        data-tab="fichas"    onclick="mat5SwitchTab('fichas',this)">   <span class="mat7-hub-tab-icon"><i class="ph ph-file-pdf"></i></span> Fichas</button>
+  <button class="mat7-hub-tab"        data-tab="progresso" onclick="mat5SwitchTab('progresso',this)"><span class="mat7-hub-tab-icon"><i class="ph ph-chart-bar"></i></span> Progresso</button>
+</div>
+
+<main class="mat7-hub-main">
+
+<!-- ══════════ PANEL: TEORIA ══════════ -->
+<div class="mat7-panel active" id="mat5p-resumo">
+  <div class="mat7-panel-heading">Teoria</div>
+  <div class="mat7-panel-sub">Seleciona um capítulo e depois o subtema que queres rever.</div>
+
+  <div class="resumo-nav" id="mat5-resumo-nav">
+    <div class="resumo-cap-row" id="mat5-resumo-cap-row"><!-- gerado por mat5BuildResumoNav() --></div>
+    <div class="resumo-st-row" id="mat5-resumo-st-row"><!-- gerado dinamicamente --></div>
+  </div>
+
+  <div id="mat5-resumo-content">
+    <div class="resumo-empty">
+      <i class="ph ph-book-open-text resumo-empty-icon"></i>
+      <div class="resumo-empty-title">Escolhe um capítulo para começar</div>
+      <div class="resumo-empty-sub">Definições, exemplos, fórmulas e propriedades</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PANEL: PRATICAR (menu de modos) ══════════ -->
+<div class="mat7-panel" id="mat5p-praticar">
+  <div class="mat7-panel-heading">Praticar</div>
+  <div class="mat7-panel-sub">Escolhe o modo de prática - todas as ferramentas de treino num só lugar.</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.75rem;margin-top:1rem">
+    <button onclick="mat5OpenPraticar('exercicios')" style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem;text-align:left;cursor:pointer;transition:all .2s;border-top:3px solid var(--m5c1-mid)" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(0,0,0,.08)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+      <div style="font-size:1.4rem;margin-bottom:.5rem"><i class="ph ph-pencil-simple" style="color:var(--m5c1-mid)"></i></div>
+      <div style="font-size:.9rem;font-weight:800;color:var(--ink1);margin-bottom:.2rem">Exercícios</div>
+      <div style="font-size:.75rem;color:var(--ink4)">Questões geradas com correção imediata</div>
+    </button>
+    <button onclick="mat5OpenPraticar('quiz')" style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem;text-align:left;cursor:pointer;transition:all .2s;border-top:3px solid #a8854d" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(0,0,0,.08)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+      <div style="font-size:1.4rem;margin-bottom:.5rem">⚡</div>
+      <div style="font-size:.9rem;font-weight:800;color:var(--ink1);margin-bottom:.2rem">Quiz Relâmpago</div>
+      <div style="font-size:.75rem;color:var(--ink4)">Escolha múltipla · 3 vidas · streak</div>
+    </button>
+    <button onclick="mat5OpenPraticar('flashcards')" style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem;text-align:left;cursor:pointer;transition:all .2s;border-top:3px solid #4d978f" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(0,0,0,.08)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+      <div style="font-size:1.4rem;margin-bottom:.5rem"><i class="ph ph-cards" style="color:#4d978f"></i></div>
+      <div style="font-size:.9rem;font-weight:800;color:var(--ink1);margin-bottom:.2rem">Flashcards</div>
+      <div style="font-size:.75rem;color:var(--ink4)">Repetição espaçada para memorizar</div>
+    </button>
+    <button onclick="mat5OpenPraticar('teste')" style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem;text-align:left;cursor:pointer;transition:all .2s;border-top:3px solid #9a5e96" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(0,0,0,.08)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+      <div style="font-size:1.4rem;margin-bottom:.5rem">⏱</div>
+      <div style="font-size:.9rem;font-weight:800;color:var(--ink1);margin-bottom:.2rem">Teste Cronometrado</div>
+      <div style="font-size:.75rem;color:var(--ink4)">Simula condições reais de teste</div>
+    </button>
+    <button onclick="mat5OpenPraticar('jogos')" style="background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.25rem;text-align:left;cursor:pointer;transition:all .2s;border-top:3px solid #5e9676" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(0,0,0,.08)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+      <div style="font-size:1.4rem;margin-bottom:.5rem"><i class="ph ph-game-controller" style="color:#5e9676"></i></div>
+      <div style="font-size:.9rem;font-weight:800;color:var(--ink1);margin-bottom:.2rem">Jogos</div>
+      <div style="font-size:.75rem;color:var(--ink4)">Jogo do 24, Minesweeper e mais</div>
+    </button>
+  </div>
+</div>
+
+<!-- ── Sub-painel comum: cabeçalho com voltar + seletor cap/subtema ── -->
+<div class="mat7-panel" id="mat5p-exercicios">
+  <button class="btn btn-ghost mb-3" onclick="mat5SwitchTab('praticar')"><i class="ph ph-arrow-left"></i> Praticar</button>
+  <div class="mat7-panel-heading">Exercícios</div>
+  <div class="mat7-panel-sub">Questões geradas com correção imediata. Capítulos com · ainda estão em preparação.</div>
+  <div class="resumo-nav" style="margin-top:.5rem">
+    <div class="resumo-cap-row" id="mat5-praticar-cap-row"></div>
+    <div class="resumo-st-row" id="mat5-praticar-st-row"></div>
+  </div>
+  <div class="level-bar" style="margin:.75rem 0 1rem">
+    <div class="gen-level-group" id="mat5-praticar-nivel">
+      <span class="gen-level-label">Nível:</span>
+      <button class="gen-level-btn" data-level="facil" onclick="mat5PraticarSetNivel('facil',this)"><span class="status-dot status-dot--easy"></span> Fácil</button>
+      <button class="gen-level-btn active" data-level="medio" onclick="mat5PraticarSetNivel('medio',this)"><span class="status-dot status-dot--medium"></span> Médio</button>
+      <button class="gen-level-btn" data-level="dificil" onclick="mat5PraticarSetNivel('dificil',this)"><span class="status-dot status-dot--hard"></span> Difícil</button>
+    </div>
+    <button class="btn btn-primary ml-auto" onclick="mat5GerarExercicios()"><i class="ph ph-dice-five"></i> Gerar exercícios</button>
+  </div>
+  <div id="mat5-praticar-content"></div>
+</div>
+
+<!-- ── Sub-painel: Quiz Relâmpago ── -->
+<div class="mat7-panel" id="mat5p-quiz">
+  <button class="btn btn-ghost mb-3" onclick="mat5SwitchTab('praticar')"><i class="ph ph-arrow-left"></i> Praticar</button>
+  <div class="mat7-panel-heading">⚡ Quiz Relâmpago</div>
+  <div class="mat7-panel-sub">Escolha múltipla · 3 vidas · streak. Escolhe o capítulo para começar.</div>
+  <div class="resumo-nav" style="margin-top:.5rem">
+    <div class="resumo-cap-row" id="mat5-quiz-cap-row"></div>
+  </div>
+  <div id="mat5-quiz-app" style="margin-top:1rem"></div>
+</div>
+
+<!-- ── Sub-painel: Flashcards ── -->
+<div class="mat7-panel" id="mat5p-flashcards">
+  <button class="btn btn-ghost mb-3" onclick="mat5SwitchTab('praticar')"><i class="ph ph-arrow-left"></i> Praticar</button>
+  <div class="mat7-panel-heading">Flashcards</div>
+  <div class="mat7-panel-sub">Revê as definições e fórmulas principais - carrega para virar o cartão.</div>
+  <div class="resumo-nav" style="margin-top:.5rem">
+    <div class="resumo-cap-row" id="mat5-fc-cap-row"></div>
+  </div>
+  <div id="mat5-fc-app" style="margin-top:1rem"></div>
+</div>
+
+<!-- ── Sub-painel: Teste Cronometrado ── -->
+<div class="mat7-panel" id="mat5p-teste">
+  <button class="btn btn-ghost mb-3" onclick="mat5SwitchTab('praticar')"><i class="ph ph-arrow-left"></i> Praticar</button>
+  <div class="mat7-panel-heading">⏱ Teste Cronometrado</div>
+  <div class="mat7-panel-sub">Simula condições reais de teste. Escolhe o capítulo, nível e tempo.</div>
+  <div class="resumo-nav" style="margin-top:.5rem">
+    <div class="resumo-cap-row" id="mat5-teste-cap-row"></div>
+  </div>
+  <div id="mat5-teste-app" style="margin-top:1rem"></div>
+</div>
+
+<!-- ── Sub-painel: Jogos ── -->
+<div class="mat7-panel" id="mat5p-jogos">
+  <button class="btn btn-ghost mb-3" onclick="mat5SwitchTab('praticar')"><i class="ph ph-arrow-left"></i> Praticar</button>
+  <div class="mat7-panel-heading">Jogos Matemáticos</div>
+  <div class="mat7-panel-sub">Jogo do 24, Minesweeper, Sudoku, Torres de Hanói e mais.</div>
+  <div id="mat5-jogos-app" style="margin-top:1rem"></div>
+</div>
+
+<!-- ══════════ PANEL: FICHAS ══════════ -->
+<div class="mat7-panel" id="mat5p-fichas">
+  <div class="mat7-panel-heading">Gerador de Fichas</div>
+  <div class="mat7-panel-sub">Escolhe os capítulos e o que incluir gera e descarrega uma ficha PDF personalizada. <strong>Para professores:</strong> ativa "Soluções" para a versão com respostas.</div>
+  <div class="mat7-dl-panel">
+    <div class="gf-row mb-4">
+      <div class="gf-col">
+        <div class="gf-label">Capítulos a incluir</div>
+        <div class="gf-caps mt-1.5" id="mat5-fichas-caps" style="display:block"><!-- gerado por mat5gfBuildCaps() --></div>
+      </div>
+    </div>
+    <div class="gf-row mb-4">
+      <div class="gf-col">
+        <div class="gf-label">O que incluir</div>
+        <div class="gf-types mt-1.5" id="mat5-fichas-types">
+          <button class="gf-type-btn active" data-type="resumo" onclick="mat5gfToggleType(this)"><span class="gf-tick">✓</span> Resumo teórico</button>
+          <button class="gf-type-btn active" data-type="exercicios" onclick="mat5gfToggleType(this)"><span class="gf-tick">✓</span> Exercícios</button>
+          <button class="gf-type-btn active" data-type="teste" onclick="mat5gfToggleType(this)"><span class="gf-tick">✓</span> Teste de avaliação</button>
+          <button class="gf-type-btn" data-type="minitestes" onclick="mat5gfToggleType(this)"><span class="gf-tick"></span> Minitestes</button>
+          <button class="gf-type-btn active" data-type="solucoes" onclick="mat5gfToggleType(this)" title="Incluir respostas no final da ficha" style="border-color:var(--m5c1-mid);color:var(--m5c1-deep)"><span class="gf-tick">✓</span> Soluções <span style="font-size:.65rem;background:var(--m5c1-mid);color:#fff;border-radius:999px;padding:1px 6px;margin-left:3px">Professor</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="gf-row mb-5">
+      <div class="gf-col">
+        <div class="gf-label">Nível de dificuldade</div>
+        <div class="gf-dif-row mt-1.5" id="mat5-fichas-dif">
+          <button class="gf-dif-btn active" data-dif="facil" onclick="mat5gfSetDif(this)"><span class="status-dot status-dot--easy"></span> Fácil</button>
+          <button class="gf-dif-btn" data-dif="medio" onclick="mat5gfSetDif(this)"><span class="status-dot status-dot--medium"></span> Médio</button>
+          <button class="gf-dif-btn" data-dif="dificil" onclick="mat5gfSetDif(this)"><span class="status-dot status-dot--hard"></span> Difícil</button>
+        </div>
+      </div>
+    </div>
+    <div class="gf-row mb-5">
+      <div class="gf-col">
+        <div class="gf-label">Exercícios por subtema</div>
+        <div class="gf-dif-row mt-1.5" id="mat5-fichas-qty">
+          <button class="gf-dif-btn" data-qty="5" onclick="mat5gfSetQty(this)">5</button>
+          <button class="gf-dif-btn active" data-qty="10" onclick="mat5gfSetQty(this)">10</button>
+          <button class="gf-dif-btn" data-qty="15" onclick="mat5gfSetQty(this)">15</button>
+          <button class="gf-dif-btn" data-qty="20" onclick="mat5gfSetQty(this)">20</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center gap-3 flex-wrap mt-2">
+    <button class="gf-gen-btn" onclick="mat5gfGerar('pdf')"><i class="ph ph-download-simple"></i> Guardar como PDF</button>
+    <button class="gf-gen-btn gf-gen-btn--html" onclick="mat5gfGerar('html')"><i class="ph ph-code"></i> Guardar como HTML</button>
+    <span id="mat5-fichas-atr"></span>
+    <span id="mat5-fichas-status" class="gf-status"></span>
+  </div>
+</div>
+
+<!-- ══════════ PANEL: PROGRESSO ══════════ -->
+<div class="mat7-panel" id="mat5p-progresso">
+  <div class="mat7-panel-heading">O Teu Progresso</div>
+  <div class="mat7-panel-sub">Resumo das tuas atividades no 5.º ano - desempenho por capítulo e relatório PDF.</div>
+  <div id="mat5-progresso-content" style="margin-top:1rem"></div>
+</div>
+
+</main>
+<footer class="portal-footer">
+  <strong>3ponto14</strong> · Feito com <i class="ph ph-heart"></i> para alunos e professores de Portugal
+  <br><a href="../termos.html">Termos de Utilização</a> · <a href="../privacidade.html">Política de Privacidade</a>
+</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/cloud.js?v=20260621"></script>
+<script src="../js/guard.js?v=20260621"></script>
+<script src="../js/turmas.js?v=20260621"></script>
+<script src="../js/atribuir.js?v=20260621"></script>
+<script src="../js/shared.js?v=20260621"></script>
+<script src="../js/chapter-engine.js?v=20260621"></script>
+<script src="../js/visuals.js?v=20260621"></script>
+<script src="../js/mat5.js?v=20260621"></script>
+<script src="../js/systems.js?v=20260621"></script>
+<script src="../js/ux-improvements.js?v=20260621"></script>
+<script src="../js/fx.js?v=20260621"></script>
+<script src="../js/auth-ui.js?v=20260621"></script>
+<script src="../js/notificacoes.js?v=20260621"></script>
+<script src="../js/menu-lateral.js?v=20260621"></script>
+<script src="../js/desafio.js?v=20260621"></script>
+<script src="../js/nav.js?v=20260621"></script>
+<script src="../js/pwa.js?v=20260622"></script>
+</body>
+</html>

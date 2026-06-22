@@ -1,4 +1,4 @@
-// CAP. 2 — NÚMEROS RACIONAIS · JavaScript
+// CAP. 2 NÚMEROS RACIONAIS · JavaScript
 // Uses chapter-engine.js for generic quiz/exam/flashcard/progress logic
 
 // ── Utilitários (aliases for backward compat) ──
@@ -7,7 +7,7 @@ function reduceFrac(p,q){if(q===0)return[0,1];var g=gcd2(Math.abs(p),Math.abs(q)
 function fmtFrac(p,q){var r=reduceFrac(p,q);if(r[1]===1)return String(r[0]);return r[0]+'/'+r[1];}
 function fmtFracHTML(p,q){var r=reduceFrac(p,q);if(r[1]===1)return String(r[0]);var neg=r[0]<0;var absP=Math.abs(r[0]);return(neg?'−':'')+'<span class="mfrac"><span class="mfrac-n">'+absP+'</span><span class="mfrac-d">'+r[1]+'</span></span>';}
 
-// ── CONSTRUTOR DE EXERCÍCIOS — Cap 2 (Números Racionais) ──
+// ── CONSTRUTOR DE EXERCÍCIOS Cap 2 (Números Racionais) ──
 function buildEx2(tema,tipo,dif){
   tema=String(tema);
   var easy=(dif==='facil'), hard=(dif==='dificil');
@@ -16,12 +16,12 @@ function buildEx2(tema,tipo,dif){
   function randFracNZ(){var q=randDen();var p=rndNZ2(-(q*2),q*2);return[p,q];}
   function randFrac(){var q=randDen();var p=rnd2(-(q*2),q*2);return[p,q];}
 
-  // TEMA 1 — Conjuntos de números racionais
+  // TEMA 1 Conjuntos de números racionais
   if(tema==='1'){
     var vals=[
-      {n:0,  sets:['ℕ','ℤ','ℚ₀⁺','ℤ₀⁺'],  desc:'zero — pertence a ℕ, ℤ, ℚ₀⁺ e ℤ₀⁺, mas NÃO a ℚ⁺ nem ℤ⁺.'},
+      {n:0,  sets:['ℕ','ℤ','ℚ₀⁺','ℤ₀⁺'],  desc:'zero pertence a ℕ, ℤ, ℚ₀⁺ e ℤ₀⁺, mas NÃO a ℚ⁺ nem ℤ⁺.'},
       {n:1,  sets:['ℕ','ℤ','ℚ⁺','ℤ₀⁺','ℚ₀⁺'],  desc:'inteiro positivo e natural.'},
-      {n:-3, sets:['ℤ⁻','ℤ','ℚ⁻','ℚ'],         desc:'inteiro negativo — pertence a ℤ⁻ e ℚ⁻.'},
+      {n:-3, sets:['ℤ⁻','ℤ','ℚ⁻','ℚ'],         desc:'inteiro negativo pertence a ℤ⁻ e ℚ⁻.'},
       {n:5,  sets:['ℕ','ℤ','ℚ⁺','ℤ₀⁺','ℚ₀⁺'],  desc:'inteiro positivo e natural.'},
       {n:-7, sets:['ℤ⁻','ℤ','ℚ⁻','ℚ'],         desc:'inteiro negativo.'},
       {n:12, sets:['ℕ','ℤ','ℚ⁺','ℤ₀⁺','ℚ₀⁺'],  desc:'inteiro positivo e natural.'},
@@ -37,7 +37,7 @@ function buildEx2(tema,tipo,dif){
       expl:'O número '+v.n+' é '+v.desc+'\nPertence a: '+v.sets.join(', ')+'.\nA afirmação "'+v.n+' ∈ '+testSet+'" é '+(correct?'VERDADEIRA':'FALSA')+'.'};
   }
 
-  // TEMA 2 — Comparação de racionais
+  // TEMA 2 Comparação de racionais
   if(tema==='2'){
     var variant=rnd2(0,3);
     if(variant===0){
@@ -58,7 +58,14 @@ function buildEx2(tema,tipo,dif){
         expl:'Reduz ao mesmo denominador (mmc='+lcm+').\n'+fmtFrac(f1[0],f1[1])+' = '+fmtFrac(f1[0]*(lcm/f1[1]),lcm)+' e '+fmtFrac(f2[0],f2[1])+' = '+fmtFrac(f2[0]*(lcm/f2[1]),lcm)+'.\n'+fmtFrac(f1[0],f1[1])+' '+(v1<v2?'<':'>')+' '+fmtFrac(f2[0],f2[1])+' → afirmação '+(v1<v2?'VERDADEIRA':'FALSA')+'.'};
     }
     if(variant===1){
-      var fs=[randFracNZ(),randFracNZ(),randFracNZ()];
+      // garante 3 frações com valores DISTINTOS (evita "−1 < −1 < −1")
+      var fs=[],_vals={},_guard=0;
+      while(fs.length<3 && _guard<50){
+        var _f=randFracNZ(), _v=(_f[0]/_f[1]).toFixed(4);
+        if(!_vals[_v]){_vals[_v]=1;fs.push(_f);}
+        _guard++;
+      }
+      while(fs.length<3){fs.push([fs.length+1,1]);} // fallback defensivo
       var sorted=fs.slice().sort(function(a,b){return a[0]/a[1]-b[0]/b[1];});
       var correctStr=sorted.map(function(f){return fmtFrac(f[0],f[1]);}).join(' < ');
       var opts2=shuffle2([
@@ -89,83 +96,122 @@ function buildEx2(tema,tipo,dif){
       expl:fmtFrac(g1[0],g1[1])+' = '+gv1.toFixed(3)+' e '+fmtFrac(g2[0],g2[1])+' = '+gv2.toFixed(3)+'.\n'+fmtFrac(g1[0],g1[1])+' '+(gv1>gv2?'>':'<')+' '+fmtFrac(g2[0],g2[1])+' → afirmação '+(gv1>gv2?'VERDADEIRA':'FALSA')+'.'};
   }
 
-  // TEMA 3 — Adição e subtração de racionais
+  // TEMA 3 Adição e subtração de racionais
   if(tema==='3'){
-    // dificil: números mistos (número inteiro + fração)
-    if(hard && Math.random()<0.5){
-      var t3mi1=rnd2(1,3), t3mn1=rnd2(1,4), t3md1=rnd2(2,6);
-      var t3mi2=rnd2(1,3), t3mn2=rnd2(1,4), t3md2=rnd2(2,6);
-      // Convert to improper fractions: (int*den + num)/den
-      var t3ip=t3mi1*t3md1+t3mn1, t3iq=t3md1;
-      var t3jp=t3mi2*t3md2+t3mn2, t3jq=t3md2;
-      var t3lcmM=t3iq*t3jq/gcd2(t3iq,t3jq);
-      var t3rp=t3ip*(t3lcmM/t3iq)+t3jp*(t3lcmM/t3jq);
-      var t3rr=reduceFrac(t3rp,t3lcmM);
-      var t3enun=t3mi1+' '+fmtFracHTML(t3mn1,t3md1)+' + '+t3mi2+' '+fmtFracHTML(t3mn2,t3md2)+' = ?';
-      if(tipo==='fill'||tipo==='fill_frac'){
-        return{tema:'Tema 3',tipo:'fill_frac',
-          enun:'Calcula (números mistos): '+t3enun+'<br><small style="color:var(--ink4)">Escreve como p/q ou inteiro</small>',
+    // FÁCIL: frações com mesmo denominador OU simplificação/frações equivalentes
+    if(easy){
+      var t3ev=rnd2(0,2);
+      if(t3ev===0){
+        // soma com mesmo denominador
+        var t3eq=rnd2(2,8);
+        var t3ep1=rndNZ2(1,t3eq-1), t3ep2=rndNZ2(1,t3eq-1);
+        var t3er=reduceFrac(t3ep1+t3ep2,t3eq);
+        if(tipo==='fill'||tipo==='fill_frac'){
+          return{tema:'Tema 3',tipo:'fill_frac',
+            enun:'Calcula: '+fmtFracHTML(t3ep1,t3eq)+' + '+fmtFracHTML(t3ep2,t3eq)+' = ?<br><small style="color:var(--ink4)">Escreve como p/q ou inteiro</small>',
+            resposta:fmtFrac(t3er[0],t3er[1]),
+            expl:'Mesmo denominador: soma apenas os numeradores.\n'+t3ep1+' + '+t3ep2+' = '+(t3ep1+t3ep2)+'.\nResultado: '+fmtFrac(t3ep1+t3ep2,t3eq)+' = '+fmtFrac(t3er[0],t3er[1])+'.'};
+        }
+        return{tema:'Tema 3',tipo:'mc',
+          enun:'Calcula: '+fmtFracHTML(t3ep1,t3eq)+' + '+fmtFracHTML(t3ep2,t3eq)+' = ?',
+          opcoes:shuffle2([fmtFrac(t3er[0],t3er[1]),fmtFrac(t3ep1+t3ep2+1,t3eq),fmtFrac(t3ep1*t3ep2,t3eq),fmtFrac(t3ep1+t3ep2,t3eq*2)]),
+          resposta:fmtFrac(t3er[0],t3er[1]),
+          expl:'Mesmo denominador: '+t3ep1+' + '+t3ep2+' = '+(t3ep1+t3ep2)+'.\nResultado: '+fmtFrac(t3ep1+t3ep2,t3eq)+' = '+fmtFrac(t3er[0],t3er[1])+'.'};
+      }
+      if(t3ev===1){
+        // subtração com mesmo denominador
+        var t3sq=rnd2(3,8);
+        var t3sa=rnd2(2,t3sq-1), t3sb=rnd2(1,t3sa-1);
+        var t3sr=reduceFrac(t3sa-t3sb,t3sq);
+        if(tipo==='fill'||tipo==='fill_frac'){
+          return{tema:'Tema 3',tipo:'fill_frac',
+            enun:'Calcula: '+fmtFracHTML(t3sa,t3sq)+' − '+fmtFracHTML(t3sb,t3sq)+' = ?<br><small style="color:var(--ink4)">Escreve como p/q ou inteiro</small>',
+            resposta:fmtFrac(t3sr[0],t3sr[1]),
+            expl:'Mesmo denominador: subtrai apenas os numeradores.\n'+t3sa+' − '+t3sb+' = '+(t3sa-t3sb)+'.\nResultado: '+fmtFrac(t3sa-t3sb,t3sq)+' = '+fmtFrac(t3sr[0],t3sr[1])+'.'};
+        }
+        return{tema:'Tema 3',tipo:'mc',
+          enun:'Calcula: '+fmtFracHTML(t3sa,t3sq)+' − '+fmtFracHTML(t3sb,t3sq)+' = ?',
+          opcoes:shuffle2([fmtFrac(t3sr[0],t3sr[1]),fmtFrac(t3sa-t3sb-1,t3sq),fmtFrac(t3sa+t3sb,t3sq),fmtFrac(t3sa*t3sb,t3sq)]),
+          resposta:fmtFrac(t3sr[0],t3sr[1]),
+          expl:'Mesmo denominador: '+t3sa+' − '+t3sb+' = '+(t3sa-t3sb)+'.\nResultado: '+fmtFrac(t3sa-t3sb,t3sq)+' = '+fmtFrac(t3sr[0],t3sr[1])+'.'};
+      }
+      // simplifica fração
+      var t3gg=rnd2(2,5),t3gn=rnd2(1,4)*t3gg,t3gd=rnd2(1,4)*t3gg;
+      var t3gsR=reduceFrac(t3gn,t3gd);
+      return{tema:'Tema 3',tipo:'mc',
+        enun:'Simplifica a fração: '+fmtFracHTML(t3gn,t3gd)+' = ?',
+        opcoes:shuffle2([fmtFrac(t3gsR[0],t3gsR[1]),fmtFrac(t3gn-1,t3gd),fmtFrac(t3gn,t3gd-1),fmtFrac(t3gn/t3gg+1,t3gd/t3gg)]),
+        resposta:fmtFrac(t3gsR[0],t3gsR[1]),
+        expl:'MDC('+t3gn+','+t3gd+') = '+t3gg+'.\nDivide numerador e denominador por '+t3gg+'.\nResultado: '+fmtFrac(t3gsR[0],t3gsR[1])+'.'};
+    }
+    // DIFÍCIL: números mistos OU expressão com 3 frações de denominadores diferentes
+    if(hard){
+      var t3hv=rnd2(0,1);
+      if(t3hv===0){
+        // números mistos
+        var t3mi1=rnd2(1,3), t3mn1=rnd2(1,4), t3md1=rnd2(2,6);
+        var t3mi2=rnd2(1,3), t3mn2=rnd2(1,4), t3md2=rnd2(2,6);
+        var t3ip=t3mi1*t3md1+t3mn1, t3iq=t3md1;
+        var t3jp=t3mi2*t3md2+t3mn2, t3jq=t3md2;
+        var t3lcmM=t3iq*t3jq/gcd2(t3iq,t3jq);
+        var t3op=rnd2(0,1);
+        var t3rp=(t3op===0)?(t3ip*(t3lcmM/t3iq)+t3jp*(t3lcmM/t3jq)):(t3ip*(t3lcmM/t3iq)-t3jp*(t3lcmM/t3jq));
+        var t3rr=reduceFrac(t3rp,t3lcmM);
+        var t3opStr=(t3op===0?'+':'−');
+        var t3enun=t3mi1+' '+fmtFracHTML(t3mn1,t3md1)+' '+t3opStr+' '+t3mi2+' '+fmtFracHTML(t3mn2,t3md2)+' = ?';
+        if(tipo==='fill'||tipo==='fill_frac'){
+          return{tema:'Tema 3',tipo:'fill_frac',
+            enun:'Calcula (números mistos): '+t3enun+'<br><small style="color:var(--ink4)">Escreve como p/q ou inteiro</small>',
+            resposta:fmtFrac(t3rr[0],t3rr[1]),
+            expl:'Converte para frações impróprias:\n'+t3mi1+' '+fmtFrac(t3mn1,t3md1)+' = '+fmtFrac(t3ip,t3iq)+'\n'+t3mi2+' '+fmtFrac(t3mn2,t3md2)+' = '+fmtFrac(t3jp,t3jq)+'\nmmc('+t3iq+','+t3jq+') = '+t3lcmM+'.\nResultado: '+fmtFrac(t3rr[0],t3rr[1])+'.'};
+        }
+        return{tema:'Tema 3',tipo:'mc',
+          enun:'Calcula (números mistos): '+t3enun,
+          opcoes:shuffle2([fmtFrac(t3rr[0],t3rr[1]),fmtFrac(t3rr[0]+1,t3rr[1]),fmtFrac(t3rr[0]-1,t3rr[1]),fmtFrac(t3mi1+t3mi2,1)]),
           resposta:fmtFrac(t3rr[0],t3rr[1]),
-          expl:'Converte para frações impróprias:\n'+t3mi1+' '+fmtFrac(t3mn1,t3md1)+' = '+fmtFrac(t3ip,t3iq)+'\n'+t3mi2+' '+fmtFrac(t3mn2,t3md2)+' = '+fmtFrac(t3jp,t3jq)+'\nReduz ao mmc ('+t3lcmM+') e soma: '+fmtFrac(t3rr[0],t3rr[1])+'.'};
+          expl:'Converte para frações impróprias e '+t3opStr+' com mmc('+t3iq+','+t3jq+') = '+t3lcmM+'.\nResultado: '+fmtFrac(t3rr[0],t3rr[1])+'.'};
       }
-      var t3mw1=fmtFrac(t3rr[0]+1,t3rr[1]),t3mw2=fmtFrac(t3rr[0]-1,t3rr[1]),t3mw3=fmtFrac(t3mi1+t3mi2,1);
+      // expressão com 3 frações de denominadores diferentes
+      var t3f1=randFracNZ(), t3f2=randFracNZ(), t3f3=randFracNZ();
+      var t3l12=t3f1[1]*t3f2[1]/gcd2(t3f1[1],t3f2[1]);
+      var t3l123=t3l12*t3f3[1]/gcd2(t3l12,t3f3[1]);
+      var t3sumP=t3f1[0]*(t3l123/t3f1[1])+t3f2[0]*(t3l123/t3f2[1])+t3f3[0]*(t3l123/t3f3[1]);
+      var t3rr3=reduceFrac(t3sumP,t3l123);
+      if(tipo==='fill'||tipo==='fill_frac'){
+        return{tema:'Tema 3',tipo:'fill_frac',
+          enun:'Calcula: '+fmtFracHTML(t3f1[0],t3f1[1])+' + '+fmtFracHTML(t3f2[0],t3f2[1])+' + '+fmtFracHTML(t3f3[0],t3f3[1])+' = ?<br><small style="color:var(--ink4)">Escreve como p/q ou inteiro</small>',
+          resposta:fmtFrac(t3rr3[0],t3rr3[1]),
+          expl:'mmc('+t3f1[1]+','+t3f2[1]+','+t3f3[1]+') = '+t3l123+'.\nConverte todas as frações e soma os numeradores.\nResultado: '+fmtFrac(t3rr3[0],t3rr3[1])+'.'};
+      }
       return{tema:'Tema 3',tipo:'mc',
-        enun:'Calcula (números mistos): '+t3enun,
-        opcoes:shuffle2([fmtFrac(t3rr[0],t3rr[1]),t3mw1,t3mw2,t3mw3]),resposta:fmtFrac(t3rr[0],t3rr[1]),
-        expl:'Converte para frações impróprias e soma com mmc('+t3iq+','+t3jq+') = '+t3lcmM+'.\nResultado: '+fmtFrac(t3rr[0],t3rr[1])+'.'};
+        enun:'Calcula: '+fmtFracHTML(t3f1[0],t3f1[1])+' + '+fmtFracHTML(t3f2[0],t3f2[1])+' + '+fmtFracHTML(t3f3[0],t3f3[1])+' = ?',
+        opcoes:shuffle2([fmtFrac(t3rr3[0],t3rr3[1]),fmtFrac(t3rr3[0]+1,t3rr3[1]),fmtFrac(t3sumP+1,t3l123),fmtFrac(t3f1[0]+t3f2[0]+t3f3[0],t3f1[1]+t3f2[1]+t3f3[1])]),
+        resposta:fmtFrac(t3rr3[0],t3rr3[1]),
+        expl:'mmc('+t3f1[1]+','+t3f2[1]+','+t3f3[1]+') = '+t3l123+'.\nResultado: '+fmtFrac(t3rr3[0],t3rr3[1])+'.'};
     }
+    // MÉDIO: denominadores diferentes, duas frações (com mmc)
     var t3a=randFracNZ(),t3b=randFracNZ();
+    // garantir denominadores diferentes
+    while(t3a[1]===t3b[1]){t3b=randFracNZ();}
     var t3lcm=t3a[1]*t3b[1]/gcd2(t3a[1],t3b[1]);
-    var t3v=rnd2(0,3);
-    if(t3v===0){
-      var rp=(t3a[0]*(t3lcm/t3a[1]))+(t3b[0]*(t3lcm/t3b[1]));
-      var res=reduceFrac(rp,t3lcm);
-      if(tipo==='fill'||tipo==='fill_frac'){
-        return{tema:'Tema 3',tipo:'fill_frac',
-          enun:'Calcula: '+fmtFracHTML(t3a[0],t3a[1])+' + ('+fmtFracHTML(t3b[0],t3b[1])+') = ?<br><small style="color:var(--ink4)">Escreve como p/q (ex: 3/4) ou inteiro</small>',
-          resposta:fmtFrac(res[0],res[1]),
-          expl:'Reduz ao mesmo denominador: mmc('+t3a[1]+','+t3b[1]+') = '+t3lcm+'.\n'+fmtFrac(t3a[0],t3a[1])+' = '+fmtFrac(t3a[0]*(t3lcm/t3a[1]),t3lcm)+', '+fmtFrac(t3b[0],t3b[1])+' = '+fmtFrac(t3b[0]*(t3lcm/t3b[1]),t3lcm)+'.\n'+fmtFrac(t3a[0]*(t3lcm/t3a[1]),t3lcm)+' + ('+fmtFrac(t3b[0]*(t3lcm/t3b[1]),t3lcm)+') = '+fmtFrac(rp,t3lcm)+' = '+fmtFrac(res[0],res[1])+'.'};
-      }
-      var w1=fmtFrac(res[0]+1,res[1]),w2=fmtFrac(res[0]-1,res[1]),w3=fmtFrac(t3a[0]+t3b[0],t3a[1]+t3b[1]);
-      return{tema:'Tema 3',tipo:'mc',
-        enun:'Calcula: '+fmtFracHTML(t3a[0],t3a[1])+' + ('+fmtFracHTML(t3b[0],t3b[1])+') = ?',
-        opcoes:shuffle2([fmtFrac(res[0],res[1]),w1,w2,w3]),resposta:fmtFrac(res[0],res[1]),
-        expl:'mmc('+t3a[1]+','+t3b[1]+') = '+t3lcm+'.\nSoma dos numeradores: '+(t3a[0]*(t3lcm/t3a[1]))+' + '+(t3b[0]*(t3lcm/t3b[1]))+' = '+rp+'.\nResultado simplificado: '+fmtFrac(res[0],res[1])+'.'};
+    var t3op2=rnd2(0,1);
+    var t3rp2=(t3op2===0)?(t3a[0]*(t3lcm/t3a[1]))+(t3b[0]*(t3lcm/t3b[1])):(t3a[0]*(t3lcm/t3a[1]))-(t3b[0]*(t3lcm/t3b[1]));
+    var t3res2=reduceFrac(t3rp2,t3lcm);
+    var t3opStr2=(t3op2===0?'+':'−');
+    if(tipo==='fill'||tipo==='fill_frac'){
+      return{tema:'Tema 3',tipo:'fill_frac',
+        enun:'Calcula: '+fmtFracHTML(t3a[0],t3a[1])+' '+t3opStr2+' ('+fmtFracHTML(t3b[0],t3b[1])+') = ?<br><small style="color:var(--ink4)">Escreve como p/q ou inteiro</small>',
+        resposta:fmtFrac(t3res2[0],t3res2[1]),
+        expl:'mmc('+t3a[1]+','+t3b[1]+') = '+t3lcm+'.\n'+fmtFrac(t3a[0],t3a[1])+' = '+fmtFrac(t3a[0]*(t3lcm/t3a[1]),t3lcm)+', '+fmtFrac(t3b[0],t3b[1])+' = '+fmtFrac(t3b[0]*(t3lcm/t3b[1]),t3lcm)+'.\nResultado: '+fmtFrac(t3res2[0],t3res2[1])+'.'};
     }
-    if(t3v===1){
-      var rp2=(t3a[0]*(t3lcm/t3a[1]))-(t3b[0]*(t3lcm/t3b[1]));
-      var res2=reduceFrac(rp2,t3lcm);
-      if(tipo==='fill'||tipo==='fill_frac'){
-        return{tema:'Tema 3',tipo:'fill_frac',
-          enun:'Calcula: '+fmtFracHTML(t3a[0],t3a[1])+' − ('+fmtFracHTML(t3b[0],t3b[1])+') = ?<br><small style="color:var(--ink4)">Escreve como p/q ou inteiro</small>',
-          resposta:fmtFrac(res2[0],res2[1]),
-          expl:'mmc('+t3a[1]+','+t3b[1]+') = '+t3lcm+'.\nSubtração dos numeradores: '+(t3a[0]*(t3lcm/t3a[1]))+' − '+(t3b[0]*(t3lcm/t3b[1]))+' = '+rp2+'.\nResultado: '+fmtFrac(res2[0],res2[1])+'.'};
-      }
-      var sw1=fmtFrac(res2[0]+1,res2[1]),sw2=fmtFrac(res2[0]-1,res2[1]),sw3=fmtFrac(t3a[0]-t3b[0],t3a[1]);
-      return{tema:'Tema 3',tipo:'mc',
-        enun:'Calcula: '+fmtFracHTML(t3a[0],t3a[1])+' − ('+fmtFracHTML(t3b[0],t3b[1])+') = ?',
-        opcoes:shuffle2([fmtFrac(res2[0],res2[1]),sw1,sw2,sw3]),resposta:fmtFrac(res2[0],res2[1]),
-        expl:'mmc('+t3a[1]+','+t3b[1]+') = '+t3lcm+'.\n'+fmtFrac(t3a[0]*(t3lcm/t3a[1]),t3lcm)+' − '+fmtFrac(t3b[0]*(t3lcm/t3b[1]),t3lcm)+' = '+fmtFrac(rp2,t3lcm)+' = '+fmtFrac(res2[0],res2[1])+'.'};
-    }
-    if(t3v===2){
-      var g3=rnd2(2,6),num2=rnd2(1,5)*g3,den2=rnd2(1,5)*g3;
-      var sR=reduceFrac(num2,den2);
-      return{tema:'Tema 3',tipo:'mc',
-        enun:'Simplifica a fração: '+fmtFracHTML(num2,den2)+' = ?',
-        opcoes:shuffle2([fmtFrac(sR[0],sR[1]),fmtFrac(num2-1,den2),fmtFrac(num2,den2-1),fmtFrac(num2/g3+1,den2/g3)]),resposta:fmtFrac(sR[0],sR[1]),
-        expl:'Encontra o MDC('+num2+','+den2+') = '+g3+'.\nDivide numerador e denominador por '+g3+'.\n'+num2+'÷'+g3+' = '+sR[0]+', '+den2+'÷'+g3+' = '+sR[1]+'.\nFração irredutível: '+fmtFrac(sR[0],sR[1])+'.'};
-    }
-    var q3=dens[rnd2(0,dens.length-1)],p3=rnd2(1,q3-1);
-    var mult=rnd2(2,4);
-    var eqcor=fmtFrac(p3*mult,q3*mult);
     return{tema:'Tema 3',tipo:'mc',
-      enun:'Qual destas frações é equivalente a '+fmtFracHTML(p3,q3)+'?',
-      opcoes:shuffle2([eqcor,fmtFrac(p3*mult+1,q3*mult),fmtFrac(p3+1,q3*mult),fmtFrac(p3*mult,q3*mult+1)]),
-      resposta:eqcor,
-      expl:'Multiplica numerador e denominador pelo mesmo número.\n'+fmtFrac(p3,q3)+' = '+fmtFrac(p3,q3)+' × '+fmtFrac(mult,mult)+' = '+fmtFrac(p3*mult,q3*mult)+'.\nPortanto '+eqcor+' é equivalente a '+fmtFrac(p3,q3)+'.'};
+      enun:'Calcula: '+fmtFracHTML(t3a[0],t3a[1])+' '+t3opStr2+' ('+fmtFracHTML(t3b[0],t3b[1])+') = ?',
+      opcoes:shuffle2([fmtFrac(t3res2[0],t3res2[1]),fmtFrac(t3res2[0]+1,t3res2[1]),fmtFrac(t3res2[0]-1,t3res2[1]),fmtFrac(t3a[0]+t3b[0],t3a[1]+t3b[1])]),
+      resposta:fmtFrac(t3res2[0],t3res2[1]),
+      expl:'mmc('+t3a[1]+','+t3b[1]+') = '+t3lcm+'.\nSoma os numeradores após converter.\nResultado: '+fmtFrac(t3res2[0],t3res2[1])+'.'};
   }
 
-  // TEMA 4 — Multiplicação e Divisão de Racionais
+  // TEMA 4 Multiplicação e Divisão de Racionais
   if(tema==='4'){
     var t4a=randFracNZ(), t4b=randFracNZ();
     var t4v=rnd2(0,2);
@@ -220,96 +266,198 @@ function buildEx2(tema,tipo,dif){
       expl:'Divisão = multiplicar pelo inverso: ÷'+fmtFrac(t4dc[0],t4dc[1])+' = ×'+fmtFrac(t4dc[1],t4dc[0])+'.\nResultado: '+fmtFrac(t4dr[0],t4dr[1])+'.'};
   }
 
-  // TEMA 5 — Percentagens
+  // TEMA 5 Percentagens
   if(tema==='5'){
-    var pcts=easy?[10,20,25,50,75]:[5,10,12,15,20,25,30,40,50,60,75,80];
-    var p5=pcts[rnd2(0,pcts.length-1)];
-    var bases=easy?[20,40,50,60,80,100,120,200]:[25,35,55,65,75,120,250,350,480];
-    var base5=bases[rnd2(0,bases.length-1)];
-    var res5=base5*p5/100;
-    var v5=rnd2(0,3);
-    if(v5===0){
-      if(tipo==='mc'){
-        var pw=shuffle2([res5+base5*0.1,res5-base5*0.1,res5*2,base5-res5].filter(function(w){return w!==res5&&w>0;})).slice(0,3);
-        return{tema:'Tema 5',tipo:'mc',
-          enun:'Calcula: '+p5+'% de '+base5+' = ?',
-          opcoes:shuffle2([res5].concat(pw)),resposta:res5,
-          expl:p5+'% significa '+p5+' por cada 100.\n'+p5+'% de '+base5+' = '+fmtFrac(p5,100)+' × '+base5+' = '+p5*base5/100+' = '+res5+'.'};
+    // FÁCIL: calcular p% de N (percentagens simples: 10, 25, 50)
+    if(easy){
+      var p5e=[10,25,50][rnd2(0,2)];
+      var b5e=[20,40,60,80,100,120,200][rnd2(0,6)];
+      var r5e=b5e*p5e/100;
+      var t5ev=rnd2(0,1);
+      if(t5ev===0){
+        if(tipo==='mc'){
+          var p5ew=shuffle2([r5e+b5e*0.1,r5e*2,b5e-r5e].filter(function(w){return w!==r5e&&w>0;})).slice(0,3);
+          return{tema:'Tema 5',tipo:'mc',
+            enun:'Calcula: '+p5e+'% de '+b5e+' = ?',
+            opcoes:shuffle2([r5e].concat(p5ew)),resposta:r5e,
+            expl:p5e+'% de '+b5e+' = '+p5e+'/100 × '+b5e+' = '+r5e+'.'};
+        }
+        return{tema:'Tema 5',tipo:'fill',
+          enun:'Calcula: '+p5e+'% de '+b5e+' = ?',resposta:r5e,
+          expl:p5e+'% de '+b5e+' = '+p5e+'/100 × '+b5e+' = '+r5e+'.'};
       }
-      return{tema:'Tema 5',tipo:'fill',
-        enun:'Calcula: '+p5+'% de '+base5+' = ?',resposta:res5,
-        expl:p5+'% de '+base5+' = '+p5+'/100 × '+base5+' = '+p5*base5/100+' = '+res5+'.'};
-    }
-    if(v5===1){
-      var popts=shuffle2([p5+5,p5-5,p5*2].filter(function(v){return v>0&&v<=100&&v!==p5;})).slice(0,3);
+      // determinar a percentagem dado o valor e o total
+      var p5eopts=shuffle2([p5e+10,p5e-5,p5e*2].filter(function(w){return w>0&&w<=100&&w!==p5e;})).slice(0,3);
       return{tema:'Tema 5',tipo:'mc',
-        enun:res5+' é __% de '+base5+'?',
-        opcoes:shuffle2([p5].concat(popts)),resposta:p5,
-        expl:'Para encontrar a percentagem: ('+res5+' ÷ '+base5+') × 100.\n'+res5+' ÷ '+base5+' = '+(res5/base5).toFixed(4)+'.\n× 100 = '+p5+'%.'};
+        enun:r5e+' é __% de '+b5e+'?',
+        opcoes:shuffle2([p5e].concat(p5eopts)),resposta:p5e,
+        expl:'('+r5e+' ÷ '+b5e+') × 100 = '+(r5e/b5e)+' × 100 = '+p5e+'%.'};
     }
-    if(v5===2){
-      var topts=shuffle2([base5+20,base5-20,base5*2].filter(function(v){return v>0&&v!==base5;})).slice(0,3);
+    // DIFÍCIL: variação percentual OU desconto composto OU encontrar valor original
+    if(hard){
+      var t5hv=rnd2(0,2);
+      if(t5hv===0){
+        // variação percentual (calcular % de aumento ou desconto)
+        var vi5=rnd2(5,20)*10;
+        var vf5=vi5+rnd2(1,4)*10;
+        var varPct=Math.round((vf5-vi5)/vi5*100);
+        var vopts5=shuffle2([varPct+5,varPct-5,varPct*2].filter(function(w){return w!==varPct;})).slice(0,3);
+        return{tema:'Tema 5',tipo:'mc',
+          enun:'Um artigo passou de '+vi5+' € para '+vf5+' €. Qual a percentagem de aumento?',
+          opcoes:shuffle2([varPct].concat(vopts5)),resposta:varPct,
+          expl:'% de variação = (Vf − Vi) / Vi × 100.\n= ('+vf5+' − '+vi5+') / '+vi5+' × 100.\n= '+( vf5-vi5)+' / '+vi5+' × 100 = '+varPct+'%.'};
+      }
+      if(t5hv===1){
+        // desconto composto (dois descontos sucessivos)
+        var b5h=rnd2(4,10)*50;
+        var d1=rnd2(1,3)*10, d2=rnd2(1,3)*5;
+        var ap1=b5h*(1-d1/100);
+        var fin5=Math.round(ap1*(1-d2/100)*100)/100;
+        var fin5w1=Math.round(b5h*(1-(d1+d2)/100)*100)/100;
+        return{tema:'Tema 5',tipo:'mc',
+          enun:'Um produto custa '+b5h+' €. Tem um desconto de '+d1+'% e depois mais '+d2+'%. Qual o preço final?',
+          opcoes:shuffle2([fin5,fin5w1,Math.round(b5h*(1-d1/100)*100)/100,b5h-d1-d2]),resposta:fin5,
+          expl:'1.º desconto: '+b5h+' × (1 − '+d1+'/100) = '+b5h+' × '+(1-d1/100)+' = '+ap1+' €.\n2.º desconto: '+ap1+' × (1 − '+d2+'/100) = '+fin5+' €.\nNota: '+d1+'%+'+d2+'% ≠ '+(d1+d2)+'% (descontos sucessivos não se somam).'};
+      }
+      // encontrar o valor original antes de aumento/desconto
+      var p5hd=rnd2(1,4)*10;
+      var b5hd=rnd2(4,10)*25;
+      var fin5hd=Math.round(b5hd*(1-p5hd/100));
+      var b5opts=shuffle2([b5hd+p5hd,b5hd-p5hd,fin5hd+p5hd].filter(function(w){return w!==b5hd;})).slice(0,3);
       return{tema:'Tema 5',tipo:'mc',
-        enun:p5+'% de um número é '+res5+'. Qual é esse número?',
-        opcoes:shuffle2([base5].concat(topts)),resposta:base5,
-        expl:'Se '+p5+'% de x = '+res5+', então:\nx = '+res5+' × 100 ÷ '+p5+' = '+res5*100+' ÷ '+p5+' = '+base5+'.'};
+        enun:'Após um desconto de '+p5hd+'%, um artigo custa '+fin5hd+' €. Qual era o preço original?',
+        opcoes:shuffle2([b5hd].concat(b5opts)),resposta:b5hd,
+        expl:'Preço final = Preço original × (1 − '+p5hd+'/100).\n'+fin5hd+' = Preço original × '+(1-p5hd/100)+'.\nPreço original = '+fin5hd+' ÷ '+(1-p5hd/100)+' = '+b5hd+' €.'};
     }
-    var items=['bilhete','produto','livro','computador','televisão'];
-    var item=items[rnd2(0,items.length-1)];
-    var discVal=base5*p5/100;
-    var finalP=base5-discVal;
-    var dopts=shuffle2([base5+discVal,discVal,base5].filter(function(v){return v!==finalP;})).slice(0,3);
+    // MÉDIO: desconto/aumento direto + encontrar valor original
+    var p5m=[5,10,15,20,25,30,40][rnd2(0,6)];
+    var b5m=rnd2(4,12)*25;
+    var t5mv=rnd2(0,2);
+    if(t5mv===0){
+      var disc5=Math.round(b5m*p5m/100);
+      var fin5m=b5m-disc5;
+      var items5=['bilhete','produto','livro','computador','televisão'];
+      var item5=items5[rnd2(0,items5.length-1)];
+      return{tema:'Tema 5',tipo:'mc',
+        enun:'Um '+item5+' custa '+b5m+' €. Tem um desconto de '+p5m+'%. Qual o preço final?',
+        opcoes:shuffle2([fin5m,b5m+disc5,disc5,b5m]),resposta:fin5m,
+        expl:p5m+'% de '+b5m+' = '+disc5+' €.\nPreço final: '+b5m+' − '+disc5+' = '+fin5m+' €.'};
+    }
+    if(t5mv===1){
+      // aumento percentual
+      var aum5=Math.round(b5m*p5m/100);
+      var fin5a=b5m+aum5;
+      return{tema:'Tema 5',tipo:'mc',
+        enun:'Um salário de '+b5m+' € aumenta '+p5m+'%. Qual o novo valor?',
+        opcoes:shuffle2([fin5a,b5m-aum5,aum5,b5m+p5m]),resposta:fin5a,
+        expl:p5m+'% de '+b5m+' = '+aum5+' €.\nNovo valor: '+b5m+' + '+aum5+' = '+fin5a+' €.'};
+    }
+    // encontrar o valor original
+    var r5m=Math.round(b5m*p5m/100);
+    var popts5=shuffle2([p5m+5,p5m-5,p5m*2].filter(function(w){return w>0&&w<=100&&w!==p5m;})).slice(0,3);
     return{tema:'Tema 5',tipo:'mc',
-      enun:'Um '+item+' custa '+base5+' €. Tem um desconto de '+p5+'%. Qual o preço final?',
-      opcoes:shuffle2([finalP].concat(dopts)),resposta:finalP,
-      expl:'Passo 1: calcula o desconto.\n'+p5+'% de '+base5+' = '+fmtFrac(p5,100)+' × '+base5+' = '+discVal+' €.\nPasso 2: subtrai ao preço original.\n'+base5+' − '+discVal+' = '+finalP+' €.'};
+      enun:r5m+' é __% de '+b5m+'?',
+      opcoes:shuffle2([p5m].concat(popts5)),resposta:p5m,
+      expl:'('+r5m+' ÷ '+b5m+') × 100 = '+(r5m/b5m).toFixed(2)+' × 100 = '+p5m+'%.'};
   }
 
-  // TEMA 7 — Potências
+  // TEMA 7 Potências
   if(tema==='7'){
-    var bases7=easy?[2,3,5,10]:[2,3,5,7,10];
-    var base7=bases7[rnd2(0,bases7.length-1)];
-    var v7=rnd2(0,4);
-    if(v7===0){
-      var exp1=rnd2(1,easy?4:6),exp2=rnd2(1,easy?3:5);
-      var rsum=exp1+exp2;
-      return{tema:'Tema 7',tipo:'mc',
-        enun:'Simplifica: '+base7+'^'+exp1+' × '+base7+'^'+exp2+' = '+base7+'^?',
-        opcoes:shuffle2([rsum,rsum+1,rsum-1,exp1*exp2]).slice(0,4),resposta:rsum,
-        expl:'Regra: mesma base → soma os expoentes.\n'+base7+'^'+exp1+' × '+base7+'^'+exp2+' = '+base7+'^('+exp1+'+'+exp2+') = '+base7+'^'+rsum+'.'};
+    var base7e=[2,3,5,10];
+    var base7m=[2,3,5,7,10];
+    // FÁCIL: calcular potência direta OU regra do produto (soma expoentes)
+    if(easy){
+      var v7e=rnd2(0,2);
+      var b7e=base7e[rnd2(0,base7e.length-1)];
+      if(v7e===0){
+        // calcular base^exp
+        var e7e=rnd2(2,3);
+        var val7e=Math.pow(b7e,e7e);
+        var vw7e=shuffle2([val7e+b7e,val7e-1,b7e*e7e].filter(function(w){return w!==val7e&&w>0;})).slice(0,3);
+        return{tema:'Tema 7',tipo:'mc',
+          enun:'Calcula: '+b7e+'^'+e7e+' = ?',
+          opcoes:shuffle2([val7e].concat(vw7e)),resposta:val7e,
+          expl:b7e+'^'+e7e+' = '+Array(e7e).join(b7e+' × ')+b7e+' = '+val7e+'.'};
+      }
+      if(v7e===1){
+        // produto: mesma base, soma expoentes
+        var e7a=rnd2(1,3),e7b=rnd2(1,3);
+        return{tema:'Tema 7',tipo:'mc',
+          enun:'Simplifica: '+b7e+'^'+e7a+' × '+b7e+'^'+e7b+' = '+b7e+'^?',
+          opcoes:shuffle2([e7a+e7b,e7a+e7b+1,e7a+e7b-1,e7a*e7b]).slice(0,4),resposta:e7a+e7b,
+          expl:'Mesma base → soma os expoentes.\n'+b7e+'^'+e7a+' × '+b7e+'^'+e7b+' = '+b7e+'^('+e7a+'+'+e7b+') = '+b7e+'^'+(e7a+e7b)+'.'};
+      }
+      // a^0 = 1
+      return{tema:'Tema 7',tipo:'vf',
+        enun:'V/F: <em>"'+b7e+'^0 = 1"</em>',
+        resposta:'V',
+        expl:'Regra: qualquer número (≠0) elevado a 0 é igual a 1.\n'+b7e+'^0 = 1. Verdadeiro.'};
     }
-    if(v7===1){
-      var e1=rnd2(2,easy?4:6),bigExp=e1+rnd2(1,3),rdif=bigExp-e1;
+    // DIFÍCIL: expoente negativo OU potência de potência OU expressão combinada
+    if(hard){
+      var v7h=rnd2(0,2);
+      var b7h=base7m[rnd2(0,base7m.length-1)];
+      if(v7h===0){
+        // expoente negativo: a^(-n) = 1/a^n
+        var eneg=rnd2(1,3);
+        var numerH=1, denomH=Math.pow(b7h,eneg);
+        var cor7h=fmtFrac(numerH,denomH);
+        return{tema:'Tema 7',tipo:'mc',
+          enun:'Calcula: '+b7h+'^(−'+eneg+') = ?',
+          opcoes:shuffle2([cor7h,fmtFrac(-numerH,denomH),String(Math.pow(b7h,eneg)),fmtFrac(numerH,denomH+1)]).slice(0,4),
+          resposta:cor7h,
+          expl:'Expoente negativo: a^(−n) = 1/a^n.\n'+b7h+'^(−'+eneg+') = 1/'+b7h+'^'+eneg+' = 1/'+denomH+' = '+cor7h+'.'};
+      }
+      if(v7h===1){
+        // potência de potência: (a^m)^n = a^(m×n)
+        var em=rnd2(2,4),en=rnd2(2,3);
+        var eprod=em*en;
+        return{tema:'Tema 7',tipo:'mc',
+          enun:'Simplifica: ('+b7h+'^'+em+')^'+en+' = '+b7h+'^?',
+          opcoes:shuffle2([eprod,em+en,eprod+1,em*en-1]).slice(0,4),resposta:eprod,
+          expl:'Regra: (a^m)^n = a^(m×n).\n('+b7h+'^'+em+')^'+en+' = '+b7h+'^('+em+'×'+en+') = '+b7h+'^'+eprod+'.'};
+      }
+      // expressão combinada: a^m × a^n ÷ a^p
+      var em2=rnd2(3,5),en2=rnd2(1,3),ep2=rnd2(1,2);
+      var eres=(em2+en2)-ep2;
       return{tema:'Tema 7',tipo:'mc',
-        enun:'Simplifica: '+base7+'^'+bigExp+' ÷ '+base7+'^'+e1+' = '+base7+'^?',
-        opcoes:shuffle2([rdif,rdif+1,rdif-1,bigExp+e1]).slice(0,4),resposta:rdif,
-        expl:'Regra: mesma base → subtrai os expoentes.\n'+base7+'^'+bigExp+' ÷ '+base7+'^'+e1+' = '+base7+'^('+bigExp+'−'+e1+') = '+base7+'^'+rdif+'.'};
+        enun:'Simplifica: '+b7h+'^'+em2+' × '+b7h+'^'+en2+' ÷ '+b7h+'^'+ep2+' = '+b7h+'^?',
+        opcoes:shuffle2([eres,eres+1,eres-1,em2+en2+ep2]).slice(0,4),resposta:eres,
+        expl:'Produto: '+em2+'+'+en2+' = '+(em2+en2)+'. Depois divide: '+(em2+en2)+'−'+ep2+' = '+eres+'.\n'+b7h+'^'+em2+' × '+b7h+'^'+en2+' ÷ '+b7h+'^'+ep2+' = '+b7h+'^'+eres+'.'};
     }
-    if(v7===2){
-      var fn=rnd2(1,4),fd=rnd2(2,5),fe=rnd2(2,3);
-      var fcor=Math.pow(fn,fe)+'/'+Math.pow(fd,fe);
+    // MÉDIO: quociente (subtrai expoentes) OU potência de fração OU produto+quociente
+    var v7m=rnd2(0,2);
+    var b7m=base7m[rnd2(0,base7m.length-1)];
+    if(v7m===0){
+      // quociente: mesma base, subtrai expoentes
+      var e7ma=rnd2(2,5),e7mb=rnd2(1,e7ma-1);
+      var rdif7=e7ma-e7mb;
       return{tema:'Tema 7',tipo:'mc',
-        enun:'Calcula: ('+fmtFracHTML(fn,fd)+')^'+fe+' = ?',
-        opcoes:shuffle2([fcor,fn*fe+'/'+fd*fe,Math.pow(fn,fe)+'/'+fd,fn+'/'+Math.pow(fd,fe)]).slice(0,4),
-        resposta:fcor,
-        expl:'Regra: (a/b)^n = a^n / b^n.\n('+fn+'/'+fd+')^'+fe+' = '+fn+'^'+fe+' / '+fd+'^'+fe+' = '+Math.pow(fn,fe)+' / '+Math.pow(fd,fe)+' = '+fcor+'.'};
+        enun:'Simplifica: '+b7m+'^'+e7ma+' ÷ '+b7m+'^'+e7mb+' = '+b7m+'^?',
+        opcoes:shuffle2([rdif7,rdif7+1,rdif7-1,e7ma+e7mb]).slice(0,4),resposta:rdif7,
+        expl:'Mesma base → subtrai os expoentes.\n'+b7m+'^'+e7ma+' ÷ '+b7m+'^'+e7mb+' = '+b7m+'^('+e7ma+'−'+e7mb+') = '+b7m+'^'+rdif7+'.'};
     }
-    if(v7===3){
-      var exp3=rnd2(2,easy?3:4);
-      var val7=Math.pow(base7,exp3);
-      var vw=shuffle2([val7+base7,val7-base7,val7*base7,base7*exp3].filter(function(w){return w!==val7;})).slice(0,3);
+    if(v7m===1){
+      // potência de fração
+      var fn7=rnd2(1,4),fd7=rnd2(2,5),fe7=rnd2(2,3);
+      var fcor7=Math.pow(fn7,fe7)+'/'+Math.pow(fd7,fe7);
       return{tema:'Tema 7',tipo:'mc',
-        enun:'Calcula: '+base7+'^'+exp3+' = ?',
-        opcoes:shuffle2([val7].concat(vw)),resposta:val7,
-        expl:base7+'^'+exp3+' significa '+Array.from({length:exp3},function(){return base7;}).join(' × ')+'.\n= '+val7+'.'};
+        enun:'Calcula: ('+fmtFracHTML(fn7,fd7)+')^'+fe7+' = ?',
+        opcoes:shuffle2([fcor7,fn7*fe7+'/'+fd7*fe7,Math.pow(fn7,fe7)+'/'+fd7,fn7+'/'+Math.pow(fd7,fe7)]).slice(0,4),
+        resposta:fcor7,
+        expl:'(a/b)^n = a^n/b^n.\n('+fn7+'/'+fd7+')^'+fe7+' = '+fn7+'^'+fe7+'/'+fd7+'^'+fe7+' = '+Math.pow(fn7,fe7)+'/'+Math.pow(fd7,fe7)+' = '+fcor7+'.'};
     }
-    return{tema:'Tema 7',tipo:'vf',
-      enun:'V/F: <em>"Qualquer número (≠0) elevado a 0 é igual a 1: '+base7+'^0 = 1"</em>',
-      resposta:'V',
-      expl:'Afirmação verdadeira.\nRegra: a^0 = 1 para qualquer a ≠ 0.\n'+base7+'^0 = 1.\nJustificação: '+base7+'^n ÷ '+base7+'^n = '+base7+'^(n-n) = '+base7+'^0 = 1.'};
+    // produto de potências → calcula valor
+    var e7p=rnd2(1,3),e7q=rnd2(1,3);
+    var val7p=Math.pow(b7m,e7p+e7q);
+    var vw7p=shuffle2([Math.pow(b7m,e7p)*e7q,val7p+b7m,val7p-1].filter(function(w){return w!==val7p&&w>0;})).slice(0,3);
+    return{tema:'Tema 7',tipo:'mc',
+      enun:'Calcula: '+b7m+'^'+e7p+' × '+b7m+'^'+e7q+' = ?',
+      opcoes:shuffle2([val7p].concat(vw7p)),resposta:val7p,
+      expl:b7m+'^'+e7p+' × '+b7m+'^'+e7q+' = '+b7m+'^'+(e7p+e7q)+' = '+val7p+'.'};
   }
 
-  // TEMA 8 — Notação científica
+  // TEMA 8 Notação científica
   if(tema==='8'){
     var mantissas=easy?[1.5,2.3,4.5,1.8,3.7,2.0,5.1]:[1.23,2.56,3.14,4.87,6.02,9.1,7.5,1.08];
     var exps=easy?[3,4,5,6]:[2,3,4,5,6,7,8];
@@ -344,7 +492,7 @@ function buildEx2(tema,tipo,dif){
       expl:'Compara primeiro os expoentes.\n'+exp8+' '+(exp8>exp82?'>':exp8<exp82?'<':'=')+' '+exp82+(exp8===exp82?' → compara mantissas: '+mant+' '+(mant>mant2?'>':'<')+' '+mant2:'')+'.\nPortanto '+mant+'×10^'+exp8+' '+correctOp+' '+mant2+'×10^'+exp82+'.'};
   }
 
-  // TEMA 9 — Operações em notação científica
+  // TEMA 9 Operações em notação científica
   if(tema==='9'){
     var v9=rnd2(0,2);
     if(v9===0){
@@ -467,7 +615,7 @@ window.CAP_DATA[2] = {
   })()
 };
 
-// DELEGATION WRAPPERS — auto-generated + cap2-specific extras
+// DELEGATION WRAPPERS auto-generated + cap2-specific extras
 _capRegisterWrappers(2, {
   setTeste2Subtema: function(n,btn){capSetTesteSubtema(2,n,btn)},
   gerarTeste2: function(){capGerarTeste(2)},
@@ -489,7 +637,7 @@ var TRIANGULO_LINES=[
 ];
 var _trianguloRevealed=false;
 
-// SUBTEMA — PRÁTICA FOCADA (Cap2)
+// SUBTEMA PRÁTICA FOCADA (Cap2)
 var _cap2SubtemaTitulos = {
   '1:conjuntos':'Conjuntos ℕ, ℤ, ℚ', '1:arredondamento':'Arredondamento', '1:aprox':'Valores Aproximados',
   '2:comparar':'Comparar Frações', '2:ordenar':'Ordenar Racionais', '2:absoluto':'Valor Absoluto em ℚ',

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════
-// CAP1 DATA LOADER — carrega dados estáticos de cap1-data.json
+// CAP1 DATA LOADER - carrega dados estáticos de cap1-data.json
 // ══════════════════════════════════════════════════════════════
 // Uso: incluir este script ANTES de cap1.js na página.
 //   <script src="data/cap1-loader.js"></script>

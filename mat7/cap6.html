@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Exercícios interativos sobre Funções para o 7.º ano — proporcionalidade direta, gráficos e tabelas de valores.">
+<meta name="description" content="Exercícios interativos sobre Funções para o 7.º ano proporcionalidade direta, gráficos e tabelas de valores.">
 <meta name="theme-color" content="#516860">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta property="og:title" content="3ponto14 · Centro de Estudos">
-<meta property="og:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano — fichas, jogos, quizzes e preparação para exames.">
+<meta property="og:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano fichas, jogos, quizzes e preparação para exames.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_PT">
 <meta property="og:url" content="https://3ponto14.pt/mat7">
@@ -17,7 +17,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="3ponto14 · Centro de Estudos">
-<meta name="twitter:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano — fichas, jogos, quizzes e preparação para exames.">
+<meta name="twitter:description" content="Recursos interativos com exercícios práticos de Matemática 7.º ano fichas, jogos, quizzes e preparação para exames.">
 <meta name="twitter:image" content="https://3ponto14.pt/og-mat7.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23516860'/><text x='50' y='68' font-size='48' font-weight='900' text-anchor='middle' fill='white' font-family='serif'>eP</text></svg>">
 <title>Funções · Matemática 7.º Ano · 3ponto14</title>
@@ -62,34 +62,40 @@
     </div>
   </header>
 
-  <!-- Tabs (hidden — navigation is now via chapter nav bar + scroll) -->
-  <div class="tabs-wrap4 hidden" id="tabs6">
-    <button class="tab-btn active" onclick="showSection6('temas6',this)">Temas</button>
-    <button class="tab-btn" onclick="showSection6('teoria6',this)">Teoria</button>
-    <button class="tab-btn" onclick="showSection6('questoes6',this)">Exercícios</button>
-    <button class="tab-btn" onclick="showSection6('minitestes6',this)"><i class="ph ph-file-text"></i> Minitestes</button>
-    <button class="tab-btn" onclick="showSection6('teste6',this)">Teste</button>
-    <button class="tab-btn" onclick="showSection6('gerador6',this)">Gerador</button>
-    <button class="tab-btn" onclick="showSection6('jogos6',this)">Jogos</button>
-    <button class="tab-btn" onclick="showSection6('quiz-game6',this)">⚡ Quiz</button>
-    <button class="tab-btn" onclick="showSection6('flashcards6',this)">Flashcards</button>
-    <button class="tab-btn" onclick="showSection6('exame6',this)">Teste</button>
-    <button class="tab-btn" onclick="showSection6('progresso6',this)">Progresso</button>
-  </div>
-
+  <!-- Tabs (hidden navigation is now via chapter nav bar + scroll) -->
+  <nav class="tabs" id="tabs6">
+  <button class="tab-btn cap-group-btn active" data-group="aprender" onclick="showSection6('temas6', this)" data-secs="temas6,teoria6"><i class="ph ph-book-open-text"></i> Aprender</button>
+  <button class="tab-btn cap-group-btn" data-group="praticar" onclick="showSection6('questoes6', this)" data-secs="questoes6,minitestes6,gerador6"><i class="ph ph-pencil-simple"></i> Praticar</button>
+  <button class="tab-btn cap-group-btn" data-group="testar" onclick="showSection6('teste6', this)" data-secs="teste6,quiz-game6,flashcards6,exame6"><i class="ph ph-timer"></i> Testar</button>
+  <button class="tab-btn" onclick="showSection6('jogos6', this)"><i class="ph ph-game-controller"></i> Jogos</button>
+  <button class="tab-btn" onclick="showSection6('progresso6', this)"><i class="ph ph-chart-bar"></i> Progresso</button>
+</nav>
+<div class="cap-subnav" id="cap-subnav-6" style="display:none"></div>
   <div class="sections4">
 
   <!-- ══ TEMAS ══ -->
+
+<div class="teacher-strip" id="ts-6-resumo">
+  <button class="teacher-toggle" onclick="toggleTeacher(this)">
+    <span class="teacher-arrow">▸</span> Para o professor
+  </button>
+  <div class="teacher-content">
+    <div class="teacher-section">
+      <div class="teacher-section-title">Objetivos DGE (PMEB)</div>
+      <p>Definir função e representar graficamente; identificar proporcionalidade direta e função afim; interpretar gráficos em contexto; determinar imagem e pré-imagem.</p>
+    </div>
+    <div class="teacher-section">
+      <div class="teacher-section-title">Sequência pedagógica sugerida</div>
+      <p>1.º Conceito de função com exemplos reais (velocidade, temperatura) → 2.º Representação em tabela, gráfico e expressão algébrica → 3.º Proporcionalidade direta: gráfico, equação, constante → 4.º Função afim f(x) = ax + b traçar e interpretar → 5.º Interpretação de gráficos em contexto → 6.º Questões de exame com funções.</p>
+    </div>
+    <div class="teacher-criteria">Critérios de classificação: Identificação correta do tipo de função (1pt) · cálculo da constante ou declive (1pt) · traçado do gráfico (2pt) · interpretação em contexto (1pt).</div>
+  </div>
+</div>
   <div class="section4 active" id="sec-temas6">
     <div class="sec-header sec-header--compact">
       <h2><span class="num"><i class="ph ph-file-text"></i></span> Temas</h2>
     </div>
     <div class="topics-grid" id="cap6-topics-grid"><!-- Generated by cap6.js --></div>
-    <hr class="topics-sep">
-    <div class="topics-grid mt-2">
-      <div class="topic-tool" onclick="showSection6('gerador6',document.querySelector('#tabs6 .tab-btn:nth-child(6)'))"><span class="tt-icon"><i class="ph ph-dice-five"></i></span> Gerador</div>
-      <div class="topic-tool" onclick="showSection6('jogos6',document.querySelector('#tabs6 .tab-btn:nth-child(7)'))"><span class="tt-icon"><i class="ph ph-game-controller"></i></span> Jogos</div>
-      <div class="topic-tool" onclick="showSection6('flashcards6',document.querySelector('#tabs6 .tab-btn:nth-child(8)'))"><span class="tt-icon"><i class="ph ph-stack"></i></span> Flashcards</div>
     </div>
   </div>
 
@@ -97,13 +103,13 @@
   <div class="section4" id="sec-teoria6">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-book-open-text"></i></span> Teoria</h2>
-      <p>6 subtemas — do referencial cartesiano aos gráficos em contexto real</p>
+      <p>6 subtemas do referencial cartesiano aos gráficos em contexto real</p>
     </div>
     <div class="topic-tools">
-      <div class="topic-tool" onclick="showSection6('questoes6',document.querySelector('#tabs6 .tab-btn:nth-child(3)'))"><span class="tt-icon"><i class="ph ph-pencil-simple"></i></span> Questões-aula</div>
-      <div class="topic-tool" onclick="showSection6('gerador6',document.querySelector('#tabs6 .tab-btn:nth-child(6)'))"><span class="tt-icon"><i class="ph ph-dice-five"></i></span> Gerador</div>
-      <div class="topic-tool" onclick="showSection6('jogos6',document.querySelector('#tabs6 .tab-btn:nth-child(7)'))"><span class="tt-icon"><i class="ph ph-game-controller"></i></span> Jogos</div>
-      <div class="topic-tool" onclick="showSection6('flashcards6',document.querySelector('#tabs6 .tab-btn:nth-child(8)'))"><span class="tt-icon"><i class="ph ph-stack"></i></span> Flashcards</div>
+      <div class="topic-tool" onclick="showSection6('questoes6', null)"><span class="tt-icon"><i class="ph ph-pencil-simple"></i></span> Questões-aula</div>
+      <div class="topic-tool" onclick="showSection6('gerador6', null)"><span class="tt-icon"><i class="ph ph-dice-five"></i></span> Gerador</div>
+      <div class="topic-tool" onclick="showSection6('jogos6', null)"><span class="tt-icon"><i class="ph ph-game-controller"></i></span> Jogos</div>
+      <div class="topic-tool" onclick="showSection6('flashcards6', null)"><span class="tt-icon"><i class="ph ph-stack"></i></span> Flashcards</div>
     </div>
 
     <!-- SUBTEMA 1 -->
@@ -117,7 +123,7 @@
       <div class="formula">P = (x, y) &nbsp; → &nbsp; abcissa = x, &nbsp; ordenada = y</div>
       <div class="def-row"><span class="def-tag ex">Exemplo</span><div class="def-text">O ponto A(3, 2) está 3 unidades à direita da origem e 2 unidades acima. O ponto B(−1, 4) está 1 unidade à esquerda e 4 unidades acima. O ponto C(2, −3) está 2 à direita e 3 abaixo.</div></div>
       <div class="def-row"><span class="def-tag prop">Quadrantes</span><div class="def-text">Os eixos dividem o plano em 4 quadrantes: <strong>1.º Q</strong> (x&gt;0, y&gt;0), <strong>2.º Q</strong> (x&lt;0, y&gt;0), <strong>3.º Q</strong> (x&lt;0, y&lt;0), <strong>4.º Q</strong> (x&gt;0, y&lt;0).</div></div>
-      <div class="def-row"><span class="def-tag def">Definição</span><div class="def-text"><strong>Simétrico em relação ao eixo Ox:</strong> o ponto simétrico de (a, b) em relação a Ox é (a, −b) — mantém a abcissa, troca o sinal da ordenada.<br><strong>Simétrico em relação ao eixo Oy:</strong> o simétrico de (a, b) em relação a Oy é (−a, b).<br><strong>Simétrico em relação à origem:</strong> o simétrico de (a, b) em relação a O é (−a, −b).</div></div>
+      <div class="def-row"><span class="def-tag def">Definição</span><div class="def-text"><strong>Simétrico em relação ao eixo Ox:</strong> o ponto simétrico de (a, b) em relação a Ox é (a, −b) mantém a abcissa, troca o sinal da ordenada.<br><strong>Simétrico em relação ao eixo Oy:</strong> o simétrico de (a, b) em relação a Oy é (−a, b).<br><strong>Simétrico em relação à origem:</strong> o simétrico de (a, b) em relação a O é (−a, −b).</div></div>
       <div class="highlight-box green"><i class="ph ph-lightbulb"></i> Para representar um ponto: começa na origem, move-te horizontalmente x unidades (direita se +, esquerda se −), depois verticalmente y unidades (cima se +, baixo se −).</div>
     </div>
 
@@ -151,7 +157,7 @@
       <div class="subtema-title">Formas de Representar uma Função</div>
     </div>
     <div class="def-block">
-      <div class="def-row"><span class="def-tag prop">Formas</span><div class="def-text">Uma função pode ser representada de 4 formas:<br><strong>1. Por extensão:</strong> {(1,3),(2,5),(3,7)} — lista de pares.<br><strong>2. Por diagrama de setas:</strong> setas do domínio para o contradomínio.<br><strong>3. Por expressão analítica:</strong> y = 2x + 1.<br><strong>4. Por tabela de valores:</strong> tabela x/y.<br><strong>5. Graficamente:</strong> no referencial cartesiano.</div></div>
+      <div class="def-row"><span class="def-tag prop">Formas</span><div class="def-text">Uma função pode ser representada de 4 formas:<br><strong>1. Por extensão:</strong> {(1,3),(2,5),(3,7)} lista de pares.<br><strong>2. Por diagrama de setas:</strong> setas do domínio para o contradomínio.<br><strong>3. Por expressão analítica:</strong> y = 2x + 1.<br><strong>4. Por tabela de valores:</strong> tabela x/y.<br><strong>5. Graficamente:</strong> no referencial cartesiano.</div></div>
       <div class="def-row"><span class="def-tag ex">Exemplo</span><div class="def-text">A função "dobro mais um" pode ser escrita como f(x) = 2x + 1 (analítica), ou como tabela {x: 0,1,2,3 | y: 1,3,5,7}, ou como conjunto de pares {(0,1),(1,3),(2,5),(3,7)}.</div></div>
     </div>
 
@@ -187,7 +193,7 @@
         <span class="desafio-star">★</span>
         Zona de Desafio Avançado
       </h3>
-      <p class="desafio-sub">Para alunos que querem ir mais longe — preparação para provas de aferição e testes exigentes.</p>
+      <p class="desafio-sub">Para alunos que querem ir mais longe preparação para provas de aferição e testes exigentes.</p>
       <div class="def-block desafio-card">
         <div class="def-row"><span class="def-tag prop">Avançado</span><div class="def-text"><strong>Função afim:</strong> f(x) = mx + b. O m é a <strong>declive</strong> (taxa de variação) e b é a <strong>ordenada na origem</strong>. Se m &gt; 0 a função é crescente; se m &lt; 0 é decrescente; se m = 0 é constante.</div></div>
         <div class="def-row"><span class="def-tag prop">Avançado</span><div class="def-text"><strong>Interseção de duas retas:</strong> para encontrar o ponto onde y = m₁x + b₁ e y = m₂x + b₂ se cruzam, iguala as expressões: m₁x + b₁ = m₂x + b₂ e resolve em ordem a x.</div></div>
@@ -207,7 +213,7 @@
 
   <!-- ══ QUESTÕES-AULA ══ -->
   <div class="section4" id="sec-questoes6">
-    <div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-pencil-simple"></i></span> Questões-aula</h2><p>Questões pelos 6 subtemas — corrige automaticamente com feedback</p></div></div>
+    <div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-pencil-simple"></i></span> Questões-aula</h2><p>Questões pelos 6 subtemas corrige automaticamente com feedback</p></div></div>
     <div class="score-bar">
       <div><div class="score-num" id="q6-score">0</div><div class="score-label">certas</div></div>
       <div><div class="score-num icon-muted" id="q6-total">/ 0</div><div class="score-label">respondidas</div></div>
@@ -218,7 +224,7 @@
 
 
 <div class="section-divider section4" id="sec-minitestes6" >
-<div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-file-text"></i></span> Minitestes</h2><p>2 minitestes por grupos de subtemas — 5 questões de escolha múltipla cada</p></div></div>
+<div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-file-text"></i></span> Minitestes</h2><p>2 minitestes por grupos de subtemas 5 questões de escolha múltipla cada</p></div></div>
     <div id="mini-tabs6">
       <button class="tab-btn active" onclick="showMini6(0,this)"><i class="ph ph-book-open-text"></i> Todos os subtemas</button>
       <button class="tab-btn" onclick="showMini6(1,this)">① Referencial e Função</button>
@@ -235,7 +241,7 @@
 
 
 <div class="section-divider section4" id="sec-teste6" >
-<div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-target"></i></span> Teste de Avaliação</h2><p>Questões de dificuldade progressiva — escolha múltipla e resposta aberta</p></div></div>
+<div class="sec-header"><div class="flex-1"><h2><span class="num"><i class="ph ph-target"></i></span> Teste de Avaliação</h2><p>Questões de dificuldade progressiva escolha múltipla e resposta aberta</p></div></div>
     <div class="score-bar">
       <div><div class="score-num" id="t6-score">0</div><div class="score-label">certas</div></div>
       <div><div class="score-num icon-muted" id="t6-total">/ 0</div><div class="score-label">respondidas</div></div>
@@ -244,7 +250,6 @@
     </div>
     <div id="t6-container"></div>
 </div>
-</div></div>
 
   <!-- ══ GERADOR ══ -->
   <div class="section4" id="sec-gerador6">
@@ -258,12 +263,12 @@
         <div><div class="ai-label">Subtema</div>
           <select class="ai-select" id="gen6-tema">
             <option value="0">Todos os subtemas</option>
-            <option value="1">1 — Referencial Cartesiano</option>
-            <option value="2">2 — Conceito de Função</option>
-            <option value="3">3 — Representação Gráfica</option>
-            <option value="4">4 — Formas de Representar</option>
-            <option value="5">5 — Proporcionalidade Direta</option>
-            <option value="6">6 — Gráficos em Contexto Real</option>
+            <option value="1">1 Referencial Cartesiano</option>
+            <option value="2">2 Conceito de Função</option>
+            <option value="3">3 Representação Gráfica</option>
+            <option value="4">4 Formas de Representar</option>
+            <option value="5">5 Proporcionalidade Direta</option>
+            <option value="6">6 Gráficos em Contexto Real</option>
           </select>
         </div>
         <div><div class="ai-label">Tipo</div>
@@ -302,7 +307,7 @@
   <div class="section4" id="sec-jogos6">
   <div class="sec-header">
     <h2><span class="num"><i class="ph ph-game-controller"></i></span> Jogos</h2>
-    <p>5 jogos matemáticos interativos — treina funções</p>
+    <p>5 jogos matemáticos interativos treina funções</p>
   </div>
   <div id="j24-wrap-cap6"></div>
 </div>
@@ -311,7 +316,7 @@
   <div class="section4" id="sec-quiz-game6">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-trophy"></i></span> ⚡ Modo Quiz</h2>
-      <p>Questões de escolha múltipla — Funções — 3 vidas, streak e game over</p>
+      <p>Questões de escolha múltipla Funções 3 vidas, streak e game over</p>
     </div>
     <div id="qg-app6"></div>
   </div>
@@ -320,7 +325,7 @@
   <div class="section4" id="sec-flashcards6">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-stack"></i></span> Flashcards de Revisão</h2>
-      <p>Cartões — clica para virar e ver a resposta</p>
+      <p>Cartões clica para virar e ver a resposta</p>
     </div>
     <div class="flex flex-wrap gap-3 items-center mb-6">
       <span id="fc6-counter" class="fc-counter">1 / ?</span>
@@ -345,13 +350,12 @@
     </div>
     <div id="fc6-dots" class="flex flex-wrap gap-1 justify-center mt-5"></div>
 
-</div></div>
 
   <!-- ══ EXAME ══ -->
   <div class="section4" id="sec-exame6">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-timer"></i></span> Modo Exame</h2>
-      <p>Simulação cronometrada — sem feedback durante o exame, nota final no fim</p>
+      <p>Simulação cronometrada sem feedback durante o exame, nota final no fim</p>
     </div>
     <div id="exame6-config" class="card">
       <div class="card-title">Configurar Exame</div>
@@ -406,7 +410,7 @@
   <div class="section4" id="sec-progresso6">
     <div class="sec-header">
       <h2><span class="num"><i class="ph ph-trophy"></i></span> O Meu Progresso</h2>
-      <p>Registo das tuas atividades — guardado localmente neste browser</p>
+      <p>Registo das tuas atividades guardado localmente neste browser</p>
     </div>
     <div class="alert-warning">
       <span>O progresso é guardado <strong>apenas neste browser e neste dispositivo</strong>. Se mudares de browser ou de computador, o registo começa do zero.</span>
@@ -431,22 +435,25 @@
   </div>
 
 
-  </div><!-- /sections4 -->
 <div style="display:flex;justify-content:space-between;padding:1.5rem 2rem 2rem;border-top:1px solid var(--border);margin-top:2rem;">
-  <button class="btn btn-ghost ch-back-link" onclick="goToChapter(5)">← Cap. 5 — Sequências</button>
-  <button class="btn btn-ghost ch-back-link" onclick="goToChapter(7)">Cap. 7 — Figuras Semelhantes →</button>
+  <button class="btn btn-ghost ch-back-link" onclick="goToChapter(5)">← Cap. 5 Sequências</button>
+  <button class="btn btn-ghost ch-back-link" onclick="goToChapter(7)">Cap. 7 Figuras Semelhantes →</button>
 </div>
+
+
+
+
 </div><!-- /view-math6 -->
-
-
-
-
-<script src="../js/shared.js"></script>
-<script src="../js/chapter-engine.js"></script>
-<script src="../js/cap6.js"></script>
-<script src="../js/systems.js"></script>
-<script src="../js/widgets.js"></script>
-<script src="../js/fx.js"></script>
-<script src="../js/nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/cloud.js"></script>
+<script src="../js/guard.js"></script>
+<script src="../js/shared.js?v=20260621"></script>
+<script src="../js/chapter-engine.js?v=20260621"></script>
+<script src="../js/cap6.js?v=20260621"></script>
+<script src="../js/systems.js?v=20260621"></script>
+<script src="../js/widgets.js?v=20260621"></script>
+<script src="../js/fx.js?v=20260621"></script>
+<script src="../js/ux-improvements.js?v=20260621"></script>
+<script src="../js/nav.js?v=20260621"></script>
 </body>
 </html>
