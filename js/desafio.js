@@ -185,6 +185,7 @@ var DESAFIO_POR_ANO = {
     { d: 'MAT', enun: 'A mediana de 3, 5, 7, 9, 11 é:', opcoes: ['7', '5', '9', '35'], resp: '7', expl: 'Com 5 valores ordenados, a mediana é o do meio (3.º): 7.' },
     /* Trigonometria */
     { d: 'MAT', enun: 'Num triângulo retângulo, sen θ é igual a:', opcoes: ['cateto oposto / hipotenusa', 'cateto adjacente / hipotenusa', 'cateto oposto / cateto adjacente', 'hipotenusa / cateto oposto'], resp: 'cateto oposto / hipotenusa', expl: 'SOH: seno = oposto sobre hipotenusa.' }
+    /* + Cultura geral (DESAFIO_GERAL_SEC) acrescentada no fim do ficheiro */
   ],
   11: [
     /* Trigonometria */
@@ -208,10 +209,50 @@ var DESAFIO_POR_ANO = {
     { d: 'MAT', enun: 'A taxa de variação média de f(x) = x² em [1, 3] é:', opcoes: ['4', '8', '2', '9'], resp: '4', expl: '[f(3) − f(1)]/(3 − 1) = (9 − 1)/2 = 8/2 = 4.' },
     /* Probabilidades e combinatória */
     { d: 'MAT', enun: 'De quantas formas se podem ordenar 3 livros diferentes numa prateleira?', opcoes: ['6', '3', '9', '27'], resp: '6', expl: '3! = 3 × 2 × 1 = 6 (permutações).' }
-  ]
+    /* + Cultura geral (DESAFIO_GERAL_SEC) acrescentada no fim do ficheiro */
+  ],
+  /* 12.º — muitos alunos do secundário NÃO têm Matemática (Línguas e
+     Humanidades, Artes…). Para o Desafio do Dia ser útil a TODOS, o 12.º
+     vive só de Cultura geral; quem tem Mat A continua a treinar na zona
+     de exames. (As perguntas GERAL são injetadas no fim do ficheiro.) */
+  12: []
 };
 
-var DESAFIO_ANOS = [5, 6, 7, 8, 9, 10, 11];
+/* ── Banco de CULTURA GERAL para o secundário (10.º–12.º) ──────────────
+   Lógica, raciocínio, interpretação e literacia transversal — relevante
+   para QUALQUER curso, incluindo os que não têm Matemática. Definido uma
+   vez e acrescentado aos anos do secundário (sem duplicar conteúdo). */
+var DESAFIO_GERAL_SEC = [
+  /* Raciocínio lógico */
+  { d: 'GERAL', enun: 'Se «todos os poetas são sonhadores» e «o Rui é poeta», então:', opcoes: ['o Rui é sonhador', 'o Rui não é sonhador', 'nenhum sonhador é poeta', 'não se pode concluir nada'], resp: 'o Rui é sonhador', expl: 'Silogismo válido: o Rui pertence ao grupo dos poetas, logo é sonhador.' },
+  { d: 'GERAL', enun: 'Completa a sequência: 2, 6, 12, 20, 30, …', opcoes: ['42', '40', '36', '45'], resp: '42', expl: 'As diferenças crescem de 2 em 2 (4, 6, 8, 10, 12): 30 + 12 = 42.' },
+  { d: 'GERAL', enun: 'A negação de «alguns alunos faltaram» é:', opcoes: ['nenhum aluno faltou', 'todos os alunos faltaram', 'alguns alunos vieram', 'todos os alunos vieram'], resp: 'nenhum aluno faltou', expl: 'A negação de «existe pelo menos um» é «não existe nenhum».' },
+  { d: 'GERAL', enun: 'Numa corrida, ultrapassaste o 2.º classificado. Em que lugar ficaste?', opcoes: ['2.º', '1.º', '3.º', 'depende'], resp: '2.º', expl: 'Ao ultrapassar quem ia em 2.º, ocupas o lugar dele: ficas em 2.º.' },
+  { d: 'GERAL', enun: '«Esta afirmação é falsa.» Trata-se de:', opcoes: ['um paradoxo', 'uma verdade', 'uma mentira', 'um facto'], resp: 'um paradoxo', expl: 'Se for verdadeira é falsa, e se for falsa é verdadeira: paradoxo do mentiroso.' },
+  /* Literacia / interpretação */
+  { d: 'GERAL', enun: 'Numa notícia, o «lead» é:', opcoes: ['o parágrafo inicial com o essencial', 'a última frase', 'a opinião do jornalista', 'o título'], resp: 'o parágrafo inicial com o essencial', expl: 'O lead responde a quem, o quê, quando, onde, como e porquê.' },
+  { d: 'GERAL', enun: 'Um argumento «ad hominem» ataca:', opcoes: ['a pessoa, não a ideia', 'os dados apresentados', 'a lógica do raciocínio', 'a fonte oficial'], resp: 'a pessoa, não a ideia', expl: 'É uma falácia: desacredita quem fala em vez de refutar o argumento.' },
+  { d: 'GERAL', enun: 'Distinguir um FACTO de uma OPINIÃO: qual é um facto?', opcoes: ['Lisboa é a capital de Portugal', 'Lisboa é a cidade mais bonita', 'Devíamos viver em Lisboa', 'Lisboa é melhor que o Porto'], resp: 'Lisboa é a capital de Portugal', expl: 'Um facto é verificável; as restantes exprimem juízos de valor.' },
+  /* Literacia de dados / probabilidade intuitiva */
+  { d: 'GERAL', enun: 'Um produto sobe 50% e depois desce 50%. Em relação ao início, fica:', opcoes: ['mais barato', 'igual', 'mais caro', 'o dobro'], resp: 'mais barato', expl: '100 → 150 → 75: a descida incide sobre um valor maior, logo fica abaixo de 100.' },
+  { d: 'GERAL', enun: 'Se um teste tem 90% de fiabilidade, qual afirmação é correta?', opcoes: ['erra em cerca de 1 em cada 10 casos', 'nunca erra', 'erra sempre', 'acerta em 9 de cada 100'], resp: 'erra em cerca de 1 em cada 10 casos', expl: '90% certo → 10% errado, ou seja ~1 em 10.' },
+  { d: 'GERAL', enun: 'Lançar uma moeda 5 vezes e sair sempre cara. No 6.º lançamento, a probabilidade de cara é:', opcoes: ['1/2', 'maior que 1/2', 'menor que 1/2', 'quase 1'], resp: '1/2', expl: 'Os lançamentos são independentes: a moeda «não tem memória».' },
+  /* Cultura científica e geral */
+  { d: 'GERAL', enun: 'A capital da Austrália é:', opcoes: ['Camberra', 'Sydney', 'Melbourne', 'Auckland'], resp: 'Camberra', expl: 'Apesar de Sydney ser a maior cidade, a capital é Camberra.' },
+  { d: 'GERAL', enun: 'O efeito de estufa é causado sobretudo pelo aumento de:', opcoes: ['dióxido de carbono', 'oxigénio', 'azoto', 'hélio'], resp: 'dióxido de carbono', expl: 'Gases como o CO₂ retêm calor na atmosfera, aquecendo o planeta.' },
+  { d: 'GERAL', enun: 'A Revolução dos Cravos, em Portugal, ocorreu em:', opcoes: ['25 de abril de 1974', '5 de outubro de 1910', '1 de dezembro de 1640', '10 de junho de 1580'], resp: '25 de abril de 1974', expl: 'Pôs fim à ditadura do Estado Novo e instaurou a democracia.' },
+  { d: 'GERAL', enun: 'Quantos continentes existem no modelo mais usado?', opcoes: ['7', '5', '6', '8'], resp: '7', expl: 'África, América do Norte, América do Sul, Antártida, Ásia, Europa e Oceânia.' },
+  { d: 'GERAL', enun: 'A obra «Mensagem» foi escrita por:', opcoes: ['Fernando Pessoa', 'Luís de Camões', 'Eça de Queirós', 'José Saramago'], resp: 'Fernando Pessoa', expl: 'Único livro de poemas em português publicado por Pessoa em vida (1934).' },
+  { d: 'GERAL', enun: 'Quem propôs a teoria da evolução por seleção natural?', opcoes: ['Charles Darwin', 'Isaac Newton', 'Albert Einstein', 'Gregor Mendel'], resp: 'Charles Darwin', expl: 'Em «A Origem das Espécies» (1859).' },
+  { d: 'GERAL', enun: 'O número de deputados da Assembleia da República portuguesa é:', opcoes: ['230', '120', '500', '300'], resp: '230', expl: 'A Assembleia da República tem 230 deputados.' }
+];
+
+/* Injeta a Cultura geral nos anos do secundário, sem duplicar texto. */
+[10, 11, 12].forEach(function (ano) {
+  DESAFIO_POR_ANO[ano] = (DESAFIO_POR_ANO[ano] || []).concat(DESAFIO_GERAL_SEC);
+});
+
+var DESAFIO_ANOS = [5, 6, 7, 8, 9, 10, 11, 12];
 
 /* Ano do desafio. Prioridade:
    1) escolha manual guardada no dispositivo (o aluno clicou num chip);
@@ -239,17 +280,35 @@ function desafioSetAno(ano) {
 function _desafioHoje() { return new Date().toISOString().slice(0, 10); }
 function _desafioSeed(s) { var h = 0; for (var i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) | 0; } return Math.abs(h); }
 
+/* Metadados de cada disciplina (rótulo + cores do "chip"). Fonte única:
+   acrescentar aqui uma disciplina nova chega para o rótulo/cor aparecerem
+   em todo o lado. A ordem fixa garante uma rotação estável dia a dia. */
+var DESAFIO_DISC_META = {
+  MAT:   { nome: 'Matemática',   chip: '#e8f0f7;color:#36527a' },
+  PT:    { nome: 'Português',    chip: '#ede8f5;color:#4a3f7a' },
+  GERAL: { nome: 'Cultura geral', chip: '#eef5ec;color:#3a6a3a' }
+};
+var DESAFIO_DISC_ORDEM = ['MAT', 'PT', 'GERAL'];
+function _desafioDiscNome(d) { return (DESAFIO_DISC_META[d] || DESAFIO_DISC_META.MAT).nome; }
+function _desafioDiscChip(d) { return (DESAFIO_DISC_META[d] || DESAFIO_DISC_META.MAT).chip; }
+
 /* Disciplina do dia, ROTATIVA (o aluno não escolhe — a plataforma alterna
-   por ele). Anos com PT (>=7) alternam Mat/PT consoante o dia do ano;
-   anos só de Matemática (5.º/6.º) são sempre Mat. As 3 perguntas do dia
-   são todas da mesma disciplina, para o desafio ser coerente e rápido. */
+   por ele). Olha que disciplinas EXISTEM no banco do ano e roda entre
+   elas consoante o dia. Assim: 5.º/6.º só têm Mat → sempre Mat; do 7.º ao
+   9.º alternam Mat/PT; no secundário, anos só com cultura geral (para
+   quem não tem Mat) recebem sempre Geral; anos com Mat+Geral alternam.
+   As 3 perguntas do dia são todas da mesma disciplina, para o desafio ser
+   coerente e rápido. */
 function _desafioDisciplina(ano) {
   var banco = DESAFIO_POR_ANO[ano] || [];
-  var temPt = banco.some(function (q) { return q.d === 'PT'; });
-  if (!temPt) return 'MAT';
-  // alterna pela data: dias pares → MAT, ímpares → PT
+  // disciplinas presentes neste ano, na ordem canónica
+  var presentes = DESAFIO_DISC_ORDEM.filter(function (d) {
+    return banco.some(function (q) { return q.d === d; });
+  });
+  if (presentes.length <= 1) return presentes[0] || 'MAT';
+  // alterna pela data, dando a volta a todas as disciplinas do ano
   var diaDoAno = Math.floor((Date.now() - Date.UTC(new Date().getUTCFullYear(), 0, 0)) / 86400000);
-  return diaDoAno % 2 === 0 ? 'MAT' : 'PT';
+  return presentes[diaDoAno % presentes.length];
 }
 
 /* 3 perguntas determinísticas do dia: mesmo ano, mesma disciplina (a do dia). */
@@ -315,7 +374,7 @@ function desafioRender() {
 
   if (!_desafioEstado.qs.length) {
     var semSessao = typeof Cloud !== 'undefined' && Cloud.disponivel && Cloud.disponivel() && (!Cloud.utilizador || !Cloud.utilizador());
-    var discHoje = _desafioDisciplina(_desafioAno()) === 'PT' ? 'Português' : 'Matemática';
+    var discHoje = _desafioDiscNome(_desafioDisciplina(_desafioAno()));
     var titulo = semSessao ? 'Desafio do Dia' : 'Desafio do Dia · ' + _desafioAno() + '.º ano';
     var sub = semSessao
       ? '3 perguntas rápidas para experimentares. Cria conta para guardares a tua ofensiva 🔥 e teres perguntas do teu ano.'
@@ -349,7 +408,7 @@ function _desafioRenderPergunta() {
 
   var h = '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:1.4rem 1.5rem">';
   h += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem">';
-  h += '<span style="font-size:.65rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:' + (q.d === 'PT' ? '#ede8f5;color:#4a3f7a' : '#e8f0f7;color:#36527a') + ';border-radius:999px;padding:3px 10px">' + (q.d === 'PT' ? 'Português' : 'Matemática') + ' · ' + _desafioAno() + '.º</span>';
+  h += '<span style="font-size:.65rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:' + _desafioDiscChip(q.d) + ';border-radius:999px;padding:3px 10px">' + _desafioDiscNome(q.d) + ' · ' + _desafioAno() + '.º</span>';
   h += '<span style="font-size:.72rem;font-weight:700;color:var(--ink4)">Pergunta ' + (e.idx + 1) + ' de 3</span>';
   h += '</div>';
   h += '<div style="font-size:.98rem;font-weight:700;color:var(--ink1);line-height:1.5;margin-bottom:1rem">' + q.enun + '</div>';
