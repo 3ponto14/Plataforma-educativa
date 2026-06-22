@@ -1243,8 +1243,8 @@ footer strong{color:rgba(255,255,255,.7);font-weight:500}
 ══════════════════════════════════════════ */
 
 /* ── Game tab bar ── */
-.g-tabs{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:1.5rem;padding:.35rem;background:var(--cream2);border-radius:14px;border:1px solid var(--border)}
-.g-tab{flex:1;min-width:90px;padding:8px 10px;border-radius:10px;border:none;background:transparent;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap}
+.g-tabs{display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:1.5rem;padding:.4rem;background:var(--cream2);border-radius:14px;border:1px solid var(--border)}
+.g-tab{flex:0 1 auto;padding:8px 14px;border-radius:10px;border:none;background:transparent;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
 .g-tab:hover{background:var(--white);color:var(--ink)}
 .g-tab.active{background:var(--white);color:var(--c2-deep);box-shadow:0 2px 8px rgba(81,104,96,.15);border:1px solid rgba(81,104,96,.12)}
 /* ── Filtro de capítulo/subtema dos jogos (multi-seleção) ── */
