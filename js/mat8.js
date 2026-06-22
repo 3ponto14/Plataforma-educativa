@@ -240,6 +240,7 @@ function mat8SwitchTab(tab, btn) {
   if (titles[tab]) document.title = 'Mat. 8.º ' + titles[tab] + ' · 3ponto14';
 
   if (tab === 'resumo') mat8BuildResumoNav();
+  else if (tab === 'aprender') { if (typeof mat8AprenderInit === 'function') mat8AprenderInit(); }
   else if (tab === 'exercicios') mat8BuildPraticarNav();
   else if (tab === 'quiz') mat8QuizBuildNav();
   else if (tab === 'flashcards') mat8FcBuildNav();
@@ -251,6 +252,37 @@ function mat8SwitchTab(tab, btn) {
 
 // Abre um sub-modo de prática a partir dos cartões do menu Praticar.
 function mat8OpenPraticar(modo) { mat8SwitchTab(modo, null); }
+
+/* Aba APRENDER: catálogo de explicadores lúdicos do 8.º ano + abrir/voltar. */
+var _mat8AprenderWired = false;
+function mat8AprenderInit() {
+  if (typeof APRENDER === 'undefined') {
+    var c = document.getElementById('mat8-aprender-cat');
+    if (c) c.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Explicadores indisponíveis (motor não carregado).</p>';
+    return;
+  }
+  var host = document.getElementById('mat8-aprender-host');
+  var cat = document.getElementById('mat8-aprender-cat');
+  if (!host || !cat) return;
+  APRENDER.catalogo('mat8-aprender-cat', function (id, t) {
+    return /8\.º/.test(t.curso || '') || /mat8/.test(id);
+  });
+  host.style.display = 'none';
+  if (_mat8AprenderWired) return;
+  _mat8AprenderWired = true;
+  window.aprenderVoltarCatalogo = function () {
+    host.style.display = 'none'; host.innerHTML = '';
+    cat.style.display = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  var _abrir = APRENDER.abrir;
+  APRENDER.abrir = function (id) {
+    cat.style.display = 'none';
+    host.style.display = 'block';
+    _abrir(id, 'mat8-aprender-host');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+}
 
 // ═══ TAB TEORIA ═══
 function mat8BuildResumoNav() {

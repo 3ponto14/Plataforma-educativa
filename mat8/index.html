@@ -41,11 +41,20 @@
 <div class="mat7-hub-tabbar" id="mat8-hub-tabbar">
   <button class="mat7-hub-tab active" data-tab="resumo"    onclick="mat8SwitchTab('resumo',this)">   <span class="mat7-hub-tab-icon"><i class="ph ph-book-open-text"></i></span> Teoria</button>
   <button class="mat7-hub-tab"        data-tab="praticar"  onclick="mat8SwitchTab('praticar',this)"> <span class="mat7-hub-tab-icon"><i class="ph ph-pencil-simple"></i></span> Praticar</button>
+  <button class="mat7-hub-tab"        data-tab="aprender"  onclick="mat8SwitchTab('aprender',this)"> <span class="mat7-hub-tab-icon"><i class="ph ph-lightbulb"></i></span> Aprender</button>
   <button class="mat7-hub-tab"        data-tab="fichas"    onclick="mat8SwitchTab('fichas',this)">   <span class="mat7-hub-tab-icon"><i class="ph ph-file-pdf"></i></span> Fichas</button>
   <button class="mat7-hub-tab"        data-tab="progresso" onclick="mat8SwitchTab('progresso',this)"><span class="mat7-hub-tab-icon"><i class="ph ph-chart-bar"></i></span> Progresso</button>
 </div>
 
 <main class="mat7-hub-main">
+
+<!-- ══════════ PANEL: APRENDER ══════════ -->
+<div class="mat7-panel" id="mat8p-aprender">
+  <div class="mat7-panel-heading">Aprender a brincar</div>
+  <div class="mat7-panel-sub">Não percebes a matéria? Escolhe um tema e deixa-me explicar-te passo a passo, a brincar. Mexe e vê o que acontece.</div>
+  <div id="mat8-aprender-host"></div>
+  <div id="mat8-aprender-cat"></div>
+</div>
 
 <!-- ══════════ PANEL: TEORIA ══════════ -->
 <div class="mat7-panel active" id="mat8p-resumo">
@@ -236,6 +245,8 @@
 <script src="../js/shared.js?v=20260621"></script>
 <script src="../js/chapter-engine.js?v=20260621"></script>
 <script src="../js/visuals.js?v=20260621"></script>
+<script src="../js/aprender.js?v=20260622"></script>
+<script src="../js/aprender-temas-mat8.js?v=20260622"></script>
 <script src="../js/mat8.js?v=20260621"></script>
 <script src="../js/systems.js?v=20260621"></script>
 <script src="../js/ux-improvements.js?v=20260621"></script>
