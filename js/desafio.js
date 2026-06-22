@@ -211,11 +211,36 @@ var DESAFIO_POR_ANO = {
     { d: 'MAT', enun: 'De quantas formas se podem ordenar 3 livros diferentes numa prateleira?', opcoes: ['6', '3', '9', '27'], resp: '6', expl: '3! = 3 × 2 × 1 = 6 (permutações).' }
     /* + Cultura geral (DESAFIO_GERAL_SEC) acrescentada no fim do ficheiro */
   ],
-  /* 12.º — muitos alunos do secundário NÃO têm Matemática (Línguas e
-     Humanidades, Artes…). Para o Desafio do Dia ser útil a TODOS, o 12.º
-     vive só de Cultura geral; quem tem Mat A continua a treinar na zona
-     de exames. (As perguntas GERAL são injetadas no fim do ficheiro.) */
-  12: []
+  /* 12.º — Matemática A (7 domínios). Quem NÃO tem Mat (Línguas e
+     Humanidades, Artes…) recebe a Cultura geral, que é injetada no fim
+     do ficheiro; o sistema alterna entre Mat e Geral conforme o que
+     existe no banco do ano. */
+  12: [
+    /* Cálculo Combinatório */
+    { d: 'MAT', enun: 'De quantas formas se podem sentar 4 pessoas numa fila?', opcoes: ['24', '12', '16', '8'], resp: '24', expl: 'Permutações: 4! = 24.' },
+    { d: 'MAT', enun: 'Quantas comissões de 2 pessoas se formam a partir de 5?', opcoes: ['10', '20', '25', '7'], resp: '10', expl: '⁵C₂ = (5×4)/2 = 10 (a ordem não conta).' },
+    { d: 'MAT', enun: 'Quantos termos tem o desenvolvimento de (a + b)⁴?', opcoes: ['5', '4', '8', '16'], resp: '5', expl: '(a+b)ⁿ tem n+1 termos: 4+1 = 5.' },
+    /* Probabilidades */
+    { d: 'MAT', enun: 'P(A) = 0,5, P(B) = 0,3 e A, B incompatíveis. P(A∪B) é:', opcoes: ['0,8', '0,15', '0,2', '0,5'], resp: '0,8', expl: 'Incompatíveis: P(A∪B) = P(A) + P(B) = 0,8.' },
+    { d: 'MAT', enun: 'Se P(A∩B) = 0,2 e P(B) = 0,5, então P(A|B) é:', opcoes: ['0,4', '0,1', '0,7', '2,5'], resp: '0,4', expl: 'P(A|B) = P(A∩B)/P(B) = 0,2/0,5 = 0,4.' },
+    /* Funções Reais */
+    { d: 'MAT', enun: 'lim(x→+∞) (3x² + 1)/(x² − 5) é:', opcoes: ['3', '0', '+∞', '1'], resp: '3', expl: 'Mesmo grau → quociente dos coeficientes = 3/1 = 3.' },
+    { d: 'MAT', enun: 'A derivada de f(x) = x³ é:', opcoes: ['3x²', 'x²', '3x', 'x³/3'], resp: '3x²', expl: 'Regra da potência: (x³)′ = 3x².' },
+    { d: 'MAT', enun: 'Se f′(x) > 0 num intervalo, a função é nesse intervalo:', opcoes: ['crescente', 'decrescente', 'constante', 'descontínua'], resp: 'crescente', expl: 'Derivada positiva ⟺ função crescente.' },
+    /* Trigonometria */
+    { d: 'MAT', enun: 'A derivada de f(x) = sen x é:', opcoes: ['cos x', '−cos x', '−sen x', 'sen x'], resp: 'cos x', expl: '(sen x)′ = cos x.' },
+    { d: 'MAT', enun: 'lim(x→0) sen(x)/x é:', opcoes: ['1', '0', '+∞', 'não existe'], resp: '1', expl: 'É o limite notável fundamental da trigonometria.' },
+    /* Exponenciais e Logaritmos */
+    { d: 'MAT', enun: 'O valor de log₂(8) é:', opcoes: ['3', '2', '4', '8'], resp: '3', expl: '2³ = 8 → log₂(8) = 3.' },
+    { d: 'MAT', enun: 'A derivada de f(x) = eˣ é:', opcoes: ['eˣ', 'x·eˣ', 'eˣ/x', '1'], resp: 'eˣ', expl: '(eˣ)′ = eˣ (a exponencial é a sua própria derivada).' },
+    /* Primitivas e Integral */
+    { d: 'MAT', enun: 'Uma primitiva de f(x) = 2x é:', opcoes: ['x² + C', '2 + C', 'x²/2 + C', '2x² + C'], resp: 'x² + C', expl: 'P(2x) = x² + C (derivada de x² é 2x).' },
+    { d: 'MAT', enun: 'O valor de ∫₀¹ x² dx é:', opcoes: ['1/3', '1', '1/2', '3'], resp: '1/3', expl: '[x³/3]₀¹ = 1/3.' },
+    /* Números Complexos */
+    { d: 'MAT', enun: 'O valor de i² é:', opcoes: ['−1', '1', 'i', '−i'], resp: '−1', expl: 'Por definição da unidade imaginária, i² = −1.' },
+    { d: 'MAT', enun: 'O módulo do complexo z = 3 + 4i é:', opcoes: ['5', '7', '12', '25'], resp: '5', expl: '|z| = √(3² + 4²) = √25 = 5.' }
+    /* + Cultura geral (DESAFIO_GERAL_SEC) acrescentada no fim do ficheiro */
+  ]
 };
 
 /* ── Banco de CULTURA GERAL para o secundário (10.º–12.º) ──────────────

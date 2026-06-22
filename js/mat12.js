@@ -1592,43 +1592,71 @@ var _mat12Banco = {
     { t: '1', tipo: 'mc', enun: 'De quantas formas se podem ordenar 4 livros distintos numa prateleira?', opcoes: ['24', '12', '16', '256'], resposta: '24', expl: 'Permutações de 4: 4! = 24.', tema: 'T1 · Permutações' },
     { t: '1', tipo: 'fill', enun: 'Quantos números de 2 algarismos DIFERENTES se formam com {1,2,3,4,5}?', resposta: '20', expl: 'Arranjos: ⁵A₂ = 5×4 = 20 (ordem conta, sem repetir).', tema: 'T1 · Arranjos' },
     { t: '2', tipo: 'mc', enun: 'Quantas comissões de 2 pessoas se formam a partir de 7?', opcoes: ['21', '42', '14', '49'], resposta: '21', expl: '⁷C₂ = (7×6)/2 = 21 (ordem não conta).', tema: 'T2 · Combinações' },
-    { t: '3', tipo: 'mc', enun: 'Quantos termos tem o desenvolvimento de (a + b)⁶?', opcoes: ['7', '6', '12', '64'], resposta: '7', expl: '(a+b)ⁿ tem n+1 termos: 6+1 = 7.', tema: 'T3 · Binómio' }
+    { t: '3', tipo: 'mc', enun: 'Quantos termos tem o desenvolvimento de (a + b)⁶?', opcoes: ['7', '6', '12', '64'], resposta: '7', expl: '(a+b)ⁿ tem n+1 termos: 6+1 = 7.', tema: 'T3 · Binómio' },
+    { t: '1', tipo: 'mc', enun: 'Numa turma de 25 alunos, vai eleger-se um delegado e um subdelegado (cargos distintos). De quantas formas?', opcoes: ['600', '300', '625', '50'], resposta: '600', expl: 'Cargos distintos → arranjos: ²⁵A₂ = 25×24 = 600.', tema: 'T1 · Arranjos' },
+    { t: '2', tipo: 'mc', enun: 'De um grupo de 8 raparigas e 5 rapazes, quantas equipas de 3 raparigas e 2 rapazes se formam?', opcoes: ['560', '286', '6840', '120'], resposta: '560', expl: '⁸C₃ × ⁵C₂ = 56 × 10 = 560.', tema: 'T2 · Combinações' },
+    { t: '3', tipo: 'mc', enun: 'No desenvolvimento de (x + 2)⁵, qual é o coeficiente do termo em x³?', opcoes: ['40', '10', '80', '20'], resposta: '40', expl: 'Termo: ⁵C₂ · x³ · 2² = 10 × 4 · x³ = 40x³ → coeficiente 40.', tema: 'T3 · Binómio' },
+    { t: '1', tipo: 'mc', enun: 'Quantos anagramas (com ou sem sentido) tem a palavra «LIVRO»?', opcoes: ['120', '25', '60', '24'], resposta: '120', expl: '5 letras distintas → P₅ = 5! = 120.', tema: 'T1 · Permutações' }
   ],
   2: [ // Probabilidades
     { t: '1', tipo: 'fill_frac', enun: 'Lança-se um dado. Qual a probabilidade de sair um número primo? (2, 3, 5)', resposta: '1/2', expl: 'Primos {2,3,5}: 3 casos → 3/6 = 1/2.', tema: 'T1 · Laplace' },
     { t: '2', tipo: 'fill_frac', enun: 'P(A∩B) = 0,3 e P(B) = 0,6. Calcula P(A|B). (fração irredutível)', resposta: '1/2', expl: 'P(A|B) = 0,3/0,6 = 1/2.', tema: 'T2 · Condicionada' },
     { t: '2', tipo: 'mc', enun: 'P(A) = 0,5, P(B) = 0,4, P(A∩B) = 0,2. Quanto é P(A∪B)?', opcoes: ['0,7', '0,9', '0,6', '1,1'], resposta: '0,7', expl: 'P(A∪B) = 0,5 + 0,4 − 0,2 = 0,7.', tema: 'T1 · União' },
-    { t: '3', tipo: 'mc', enun: 'A e B são independentes com P(A)=0,5 e P(B)=0,4. Quanto é P(A∩B)?', opcoes: ['0,2', '0,9', '0,1', '0,45'], resposta: '0,2', expl: 'Independentes: P(A∩B) = 0,5 × 0,4 = 0,2.', tema: 'T3 · Independentes' }
+    { t: '3', tipo: 'mc', enun: 'A e B são independentes com P(A)=0,5 e P(B)=0,4. Quanto é P(A∩B)?', opcoes: ['0,2', '0,9', '0,1', '0,45'], resposta: '0,2', expl: 'Independentes: P(A∩B) = 0,5 × 0,4 = 0,2.', tema: 'T3 · Independentes' },
+    { t: '1', tipo: 'fill_frac', enun: 'Um saco tem 10 bolas numeradas de 0 a 9. Tira-se uma ao acaso. Qual a probabilidade de o número ser primo? (2,3,5,7) (fração irredutível)', resposta: '2/5', expl: 'Primos de 0 a 9: {2,3,5,7} → 4 casos em 10 = 4/10 = 2/5.', tema: 'T1 · Laplace' },
+    { t: '2', tipo: 'fill_frac', enun: 'Num baralho de 40 cartas tira-se uma e vê-se que é de copas (10 cartas, das quais 3 figuras). Qual a probabilidade de ser figura? (fração irredutível)', resposta: '3/10', expl: 'Condicionada ao naipe copas: 3 figuras em 10 cartas = 3/10.', tema: 'T2 · Condicionada' },
+    { t: '2', tipo: 'fill_frac', enun: 'Tiram-se 2 bolas, sem reposição, de um saco com 4 vermelhas e 6 azuis. Probabilidade de ambas vermelhas? (fração irredutível)', resposta: '2/15', expl: '(4/10) × (3/9) = 12/90 = 2/15.', tema: 'T2 · Sem reposição' },
+    { t: '3', tipo: 'fill_frac', enun: 'Lançam-se 2 moedas. Probabilidade de sair pelo menos uma cara? (fração irredutível)', resposta: '3/4', expl: 'Contrário de "nenhuma cara" (CC): 1 − 1/4 = 3/4.', tema: 'T3 · Contrário' }
   ],
   3: [ // Funções Reais de Variável Real
     { t: '1', tipo: 'mc', enun: 'O valor de lim(x→+∞) (5x² − 3x + 1)/(2x² + 7) é:', opcoes: ['5/2', '0', '+∞', '5/7'], resposta: '5/2', expl: 'Mesmo grau (x²): quociente dos coeficientes principais = 5/2.', tema: 'T1 · Limites' },
     { t: '1', tipo: 'fill', enun: 'Calcula lim(x→3) (x² − 9)/(x − 3).', resposta: '6', expl: '(x−3)(x+3)/(x−3) = x+3 → 6.', tema: 'T1 · Indeterminação' },
     { t: '2', tipo: 'mc', enun: 'f é contínua, f(1) = −2 e f(3) = 4. Pelo Teorema de Bolzano, em ]1,3[:', opcoes: ['existe pelo menos um zero', 'não há zeros', 'há exatamente dois zeros', 'f é constante'], resposta: 'existe pelo menos um zero', expl: 'f(1)·f(3) < 0 e f contínua → pelo menos um zero (Bolzano).', tema: 'T2 · Bolzano' },
-    { t: '4', tipo: 'fill', enun: 'Sendo f(x) = x³ − 3x, calcula f′(2).', resposta: '9', expl: "f′(x) = 3x² − 3 → f′(2) = 12 − 3 = 9.", tema: 'T4 · Derivadas' }
+    { t: '4', tipo: 'fill', enun: 'Sendo f(x) = x³ − 3x, calcula f′(2).', resposta: '9', expl: "f′(x) = 3x² − 3 → f′(2) = 12 − 3 = 9.", tema: 'T4 · Derivadas' },
+    { t: '1', tipo: 'fill', enun: 'Calcula lim(x→+∞) (2x³ − x)/(x² + 5). (escreve +∞ ou −∞ se for infinito)', resposta: '+∞', expl: 'Grau do numerador (3) > do denominador (2) e coeficientes positivos → +∞.', tema: 'T1 · Limites' },
+    { t: '3', tipo: 'mc', enun: 'A reta y = 2 é assíntota horizontal de f(x) = (2x − 1)/(x + 3). A função tem assíntota vertical em:', opcoes: ['x = −3', 'x = 3', 'x = 2', 'não tem'], resposta: 'x = −3', expl: 'O denominador x+3 anula-se em x = −3 → assíntota vertical.', tema: 'T3 · Assíntotas' },
+    { t: '4', tipo: 'mc', enun: 'A função f(x) = x³ − 3x² tem concavidade voltada para cima quando:', opcoes: ['x > 1', 'x < 1', 'x > 0', 'sempre'], resposta: 'x > 1', expl: "f''(x) = 6x − 6 > 0 ⟺ x > 1.", tema: 'T4 · Concavidade' },
+    { t: '4', tipo: 'fill', enun: 'A reta tangente ao gráfico de f(x) = x² no ponto de abcissa x = 3 tem que declive?', resposta: '6', expl: "f′(x) = 2x → f′(3) = 6 (declive da tangente).", tema: 'T4 · Tangente' }
   ],
   4: [ // Trigonometria
     { t: '1', tipo: 'mc', enun: 'Usando sen(2a) = 2 sen a cos a, com sen a = 0,6 e cos a = 0,8, quanto é sen(2a)?', opcoes: ['0,96', '1,2', '0,48', '1,4'], resposta: '0,96', expl: 'sen(2a) = 2 × 0,6 × 0,8 = 0,96.', tema: 'T1 · Fórmulas' },
     { t: '2', tipo: 'mc', enun: 'Qual é a derivada de f(x) = cos(3x)?', opcoes: ['−3sen(3x)', '3sen(3x)', '−sen(3x)', '3cos(3x)'], resposta: '−3sen(3x)', expl: '(cos u)′ = −u′ sen u → −3sen(3x).', tema: 'T2 · Derivadas sen/cos' },
     { t: '3', tipo: 'fill', enun: 'Calcula lim(x→0) sen(4x)/x.', resposta: '4', expl: 'lim sen(4x)/x = 4 × lim sen(4x)/(4x) = 4×1 = 4.', tema: 'T3 · Limites notáveis' },
-    { t: '1', tipo: 'mc', enun: 'Qual é o período da função x(t) = sen(2t)?', opcoes: ['π', '2π', 'π/2', '4π'], resposta: 'π', expl: 'T = 2π/ω = 2π/2 = π.', tema: 'T1 · Osciladores' }
+    { t: '1', tipo: 'mc', enun: 'Qual é o período da função x(t) = sen(2t)?', opcoes: ['π', '2π', 'π/2', '4π'], resposta: 'π', expl: 'T = 2π/ω = 2π/2 = π.', tema: 'T1 · Osciladores' },
+    { t: '1', tipo: 'mc', enun: 'Sabendo que cos(a) = 0,8 e a é agudo, qual é cos(2a)? (usa cos 2a = 2cos²a − 1)', opcoes: ['0,28', '0,6', '0,96', '1,28'], resposta: '0,28', expl: 'cos(2a) = 2×0,64 − 1 = 1,28 − 1 = 0,28.', tema: 'T1 · Fórmulas' },
+    { t: '2', tipo: 'mc', enun: 'Qual é a derivada de f(x) = sen(x²)?', opcoes: ['2x·cos(x²)', 'cos(x²)', '2x·sen(x²)', '−2x·cos(x²)'], resposta: '2x·cos(x²)', expl: "(sen u)′ = u′cos u, com u = x² → u′ = 2x → 2x·cos(x²).", tema: 'T2 · Derivadas sen/cos' },
+    { t: '3', tipo: 'fill', enun: 'Calcula lim(x→0) sen(3x)/sen(x). (escreve um inteiro)', resposta: '3', expl: 'sen(3x)/sen(x) = [sen(3x)/3x]·3·[x/sen(x)] → 1·3·1 = 3.', tema: 'T3 · Limites notáveis' },
+    { t: '1', tipo: 'mc', enun: 'A amplitude do oscilador x(t) = 5sen(2t + π/3) é:', opcoes: ['5', '2', 'π/3', '10'], resposta: '5', expl: 'Em x = A sen(ωt + φ), a amplitude é A = 5.', tema: 'T1 · Osciladores' }
   ],
   5: [ // Exponenciais e Logaritmos
     { t: '1', tipo: 'fill', enun: 'Resolve a equação 3ˣ = 81.', resposta: '4', expl: '81 = 3⁴ → x = 4.', tema: 'T1 · Exponencial' },
     { t: '2', tipo: 'fill', enun: 'Calcula log₂(32).', resposta: '5', expl: '2⁵ = 32 → log₂(32) = 5.', tema: 'T2 · Logaritmos' },
     { t: '2', tipo: 'mc', enun: 'Qual é o valor de ln(e⁴)?', opcoes: ['4', 'e', '1', '4e'], resposta: '4', expl: 'ln(eⁿ) = n, porque ln e = 1.', tema: 'T2 · Logaritmos' },
-    { t: '3', tipo: 'mc', enun: 'Qual é a derivada de f(x) = e^(3x)?', opcoes: ['3e^(3x)', 'e^(3x)', '3x·e^(3x)', 'e^(3x)/3'], resposta: '3e^(3x)', expl: '(e^u)′ = u′ e^u → 3e^(3x).', tema: 'T3 · Derivadas' }
+    { t: '3', tipo: 'mc', enun: 'Qual é a derivada de f(x) = e^(3x)?', opcoes: ['3e^(3x)', 'e^(3x)', '3x·e^(3x)', 'e^(3x)/3'], resposta: '3e^(3x)', expl: '(e^u)′ = u′ e^u → 3e^(3x).', tema: 'T3 · Derivadas' },
+    { t: '1', tipo: 'fill', enun: 'Resolve a equação 2^(x+1) = 16.', resposta: '3', expl: '16 = 2⁴ → x+1 = 4 → x = 3.', tema: 'T1 · Exponencial' },
+    { t: '2', tipo: 'mc', enun: 'Aplicando as propriedades, log₃(9 × 27) é igual a:', opcoes: ['5', '6', '243', '36'], resposta: '5', expl: 'log₃9 + log₃27 = 2 + 3 = 5.', tema: 'T2 · Logaritmos' },
+    { t: '3', tipo: 'mc', enun: 'Qual é a derivada de f(x) = ln(x² + 1)?', opcoes: ['2x/(x²+1)', '1/(x²+1)', '2x', 'ln(2x)'], resposta: '2x/(x²+1)', expl: "(ln u)′ = u′/u, com u = x²+1 → 2x/(x²+1).", tema: 'T3 · Derivadas' },
+    { t: '1', tipo: 'mc', enun: 'A função f(x) = (1/2)ˣ é:', opcoes: ['decrescente', 'crescente', 'constante', 'não monótona'], resposta: 'decrescente', expl: 'Base entre 0 e 1 (0 < 1/2 < 1) → função exponencial decrescente.', tema: 'T1 · Exponencial' }
   ],
   6: [ // Primitivas e Cálculo Integral
     { t: '1', tipo: 'mc', enun: 'Qual é uma primitiva de f(x) = x³?', opcoes: ['x⁴/4 + C', '3x² + C', 'x⁴ + C', '4x⁴ + C'], resposta: 'x⁴/4 + C', expl: 'P(xⁿ) = x^(n+1)/(n+1) + C → x⁴/4 + C.', tema: 'T1 · Primitivas' },
     { t: '2', tipo: 'fill', enun: 'Calcula ∫₀¹ x² dx. (escreve como fração, ex.: 1/3)', resposta: '1/3', expl: '[x³/3]₀¹ = 1/3 − 0 = 1/3.', tema: 'T2 · Integral' },
     { t: '2', tipo: 'fill', enun: 'Calcula ∫₀² 4x dx.', resposta: '8', expl: '[2x²]₀² = 2×4 = 8.', tema: 'T2 · Integral' },
-    { t: '3', tipo: 'fill', enun: 'Qual é a área entre y = x², o eixo Ox e x = 3?', resposta: '9', expl: '∫₀³ x² dx = [x³/3]₀³ = 27/3 = 9.', tema: 'T3 · Áreas' }
+    { t: '3', tipo: 'fill', enun: 'Qual é a área entre y = x², o eixo Ox e x = 3?', resposta: '9', expl: '∫₀³ x² dx = [x³/3]₀³ = 27/3 = 9.', tema: 'T3 · Áreas' },
+    { t: '1', tipo: 'mc', enun: 'Qual é uma primitiva de f(x) = cos(x) + 2x?', opcoes: ['sen(x) + x² + C', '−sen(x) + x² + C', 'sen(x) + 2 + C', 'cos(x) + x² + C'], resposta: 'sen(x) + x² + C', expl: 'P(cos x) = sen x; P(2x) = x². Soma → sen(x) + x² + C.', tema: 'T1 · Primitivas' },
+    { t: '2', tipo: 'fill', enun: 'Calcula ∫₁³ 2x dx.', resposta: '8', expl: '[x²]₁³ = 9 − 1 = 8.', tema: 'T2 · Integral' },
+    { t: '2', tipo: 'fill', enun: 'Calcula ∫₀¹ eˣ dx. (escreve em função de e, ex.: e-1)', resposta: 'e-1', expl: '[eˣ]₀¹ = e¹ − e⁰ = e − 1.', tema: 'T2 · Integral' },
+    { t: '3', tipo: 'fill', enun: 'Qual é a área entre y = x³, o eixo Ox e x = 2?', resposta: '4', expl: '∫₀² x³ dx = [x⁴/4]₀² = 16/4 = 4.', tema: 'T3 · Áreas' }
   ],
   7: [ // Números Complexos
     { t: '1', tipo: 'fill', enun: 'Calcula (3 + 2i) + (1 + 5i).', resposta: '4+7i', expl: 'Soma parte real e imaginária: (3+1) + (2+5)i = 4+7i.', tema: 'T1 · Forma algébrica' },
     { t: '1', tipo: 'fill', enun: 'Calcula (2 + i)(2 − i).', resposta: '5', expl: '(a+bi)(a−bi) = a²+b² = 4+1 = 5.', tema: 'T1 · Forma algébrica' },
     { t: '2', tipo: 'fill', enun: 'Calcula o módulo de z = 5 + 12i.', resposta: '13', expl: '|z| = √(25+144) = √169 = 13.', tema: 'T2 · Módulo' },
-    { t: '3', tipo: 'mc', enun: 'Simplifica i²⁷.', opcoes: ['−i', 'i', '1', '−1'], resposta: '−i', expl: '27 = 4×6 + 3 → i²⁷ = i³ = −i.', tema: 'T3 · Potências de i' }
+    { t: '3', tipo: 'mc', enun: 'Simplifica i²⁷.', opcoes: ['−i', 'i', '1', '−1'], resposta: '−i', expl: '27 = 4×6 + 3 → i²⁷ = i³ = −i.', tema: 'T3 · Potências de i' },
+    { t: '1', tipo: 'fill', enun: 'Calcula (4 + 3i) − (1 + 5i).', resposta: '3-2i', expl: '(4−1) + (3−5)i = 3 − 2i.', tema: 'T1 · Forma algébrica' },
+    { t: '2', tipo: 'mc', enun: 'Qual é o conjugado de z = −2 + 7i?', opcoes: ['−2 − 7i', '2 − 7i', '2 + 7i', '−2 + 7i'], resposta: '−2 − 7i', expl: 'O conjugado de a+bi é a−bi → −2 − 7i.', tema: 'T2 · Conjugado' },
+    { t: '1', tipo: 'fill', enun: 'Calcula (1 + i)². (forma a+bi)', resposta: '2i', expl: '(1+i)² = 1 + 2i + i² = 1 + 2i − 1 = 2i.', tema: 'T1 · Forma algébrica' },
+    { t: '3', tipo: 'mc', enun: 'No plano de Argand, o número z = −3i está representado:', opcoes: ['no eixo imaginário, abaixo da origem', 'no eixo real, à esquerda', 'no 1.º quadrante', 'na origem'], resposta: 'no eixo imaginário, abaixo da origem', expl: 'z = 0 − 3i: parte real 0 (está no eixo Oy) e parte imaginária negativa (abaixo).', tema: 'T3 · Plano de Argand' }
   ]
 };
 /* atribuir: deep-link mat12 */
