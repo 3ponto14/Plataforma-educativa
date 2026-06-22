@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════════
-   MAT11 HUB - Matemática A · 11.º ano (6 capítulos)
+   MAT11 HUB - Matemática A · 12.º ano (6 capítulos)
    Modelo de HUB ÚNICO (ver MODELO BASE no CLAUDE.md).
    Tabs: Teoria · Praticar · Fichas · Progresso.
    ════════════════════════════════════════════════════════════════ */
@@ -34,117 +34,142 @@ var _mat12Subtemas = {
 // ═══ FLASHCARDS / TEORIA por capítulo ═══
 // Cap 1 (Números) - conteúdo real, fiel ao Prisma 8.
 // Caps 2-8 - placeholders honestos até serem construídos.
-// ═══ FLASHCARDS / TEORIA por capítulo (11.º ano) ═══
-// ═══ FLASHCARDS / TEORIA por capítulo (11.º ano · Matemática A) ═══
-// ═══ FLASHCARDS / TEORIA por capítulo (11.º ano · Matemática A) ═══
+// ═══ FLASHCARDS / TEORIA por capítulo (12.º ano) ═══
+// ═══ FLASHCARDS / TEORIA por capítulo (12.º ano · Matemática A) ═══
+// ═══ FLASHCARDS / TEORIA por capítulo (12.º ano · Matemática A) ═══
 var _mat12Cards = {
+  // ── Cap 1 · Cálculo Combinatório ──
   1: [
-    { st: 1, tag: 'Definição', q: 'O que é um radiano?', a: 'A medida do ângulo ao centro que corresponde a um arco de comprimento igual ao raio. 180° = π rad; 360° = 2π rad.' },
-    { st: 1, tag: 'Regra', q: 'Conversão graus ↔ radianos', a: 'rad = graus × π/180  e  graus = rad × 180/π. Ex: 90° = π/2; π/3 = 60°.' },
-    { st: 2, tag: 'Fórmula', q: 'Fórmula fundamental da trigonometria', a: 'sen²(α) + cos²(α) = 1. Permite obter uma razão a partir da outra.' },
-    { st: 2, tag: 'Fórmula', q: 'Relações com a tangente', a: 'tg(α) = sen(α)/cos(α)  e  1 + tg²(α) = 1/cos²(α) = sec²(α).' },
-    { st: 1, tag: 'Definição', q: 'Círculo trigonométrico', a: 'Circunferência de raio 1 centrada na origem. O ponto associado a α tem coordenadas (cos α, sen α).' },
-    { st: 1, tag: 'Regra', q: 'Sinais por quadrante', a: '1.º Q: tudo +. 2.º Q: só sen +. 3.º Q: só tg +. 4.º Q: só cos +. (Regra "ASTC".)' },
-    { st: 1, tag: 'Fórmula', q: 'Redução ao 1.º quadrante (alguns casos)', a: 'sen(π − α) = sen α; cos(π − α) = −cos α; sen(−α) = −sen α; cos(−α) = cos α.' },
-    { st: 2, tag: 'Definição', q: 'Período de uma função trigonométrica', a: 'sen e cos têm período 2π; tg tem período π. f(x + P) = f(x) para todo o x.' },
-    { st: 2, tag: 'Definição', q: 'Funções seno, cosseno e tangente', a: 'y = sen x e y = cos x têm contradomínio [−1, 1]. y = tg x tem domínio ℝ \\ {π/2 + kπ}.' },
-    { st: 3, tag: 'Estratégia', q: 'Como resolver sen x = a?', a: 'Se −1 ≤ a ≤ 1: x = arcsen(a) + 2kπ ∨ x = π − arcsen(a) + 2kπ, k ∈ ℤ.' },
-    { st: 3, tag: 'Estratégia', q: 'Como resolver cos x = a?', a: 'Se −1 ≤ a ≤ 1: x = ± arccos(a) + 2kπ, k ∈ ℤ.' },
-    { st: 2, tag: 'Definição', q: 'Valores notáveis', a: 'sen30°=½, cos30°=√3/2; sen45°=cos45°=√2/2; sen60°=√3/2, cos60°=½; tg45°=1.' },
-    { st: 1, tag: 'Exemplo', q: 'Converte 120° para radianos', a: '120 × π/180 = 2π/3 rad.' },
-    { st: 2, tag: 'Exemplo', q: 'Se cos α = 0,6 e α agudo, quanto é sen α?', a: 'sen²α = 1 − 0,36 = 0,64 → sen α = 0,8.' },
-    { st: 3, tag: 'Exemplo', q: 'Resolve sen x = 1', a: 'x = π/2 + 2kπ, k ∈ ℤ.' },
-    { st: 2, tag: 'Exemplo', q: 'Período de y = sen(2x)?', a: '2π ÷ 2 = π.' }
+    { st: 1, tag: 'Definição', q: 'O que é um arranjo sem repetição?', a: 'Uma sequência ORDENADA de p elementos escolhidos de n distintos, sem repetir. ⁿAₚ = n!/(n−p)!.' },
+    { st: 1, tag: 'Fórmula', q: 'Arranjos com repetição', a: 'Sequências ordenadas de p elementos de n, podendo repetir: n^p.' },
+    { st: 1, tag: 'Definição', q: 'O que é uma permutação?', a: 'Uma ordenação de TODOS os n elementos. Pₙ = n! = ⁿAₙ.' },
+    { st: 1, tag: 'Fórmula', q: 'Definição de fatorial', a: 'n! = n × (n−1) × … × 2 × 1, com 0! = 1 por convenção.' },
+    { st: 2, tag: 'Definição', q: 'O que é uma combinação?', a: 'Um subconjunto NÃO ordenado de p elementos de n distintos. ⁿCₚ = n!/(p!(n−p)!).' },
+    { st: 2, tag: 'Regra', q: 'Quando uso arranjos e quando uso combinações?', a: 'Se a ORDEM importa → arranjos. Se a ordem NÃO importa → combinações.' },
+    { st: 2, tag: 'Propriedade', q: 'Propriedade de simetria das combinações', a: 'ⁿCₚ = ⁿC₍ₙ₋ₚ₎. Ex.: ¹⁰C₃ = ¹⁰C₇.' },
+    { st: 2, tag: 'Propriedade', q: 'Casos particulares das combinações', a: 'ⁿC₀ = ⁿCₙ = 1;  ⁿC₁ = n.' },
+    { st: 3, tag: 'Fórmula', q: 'Binómio de Newton', a: '(a+b)ⁿ = Σ (ⁿCₖ) a^(n−k) b^k, com k de 0 a n.' },
+    { st: 3, tag: 'Definição', q: 'O que é o triângulo de Pascal?', a: 'Disposição dos coeficientes binomiais ⁿCₖ; cada número é a soma dos dois acima. Linha n dá os coeficientes de (a+b)ⁿ.' },
+    { st: 3, tag: 'Propriedade', q: 'Regra de Pascal (lei do triângulo)', a: 'ⁿCₖ + ⁿC₍ₖ₊₁₎ = ⁿ⁺¹C₍ₖ₊₁₎.' },
+    { st: 3, tag: 'Propriedade', q: 'Soma de uma linha do triângulo de Pascal', a: 'ⁿC₀ + ⁿC₁ + … + ⁿCₙ = 2ⁿ (número de subconjuntos de um conjunto com n elementos).' },
+    { st: 1, tag: 'Exemplo', q: 'De quantas formas 5 pessoas se sentam numa fila?', a: 'P₅ = 5! = 120.' },
+    { st: 2, tag: 'Exemplo', q: 'Quantas comissões de 3 em 10 pessoas?', a: '¹⁰C₃ = 120 (a ordem não conta).' },
+    { st: 1, tag: 'Exemplo', q: 'Quantos códigos de 3 algarismos distintos com {1..9}?', a: '⁹A₃ = 9×8×7 = 504 (ordenado, sem repetir).' },
+    { st: 3, tag: 'Exemplo', q: 'Termo geral no desenvolvimento de (a+b)ⁿ', a: 'O termo de ordem k+1 é ⁿCₖ · a^(n−k) · b^k.' }
   ],
+  // ── Cap 2 · Probabilidades ──
   2: [
-    { st: 1, tag: 'Fórmula', q: 'Distância entre pontos no espaço', a: 'd(A,B) = √((x_B−x_A)² + (y_B−y_A)² + (z_B−z_A)²).' },
-    { st: 1, tag: 'Fórmula', q: 'Ponto médio no espaço', a: 'M = ((x_A+x_B)/2, (y_A+y_B)/2, (z_A+z_B)/2).' },
-    { st: 1, tag: 'Fórmula', q: 'Equação da superfície esférica', a: '(x−a)² + (y−b)² + (z−c)² = r², com centro (a,b,c) e raio r.' },
-    { st: 2, tag: 'Definição', q: 'Vetor no espaço', a: 'v(v₁, v₂, v₃). Norma: ‖v‖ = √(v₁² + v₂² + v₃²). Vetor AB = B − A.' },
-    { st: 2, tag: 'Fórmula', q: 'Produto escalar de dois vetores', a: 'u · v = u₁v₁ + u₂v₂ + u₃v₃. Também u · v = ‖u‖‖v‖cos(θ).' },
-    { st: 2, tag: 'Regra', q: 'Vetores perpendiculares', a: 'u ⊥ v  ⟺  u · v = 0 (produto escalar nulo).' },
-    { st: 2, tag: 'Fórmula', q: 'Ângulo entre dois vetores', a: 'cos(θ) = (u · v) / (‖u‖ · ‖v‖).' },
-    { st: 3, tag: 'Fórmula', q: 'Equação do plano (forma cartesiana)', a: 'ax + by + cz + d = 0, onde (a, b, c) é um vetor normal ao plano.' },
-    { st: 3, tag: 'Definição', q: 'Vetor normal a um plano', a: 'Um vetor perpendicular ao plano. Em ax + by + cz + d = 0, o vetor normal é (a, b, c).' },
-    { st: 3, tag: 'Fórmula', q: 'Equação vetorial da reta no espaço', a: '(x,y,z) = (x₀,y₀,z₀) + k(v₁,v₂,v₃), k ∈ ℝ.' },
-    { st: 2, tag: 'Regra', q: 'Planos paralelos e perpendiculares', a: 'Paralelos: vetores normais colineares. Perpendiculares: vetores normais perpendiculares (produto escalar 0).' },
-    { st: 2, tag: 'Definição', q: 'Vetores colineares (espaço)', a: 'u e v são colineares se u = k·v para algum escalar k.' },
-    { st: 2, tag: 'Exemplo', q: 'Norma de v(2, 3, 6)?', a: '√(4 + 9 + 36) = √49 = 7.' },
-    { st: 1, tag: 'Exemplo', q: 'Produto escalar de (1,2,3) e (4,−1,2)?', a: '1×4 + 2×(−1) + 3×2 = 4 − 2 + 6 = 8.' },
-    { st: 3, tag: 'Exemplo', q: 'Centro e raio de (x−1)²+(y+2)²+z²=9?', a: 'Centro (1, −2, 0) e raio 3.' },
-    { st: 2, tag: 'Exemplo', q: 'Vetor normal ao plano 2x − y + 3z − 5 = 0?', a: '(2, −1, 3).' }
+    { st: 1, tag: 'Definição', q: 'Lei de Laplace', a: 'Em equiprobabilidade: P(A) = casos favoráveis ÷ casos possíveis.' },
+    { st: 1, tag: 'Definição', q: 'Axiomas de probabilidade', a: '0 ≤ P(A) ≤ 1;  P(Ω) = 1;  se A e B incompatíveis, P(A∪B) = P(A) + P(B).' },
+    { st: 1, tag: 'Fórmula', q: 'Probabilidade da união (regra geral)', a: 'P(A∪B) = P(A) + P(B) − P(A∩B).' },
+    { st: 1, tag: 'Fórmula', q: 'Probabilidade do acontecimento contrário', a: 'P(Ā) = 1 − P(A).' },
+    { st: 2, tag: 'Fórmula', q: 'Probabilidade condicionada', a: 'P(A|B) = P(A∩B) ÷ P(B), com P(B) > 0. "Probabilidade de A sabendo que B ocorreu."' },
+    { st: 2, tag: 'Fórmula', q: 'Regra do produto', a: 'P(A∩B) = P(B) × P(A|B) = P(A) × P(B|A).' },
+    { st: 2, tag: 'Definição', q: 'Teorema da probabilidade total', a: 'Se B e B̄ partem Ω: P(A) = P(A|B)P(B) + P(A|B̄)P(B̄).' },
+    { st: 3, tag: 'Definição', q: 'Acontecimentos independentes', a: 'A e B são independentes se P(A∩B) = P(A) × P(B), ou seja P(A|B) = P(A).' },
+    { st: 3, tag: 'Regra', q: 'Incompatíveis ≠ independentes', a: 'Incompatíveis: A∩B = ∅ (não ocorrem juntos). Independentes: um não afeta o outro. Em geral, incompatíveis com P>0 são DEPENDENTES.' },
+    { st: 1, tag: 'Definição', q: 'Acontecimentos incompatíveis (disjuntos)', a: 'A∩B = ∅: P(A∩B) = 0; logo P(A∪B) = P(A) + P(B).' },
+    { st: 2, tag: 'Estratégia', q: 'Como ler uma tabela de dupla entrada para P(A|B)?', a: 'P(A|B) = (casos em A∩B) ÷ (total da linha/coluna de B).' },
+    { st: 3, tag: 'Definição', q: 'Distribuição de probabilidade', a: 'Tabela que associa a cada valor de uma variável a sua probabilidade; a soma de todas é 1.' },
+    { st: 1, tag: 'Exemplo', q: 'P de sair par num dado?', a: '{2,4,6} → 3/6 = 1/2.' },
+    { st: 2, tag: 'Exemplo', q: 'Dois ases seguidos de um baralho (sem reposição)?', a: '4/52 × 3/51 = 12/2652 = 1/221.' },
+    { st: 3, tag: 'Exemplo', q: 'P(A∪B) com P(A)=0,5, P(B)=0,4, P(A∩B)=0,2', a: '0,5 + 0,4 − 0,2 = 0,7.' },
+    { st: 2, tag: 'Exemplo', q: 'P(A|B) com P(A∩B)=0,2 e P(B)=0,5', a: '0,2 ÷ 0,5 = 0,4.' }
   ],
+  // ── Cap 3 · Funções Reais de Variável Real ──
   3: [
-    { st: 1, tag: 'Definição', q: 'O que é uma sucessão?', a: 'Uma função de domínio ℕ: a cada ordem n associa um termo uₙ. Ex: uₙ = 2n + 1.' },
-    { st: 1, tag: 'Definição', q: 'Termo geral de uma sucessão', a: 'A expressão uₙ que dá qualquer termo em função da ordem n. Ex: uₙ = n² calcula o n-ésimo termo.' },
-    { st: 1, tag: 'Definição', q: 'Sucessão monótona', a: 'Crescente se uₙ₊₁ > uₙ para todo o n; decrescente se uₙ₊₁ < uₙ. Estuda-se o sinal de uₙ₊₁ − uₙ.' },
-    { st: 2, tag: 'Definição', q: 'Progressão aritmética (PA)', a: 'A diferença entre termos consecutivos é constante (razão r). uₙ = u₁ + (n−1)r.' },
-    { st: 2, tag: 'Fórmula', q: 'Soma de n termos de uma PA', a: 'Sₙ = (u₁ + uₙ) × n / 2.' },
-    { st: 3, tag: 'Definição', q: 'Progressão geométrica (PG)', a: 'O quociente entre termos consecutivos é constante (razão r). uₙ = u₁ × r^(n−1).' },
-    { st: 3, tag: 'Fórmula', q: 'Soma de n termos de uma PG', a: 'Sₙ = u₁ × (1 − rⁿ)/(1 − r), com r ≠ 1.' },
-    { st: 1, tag: 'Definição', q: 'Sucessão limitada', a: 'Existe um intervalo [m, M] que contém todos os termos. Tem majorante e minorante.' },
-    { st: 1, tag: 'Definição', q: 'Sucessão definida por recorrência', a: 'Cada termo define-se a partir do(s) anterior(es). Ex: u₁ = 2, uₙ₊₁ = uₙ + 3.' },
-    { st: 2, tag: 'Estratégia', q: 'Como verificar se uma sucessão é PA?', a: 'Calcula uₙ₊₁ − uₙ. Se for constante, é PA e essa constante é a razão.' },
-    { st: 3, tag: 'Estratégia', q: 'Como verificar se uma sucessão é PG?', a: 'Calcula uₙ₊₁ ÷ uₙ. Se for constante (≠0), é PG e esse quociente é a razão.' },
-    { st: 1, tag: 'Definição', q: 'Sucessão convergente', a: 'Aproxima-se de um valor finito (limite) quando n → +∞. Ex: uₙ = 1/n → 0.' },
-    { st: 2, tag: 'Exemplo', q: 'PA com u₁=3 e r=4: o 10.º termo?', a: 'u₁₀ = 3 + 9×4 = 39.' },
-    { st: 3, tag: 'Exemplo', q: 'PG com u₁=2 e r=3: o 4.º termo?', a: 'u₄ = 2 × 3³ = 2 × 27 = 54.' },
-    { st: 1, tag: 'Exemplo', q: 'A sucessão uₙ = 2n − 1 é crescente?', a: 'uₙ₊₁ − uₙ = 2 > 0 → é crescente.' },
-    { st: 2, tag: 'Exemplo', q: 'Soma dos 5 primeiros termos da PA 2,5,8,11,14?', a: 'S₅ = (2 + 14)×5/2 = 40.' }
+    { st: 1, tag: 'Definição', q: 'O que é o limite de f(x) quando x→a?', a: 'O valor para que f(x) tende quando x se aproxima de a. Existe se os limites laterais forem iguais.' },
+    { st: 1, tag: 'Regra', q: 'Indeterminações mais comuns', a: '0/0, ∞/∞, ∞−∞, 0×∞, 1^∞. É preciso levantar (fatorizar, racionalizar, regras…).' },
+    { st: 1, tag: 'Estratégia', q: 'Limite de função racional em ±∞', a: 'Compara os graus: numerador < denominador → 0; iguais → quociente dos coeficientes; maior → ±∞.' },
+    { st: 1, tag: 'Estratégia', q: 'Levantar 0/0 numa função racional', a: 'Fatoriza numerador e denominador e simplifica o fator comum (x−a).' },
+    { st: 2, tag: 'Definição', q: 'Função contínua num ponto', a: 'f é contínua em a se existe f(a), existe lim(x→a)f(x), e são iguais.' },
+    { st: 2, tag: 'Teorema', q: 'Teorema de Bolzano-Cauchy', a: 'Se f é contínua em [a,b] e f(a), f(b) têm sinais contrários, então existe c em ]a,b[ com f(c)=0.' },
+    { st: 2, tag: 'Teorema', q: 'Teorema de Weierstrass', a: 'Uma função contínua num intervalo fechado [a,b] tem máximo e mínimo absolutos nesse intervalo.' },
+    { st: 3, tag: 'Definição', q: 'Assíntota vertical', a: 'x = a é assíntota vertical se lim(x→a) f(x) = ±∞ (em geral nos pontos onde a função não está definida).' },
+    { st: 3, tag: 'Fórmula', q: 'Assíntota não vertical (oblíqua/horizontal)', a: 'y = mx + b, com m = lim(x→±∞) f(x)/x e b = lim(x→±∞) [f(x) − mx]. Se m=0, é horizontal.' },
+    { st: 4, tag: 'Definição', q: 'Derivada de f num ponto', a: "f'(a) = lim(h→0) [f(a+h) − f(a)]/h. É o declive da reta tangente em (a, f(a))." },
+    { st: 4, tag: 'Regra', q: 'Sinal da 1.ª derivada e monotonia', a: "f'>0 → f crescente; f'<0 → f decrescente; f'=0 com mudança de sinal → extremo." },
+    { st: 4, tag: 'Regra', q: 'Sinal da 2.ª derivada e concavidade', a: "f''>0 → concavidade para cima; f''<0 → para baixo; f''=0 com mudança → ponto de inflexão." },
+    { st: 1, tag: 'Exemplo', q: 'lim(x→+∞) (3x²+1)/(x²−5)', a: 'Graus iguais → quociente dos coeficientes dos termos de maior grau = 3/1 = 3.' },
+    { st: 1, tag: 'Exemplo', q: 'lim(x→2) (x²−4)/(x−2)', a: 'Fatoriza: (x−2)(x+2)/(x−2) = x+2 → 4.' },
+    { st: 2, tag: 'Exemplo', q: 'Aplica Bolzano a f(x)=x³−x−1 em [1,2]', a: 'f(1)=−1<0 e f(2)=5>0; f contínua → existe zero em ]1,2[.' },
+    { st: 4, tag: 'Exemplo', q: "Derivada de f(x)=x³−2x", a: "f'(x)=3x²−2." }
   ],
+  // ── Cap 4 · Trigonometria e Funções Trigonométricas ──
   4: [
-    { st: 1, tag: 'Definição', q: 'O que é o limite de uma sucessão?', a: 'O valor de que os termos se aproximam quando n → +∞. Escreve-se lim uₙ.' },
-    { st: 1, tag: 'Regra', q: 'Limites notáveis de sucessões', a: 'lim 1/n = 0; lim (1 + 1/n)ⁿ = e ≈ 2,718; lim rⁿ = 0 se |r| < 1.' },
-    { st: 1, tag: 'Definição', q: 'Sucessão divergente', a: 'Não tende para um valor finito: tende para +∞, −∞ ou oscila sem limite.' },
-    { st: 2, tag: 'Definição', q: 'Limite de uma função num ponto', a: 'lim(x→a) f(x) = L significa que f(x) se aproxima de L quando x se aproxima de a.' },
-    { st: 2, tag: 'Regra', q: 'Limites laterais', a: 'O limite existe num ponto se os limites à esquerda e à direita forem iguais: lim(x→a⁻) = lim(x→a⁺).' },
-    { st: 2, tag: 'Estratégia', q: 'Indeterminação 0/0', a: 'Fatoriza numerador e denominador e simplifica o fator comum, depois substitui. Ex: (x²−1)/(x−1) → x+1 → 2 (x→1).' },
-    { st: 2, tag: 'Estratégia', q: 'Indeterminação ∞/∞ (funções racionais)', a: 'Compara os graus: divide tudo pela maior potência ou usa o quociente dos termos de maior grau.' },
-    { st: 2, tag: 'Definição', q: 'O que é uma assíntota vertical?', a: 'A reta x = a tal que lim(x→a) f(x) = ±∞. Surge onde a função "explode" (ex: denominador zero).' },
-    { st: 2, tag: 'Definição', q: 'O que é uma assíntota horizontal?', a: 'A reta y = b tal que lim(x→±∞) f(x) = b. Descreve o comportamento da função no infinito.' },
-    { st: 3, tag: 'Definição', q: 'Função contínua num ponto', a: 'f é contínua em a se existe f(a), existe lim(x→a) f(x) e são iguais: lim(x→a) f(x) = f(a).' },
-    { st: 3, tag: 'Definição', q: 'Continuidade num intervalo', a: 'f é contínua em [a,b] se é contínua em todos os pontos. O seu gráfico não tem "saltos".' },
-    { st: 3, tag: 'Teorema', q: 'Teorema de Bolzano (valor intermédio)', a: 'Se f é contínua em [a,b] e f(a)·f(b) < 0, então existe c em ]a,b[ tal que f(c) = 0 (há um zero).' },
-    { st: 2, tag: 'Exemplo', q: 'lim(x→2) (x² − 4)/(x − 2)?', a: '(x²−4)/(x−2) = (x−2)(x+2)/(x−2) = x+2 → 4.' },
-    { st: 2, tag: 'Exemplo', q: 'lim(x→+∞) (3x² + 1)/(x² − 5)?', a: 'Mesmo grau: quociente dos coeficientes principais = 3/1 = 3.' },
-    { st: 1, tag: 'Exemplo', q: 'lim 1/n quando n→+∞?', a: '0.' },
-    { st: 2, tag: 'Exemplo', q: 'Assíntota horizontal de f(x)=(2x)/(x+1)?', a: 'lim(x→±∞) = 2 → assíntota y = 2.' }
+    { st: 1, tag: 'Fórmula', q: 'Fórmula fundamental da trigonometria', a: 'sen²x + cos²x = 1.' },
+    { st: 1, tag: 'Fórmula', q: 'Seno e cosseno da soma', a: 'sen(a+b)=sen a cos b + cos a sen b;  cos(a+b)=cos a cos b − sen a sen b.' },
+    { st: 1, tag: 'Fórmula', q: 'Seno e cosseno do ângulo duplo', a: 'sen(2a)=2 sen a cos a;  cos(2a)=cos²a − sen²a = 2cos²a − 1 = 1 − 2sen²a.' },
+    { st: 1, tag: 'Fórmula', q: 'Fórmulas de diferença', a: 'sen(a−b)=sen a cos b − cos a sen b;  cos(a−b)=cos a cos b + sen a sen b.' },
+    { st: 2, tag: 'Fórmula', q: 'Derivada do seno e do cosseno', a: "(sen x)' = cos x;  (cos x)' = −sen x." },
+    { st: 2, tag: 'Fórmula', q: 'Derivada de funções trigonométricas compostas', a: "(sen u)' = u' cos u;  (cos u)' = −u' sen u, pela regra da cadeia." },
+    { st: 2, tag: 'Fórmula', q: 'Derivada da tangente', a: "(tg x)' = 1/cos²x = sec²x." },
+    { st: 3, tag: 'Fórmula', q: 'Limite notável do seno', a: 'lim(x→0) sen(x)/x = 1. Base para as derivadas trigonométricas.' },
+    { st: 3, tag: 'Fórmula', q: 'Outro limite notável', a: 'lim(x→0) (1 − cos x)/x = 0.' },
+    { st: 1, tag: 'Definição', q: 'Oscilador harmónico', a: 'Movimento descrito por x(t)=A sen(ωt+φ): A=amplitude, ω=pulsação, φ=fase. Período T = 2π/ω.' },
+    { st: 1, tag: 'Definição', q: 'Radiano', a: 'Ângulo cujo arco tem comprimento igual ao raio. 180° = π rad.' },
+    { st: 2, tag: 'Definição', q: 'Equação diferencial do oscilador', a: "x'' = −ω²x: a 2.ª derivada é proporcional (com sinal −) à própria função." },
+    { st: 1, tag: 'Exemplo', q: 'sen(2x) em x=π/4', a: 'sen(π/2) = 1.' },
+    { st: 2, tag: 'Exemplo', q: "Derivada de f(x)=sen(3x)", a: "f'(x)=3cos(3x)." },
+    { st: 3, tag: 'Exemplo', q: 'lim(x→0) sen(5x)/x', a: '= 5 · lim sen(5x)/(5x) = 5×1 = 5.' },
+    { st: 1, tag: 'Exemplo', q: 'Período de x(t)=sen(2t)', a: 'T = 2π/2 = π.' }
   ],
+  // ── Cap 5 · Funções Exponenciais e Logarítmicas ──
   5: [
-    { st: 1, tag: 'Definição', q: 'O que é a taxa de variação média?', a: 'tvm = (f(b) − f(a))/(b − a). É o declive da reta secante entre os pontos (a, f(a)) e (b, f(b)).' },
-    { st: 1, tag: 'Definição', q: 'O que é a derivada num ponto?', a: 'f\'(a) = lim(h→0) (f(a+h) − f(a))/h. É o declive da reta tangente ao gráfico em (a, f(a)).' },
-    { st: 2, tag: 'Regra', q: 'Derivada de uma potência', a: '(xⁿ)\' = n·x^(n−1). Ex: (x³)\' = 3x²; (x)\' = 1; (constante)\' = 0.' },
-    { st: 2, tag: 'Regra', q: 'Derivada da soma e do produto por constante', a: '(f + g)\' = f\' + g\'  e  (k·f)\' = k·f\'.' },
-    { st: 2, tag: 'Regra', q: 'Regra do produto', a: '(f·g)\' = f\'·g + f·g\'.' },
-    { st: 2, tag: 'Regra', q: 'Regra do quociente', a: '(f/g)\' = (f\'·g − f·g\') / g².' },
-    { st: 2, tag: 'Regra', q: 'Derivada da função composta (regra da cadeia)', a: '(f(g(x)))\' = f\'(g(x)) · g\'(x).' },
-    { st: 3, tag: 'Estratégia', q: 'Como estudar a monotonia com a derivada?', a: 'f\'(x) > 0 → f crescente; f\'(x) < 0 → f decrescente. Os zeros de f\' são candidatos a extremos.' },
-    { st: 3, tag: 'Definição', q: 'O que é um extremo relativo?', a: 'Um máximo ou mínimo local. Ocorre onde f\' muda de sinal (de + para − → máximo; de − para + → mínimo).' },
-    { st: 3, tag: 'Estratégia', q: 'Equação da reta tangente num ponto a', a: 'y = f(a) + f\'(a)·(x − a). O declive é f\'(a).' },
-    { st: 2, tag: 'Definição', q: 'Pontos críticos', a: 'Os valores de x onde f\'(x) = 0 ou f\' não existe. São candidatos a máximos/mínimos.' },
-    { st: 1, tag: 'Definição', q: 'Derivada de funções trigonométricas', a: '(sen x)\' = cos x; (cos x)\' = −sen x.' },
-    { st: 2, tag: 'Exemplo', q: 'Deriva f(x) = 3x² − 5x + 2', a: 'f\'(x) = 6x − 5.' },
-    { st: 1, tag: 'Exemplo', q: 'tvm de f(x)=x² em [1, 3]?', a: '(9 − 1)/(3 − 1) = 8/2 = 4.' },
-    { st: 2, tag: 'Exemplo', q: 'Deriva f(x) = x⁴', a: 'f\'(x) = 4x³.' },
-    { st: 1, tag: 'Exemplo', q: 'Declive da tangente a f(x)=x² em x=2?', a: 'f\'(x) = 2x → f\'(2) = 4.' }
+    { st: 1, tag: 'Definição', q: 'O que é o número de Neper (e)?', a: 'e ≈ 2,718…  É o limite de (1 + 1/n)ⁿ quando n→+∞. Base da exponencial natural.' },
+    { st: 1, tag: 'Propriedade', q: 'Propriedades das potências (exponencial)', a: 'aˣ·aʸ = aˣ⁺ʸ;  aˣ/aʸ = aˣ⁻ʸ;  (aˣ)ʸ = aˣʸ;  a⁰ = 1.' },
+    { st: 1, tag: 'Definição', q: 'Função exponencial', a: 'f(x)=aˣ com a>0, a≠1. Se a>1 é crescente; se 0<a<1 é decrescente. Contradomínio ]0, +∞[.' },
+    { st: 2, tag: 'Definição', q: 'Logaritmo: definição', a: 'log_a(b) = c  ⟺  aᶜ = b (a>0, a≠1, b>0). ln = log de base e.' },
+    { st: 2, tag: 'Propriedade', q: 'Propriedades dos logaritmos', a: 'log(xy)=log x+log y;  log(x/y)=log x−log y;  log(xⁿ)=n log x;  log_a(a)=1;  log_a(1)=0.' },
+    { st: 2, tag: 'Fórmula', q: 'Mudança de base', a: 'log_a(b) = log_c(b) / log_c(a). Útil para calcular na calculadora (base 10 ou e).' },
+    { st: 3, tag: 'Estratégia', q: 'Resolver aˣ = b', a: 'Aplica logaritmo a ambos os lados: x = log_a(b) = ln b / ln a.' },
+    { st: 3, tag: 'Estratégia', q: 'Resolver uma equação logarítmica', a: 'Junta os logs num só, passa à forma exponencial e VERIFICA o domínio (argumentos > 0).' },
+    { st: 1, tag: 'Fórmula', q: 'Derivada da exponencial', a: "(eˣ)' = eˣ;  (aˣ)' = aˣ · ln a;  (e^u)' = u' e^u." },
+    { st: 2, tag: 'Fórmula', q: 'Derivada do logaritmo', a: "(ln x)' = 1/x;  (ln u)' = u'/u;  (log_a x)' = 1/(x ln a)." },
+    { st: 3, tag: 'Fórmula', q: 'Limites notáveis (exponencial/log)', a: 'lim(x→+∞) eˣ/xⁿ = +∞ (a exponencial cresce mais que qualquer potência); lim(x→0) (eˣ−1)/x = 1.' },
+    { st: 1, tag: 'Definição', q: 'Função logarítmica', a: 'f(x)=log_a x é a inversa da exponencial. Domínio ]0,+∞[, contradomínio ℝ. Assíntota vertical x=0.' },
+    { st: 1, tag: 'Exemplo', q: 'log₂(8)', a: '2³ = 8 → log₂(8) = 3.' },
+    { st: 3, tag: 'Exemplo', q: 'Resolve 2ˣ = 16', a: '2ˣ = 2⁴ → x = 4.' },
+    { st: 2, tag: 'Exemplo', q: 'ln(e³)', a: '= 3, porque ln e = 1.' },
+    { st: 1, tag: 'Exemplo', q: "Derivada de f(x)=e^(2x)", a: "f'(x)=2e^(2x)." }
   ],
+  // ── Cap 6 · Primitivas e Cálculo Integral ──
   6: [
-    { st: 1, tag: 'Definição', q: 'O que é o fatorial n!?', a: 'O produto de todos os naturais de 1 a n: n! = n × (n−1) × … × 2 × 1. Por convenção, 0! = 1.' },
-    { st: 1, tag: 'Fórmula', q: 'Arranjos (sem repetição)', a: 'ⁿAₚ = n!/(n−p)!. Conta sequências ordenadas de p elementos de um conjunto de n.' },
-    { st: 1, tag: 'Fórmula', q: 'Combinações', a: 'ⁿCₚ = n!/(p!(n−p)!). Conta subconjuntos de p elementos (ordem não importa).' },
-    { st: 1, tag: 'Fórmula', q: 'Permutações', a: 'O número de ordenações de n elementos distintos é n!.' },
-    { st: 1, tag: 'Regra', q: 'Triângulo de Pascal', a: 'Cada número é a soma dos dois acima. As linhas dão os coeficientes ⁿCₚ do binómio de Newton.' },
-    { st: 1, tag: 'Fórmula', q: 'Binómio de Newton', a: '(a + b)ⁿ = Σ ⁿCₖ · a^(n−k) · bᵏ, para k de 0 a n.' },
-    { st: 2, tag: 'Fórmula', q: 'Regra de Laplace', a: 'P(A) = casos favoráveis / casos possíveis (em casos equiprováveis). 0 ≤ P(A) ≤ 1.' },
-    { st: 2, tag: 'Fórmula', q: 'Probabilidade condicionada', a: 'P(A|B) = P(A ∩ B) / P(B), com P(B) ≠ 0. É a probabilidade de A sabendo que B ocorreu.' },
-    { st: 2, tag: 'Regra', q: 'Acontecimentos independentes', a: 'A e B são independentes se P(A ∩ B) = P(A) × P(B), ou seja P(A|B) = P(A).' },
-    { st: 2, tag: 'Fórmula', q: 'Probabilidade da reunião', a: 'P(A ∪ B) = P(A) + P(B) − P(A ∩ B). Se incompatíveis: P(A ∪ B) = P(A) + P(B).' },
-    { st: 3, tag: 'Definição', q: 'Acontecimento contrário', a: 'P(Ā) = 1 − P(A).' },
-    { st: 1, tag: 'Definição', q: 'Valor médio de uma variável aleatória', a: 'μ = Σ xᵢ · P(X = xᵢ). É a "média esperada" da distribuição.' },
-    { st: 1, tag: 'Exemplo', q: 'Quanto é 5!?', a: '5 × 4 × 3 × 2 × 1 = 120.' },
-    { st: 2, tag: 'Exemplo', q: 'Quantas combinações ⁵C₂?', a: '5!/(2!3!) = (5×4)/(2×1) = 10.' },
-    { st: 2, tag: 'Exemplo', q: 'P(A|B) se P(A∩B)=0,2 e P(B)=0,5?', a: '0,2 / 0,5 = 0,4.' },
-    { st: 1, tag: 'Exemplo', q: 'P de duas caras ao lançar 2 moedas?', a: 'Independentes: ½ × ½ = ¼ = 0,25.' }
+    { st: 1, tag: 'Definição', q: 'O que é uma primitiva de f?', a: "Uma função F tal que F'(x) = f(x). As primitivas diferem por uma constante: F(x) + C." },
+    { st: 1, tag: 'Fórmula', q: 'Primitiva de uma potência', a: 'P(xⁿ) = x^(n+1)/(n+1) + C, para n ≠ −1.' },
+    { st: 1, tag: 'Fórmula', q: 'Primitiva de 1/x', a: 'P(1/x) = ln|x| + C.' },
+    { st: 1, tag: 'Fórmula', q: 'Primitivas elementares', a: 'P(eˣ)=eˣ+C;  P(sen x)=−cos x+C;  P(cos x)=sen x+C.' },
+    { st: 1, tag: 'Propriedade', q: 'Linearidade da primitivação', a: 'P(af + bg) = a·P(f) + b·P(g): primitiva-se termo a termo.' },
+    { st: 2, tag: 'Definição', q: 'Integral definido', a: '∫ₐᵇ f(x) dx representa a área algébrica entre o gráfico de f e o eixo Ox, de a a b.' },
+    { st: 2, tag: 'Teorema', q: 'Teorema Fundamental do Cálculo (Barrow)', a: '∫ₐᵇ f(x) dx = F(b) − F(a), onde F é uma primitiva de f.' },
+    { st: 2, tag: 'Propriedade', q: 'Propriedades do integral definido', a: '∫ₐᵃ f = 0;  ∫ₐᵇ f = −∫ᵦᵃ f;  ∫ₐᵇ f = ∫ₐᶜ f + ∫ᶜᵇ f.' },
+    { st: 3, tag: 'Estratégia', q: 'Área entre o gráfico e o eixo Ox', a: 'A = ∫ₐᵇ |f(x)| dx. Onde f<0, a área conta-se em módulo (ou separa-se nos zeros).' },
+    { st: 3, tag: 'Estratégia', q: 'Área entre duas curvas f e g', a: 'A = ∫ₐᵇ [f(x) − g(x)] dx, com f ≥ g no intervalo (senão usa-se o módulo).' },
+    { st: 2, tag: 'Regra', q: 'Sinal do integral', a: 'Se f ≥ 0 em [a,b], ∫ₐᵇ f ≥ 0. Onde f é negativa, o integral é negativo (área "abaixo" do eixo).' },
+    { st: 1, tag: 'Exemplo', q: 'Primitiva de f(x)=x²', a: 'x³/3 + C.' },
+    { st: 2, tag: 'Exemplo', q: '∫₀¹ x² dx', a: '[x³/3]₀¹ = 1/3 − 0 = 1/3.' },
+    { st: 2, tag: 'Exemplo', q: '∫₁ᵉ (1/x) dx', a: '[ln|x|]₁ᵉ = ln e − ln 1 = 1 − 0 = 1.' },
+    { st: 1, tag: 'Exemplo', q: 'Primitiva de f(x)=cos x', a: 'sen x + C.' },
+    { st: 3, tag: 'Exemplo', q: 'Área sob y=2x entre x=0 e x=3', a: '∫₀³ 2x dx = [x²]₀³ = 9.' }
+  ],
+  // ── Cap 7 · Números Complexos ──
+  7: [
+    { st: 1, tag: 'Definição', q: 'Unidade imaginária', a: 'i é o número tal que i² = −1. Logo √(−1) = i.' },
+    { st: 1, tag: 'Definição', q: 'Forma algébrica de um complexo', a: 'z = a + bi, com a = parte real Re(z) e b = parte imaginária Im(z).' },
+    { st: 1, tag: 'Definição', q: 'Conjugado de um complexo', a: 'Se z = a + bi, o conjugado é z̄ = a − bi. Reflete z no eixo real.' },
+    { st: 1, tag: 'Fórmula', q: 'Módulo de um complexo', a: '|z| = √(a² + b²). É a distância de z à origem no plano de Argand.' },
+    { st: 1, tag: 'Regra', q: 'Potências de i', a: 'i¹=i, i²=−1, i³=−i, i⁴=1 e repete com período 4. Ex.: i²⁷ = i^(4×6+3) = i³ = −i.' },
+    { st: 2, tag: 'Estratégia', q: 'Como dividir complexos?', a: 'Multiplica numerador e denominador pelo conjugado do denominador. Ex.: 1/(a+bi) = (a−bi)/(a²+b²).' },
+    { st: 2, tag: 'Definição', q: 'Forma trigonométrica', a: 'z = ρ(cos θ + i sen θ) = ρ cis θ, com ρ = |z| e θ = argumento (ângulo).' },
+    { st: 2, tag: 'Fórmula', q: 'Argumento de um complexo', a: 'θ tal que cos θ = a/ρ e sen θ = b/ρ. Atenção ao quadrante onde z se encontra.' },
+    { st: 3, tag: 'Fórmula', q: 'Produto na forma trigonométrica', a: 'ρ₁cis θ₁ × ρ₂cis θ₂ = (ρ₁ρ₂) cis(θ₁+θ₂): multiplicam-se módulos e somam-se argumentos.' },
+    { st: 3, tag: 'Fórmula', q: 'Fórmula de De Moivre', a: '(ρ cis θ)ⁿ = ρⁿ cis(nθ).' },
+    { st: 3, tag: 'Fórmula', q: 'Raízes de índice n', a: 'Um complexo tem n raízes de índice n: ⁿ√ρ · cis((θ+2kπ)/n), k=0,…,n−1. Formam um polígono regular.' },
+    { st: 2, tag: 'Definição', q: 'Plano de Argand (complexo)', a: 'Plano onde z=a+bi é o ponto (a,b): eixo Ox = parte real, eixo Oy = parte imaginária.' },
+    { st: 1, tag: 'Exemplo', q: '(2+3i) + (1−i)', a: '= 3 + 2i (soma-se parte real com real e imaginária com imaginária).' },
+    { st: 1, tag: 'Exemplo', q: '(1+i)(1−i)', a: '= 1 − i² = 1 − (−1) = 2.' },
+    { st: 1, tag: 'Exemplo', q: 'Módulo de z = 3 + 4i', a: '√(9+16) = √25 = 5.' },
+    { st: 3, tag: 'Exemplo', q: 'i¹⁰⁰', a: '100 = 4×25 → i¹⁰⁰ = (i⁴)²⁵ = 1.' }
   ]
 };
 
@@ -169,7 +194,7 @@ function mat12SwitchTab(tab, btn) {
 
   var titles = { resumo:'Teoria', praticar:'Praticar', fichas:'Fichas', progresso:'Progresso',
                  exercicios:'Exercícios', quiz:'Quiz', flashcards:'Flashcards', teste:'Teste', jogos:'Jogos' };
-  if (titles[tab]) document.title = 'Mat. 11.º ' + titles[tab] + ' · 3ponto14';
+  if (titles[tab]) document.title = 'Mat. 12.º ' + titles[tab] + ' · 3ponto14';
 
   if (tab === 'resumo') mat12BuildResumoNav();
   else if (tab === 'exercicios') mat12BuildPraticarNav();
@@ -300,9 +325,10 @@ function _mat12Gerador(cap) {
   if (cap === 4 && typeof buildEx_m12c4 === 'function') return buildEx_m12c4;
   if (cap === 5 && typeof buildEx_m12c5 === 'function') return buildEx_m12c5;
   if (cap === 6 && typeof buildEx_m12c6 === 'function') return buildEx_m12c6;
+  if (cap === 7 && typeof buildEx_m12c7 === 'function') return buildEx_m12c7;
   return null;
 }
-var _mat12TemasCount = { 1: 3, 2: 3, 3: 3, 4: 3, 5: 3, 6: 3 };
+var _mat12TemasCount = { 1: 3, 2: 3, 3: 4, 4: 3, 5: 3, 6: 3, 7: 3 };
 
 // Estado da prática
 var _mat12Prat = { cap: 1, st: 0, nivel: 'medio', score: { correct: 0, total: 0 }, answered: {}, exs: [] };
@@ -351,12 +377,13 @@ function mat12PraticarSetNivel(nivel, btn) {
 
 // Mapa subtema → temas a usar no gerador (Cap 1 Números)
 var _mat12SubtemaTemas = {
-  1: { 1: ['1'], 2: ['2'], 3: ['3'] },  // Radianos · Fórmula fundamental · Equações trig
-  2: { 1: ['1'], 2: ['2'], 3: ['3'] },  // Distâncias/esfera · Vetores/produto escalar · Planos
-  3: { 1: ['1'], 2: ['2'], 3: ['3'] },  // Termo geral/monotonia · PA · PG
-  4: { 1: ['1'], 2: ['2'], 3: ['3'] },  // Limites de sucessões · Limites de funções · Continuidade
-  5: { 1: ['1'], 2: ['2'], 3: ['3'] },  // tvm/derivada · Regras · Tangente
-  6: { 1: ['1'], 2: ['2'], 3: ['3'] }   // Combinatória · Probabilidade condicionada · Laplace
+  1: { 1: ['1'], 2: ['2'], 3: ['3'] },        // Arranjos/permutações · Combinações · Binómio
+  2: { 1: ['1'], 2: ['2'], 3: ['3'] },        // Laplace/axiomas · Condicionada · Independentes
+  3: { 1: ['1'], 2: ['2'], 3: ['3'], 4: ['4'] }, // Limites · Continuidade/Bolzano · Assíntotas · Derivadas
+  4: { 1: ['1'], 2: ['2'], 3: ['3'] },        // Fórmulas · Derivadas sen/cos · Limites notáveis
+  5: { 1: ['1'], 2: ['2'], 3: ['3'] },        // Exponencial · Logarítmica · Equações
+  6: { 1: ['1'], 2: ['2'], 3: ['3'] },        // Primitivas · Integral · Áreas
+  7: { 1: ['1'], 2: ['2'], 3: ['3'] }         // Forma algébrica · Forma trigonométrica · Operações
 };
 
 function mat12GerarExercicios() {
@@ -410,7 +437,7 @@ function mat12GerarExercicios() {
     var _selA = _mat12PratSel();
     var _stA = (_selA.caps.length === 1 && (_selA.stsByCap[cap] || []).length === 1) ? _selA.stsByCap[cap][0] : 0;
     var _sn = (_mat12Subtemas[cap] && _stA > 0) ? (_mat12Subtemas[cap][_stA - 1] || '') : '';
-    Atribuir.montar('mat12-atribuir', { curso: 'mat12', cursoNome: 'Matemática 11.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_stA || ''), subNome: _sn, tipo: 'quiz', nivel: _mat12Prat.nivel });
+    Atribuir.montar('mat12-atribuir', { curso: 'mat12', cursoNome: 'Matemática 12.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_stA || ''), subNome: _sn, tipo: 'quiz', nivel: _mat12Prat.nivel });
   }
 }
 
@@ -443,7 +470,7 @@ function mat12SaveProgress(cap, correct) {
   } catch (e) {}
 }
 
-// Regista atividade no ProgressManager (XP + streak), com capId próprio do 11.º ano
+// Regista atividade no ProgressManager (XP + streak), com capId próprio do 12.º ano
 // ('m12capN') para não misturar com o progresso do 7.º ano.
 function _mat12PM(cap, tipo, opts) {
   if (typeof ProgressManager === 'undefined') return;
@@ -805,7 +832,7 @@ function mat12TesteFinish() {
    ════════════════════════════════════════════════════════════════ */
 var _mat12JogosInited = false;
 function mat12JogosInit() {
-  (function(){ var pj=document.getElementById('mat12p-jogos'); if(pj && !document.getElementById('mat12-jogos-atr')){ var d=document.createElement('div'); d.id='mat12-jogos-atr'; d.style.margin='0 0 .8rem'; if(pj.firstChild) pj.insertBefore(d,pj.firstChild); else pj.appendChild(d); } if(typeof Atribuir!=='undefined'&&Atribuir.montar) Atribuir.montar('mat12-jogos-atr',{curso:'mat12',cursoNome:'Matemática 11.º',tipo:'jogo',nivel:'',caps:_mat12CapMeta.map(function(mm){return {n:mm.n,label:mm.label};})}); })();
+  (function(){ var pj=document.getElementById('mat12p-jogos'); if(pj && !document.getElementById('mat12-jogos-atr')){ var d=document.createElement('div'); d.id='mat12-jogos-atr'; d.style.margin='0 0 .8rem'; if(pj.firstChild) pj.insertBefore(d,pj.firstChild); else pj.appendChild(d); } if(typeof Atribuir!=='undefined'&&Atribuir.montar) Atribuir.montar('mat12-jogos-atr',{curso:'mat12',cursoNome:'Matemática 12.º',tipo:'jogo',nivel:'',caps:_mat12CapMeta.map(function(mm){return {n:mm.n,label:mm.label};})}); })();
   _mat12PM(_mat12Prat.cap || 1, 'jogo');
   if (_mat12JogosInited) return;
   if (typeof _j24AutoInit === 'function') {
@@ -874,7 +901,7 @@ function mat12RenderProgresso() {
      + '<button onclick="mat12ProgDownloadPDF()" style="font-family:inherit;font-size:.82rem;font-weight:700;color:#8b3a35;background:none;border:none;cursor:pointer;text-decoration:underline;padding:0">Guarda o relatório PDF</button> para o manteres.</span>'
      + '</div>';
 
-  // Resumo global (gradiente terracota do 11.º ano)
+  // Resumo global (gradiente terracota do 12.º ano)
   h += '<div style="background:var(--m12c1-base);border:1.5px solid var(--m12c1-mid);border-radius:16px;padding:1.1rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap">'
      +   '<div style="width:52px;height:52px;border-radius:50%;background:var(--m12c1-mid);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ph ' + icon + '" style="font-size:1.4rem;color:#fff"></i></div>'
      +   '<div style="flex:1;min-width:180px">'
@@ -884,7 +911,7 @@ function mat12RenderProgresso() {
      +   '<button class="btn btn-ghost" onclick="mat12ProgDownloadPDF()" style="font-size:.78rem;padding:7px 14px;display:inline-flex;align-items:center;gap:5px"><i class="ph ph-file-text"></i>Relatório PDF</button>'
      + '</div>';
 
-  // XP + streak do ProgressManager (apenas dos capítulos do 11.º ano)
+  // XP + streak do ProgressManager (apenas dos capítulos do 12.º ano)
   var pmXp = 0, pmStreak = 0;
   if (typeof ProgressManager !== 'undefined') {
     try {
@@ -951,9 +978,9 @@ function mat12TreinarCap(cap) {
 }
 
 function mat12ProgReset() {
-  if (typeof window !== 'undefined' && window.confirm && !window.confirm('Limpar todo o progresso do 11.º ano? Esta ação não pode ser desfeita.')) return;
+  if (typeof window !== 'undefined' && window.confirm && !window.confirm('Limpar todo o progresso do 12.º ano? Esta ação não pode ser desfeita.')) return;
   for (var cap = 1; cap <= _mat12CapMeta.length; cap++) { try { localStorage.removeItem('edupt_mat12_cap' + cap); } catch (e) {} }
-  // Remove só os capítulos do 11.º ano (m12cap*) do ProgressManager, preservando os outros anos.
+  // Remove só os capítulos do 12.º ano (m12cap*) do ProgressManager, preservando os outros anos.
   try {
     var raw = localStorage.getItem('edupt_progress_v2');
     if (raw) {
@@ -963,7 +990,7 @@ function mat12ProgReset() {
     }
   } catch (e) {}
   mat12RenderProgresso();
-  if (typeof eduToast === 'function') eduToast('Progresso do 11.º ano limpo.', 'ok');
+  if (typeof eduToast === 'function') eduToast('Progresso do 12.º ano limpo.', 'ok');
 }
 
 function mat12ProgDownloadPDF() {
@@ -978,7 +1005,7 @@ function mat12ProgDownloadPDF() {
       + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.total > 0 ? c.pct + '%' : '-') + '</td></tr>';
   }).join('');
   var html = '<div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;padding:24px">'
-    + '<h1 style="font-size:20px;margin:0 0 4px">Relatório de Progresso · Matemática 11.º Ano</h1>'
+    + '<h1 style="font-size:20px;margin:0 0 4px">Relatório de Progresso · Matemática 12.º Ano</h1>'
     + '<div style="color:#666;font-size:13px;margin-bottom:16px">3ponto14 · ' + new Date().toLocaleString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' }) + '</div>'
     + eduAlunoLinhaPDF()
     + '<div style="background:#eef2f0;border:1px solid #9ab5aa;border-radius:8px;padding:12px 16px;margin-bottom:16px">'
@@ -1243,7 +1270,7 @@ function mat12gfGerar(formato) {
   var nomesCaps = capsSel.map(function(c) { return _mat12CapMeta[c - 1].label; }).join(', ');
   var html = '<div style="font-family:Arial,sans-serif;max-width:740px;margin:0 auto;padding:24px;color:#222">'
     + '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #36527a;padding-bottom:8px;margin-bottom:14px">'
-    + '<div><h1 style="font-size:18px;margin:0">Ficha de Trabalho · Matemática 11.º Ano</h1>'
+    + '<div><h1 style="font-size:18px;margin:0">Ficha de Trabalho · Matemática 12.º Ano</h1>'
     + '<div style="font-size:11.5px;color:#666">' + nomesCaps + ' · Nível ' + difLabel + '</div></div>'
     + '<div style="font-size:11.5px;color:#888">3ponto14</div></div>'
     + '<div style="font-size:11.5px;color:#666;margin-bottom:12px">Nome: ____________________________  Data: ____ / ____ / ______</div>'
@@ -1310,351 +1337,298 @@ var dynState_m81 = {
 };
 
 /* ════════════════════════════════════════════════════════════════
-   GERADORES DE EXERCÍCIOS - Matemática A · 11.º ano
+   GERADORES DE EXERCÍCIOS - Matemática A · 12.º ano
    Reutilizam os helpers genéricos acima (rnd_m81, shuffle_m81…).
    ════════════════════════════════════════════════════════════════ */
 
-// ═══ CAP 1 · Trigonometria ═══
-// Temas: 1 Conversão graus↔rad · 2 Fórmula fundamental · 3 Período / valores
+// ═══════════════════════════════════════════════════════════════
+//   GERADORES DE EXERCÍCIOS · Matemática A · 12.º ano (7 domínios)
+//   Cada buildEx_m12cN(tema, tipo, dif) → {enun, tipo, opcoes?, resposta, expl, tema}
+//   Helpers usados: rnd_m81, reduce_m81, fmtFrac_m81, _fatorial_m12, _comb_m12, _arr_m12
+// ═══════════════════════════════════════════════════════════════
+function _fatorial_m12(n){ var r=1; for(var i=2;i<=n;i++) r*=i; return r; }
+function _arr_m12(n,p){ var r=1; for(var i=0;i<p;i++) r*=(n-i); return r; }              // arranjos n A p
+function _comb_m12(n,p){ return _arr_m12(n,p)/_fatorial_m12(p); }                          // combinações n C p
+
+// ═══ CAP 1 · Cálculo Combinatório ═══
+// Temas: 1 Arranjos/Permutações · 2 Combinações · 3 Binómio/Pascal
 function buildEx_m12c1(tema, tipo, dif) {
   tema = String(tema);
   if (tema === '1') {
-    var graus = [30, 45, 60, 90, 120, 135, 150, 180, 270, 360][rnd_m81(0, 9)];
-    var fracs = { 30: 'π/6', 45: 'π/4', 60: 'π/3', 90: 'π/2', 120: '2π/3', 135: '3π/4', 150: '5π/6', 180: 'π', 270: '3π/2', 360: '2π' };
-    return {
-      enun: 'Converte <strong>' + graus + '°</strong> para radianos.',
-      tipo: 'fill_frac', resposta: fracs[graus],
-      expl: graus + '° × π/180 = ' + fracs[graus] + ' rad.',
-      tema: 'T1 · Radianos'
-    };
+    if (Math.random() < 0.5) {
+      var nP = rnd_m81(3, 6);
+      return { enun: 'De quantas formas diferentes se podem sentar <strong>' + nP + ' pessoas</strong> numa fila?',
+        tipo: 'fill', resposta: String(_fatorial_m12(nP)),
+        expl: 'É uma permutação: P' + nP + ' = ' + nP + '! = ' + _fatorial_m12(nP) + '.', tema: 'T1 · Permutações' };
+    }
+    var n = rnd_m81(5, 9), p = rnd_m81(2, 3);
+    return { enun: 'Quantas sequências ordenadas de <strong>' + p + '</strong> elementos distintos se formam a partir de <strong>' + n + '</strong> elementos?',
+      tipo: 'fill', resposta: String(_arr_m12(n, p)),
+      expl: 'Arranjos sem repetição: ' + n + 'A' + p + ' = ' + n + '!/(' + n + '−' + p + ')! = ' + _arr_m12(n, p) + '.', tema: 'T1 · Arranjos' };
   }
   if (tema === '2') {
-    // dado sen, achar cos (ângulo agudo). Só pares com 1 casa decimal EXATA
-    // (sen,cos): garantem que sen²+cos²=1 e que arredondam sem ambiguidade.
-    var pares = [[0.6, 0.8], [0.8, 0.6]];
-    var pr = pares[rnd_m81(0, pares.length - 1)];
-    var dadoSen = Math.random() < 0.5;
-    var senV = pr[0], cosV = pr[1];
-    var fmt = function (x) { return x.toFixed(1).replace('.', ','); };
-    var sq = function (x) { return (x * x).toFixed(2).replace('.', ','); };
-    if (dadoSen) {
-      return {
-        enun: 'Sendo sen(α) = ' + fmt(senV) + ' e α agudo, calcula cos(α). (usa sen²+cos²=1)',
-        tipo: 'fill_frac', resposta: fmt(cosV),
-        expl: 'cos²α = 1 − sen²α = 1 − ' + sq(senV) + ' = ' + sq(cosV) + ' → cos α = ' + fmt(cosV) + '.',
-        tema: 'T2 · Fórmula Fundamental'
-      };
-    }
-    return {
-      enun: 'Sendo cos(α) = ' + fmt(cosV) + ' e α agudo, calcula sen(α). (usa sen²+cos²=1)',
-      tipo: 'fill_frac', resposta: fmt(senV),
-      expl: 'sen²α = 1 − cos²α = 1 − ' + sq(cosV) + ' = ' + sq(senV) + ' → sen α = ' + fmt(senV) + '.',
-      tema: 'T2 · Fórmula Fundamental'
-    };
+    var n2 = rnd_m81(5, 10), p2 = rnd_m81(2, 3);
+    return { enun: 'Quantos grupos (não ordenados) de <strong>' + p2 + '</strong> se podem formar a partir de <strong>' + n2 + '</strong> pessoas?',
+      tipo: 'fill', resposta: String(_comb_m12(n2, p2)),
+      expl: 'Combinações (ordem não conta): ' + n2 + 'C' + p2 + ' = ' + _comb_m12(n2, p2) + '.', tema: 'T2 · Combinações' };
   }
-  // tema 3 · período de sen/cos(kx)
-  var k = rnd_m81(2, 6);
-  var fn = Math.random() < 0.5 ? 'sen' : 'cos';
-  var periodos = { 2: '2π/2 = π', 3: '2π/3', 4: '2π/4 = π/2', 5: '2π/5', 6: '2π/6 = π/3' };
-  var resp = { 2: 'π', 3: '2π/3', 4: 'π/2', 5: '2π/5', 6: 'π/3' };
-  return {
-    enun: 'Qual é o período da função <strong>y = ' + fn + '(' + k + 'x)</strong>?',
-    tipo: 'fill_frac', resposta: resp[k],
-    expl: 'Período = 2π ÷ ' + k + ' = ' + resp[k] + '.',
-    tema: 'T3 · Período'
-  };
+  // tema 3 · binómio / Pascal
+  if (Math.random() < 0.5) {
+    var nB = rnd_m81(4, 8);
+    return { enun: 'Quantos termos tem o desenvolvimento de <strong>(a + b)<sup>' + nB + '</sup></strong>?',
+      tipo: 'fill', resposta: String(nB + 1),
+      expl: '(a+b)ⁿ tem n+1 termos: ' + nB + ' + 1 = ' + (nB + 1) + '.', tema: 'T3 · Binómio' };
+  }
+  var nL = rnd_m81(3, 7);
+  return { enun: 'Qual é a soma de todos os elementos da linha <strong>' + nL + '</strong> do triângulo de Pascal?',
+    tipo: 'fill', resposta: String(Math.pow(2, nL)),
+    expl: 'A soma da linha n é 2ⁿ = 2^' + nL + ' = ' + Math.pow(2, nL) + '.', tema: 'T3 · Pascal' };
 }
 
-// ═══ CAP 2 · Geometria no Espaço ═══
-// Temas: 1 Norma/distância 3D · 2 Produto escalar · 3 Esfera (centro/raio)
+// ═══ CAP 2 · Probabilidades ═══
+// Temas: 1 Laplace/contrário · 2 União/condicionada · 3 Independentes
 function buildEx_m12c2(tema, tipo, dif) {
   tema = String(tema);
-  // ternos pitagóricos 3D: (a,b,c) com a²+b²+c²=d²
-  var QUAD = [[1, 2, 2, 3], [2, 3, 6, 7], [1, 4, 8, 9], [4, 4, 7, 9], [2, 6, 9, 11], [6, 6, 7, 11]];
   if (tema === '1') {
-    var q = QUAD[rnd_m81(0, QUAD.length - 1)];
-    var v1 = q[0] * (Math.random() < 0.5 ? 1 : -1), v2 = q[1] * (Math.random() < 0.5 ? 1 : -1), v3 = q[2] * (Math.random() < 0.5 ? 1 : -1);
-    return {
-      enun: 'Calcula a norma do vetor <strong>v(' + v1 + ', ' + v2 + ', ' + v3 + ')</strong>.',
-      tipo: 'fill', resposta: String(q[3]),
-      expl: '‖v‖ = √(' + _parenSeNeg(v1) + '² + ' + _parenSeNeg(v2) + '² + ' + _parenSeNeg(v3) + '²) = √(' + (v1 * v1) + ' + ' + (v2 * v2) + ' + ' + (v3 * v3) + ') = √' + (q[3] * q[3]) + ' = ' + q[3] + '.',
-      tema: 'T1 · Distâncias'
-    };
+    var ctx = [
+      { e: 'sair número par no lançamento de um dado', f: 3, t: 6 },
+      { e: 'sair número maior que 4 num dado', f: 2, t: 6 },
+      { e: 'tirar uma carta de copas de um baralho de 40', f: 10, t: 40 },
+      { e: 'sair uma figura num naipe de 10 cartas', f: 3, t: 10 }
+    ];
+    var c = ctx[rnd_m81(0, ctx.length - 1)];
+    var rr = reduce_m81(c.f, c.t);
+    return { enun: 'Qual é a probabilidade de <strong>' + c.e + '</strong>? (fração irredutível)',
+      tipo: 'fill_frac', resposta: fmtFrac_m81(rr[0], rr[1]),
+      expl: 'P = casos favoráveis / casos possíveis = ' + c.f + '/' + c.t + ' = ' + fmtFrac_m81(rr[0], rr[1]) + '.', tema: 'T1 · Laplace' };
   }
   if (tema === '2') {
-    var a1 = rnd_m81(-5, 5), a2 = rnd_m81(-5, 5), a3 = rnd_m81(-5, 5);
-    var b1 = rnd_m81(-5, 5), b2 = rnd_m81(-5, 5), b3 = rnd_m81(-5, 5);
-    var pe = a1 * b1 + a2 * b2 + a3 * b3;
-    return {
-      enun: 'Calcula o produto escalar de <strong>u(' + a1 + ', ' + a2 + ', ' + a3 + ')</strong> e <strong>v(' + b1 + ', ' + b2 + ', ' + b3 + ')</strong>.',
-      tipo: 'fill', resposta: String(pe),
-      expl: 'u · v = ' + a1 + '×' + b1 + ' + ' + a2 + '×' + b2 + ' + ' + a3 + '×' + b3 + ' = ' + pe + '.' + (pe === 0 ? ' (São perpendiculares!)' : ''),
-      tema: 'T2 · Produto Escalar'
-    };
+    // P(A|B) = P(A∩B)/P(B), frações com mesmo denominador
+    var total = [8, 10, 12, 20][rnd_m81(0, 3)];
+    var inter = rnd_m81(1, total / 2);
+    var pbNum = rnd_m81(inter, total);
+    var res = reduce_m81(inter, pbNum);
+    return { enun: 'Sabendo que P(A ∩ B) = ' + inter + '/' + total + ' e P(B) = ' + pbNum + '/' + total + ', calcula P(A | B). (fração irredutível)',
+      tipo: 'fill_frac', resposta: fmtFrac_m81(res[0], res[1]),
+      expl: 'P(A|B) = P(A∩B)/P(B) = ' + inter + '/' + pbNum + ' = ' + fmtFrac_m81(res[0], res[1]) + '.', tema: 'T2 · Condicionada' };
   }
-  // tema 3 · esfera centro/raio
-  var ca = rnd_m81(-4, 4), cb = rnd_m81(-4, 4), cc = rnd_m81(-4, 4), r = rnd_m81(2, 6);
-  var eq = '(x ' + (ca === 0 ? '' : (ca > 0 ? '− ' + ca : '+ ' + (-ca))) + ')² + (y ' + (cb === 0 ? '' : (cb > 0 ? '− ' + cb : '+ ' + (-cb))) + ')² + (z ' + (cc === 0 ? '' : (cc > 0 ? '− ' + cc : '+ ' + (-cc))) + ')² = ' + (r * r);
-  var pedeRaio = Math.random() < 0.5;
-  if (pedeRaio) {
-    return {
-      enun: 'Qual é o raio da superfície esférica <strong>' + eq + '</strong>?',
-      tipo: 'fill', resposta: String(r),
-      expl: 'r² = ' + (r * r) + ' → r = ' + r + '.',
-      tema: 'T3 · Esfera'
-    };
-  }
-  return {
-    enun: 'Qual é o centro da superfície esférica <strong>' + eq + '</strong>? (forma (a, b, c))',
-    tipo: 'fill_frac', resposta: '(' + ca + ',' + cb + ',' + cc + ')',
-    expl: 'Centro = (' + ca + ', ' + cb + ', ' + cc + ').',
-    tema: 'T3 · Esfera'
-  };
+  // tema 3 · independentes: P(A∩B)=P(A)×P(B)
+  var pa = [[1, 2], [1, 3], [2, 3], [1, 4], [3, 4]][rnd_m81(0, 4)];
+  var pb = [[1, 2], [1, 3], [2, 5], [1, 5]][rnd_m81(0, 3)];
+  var num = pa[0] * pb[0], den = pa[1] * pb[1];
+  var r3 = reduce_m81(num, den);
+  return { enun: 'A e B são independentes, com P(A) = ' + fmtFrac_m81(pa[0], pa[1]) + ' e P(B) = ' + fmtFrac_m81(pb[0], pb[1]) + '. Calcula P(A ∩ B). (fração irredutível)',
+    tipo: 'fill_frac', resposta: fmtFrac_m81(r3[0], r3[1]),
+    expl: 'Independentes: P(A∩B) = P(A) × P(B) = ' + fmtFrac_m81(pa[0], pa[1]) + ' × ' + fmtFrac_m81(pb[0], pb[1]) + ' = ' + fmtFrac_m81(r3[0], r3[1]) + '.', tema: 'T3 · Independentes' };
 }
 
-// ═══ CAP 3 · Sucessões ═══
-// Temas: 1 Termo geral · 2 PA · 3 PG
+// ═══ CAP 3 · Funções Reais de Variável Real ═══
+// Temas: 1 Limites · 2 Continuidade/Bolzano · 3 Assíntotas · 4 Derivadas
 function buildEx_m12c3(tema, tipo, dif) {
   tema = String(tema);
   if (tema === '1') {
-    // termo de ordem n de uma sucessão dada por termo geral
-    var a = rnd_m81(1, 5), b = rnd_m81(-5, 5), n = rnd_m81(3, 12);
-    var un = a * n + b;
-    var expr = (a === 1 ? 'n' : a + 'n') + (b === 0 ? '' : (b > 0 ? ' + ' + b : ' − ' + Math.abs(b)));
-    return {
-      enun: 'Considera a sucessão de termo geral <strong>uₙ = ' + expr + '</strong>. Calcula u' + _sub_m12(n) + '.',
-      tipo: 'fill', resposta: String(un),
-      expl: 'u' + _sub_m12(n) + ' = ' + a + '×' + n + (b >= 0 ? ' + ' + b : ' − ' + Math.abs(b)) + ' = ' + un + '.',
-      tema: 'T1 · Termo Geral'
-    };
+    if (Math.random() < 0.5) {
+      // limite racional em +inf, graus iguais
+      var a = rnd_m81(2, 6), b = rnd_m81(1, 5);
+      var rl = reduce_m81(a, b);
+      return { enun: 'Calcula <strong>lim<sub>x→+∞</sub> (' + a + 'x² + 1)/(' + b + 'x² − 3)</strong>. (fração irredutível)',
+        tipo: 'fill_frac', resposta: fmtFrac_m81(rl[0], rl[1]),
+        expl: 'Graus iguais → quociente dos coeficientes de maior grau = ' + a + '/' + b + ' = ' + fmtFrac_m81(rl[0], rl[1]) + '.', tema: 'T1 · Limites' };
+    }
+    // 0/0: (x²-k²)/(x-k) -> 2k
+    var k = rnd_m81(2, 7);
+    return { enun: 'Calcula <strong>lim<sub>x→' + k + '</sub> (x² − ' + (k * k) + ')/(x − ' + k + ')</strong>.',
+      tipo: 'fill', resposta: String(2 * k),
+      expl: 'Fatoriza: (x−' + k + ')(x+' + k + ')/(x−' + k + ') = x+' + k + ' → ' + (2 * k) + '.', tema: 'T1 · Limites' };
   }
   if (tema === '2') {
-    // PA: u1, razão r, termo de ordem n
-    var u1 = rnd_m81(1, 8), r = rndNZ_m81(-4, 5), n = rnd_m81(5, 15);
-    var un = u1 + (n - 1) * r;
-    return {
-      enun: 'Numa progressão aritmética, u₁ = ' + u1 + ' e a razão é ' + r + '. Qual é o ' + n + '.º termo?',
-      tipo: 'fill', resposta: String(un),
-      expl: 'uₙ = u₁ + (n−1)×r = ' + u1 + ' + ' + (n - 1) + '×' + r + ' = ' + un + '.',
-      tema: 'T2 · Progressão Aritmética'
-    };
+    // Bolzano: f(x)=x³+? com sinais opostos em [a,a+1]
+    var aa = rnd_m81(1, 3);
+    return { enun: 'A função f(x) = x³ − x − ' + (aa + 1) + ' é contínua. Em qual intervalo o Teorema de Bolzano garante um zero?',
+      tipo: 'mc', opcoes: ['[' + aa + ', ' + (aa + 1) + ']', '[−1, 0]', '[0, 1]', '[' + (aa + 3) + ', ' + (aa + 4) + ']'],
+      resposta: '[' + aa + ', ' + (aa + 1) + ']',
+      expl: 'Bolzano exige f com sinais contrários nos extremos; isso ocorre em [' + aa + ', ' + (aa + 1) + '] (f muda de − para +).', tema: 'T2 · Bolzano' };
   }
-  // tema 3 · PG: termo de ordem n
-  var u1g = rnd_m81(1, 4), rg = rnd_m81(2, 3), ng = rnd_m81(3, 6);
-  var ung = u1g * Math.pow(rg, ng - 1);
-  return {
-    enun: 'Numa progressão geométrica, u₁ = ' + u1g + ' e a razão é ' + rg + '. Qual é o ' + ng + '.º termo?',
-    tipo: 'fill', resposta: String(ung),
-    expl: 'uₙ = u₁ × r^(n−1) = ' + u1g + ' × ' + rg + '^' + (ng - 1) + ' = ' + u1g + ' × ' + Math.pow(rg, ng - 1) + ' = ' + ung + '.',
-    tema: 'T3 · Progressão Geométrica'
-  };
+  if (tema === '3') {
+    // assíntota horizontal de função racional graus iguais
+    var p = rnd_m81(2, 6), q = rnd_m81(1, 4);
+    var rh = reduce_m81(p, q);
+    return { enun: 'Qual é a assíntota horizontal do gráfico de <strong>f(x) = (' + p + 'x + 1)/(' + q + 'x − 2)</strong>?',
+      tipo: 'fill_frac', resposta: 'y=' + fmtFrac_m81(rh[0], rh[1]),
+      expl: 'Graus iguais → y = ' + p + '/' + q + ' = ' + fmtFrac_m81(rh[0], rh[1]) + '. (escreve y=valor)', tema: 'T3 · Assíntotas' };
+  }
+  // tema 4 · derivada de polinómio, avaliar em ponto
+  var c2 = rnd_m81(2, 5), c1 = rnd_m81(1, 6), x0 = rnd_m81(1, 4);
+  var deriv = 2 * c2 * x0 - c1;
+  return { enun: 'Sendo f(x) = ' + c2 + 'x² − ' + c1 + 'x + 3, calcula f′(' + x0 + ').',
+    tipo: 'fill', resposta: String(deriv),
+    expl: 'f′(x) = ' + (2 * c2) + 'x − ' + c1 + '; f′(' + x0 + ') = ' + (2 * c2) + '×' + x0 + ' − ' + c1 + ' = ' + deriv + '.', tema: 'T4 · Derivadas' };
 }
-function _sub_m12(n) { var m = { '0': '₀', '1': '₁', '2': '₂', '3': '₃', '4': '₄', '5': '₅', '6': '₆', '7': '₇', '8': '₈', '9': '₉' }; return String(n).split('').map(function (c) { return m[c] || c; }).join(''); }
 
-// ═══ CAP 4 · Limites e Continuidade ═══
-// Temas: 1 Limite de sucessão · 2 Limite racional (∞/∞) · 3 Limite 0/0 (fatorizar)
+// ═══ CAP 4 · Trigonometria e Funções Trigonométricas ═══
+// Temas: 1 Valores/fórmulas · 2 Derivadas sen/cos · 3 Limites notáveis
 function buildEx_m12c4(tema, tipo, dif) {
   tema = String(tema);
   if (tema === '1') {
-    // lim de (a n + b)/(c n + d) = a/c ; ou de constante/n = 0
-    var kind = rnd_m81(0, 1);
-    if (kind === 0) {
-      var a = rnd_m81(2, 8), c = rnd_m81(2, 8);
-      while (c === 0) c = rnd_m81(2, 8);
-      var g = _gcd_m12(a, c);
-      var resp = (c / g === 1) ? String(a / g) : (a / g) + '/' + (c / g);
-      return {
-        enun: 'Calcula lim(n→+∞) de <strong>(' + a + 'n + 1)/(' + c + 'n − 2)</strong>.',
-        tipo: 'fill_frac', resposta: resp,
-        expl: 'Mesmo grau (n): o limite é o quociente dos coeficientes de n → ' + a + '/' + c + (resp !== a + '/' + c ? ' = ' + resp : '') + '.',
-        tema: 'T1 · Limite de Sucessão'
-      };
-    }
-    var k = rnd_m81(2, 20);
-    return {
-      enun: 'Calcula lim(n→+∞) de <strong>' + k + '/n</strong>.',
-      tipo: 'fill', resposta: '0',
-      expl: 'Quando n → +∞, ' + k + '/n aproxima-se de 0.',
-      tema: 'T1 · Limite de Sucessão'
-    };
+    // ângulo duplo: sen(2a)=2 sen a cos a com (sen,cos) conhecidos
+    var pares = [[0.6, 0.8], [0.8, 0.6]];
+    var pr = pares[rnd_m81(0, 1)];
+    var d2 = (2 * pr[0] * pr[1]); // sen(2a)
+    return { enun: 'Sendo sen(a) = ' + String(pr[0]).replace('.', ',') + ' e cos(a) = ' + String(pr[1]).replace('.', ',') + ', calcula sen(2a). (usa sen 2a = 2 sen a cos a)',
+      tipo: 'fill', resposta: String(d2).replace('.', ','),
+      expl: 'sen(2a) = 2 × ' + String(pr[0]).replace('.', ',') + ' × ' + String(pr[1]).replace('.', ',') + ' = ' + String(d2).replace('.', ',') + '.', tema: 'T1 · Fórmulas' };
   }
   if (tema === '2') {
-    // lim x→∞ de função racional, mesmo grau
-    var a2 = rnd_m81(2, 9), c2 = rnd_m81(2, 9);
-    var g2 = _gcd_m12(a2, c2);
-    var resp2 = (c2 / g2 === 1) ? String(a2 / g2) : (a2 / g2) + '/' + (c2 / g2);
-    return {
-      enun: 'Calcula lim(x→+∞) de <strong>(' + a2 + 'x² + 1)/(' + c2 + 'x² − 5)</strong>.',
-      tipo: 'fill_frac', resposta: resp2,
-      expl: 'Mesmo grau (x²): quociente dos coeficientes principais = ' + a2 + '/' + c2 + (resp2 !== a2 + '/' + c2 ? ' = ' + resp2 : '') + '.',
-      tema: 'T2 · Limite de Função'
-    };
+    // derivada de sen(kx) ou cos(kx) em x: forma simbólica
+    var k = rnd_m81(2, 6);
+    if (Math.random() < 0.5) {
+      return { enun: 'Qual é a derivada de <strong>f(x) = sen(' + k + 'x)</strong>?',
+        tipo: 'mc', opcoes: [k + 'cos(' + k + 'x)', 'cos(' + k + 'x)', '−' + k + 'cos(' + k + 'x)', k + 'sen(' + k + 'x)'],
+        resposta: k + 'cos(' + k + 'x)',
+        expl: '(sen u)′ = u′ cos u, com u = ' + k + 'x → ' + k + 'cos(' + k + 'x).', tema: 'T2 · Derivadas sen/cos' };
+    }
+    return { enun: 'Qual é a derivada de <strong>f(x) = cos(' + k + 'x)</strong>?',
+      tipo: 'mc', opcoes: ['−' + k + 'sen(' + k + 'x)', k + 'sen(' + k + 'x)', '−sen(' + k + 'x)', k + 'cos(' + k + 'x)'],
+      resposta: '−' + k + 'sen(' + k + 'x)',
+      expl: '(cos u)′ = −u′ sen u, com u = ' + k + 'x → −' + k + 'sen(' + k + 'x).', tema: 'T2 · Derivadas sen/cos' };
   }
-  // tema 3 · 0/0 do tipo (x²−a²)/(x−a) → x→a dá 2a
-  var a3 = rnd_m81(1, 8);
-  var lim = 2 * a3;
-  return {
-    enun: 'Calcula lim(x→' + a3 + ') de <strong>(x² − ' + (a3 * a3) + ')/(x − ' + a3 + ')</strong>.',
-    tipo: 'fill', resposta: String(lim),
-    expl: '(x² − ' + (a3 * a3) + ') = (x − ' + a3 + ')(x + ' + a3 + '). Simplifica → x + ' + a3 + '. Para x = ' + a3 + ': ' + a3 + ' + ' + a3 + ' = ' + lim + '.',
-    tema: 'T3 · Indeterminação 0/0'
-  };
+  // tema 3 · limite notável lim sen(kx)/x = k
+  var k3 = rnd_m81(2, 8);
+  return { enun: 'Calcula <strong>lim<sub>x→0</sub> sen(' + k3 + 'x)/x</strong>.',
+    tipo: 'fill', resposta: String(k3),
+    expl: 'lim sen(' + k3 + 'x)/x = ' + k3 + ' × lim sen(' + k3 + 'x)/(' + k3 + 'x) = ' + k3 + ' × 1 = ' + k3 + '.', tema: 'T3 · Limites notáveis' };
 }
-function _gcd_m12(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { var t = b; b = a % b; a = t; } return a || 1; }
 
-// ═══ CAP 5 · Derivadas ═══
-// Temas: 1 Derivar polinómio (valor num ponto) · 2 tvm · 3 Declive da tangente
+// ═══ CAP 5 · Funções Exponenciais e Logarítmicas ═══
+// Temas: 1 Exponencial/equações · 2 Logaritmos · 3 Derivadas
 function buildEx_m12c5(tema, tipo, dif) {
   tema = String(tema);
   if (tema === '1') {
-    // f(x)=a x² + b x + c ; f'(x)=2a x + b ; pede f'(x0)
-    var a = rndNZ_m81(1, 5), b = rnd_m81(-6, 6), c = rnd_m81(-6, 6), x0 = rnd_m81(-4, 4);
-    var dval = 2 * a * x0 + b;
-    var bx = (Math.abs(b) === 1 ? 'x' : Math.abs(b) + 'x');
-    var _tc11 = c === 0 ? '' : (c > 0 ? ' + ' + c : ' − ' + Math.abs(c)); // omite termo c se 0
-    var f = 'f(x) = ' + (a === 1 ? 'x²' : a + 'x²') + (b === 0 ? '' : (b > 0 ? ' + ' + bx : ' − ' + bx)) + _tc11;
-    return {
-      enun: 'Sendo <strong>' + f + '</strong>, calcula f\'(' + x0 + ').',
-      tipo: 'fill', resposta: String(dval),
-      expl: 'f\'(x) = ' + (2 * a) + 'x ' + (b >= 0 ? '+ ' + b : '− ' + Math.abs(b)) + '. f\'(' + x0 + ') = ' + (2 * a) + '×' + x0 + (b >= 0 ? ' + ' + b : ' − ' + Math.abs(b)) + ' = ' + dval + '.',
-      tema: 'T1 · Derivar'
-    };
+    // a^x = a^k -> x=k
+    var base = [2, 3, 5][rnd_m81(0, 2)], exp = rnd_m81(2, 5);
+    return { enun: 'Resolve a equação <strong>' + base + '<sup>x</sup> = ' + Math.pow(base, exp) + '</strong>.',
+      tipo: 'fill', resposta: String(exp),
+      expl: base + '^x = ' + base + '^' + exp + ' → x = ' + exp + '.', tema: 'T1 · Exponencial' };
   }
   if (tema === '2') {
-    // tvm de f(x)=x² em [a,b]
-    var aa = rnd_m81(-3, 3), bb = aa + rnd_m81(2, 5);
-    var tvm = (bb * bb - aa * aa) / (bb - aa); // = a+b
-    return {
-      enun: 'Calcula a taxa de variação média de <strong>f(x) = x²</strong> no intervalo [' + aa + ', ' + bb + '].',
-      tipo: 'fill', resposta: String(tvm),
-      expl: 'tvm = (f(' + bb + ') − f(' + aa + '))/(' + bb + ' − ' + aa + ') = (' + (bb * bb) + ' − ' + (aa * aa) + ')/' + (bb - aa) + ' = ' + tvm + '.',
-      tema: 'T2 · Taxa de Variação'
-    };
+    // log_b(b^k)=k
+    var b = [2, 3, 10][rnd_m81(0, 2)], v = rnd_m81(2, 4);
+    return { enun: 'Calcula <strong>log<sub>' + b + '</sub>(' + Math.pow(b, v) + ')</strong>.',
+      tipo: 'fill', resposta: String(v),
+      expl: 'log_' + b + '(' + b + '^' + v + ') = ' + v + '.', tema: 'T2 · Logaritmos' };
   }
-  // tema 3 · declive da tangente a f(x)=x² em x0 (a=1 p/ caber no gráfico)
-  var a3 = 1, x3 = rnd_m81(-2, 2);
-  var decl = 2 * a3 * x3;
-  var y3 = a3 * x3 * x3;
-  var visTg = (typeof EduVisual !== 'undefined') ? EduVisual.grafico(
-    function (x) { return a3 * x * x; },
-    { range: 5, color: '#4a8a74', markers: [{ x: x3, y: y3, label: 'P' }] }
-  ) : '';
-  return {
-    enun: 'A figura mostra o gráfico de <strong>f(x) = x²</strong>. Qual é o declive da reta tangente no ponto de abcissa ' + x3 + '?',
-    visual: visTg,
-    tipo: 'fill', resposta: String(decl),
-    expl: 'O declive é f\'(' + x3 + '). f\'(x) = 2x → f\'(' + x3 + ') = 2×' + x3 + ' = ' + decl + '.',
-    tema: 'T3 · Tangente'
-  };
+  // tema 3 · derivada de e^(kx)
+  var k = rnd_m81(2, 6);
+  return { enun: 'Qual é a derivada de <strong>f(x) = e<sup>' + k + 'x</sup></strong>?',
+    tipo: 'mc', opcoes: [k + 'e^(' + k + 'x)', 'e^(' + k + 'x)', k + 'x·e^(' + k + 'x)', '(' + k + 'x)e^(' + (k - 1) + 'x)'],
+    resposta: k + 'e^(' + k + 'x)',
+    expl: '(e^u)′ = u′ e^u, com u = ' + k + 'x → ' + k + 'e^(' + k + 'x).', tema: 'T3 · Derivadas' };
 }
 
-// ═══ CAP 6 · Probabilidades e Combinatória ═══
-// Temas: 1 Fatorial/combinações · 2 Probabilidade condicionada · 3 Laplace
+// ═══ CAP 6 · Primitivas e Cálculo Integral ═══
+// Temas: 1 Primitivas · 2 Integral definido · 3 Áreas
 function buildEx_m12c6(tema, tipo, dif) {
   tema = String(tema);
-  function fat(n) { var r = 1; for (var i = 2; i <= n; i++) r *= i; return r; }
-  function comb(n, p) { return fat(n) / (fat(p) * fat(n - p)); }
   if (tema === '1') {
-    var kind = rnd_m81(0, 1);
-    if (kind === 0) {
-      var n = rnd_m81(3, 6);
-      return {
-        enun: 'Calcula <strong>' + n + '!</strong> (fatorial de ' + n + ').',
-        tipo: 'fill', resposta: String(fat(n)),
-        expl: n + '! = ' + (function () { var a = []; for (var i = n; i >= 1; i--) a.push(i); return a.join(' × '); })() + ' = ' + fat(n) + '.',
-        tema: 'T1 · Combinatória'
-      };
-    }
-    var nn = rnd_m81(4, 8), pp = rnd_m81(2, nn - 1);
-    return {
-      enun: 'Calcula o número de combinações <strong>' + nn + 'C' + pp + '</strong>.',
-      tipo: 'fill', resposta: String(comb(nn, pp)),
-      expl: nn + 'C' + pp + ' = ' + nn + '! / (' + pp + '! × ' + (nn - pp) + '!) = ' + comb(nn, pp) + '.',
-      tema: 'T1 · Combinatória'
-    };
+    // primitiva de x^n -> x^(n+1)/(n+1)
+    var n = rnd_m81(2, 5);
+    return { enun: 'Qual é uma primitiva de <strong>f(x) = x<sup>' + n + '</sup></strong>?',
+      tipo: 'mc', opcoes: ['x^' + (n + 1) + '/' + (n + 1) + ' + C', n + 'x^' + (n - 1) + ' + C', (n + 1) + 'x^' + n + ' + C', 'x^' + n + ' + C'],
+      resposta: 'x^' + (n + 1) + '/' + (n + 1) + ' + C',
+      expl: 'P(xⁿ) = x^(n+1)/(n+1) + C → x^' + (n + 1) + '/' + (n + 1) + ' + C.', tema: 'T1 · Primitivas' };
   }
   if (tema === '2') {
-    // P(A|B) = P(A∩B)/P(B), valores "redondos"
-    var inter = [1, 2, 2, 3][rnd_m81(0, 3)], total = [4, 5, 8, 10][rnd_m81(0, 3)];
-    var pb = [4, 5, 8, 10][rnd_m81(0, 3)];
-    // usar frações simples: P(A∩B)=inter/total, P(B)=pbNum/total
-    var pbNum = rnd_m81(inter, total); // P(B) >= P(A∩B)
-    var res = reduce_m81(inter, pbNum);
-    return {
-      enun: 'Sabendo que P(A ∩ B) = ' + inter + '/' + total + ' e P(B) = ' + pbNum + '/' + total + ', calcula P(A | B). (fração irredutível)',
-      tipo: 'fill_frac', resposta: fmtFrac_m81(res[0], res[1]),
-      expl: 'P(A|B) = P(A∩B)/P(B) = (' + inter + '/' + total + ') ÷ (' + pbNum + '/' + total + ') = ' + inter + '/' + pbNum + ' = ' + fmtFrac_m81(res[0], res[1]) + '.',
-      tema: 'T2 · Prob. Condicionada'
-    };
+    // integral de a*x de 0 a b = a*b²/2  (escolher a,b com resultado inteiro)
+    var a = [2, 4, 6][rnd_m81(0, 2)], b = rnd_m81(1, 4);
+    var val = a * b * b / 2;
+    return { enun: 'Calcula <strong>∫<sub>0</sub><sup>' + b + '</sup> ' + a + 'x dx</strong>.',
+      tipo: 'fill', resposta: String(val),
+      expl: '∫ ' + a + 'x dx = ' + a + 'x²/2 = ' + (a / 2) + 'x². De 0 a ' + b + ': ' + (a / 2) + '×' + (b * b) + ' = ' + val + '.', tema: 'T2 · Integral' };
   }
-  // tema 3 · Laplace (dado/baralho)
-  var ctx = [
-    { e: 'sair um número par num dado', f: 3, t: 6 },
-    { e: 'sair um número maior que 4 num dado', f: 2, t: 6 },
-    { e: 'tirar uma carta de copas de um baralho de 40', f: 10, t: 40 },
-    { e: 'sair uma figura (rei, dama ou valete) num naipe de 10 cartas', f: 3, t: 10 }
-  ];
-  var c = ctx[rnd_m81(0, ctx.length - 1)];
-  var rr = reduce_m81(c.f, c.t);
-  return {
-    enun: 'Qual é a probabilidade de <strong>' + c.e + '</strong>? (fração irredutível)',
-    tipo: 'fill_frac', resposta: fmtFrac_m81(rr[0], rr[1]),
-    expl: 'P = casos favoráveis / casos possíveis = ' + c.f + '/' + c.t + ' = ' + fmtFrac_m81(rr[0], rr[1]) + '.',
-    tema: 'T3 · Laplace'
-  };
+  // tema 3 · área sob y=x² de 0 a b = b³/3 (b múltiplo de 3 p/ inteiro)
+  var bb = [3, 6][rnd_m81(0, 1)];
+  var area = bb * bb * bb / 3;
+  return { enun: 'Qual é a área entre o gráfico de <strong>y = x²</strong>, o eixo Ox e a reta x = ' + bb + '?',
+    tipo: 'fill', resposta: String(area),
+    expl: 'A = ∫₀^' + bb + ' x² dx = [x³/3]₀^' + bb + ' = ' + (bb * bb * bb) + '/3 = ' + area + '.', tema: 'T3 · Áreas' };
 }
 
+// ═══ CAP 7 · Números Complexos ═══
+// Temas: 1 Operações forma algébrica · 2 Módulo/conjugado · 3 Potências de i
+function buildEx_m12c7(tema, tipo, dif) {
+  tema = String(tema);
+  if (tema === '1') {
+    var a = rnd_m81(1, 5), b = rnd_m81(1, 5), c = rnd_m81(1, 5), d = rnd_m81(1, 5);
+    if (Math.random() < 0.5) {
+      return { enun: 'Calcula <strong>(' + a + ' + ' + b + 'i) + (' + c + ' + ' + d + 'i)</strong>.',
+        tipo: 'fill', resposta: (a + c) + '+' + (b + d) + 'i',
+        expl: 'Soma parte real com real e imaginária com imaginária: (' + a + '+' + c + ') + (' + b + '+' + d + ')i = ' + (a + c) + '+' + (b + d) + 'i.', tema: 'T1 · Forma algébrica' };
+    }
+    // (a+bi)(a-bi) = a²+b² (real)
+    return { enun: 'Calcula <strong>(' + a + ' + ' + b + 'i)(' + a + ' − ' + b + 'i)</strong>.',
+      tipo: 'fill', resposta: String(a * a + b * b),
+      expl: '(a+bi)(a−bi) = a² + b² = ' + (a * a) + ' + ' + (b * b) + ' = ' + (a * a + b * b) + '.', tema: 'T1 · Forma algébrica' };
+  }
+  if (tema === '2') {
+    // módulo de a+bi com (a,b) terno pitagórico -> inteiro
+    var ter = [[3, 4, 5], [6, 8, 10], [5, 12, 13], [8, 15, 17]][rnd_m81(0, 3)];
+    return { enun: 'Calcula o módulo do número complexo <strong>z = ' + ter[0] + ' + ' + ter[1] + 'i</strong>.',
+      tipo: 'fill', resposta: String(ter[2]),
+      expl: '|z| = √(' + ter[0] + '² + ' + ter[1] + '²) = √(' + (ter[0] * ter[0] + ter[1] * ter[1]) + ') = ' + ter[2] + '.', tema: 'T2 · Módulo' };
+  }
+  // tema 3 · potência de i
+  var exp = rnd_m81(2, 30);
+  var r = exp % 4;
+  var vals = { 0: '1', 1: 'i', 2: '−1', 3: '−i' };
+  return { enun: 'Simplifica <strong>i<sup>' + exp + '</sup></strong>.',
+    tipo: 'mc', opcoes: ['1', 'i', '−1', '−i'], resposta: vals[r],
+    expl: 'i tem período 4. ' + exp + ' = 4×' + Math.floor(exp / 4) + ' + ' + r + ' → i^' + exp + ' = i^' + r + ' = ' + vals[r] + '.', tema: 'T3 · Potências de i' };
+}
 /* ════════════════════════════════════════════════════════════════
-   BANCO DE QUESTÕES (reais/ricas) - Matemática A · 11.º ano
+   BANCO DE QUESTÕES (reais/ricas) - Matemática A · 12.º ano
    ════════════════════════════════════════════════════════════════ */
 var _mat12Banco = {
-  1: [ // Trigonometria
-    { t: '2', tipo: 'mc', enun: 'Se cos(α) = −3/5 e α pertence ao 2.º quadrante, qual é sen(α)?', opcoes: ['4/5', '−4/5', '3/5', '−3/5'], resposta: '4/5', expl: 'sen²α = 1 − 9/25 = 16/25 → sen α = ±4/5. No 2.º quadrante o seno é positivo → 4/5.', tema: 'T2 · Fórmula Fundamental' },
-    { t: '1', tipo: 'fill_frac', enun: 'Converte 5π/6 radianos para graus.', resposta: '150', expl: '5π/6 × 180/π = 5×180/6 = 150°.', tema: 'T1 · Radianos' },
-    { t: '3', tipo: 'mc', enun: 'Quantas soluções tem a equação sen(x) = 1/2 no intervalo [0, 2π]?', opcoes: ['2', '1', '3', '4'], resposta: '2', expl: 'sen x = 1/2 em [0,2π]: x = π/6 e x = 5π/6 → duas soluções.', tema: 'T3 · Equações Trig.' },
-    { t: '2', tipo: 'vf', enun: 'Verdadeiro ou Falso: para qualquer ângulo α, tem-se sen(α) ≤ 1.', resposta: 'V', expl: 'O contradomínio do seno é [−1, 1], logo sen α ≤ 1 sempre.', tema: 'T2 · Razões' },
-    { t: '2', tipo: 'fill_frac', enun: 'Sabe-se que tg(α) = 2 e que α é um ângulo agudo. Determina o valor de sen(α).', resposta: '2√5/5', expl: 'Passo 1: tg α = sen/cos = 2, logo sen = 2cos. Passo 2: na fórmula fundamental, sen²+cos²=1 → (2cos)²+cos²=1 → 5cos²=1 → cos²=1/5. Passo 3: cos=1/√5 (agudo, positivo) e sen=2/√5 = 2√5/5.', tema: 'T2 · Fórmula Fundamental' },
-    { t: '3', tipo: 'mc', enun: 'Considera a função f(x) = 2sen(x) + 1. Qual é o contradomínio de f?', opcoes: ['[−1, 3]', '[−2, 2]', '[0, 2]', '[1, 3]'], resposta: '[−1, 3]', expl: 'Passo 1: sen(x) varia em [−1, 1]. Passo 2: 2sen(x) varia em [−2, 2]. Passo 3: somando 1, f(x) varia em [−2+1, 2+1] = [−1, 3].', tema: 'T3 · Funções Trigonométricas' }
+  1: [ // Cálculo Combinatório
+    { t: '1', tipo: 'mc', enun: 'De quantas formas se podem ordenar 4 livros distintos numa prateleira?', opcoes: ['24', '12', '16', '256'], resposta: '24', expl: 'Permutações de 4: 4! = 24.', tema: 'T1 · Permutações' },
+    { t: '1', tipo: 'fill', enun: 'Quantos números de 2 algarismos DIFERENTES se formam com {1,2,3,4,5}?', resposta: '20', expl: 'Arranjos: ⁵A₂ = 5×4 = 20 (ordem conta, sem repetir).', tema: 'T1 · Arranjos' },
+    { t: '2', tipo: 'mc', enun: 'Quantas comissões de 2 pessoas se formam a partir de 7?', opcoes: ['21', '42', '14', '49'], resposta: '21', expl: '⁷C₂ = (7×6)/2 = 21 (ordem não conta).', tema: 'T2 · Combinações' },
+    { t: '3', tipo: 'mc', enun: 'Quantos termos tem o desenvolvimento de (a + b)⁶?', opcoes: ['7', '6', '12', '64'], resposta: '7', expl: '(a+b)ⁿ tem n+1 termos: 6+1 = 7.', tema: 'T3 · Binómio' }
   ],
-  2: [ // Geometria no Espaço
-    { t: '2', tipo: 'mc', enun: 'Os vetores u(1, 2, −1) e v(3, −1, 1) são perpendiculares?', opcoes: ['Sim, porque u·v = 0', 'Não', 'Só se forem unitários', 'São colineares'], resposta: 'Sim, porque u·v = 0', expl: 'u·v = 1×3 + 2×(−1) + (−1)×1 = 3 − 2 − 1 = 0 → perpendiculares.', tema: 'T2 · Produto Escalar' },
-    { t: '1', tipo: 'fill', enun: 'Calcula a distância entre A(1, 0, 2) e B(1, 4, 5).', resposta: '5', expl: 'd = √(0² + 4² + 3²) = √(0+16+9) = √25 = 5.', tema: 'T1 · Distâncias' },
-    { t: '3', tipo: 'mc', enun: 'Um vetor normal ao plano de equação 3x − 2y + z − 7 = 0 é:', opcoes: ['(3, −2, 1)', '(3, 2, 1)', '(−7, 0, 0)', '(1, 1, 1)'], resposta: '(3, −2, 1)', expl: 'Em ax+by+cz+d=0, o vetor normal é (a, b, c) = (3, −2, 1).', tema: 'T3 · Planos' },
-    { t: '1', tipo: 'fill', enun: 'Qual é o raio da superfície esférica x² + y² + z² = 49?', resposta: '7', expl: 'r² = 49 → r = 7. (Centro na origem.)', tema: 'T1 · Esfera' },
-    { t: '2', tipo: 'mc', enun: 'Os pontos A(1, 2, 0), B(3, 2, 0) e C(1, 2, 4) definem um triângulo. Qual é a sua área?', opcoes: ['4', '8', '6', '2√5'], resposta: '4', expl: 'Passo 1: AB = (2,0,0), ‖AB‖=2. Passo 2: AC = (0,0,4), ‖AC‖=4. Passo 3: AB·AC = 0 → são perpendiculares (triângulo retângulo em A). Passo 4: área = (2×4)/2 = 4.', tema: 'T2 · Produto Escalar' },
-    { t: '3', tipo: 'mc', enun: 'A interseção da esfera x²+y²+z²=25 com o plano z=3 é uma circunferência. Qual é o seu raio?', opcoes: ['4', '3', '5', '√34'], resposta: '4', expl: 'Passo 1: substituindo z=3: x²+y²+9=25 → x²+y²=16. Passo 2: é uma circunferência de raio √16 = 4 (no plano z=3).', tema: 'T1 · Esfera' }
+  2: [ // Probabilidades
+    { t: '1', tipo: 'fill_frac', enun: 'Lança-se um dado. Qual a probabilidade de sair um número primo? (2, 3, 5)', resposta: '1/2', expl: 'Primos {2,3,5}: 3 casos → 3/6 = 1/2.', tema: 'T1 · Laplace' },
+    { t: '2', tipo: 'fill_frac', enun: 'P(A∩B) = 0,3 e P(B) = 0,6. Calcula P(A|B). (fração irredutível)', resposta: '1/2', expl: 'P(A|B) = 0,3/0,6 = 1/2.', tema: 'T2 · Condicionada' },
+    { t: '2', tipo: 'mc', enun: 'P(A) = 0,5, P(B) = 0,4, P(A∩B) = 0,2. Quanto é P(A∪B)?', opcoes: ['0,7', '0,9', '0,6', '1,1'], resposta: '0,7', expl: 'P(A∪B) = 0,5 + 0,4 − 0,2 = 0,7.', tema: 'T1 · União' },
+    { t: '3', tipo: 'mc', enun: 'A e B são independentes com P(A)=0,5 e P(B)=0,4. Quanto é P(A∩B)?', opcoes: ['0,2', '0,9', '0,1', '0,45'], resposta: '0,2', expl: 'Independentes: P(A∩B) = 0,5 × 0,4 = 0,2.', tema: 'T3 · Independentes' }
   ],
-  3: [ // Sucessões
-    { t: '2', tipo: 'mc', enun: 'Numa progressão aritmética, u₃ = 7 e u₇ = 19. Qual é a razão?', opcoes: ['3', '4', '2', '12'], resposta: '3', expl: 'De u₃ a u₇ vão 4 razões: 19 − 7 = 12 = 4r → r = 3.', tema: 'T2 · PA' },
-    { t: '2', tipo: 'fill', enun: 'A soma dos 20 primeiros termos da PA com u₁ = 2 e razão 3 é:', resposta: '610', expl: 'u₂₀ = 2 + 19×3 = 59. S₂₀ = (2 + 59)×20/2 = 61×10 = 610.', tema: 'T2 · PA' },
-    { t: '3', tipo: 'fill', enun: 'Numa progressão geométrica de razão 2, o 1.º termo é 3. Qual é o 5.º termo?', resposta: '48', expl: 'u₅ = 3 × 2⁴ = 3 × 16 = 48.', tema: 'T3 · PG' },
-    { t: '1', tipo: 'mc', enun: 'A sucessão uₙ = (n − 5) é:', opcoes: ['crescente', 'decrescente', 'constante', 'não monótona'], resposta: 'crescente', expl: 'uₙ₊₁ − uₙ = (n+1−5) − (n−5) = 1 > 0 → crescente.', tema: 'T1 · Monotonia' },
-    { t: '2', tipo: 'fill', enun: 'Numa PA, a soma do 2.º com o 5.º termo é 17 e u₁ = 1. Determina a razão r.', resposta: '3', expl: 'Passo 1: u₂ = 1+r e u₅ = 1+4r. Passo 2: soma = (1+r)+(1+4r) = 2+5r = 17. Passo 3: 5r = 15 → r = 3.', tema: 'T2 · PA' },
-    { t: '3', tipo: 'mc', enun: 'Numa PG de termos positivos, u₂ = 6 e u₄ = 54. Qual é a razão r?', opcoes: ['3', '9', '6', '√3'], resposta: '3', expl: 'Passo 1: u₄/u₂ = r² = 54/6 = 9. Passo 2: r = √9 = 3 (termos positivos → r>0).', tema: 'T3 · PG' }
+  3: [ // Funções Reais de Variável Real
+    { t: '1', tipo: 'mc', enun: 'O valor de lim(x→+∞) (5x² − 3x + 1)/(2x² + 7) é:', opcoes: ['5/2', '0', '+∞', '5/7'], resposta: '5/2', expl: 'Mesmo grau (x²): quociente dos coeficientes principais = 5/2.', tema: 'T1 · Limites' },
+    { t: '1', tipo: 'fill', enun: 'Calcula lim(x→3) (x² − 9)/(x − 3).', resposta: '6', expl: '(x−3)(x+3)/(x−3) = x+3 → 6.', tema: 'T1 · Indeterminação' },
+    { t: '2', tipo: 'mc', enun: 'f é contínua, f(1) = −2 e f(3) = 4. Pelo Teorema de Bolzano, em ]1,3[:', opcoes: ['existe pelo menos um zero', 'não há zeros', 'há exatamente dois zeros', 'f é constante'], resposta: 'existe pelo menos um zero', expl: 'f(1)·f(3) < 0 e f contínua → pelo menos um zero (Bolzano).', tema: 'T2 · Bolzano' },
+    { t: '4', tipo: 'fill', enun: 'Sendo f(x) = x³ − 3x, calcula f′(2).', resposta: '9', expl: "f′(x) = 3x² − 3 → f′(2) = 12 − 3 = 9.", tema: 'T4 · Derivadas' }
   ],
-  4: [ // Limites e Continuidade
-    { t: '2', tipo: 'mc', enun: 'O valor de lim(x→+∞) (5x² − 3x + 1)/(2x² + 7) é:', opcoes: ['5/2', '0', '+∞', '5/7'], resposta: '5/2', expl: 'Mesmo grau (x²): quociente dos coeficientes principais = 5/2.', tema: 'T2 · Limite de Função' },
-    { t: '3', tipo: 'fill', enun: 'A função f tem domínio ℝ, é contínua, f(1) = −2 e f(3) = 4. Pelo Teorema de Bolzano, quantos zeros TEM DE existir em ]1, 3[ (no mínimo)?', resposta: '1', expl: 'f(1)·f(3) = (−2)(4) < 0 → existe pelo menos UM zero em ]1, 3[.', tema: 'T3 · Bolzano' },
-    { t: '2', tipo: 'fill', enun: 'Calcula lim(x→3) (x² − 9)/(x − 3).', resposta: '6', expl: '(x²−9)/(x−3) = (x−3)(x+3)/(x−3) = x+3 → para x=3 dá 6.', tema: 'T2 · Indeterminação' },
-    { t: '2', tipo: 'mc', enun: 'A reta y = 4 é assíntota horizontal de f(x) = (4x + 1)/(x − 2) porque:', opcoes: ['lim(x→±∞) f(x) = 4', 'f(4) = 0', 'f(2) não existe', 'o gráfico passa em (0, 4)'], resposta: 'lim(x→±∞) f(x) = 4', expl: 'No infinito, o quociente tende para 4/1 = 4 → assíntota horizontal y = 4.', tema: 'T2 · Assíntotas' },
-    { t: '2', tipo: 'fill', enun: 'Calcula lim(x→2) (x² + x − 6)/(x − 2).', resposta: '5', expl: 'Passo 1: substituir x=2 dá 0/0 (indeterminação). Passo 2: fatorizar o numerador: x²+x−6 = (x−2)(x+3). Passo 3: simplificar (x−2)(x+3)/(x−2) = x+3. Passo 4: para x=2 → 2+3 = 5.', tema: 'T2 · Indeterminação' },
-    { t: '1', tipo: 'mc', enun: 'A função f(x) = (3x − 6)/(x² − 4) tem uma assíntota vertical em:', opcoes: ['x = −2', 'x = 2', 'x = 0', 'não tem'], resposta: 'x = −2', expl: 'Passo 1: x²−4 = (x−2)(x+2) anula-se em x=2 e x=−2. Passo 2: simplificar f = 3(x−2)/[(x−2)(x+2)] = 3/(x+2) (x≠2). Passo 3: em x=2 há um buraco; a assíntota vertical é em x=−2.', tema: 'T2 · Assíntotas' }
+  4: [ // Trigonometria
+    { t: '1', tipo: 'mc', enun: 'Usando sen(2a) = 2 sen a cos a, com sen a = 0,6 e cos a = 0,8, quanto é sen(2a)?', opcoes: ['0,96', '1,2', '0,48', '1,4'], resposta: '0,96', expl: 'sen(2a) = 2 × 0,6 × 0,8 = 0,96.', tema: 'T1 · Fórmulas' },
+    { t: '2', tipo: 'mc', enun: 'Qual é a derivada de f(x) = cos(3x)?', opcoes: ['−3sen(3x)', '3sen(3x)', '−sen(3x)', '3cos(3x)'], resposta: '−3sen(3x)', expl: '(cos u)′ = −u′ sen u → −3sen(3x).', tema: 'T2 · Derivadas sen/cos' },
+    { t: '3', tipo: 'fill', enun: 'Calcula lim(x→0) sen(4x)/x.', resposta: '4', expl: 'lim sen(4x)/x = 4 × lim sen(4x)/(4x) = 4×1 = 4.', tema: 'T3 · Limites notáveis' },
+    { t: '1', tipo: 'mc', enun: 'Qual é o período da função x(t) = sen(2t)?', opcoes: ['π', '2π', 'π/2', '4π'], resposta: 'π', expl: 'T = 2π/ω = 2π/2 = π.', tema: 'T1 · Osciladores' }
   ],
-  5: [ // Derivadas
-    { t: '1', tipo: 'fill', enun: 'Sendo f(x) = x³ − 3x, calcula f\'(2).', resposta: '9', expl: 'f\'(x) = 3x² − 3 → f\'(2) = 3×4 − 3 = 9.', tema: 'T1 · Derivar' },
-    { t: '3', tipo: 'mc', enun: 'A função f(x) = x² − 4x tem, em x = 2:', opcoes: ['um mínimo', 'um máximo', 'um ponto de inflexão', 'uma assíntota'], resposta: 'um mínimo', expl: 'f\'(x) = 2x − 4 = 0 → x = 2. f\' passa de − para + → mínimo.', tema: 'T3 · Extremos' },
-    { t: '2', tipo: 'fill', enun: 'Calcula a taxa de variação média de f(x) = x² no intervalo [2, 5].', resposta: '7', expl: 'tvm = (25 − 4)/(5 − 2) = 21/3 = 7.', tema: 'T2 · Taxa de Variação' },
-    { t: '3', tipo: 'mc', enun: 'Se f\'(x) > 0 para todo o x ∈ ]a, b[, então f é, nesse intervalo:', opcoes: ['estritamente crescente', 'estritamente decrescente', 'constante', 'descontínua'], resposta: 'estritamente crescente', expl: 'Derivada positiva ⟺ função estritamente crescente.', tema: 'T3 · Monotonia' },
-    { t: '1', tipo: 'fill', enun: 'Considera f(x) = x³ − 6x² + 9x. A reta tangente ao gráfico no ponto de abcissa x = 1 tem que declive?', resposta: '0', expl: 'Passo 1: o declive da tangente é f\'(1). Passo 2: f\'(x) = 3x² − 12x + 9. Passo 3: f\'(1) = 3 − 12 + 9 = 0. (A tangente é horizontal.)', tema: 'T1 · Tangente' },
-    { t: '3', tipo: 'mc', enun: 'A função f(x) = x³ − 3x² tem extremos em:', opcoes: ['x = 0 (máx) e x = 2 (mín)', 'x = 0 (mín) e x = 2 (máx)', 'apenas x = 2', 'não tem extremos'], resposta: 'x = 0 (máx) e x = 2 (mín)', expl: 'Passo 1: f\'(x) = 3x² − 6x = 3x(x−2), zeros em x=0 e x=2. Passo 2: f\' é positiva antes de 0, negativa entre 0 e 2, positiva depois. Passo 3: em x=0 passa de + para − (máximo); em x=2 de − para + (mínimo).', tema: 'T3 · Extremos' }
+  5: [ // Exponenciais e Logaritmos
+    { t: '1', tipo: 'fill', enun: 'Resolve a equação 3ˣ = 81.', resposta: '4', expl: '81 = 3⁴ → x = 4.', tema: 'T1 · Exponencial' },
+    { t: '2', tipo: 'fill', enun: 'Calcula log₂(32).', resposta: '5', expl: '2⁵ = 32 → log₂(32) = 5.', tema: 'T2 · Logaritmos' },
+    { t: '2', tipo: 'mc', enun: 'Qual é o valor de ln(e⁴)?', opcoes: ['4', 'e', '1', '4e'], resposta: '4', expl: 'ln(eⁿ) = n, porque ln e = 1.', tema: 'T2 · Logaritmos' },
+    { t: '3', tipo: 'mc', enun: 'Qual é a derivada de f(x) = e^(3x)?', opcoes: ['3e^(3x)', 'e^(3x)', '3x·e^(3x)', 'e^(3x)/3'], resposta: '3e^(3x)', expl: '(e^u)′ = u′ e^u → 3e^(3x).', tema: 'T3 · Derivadas' }
   ],
-  6: [ // Probabilidades e Combinatória
-    { t: '1', tipo: 'fill', enun: 'De quantas maneiras se podem sentar 4 pessoas em 4 cadeiras em fila?', resposta: '24', expl: 'Permutações de 4: 4! = 4×3×2×1 = 24.', tema: 'T1 · Combinatória' },
-    { t: '1', tipo: 'fill', enun: 'Quantas comissões de 3 pessoas se podem formar a partir de 6 pessoas?', resposta: '20', expl: '⁶C₃ = 6!/(3!3!) = (6×5×4)/(3×2×1) = 20. (A ordem não conta.)', tema: 'T1 · Combinatória' },
-    { t: '2', tipo: 'fill_frac', enun: 'P(A∩B) = 0,3 e P(B) = 0,6. Calcula P(A|B) (fração irredutível).', resposta: '1/2', expl: 'P(A|B) = P(A∩B)/P(B) = 0,3/0,6 = 1/2.', tema: 'T2 · Prob. Condicionada' },
-    { t: '3', tipo: 'fill_frac', enun: 'Lança-se um dado. Qual a probabilidade de sair um número primo? (2, 3 e 5 são primos)', resposta: '1/2', expl: 'Primos no dado: 2, 3, 5 → 3 casos. P = 3/6 = 1/2.', tema: 'T3 · Laplace' },
-    { t: '2', tipo: 'fill_frac', enun: 'Numa turma, 60% dos alunos pratica desporto e, destes, metade joga futebol. Escolhido um aluno ao acaso, qual a probabilidade de praticar desporto E jogar futebol? (fração irredutível)', resposta: '3/10', expl: 'Passo 1: P(desporto) = 0,6. Passo 2: P(futebol | desporto) = 0,5. Passo 3: P(desporto ∩ futebol) = 0,6 × 0,5 = 0,3 = 3/10.', tema: 'T2 · Prob. Condicionada' },
-    { t: '1', tipo: 'fill', enun: 'Quantos números de 3 algarismos DIFERENTES se podem formar com os algarismos 1, 2, 3, 4 e 5?', resposta: '60', expl: 'Passo 1: ordem conta e sem repetir → arranjos de 5, 3 a 3. Passo 2: ⁵A₃ = 5×4×3 = 60.', tema: 'T1 · Combinatória' }
+  6: [ // Primitivas e Cálculo Integral
+    { t: '1', tipo: 'mc', enun: 'Qual é uma primitiva de f(x) = x³?', opcoes: ['x⁴/4 + C', '3x² + C', 'x⁴ + C', '4x⁴ + C'], resposta: 'x⁴/4 + C', expl: 'P(xⁿ) = x^(n+1)/(n+1) + C → x⁴/4 + C.', tema: 'T1 · Primitivas' },
+    { t: '2', tipo: 'fill', enun: 'Calcula ∫₀¹ x² dx. (escreve como fração, ex.: 1/3)', resposta: '1/3', expl: '[x³/3]₀¹ = 1/3 − 0 = 1/3.', tema: 'T2 · Integral' },
+    { t: '2', tipo: 'fill', enun: 'Calcula ∫₀² 4x dx.', resposta: '8', expl: '[2x²]₀² = 2×4 = 8.', tema: 'T2 · Integral' },
+    { t: '3', tipo: 'fill', enun: 'Qual é a área entre y = x², o eixo Ox e x = 3?', resposta: '9', expl: '∫₀³ x² dx = [x³/3]₀³ = 27/3 = 9.', tema: 'T3 · Áreas' }
+  ],
+  7: [ // Números Complexos
+    { t: '1', tipo: 'fill', enun: 'Calcula (3 + 2i) + (1 + 5i).', resposta: '4+7i', expl: 'Soma parte real e imaginária: (3+1) + (2+5)i = 4+7i.', tema: 'T1 · Forma algébrica' },
+    { t: '1', tipo: 'fill', enun: 'Calcula (2 + i)(2 − i).', resposta: '5', expl: '(a+bi)(a−bi) = a²+b² = 4+1 = 5.', tema: 'T1 · Forma algébrica' },
+    { t: '2', tipo: 'fill', enun: 'Calcula o módulo de z = 5 + 12i.', resposta: '13', expl: '|z| = √(25+144) = √169 = 13.', tema: 'T2 · Módulo' },
+    { t: '3', tipo: 'mc', enun: 'Simplifica i²⁷.', opcoes: ['−i', 'i', '1', '−1'], resposta: '−i', expl: '27 = 4×6 + 3 → i²⁷ = i³ = −i.', tema: 'T3 · Potências de i' }
   ]
 };
 /* atribuir: deep-link mat12 */
@@ -1667,7 +1641,7 @@ function mat12AtribuirFicha(){
   var caps=[]; _mat12CapMeta.forEach(function(m){ if(_mat12gf.caps[m.n]) caps.push(m.n); });
   if(!caps.length){ var st=document.getElementById('mat12-fichas-status'); if(st) st.textContent='Escolhe pelo menos um capítulo para atribuir.'; return null; }
   var nomes=caps.map(function(n){ var mm=_mat12CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
-  return { curso:'mat12', cursoNome:'Matemática 11.º', tema:caps.join('.'), temaNome:nomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_mat12gf.dif };
+  return { curso:'mat12', cursoNome:'Matemática 12.º', tema:caps.join('.'), temaNome:nomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_mat12gf.dif };
 }
 
 function mat12EntregarTarefa(){

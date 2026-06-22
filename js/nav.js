@@ -26,6 +26,7 @@ var _mat8Path = _inMat8 ? '' : _coursePath('mat8');
 var _mat9Path = _inMat9 ? '' : _coursePath('mat9');
 var _mat10Path = _inMat(10) ? '' : _coursePath('mat10');
 var _mat11Path = _inMat(11) ? '' : _coursePath('mat11');
+var _mat12Path = _inMat(12) ? '' : _coursePath('mat12');
 var _port9Path = _inPort(9) ? '' : _coursePath('port9');
 var _port7Path = _inPort(7) ? '' : _coursePath('port7');
 var _port8Path = _inPort(8) ? '' : _coursePath('port8');
@@ -82,6 +83,8 @@ function showMat10View() { window.location.href = _mat10Path + 'index.html'; }
 function showPortalFromMat10() { showPortalView(); }
 function showMat11View() { window.location.href = _mat11Path + 'index.html'; }
 function showPortalFromMat11() { showPortalView(); }
+function showMat12View() { window.location.href = _mat12Path + 'index.html'; }
+function showPortalFromMat12() { showPortalView(); }
 
 /* ── Chapter pages ── */
 function showMathView()  { window.location.href = _mat7Path + 'cap1.html'; }
