@@ -4466,3 +4466,11 @@ a.grp-item-tit:hover{color:#2e7d52;text-decoration:underline}
 .apr-fim{text-align:center}
 .apr-fim-emoji{font-size:3rem;margin-bottom:.4rem}
 .apr-fim h3{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:800;color:var(--ink);margin:.2rem 0 .6rem}
+
+/* — Aprender: widgets extra (balança, sequência) — */
+.apr-bal{display:flex;align-items:center;justify-content:center;gap:1rem;margin:1rem 0}
+.apr-bal-prato{min-width:90px;text-align:center;background:var(--cream2);border:2px solid var(--border);border-radius:12px;padding:.9rem .6rem;font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--ink);box-shadow:0 4px 0 rgba(0,0,0,.06)}
+.apr-bal-eq{font-size:1.6rem;font-weight:800;color:#7d6aa8}
+.apr-seq-row{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.4rem;margin:.6rem 0}
+.apr-seq-bola{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:#eaf7f0;border:2px solid #2f9e63;color:#1f7a49;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:1rem}
+.apr-seq-seta{font-size:.78rem;font-weight:700;color:var(--ink4)}

@@ -850,10 +850,11 @@ function mat7SwitchTab(tab, btn) {
   if (panel) { panel.classList.add('active'); panel.style.setProperty('display','block','important'); }
   // Update document title
   var _tabTitles = { resumo:'Teoria', exercicios:'Exercícios', flashcards:'Flashcards',
-    jogos:'Jogos', exame:'Teste', progresso:'Progresso', quiz:'Quiz', fichas:'Fichas', praticar:'Praticar' };
+    jogos:'Jogos', exame:'Teste', progresso:'Progresso', quiz:'Quiz', fichas:'Fichas', praticar:'Praticar', aprender:'Aprender' };
   if (_tabTitles[tab]) document.title = 'Mat. 7.º ' + _tabTitles[tab] + ' · 3ponto14';
   // Auto-render content
   if (tab === 'resumo') mat7BuildResumoNav();
+  else if (tab === 'aprender') { if (typeof mat7AprenderInit === 'function') mat7AprenderInit(); }
   else if (tab === 'quiz') { if (typeof qgHubInit === 'function') qgHubInit(); }
   else if (tab === 'progresso') { if (typeof renderProgressoUnificado === 'function') renderProgressoUnificado(); }
   else if (tab === 'exercicios') { mat7LoadInline('exercicios'); }
@@ -862,6 +863,40 @@ function mat7SwitchTab(tab, btn) {
   // Botão fixo «Atribuir» (só professores) nas tabs Exercícios e Jogos
   if (tab === 'exercicios' && typeof Atribuir !== 'undefined' && Atribuir.fixo) Atribuir.fixo('mat7-ex-atr', 'mat7AtribuirEx');
   if (tab === 'jogos' && typeof Atribuir !== 'undefined' && Atribuir.fixo) Atribuir.fixo('mat7-jogos-atr', 'mat7AtribuirJogo');
+}
+
+/* Aba APRENDER: catálogo de explicadores lúdicos do 7.º ano + abrir/voltar. */
+var _mat7AprenderWired = false;
+function mat7AprenderInit() {
+  if (typeof APRENDER === 'undefined') {
+    var c = document.getElementById('mat7-aprender-cat');
+    if (c) c.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Explicadores indisponíveis (motor não carregado).</p>';
+    return;
+  }
+  var host = document.getElementById('mat7-aprender-host');
+  var cat = document.getElementById('mat7-aprender-cat');
+  if (!host || !cat) return;
+  // só os temas do 7.º ano (curso começa por "Matemática · 7")
+  APRENDER.catalogo('mat7-aprender-cat', function (id, t) {
+    return /7\.º/.test(t.curso || '') || /mat7/.test(id);
+  });
+  host.style.display = 'none';
+  if (_mat7AprenderWired) return;
+  _mat7AprenderWired = true;
+  // botão "voltar ao catálogo" usado pelo motor
+  window.aprenderVoltarCatalogo = function () {
+    host.style.display = 'none'; host.innerHTML = '';
+    cat.style.display = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  // intercepta abrir para alternar catálogo/explicador dentro do painel
+  var _abrir = APRENDER.abrir;
+  APRENDER.abrir = function (id) {
+    cat.style.display = 'none';
+    host.style.display = 'block';
+    _abrir(id, 'mat7-aprender-host');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 }
 
 /* Contexto p/ atribuir EXERCÍCIOS do mat7 (lê o capítulo ativo). */

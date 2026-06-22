@@ -56,6 +56,7 @@
 <div class="mat7-hub-tabbar" id="mat7-hub-tabbar">
   <button class="mat7-hub-tab active"  data-tab="resumo"    onclick="mat7SwitchTab('resumo',this)">   <span class="mat7-hub-tab-icon"><i class="ph ph-book-open-text"></i></span> Teoria</button>
   <button class="mat7-hub-tab"         data-tab="praticar"  onclick="mat7SwitchHub('praticar',this)"> <span class="mat7-hub-tab-icon"><i class="ph ph-pencil-simple"></i></span> Praticar</button>
+  <button class="mat7-hub-tab"         data-tab="aprender"  onclick="mat7SwitchTab('aprender',this)"> <span class="mat7-hub-tab-icon"><i class="ph ph-lightbulb"></i></span> Aprender</button>
   <button class="mat7-hub-tab"         data-tab="fichas"    onclick="mat7SwitchTab('fichas',this)">   <span class="mat7-hub-tab-icon"><i class="ph ph-file-pdf"></i></span> Fichas</button>
   <button class="mat7-hub-tab"         data-tab="progresso" onclick="mat7SwitchTab('progresso',this)"><span class="mat7-hub-tab-icon"><i class="ph ph-chart-bar"></i></span> Progresso</button>
 </div>
@@ -163,6 +164,16 @@
     <div class="gf-preview" id="gf-content-mat7-downloads"></div>
   </div>
 </div><!-- /panel fichas -->
+
+<!-- ══════════════════════════════════════════
+     PANEL: APRENDER (explicadores lúdicos)
+══════════════════════════════════════════ -->
+<div class="mat7-panel" id="mat7p-aprender">
+  <div class="mat7-panel-heading">Aprender a brincar</div>
+  <div class="mat7-panel-sub">Não percebes a matéria? Escolhe um tema e deixa-me explicar-te passo a passo, a brincar. Mexe e vê o que acontece.</div>
+  <div id="mat7-aprender-host"></div>
+  <div id="mat7-aprender-cat"></div>
+</div>
 
 <!-- ══════════════════════════════════════════
      PANEL: RESUMO
@@ -1154,6 +1165,10 @@
 <script src="../js/cap6.js?v=20260621"></script>
 <script src="../js/cap7.js?v=20260621"></script>
 <script src="../js/cap8.js?v=20260621"></script>
+<script src="../js/visuals.js?v=20260622"></script>
+<script src="../js/aprender.js?v=20260622"></script>
+<script src="../js/aprender-temas.js?v=20260622"></script>
+<script src="../js/aprender-temas-mat7.js?v=20260622"></script>
 <script src="../js/mat7.js?v=20260621"></script>
 <script src="../js/systems.js?v=20260621"></script>
 <script src="../js/gf.js?v=20260621"></script>

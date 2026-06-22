@@ -134,12 +134,14 @@ var APRENDER = (function () {
   function reabrir() { S.idx = 0; render(); }
 
   // ── Catálogo: cartões dos temas disponíveis (para a página índice) ──
-  function catalogo(hostId) {
+  // filtro (opcional): função(id, tema) → bool, para mostrar só alguns.
+  function catalogo(hostId, filtro) {
     var host = document.getElementById(hostId);
     if (!host) return;
     var byCurso = {};
     Object.keys(temas).forEach(function (id) {
       var t = temas[id];
+      if (filtro && !filtro(id, t)) return;
       (byCurso[t.curso] = byCurso[t.curso] || []).push({ id: id, t: t });
     });
     var html = '';

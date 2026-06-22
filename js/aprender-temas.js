@@ -109,7 +109,7 @@
     titulo: 'A Máquina de Funções',
     subtitulo: 'O que é mesmo uma função?',
     icone: 'ph-function', cor: '#56b6c2',
-    praticar: 'mat7/index.html?abrir=praticar&cap=6',
+    praticar: (typeof window !== 'undefined' && /\/mat7\//.test(window.location.pathname) ? '' : 'mat7/') + 'index.html?abrir=praticar&cap=6',
     blocos: [
       {
         tipo: 'texto',
