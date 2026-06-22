@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════════
-   MAT8 HUB - Físico-Química 9.º ano
+   FQ9 HUB - Físico-Química 9.º ano
    Modelo de HUB ÚNICO espelhado no mat7 (NUNCA páginas por capítulo).
    Tabs: Teoria · Praticar · Fichas · Progresso.
    Capítulos são botões de seleção; conteúdo renderizado por JS.

@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════════
-   MAT8 HUB - Físico-Química 7.º ano
+   FQ7 HUB - Físico-Química 7.º ano
    Modelo de HUB ÚNICO espelhado no mat7 (NUNCA páginas por capítulo).
    Tabs: Teoria · Praticar · Fichas · Progresso.
    Capítulos são botões de seleção; conteúdo renderizado por JS.
