@@ -27,7 +27,7 @@ function lazyLoad(src, callback) {
   // Páginas de curso vivem num subdiretório (mat7/, …, port9/) e precisam de '../js/'.
   // Deteção via fonte única em shared.js (fallback à regex se faltar).
   var _inCourseDir = (typeof eduIsCourseHub === 'function') ? eduIsCourseHub()
-    : /\/(mat\d+|port\d+|fq\d+)(\/|$)/.test(window.location.pathname);
+    : /\/(mat\d+|port\d+|fq\d+|em\d+)(\/|$)/.test(window.location.pathname);
   var _jsPrefix = _inCourseDir ? '../js/' : 'js/';
   var fullSrc = _jsPrefix + src;
   var existing = document.querySelector('script[src="' + fullSrc + '"]');

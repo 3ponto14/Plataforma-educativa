@@ -251,7 +251,7 @@ function lcm(a,b){return Math.abs(a*b)/gcd(a,b)}
 // Deteção de contexto de página (uma única fonte de verdade).
 // Os hubs de curso vivem em subpastas (matN/, portN/, fqN/); o portal e as
 // páginas de exame estão na raiz. Usar em vez de repetir a regex por todo o lado.
-function eduIsCourseHub() { return /\/(mat\d+|port\d+|fq\d+)(\/|$)/.test(window.location.pathname); }
+function eduIsCourseHub() { return /\/(mat\d+|port\d+|fq\d+|em\d+)(\/|$)/.test(window.location.pathname); }
 function eduRootPath() { return eduIsCourseHub() ? '../' : ''; }
 window.eduIsCourseHub = eduIsCourseHub;
 window.eduRootPath = eduRootPath;

@@ -46,7 +46,7 @@
     // Fonte única em shared.js (eduRootPath); fallback à regex se faltar.
     if (typeof eduRootPath === 'function') return eduRootPath() + 'index.html';
     var p = window.location.pathname || '';
-    return /\/(mat\d+|port\d+|fq\d+)(\/|$)/.test(p) ? '../index.html' : 'index.html';
+    return /\/(mat\d+|port\d+|fq\d+|em\d+)(\/|$)/.test(p) ? '../index.html' : 'index.html';
   }
 
   function irParaPortal() {

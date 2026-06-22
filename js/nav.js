@@ -12,9 +12,10 @@
 // Deteção genérica: estamos dentro de um diretório de curso (matN/ portN/ fqN/)?
 // Fonte única em shared.js (eduIsCourseHub); fallback à regex se faltar.
 var _inSub = (typeof eduIsCourseHub === 'function') ? eduIsCourseHub()
-  : /\/(mat\d+|port\d+|fq\d+)(\/|$)/.test(window.location.pathname);
+  : /\/(mat\d+|port\d+|fq\d+|em\d+)(\/|$)/.test(window.location.pathname);
 function _inMat(n) { return window.location.pathname.indexOf('/mat' + n + '/') !== -1 || window.location.pathname.endsWith('/mat' + n); }
 function _inPort(n) { return window.location.pathname.indexOf('/port' + n + '/') !== -1 || window.location.pathname.endsWith('/port' + n); }
+function _inEm(n) { return window.location.pathname.indexOf('/em' + n + '/') !== -1 || window.location.pathname.endsWith('/em' + n); }
 var _inMat7 = _inMat(7), _inMat8 = _inMat(8), _inMat9 = _inMat(9);
 var _rootPath = _inSub ? '../' : '';
 // Caminho para cada curso, relativo à página atual (raiz ou dentro de matN/).
@@ -30,6 +31,7 @@ var _mat11Path = _inMat(11) ? '' : _coursePath('mat11');
 var _mat12Path = _inMat(12) ? '' : _coursePath('mat12');
 var _port9Path = _inPort(9) ? '' : _coursePath('port9');
 var _port1Path = _inPort(1) ? '' : _coursePath('port1');
+var _em1Path = _inEm(1) ? '' : _coursePath('em1');
 var _port7Path = _inPort(7) ? '' : _coursePath('port7');
 var _port8Path = _inPort(8) ? '' : _coursePath('port8');
 var _inFq7 = window.location.pathname.indexOf('/fq7/') !== -1 || window.location.pathname.endsWith('/fq7');
@@ -61,6 +63,8 @@ function showPort9View() { window.location.href = _port9Path + 'index.html'; }
 function showPortalFromPort9() { showPortalView(); }
 function showPort1View() { window.location.href = _port1Path + 'index.html'; }
 function showPortalFromPort1() { showPortalView(); }
+function showEm1View() { window.location.href = _em1Path + 'index.html'; }
+function showPortalFromEm1() { showPortalView(); }
 function showPort7View() { window.location.href = _port7Path + 'index.html'; }
 function showPortalFromPort7() { showPortalView(); }
 function showPort8View() { window.location.href = _port8Path + 'index.html'; }

@@ -147,7 +147,7 @@
     // secção Turmas. O destino interno (accordion) só faz sentido lá.
     if (typeof portalIrPara !== 'function') {
       var base = (typeof eduRootPath === 'function') ? eduRootPath()
-        : (/\/(mat\d+|port\d+|fq\d+)(\/|$)/.test(window.location.pathname) ? '../' : '');
+        : (/\/(mat\d+|port\d+|fq\d+|em\d+)(\/|$)/.test(window.location.pathname) ? '../' : '');
       window.location.href = base + 'index.html#apoio';
       return;
     }

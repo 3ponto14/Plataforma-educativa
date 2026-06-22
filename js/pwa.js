@@ -16,7 +16,7 @@
 (function () {
   // Raiz do site relativa à página atual: '' na raiz, '../' nas subpastas.
   // (Mesma regra usada em nav.js / menu-lateral.js para resolver caminhos.)
-  var inSub = /\/(mat\d+|port\d+|fq\d+)(\/|$)/.test(window.location.pathname);
+  var inSub = /\/(mat\d+|port\d+|fq\d+|em\d+)(\/|$)/.test(window.location.pathname);
   var root = inSub ? '../' : '';
 
   // 1) Liga o manifest (instalação) — só se ainda não existir um na página.
