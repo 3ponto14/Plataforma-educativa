@@ -78,8 +78,13 @@
       var h = '<button id="notif-btn" aria-label="Notificações" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1.5px solid var(--border);background:var(--white);border-radius:11px;color:var(--ink2);font-size:1.15rem;cursor:pointer"><i class="ph ph-bell"></i>'
         + (novos > 0 ? '<span style="position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;background:#e23b3b;color:#fff;border-radius:999px;font-size:.66rem;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 4px;font-family:Montserrat,sans-serif">' + (novos > 9 ? '9+' : novos) + '</span>' : '')
         + '</button>';
-      // popover
-      h += '<div id="notif-pop" style="display:none;position:absolute;top:120%;right:0;width:300px;max-height:60vh;overflow-y:auto;background:var(--white);border:1.5px solid var(--border);border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:.6rem;z-index:300;text-align:left">';
+      // popover — em ecrãs estreitos ancora ao viewport (position:fixed) para
+      // nunca sair fora do ecrã; em ecrãs largos abre ancorado ao sino.
+      var popMobile = window.innerWidth <= 480;
+      var popPos = popMobile
+        ? 'position:fixed;top:64px;left:12px;right:12px;width:auto;max-height:70vh'
+        : 'position:absolute;top:120%;right:0;width:300px;max-width:calc(100vw - 24px);max-height:60vh';
+      h += '<div id="notif-pop" style="display:none;' + popPos + ';overflow-y:auto;background:var(--white);border:1.5px solid var(--border);border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:.6rem;z-index:300;text-align:left">';
       h += '<div style="font-weight:800;color:var(--ink1);font-size:.85rem;padding:.2rem .3rem .5rem">Notificações</div>';
       if (!itens.length) {
         h += '<div style="font-size:.82rem;color:var(--ink4);padding:.3rem">Sem notificações por agora.</div>';
