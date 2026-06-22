@@ -54,6 +54,25 @@
     });
   }
 
+  /* Posiciona o popover (position:fixed) ancorado ao sino mas SEMPRE dentro do
+     ecrã: alinha pela direita do sino e, se não couber, encosta à margem,
+     nunca passando para fora à esquerda nem à direita. */
+  function _posicionarPop(pop) {
+    var btn = document.getElementById('notif-btn');
+    if (!btn) return;
+    var margem = 12;
+    var r = btn.getBoundingClientRect();
+    var vw = document.documentElement.clientWidth;
+    // largura real do popover (já limitada por max-width no CSS inline)
+    var w = pop.offsetWidth || 300;
+    // queremos a direita do popover alinhada com a direita do sino
+    var left = r.right - w;
+    if (left + w > vw - margem) left = vw - margem - w; // não sai à direita
+    if (left < margem) left = margem;                    // não sai à esquerda
+    pop.style.left = left + 'px';
+    pop.style.top = (r.bottom + 8) + 'px';
+  }
+
   /* Cria/atualiza o sino na topbar. */
   function render() {
     var slot = document.querySelector('.site-topbar-actions');
@@ -78,13 +97,10 @@
       var h = '<button id="notif-btn" aria-label="Notificações" style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1.5px solid var(--border);background:var(--white);border-radius:11px;color:var(--ink2);font-size:1.15rem;cursor:pointer"><i class="ph ph-bell"></i>'
         + (novos > 0 ? '<span style="position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;background:#e23b3b;color:#fff;border-radius:999px;font-size:.66rem;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 4px;font-family:Montserrat,sans-serif">' + (novos > 9 ? '9+' : novos) + '</span>' : '')
         + '</button>';
-      // popover — em ecrãs estreitos ancora ao viewport (position:fixed) para
-      // nunca sair fora do ecrã; em ecrãs largos abre ancorado ao sino.
-      var popMobile = window.innerWidth <= 480;
-      var popPos = popMobile
-        ? 'position:fixed;top:64px;left:12px;right:12px;width:auto;max-height:70vh'
-        : 'position:absolute;top:120%;right:0;width:300px;max-width:calc(100vw - 24px);max-height:60vh';
-      h += '<div id="notif-pop" style="display:none;' + popPos + ';overflow-y:auto;background:var(--white);border:1.5px solid var(--border);border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:.6rem;z-index:300;text-align:left">';
+      // popover — ancorado ao VIEWPORT (position:fixed) e posicionado no
+      // momento de abrir (ver _posicionarPop), nunca sai fora do ecrã, seja
+      // qual for a largura. Largura limitada ao ecrã com folga lateral.
+      h += '<div id="notif-pop" style="display:none;position:fixed;width:300px;max-width:calc(100vw - 24px);max-height:70vh;overflow-y:auto;background:var(--white);border:1.5px solid var(--border);border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:.6rem;z-index:300;text-align:left">';
       h += '<div style="font-weight:800;color:var(--ink1);font-size:.85rem;padding:.2rem .3rem .5rem">Notificações</div>';
       if (!itens.length) {
         h += '<div style="font-size:.82rem;color:var(--ink4);padding:.3rem">Sem notificações por agora.</div>';
@@ -107,7 +123,7 @@
         if (!pop) return;
         var abrir = pop.style.display === 'none';
         pop.style.display = abrir ? 'block' : 'none';
-        if (abrir) { _marcarVisto(); var badge = bell.querySelector('span[style*="e23b3b"]'); if (badge && badge.parentNode === document.getElementById('notif-btn')) badge.remove(); }
+        if (abrir) { _posicionarPop(pop); _marcarVisto(); var badge = bell.querySelector('span[style*="e23b3b"]'); if (badge && badge.parentNode === document.getElementById('notif-btn')) badge.remove(); }
       };
     });
   }
