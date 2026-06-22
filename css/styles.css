@@ -4125,6 +4125,13 @@ body.ml-collapsed #ml-drawer.fixed .ml-toggle i{transform:scaleX(-1);}
 /* conteúdo não fica tapado pela barra inferior */
 body.ml-bottom-on{padding-bottom:60px;}
 body.ml-bottom-on #ml-bottombar{display:flex;}
+/* Telemóvel: portal em coluna a 100vh para o footer ficar SEMPRE colado em
+   baixo, mesmo quando o conteúdo é curto (ex.: só saudação + desafio). Sem
+   isto o footer subia para o meio do ecrã. Espelha o modo menu fixo. */
+body.ml-bottom-on #view-portal{display:flex;flex-direction:column;min-height:100vh}
+body.ml-bottom-on #view-portal > footer{margin-top:auto}
+body.ml-bottom-on .math-view{display:flex;flex-direction:column;min-height:100vh}
+body.ml-bottom-on .math-view > footer{margin-top:auto}
 
 /* A secção Turmas usa toda a largura disponível (até um máximo confortável)
    e fica centrada, com algum respiro lateral. Antes ficava espremida. */
