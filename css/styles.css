@@ -1965,6 +1965,16 @@ body.dark-mode .y-card,body.dark-mode .s-item,body.dark-mode .score-bar{
 }
 body.dark-mode .option-btn{background:var(--cream2)!important;}
 body.dark-mode .option-btn:hover:not(:disabled){background:var(--c2-base)!important;}
+
+/* ── Balões de conversa do aluno (Turmas) — legíveis nos dois modos ── */
+.aluno-msg--eu   { background:#e8f5ee; }   /* aluno → verde-claro */
+.aluno-msg--prof { background:#f0edf7; }   /* professor → lilás-claro */
+.aluno-msg-txt   { color:#2a2724; }
+.aluno-msg-quem  { color:#6b6560; }
+body.dark-mode .aluno-msg--eu   { background:#1e3a2b!important; }  /* verde escuro */
+body.dark-mode .aluno-msg--prof { background:#2e2a45!important; }  /* lilás escuro */
+body.dark-mode .aluno-msg-txt   { color:#f0ede8!important; }       /* texto claro */
+body.dark-mode .aluno-msg-quem  { color:#b8b2ab!important; }
 body.dark-mode .featured-card{background:linear-gradient(135deg,#1a2420 0%,#0f1a16 60%,#1e3028 100%)!important;}
 body.dark-mode .hero-stats{background:rgba(36,36,36,.9)!important;}
 body.dark-mode .tab-btn{background:rgba(36,36,36,.8)!important;color:var(--ink2)!important;}

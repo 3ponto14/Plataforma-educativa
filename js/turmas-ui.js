@@ -1367,7 +1367,7 @@ function _turmasRenderAluno(wrap) {
   // Conversa: caixa de escrita + lista, dentro do acordeão (aberto por defeito)
   var convBody = '<div id="turmas-mensagens-aluno"><div style="color:var(--ink4);font-size:.85rem">A carregar…</div></div>'
     + '<div style="display:flex;gap:.4rem;margin-top:.7rem">'
-    + '<input id="aluno-conv-txt" placeholder="Escrever ao professor…" style="flex:1;border:1.5px solid var(--border);border-radius:999px;padding:8px 14px;font-size:.84rem;font-family:Montserrat,sans-serif" onkeydown="if(event.key===\'Enter\')alunoConvEnviar()">'
+    + '<input id="aluno-conv-txt" placeholder="Escrever ao professor…" style="flex:1;border:1.5px solid var(--border);border-radius:999px;padding:8px 14px;font-size:.84rem;font-family:Montserrat,sans-serif;background:var(--white);color:var(--ink1)" onkeydown="if(event.key===\'Enter\')alunoConvEnviar()">'
     + '<button onclick="alunoConvEnviar()" style="background:linear-gradient(135deg,#4a3f7a,#6b5fa0);color:#fff;border:none;border-radius:999px;padding:8px 16px;font-size:.84rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif">Enviar</button>'
     + '</div>';
   var btnDuvida = '<button onclick="alunoTirarDuvida()" style="background:#2e7d52;color:#fff;border:none;border-radius:999px;padding:5px 12px;font-size:.74rem;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif"><i class="ph ph-question"></i> Tirar dúvida</button>';
@@ -1463,11 +1463,11 @@ function _alunoMsgHTML(m) {
   if (!doAluno && m.alcance === 'grupo') rotulo = '👥 ' + ((m.grupos && m.grupos.nome) || 'Grupo') + ' · ';
   else if (!doAluno && m.alcance === 'geral') rotulo = '📣 Aviso · ';
   var quem = doAluno ? 'tu' : (rotulo + (m.prof_nome || 'professor'));
-  var fundo = doAluno ? '#e8f5ee' : '#f0edf7';
+  var cls = doAluno ? 'aluno-msg aluno-msg--eu' : 'aluno-msg aluno-msg--prof';
   return '<div style="display:flex;justify-content:' + (doAluno ? 'flex-end' : 'flex-start') + '">'
-    + '<div style="max-width:82%;background:' + fundo + ';border-radius:14px;padding:.5rem .8rem">'
-    + '<div style="font-size:.86rem;color:var(--ink1);line-height:1.45">' + _esc(m.texto) + '</div>'
-    + '<div style="font-size:.66rem;color:var(--ink4);margin-top:.2rem">' + _esc(quem) + '</div>'
+    + '<div class="' + cls + '" style="max-width:82%;border-radius:14px;padding:.5rem .8rem">'
+    + '<div class="aluno-msg-txt" style="font-size:.86rem;line-height:1.45">' + _esc(m.texto) + '</div>'
+    + '<div class="aluno-msg-quem" style="font-size:.66rem;margin-top:.2rem">' + _esc(quem) + '</div>'
     + '</div></div>';
 }
 
