@@ -1,0 +1,15 @@
+# Cloudflare Pages — regras de cache.
+# O HTML NÃO deve ser cacheado (para as atualizações aparecerem logo).
+# Os ficheiros estáticos (css/js) revalidam sempre com o servidor.
+
+/*.html
+  Cache-Control: no-cache, must-revalidate
+
+/
+  Cache-Control: no-cache, must-revalidate
+
+/css/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/js/*
+  Cache-Control: public, max-age=0, must-revalidate

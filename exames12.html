@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Exames Nacionais de Matematica A 12.o Ano Todas as questões reais de 2020 a 2025 com resolução. Pratica por tema, por prova ou simula o exame..">
+<meta name="theme-color" content="#2d5a3d">
+<meta property="og:title" content="Exames Nacionais · Matemática A 12.º Ano · 3ponto14">
+<meta property="og:description" content="Todas as questões reais de 2020 a 2025 com resolução. Pratica por tema, por prova ou simula o exame.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_PT">
+<title>Exames Nacionais · Matemática A 12.º Ano · 3ponto14</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23516860'/><text x='50' y='68' font-size='48' font-weight='900' text-anchor='middle' fill='white' font-family='serif'>eP</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+<style>
+:root { --ex12-dark:#1a3d2b; --ex12-mid:#2d6b45; --ex12-light:#4a9e6b; --ex12-pale:#e8f4ed; --ex12-border:#b8d9c4; }
+
+.ex12-topbar{background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.07);position:sticky;top:0;z-index:200;padding:.7rem 1.5rem;display:flex;align-items:center;gap:.75rem}
+.ex12-logo{font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--ex12-dark);font-size:1.1rem;text-decoration:none;display:flex;align-items:center;gap:.5rem}
+.ex12-logo .mark{width:30px;height:30px;background:var(--ex12-mid);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.75rem;font-weight:900}
+.ex12-topbar-title{font-size:.82rem;font-weight:700;color:var(--ink2);flex:1}
+.ex12-topbar-back{font-size:.75rem;font-weight:600;color:var(--ex12-mid);text-decoration:none;display:flex;align-items:center;gap:.3rem;padding:5px 12px;border:1.5px solid var(--ex12-border);border-radius:999px;transition:all .15s;white-space:nowrap}
+.ex12-topbar-back:hover{background:var(--ex12-pale);border-color:var(--ex12-mid)}
+
+.ex12-hero{position:relative;overflow:hidden;background:linear-gradient(150deg,#0d2b1a 0%,#1a4a2d 35%,#2d6b45 70%,#4a9e6b 100%);padding:3.5rem 1.5rem 2.5rem;text-align:center}
+.ex12-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+.ex12-hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);font-size:.68rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:6px 16px;border-radius:999px;margin-bottom:1.2rem}
+.ex12-hero h1{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;color:#fff;margin-bottom:.5rem;line-height:1.1}
+.ex12-hero h1 em{font-style:italic;font-weight:400;color:rgba(255,255,255,.75)}
+.ex12-hero-sub{color:rgba(255,255,255,.65);font-size:.9rem;max-width:500px;margin:0 auto 2rem;line-height:1.7}
+.ex12-hero-stats{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.ex12-hstat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:.85rem 1.6rem;text-align:center}
+.ex12-hstat-n{font-family:'JetBrains Mono',monospace;font-size:1.9rem;font-weight:700;color:#fff;line-height:1}
+.ex12-hstat-l{font-size:.63rem;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.1em;margin-top:.3rem}
+
+.ex12-page{max-width:860px;margin:0 auto;padding:2rem 1.25rem 5rem}
+
+.ex12-tabs-wrap{display:flex;gap:0;background:var(--surface,#f8f6f1);border:1.5px solid var(--border,#e0dcd5);border-radius:16px;padding:.35rem;margin-bottom:2rem;position:sticky;top:57px;z-index:100}
+.ex12-tab{flex:1;padding:.7rem .5rem;border:none;background:transparent;border-radius:12px;font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:700;color:var(--ink3,#888);cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:.4rem;white-space:nowrap}
+.ex12-tab.active{background:linear-gradient(135deg,var(--ex12-dark),var(--ex12-mid));color:#fff;box-shadow:0 4px 12px rgba(29,91,58,.4)}
+.ex12-tab:hover:not(.active){background:rgba(45,107,69,.08);color:var(--ink1,#1a1a1a)}
+
+.ex12-panel{display:none}
+.ex12-panel.active{display:block;animation:fadeUp12 .25s ease}
+@keyframes fadeUp12{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.ex12-sec-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--ink1,#1a1a1a);margin-bottom:.2rem}
+.ex12-sec-sub{font-size:.83rem;color:var(--ink3,#888);line-height:1.5;margin-bottom:1.5rem}
+
+/* Tema grid */
+.ex12-tema-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-bottom:1.5rem}
+.ex12-tema-card{background:#fff;border:1.5px solid var(--border,#e0dcd5);border-radius:18px;padding:1.4rem 1.5rem;cursor:pointer;transition:all .22s;text-align:left;width:100%;position:relative;overflow:hidden}
+.ex12-tema-card:hover{border-color:var(--ex12-mid);transform:translateY(-3px);box-shadow:0 12px 32px rgba(29,91,58,.12)}
+.ex12-tema-icon{width:44px;height:44px;border-radius:12px;background:var(--ex12-pale);display:flex;align-items:center;justify-content:center;margin-bottom:.9rem;font-size:1.2rem;color:var(--ex12-mid);flex-shrink:0}
+.ex12-tema-name{font-size:.95rem;font-weight:800;color:var(--ink1,#1a1a1a);margin-bottom:.25rem;line-height:1.2}
+.ex12-tema-sub{font-size:.74rem;color:var(--ink4,#aaa);line-height:1.45;margin-bottom:.9rem}
+.ex12-tema-footer{display:flex;align-items:center;gap:.5rem}
+.ex12-tema-count{font-size:.7rem;font-weight:700;color:var(--ink4,#aaa);white-space:nowrap}
+.ex12-tema-bar-wrap{flex:1;height:5px;background:var(--border,#e0dcd5);border-radius:99px;overflow:hidden}
+.ex12-tema-bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--ex12-light),var(--ex12-mid));transition:width .4s ease}
+.ex12-tema-pct{font-size:.72rem;font-weight:800;color:var(--ex12-mid);min-width:30px;text-align:right}
+
+/* Prova grid */
+.ex12-prova-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.75rem;margin-bottom:2rem}
+.ex12-prova-card{background:#fff;border:1.5px solid var(--border,#e0dcd5);border-radius:14px;padding:1.1rem;cursor:pointer;transition:all .18s;display:flex;flex-direction:column;gap:.5rem}
+.ex12-prova-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.08);border-color:var(--ex12-mid)}
+.ex12-prova-year{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:700;color:var(--ex12-mid);line-height:1}
+.ex12-prova-fase{font-size:.75rem;font-weight:700;color:var(--ink3,#888)}
+.ex12-prova-count{font-size:.7rem;color:var(--ink4,#aaa);margin-top:auto}
+
+/* Questao */
+.ex12-q-wrap{background:#fff;border:1.5px solid var(--border,#e0dcd5);border-radius:16px;padding:1.5rem;margin-bottom:1rem}
+.ex12-q-num{font-size:.72rem;font-weight:800;color:var(--ex12-mid);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.5rem}
+.ex12-q-tema{display:inline-block;background:var(--ex12-pale);color:var(--ex12-dark);font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-bottom:.75rem}
+.ex12-q-enun{font-size:.92rem;color:var(--ink1,#1a1a1a);line-height:1.6;margin-bottom:1rem}
+.ex12-q-opts{display:flex;flex-direction:column;gap:.5rem}
+.ex12-opt-btn{text-align:left;padding:.65rem 1rem;border:1.5px solid var(--border,#e0dcd5);border-radius:10px;background:#fff;font-family:'Montserrat',sans-serif;font-size:.85rem;color:var(--ink1,#1a1a1a);cursor:pointer;transition:all .15s;width:100%}
+.ex12-opt-btn:hover:not(:disabled){border-color:var(--ex12-mid);background:var(--ex12-pale)}
+.ex12-opt-btn.selected{border-color:var(--ex12-mid);background:var(--ex12-pale);font-weight:700}
+.ex12-opt-btn.correct{border-color:#4caf50;background:#e8f5e9;color:#2e7d32;font-weight:700}
+.ex12-opt-btn.wrong{border-color:#f44336;background:#ffebee;color:#c62828}
+.ex12-opt-btn:disabled{cursor:default;opacity:.9}
+.ex12-feedback{margin-top:.75rem;padding:.65rem 1rem;border-radius:10px;font-size:.83rem;font-weight:600;display:none}
+.ex12-feedback.show{display:block}
+.ex12-feedback.ok{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7}
+.ex12-feedback.err{background:#ffebee;color:#c62828;border:1px solid #ef9a9a}
+.ex12-q-nav{display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;flex-wrap:wrap;gap:.5rem}
+
+/* Simulador */
+.ex12-sim-dur-btn{padding:.55rem 1rem;border:1.5px solid var(--border);border-radius:999px;background:#fff;font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:700;color:var(--ink3);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:.4rem}
+.ex12-sim-dur-btn.active{border-color:var(--ex12-mid);background:var(--ex12-pale);color:var(--ex12-dark)}
+.ex12-sim-timer{background:linear-gradient(135deg,var(--ex12-dark),var(--ex12-mid));border-radius:16px;padding:1rem 1.25rem;display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap;position:sticky;top:110px;z-index:50}
+.ex12-sim-timer-clock{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:700;color:#fff;line-height:1}
+.ex12-sim-timer-label{font-size:.65rem;font-weight:700;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.2rem}
+.ex12-sim-timer-bar-wrap{height:6px;background:rgba(255,255,255,.2);border-radius:999px;flex:1;min-width:80px;overflow:hidden}
+.ex12-sim-timer-bar{height:100%;background:#fff;border-radius:999px;transition:width 1s linear}
+.ex12-sim-stop{padding:6px 14px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:999px;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.ex12-result-hero{background:linear-gradient(135deg,var(--ex12-dark),var(--ex12-mid));border-radius:20px;padding:2rem;text-align:center;color:#fff;margin-bottom:1.5rem}
+.ex12-result-nota{font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:900;line-height:1}
+.ex12-result-nota span{font-size:1.5rem;opacity:.7}
+.ex12-result-pct{font-size:1rem;opacity:.8;margin:.25rem 0 .5rem}
+.ex12-result-msg{font-size:.9rem;opacity:.85;margin-bottom:1rem}
+
+/* Progresso */
+.ex12-prog-summary{background:var(--ex12-pale);border:1.5px solid var(--ex12-border);border-radius:16px;padding:1.25rem;margin-bottom:1.5rem}
+.ex12-prog-big{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:900;color:var(--ex12-dark);line-height:1}
+.ex12-prog-chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem;margin-bottom:1.5rem}
+.ex12-prog-chip{background:#fff;border:1.5px solid var(--border,#e0dcd5);border-radius:12px;padding:.85rem;text-align:center}
+.ex12-prog-chip-n{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:700;color:var(--ex12-mid);line-height:1}
+.ex12-prog-chip-l{font-size:.65rem;font-weight:700;color:var(--ink4,#aaa);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<nav class="site-topbar">
+  <a href="index.html" class="site-topbar-logo">
+    <img class="mark" src="icons/logo-3ponto14.png" alt="3ponto14">
+    <span class="wordmark">3ponto<em>14</em></span>
+  </a>
+  <div class="site-topbar-sep"></div>
+  <span class="site-topbar-title">Matematica A · 12.º Ano</span>
+  <div class="site-topbar-actions"></div>
+  <a href="index.html" class="site-topbar-back"><i class="ph ph-arrow-left"></i> Inicio</a>
+</nav>
+
+<!-- Hero -->
+<div class="ex12-hero">
+  <div class="ex12-hero-grid"></div>
+  <div style="position:relative">
+    <div class="ex12-hero-eyebrow"><i class="ph ph-exam"></i> Prova 635</div>
+    <h1>Exames Nacionais<br><em>Matematica A</em></h1>
+    <p class="ex12-hero-sub">Questões reais com resposta correta · 2020 a 2025 · pratica por tema ou por prova</p>
+    <div class="ex12-hero-stats">
+      <div class="ex12-hstat"><div class="ex12-hstat-n" id="stat-total-q">195</div><div class="ex12-hstat-l">Questoes</div></div>
+      <div class="ex12-hstat"><div class="ex12-hstat-n">17</div><div class="ex12-hstat-l">Provas</div></div>
+      <div class="ex12-hstat"><div class="ex12-hstat-n">6</div><div class="ex12-hstat-l">Anos</div></div>
+      <div class="ex12-hstat"><div class="ex12-hstat-n">13</div><div class="ex12-hstat-l">Temas</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="ex12-page">
+
+  <!-- Tabs -->
+  <div class="ex12-tabs-wrap">
+    <button class="ex12-tab active" onclick="ex12SwitchTab('temas',this)"><i class="ph ph-tag"></i> <span>Por Tema</span></button>
+    <button class="ex12-tab" onclick="ex12SwitchTab('provas',this)"><i class="ph ph-file-text"></i> <span>Por Prova</span></button>
+    <button class="ex12-tab" onclick="ex12SwitchTab('simulador',this)"><i class="ph ph-timer"></i> <span>Simulador</span></button>
+    <button class="ex12-tab" onclick="ex12SwitchTab('progresso',this)"><i class="ph ph-chart-bar"></i> <span>Progresso</span></button>
+  </div>
+
+  <!-- PANEL: TEMAS -->
+  <div class="ex12-panel active" id="ex12-panel-temas">
+    <div class="ex12-sec-title">Praticar por Tema</div>
+    <div class="ex12-sec-sub">Escolhe um tema para treinar questoes de todas as provas.</div>
+
+    <div class="ex12-tema-grid" id="ex12-tema-grid"></div>
+
+    <!-- Questao inline -->
+    <div id="ex12-tema-content" style="display:none">
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem">
+        <button onclick="ex12VolverTemas()" style="background:none;border:none;color:var(--ex12-mid);font-size:.82rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.3rem;padding:0">
+          <i class="ph ph-arrow-left"></i> Todos os temas
+        </button>
+        <div style="font-size:.82rem;font-weight:700;color:var(--ink2)" id="ex12-tema-active-label"></div>
+      </div>
+      <div id="ex12-tema-questoes"></div>
+      <div id="ex12-tema-result" style="display:none;background:var(--ex12-pale);border:1.5px solid var(--ex12-border);border-radius:16px;padding:1.5rem;text-align:center;margin-top:1rem">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:900;color:var(--ex12-dark)" id="ex12-result-pct"></div>
+        <div style="font-size:.85rem;color:var(--ink2);margin:.5rem 0 1rem" id="ex12-result-msg"></div>
+        <button onclick="ex12VolverTemas()" class="btn btn-primary" style="background:var(--ex12-mid);border-color:var(--ex12-mid)">Escolher outro tema</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL: PROVAS -->
+  <div class="ex12-panel" id="ex12-panel-provas">
+    <div class="ex12-sec-title">Praticar por Prova</div>
+    <div class="ex12-sec-sub">Escolhe uma prova completa para praticar as suas questoes de escolha multipla.</div>
+
+    <div class="ex12-prova-grid" id="ex12-prova-grid"></div>
+
+    <div id="ex12-prova-content" style="display:none">
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem">
+        <button onclick="ex12VolverProvas()" style="background:none;border:none;color:var(--ex12-mid);font-size:.82rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.3rem;padding:0">
+          <i class="ph ph-arrow-left"></i> Todas as provas
+        </button>
+        <div style="font-size:.82rem;font-weight:700;color:var(--ink2)" id="ex12-prova-active-label"></div>
+      </div>
+      <div id="ex12-prova-questoes"></div>
+      <div id="ex12-prova-result" style="display:none;background:var(--ex12-pale);border:1.5px solid var(--ex12-border);border-radius:16px;padding:1.5rem;text-align:center;margin-top:1rem">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:900;color:var(--ex12-dark)" id="ex12-prova-result-pct"></div>
+        <div style="font-size:.85rem;color:var(--ink2);margin:.5rem 0 1rem" id="ex12-prova-result-msg"></div>
+        <button onclick="ex12VolverProvas()" class="btn btn-primary" style="background:var(--ex12-mid);border-color:var(--ex12-mid)">Escolher outra prova</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL: SIMULADOR -->
+  <div class="ex12-panel" id="ex12-panel-simulador">
+    <div class="ex12-sec-title">Simulador de Exame</div>
+    <div class="ex12-sec-sub">Condições reais: 150 minutos, questoes de escolha multipla e desenvolvimento. No final ves a nota e a revisao completa.</div>
+
+    <!-- Config -->
+    <div id="ex12-sim-config">
+      <div style="background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1rem">
+        <div style="font-size:.78rem;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:1rem">Escolhe a prova</div>
+        <div id="ex12-sim-prova-sel" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.6rem;margin-bottom:1.5rem"></div>
+
+        <div style="font-size:.78rem;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">Duracao</div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem">
+          <button class="ex12-sim-dur-btn active" data-min="150" onclick="ex12SimSelDur(this)"><i class="ph ph-clock"></i> 150 min (real)</button>
+          <button class="ex12-sim-dur-btn" data-min="90" onclick="ex12SimSelDur(this)">90 min</button>
+          <button class="ex12-sim-dur-btn" data-min="60" onclick="ex12SimSelDur(this)">60 min</button>
+          <button class="ex12-sim-dur-btn" data-min="30" onclick="ex12SimSelDur(this)">30 min</button>
+        </div>
+
+        <button onclick="ex12SimStart()" style="width:100%;padding:.9rem;background:linear-gradient(135deg,var(--ex12-dark),var(--ex12-mid));color:#fff;border:none;border-radius:12px;font-family:'Montserrat',sans-serif;font-size:.92rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem">
+          <i class="ph ph-play"></i> Iniciar Simulador
+        </button>
+      </div>
+    </div>
+
+    <!-- Running -->
+    <div id="ex12-sim-running" style="display:none"></div>
+  </div>
+
+  <!-- PANEL: PROGRESSO -->
+  <div class="ex12-panel" id="ex12-panel-progresso">
+    <div class="ex12-sec-title">O Teu Progresso</div>
+    <div class="ex12-sec-sub">Historico de respostas guardado neste browser.</div>
+    <div id="ex12-prog-content"></div>
+  </div>
+
+</div><!-- /ex12-page -->
+<footer class="portal-footer">
+  <strong>3ponto14</strong> · Feito com <i class="ph ph-heart"></i> para alunos e professores de Portugal
+  <br><a href="termos.html">Termos de Utilização</a> · <a href="privacidade.html">Política de Privacidade</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/cloud.js"></script>
+<script src="js/guard.js"></script>
+<script src="js/shared.js?v=20260621"></script>
+<script src="js/mat12-exames.js?v=20260621"></script>
+<script>
+/* ═══════════════════════════════════════════════
+   EXAMES 12 - Logica
+═══════════════════════════════════════════════ */
+
+var _ex12Progress = {};
+var _ex12ActiveTema = null;
+var _ex12ActiveProva = null;
+var _ex12TemaState = { questoes: [], idx: 0, answers: {}, done: false };
+var _ex12ProvaState = { questoes: [], idx: 0, answers: {}, done: false };
+var EX12_STORAGE = 'ex12_progress';
+
+/* ── Storage ── */
+function ex12LoadProgress() {
+  try { _ex12Progress = JSON.parse(localStorage.getItem(EX12_STORAGE) || '{}'); } catch(e) { _ex12Progress = {}; }
+}
+function ex12SaveProgress() {
+  try { localStorage.setItem(EX12_STORAGE, JSON.stringify(_ex12Progress)); } catch(e) {}
+}
+function ex12RecordAnswer(qid, correct) {
+  if (!_ex12Progress[qid]) _ex12Progress[qid] = { correct: 0, total: 0 };
+  _ex12Progress[qid].total++;
+  if (correct) _ex12Progress[qid].correct++;
+  ex12SaveProgress();
+}
+
+/* ── Tab switching ── */
+function ex12SwitchTab(tab, btn) {
+  // Se sair do simulador enquanto corre, parar o timer
+  if (tab !== 'simulador' && _ex12SimTimer) {
+    clearInterval(_ex12SimTimer);
+    _ex12SimTimer = null;
+  }
+  document.querySelectorAll('.ex12-tab').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  else {
+    var tabBtn = document.querySelector('.ex12-tab[onclick*="' + tab + '"]');
+    if (tabBtn) tabBtn.classList.add('active');
+  }
+  document.querySelectorAll('.ex12-panel').forEach(function(p){ p.classList.remove('active'); });
+  var panel = document.getElementById('ex12-panel-' + tab);
+  if (panel) panel.classList.add('active');
+  if (tab === 'progresso') ex12RenderProgress();
+}
+
+/* ── Tema grid ── */
+var _ex12TemaDesc = {
+  geometria:      'Planos, retas, superficies, volumes e angulos no espaco',
+  funcoes:        'Dominio, continuidade, limites e assimptotas',
+  derivadas:      'Monotonia, extremos, concavidades e otimizacao',
+  integrais:      'Primitivas, calculo integral e areas de regioes',
+  probabilidades: 'Probabilidade condicionada, total e independencia',
+  combinatoria:   'Arranjos, combinacoes, permutacoes e triangulo de Pascal',
+  complexos:      'Forma trigonometrica, operacoes e raizes em C',
+  sucessoes:      'Progressoes aritmeticas, geometricas e limites',
+  logaritmos:     'Equacoes e inequacoes logaritmicas e exponenciais',
+  trigonometria:  'Funcoes circulares, equacoes e transformacoes',
+  estatistica:    'Medidas de tendencia central, dispersao e correlacao',
+  continuidade:   'Continuidade, descontinuidades e teoremas',
+  limites:        'Limites laterais, assimptotas e limites notaveis'
+};
+
+function ex12BuildTemaGrid() {
+  var grid = document.getElementById('ex12-tema-grid');
+  if (!grid) return;
+
+  // Contar questoes e progresso por tema
+  var counts = {}, feitas = {}, certas = {};
+  Object.keys(MAT12_BANCO).forEach(function(key) {
+    MAT12_BANCO[key].questoes.forEach(function(q) {
+      counts[q.tema] = (counts[q.tema] || 0) + 1;
+      var p = _ex12Progress[q.id];
+      if (p) {
+        feitas[q.tema] = (feitas[q.tema] || 0) + p.total;
+        certas[q.tema] = (certas[q.tema] || 0) + p.correct;
+      }
+    });
+  });
+
+  var html = '';
+  MAT12_TEMAS.forEach(function(t) {
+    var n = counts[t.id] || 0;
+    if (n === 0) return;
+    var f = feitas[t.id] || 0;
+    var c = certas[t.id] || 0;
+    var pct = f > 0 ? Math.round(c / f * 100) : 0;
+    var nProvas = _ex12TemaProvas(t.id);
+    var desc = _ex12TemaDesc[t.id] || '';
+
+    html += '<div class="ex12-tema-card" onclick="ex12StartTema(\'' + t.id + '\')">'
+      + '<div class="ex12-tema-icon"><i class="ph ' + t.icon + '"></i></div>'
+      + '<div class="ex12-tema-name">' + t.label + '</div>'
+      + (desc ? '<div class="ex12-tema-sub">' + desc + '</div>' : '')
+      + '<div class="ex12-tema-footer">'
+      + '<span class="ex12-tema-count">' + n + ' questoes</span>'
+      + '<div class="ex12-tema-bar-wrap"><div class="ex12-tema-bar-fill" style="width:' + pct + '%"></div></div>'
+      + '<span class="ex12-tema-pct">' + (f > 0 ? pct + '%' : '') + '</span>'
+      + '</div>'
+      + '</div>';
+  });
+  grid.innerHTML = html;
+}
+
+function _ex12TemaProvas(tema) {
+  var provas = new Set();
+  Object.keys(MAT12_BANCO).forEach(function(key) {
+    MAT12_BANCO[key].questoes.forEach(function(q) {
+      if (q.tema === tema) provas.add(key);
+    });
+  });
+  return provas.size;
+}
+
+/* ── Start tema ── */
+function ex12StartTema(tema) {
+  _ex12ActiveTema = tema;
+  var questoes = [];
+  Object.keys(MAT12_BANCO).forEach(function(key) {
+    MAT12_BANCO[key].questoes.forEach(function(q) {
+      if (q.tema === tema) questoes.push(Object.assign({}, q, {_provaLabel: MAT12_BANCO[key].label, _examKey: key}));
+    });
+  });
+  // Shuffle
+  for (var i = questoes.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = questoes[i]; questoes[i] = questoes[j]; questoes[j] = tmp;
+  }
+  _ex12TemaState = { questoes: questoes, idx: 0, answers: {}, avaliacao: {}, done: false };
+
+  var temaLabel = '';
+  MAT12_TEMAS.forEach(function(t){ if(t.id === tema) temaLabel = t.label; });
+  var lbl = document.getElementById('ex12-tema-active-label');
+  if (lbl) lbl.textContent = temaLabel;
+
+  document.getElementById('ex12-tema-grid').style.display = 'none';
+  document.getElementById('ex12-tema-content').style.display = 'block';
+  document.getElementById('ex12-tema-result').style.display = 'none';
+  ex12RenderTemaQ();
+}
+
+function ex12VolverTemas() {
+  _ex12ActiveTema = null;
+  document.getElementById('ex12-tema-grid').style.display = '';
+  document.getElementById('ex12-tema-content').style.display = 'none';
+}
+
+function ex12RenderTemaQ() {
+  var st = _ex12TemaState;
+  var container = document.getElementById('ex12-tema-questoes');
+  if (!container) return;
+  if (st.idx >= st.questoes.length) {
+    ex12ShowTemaResult();
+    return;
+  }
+  var q = st.questoes[st.idx];
+  container.innerHTML = ex12BuildQHTML(q, st.idx, st.questoes.length, 'tema');
+}
+
+function ex12BuildQHTML(q, idx, total, mode) {
+  var st = mode === 'tema' ? _ex12TemaState : (mode === 'sim' ? _ex12SimState : _ex12ProvaState);
+  var answered = st.answers[q.id];
+  var isMC = q.tipo === 'mc';
+  var qid = mode + '-' + idx;
+
+  var html = '<div class="ex12-q-wrap">'
+    + '<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">'
+    + '<div class="ex12-q-num">Questao ' + (idx+1) + ' / ' + total + '</div>'
+    + '<div style="font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:999px;background:' + (isMC ? 'var(--ex12-pale)' : '#f0f4ff') + ';color:' + (isMC ? 'var(--ex12-dark)' : '#3a4a8a') + '">'
+    + (isMC ? 'Escolha multipla' : 'Desenvolvimento') + '</div>'
+    + '</div>'
+    + '<div class="ex12-q-tema">' + _ex12TemaLabel(q.tema) + '</div>';
+  if (q._provaLabel) html += '<div style="font-size:.72rem;color:var(--ink4);margin-bottom:.5rem">' + q._provaLabel + '</div>';
+  if (q.num) html += '<div style="font-size:.72rem;font-weight:800;color:var(--ink3);margin-bottom:.4rem">Item ' + q.num + '</div>';
+  html += '<div class="ex12-q-enun">' + q.enun + '</div>';
+
+  // Imagem da prova
+  var examKey = q._examKey || q.examKey || '';
+  if (!examKey) {
+    var km = q.id ? q.id.match(/m12-(\d{2}[_-](?:f1|f2|esp))/) : null;
+    if (km) examKey = km[1].replace('-','_');
+  }
+  if (examKey && q.page) {
+    var pg = String(q.page).length < 2 ? '0' + q.page : String(q.page);
+    var imgPath = 'img/exames12/' + examKey + '/p-' + pg + '.png';
+    html += '<div style="margin-bottom:1rem">'
+      + '<div style="font-size:.68rem;font-weight:700;color:var(--ink4);margin-bottom:.35rem;display:flex;align-items:center;gap:.3rem"><i class="ph ph-file-text"></i> Prova original</div>'
+      + '<img src="' + imgPath + '" style="width:100%;border-radius:8px;border:1px solid var(--border)" loading="lazy" onerror="this.style.display=\'none\'">'
+      + '</div>';
+  }
+
+  if (isMC) {
+    // Escolha multipla
+    html += '<div class="ex12-q-opts">';
+    (q.opts || []).forEach(function(opt, i) {
+      var letter = ['A','B','C','D'][i];
+      var cls = 'ex12-opt-btn';
+      var disabled = '';
+      if (answered) {
+        disabled = 'disabled';
+        if (letter === q.correct) cls += ' correct';
+        else if (letter === answered) cls += ' wrong';
+      }
+      html += '<button class="' + cls + '" ' + disabled + ' onclick="ex12SelectOpt(\'' + mode + '\',' + idx + ',\'' + letter + '\',\'' + q.id + '\',\'' + q.correct + '\')">' + opt + '</button>';
+    });
+    html += '</div>';
+    if (answered) {
+      var ok = answered === q.correct;
+      html += '<div class="ex12-feedback show ' + (ok ? 'ok' : 'err') + '">'
+        + (ok ? '<i class="ph ph-check-circle"></i> Correto!' : '<i class="ph ph-x-circle"></i> Resposta correta: (' + q.correct + ')')
+        + '</div>';
+      if (q.resolucao && q.resolucao.indexOf('[Ver') === -1) {
+        html += '<div style="margin-top:.75rem;padding:.75rem 1rem;background:#f8f9fa;border-radius:10px;border-left:3px solid var(--ex12-mid)">'
+          + '<div style="font-size:.72rem;font-weight:800;color:var(--ex12-mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem">Resolucao</div>'
+          + '<div style="font-size:.82rem;color:var(--ink2);line-height:1.6">' + q.resolucao + '</div>'
+          + '</div>';
+      }
+    }
+  } else {
+    // Desenvolvimento
+    html += '<div style="margin-top:.75rem">';
+    if (!answered) {
+      html += '<div style="background:#f8f9fa;border:1.5px dashed var(--border);border-radius:10px;padding:1rem;min-height:80px;font-size:.82rem;color:var(--ink4);font-style:italic;margin-bottom:.75rem">Resolve aqui no caderno ou folha de rascunho...</div>'
+        + '<button class="ex12-opt-btn" style="border-color:var(--ex12-mid);color:var(--ex12-mid);font-weight:700" onclick="ex12VerResolucao(\'' + mode + '\',' + idx + ',\'' + q.id + '\')">'
+        + '<i class="ph ph-eye"></i> Ver resolucao</button>';
+    } else {
+      html += '<div style="padding:.75rem 1rem;background:#f8f9fa;border-radius:10px;border-left:3px solid var(--ex12-mid)">'
+        + '<div style="font-size:.72rem;font-weight:800;color:var(--ex12-mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem">Resolucao</div>'
+        + '<div style="font-size:.85rem;color:var(--ink1);line-height:1.7;white-space:pre-wrap">' + (q.resolucao || 'Ver proposta de resolucao oficial.') + '</div>'
+        + '</div>'
+        + '<div style="margin-top:.75rem;display:flex;gap:.5rem;flex-wrap:wrap">'
+        + '<button class="ex12-opt-btn" style="border-color:#4caf50;color:#2e7d32;font-weight:700;flex:1" onclick="ex12AutoAvaliar(\'' + mode + '\',' + idx + ',\'' + q.id + '\',true)"><i class="ph ph-check-circle"></i> Acertei</button>'
+        + '<button class="ex12-opt-btn" style="border-color:#f44336;color:#c62828;font-weight:700;flex:1" onclick="ex12AutoAvaliar(\'' + mode + '\',' + idx + ',\'' + q.id + '\',false)"><i class="ph ph-x-circle"></i> Errei</button>'
+        + '</div>';
+      var avaliado = st.avaliacao && st.avaliacao[q.id];
+      if (avaliado) {
+        html += '<div class="ex12-feedback show ' + (avaliado === 'ok' ? 'ok' : 'err') + '" style="margin-top:.5rem">'
+          + (avaliado === 'ok' ? '<i class="ph ph-check-circle"></i> Marcado como correto' : '<i class="ph ph-x-circle"></i> Marcado como errado')
+          + '</div>';
+      }
+    }
+    html += '</div>';
+  }
+
+  html += '<div class="ex12-q-nav">';
+  // No simulador, dev avanca logo apos ver resolucao (sem obrigar a avaliar)
+  var canAdvance = isMC ? !!answered : (mode === 'sim' ? !!answered : (answered && st.avaliacao && st.avaliacao[q.id]));
+  if (canAdvance) {
+    if (idx + 1 < total) {
+      html += '<button class="btn btn-primary" style="background:var(--ex12-mid);border-color:var(--ex12-mid);margin-left:auto" onclick="ex12Next(\'' + mode + '\')">'
+        + 'Seguinte <i class="ph ph-arrow-right"></i></button>';
+    } else {
+      html += '<button class="btn btn-primary" style="background:var(--ex12-mid);border-color:var(--ex12-mid);margin-left:auto" onclick="ex12ShowResult(\'' + mode + '\')">'
+        + 'Ver resultado <i class="ph ph-flag-checkered"></i></button>';
+    }
+  } else if (!isMC && answered && !(st.avaliacao && st.avaliacao[q.id])) {
+    // Mostrou resolucao mas ainda nao avaliou
+  } else if (!answered && !isMC) {
+    // Ainda nao viu resolucao - nao mostra botao seguinte
+  }
+  html += '</div></div>';
+  return html;
+}
+
+function ex12ReRender(mode) {
+  if (mode === 'tema') ex12RenderTemaQ();
+  else if (mode === 'sim') ex12SimRenderQ();
+  else ex12RenderProvaQ();
+}
+
+function ex12VerResolucao(mode, idx, qid) {
+  var st = mode === 'tema' ? _ex12TemaState : (mode === 'sim' ? _ex12SimState : _ex12ProvaState);
+  st.answers[qid] = 'visto';
+  if (!st.avaliacao) st.avaliacao = {};
+  ex12ReRender(mode);
+}
+
+function ex12AutoAvaliar(mode, idx, qid, isCorrect) {
+  var st = mode === 'tema' ? _ex12TemaState : (mode === 'sim' ? _ex12SimState : _ex12ProvaState);
+  if (!st.avaliacao) st.avaliacao = {};
+  st.avaliacao[qid] = isCorrect ? 'ok' : 'err';
+  ex12RecordAnswer(qid, isCorrect);
+  ex12ReRender(mode);
+}
+
+function ex12SelectOpt(mode, idx, letter, qid, correct) {
+  var st = mode === 'tema' ? _ex12TemaState : (mode === 'sim' ? _ex12SimState : _ex12ProvaState);
+  if (st.answers[qid]) return;
+  st.answers[qid] = letter;
+  var isCorrect = letter === correct;
+  ex12RecordAnswer(qid, isCorrect);
+  ex12ReRender(mode);
+}
+
+function ex12Next(mode) {
+  var st = mode === 'tema' ? _ex12TemaState : (mode === 'sim' ? _ex12SimState : _ex12ProvaState);
+  st.idx++;
+  ex12ReRender(mode);
+}
+
+function ex12ShowResult(mode) {
+  if (mode === 'tema') ex12ShowTemaResult();
+  else if (mode === 'sim') ex12SimShowResult();
+  else ex12ShowProvaResult();
+}
+
+function ex12CountCorrect(st) {
+  var correct = 0;
+  st.questoes.forEach(function(q) {
+    if (q.tipo === 'mc') {
+      if (st.answers[q.id] === q.correct) correct++;
+    } else {
+      if (st.avaliacao && st.avaliacao[q.id] === 'ok') correct++;
+    }
+  });
+  return correct;
+}
+
+function ex12ShowTemaResult() {
+  var st = _ex12TemaState;
+  var correct = ex12CountCorrect(st);
+  var pct = st.questoes.length > 0 ? Math.round(correct / st.questoes.length * 100) : 0;
+  document.getElementById('ex12-tema-questoes').innerHTML = '';
+  var result = document.getElementById('ex12-tema-result');
+  result.style.display = 'block';
+  document.getElementById('ex12-result-pct').textContent = pct + '%';
+  document.getElementById('ex12-result-msg').textContent = correct + ' certas em ' + st.questoes.length + ' questoes. ' + (pct >= 80 ? 'Excelente!' : pct >= 60 ? 'Bom trabalho!' : 'Continua a praticar!');
+}
+
+function _ex12TemaLabel(tema) {
+  var label = tema;
+  MAT12_TEMAS.forEach(function(t){ if(t.id === tema) label = t.label; });
+  return label;
+}
+
+/* ── Prova grid ── */
+function ex12BuildProvaGrid() {
+  var grid = document.getElementById('ex12-prova-grid');
+  if (!grid) return;
+  var anos = [2025, 2024, 2023, 2022, 2021, 2020];
+  var html = '';
+  anos.forEach(function(ano) {
+    var cardsHtml = '';
+    ['f1','f2','esp'].forEach(function(fase) {
+      var key = String(ano).slice(2) + '_' + fase;
+      var prova = MAT12_BANCO[key];
+      if (!prova) return;
+      var faseLabel = fase === 'f1' ? '1.a Fase' : fase === 'f2' ? '2.a Fase' : 'Ep. Especial';
+      var n = prova.questoes.length;
+      cardsHtml += '<div class="ex12-prova-card" onclick="ex12StartProva(\'' + key + '\')">'
+        + '<div class="ex12-prova-fase" style="font-size:.82rem;font-weight:800;color:var(--ex12-mid)">' + faseLabel + '</div>'
+        + '<div class="ex12-prova-count">' + n + ' questoes</div>'
+        + '</div>';
+    });
+    if (!cardsHtml) return;
+    html += '<div style="margin-bottom:1.5rem">'
+      + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.4rem;font-weight:700;color:var(--ink1);margin-bottom:.6rem;padding-bottom:.4rem;border-bottom:2px solid var(--ex12-border)">' + ano + '</div>'
+      + '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.6rem">' + cardsHtml + '</div>'
+      + '</div>';
+  });
+  grid.innerHTML = html;
+}
+
+/* ── Start prova ── */
+function ex12StartProva(key) {
+  _ex12ActiveProva = key;
+  var prova = MAT12_BANCO[key];
+  if (!prova) return;
+  _ex12ProvaState = { questoes: prova.questoes.slice(), idx: 0, answers: {}, avaliacao: {}, done: false };
+
+  var lbl = document.getElementById('ex12-prova-active-label');
+  if (lbl) lbl.textContent = prova.label;
+
+  document.getElementById('ex12-prova-grid').style.display = 'none';
+  document.getElementById('ex12-prova-content').style.display = 'block';
+  document.getElementById('ex12-prova-result').style.display = 'none';
+  ex12RenderProvaQ();
+}
+
+function ex12VolverProvas() {
+  _ex12ActiveProva = null;
+  document.getElementById('ex12-prova-grid').style.display = '';
+  document.getElementById('ex12-prova-content').style.display = 'none';
+}
+
+function ex12RenderProvaQ() {
+  var st = _ex12ProvaState;
+  var container = document.getElementById('ex12-prova-questoes');
+  if (!container) return;
+  if (st.idx >= st.questoes.length) {
+    ex12ShowProvaResult();
+    return;
+  }
+  var q = st.questoes[st.idx];
+  container.innerHTML = ex12BuildQHTML(q, st.idx, st.questoes.length, 'prova');
+}
+
+function ex12ShowProvaResult() {
+  var st = _ex12ProvaState;
+  var correct = ex12CountCorrect(st);
+  var pct = st.questoes.length > 0 ? Math.round(correct / st.questoes.length * 100) : 0;
+  document.getElementById('ex12-prova-questoes').innerHTML = '';
+  var result = document.getElementById('ex12-prova-result');
+  result.style.display = 'block';
+  document.getElementById('ex12-prova-result-pct').textContent = pct + '%';
+  document.getElementById('ex12-prova-result-msg').textContent = correct + ' certas em ' + st.questoes.length + ' questoes. ' + (pct >= 80 ? 'Excelente!' : pct >= 60 ? 'Bom trabalho!' : 'Continua a praticar!');
+}
+
+/* ── Progresso ── */
+function ex12RenderProgress() {
+  var container = document.getElementById('ex12-prog-content');
+  if (!container) return;
+
+  // Totais globais
+  var totalQ = 0, totalC = 0;
+  Object.keys(MAT12_BANCO).forEach(function(key) {
+    MAT12_BANCO[key].questoes.forEach(function(q) {
+      var p = _ex12Progress[q.id];
+      if (p) { totalQ += p.total; totalC += p.correct; }
+    });
+  });
+  var globalPct = totalQ > 0 ? Math.round(totalC / totalQ * 100) : 0;
+
+  var html = '';
+
+  // Cartao global
+  html += '<div style="background:linear-gradient(135deg,var(--ex12-dark),var(--ex12-mid));border-radius:18px;padding:1.75rem 2rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap">';
+  html += '<div style="flex:1;min-width:160px">';
+  html += '<div style="color:rgba(255,255,255,.55);font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem">Taxa de acerto global</div>';
+  html += '<div style="font-family:\'JetBrains Mono\',monospace;font-size:2.8rem;font-weight:700;color:#fff;line-height:1">' + (totalQ > 0 ? globalPct : '--') + (totalQ > 0 ? '<span style="font-size:1.2rem;opacity:.55">%</span>' : '') + '</div>';
+  html += '<div style="color:rgba(255,255,255,.45);font-size:.75rem;margin-top:.3rem">' + totalQ + ' questoes respondidas &middot; ' + totalC + ' corretas</div>';
+  html += '</div>';
+  html += '<div style="background:rgba(255,255,255,.08);border-radius:10px;padding:.6rem 1rem;text-align:center">';
+  html += '<div style="font-family:\'JetBrains Mono\',monospace;font-size:1.5rem;font-weight:700;color:#fff">' + totalQ + '</div>';
+  html += '<div style="font-size:.63rem;color:rgba(255,255,255,.5);font-weight:700;text-transform:uppercase;letter-spacing:.08em">Respondidas</div>';
+  html += '</div></div>';
+
+  if (totalQ === 0) {
+    html += '<div style="text-align:center;padding:2rem;color:var(--ink4)">';
+    html += '<i class="ph ph-chart-bar" style="font-size:2.5rem;opacity:.3;display:block;margin-bottom:.75rem"></i>';
+    html += '<p style="font-size:.85rem">Ainda nao respondeste a nenhuma questao.<br>Comeca pela <strong>pratica por Tema</strong>!</p>';
+    html += '<button onclick="ex12SwitchTab(\'temas\',null)" style="margin-top:1rem;padding:.75rem 1.5rem;background:linear-gradient(135deg,var(--ex12-dark),var(--ex12-mid));color:#fff;border:none;border-radius:12px;font-family:\'Montserrat\',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer"><i class="ph ph-play-circle"></i> Comecar agora</button>';
+    html += '</div>';
+    container.innerHTML = html;
+    return;
+  }
+
+  // Por tema
+  html += '<div style="margin-bottom:1.5rem">';
+  html += '<div style="font-size:.78rem;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">Progresso por tema</div>';
+
+  MAT12_TEMAS.forEach(function(t) {
+    // Contar questoes deste tema no banco e no progresso
+    var bancoTotal = 0, feitas = 0, certas = 0;
+    Object.keys(MAT12_BANCO).forEach(function(key) {
+      MAT12_BANCO[key].questoes.forEach(function(q) {
+        if (q.tema !== t.id) return;
+        bancoTotal++;
+        var p = _ex12Progress[q.id];
+        if (p) { feitas += p.total; certas += p.correct; }
+      });
+    });
+    if (bancoTotal === 0) return;
+    var pct = feitas > 0 ? Math.round(certas / feitas * 100) : 0;
+    var cobertura = Math.min(100, Math.round(feitas / bancoTotal * 100));
+    var cor = pct >= 80 ? '#4caf50' : pct >= 60 ? 'var(--ex12-mid)' : pct >= 40 ? '#f0a010' : '#f44336';
+
+    html += '<div style="margin-bottom:1rem">';
+    html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.3rem">';
+    html += '<span style="font-size:.78rem;font-weight:700;color:var(--ink1);display:flex;align-items:center;gap:.4rem"><i class="ph ' + t.icon + '" style="color:var(--ex12-mid)"></i> ' + t.label + '</span>';
+    html += '<span style="font-size:.72rem;font-weight:800;color:' + (feitas > 0 ? cor : 'var(--ink4)') + '">' + (feitas > 0 ? pct + '% acerto' : 'Nao iniciado') + '</span>';
+    html += '</div>';
+    html += '<div style="height:8px;background:var(--cream3,#ede9e2);border-radius:999px;overflow:hidden">';
+    html += '<div style="height:100%;width:' + (feitas > 0 ? pct : 0) + '%;background:' + cor + ';border-radius:999px;transition:width .5s ease"></div>';
+    html += '</div>';
+    if (feitas > 0) {
+      html += '<div style="display:flex;justify-content:space-between;margin-top:.25rem">';
+      html += '<span style="font-size:.65rem;color:var(--ink4)">' + feitas + ' feitas · ' + certas + ' certas</span>';
+      html += '<span style="font-size:.65rem;color:var(--ink4)">' + cobertura + '% do banco (' + bancoTotal + ' questoes)</span>';
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+  html += '</div>';
+
+  // Botoes de accao
+  html += '<div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.5rem">'
+    + '<button onclick="ex12DownloadPDF()" class="btn btn-ghost" style="font-size:.78rem;padding:7px 14px;display:inline-flex;align-items:center;gap:5px"><i class="ph ph-file-text"></i> Relatório PDF</button>'
+    + '<button onclick="ex12ClearProgress()" style="font-size:.72rem;color:#c62828;background:none;border:1px solid #ef9a9a;border-radius:999px;padding:5px 14px;cursor:pointer;font-family:\'Montserrat\',sans-serif;font-weight:600;margin-left:auto">Limpar progresso</button>'
+    + '</div>';
+
+  container.innerHTML = html;
+}
+
+function ex12DownloadPDF() {
+  var totalQ = 0, totalC = 0;
+  var temasRows = '';
+  MAT12_TEMAS.forEach(function(t) {
+    var bancoTotal = 0, feitas = 0, certas = 0;
+    Object.keys(MAT12_BANCO).forEach(function(key) {
+      MAT12_BANCO[key].questoes.forEach(function(q) {
+        if (q.tema !== t.id) return;
+        bancoTotal++;
+        var p = _ex12Progress[q.id];
+        if (p) { feitas += p.total; certas += p.correct; }
+      });
+    });
+    if (bancoTotal === 0) return;
+    totalQ += feitas; totalC += certas;
+    var pct = feitas > 0 ? Math.round(certas / feitas * 100) + '%' : 'Nao iniciado';
+    var cor = feitas > 0 ? (parseInt(pct) >= 80 ? '#2d6b45' : parseInt(pct) >= 60 ? '#c4a030' : '#c4796e') : '#9e9e9e';
+    temasRows += '<tr><td style="padding:10px 14px;font-weight:600;color:#1a3d2b">' + t.label + '</td>'
+      + '<td style="padding:10px 14px;text-align:center;font-family:monospace">' + certas + '/' + feitas + '</td>'
+      + '<td style="padding:10px 14px;text-align:center;font-weight:700;color:' + cor + '">' + pct + '</td>'
+      + '<td style="padding:10px 24px 10px 14px;min-width:120px"><div style="width:100%;height:8px;background:#eee;border-radius:4px;overflow:hidden"><div style="height:100%;width:' + (feitas > 0 ? parseInt(pct) : 0) + '%;background:' + cor + ';border-radius:4px"></div></div></td></tr>';
+  });
+  var taxaGlobal = totalQ > 0 ? Math.round(totalC / totalQ * 100) + '%' : 'Sem dados';
+  var data = new Date().toLocaleDateString('pt-PT');
+
+  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Progresso 3ponto14 Mat12</title>'
+    + '<style>body{font-family:Montserrat,sans-serif;max-width:800px;margin:2rem auto;color:#1a1a1a;padding:0 1rem}'
+    + 'h1{font-family:Georgia,serif;color:#1a3d2b}table{width:100%;border-collapse:collapse;margin-top:1rem}'
+    + 'th{background:#1a3d2b;color:#fff;padding:10px 14px;text-align:left;font-size:.8rem}'
+    + 'tr:nth-child(even){background:#f5faf7}.stat-grid{display:flex;gap:1rem;margin:1rem 0}'
+    + '.stat{background:#e8f4ed;border-radius:10px;padding:1rem;flex:1;text-align:center}'
+    + '.stat .n{font-size:2rem;font-weight:700;color:#1a3d2b}.stat .l{font-size:.75rem;color:#555}'
+    + '@media print{button{display:none}}</style></head><body>'
+    + '<h1>3ponto14 · Matemática A · 12.º Ano</h1>'
+    + '<p style="color:#555">Relatório de progresso exportado em ' + data + '</p>'
+    + '<div class="stat-grid">'
+    + '<div class="stat"><div class="n">' + totalC + '</div><div class="l">Respostas certas</div></div>'
+    + '<div class="stat"><div class="n">' + taxaGlobal + '</div><div class="l">Taxa global</div></div>'
+    + '<div class="stat"><div class="n">' + totalQ + '</div><div class="l">Questoes respondidas</div></div>'
+    + '</div>'
+    + '<h2>Desempenho por Tema</h2>'
+    + '<table><thead><tr><th>Tema</th><th>Certas/Feitas</th><th>Taxa</th><th>Barra</th></tr></thead><tbody>'
+    + temasRows + '</tbody></table>'
+    + '<p style="margin-top:2rem;font-size:.75rem;color:#aaa">3ponto14 · Exames Nacionais Mat A 12º Ano</p>'
+    + '</body></html>';
+
+  if (typeof htmlToPdfDownload === 'function') {
+    htmlToPdfDownload(html, 'progresso_mat12.pdf');
+  }
+}
+
+function ex12ClearProgress() {
+  _ex12Progress = {};
+  ex12SaveProgress();
+  ex12RenderProgress();
+}
+
+/* ── Init ── */
+/* ══ SIMULADOR ══════════════════════════════════════════ */
+var _ex12SimTimer = null;
+var _ex12SimTimeLeft = 0;
+var _ex12SimTotalTime = 0;
+var _ex12SimProva = null;
+var _ex12SimDurMin = 150;
+var _ex12SimState = { questoes: [], idx: 0, answers: {}, avaliacao: {}, done: false };
+
+function ex12SimSelDur(btn) {
+  document.querySelectorAll('.ex12-sim-dur-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  _ex12SimDurMin = parseInt(btn.dataset.min) || 150;
+}
+
+function ex12BuildSimProvaGrid() {
+  var grid = document.getElementById('ex12-sim-prova-sel');
+  if (!grid) return;
+  var anos = [2025,2024,2023,2022,2021,2020];
+  var html = '';
+  anos.forEach(function(ano) {
+    ['f1','f2','esp'].forEach(function(fase) {
+      var key = String(ano).slice(2) + '_' + fase;
+      if (!MAT12_BANCO[key]) return;
+      var faseLabel = fase==='f1'?'1.ª Fase':fase==='f2'?'2.ª Fase':'Ep. Especial';
+      var n = MAT12_BANCO[key].questoes.length;
+      html += '<button class="ex12-prova-card" style="padding:.85rem;font-size:.78rem" onclick="ex12SimSelProva(this,\'' + key + '\')">'
+        + '<div style="font-family:\'JetBrains Mono\',monospace;font-size:1.1rem;font-weight:700;color:var(--ex12-mid)">' + ano + '</div>'
+        + '<div style="font-size:.7rem;color:var(--ink3);font-weight:700">' + faseLabel + '</div>'
+        + '<div style="font-size:.65rem;color:var(--ink4);margin-top:.25rem">' + n + ' questoes</div>'
+        + '</button>';
+    });
+  });
+  grid.innerHTML = html;
+}
+
+function ex12SimSelProva(btn, key) {
+  document.querySelectorAll('#ex12-sim-prova-sel .ex12-prova-card').forEach(function(b){
+    b.style.borderColor = ''; b.style.background = '';
+  });
+  btn.style.borderColor = 'var(--ex12-mid)';
+  btn.style.background = 'var(--ex12-pale)';
+  _ex12SimProva = key;
+}
+
+function ex12SimStart() {
+  if (!_ex12SimProva) {
+    alert('Escolhe uma prova primeiro.');
+    return;
+  }
+  var prova = MAT12_BANCO[_ex12SimProva];
+  if (!prova) return;
+
+  _ex12SimState = { questoes: prova.questoes.slice(), idx: 0, answers: {}, avaliacao: {}, done: false };
+  _ex12SimTotalTime = _ex12SimDurMin * 60;
+  _ex12SimTimeLeft = _ex12SimTotalTime;
+
+  var cfg = document.getElementById('ex12-sim-config');
+  var running = document.getElementById('ex12-sim-running');
+  cfg.style.display = 'none';
+  running.style.display = 'block';
+
+  ex12SimRenderTimer();
+  ex12SimRenderQ();
+
+  _ex12SimTimer = setInterval(function() {
+    _ex12SimTimeLeft--;
+    var timeEl = document.getElementById('ex12-sim-clock');
+    var barEl = document.getElementById('ex12-sim-bar');
+    if (timeEl) timeEl.textContent = ex12FmtTime(_ex12SimTimeLeft);
+    if (barEl) {
+      var pct = Math.max(0, Math.round(_ex12SimTimeLeft / _ex12SimTotalTime * 100));
+      barEl.style.width = pct + '%';
+      if (_ex12SimTimeLeft <= 300) barEl.style.background = 'linear-gradient(90deg,#f0a010,#ffcc44)';
+      if (_ex12SimTimeLeft <= 60)  barEl.style.background = 'linear-gradient(90deg,#f55,#ff8080)';
+    }
+    if (_ex12SimTimeLeft <= 0) ex12SimStop();
+  }, 1000);
+}
+
+function ex12FmtTime(s) {
+  var m = Math.floor(s/60);
+  var ss = s % 60;
+  return (m < 10 ? '0' : '') + m + ':' + (ss < 10 ? '0' : '') + ss;
+}
+
+function ex12SimRenderTimer() {
+  var running = document.getElementById('ex12-sim-running');
+  var timer = document.getElementById('ex12-sim-timer');
+  if (!timer) {
+    var t = document.createElement('div');
+    t.id = 'ex12-sim-timer';
+    t.className = 'ex12-sim-timer';
+    running.insertBefore(t, running.firstChild);
+    timer = t;
+  }
+  var st = _ex12SimState;
+  var total = st.questoes.length;
+  timer.innerHTML = '<i class="ph ph-timer" style="color:rgba(255,255,255,.7);font-size:1.3rem;flex-shrink:0"></i>'
+    + '<div style="flex:1">'
+    + '<div class="ex12-sim-timer-label">Tempo restante</div>'
+    + '<div class="ex12-sim-timer-clock" id="ex12-sim-clock">' + ex12FmtTime(_ex12SimTimeLeft) + '</div>'
+    + '<div class="ex12-sim-timer-bar-wrap"><div class="ex12-sim-timer-bar" id="ex12-sim-bar" style="width:100%"></div></div>'
+    + '</div>'
+    + '<div style="text-align:right;color:rgba(255,255,255,.7);font-size:.72rem;font-weight:700">'
+    + '<div style="font-size:1.1rem;font-family:\'JetBrains Mono\',monospace;color:#fff" id="ex12-sim-qcount">' + (st.idx+1) + '/' + total + '</div>'
+    + '<div>questoes</div></div>'
+    + '<button class="ex12-sim-stop" onclick="ex12SimStop()"><i class="ph ph-stop-circle"></i> Terminar</button>';
+}
+
+function ex12SimRenderQ() {
+  var st = _ex12SimState;
+  var container = document.getElementById('ex12-sim-questoes');
+  if (!container) {
+    var c = document.createElement('div');
+    c.id = 'ex12-sim-questoes';
+    document.getElementById('ex12-sim-running').appendChild(c);
+    container = c;
+  }
+  var qcount = document.getElementById('ex12-sim-qcount');
+  if (qcount) qcount.textContent = (st.idx+1) + '/' + st.questoes.length;
+
+  if (st.idx >= st.questoes.length) {
+    ex12SimShowResult();
+    return;
+  }
+  var q = st.questoes[st.idx];
+  container.innerHTML = ex12BuildQHTML(q, st.idx, st.questoes.length, 'sim');
+}
+
+function ex12SimStop() {
+  clearInterval(_ex12SimTimer);
+  _ex12SimTimer = null;
+  _ex12SimState.done = true;
+  ex12SimShowResult();
+}
+
+function ex12SimShowResult() {
+  clearInterval(_ex12SimTimer);
+  var st = _ex12SimState;
+  var timer = document.getElementById('ex12-sim-timer');
+  if (timer) timer.style.display = 'none';
+
+  var correct = ex12CountCorrect(st);
+  var total = st.questoes.length;
+  var pct = total > 0 ? Math.round(correct / total * 100) : 0;
+  var nota = Math.round(correct / total * 20 * 10) / 10;
+
+  var emoji = pct>=90?'🏆':pct>=75?'⭐':pct>=55?'💪':pct>=35?'📚':'🔄';
+  var msg = pct>=90?'Excelente! Estás preparado!':pct>=75?'Muito bom! Continua assim.':pct>=55?'Bom esforço! Treina mais.':pct>=35?'Revê os temas com mais erros.':'Estuda a matéria e tenta de novo!';
+
+  var container = document.getElementById('ex12-sim-questoes');
+  if (!container) return;
+
+  var h = '<div class="ex12-result-hero">'
+    + '<div style="font-size:2.5rem;margin-bottom:.5rem">' + emoji + '</div>'
+    + '<div class="ex12-result-nota">' + nota.toFixed(1).replace('.',',') + '<span> / 20</span></div>'
+    + '<div class="ex12-result-pct">' + correct + ' de ' + total + ' questoes certas (' + pct + '%)</div>'
+    + '<div class="ex12-result-msg">' + msg + '</div>'
+    + '<div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:1rem">'
+    + '<button onclick="ex12SimReset()" style="padding:8px 18px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:999px;font-family:\'Montserrat\',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer"><i class="ph ph-arrow-clockwise"></i> Novo simulador</button>'
+    + '<button onclick="ex12SwitchTab(\'temas\',null)" style="padding:8px 18px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:999px;font-family:\'Montserrat\',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer"><i class="ph ph-books"></i> Praticar por Tema</button>'
+    + '</div></div>';
+
+  // Revisão
+  h += '<div style="margin-top:1.5rem"><div style="font-size:.78rem;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">Revisao das questoes</div>';
+  st.questoes.forEach(function(q, qi) {
+    var ans = st.answers[q.id];
+    var aval = st.avaliacao && st.avaliacao[q.id];
+    var isOk = q.tipo === 'mc' ? ans === q.correct : aval === 'ok';
+    var skipped = q.tipo === 'mc' ? !ans : !aval;
+    var color = skipped ? '#888' : isOk ? '#2e7d32' : '#c62828';
+    var bg = skipped ? '#f5f5f5' : isOk ? '#e8f5e9' : '#ffebee';
+    h += '<div style="background:' + bg + ';border-radius:12px;padding:1rem;margin-bottom:.6rem;border-left:4px solid ' + color + '">'
+      + '<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem">'
+      + '<span style="font-size:.7rem;font-weight:800;color:var(--ink4)">Item ' + (q.num||qi+1) + '</span>'
+      + '<span style="font-size:.65rem;padding:1px 7px;border-radius:999px;background:' + color + ';color:#fff;font-weight:700">'
+      + (skipped ? 'Sem resposta' : isOk ? 'Certo' : 'Errado') + '</span>'
+      + '<span style="font-size:.65rem;color:var(--ink4);margin-left:auto">' + (q.tipo==='mc'?'Escolha multipla':'Desenvolvimento') + '</span>'
+      + '</div>'
+      + '<div style="font-size:.82rem;color:var(--ink2);line-height:1.5;margin-bottom:.5rem">' + q.enun.slice(0,120) + (q.enun.length>120?'...':'') + '</div>';
+    if (q.tipo === 'mc' && q.correct) {
+      h += '<div style="font-size:.78rem;color:' + color + ';font-weight:700">Resposta certa: (' + q.correct + ')';
+      if (ans && ans !== q.correct) h += ' &nbsp; A tua: (' + ans + ')';
+      h += '</div>';
+    }
+    h += '</div>';
+  });
+  h += '</div>';
+  container.innerHTML = h;
+}
+
+function ex12SimReset() {
+  clearInterval(_ex12SimTimer);
+  _ex12SimTimer = null;
+  _ex12SimProva = null;
+  var cfg = document.getElementById('ex12-sim-config');
+  var running = document.getElementById('ex12-sim-running');
+  if (cfg) cfg.style.display = 'block';
+  if (running) { running.style.display = 'none'; running.innerHTML = ''; }
+  // Reset prova selection
+  document.querySelectorAll('#ex12-sim-prova-sel .ex12-prova-card').forEach(function(b){
+    b.style.borderColor = ''; b.style.background = '';
+  });
+}
+
+function ex12ToggleImg(btn) {
+  var container = btn.nextElementSibling;
+  var visible = container.style.display !== 'none';
+  container.style.display = visible ? 'none' : 'block';
+  btn.innerHTML = visible
+    ? '<i class="ph ph-image"></i> Ver pagina da prova'
+    : '<i class="ph ph-eye-slash"></i> Ocultar pagina';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  ex12LoadProgress();
+  ex12BuildTemaGrid();
+  ex12BuildProvaGrid();
+  ex12BuildSimProvaGrid();
+  // Update total count
+  var total = 0;
+  Object.keys(MAT12_BANCO).forEach(function(k){ total += MAT12_BANCO[k].questoes.length; });
+  var el = document.getElementById('stat-total-q');
+  if (el) el.textContent = total;
+});
+</script>
+<script src="js/ux-improvements.js?v=20260621"></script>
+<script src="js/nav.js?v=20260621"></script>
+<script src="js/pwa.js?v=20260622"></script>
+</body>
+</html>
