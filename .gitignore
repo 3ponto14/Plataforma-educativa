@@ -3,3 +3,18 @@
 
 # Ficheiro de referência demasiado grande para o GitHub (>100MB)
 8º ano_matemática/MX8/Capítulo 4 - Polinómios. Equações literais e sistemas/mx8p2_cap4_p08_qa_11_e_12.docx
+
+# ── Materiais de referência (manuais/PDFs do professor) ──
+# NÃO fazem parte do site. Ficam só no disco. Cloudflare Pages rejeita
+# ficheiros > 25 MB e fazia FALHAR todos os deploys por causa destes.
+/[0-9]* ano*/
+/[0-9]*º*/
+/12- matematica/
+/1º ciclo/
+*.pdf
+*.docx
+
+*.pdf
+*.docx
+/12- matematica/
+/1º ciclo/
