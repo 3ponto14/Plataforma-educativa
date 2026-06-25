@@ -197,6 +197,11 @@
   /* Decide o estado conforme sessão + tamanho de ecrã. */
   function aplicar() {
     montar();
+    // Marca o body conforme o tipo de conta, para o CSS poder mostrar/esconder
+    // elementos só-de-professor (ex.: botão "Soluções" no gerador de fichas).
+    var ehProf = (typeof Cloud !== 'undefined' && Cloud.ehProfessor && Cloud.ehProfessor());
+    document.body.classList.toggle('is-prof', !!ehProf);
+    document.body.classList.toggle('is-aluno', !ehProf);
     var sessao = _temSessao();
     var burger = document.getElementById('ml-burger');
     var drawer = document.getElementById('ml-drawer');

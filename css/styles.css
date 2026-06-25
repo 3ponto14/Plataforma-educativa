@@ -1966,6 +1966,12 @@ body.dark-mode .y-card,body.dark-mode .s-item,body.dark-mode .score-bar{
 body.dark-mode .option-btn{background:var(--cream2)!important;}
 body.dark-mode .option-btn:hover:not(:disabled){background:var(--c2-base)!important;}
 
+/* ── Soluções (gabarito) só para professores ──
+   O botão "Soluções" do gerador de fichas fica escondido para alunos e
+   para quem não tem sessão; só aparece quando o body tem .is-prof. */
+.gf-type-btn[data-type="solucoes"]{display:none;}
+body.is-prof .gf-type-btn[data-type="solucoes"]{display:inline-flex;}
+
 /* ── Balões de conversa do aluno (Turmas) — legíveis nos dois modos ── */
 .aluno-msg--eu   { background:#e8f5ee; }   /* aluno → verde-claro */
 .aluno-msg--prof { background:#f0edf7; }   /* professor → lilás-claro */
@@ -2609,6 +2615,15 @@ body.dark-mode #pt-gram-engine>div>div,
 body.dark-mode #pt-fig-engine>div>div{background:#1e1c2e!important;border-color:#2a2840!important}
 body.dark-mode .pn-opt{background:#252340!important;border-color:#3a3860!important;color:#e0daf0!important}
 body.dark-mode .pn-opt:hover:not(:disabled){background:#2d2a50!important;border-color:#6b5fa0!important}
+
+/* Dark mode — cartão de questão genérico (exames Mat, simulador, por tema) */
+body.dark-mode .pn-card{background:#1e1c2e!important;border-color:#2a2840!important}
+body.dark-mode .pn-enun,
+body.dark-mode .pn-opt-text,
+body.dark-mode .pn-rev-enun{color:#f0ede8!important}
+body.dark-mode .pn-opt-letter{background:#34314f!important;color:#d8d2ea!important}
+body.dark-mode .pn-opt--correct{background:#16331f!important;border-color:#4caf50!important}
+body.dark-mode .pn-opt--wrong{background:#3a1c1c!important;border-color:#e53935!important}
 
 /* Dark mode - texto boxes */
 body.dark-mode .pt-texto-box{background:#151325!important;border-color:#2a2840!important}

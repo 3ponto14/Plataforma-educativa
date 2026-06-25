@@ -2792,3 +2792,24 @@ function _capDownloadFicha(cap, capNome) {
     + content + '</body></html>';
   if (typeof htmlToPdfDownload === 'function') htmlToPdfDownload(fullHtml, 'ficha_cap' + cap + '_mat7.pdf');
 }
+
+/* ════════════════════════════════════════════════════════════════
+   SOLUÇÕES (gabarito) só para PROFESSORES
+   O botão "Soluções" do gerador de fichas é escondido por CSS para
+   alunos (body.is-prof). Por segurança, garantimos também que o ESTADO
+   solucoes fica a false numa conta de aluno, mesmo que venha true por
+   omissão — assim uma ficha de aluno nunca inclui o gabarito.
+   ════════════════════════════════════════════════════════════════ */
+function eduForcarSolucoesSoProf() {
+  var ehProf = (typeof Cloud !== 'undefined' && Cloud.ehProfessor && Cloud.ehProfessor());
+  if (ehProf) return; // professor: mantém a sua escolha
+  var nomes = ['_mat1gf','_mat5gf','_mat6gf','_mat7gf','_mat8gf','_mat9gf','_mat10gf','_mat11gf','_mat12gf','_port1gf','_port7gf','_port8gf','_port9gf','_fq7gf','_fq8gf','_fq9gf','_em1gf'];
+  nomes.forEach(function (n) {
+    var gf = window[n];
+    if (gf && gf.tipos && gf.tipos.solucoes) gf.tipos.solucoes = false;
+  });
+}
+if (typeof document !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', function () { setTimeout(eduForcarSolucoesSoProf, 600); });
+  document.addEventListener('cloud:auth', function () { setTimeout(eduForcarSolucoesSoProf, 200); });
+}
