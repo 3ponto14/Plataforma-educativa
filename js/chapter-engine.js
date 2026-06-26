@@ -1,3 +1,7 @@
+/*! 3ponto14 — Plataforma educativa. © 2026 3ponto14. Todos os direitos reservados.
+ * Código e conteúdo protegidos por direitos de autor. Proibida a cópia,
+ * reprodução ou clonagem sem autorização escrita. https://plataformaeducativa.pages.dev */
+
 // CHAPTER ENGINE Generic parameterized logic for cap1-cap4
 // Each chapter registers its data in window.CAP_DATA[n].
 

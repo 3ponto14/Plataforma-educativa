@@ -1,3 +1,7 @@
+/*! 3ponto14 — Plataforma educativa. © 2026 3ponto14. Todos os direitos reservados.
+ * Código e conteúdo protegidos por direitos de autor. Proibida a cópia,
+ * reprodução ou clonagem sem autorização escrita. https://plataformaeducativa.pages.dev */
+
 /* ════════════════════════════════════════════════════════════════
    cloud.js — Contas e sincronização na nuvem (Supabase)
    Camada NÃO destrutiva por cima do localStorage: sem login, tudo

@@ -1,3 +1,7 @@
+/*! 3ponto14 — Plataforma educativa. © 2026 3ponto14. Todos os direitos reservados.
+ * Código e conteúdo protegidos por direitos de autor. Proibida a cópia,
+ * reprodução ou clonagem sem autorização escrita. https://plataformaeducativa.pages.dev */
+
 /* ── Portal page logic (index.html only) ──────────────────────────
    Renders the portal card grid and handles portal-specific interactions.
    Navigation functions live in nav.js (loaded last on every page).

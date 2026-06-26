@@ -1,3 +1,7 @@
+/*! 3ponto14 — Plataforma educativa. © 2026 3ponto14. Todos os direitos reservados.
+ * Código e conteúdo protegidos por direitos de autor. Proibida a cópia,
+ * reprodução ou clonagem sem autorização escrita. https://plataformaeducativa.pages.dev */
+
 /* ── Disciplinas do currículo português (1.º ciclo → Secundário) ──────
    Lista canónica única, usada no perfil do professor (disciplinas que
    leciona) e na pergunta pública do aluno (disciplina da dúvida). As que
