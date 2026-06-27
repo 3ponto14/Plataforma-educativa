@@ -1298,7 +1298,7 @@ function fq7gfGerar(formato) {
 
   // Secção de soluções
   var solHTML = '';
-  if (_fq7gf.tipos.solucoes && solucoes.length) {
+  if (_fq7gf.tipos.solucoes && eduPodeSolucoes() && solucoes.length) {
     var _lmS = (typeof _limpaMath === 'function') ? _limpaMath : function(x){ return x; };
     var fmS = (typeof formatMath === 'function') ? function(x){ return formatMath(_lmS(x)); } : function(x){ return _lmS(x); };
     var lst = solucoes.map(function(s) {

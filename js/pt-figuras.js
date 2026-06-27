@@ -180,7 +180,7 @@ function ptFigRender() {
 
   h += '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:1.75rem">';
   h += '<div style="font-size:.68rem;font-weight:800;color:#b07030;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem"><i class="ph ph-sparkle"></i> Que figura de estilo é esta?</div>';
-  h += '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.2rem;line-height:1.8;color:var(--ink1);margin-bottom:1.5rem;padding:1rem 1.25rem;background:#fefbf0;border-radius:12px;border-left:3px solid #c9a84c">' + q.frase + '</div>';
+  h += '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.2rem;line-height:1.8;color:#2a2724;margin-bottom:1.5rem;padding:1rem 1.25rem;background:#fefbf0;border-radius:12px;border-left:3px solid #c9a84c">' + q.frase + '</div>';
   h += '<div id="pt-fig-opts">';
   var opts = q.opts.slice().sort(function(){ return Math.random() - .5; });
   opts.forEach(function(opt) {
@@ -378,7 +378,7 @@ function ptDiscRender() {
 
   h += '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:1.75rem">';
   h += '<div style="font-size:.68rem;font-weight:800;color:#2e7d52;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem"><i class="ph ph-chat-circle-text"></i> ' + tipo + '</div>';
-  h += '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.1rem;line-height:1.8;color:var(--ink1);margin-bottom:1.5rem;padding:1rem 1.25rem;background:#f0faf4;border-radius:12px;border-left:3px solid #4caf50">' + q.original + '</div>';
+  h += '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.1rem;line-height:1.8;color:#2a2724;margin-bottom:1.5rem;padding:1rem 1.25rem;background:#f0faf4;border-radius:12px;border-left:3px solid #4caf50">' + q.original + '</div>';
   h += '<div id="pt-disc-opts">';
   q.opcoes.forEach(function(opt, i) {
     h += '<button onclick="ptDiscSelect(this,' + i + ')" data-idx="' + i + '" style="display:block;width:100%;text-align:left;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:.8rem 1.1rem;margin-bottom:.5rem;font-family:Montserrat,sans-serif;font-size:.86rem;font-weight:500;color:var(--ink1);cursor:pointer;transition:all .15s">' + opt + '</button>';
@@ -504,7 +504,7 @@ function ptConRender() {
 
   h += '<div style="background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:1.75rem">';
   h += '<div style="font-size:.68rem;font-weight:800;color:#4a3f7a;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem"><i class="ph ph-link"></i> Escolhe o conector correto</div>';
-  h += '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.15rem;line-height:1.8;color:var(--ink1);margin-bottom:1.5rem;padding:1rem 1.25rem;background:#f3f0fb;border-radius:12px;border-left:3px solid #6b5fa0">' + q.frase.replace('___', '<span style="background:#4a3f7a;color:#fff;padding:2px 10px;border-radius:6px;font-family:Montserrat,sans-serif;font-size:.85rem;font-weight:700">___</span>') + '</div>';
+  h += '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.15rem;line-height:1.8;color:#2a2724;margin-bottom:1.5rem;padding:1rem 1.25rem;background:#f3f0fb;border-radius:12px;border-left:3px solid #6b5fa0">' + q.frase.replace('___', '<span style="background:#4a3f7a;color:#fff;padding:2px 10px;border-radius:6px;font-family:Montserrat,sans-serif;font-size:.85rem;font-weight:700">___</span>') + '</div>';
   h += '<div id="pt-con-opts">';
   var opts = q.opts.slice().sort(function(){ return Math.random()-.5; });
   opts.forEach(function(opt) {
@@ -650,7 +650,7 @@ function ptDiscMount(containerId) {
   h += '<tr style="background:#fdfcff"><td style="' + td + '">Imperativo</td><td style="' + tdR + '">Imperfeito do conjuntivo</td></tr>';
   h += '<tr><td style="padding:.4rem .75rem">Presente do conjuntivo</td><td style="padding:.4rem .75rem;color:#5c4e8a;font-weight:700">Imperfeito do conjuntivo</td></tr>';
   h += '</tbody></table>';
-  h += '<div style="margin-top:.75rem;font-size:.75rem;color:var(--ink3);background:#f8f6ff;border-radius:8px;padding:.5rem .75rem"><strong>Dêiticos:</strong> hoje → naquele dia · amanhã → no dia seguinte · aqui → ali · agora → naquele momento · este → aquele</div>';
+  h += '<div style="margin-top:.75rem;font-size:.75rem;color:#5a5650;background:#f8f6ff;border-radius:8px;padding:.5rem .75rem"><strong>Dêiticos:</strong> hoje → naquele dia · amanhã → no dia seguinte · aqui → ali · agora → naquele momento · este → aquele</div>';
   h += '</div>';
   h += '<button onclick="ptDiscStart()" style="width:100%;background:linear-gradient(135deg,#1a4a2e,#2e7d52);color:#fff;border:none;border-radius:14px;padding:1rem 2rem;font-family:Montserrat,sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem">';
   h += '<i class="ph ph-play"></i> Praticar transformações';

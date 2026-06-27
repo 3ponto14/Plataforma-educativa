@@ -220,7 +220,7 @@ function ptCompAutocheck() {
   });
   h += '</div>';
   // Nota: critérios qualitativos
-  h += '<div style="margin-top:1rem;padding:.75rem 1rem;background:#f8f6ff;border-radius:10px;font-size:.78rem;color:var(--ink3);line-height:1.6"><strong>Não verificável automaticamente:</strong> coerência e coesão do texto, qualidade do vocabulário, correção ortográfica e gramática estes são avaliados pelo professor.</div>';
+  h += '<div style="margin-top:1rem;padding:.75rem 1rem;background:#f8f6ff;border-radius:10px;font-size:.78rem;color:#5a5650;line-height:1.6"><strong>Não verificável automaticamente:</strong> coerência e coesão do texto, qualidade do vocabulário, correção ortográfica e gramática estes são avaliados pelo professor.</div>';
   h += '</div>';
   result.innerHTML = h;
   result.style.display = 'block';

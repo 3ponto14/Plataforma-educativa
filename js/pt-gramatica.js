@@ -192,7 +192,7 @@ function ptGramRender() {
   h += '<div style="font-size:.75rem;font-weight:700;color:var(--ink3);margin-bottom:.75rem">' + (instrucao[_ptGram.mode] || '') + '</div>';
 
   // Frase
-  h += '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.15rem;line-height:1.8;color:var(--ink1);margin-bottom:1.5rem;padding:1rem 1.25rem;background:#f8f6ff;border-radius:12px;border-left:3px solid #8b7cc0">' + q.frase + '</div>';
+  h += '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.15rem;line-height:1.8;color:#2a2724;margin-bottom:1.5rem;padding:1rem 1.25rem;background:#f8f6ff;border-radius:12px;border-left:3px solid #8b7cc0">' + q.frase + '</div>';
 
   // Opções
   h += '<div id="pt-gram-opts">';

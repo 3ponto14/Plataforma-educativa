@@ -2804,6 +2804,11 @@ function _capDownloadFicha(cap, capNome) {
    solucoes fica a false numa conta de aluno, mesmo que venha true por
    omissão — assim uma ficha de aluno nunca inclui o gabarito.
    ════════════════════════════════════════════════════════════════ */
+/* Verdadeiro só se a conta atual for de professor. Defesa final (à prova
+   de timing) usada no momento de gerar a ficha, para o gabarito. */
+function eduPodeSolucoes() {
+  return !!(typeof Cloud !== 'undefined' && Cloud.ehProfessor && Cloud.ehProfessor());
+}
 function eduForcarSolucoesSoProf() {
   var ehProf = (typeof Cloud !== 'undefined' && Cloud.ehProfessor && Cloud.ehProfessor());
   if (ehProf) return; // professor: mantém a sua escolha

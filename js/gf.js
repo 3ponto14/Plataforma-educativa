@@ -470,6 +470,8 @@ function _gfGenerarBase(secId, qty) {
 
   var types = {};
   sec.querySelectorAll('.gf-type-btn.active').forEach(function(b){ types[b.dataset.type] = true; });
+  // Soluções (gabarito) só para professores — mesmo que o botão esteja ativo.
+  if (types.solucoes && !(typeof Cloud !== 'undefined' && Cloud.ehProfessor && Cloud.ehProfessor())) types.solucoes = false;
 
   var statusEl = document.getElementById('gf-status-' + secId);
   if (!selectedCaps.length) { if(statusEl) statusEl.textContent = 'Seleciona pelo menos um cap\u00edtulo.'; return; }
@@ -2155,6 +2157,8 @@ function gfGenerar(secId) {
 
   var types = {};
   sec.querySelectorAll('.gf-type-btn.active').forEach(function(b){ types[b.dataset.type] = true; });
+  // Soluções (gabarito) só para professores — mesmo que o botão esteja ativo.
+  if (types.solucoes && !(typeof Cloud !== 'undefined' && Cloud.ehProfessor && Cloud.ehProfessor())) types.solucoes = false;
   var dif = gfGetDifficulty(secId);
   var statusEl = document.getElementById('gf-status-' + secId);
 
