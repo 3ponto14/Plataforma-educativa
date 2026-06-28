@@ -114,8 +114,40 @@ function fq8SwitchTab(tab, btn) {
   else if (tab === 'flashcards') fq8FcBuildNav();
   else if (tab === 'teste') fq8TesteBuildNav();
   else if (tab === 'jogos') fq8JogosInit();
+  else if (tab === 'aprender') { if (typeof fq8AprenderInit === 'function') fq8AprenderInit(); }
   else if (tab === 'fichas') fq8FichasBuildNav();
   else if (tab === 'progresso') fq8RenderProgresso();
+}
+
+/* Aba APRENDER: catálogo de explicadores lúdicos de FQ 8.º + abrir/voltar. */
+var _fq8AprenderWired = false;
+function fq8AprenderInit() {
+  if (typeof APRENDER === 'undefined') {
+    var c = document.getElementById('fq8-aprender-cat');
+    if (c) c.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Explicadores indisponíveis (motor não carregado).</p>';
+    return;
+  }
+  var host = document.getElementById('fq8-aprender-host');
+  var cat = document.getElementById('fq8-aprender-cat');
+  if (!host || !cat) return;
+  APRENDER.catalogo('fq8-aprender-cat', function (id, t) {
+    return /fq8/.test(id);
+  });
+  host.style.display = 'none';
+  if (_fq8AprenderWired) return;
+  _fq8AprenderWired = true;
+  window.aprenderVoltarCatalogo = function () {
+    host.style.display = 'none'; host.innerHTML = '';
+    cat.style.display = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  var _abrir = APRENDER.abrir;
+  APRENDER.abrir = function (id) {
+    cat.style.display = 'none';
+    host.style.display = 'block';
+    _abrir(id, 'fq8-aprender-host');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 }
 
 // Abre um sub-modo de prática a partir dos cartões do menu Praticar.
