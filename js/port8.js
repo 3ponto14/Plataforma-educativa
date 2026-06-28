@@ -162,8 +162,40 @@ function port8SwitchTab(tab, btn) {
   else if (tab === 'flashcards') port8FcBuildNav();
   else if (tab === 'teste') port8TesteBuildNav();
   else if (tab === 'jogos') port8JogosInit();
+  else if (tab === 'aprender') { if (typeof port8AprenderInit === 'function') port8AprenderInit(); }
   else if (tab === 'fichas') port8FichasBuildNav();
   else if (tab === 'progresso') port8RenderProgresso();
+}
+
+/* Aba APRENDER: catálogo de explicadores lúdicos de Português 8.º + abrir/voltar. */
+var _port8AprenderWired = false;
+function port8AprenderInit() {
+  if (typeof APRENDER === 'undefined') {
+    var c = document.getElementById('port8-aprender-cat');
+    if (c) c.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Explicadores indisponíveis (motor não carregado).</p>';
+    return;
+  }
+  var host = document.getElementById('port8-aprender-host');
+  var cat = document.getElementById('port8-aprender-cat');
+  if (!host || !cat) return;
+  APRENDER.catalogo('port8-aprender-cat', function (id, t) {
+    return /port8/.test(id);
+  });
+  host.style.display = 'none';
+  if (_port8AprenderWired) return;
+  _port8AprenderWired = true;
+  window.aprenderVoltarCatalogo = function () {
+    host.style.display = 'none'; host.innerHTML = '';
+    cat.style.display = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  var _abrir = APRENDER.abrir;
+  APRENDER.abrir = function (id) {
+    cat.style.display = 'none';
+    host.style.display = 'block';
+    _abrir(id, 'port8-aprender-host');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 }
 
 // Abre um sub-modo de prática a partir dos cartões do menu Praticar.

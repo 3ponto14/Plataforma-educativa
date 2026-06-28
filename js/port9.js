@@ -162,8 +162,40 @@ function port9SwitchTab(tab, btn) {
   else if (tab === 'flashcards') port9FcBuildNav();
   else if (tab === 'teste') port9TesteBuildNav();
   else if (tab === 'jogos') port9JogosInit();
+  else if (tab === 'aprender') { if (typeof port9AprenderInit === 'function') port9AprenderInit(); }
   else if (tab === 'fichas') port9FichasBuildNav();
   else if (tab === 'progresso') port9RenderProgresso();
+}
+
+/* Aba APRENDER: catálogo de explicadores lúdicos de Português 9.º + abrir/voltar. */
+var _port9AprenderWired = false;
+function port9AprenderInit() {
+  if (typeof APRENDER === 'undefined') {
+    var c = document.getElementById('port9-aprender-cat');
+    if (c) c.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Explicadores indisponíveis (motor não carregado).</p>';
+    return;
+  }
+  var host = document.getElementById('port9-aprender-host');
+  var cat = document.getElementById('port9-aprender-cat');
+  if (!host || !cat) return;
+  APRENDER.catalogo('port9-aprender-cat', function (id, t) {
+    return /port9/.test(id);
+  });
+  host.style.display = 'none';
+  if (_port9AprenderWired) return;
+  _port9AprenderWired = true;
+  window.aprenderVoltarCatalogo = function () {
+    host.style.display = 'none'; host.innerHTML = '';
+    cat.style.display = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  var _abrir = APRENDER.abrir;
+  APRENDER.abrir = function (id) {
+    cat.style.display = 'none';
+    host.style.display = 'block';
+    _abrir(id, 'port9-aprender-host');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 }
 
 // Abre um sub-modo de prática a partir dos cartões do menu Praticar.
