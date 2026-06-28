@@ -202,8 +202,40 @@ function mat12SwitchTab(tab, btn) {
   else if (tab === 'flashcards') mat12FcBuildNav();
   else if (tab === 'teste') mat12TesteBuildNav();
   else if (tab === 'jogos') mat12JogosInit();
+  else if (tab === 'aprender') { if (typeof mat12AprenderInit === 'function') mat12AprenderInit(); }
   else if (tab === 'fichas') mat12FichasBuildNav();
   else if (tab === 'progresso') mat12RenderProgresso();
+}
+
+/* Aba APRENDER: catálogo de explicadores lúdicos do 12.º ano + abrir/voltar. */
+var _mat12AprenderWired = false;
+function mat12AprenderInit() {
+  if (typeof APRENDER === 'undefined') {
+    var c = document.getElementById('mat12-aprender-cat');
+    if (c) c.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Explicadores indisponíveis (motor não carregado).</p>';
+    return;
+  }
+  var host = document.getElementById('mat12-aprender-host');
+  var cat = document.getElementById('mat12-aprender-cat');
+  if (!host || !cat) return;
+  APRENDER.catalogo('mat12-aprender-cat', function (id, t) {
+    return /12\.º/.test(t.curso || '') || /mat12/.test(id);
+  });
+  host.style.display = 'none';
+  if (_mat12AprenderWired) return;
+  _mat12AprenderWired = true;
+  window.aprenderVoltarCatalogo = function () {
+    host.style.display = 'none'; host.innerHTML = '';
+    cat.style.display = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  var _abrir = APRENDER.abrir;
+  APRENDER.abrir = function (id) {
+    cat.style.display = 'none';
+    host.style.display = 'block';
+    _abrir(id, 'mat12-aprender-host');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 }
 
 // Abre um sub-modo de prática a partir dos cartões do menu Praticar.

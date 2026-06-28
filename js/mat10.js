@@ -174,8 +174,40 @@ function mat10SwitchTab(tab, btn) {
   else if (tab === 'flashcards') mat10FcBuildNav();
   else if (tab === 'teste') mat10TesteBuildNav();
   else if (tab === 'jogos') mat10JogosInit();
+  else if (tab === 'aprender') { if (typeof mat10AprenderInit === 'function') mat10AprenderInit(); }
   else if (tab === 'fichas') mat10FichasBuildNav();
   else if (tab === 'progresso') mat10RenderProgresso();
+}
+
+/* Aba APRENDER: catálogo de explicadores lúdicos do 10.º ano + abrir/voltar. */
+var _mat10AprenderWired = false;
+function mat10AprenderInit() {
+  if (typeof APRENDER === 'undefined') {
+    var c = document.getElementById('mat10-aprender-cat');
+    if (c) c.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Explicadores indisponíveis (motor não carregado).</p>';
+    return;
+  }
+  var host = document.getElementById('mat10-aprender-host');
+  var cat = document.getElementById('mat10-aprender-cat');
+  if (!host || !cat) return;
+  APRENDER.catalogo('mat10-aprender-cat', function (id, t) {
+    return /10\.º/.test(t.curso || '') || /mat10/.test(id);
+  });
+  host.style.display = 'none';
+  if (_mat10AprenderWired) return;
+  _mat10AprenderWired = true;
+  window.aprenderVoltarCatalogo = function () {
+    host.style.display = 'none'; host.innerHTML = '';
+    cat.style.display = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  var _abrir = APRENDER.abrir;
+  APRENDER.abrir = function (id) {
+    cat.style.display = 'none';
+    host.style.display = 'block';
+    _abrir(id, 'mat10-aprender-host');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 }
 
 // Abre um sub-modo de prática a partir dos cartões do menu Praticar.

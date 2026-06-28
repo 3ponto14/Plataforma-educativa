@@ -41,6 +41,7 @@
 <div class="mat7-hub-tabbar" id="mat6-hub-tabbar">
   <button class="mat7-hub-tab active" data-tab="resumo"    onclick="mat6SwitchTab('resumo',this)">   <span class="mat7-hub-tab-icon"><i class="ph ph-book-open-text"></i></span> Teoria</button>
   <button class="mat7-hub-tab"        data-tab="praticar"  onclick="mat6SwitchTab('praticar',this)"> <span class="mat7-hub-tab-icon"><i class="ph ph-pencil-simple"></i></span> Praticar</button>
+  <button class="mat7-hub-tab"        data-tab="aprender"  onclick="mat6SwitchTab('aprender',this)"> <span class="mat7-hub-tab-icon"><i class="ph ph-lightbulb"></i></span> Aprender</button>
   <button class="mat7-hub-tab"        data-tab="fichas"    onclick="mat6SwitchTab('fichas',this)">   <span class="mat7-hub-tab-icon"><i class="ph ph-file-pdf"></i></span> Fichas</button>
   <button class="mat7-hub-tab"        data-tab="progresso" onclick="mat6SwitchTab('progresso',this)"><span class="mat7-hub-tab-icon"><i class="ph ph-chart-bar"></i></span> Progresso</button>
 </div>
@@ -161,6 +162,14 @@
   <div id="mat6-jogos-app" style="margin-top:1rem"></div>
 </div>
 
+<!-- ══════════ PANEL: APRENDER ══════════ -->
+<div class="mat7-panel" id="mat6p-aprender">
+  <div class="mat7-panel-heading">Aprender a brincar</div>
+  <div class="mat7-panel-sub">Não percebes a matéria? Escolhe um tema e eu explico-te passo a passo, com exemplos do dia a dia. Mexe e vê o que acontece.</div>
+  <div id="mat6-aprender-host"></div>
+  <div id="mat6-aprender-cat"></div>
+</div>
+
 <!-- ══════════ PANEL: FICHAS ══════════ -->
 <div class="mat7-panel" id="mat6p-fichas">
   <div class="mat7-panel-heading">Gerador de Fichas</div>
@@ -237,6 +246,8 @@
 <script src="../js/chapter-engine.js?v=20260621"></script>
 <script src="../js/visuals.js?v=20260621"></script>
 <script src="../js/mat6.js?v=20260621"></script>
+<script src="../js/aprender.js?v=20260627"></script>
+<script src="../js/aprender-temas-mat6.js?v=20260627"></script>
 <script src="../js/systems.js?v=20260621"></script>
 <script src="../js/ux-improvements.js?v=20260621"></script>
 <script src="../js/fx.js?v=20260621"></script>

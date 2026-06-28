@@ -51,7 +51,9 @@
       { tipo: 'texto', titulo: 'O que há antes do zero?', html: '<p>Já viste um <b>termómetro</b> marcar 3 graus <b>abaixo de zero</b>? Isso é <b>−3</b>. Os números <b>negativos</b> são os que ficam <b>antes do zero</b>.</p><p>Juntando os negativos, o zero e os positivos, temos os <b>números inteiros</b> (ℤ): …, −3, −2, −1, <b>0</b>, 1, 2, 3, …</p>' },
       { tipo: 'interativo', titulo: 'Anda na reta 🎮', render: retaInterativa },
       { tipo: 'texto', titulo: 'Valor absoluto = distância', html: '<p>O <b>valor absoluto</b> de um número é a sua <b>distância ao zero</b> — e a distância nunca é negativa!</p><p>Por isso <b>|−5| = 5</b> e <b>|5| = 5</b>: o −5 e o 5 estão ambos a 5 passos do zero. O sinal desaparece.</p>' },
-      { tipo: 'confirma', pergunta: 'Qual é o valor de <b>|−7|</b>?', opcoes: ['7', '−7', '0', '14'], correta: 0, feedback: '|−7| é a distância do −7 ao zero = <b>7</b>. O valor absoluto é sempre positivo (ou zero).' }
+      { tipo: 'confirma', pergunta: 'Mini-quiz (1/3) · «3 graus abaixo de zero» escreve-se…', opcoes: ['−3', '3', '+3', '0'], correta: 0, feedback: 'Abaixo de zero → número negativo: <b>−3</b>. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (2/3) · Na reta, os negativos ficam…', opcoes: ['à esquerda do zero', 'à direita do zero', 'em cima', 'no zero'], correta: 0, feedback: 'Negativos ficam à <b>esquerda</b> do zero. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (3/3) · Qual é o valor de <b>|−7|</b>?', opcoes: ['7', '−7', '0', '14'], correta: 0, feedback: '|−7| é a distância do −7 ao zero = <b>7</b> (sempre positivo). 👍' }
     ],
     fecho: 'Pensa sempre na <b>reta</b>: negativos à esquerda, positivos à direita, e o valor absoluto é só a distância ao zero.'
   });
@@ -89,7 +91,9 @@
       { tipo: 'texto', titulo: 'Uma fração é uma divisão', html: '<p>Uma <b>fração</b> 3/4 quer dizer: divide o todo em <b>4 partes iguais</b> e fica com <b>3</b>.</p><p>O número de baixo (<b>denominador</b>) diz <b>em quantas partes</b> dividimos. O de cima (<b>numerador</b>) diz <b>quantas</b> ficamos.</p>' },
       { tipo: 'interativo', titulo: 'Parte a barra 🍫', render: fracaoInterativa },
       { tipo: 'texto', titulo: 'A mesma fração, outro nome', html: '<p>Repara: <b>2/4</b> é o mesmo que <b>1/2</b> — metade da barra! São <b>frações equivalentes</b>: o mesmo pedaço, escrito de outra forma.</p><p>Por isso é que <b>50%</b>, <b>0,5</b> e <b>1/2</b> são a mesma coisa, só vestidas de maneira diferente.</p>' },
-      { tipo: 'confirma', pergunta: 'Comeste <b>2 de 4</b> pedaços. Que fração da barra comeste?', opcoes: ['Metade (1/2)', 'Um quarto', 'A barra toda', 'Dois inteiros'], correta: 0, feedback: '2/4 = 1/2 = <b>metade</b>. Dois pedaços de quatro são exatamente meia barra. 👍' }
+      { tipo: 'confirma', pergunta: 'Mini-quiz (1/3) · Comeste <b>2 de 4</b> pedaços. Que fração comeste?', opcoes: ['Metade (1/2)', 'Um quarto', 'A barra toda', 'Dois inteiros'], correta: 0, feedback: '2/4 = 1/2 = <b>metade</b>. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (2/3) · Na fração 3/5, o «em quantos pedaços» é…', opcoes: ['5', '3', '8', '15'], correta: 0, feedback: 'O número de baixo (5) diz em quantos pedaços se corta. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (3/3) · Qual é o mesmo bocado que 1/2?', opcoes: ['2/4', '1/4', '2/3', '3/4'], correta: 0, feedback: '2/4 = 1/2 — frações equivalentes. 👍' }
     ],
     fecho: 'Sempre que vires uma fração, imagina a <b>barra</b>: o de baixo diz em quantos pedaços cortar, o de cima quantos tens.'
   });
@@ -129,7 +133,9 @@
       { tipo: 'texto', titulo: 'O que mede um ângulo?', html: '<p>Um <b>ângulo</b> não mede comprimento — mede a <b>abertura</b> entre duas linhas que partem do mesmo ponto (o <b>vértice</b>).</p><p>Mede-se em <b>graus (°)</b>. Uma volta completa tem 360°; meia volta, 180°; um quarto de volta (o canto de uma folha), 90°.</p>' },
       { tipo: 'interativo', titulo: 'Abre e fecha ✂️', render: anguloInterativo },
       { tipo: 'texto', titulo: 'Os nomes dos ângulos', html: '<p>Pelo tamanho da abertura: <b>agudo</b> (&lt; 90°), <b>reto</b> (= 90°, o cantinho certo), <b>obtuso</b> (entre 90° e 180°) e <b>raso</b> (= 180°, uma linha reta).</p>' },
-      { tipo: 'confirma', pergunta: 'Um ângulo de <b>120°</b> é…', opcoes: ['Obtuso', 'Agudo', 'Reto', 'Raso'], correta: 0, feedback: '120° está entre 90° e 180°, por isso é <b>obtuso</b> (maior que o canto reto). 👍' }
+      { tipo: 'confirma', pergunta: 'Mini-quiz (1/3) · O canto de uma folha de papel é um ângulo…', opcoes: ['reto', 'agudo', 'obtuso', 'raso'], correta: 0, feedback: 'O cantinho certo = ângulo <b>reto</b> (90°). 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (2/3) · Um ângulo de <b>120°</b> é…', opcoes: ['Obtuso', 'Agudo', 'Reto', 'Raso'], correta: 0, feedback: '120° está entre 90° e 180° → <b>obtuso</b>. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (3/3) · Um ângulo de <b>40°</b> é…', opcoes: ['agudo', 'obtuso', 'reto', 'raso'], correta: 0, feedback: 'Menos de 90° → <b>agudo</b>. 👍' }
     ],
     fecho: 'Ângulo é <b>abertura</b>, medida em graus. Decora os marcos: 90° é o cantinho reto, 180° é uma linha reta.'
   });
@@ -163,7 +169,9 @@
       { tipo: 'texto', titulo: 'O segredo do sinal =', html: '<p>Numa equação como <b>x + 2 = 5</b>, o sinal <b>=</b> significa que os <b>dois lados valem o mesmo</b> — como uma <b>balança em equilíbrio</b>.</p><p>O <b>x</b> é um número escondido. Resolver a equação é <b>descobrir esse número</b> sem desequilibrar a balança.</p>' },
       { tipo: 'interativo', titulo: 'Equilibra a balança ⚖️', render: balancaInterativa },
       { tipo: 'texto', titulo: 'A regra de ouro', html: '<p><b>O que fizeres a um lado, faz ao outro.</b> Se tiras 2 à esquerda, tens de tirar 2 à direita — assim a balança continua equilibrada e o x fica sozinho.</p><p>Foi o que fizemos: x + 2 = 5 → (tira 2) → x = 3. ✓</p>' },
-      { tipo: 'confirma', pergunta: 'Para resolver <b>x + 4 = 10</b>, o que fazes aos dois lados?', opcoes: ['Tirar 4', 'Somar 4', 'Multiplicar por 4', 'Tirar 10'], correta: 0, feedback: 'Tiras <b>4</b> a cada lado: x + 4 − 4 = 10 − 4 → <b>x = 6</b>. A balança mantém-se equilibrada. 👍' }
+      { tipo: 'confirma', pergunta: 'Mini-quiz (1/3) · O sinal = numa equação quer dizer…', opcoes: ['os dois lados valem o mesmo', 'o lado esquerdo é maior', 'somar', 'o resultado'], correta: 0, feedback: '= significa <b>equilíbrio</b>: os dois lados valem o mesmo. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (2/3) · Para resolver <b>x + 4 = 10</b>, fazes aos dois lados…', opcoes: ['Tirar 4', 'Somar 4', 'Multiplicar por 4', 'Tirar 10'], correta: 0, feedback: 'Tiras <b>4</b> a cada lado → x = 6. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (3/3) · Em <b>x − 3 = 5</b>, quanto vale x?', opcoes: ['8', '2', '15', '5'], correta: 0, feedback: 'Somas 3 aos dois lados: x = 5 + 3 = <b>8</b>. 👍' }
     ],
     fecho: 'Equação = <b>balança</b>. Para isolar o x, faz a mesma coisa aos dois lados e o equilíbrio mantém-se.'
   });
@@ -196,7 +204,9 @@
       { tipo: 'texto', titulo: 'Descobre o padrão', html: '<p>Olha para esta lista: <b>2, 5, 8, 11, …</b> Consegues ver a regra? De cada vez somamos <b>3</b>.</p><p>A isto chama-se uma <b>sequência</b>: números em ordem, seguindo um padrão. Cada número é um <b>termo</b>.</p>' },
       { tipo: 'interativo', titulo: 'Continua o padrão 🔢', render: sequenciaInterativa },
       { tipo: 'texto', titulo: 'O atalho: o termo geral', html: '<p>Se quiseres o <b>100.º termo</b>, somar +3 cem vezes é uma seca. Por isso usamos uma <b>fórmula</b> — o <b>termo geral</b> — que dá qualquer termo de uma vez.</p><p>Aqui é <b>3n − 1</b>: mete o número da posição (n) e sai o termo. 5.º termo? 3×5 − 1 = <b>14</b>. ✓</p>' },
-      { tipo: 'confirma', pergunta: 'Na fórmula <b>3n − 1</b>, qual é o <b>4.º</b> termo (n = 4)?', opcoes: ['11', '12', '7', '13'], correta: 0, feedback: '3×4 − 1 = 12 − 1 = <b>11</b>. A fórmula dá qualquer termo sem contar um a um. 👍' }
+      { tipo: 'confirma', pergunta: 'Mini-quiz (1/3) · Em 2, 5, 8, 11… qual é o salto?', opcoes: ['+3', '+2', '+5', '×2'], correta: 0, feedback: 'Somas sempre 3 → salto <b>+3</b>. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (2/3) · 2, 5, 8, 11… qual vem a seguir?', opcoes: ['14', '13', '15', '12'], correta: 0, feedback: '11 + 3 = <b>14</b>. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (3/3) · Na fórmula <b>3n − 1</b>, qual é o <b>4.º</b> termo (n = 4)?', opcoes: ['11', '12', '7', '13'], correta: 0, feedback: '3×4 − 1 = <b>11</b>. A fórmula dá qualquer termo de uma vez. 👍' }
     ],
     fecho: 'Sequência = números com <b>padrão</b>. O <b>termo geral</b> (uma fórmula com n) é o atalho para chegar a qualquer termo.'
   });
@@ -232,7 +242,9 @@
       { tipo: 'texto', titulo: 'Mesma forma, outro tamanho', html: '<p>Quando amplias uma foto, ela fica maior mas <b>continua a mesma foto</b> — não fica esticada nem deformada. Em matemática dizemos que as duas são <b>figuras semelhantes</b>.</p><p>O número que diz quantas vezes ampliaste (ou reduziste) chama-se <b>razão de semelhança</b> (ou escala).</p>' },
       { tipo: 'interativo', titulo: 'Amplia a figura 🔍', render: semelhancaInterativa },
       { tipo: 'texto', titulo: 'Tudo cresce na mesma proporção', html: '<p>Numa ampliação ×2, <b>todos</b> os comprimentos ficam a dobrar: largura, altura, lados… mas os <b>ângulos não mudam</b>. É isso que mantém a forma igual.</p>' },
-      { tipo: 'confirma', pergunta: 'Amplias um retângulo de lados 3 e 4 com escala <b>×2</b>. Os novos lados são:', opcoes: ['6 e 8', '5 e 6', '3 e 4', '9 e 16'], correta: 0, feedback: 'Escala ×2 → cada lado a dobrar: 3×2 = 6 e 4×2 = 8. A forma mantém-se. 👍' }
+      { tipo: 'confirma', pergunta: 'Mini-quiz (1/3) · Duas figuras semelhantes têm…', opcoes: ['a mesma forma, tamanhos diferentes', 'a mesma cor', 'o mesmo tamanho', 'formas diferentes'], correta: 0, feedback: 'Semelhantes = <b>mesma forma</b>, tamanho diferente. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (2/3) · Amplias um retângulo 3×4 com escala <b>×2</b>. Os lados ficam…', opcoes: ['6 e 8', '5 e 6', '3 e 4', '9 e 16'], correta: 0, feedback: 'Cada lado a dobrar: 3×2=6 e 4×2=8. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (3/3) · Numa ampliação, os ângulos…', opcoes: ['não mudam', 'dobram', 'desaparecem', 'reduzem'], correta: 0, feedback: 'Os ângulos <b>não mudam</b> — é o que mantém a forma. 👍' }
     ],
     fecho: 'Semelhantes = <b>mesma forma, tamanho diferente</b>. A escala diz quantas vezes ampliaste; os ângulos nunca mudam.'
   });
@@ -274,7 +286,9 @@
       { tipo: 'texto', titulo: 'Do impossível ao certo', html: '<p>A <b>probabilidade</b> mede a <b>hipótese</b> de algo acontecer, numa escala de <b>0 a 1</b>: <b>0</b> = impossível, <b>1</b> = de certeza, <b>0,5</b> = tanto faz (como o cara ou coroa).</p>' },
       { tipo: 'interativo', titulo: 'Roda a roleta 🎯', render: probInterativa },
       { tipo: 'texto', titulo: 'A fração mágica', html: '<p>Calcula-se assim: <b>casos favoráveis ÷ casos possíveis</b>.</p><p>Num dado, a probabilidade de sair <b>5</b> é <b>1/6</b> (um caso favorável, seis possíveis). De sair <b>par</b> é <b>3/6 = 1/2</b> (o 2, o 4 e o 6).</p>' },
-      { tipo: 'confirma', pergunta: 'Num dado normal, qual a probabilidade de sair um número <b>maior que 4</b> (5 ou 6)?', opcoes: ['2/6 (= 1/3)', '1/6', '4/6', '1/2'], correta: 0, feedback: 'Favoráveis: 5 e 6 (2 casos). Possíveis: 6. Logo <b>2/6 = 1/3</b>. 👍' }
+      { tipo: 'confirma', pergunta: 'Mini-quiz (1/3) · Uma probabilidade de 0 quer dizer…', opcoes: ['impossível', 'certo', 'metade', '100%'], correta: 0, feedback: '0 = <b>impossível</b>; 1 = certo. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (2/3) · Num dado, a probabilidade de sair o 5 é…', opcoes: ['1/6', '5/6', '1/2', '5'], correta: 0, feedback: '1 caso (o 5) em 6 → <b>1/6</b>. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (3/3) · Num dado, sair um número <b>maior que 4</b> (5 ou 6) é…', opcoes: ['2/6 (= 1/3)', '1/6', '4/6', '1/2'], correta: 0, feedback: 'Favoráveis 5 e 6 (2) em 6 → <b>2/6 = 1/3</b>. 👍' }
     ],
     fecho: 'Probabilidade = <b>favoráveis ÷ possíveis</b>, sempre entre 0 (impossível) e 1 (certo).'
   });

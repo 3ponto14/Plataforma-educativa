@@ -174,8 +174,40 @@ function mat9SwitchTab(tab, btn) {
   else if (tab === 'flashcards') mat9FcBuildNav();
   else if (tab === 'teste') mat9TesteBuildNav();
   else if (tab === 'jogos') mat9JogosInit();
+  else if (tab === 'aprender') { if (typeof mat9AprenderInit === 'function') mat9AprenderInit(); }
   else if (tab === 'fichas') mat9FichasBuildNav();
   else if (tab === 'progresso') mat9RenderProgresso();
+}
+
+/* Aba APRENDER: catálogo de explicadores lúdicos do 9.º ano + abrir/voltar. */
+var _mat9AprenderWired = false;
+function mat9AprenderInit() {
+  if (typeof APRENDER === 'undefined') {
+    var c = document.getElementById('mat9-aprender-cat');
+    if (c) c.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Explicadores indisponíveis (motor não carregado).</p>';
+    return;
+  }
+  var host = document.getElementById('mat9-aprender-host');
+  var cat = document.getElementById('mat9-aprender-cat');
+  if (!host || !cat) return;
+  APRENDER.catalogo('mat9-aprender-cat', function (id, t) {
+    return /9\.º/.test(t.curso || '') || /mat9/.test(id);
+  });
+  host.style.display = 'none';
+  if (_mat9AprenderWired) return;
+  _mat9AprenderWired = true;
+  window.aprenderVoltarCatalogo = function () {
+    host.style.display = 'none'; host.innerHTML = '';
+    cat.style.display = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  var _abrir = APRENDER.abrir;
+  APRENDER.abrir = function (id) {
+    cat.style.display = 'none';
+    host.style.display = 'block';
+    _abrir(id, 'mat9-aprender-host');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 }
 
 // Abre um sub-modo de prática a partir dos cartões do menu Praticar.

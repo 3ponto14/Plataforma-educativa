@@ -42,7 +42,9 @@
       { tipo: 'texto', titulo: 'O quadrado de um número', html: '<p>Elevar ao quadrado (expoente 2) é o mais comum: <b>5² = 25</b>. Chama-se «quadrado» porque é mesmo a <b>área de um quadrado</b> de lado 5.</p>' },
       { tipo: 'interativo', titulo: 'A raiz é o lado ⬜', render: raizInterativa },
       { tipo: 'texto', titulo: 'A raiz desfaz o quadrado', html: '<p>A <b>raiz quadrada</b> faz o contrário: dá-te o <b>lado</b> a partir da <b>área</b>. <b>√25 = 5</b> porque 5² = 25.</p><p>Por isso a raiz e o quadrado são operações <b>inversas</b> — uma desfaz a outra.</p>' },
-      { tipo: 'confirma', pergunta: 'Quanto é <b>√49</b>?', opcoes: ['7', '24,5', '9', '14'], correta: 0, feedback: '√49 = <b>7</b> porque 7² = 49. Procuras o número que, ao quadrado, dá 49. 👍' }
+      { tipo: 'confirma', pergunta: 'Mini-quiz (1/3) · 2³ quer dizer…', opcoes: ['2×2×2', '2×3', '2+2+2', '3×3'], correta: 0, feedback: '2³ = <b>2×2×2</b> = 8. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (2/3) · A raiz quadrada de uma área dá-te…', opcoes: ['o lado do quadrado', 'o dobro', 'a volta', 'o volume'], correta: 0, feedback: 'A raiz da área = o <b>lado</b> do quadrado. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (3/3) · Quanto é <b>√49</b>?', opcoes: ['7', '24,5', '9', '14'], correta: 0, feedback: '√49 = <b>7</b> porque 7² = 49. 👍' }
     ],
     fecho: 'Potência = multiplicar repetido. O <b>quadrado</b> é a área; a <b>raiz</b> é o lado — uma desfaz a outra.'
   });
@@ -83,7 +85,9 @@
       { tipo: 'texto', titulo: 'Uma seta com instruções', html: '<p>Um <b>vetor</b> é uma <b>seta</b> que diz como deslocar algo: para que lado e quanto. O vetor (3, 2) significa «anda 3 para a direita e 2 para cima».</p>' },
       { tipo: 'interativo', titulo: 'Move o ponto ➡️', render: vetorInterativo },
       { tipo: 'texto', titulo: 'Isometrias: mover sem deformar', html: '<p>Uma <b>translação</b> (deslizar com um vetor) é uma <b>isometria</b>: muda o sítio mas <b>não muda a forma nem o tamanho</b>. A reflexão (espelho) e a rotação (girar) também são isometrias.</p>' },
-      { tipo: 'confirma', pergunta: 'O vetor (4, −1) desloca um ponto…', opcoes: ['4 à direita e 1 para baixo', '4 para cima e 1 à direita', '1 à direita e 4 para cima', '4 à esquerda e 1 para cima'], correta: 0, feedback: 'Primeiro valor = horizontal (4 à direita), segundo = vertical (−1 → 1 para baixo). 👍' }
+      { tipo: 'confirma', pergunta: 'Mini-quiz (1/3) · Um vetor é como uma seta: tem…', opcoes: ['tamanho e direção', 'só um número', 'só cor', 'só posição'], correta: 0, feedback: 'Vetor = seta com <b>tamanho e direção</b>. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (2/3) · O vetor (4, −1) desloca um ponto…', opcoes: ['4 à direita e 1 para baixo', '4 para cima e 1 à direita', '1 à direita e 4 para cima', '4 à esquerda e 1 para cima'], correta: 0, feedback: '1.º valor = horizontal (4 à direita); 2.º = vertical (−1 → para baixo). 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (3/3) · No vetor, o 1.º número diz o movimento…', opcoes: ['horizontal (lado)', 'vertical (cima/baixo)', 'em diagonal', 'circular'], correta: 0, feedback: '1.º número = horizontal (para o lado). 👍' }
     ],
     fecho: 'Vetor = <b>seta de deslocação</b> (x, y). Translações, reflexões e rotações movem sem deformar — são isometrias.'
   });
@@ -96,7 +100,9 @@
       { tipo: 'texto', titulo: 'O que é um monómio?', html: '<p>Um <b>monómio</b> é um número com uma letra: <b>3x</b>, <b>−5a</b>, <b>7y²</b>. A letra representa um valor que não sabemos (uma <b>variável</b>).</p>' },
       { tipo: 'texto', titulo: 'Só se juntam os parecidos', html: '<p>Imagina que <b>x</b> são maçãs e <b>y</b> são laranjas. <b>3x + 2x = 5x</b> (3 maçãs + 2 maçãs = 5 maçãs). Mas <b>3x + 2y</b> fica assim — não podes juntar maçãs com laranjas!</p><p class="apr-formula">3x + 2y + 4x = 7x + 2y</p><p>Juntámos só os <b>x</b> (3x + 4x = 7x). Estes chamam-se <b>termos semelhantes</b>.</p>' },
       { tipo: 'texto', titulo: 'Polinómio = soma de monómios', html: '<p>Um <b>polinómio</b> é só vários monómios somados: <b>2x² + 3x − 5</b>. Simplificar é <b>juntar os termos semelhantes</b> para ficar mais curto.</p>' },
-      { tipo: 'confirma', pergunta: 'Simplifica: <b>5a + 3b − 2a</b>', opcoes: ['3a + 3b', '6ab', '8a + b', '3a − b'], correta: 0, feedback: 'Juntas só os «a»: 5a − 2a = 3a. O 3b fica (não há outro b). Resultado: <b>3a + 3b</b>. 👍' }
+      { tipo: 'confirma', pergunta: 'Mini-quiz (1/3) · Numa expressão, só se juntam os termos…', opcoes: ['parecidos (a com a, b com b)', 'todos', 'os números só', 'nenhuns'], correta: 0, feedback: 'Só se juntam os <b>parecidos</b> (a com a, b com b). 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (2/3) · Quanto é <b>3a + 2a</b>?', opcoes: ['5a', '6a', '5', '6a²'], correta: 0, feedback: '3a + 2a = <b>5a</b> (juntas os «a»). 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (3/3) · Simplifica: <b>5a + 3b − 2a</b>', opcoes: ['3a + 3b', '6ab', '8a + b', '3a − b'], correta: 0, feedback: '5a − 2a = 3a; o 3b fica → <b>3a + 3b</b>. 👍' }
     ],
     fecho: 'Só se somam <b>termos semelhantes</b> (mesma letra) — maçãs com maçãs. Polinómio = soma de monómios.'
   });
@@ -142,7 +148,9 @@
       { tipo: 'texto', titulo: 'O triângulo especial', html: '<p>Um triângulo <b>retângulo</b> tem um ângulo de 90° (um cantinho reto). Os dois lados que formam esse canto chamam-se <b>catetos</b>; o lado maior, à frente do ângulo reto, é a <b>hipotenusa</b>.</p>' },
       { tipo: 'interativo', titulo: 'Vê os quadrados 📐', render: pitagorasVisual },
       { tipo: 'texto', titulo: 'A regra mágica', html: '<p>Pitágoras descobriu: <b>a área dos dois quadrados pequenos (catetos) somada é igual à área do quadrado grande (hipotenusa)</b>.</p><p class="apr-formula">a² + b² = c²</p><p>Serve para descobrir um lado que falta. Ex: catetos 3 e 4 → 9 + 16 = 25 → c = √25 = <b>5</b>.</p>' },
-      { tipo: 'confirma', pergunta: 'Catetos 6 e 8. Quanto mede a hipotenusa?', opcoes: ['10', '14', '48', '100'], correta: 0, feedback: '6² + 8² = 36 + 64 = 100 → c = √100 = <b>10</b>. 👍' }
+      { tipo: 'confirma', pergunta: 'Mini-quiz (1/3) · O lado maior do triângulo retângulo é a…', opcoes: ['hipotenusa', 'altura', 'base', 'cateto'], correta: 0, feedback: 'O maior (em frente ao canto reto) = <b>hipotenusa</b>. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (2/3) · O Teorema de Pitágoras diz que…', opcoes: ['cateto² + cateto² = hipotenusa²', 'os lados são iguais', 'a área é o lado²', 'os ângulos somam 90°'], correta: 0, feedback: 'a² + b² = c² (catetos e hipotenusa). 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (3/3) · Catetos 6 e 8. A hipotenusa mede…', opcoes: ['10', '14', '48', '100'], correta: 0, feedback: '6² + 8² = 100 → √100 = <b>10</b>. 👍' }
     ],
     fecho: 'No triângulo retângulo: <b>a² + b² = c²</b>. Os quadrados dos catetos somam o quadrado da hipotenusa.'
   });
@@ -183,7 +191,9 @@
       { tipo: 'texto', titulo: 'A reta tem uma fórmula', html: '<p>No 7.º viste que f(x) = 2x dá uma reta pela origem. No 8.º acrescentamos um número: <b>y = mx + b</b>. Esta fórmula consegue desenhar <b>qualquer reta</b>.</p><p>Só tens de perceber o que cada letra faz.</p>' },
       { tipo: 'interativo', titulo: 'Constrói a tua reta 📈', render: retaConstrutor },
       { tipo: 'texto', titulo: 'm inclina, b levanta', html: '<p>O <b>m</b> é o <b>declive</b>: quanto maior, mais íngreme a reta sobe. Se for negativo, a reta desce.</p><p>O <b>b</b> é a <b>ordenada na origem</b>: o ponto onde a reta corta o eixo dos y. Mudar o b sobe ou desce a reta toda.</p>' },
-      { tipo: 'confirma', pergunta: 'Na reta <b>y = 2x + 3</b>, onde corta o eixo dos y?', opcoes: ['No 3', 'No 2', 'No 0', 'No 5'], correta: 0, feedback: 'O b (= 3) é onde a reta corta o eixo y: no ponto (0, <b>3</b>). O m (= 2) é a inclinação. 👍' }
+      { tipo: 'confirma', pergunta: 'Mini-quiz (1/3) · Em y = mx + b, o «m» é…', opcoes: ['a inclinação (declive)', 'onde corta o y', 'o x', 'a área'], correta: 0, feedback: 'O m é o <b>declive</b> (inclinação da reta). 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (2/3) · Em y = 2x + 3, onde corta o eixo dos y?', opcoes: ['No 3', 'No 2', 'No 0', 'No 5'], correta: 0, feedback: 'O b (= 3) é onde corta o y: ponto (0, <b>3</b>). 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (3/3) · Um declive positivo faz a reta…', opcoes: ['subir', 'descer', 'ficar horizontal', 'desaparecer'], correta: 0, feedback: 'Declive positivo → a reta <b>sobe</b>. 👍' }
     ],
     fecho: 'Toda a reta é <b>y = mx + b</b>: o <b>m</b> inclina (declive), o <b>b</b> diz onde corta o eixo y.'
   });
@@ -196,7 +206,9 @@
       { tipo: 'texto', titulo: 'Quando há dois mistérios', html: '<p>Às vezes há <b>dois números escondidos</b> (x e y) e <b>duas pistas</b> ao mesmo tempo. Por exemplo:</p><p class="apr-formula">x + y = 10<br>x − y = 4</p><p>Isto é um <b>sistema</b>: procuramos os valores de x e y que servem para as <b>duas</b> condições.</p>' },
       { tipo: 'texto', titulo: 'A imagem: duas retas', html: '<p>Cada equação é uma <b>reta</b>. A solução do sistema é o <b>ponto onde as duas retas se cruzam</b> — o único par (x, y) que está nas duas ao mesmo tempo.</p><p>No exemplo, a solução é <b>x = 7, y = 3</b>: confere → 7 + 3 = 10 ✓ e 7 − 3 = 4 ✓.</p>' },
       { tipo: 'texto', titulo: 'Como se resolve', html: '<p>Um truque (método da substituição): da 2.ª pista, x = 4 + y. Mete na 1.ª: (4 + y) + y = 10 → 4 + 2y = 10 → y = 3. E x = 4 + 3 = 7.</p>' },
-      { tipo: 'confirma', pergunta: 'A solução de um sistema de duas retas é…', opcoes: ['O ponto onde se cruzam', 'A reta mais alta', 'A origem (0,0)', 'Qualquer ponto de uma reta'], correta: 0, feedback: 'É o <b>ponto de cruzamento</b>: o único (x, y) que satisfaz as duas equações ao mesmo tempo. 👍' }
+      { tipo: 'confirma', pergunta: 'Mini-quiz (1/3) · Um sistema tem…', opcoes: ['duas (ou mais) equações ao mesmo tempo', 'uma só equação', 'só números', 'só gráficos'], correta: 0, feedback: 'Sistema = várias equações que têm de valer <b>ao mesmo tempo</b>. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (2/3) · A solução de um sistema de duas retas é…', opcoes: ['o ponto onde se cruzam', 'a reta mais alta', 'a origem (0,0)', 'qualquer ponto'], correta: 0, feedback: 'É o <b>ponto de cruzamento</b> das retas. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (3/3) · Se duas retas são paralelas (nunca se cruzam), o sistema…', opcoes: ['não tem solução', 'tem 1 solução', 'tem infinitas', 'tem 2'], correta: 0, feedback: 'Não se cruzam → <b>não há solução</b>. 👍' }
     ],
     fecho: 'Sistema = <b>duas condições juntas</b>. A solução é o <b>ponto onde as duas retas se cruzam</b>.'
   });
@@ -209,7 +221,9 @@
       { tipo: 'texto', titulo: 'Volume = espaço ocupado', html: '<p>O <b>volume</b> é quanto «cabe» dentro de um sólido — como a água que enche um pacote de leite. Mede-se em <b>unidades cúbicas</b> (cm³, m³…).</p>' },
       { tipo: 'texto', titulo: 'Prisma e cilindro: base × altura', html: '<p>Para os sólidos «direitos» (prisma, cilindro), o volume é simples: <b>área da base × altura</b>. Calcula-se a área do «chão» e multiplica-se pela altura, como empilhar fatias iguais.</p><p class="apr-formula">V = área da base × altura</p>' },
       { tipo: 'texto', titulo: 'Pirâmide e cone: a terça parte', html: '<p>Uma pirâmide ou um cone «acabam em bico», por isso cabe <b>menos</b>: exatamente <b>um terço</b> do prisma/cilindro com a mesma base e altura.</p><p class="apr-formula">V = (área da base × altura) ÷ 3</p>' },
-      { tipo: 'confirma', pergunta: 'Um prisma tem base de área 10 cm² e altura 6 cm. Qual o volume?', opcoes: ['60 cm³', '16 cm³', '30 cm³', '600 cm³'], correta: 0, feedback: 'V = base × altura = 10 × 6 = <b>60 cm³</b>. 👍' }
+      { tipo: 'confirma', pergunta: 'Mini-quiz (1/3) · O volume mede…', opcoes: ['o que cabe dentro', 'a volta', 'o peso', 'a altura só'], correta: 0, feedback: 'Volume = o espaço <b>dentro</b>. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (2/3) · O volume de um prisma é…', opcoes: ['área da base × altura', 'base + altura', 'só a altura', 'a volta da base'], correta: 0, feedback: 'V = <b>área da base × altura</b>. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (3/3) · Base de 10 cm² e altura 6 cm. O volume é…', opcoes: ['60 cm³', '16 cm³', '30 cm³', '600 cm³'], correta: 0, feedback: '10 × 6 = <b>60 cm³</b>. 👍' }
     ],
     fecho: 'Volume = quanto cabe. Prisma/cilindro: <b>base × altura</b>. Pirâmide/cone: <b>a terça parte</b> disso.'
   });
@@ -250,7 +264,9 @@
       { tipo: 'texto', titulo: 'Resumir muitos números', html: '<p>Quando temos muitos dados (notas, idades…), queremos um número que os <b>resuma</b>. Há três «centros»: a <b>média</b>, a <b>moda</b> e a <b>mediana</b>.</p>' },
       { tipo: 'interativo', titulo: 'Equilibra a média ⚖️', render: mediaInterativa },
       { tipo: 'texto', titulo: 'Os três centros', html: '<p><b>Média</b>: soma tudo e divide pelo número de valores (o equilíbrio).<br><b>Moda</b>: o valor que <b>mais se repete</b>.<br><b>Mediana</b>: o valor <b>do meio</b> quando ordenas todos.</p>' },
-      { tipo: 'confirma', pergunta: 'Notas: 3, 4, 4, 5. Qual é a <b>moda</b>?', opcoes: ['4', '3', '5', '4,5'], correta: 0, feedback: 'A moda é o valor que mais aparece: o <b>4</b> (aparece duas vezes). 👍' }
+      { tipo: 'confirma', pergunta: 'Mini-quiz (1/3) · A média calcula-se…', opcoes: ['somar tudo ÷ quantidade', 'a maior', 'a que mais repete', 'a do meio'], correta: 0, feedback: 'Média = somar tudo ÷ quantidade. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (2/3) · Notas: 3, 4, 4, 5. A <b>moda</b> é…', opcoes: ['4', '3', '5', '4,5'], correta: 0, feedback: 'A moda é o que mais aparece: o <b>4</b>. 👍' },
+      { tipo: 'confirma', pergunta: 'Mini-quiz (3/3) · A média de 4 e 8 é…', opcoes: ['6', '12', '4', '8'], correta: 0, feedback: '(4+8) ÷ 2 = <b>6</b>. 👍' }
     ],
     fecho: 'Três centros: <b>média</b> (equilíbrio), <b>moda</b> (mais repetido), <b>mediana</b> (o do meio).'
   });

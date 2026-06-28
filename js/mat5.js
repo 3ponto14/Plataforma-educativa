@@ -194,8 +194,40 @@ function mat5SwitchTab(tab, btn) {
   else if (tab === 'flashcards') mat5FcBuildNav();
   else if (tab === 'teste') mat5TesteBuildNav();
   else if (tab === 'jogos') mat5JogosInit();
+  else if (tab === 'aprender') { if (typeof mat5AprenderInit === 'function') mat5AprenderInit(); }
   else if (tab === 'fichas') mat5FichasBuildNav();
   else if (tab === 'progresso') mat5RenderProgresso();
+}
+
+/* Aba APRENDER: catálogo de explicadores lúdicos do 5.º ano + abrir/voltar. */
+var _mat5AprenderWired = false;
+function mat5AprenderInit() {
+  if (typeof APRENDER === 'undefined') {
+    var c = document.getElementById('mat5-aprender-cat');
+    if (c) c.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Explicadores indisponíveis (motor não carregado).</p>';
+    return;
+  }
+  var host = document.getElementById('mat5-aprender-host');
+  var cat = document.getElementById('mat5-aprender-cat');
+  if (!host || !cat) return;
+  APRENDER.catalogo('mat5-aprender-cat', function (id, t) {
+    return /5\.º/.test(t.curso || '') || /mat5/.test(id);
+  });
+  host.style.display = 'none';
+  if (_mat5AprenderWired) return;
+  _mat5AprenderWired = true;
+  window.aprenderVoltarCatalogo = function () {
+    host.style.display = 'none'; host.innerHTML = '';
+    cat.style.display = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  var _abrir = APRENDER.abrir;
+  APRENDER.abrir = function (id) {
+    cat.style.display = 'none';
+    host.style.display = 'block';
+    _abrir(id, 'mat5-aprender-host');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 }
 
 // Abre um sub-modo de prática a partir dos cartões do menu Praticar.

@@ -195,8 +195,40 @@ function mat6SwitchTab(tab, btn) {
   else if (tab === 'flashcards') mat6FcBuildNav();
   else if (tab === 'teste') mat6TesteBuildNav();
   else if (tab === 'jogos') mat6JogosInit();
+  else if (tab === 'aprender') { if (typeof mat6AprenderInit === 'function') mat6AprenderInit(); }
   else if (tab === 'fichas') mat6FichasBuildNav();
   else if (tab === 'progresso') mat6RenderProgresso();
+}
+
+/* Aba APRENDER: catálogo de explicadores lúdicos do 6.º ano + abrir/voltar. */
+var _mat6AprenderWired = false;
+function mat6AprenderInit() {
+  if (typeof APRENDER === 'undefined') {
+    var c = document.getElementById('mat6-aprender-cat');
+    if (c) c.innerHTML = '<p style="color:var(--ink4);padding:2rem;text-align:center">Explicadores indisponíveis (motor não carregado).</p>';
+    return;
+  }
+  var host = document.getElementById('mat6-aprender-host');
+  var cat = document.getElementById('mat6-aprender-cat');
+  if (!host || !cat) return;
+  APRENDER.catalogo('mat6-aprender-cat', function (id, t) {
+    return /6\.º/.test(t.curso || '') || /mat6/.test(id);
+  });
+  host.style.display = 'none';
+  if (_mat6AprenderWired) return;
+  _mat6AprenderWired = true;
+  window.aprenderVoltarCatalogo = function () {
+    host.style.display = 'none'; host.innerHTML = '';
+    cat.style.display = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  var _abrir = APRENDER.abrir;
+  APRENDER.abrir = function (id) {
+    cat.style.display = 'none';
+    host.style.display = 'block';
+    _abrir(id, 'mat6-aprender-host');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 }
 
 // Abre um sub-modo de prática a partir dos cartões do menu Praticar.
