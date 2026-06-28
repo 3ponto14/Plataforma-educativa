@@ -161,6 +161,7 @@ function port1SwitchTab(tab, btn) {
   else if (tab === 'flashcards') port1FcBuildNav();
   else if (tab === 'teste') port1TesteBuildNav();
   else if (tab === 'jogos') port1JogosInit();
+  else if (tab === 'jogar') { if (typeof LudicoPort1 !== 'undefined') LudicoPort1.init('port1-ludico-menu', 'port1-ludico-jogo'); }
   else if (tab === 'fichas') port1FichasBuildNav();
   else if (tab === 'progresso') port1RenderProgresso();
 }

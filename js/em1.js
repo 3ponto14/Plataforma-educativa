@@ -161,6 +161,7 @@ function em1SwitchTab(tab, btn) {
   else if (tab === 'flashcards') em1FcBuildNav();
   else if (tab === 'teste') em1TesteBuildNav();
   else if (tab === 'jogos') em1JogosInit();
+  else if (tab === 'jogar') { if (typeof LudicoEm1 !== 'undefined') LudicoEm1.init('em1-ludico-menu', 'em1-ludico-jogo'); }
   else if (tab === 'fichas') em1FichasBuildNav();
   else if (tab === 'progresso') em1RenderProgresso();
 }

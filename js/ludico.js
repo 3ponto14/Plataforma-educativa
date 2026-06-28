@@ -173,6 +173,44 @@ var LUDICO = (function () {
     caixa.addEventListener('drop', function (e) { e.preventDefault(); });
   }
 
+  /* ── Atividade de ESCOLHER ──
+     dados = { tipo:'escolher', pergunta:'...', figura:'🐶'?, opcoes:[{t:'🍎',ok:true},{t:'🐶'},...] }
+     A criança vê a pergunta (e talvez uma figura grande) e clica na opção certa. */
+  function _renderEscolher(host, at, aoTerminar) {
+    var resolvido = false;
+    var figuraHTML = at.figura ? '<div style="font-size:4rem;text-align:center;line-height:1;margin:.4rem 0">' + at.figura + '</div>' : '';
+    var opsHTML = '';
+    for (var i = 0; i < at.opcoes.length; i++) {
+      var o = at.opcoes[i];
+      opsHTML += '<button class="lud-esc" data-ok="' + (o.ok ? '1' : '0') + '" '
+        + 'style="font-size:1.5rem;font-weight:800;min-width:84px;min-height:84px;border-radius:20px;border:3px solid #d8d8d8;background:#fff;color:#3a3a3a;cursor:pointer;font-family:Montserrat,sans-serif;transition:all .15s;padding:.6rem 1rem">'
+        + o.t + '</button>';
+    }
+    host.innerHTML = barraEstrelas()
+      + mascote('pensa', at.pergunta)
+      + figuraHTML
+      + '<div style="display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center;margin-top:.6rem">' + opsHTML + '</div>'
+      + '<div id="lud-esc-fb" style="text-align:center;font-size:1.1rem;font-weight:800;min-height:1.8rem;margin-top:.7rem"></div>';
+    host.querySelectorAll('.lud-esc').forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (resolvido) return;
+        var fb = document.getElementById('lud-esc-fb');
+        if (b.getAttribute('data-ok') === '1') {
+          resolvido = true;
+          b.style.borderColor = '#2e9e6a'; b.style.background = '#e8f5ee';
+          somAcerto(); festa(host); _estrelas++;
+          var es = document.getElementById('lud-estrelas'); if (es) es.textContent = '⭐'.repeat(_estrelas);
+          if (fb) { fb.textContent = at.feedback || 'Boa! Acertaste! 🎉'; fb.style.color = '#2e9e6a'; }
+          setTimeout(function () { if (aoTerminar) aoTerminar(true); }, 1500);
+        } else {
+          b.style.borderColor = '#c4796e'; b.style.background = '#fdeceb';
+          somErro();
+          if (fb) { fb.textContent = 'Quase! Tenta outra. 🤔'; fb.style.color = '#c4796e'; }
+        }
+      });
+    });
+  }
+
   // opções de número: resposta + (qt-1) distratores próximos, baralhadas
   function _opcoesNum(correto, qt) {
     var set = {}; set[correto] = 1;
@@ -206,6 +244,7 @@ var LUDICO = (function () {
       }
       var at = atividades[idx];
       if (at.tipo === 'somar') _renderSomar(host, at, function () { idx++; proxima(); });
+      else if (at.tipo === 'escolher') _renderEscolher(host, at, function () { idx++; proxima(); });
       else _renderContar(host, at, function () { idx++; proxima(); });
     }
     _ultimas = { hostId: hostId, atividades: atividades };

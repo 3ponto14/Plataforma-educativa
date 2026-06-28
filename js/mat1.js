@@ -180,6 +180,7 @@ function mat1SwitchTab(tab, btn) {
   else if (tab === 'flashcards') mat1FcBuildNav();
   else if (tab === 'teste') mat1TesteBuildNav();
   else if (tab === 'jogos') mat1JogosInit();
+  else if (tab === 'jogar') { if (typeof LudicoMat1 !== 'undefined') LudicoMat1.init('mat1-ludico-menu', 'mat1-ludico-jogo'); }
   else if (tab === 'fichas') mat1FichasBuildNav();
   else if (tab === 'progresso') mat1RenderProgresso();
 }

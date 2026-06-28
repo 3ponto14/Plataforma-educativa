@@ -41,6 +41,7 @@
 <div class="mat7-hub-tabbar" id="em1-hub-tabbar">
   <button class="mat7-hub-tab active" data-tab="resumo"    onclick="em1SwitchTab('resumo',this)">   <span class="mat7-hub-tab-icon"><i class="ph ph-book-open-text"></i></span> Teoria</button>
   <button class="mat7-hub-tab"        data-tab="praticar"  onclick="em1SwitchTab('praticar',this)"> <span class="mat7-hub-tab-icon"><i class="ph ph-pencil-simple"></i></span> Praticar</button>
+  <button class="mat7-hub-tab"        data-tab="jogar"     onclick="em1SwitchTab('jogar',this)">    <span class="mat7-hub-tab-icon"><i class="ph ph-game-controller"></i></span> Jogar</button>
   <button class="mat7-hub-tab"        data-tab="fichas"    onclick="em1SwitchTab('fichas',this)">   <span class="mat7-hub-tab-icon"><i class="ph ph-file-pdf"></i></span> Fichas</button>
   <button class="mat7-hub-tab"        data-tab="progresso" onclick="em1SwitchTab('progresso',this)"><span class="mat7-hub-tab-icon"><i class="ph ph-chart-bar"></i></span> Progresso</button>
 </div>
@@ -161,6 +162,14 @@
   <div id="em1-jogos-app" style="margin-top:1rem"></div>
 </div>
 
+<!-- ══════════ PANEL: JOGAR (lúdico 1.º ano) ══════════ -->
+<div class="mat7-panel" id="em1p-jogar">
+  <div class="mat7-panel-heading">Vamos jogar! 🎮</div>
+  <div class="mat7-panel-sub">Descobre os animais, o corpo e as estações a brincar, e ganha estrelas. Escolhe um jogo!</div>
+  <div id="em1-ludico-menu" style="margin-top:.6rem"></div>
+  <div id="em1-ludico-jogo" style="position:relative;margin-top:1rem;display:none"></div>
+</div>
+
 <!-- ══════════ PANEL: FICHAS ══════════ -->
 <div class="mat7-panel" id="em1p-fichas">
   <div class="mat7-panel-heading">Gerador de Fichas</div>
@@ -237,6 +246,8 @@
 <script src="../js/chapter-engine.js?v=20260621"></script>
 <script src="../js/visuals.js?v=20260621"></script>
 <script src="../js/em1.js?v=20260621"></script>
+<script src="../js/ludico.js?v=20260628"></script>
+<script src="../js/ludico-em1.js?v=20260628"></script>
 <script src="../js/pt-jogos.js?v=20260621"></script>
 <script src="../js/systems.js?v=20260621"></script>
 <script src="../js/ux-improvements.js?v=20260621"></script>
