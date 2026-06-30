@@ -728,6 +728,7 @@ function _port9FichaBanco(cap) {
   var out = (_port9Banco[cap] || []).slice();
   function add(a) { out = out.concat(a); }
   if (cap === 1) {
+    if (typeof PT_EXCERTOS_BANCO !== 'undefined') add(_port9ConvBancoLetra(PT_EXCERTOS_BANCO, '1', 'Excertos · interpretação', _P9_DIF_LUS));
     if (typeof PT_LUS_BANCO !== 'undefined') add(_port9ConvBancoLetra(PT_LUS_BANCO, '2', 'Os Lusíadas', _P9_DIF_LUS));
     if (typeof PT_BARCA_BANCO !== 'undefined') add(_port9ConvBancoLetra(PT_BARCA_BANCO, '1', 'Auto da Barca do Inferno', _P9_DIF_BARCA));
     if (typeof PT_POESIA_BANCO !== 'undefined') add(_port9ConvBancoLetra(PT_POESIA_BANCO, '4', 'Poesia', _P9_DIF_POESIA));
@@ -823,7 +824,7 @@ function port9QuizNext() {
       '<div class="qg-hub-streak">' + (_port9Quiz.streak > 1 ? '🔥 ' + _port9Quiz.streak + ' seguidas' : '') + '</div>' +
       '<div class="qg-hub-score">✓ ' + _port9Quiz.score + ' / ' + _port9Quiz.total + '</div>' +
     '</div>' +
-    '<div class="qg-hub-question">' + ex.enun + '</div>' +
+    '<div class="qg-hub-question">' + String(ex.enun || '').replace(/\n/g, '<br>') + '</div>' +
     '<div class="qg-hub-opts">' + opts + '</div>' +
     '<div class="qg-hub-feedback" id="port9-quiz-fb" style="min-height:2.5rem"></div>';
 }
@@ -1365,7 +1366,7 @@ function _port9gfExBloco(exs, startNum) {
   var fm = (typeof formatMath === 'function') ? function(x){ return formatMath(_lm(x)); } : function(x){ return _lm(x); };
   exs.forEach(function(ex, i) {
     h += '<div style="margin-bottom:22px;page-break-inside:avoid">'
-      + '<div style="font-weight:600;font-size:12.5px;margin-bottom:6px;line-height:1.5">' + (startNum + i) + '. ' + fm(ex.enun) + '</div>';
+      + '<div style="font-weight:600;font-size:12.5px;margin-bottom:6px;line-height:1.5">' + (startNum + i) + '. ' + fm(ex.enun).replace(/\n/g, '<br>') + '</div>';
     if (ex.visual) h += '<div style="margin:6px 0 10px">' + ex.visual + '</div>'; // gráfico/tabela/figura SVG
     if (ex.tipo === 'mc' && ex.opcoes) {
       h += '<div style="font-size:12px;color:#333;padding-left:14px;line-height:2.1">';
