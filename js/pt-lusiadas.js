@@ -24,9 +24,9 @@ var PT_LUS_EPISODIOS = [
     canto: 'Canto I',
     nome: 'Proposição',
     estancia: 'Est. 1-3',
-    resumo: 'Camões apresenta o tema da obra: «As armas e os barões assinalados» - os feitos dos portugueses. Distingue-os dos heróis gregos e romanos.',
+    resumo: 'É a abertura da obra, onde Camões anuncia aquilo que vai cantar: as «armas» (os feitos guerreiros) e os «barões assinalados» (os homens notáveis) de Portugal. Logo nos primeiros versos diz que estes heróis viajaram «por mares nunca dantes navegados», ou seja, fizeram algo que ninguém tinha feito. E afirma que os feitos portugueses são tão grandes que ultrapassam os dos heróis gregos e romanos da Antiguidade.',
     citacao: '«As armas e os Barões assinalados / Que da Ocidental praia Lusitana / Por mares nunca dantes navegados...»',
-    importancia: 'Define o programa épico - a celebração dos feitos portugueses supera os da Antiguidade.',
+    importancia: 'Interpretação: «barões assinalados» = homens que se distinguiram; «mares nunca dantes navegados» mostra o pioneirismo e a coragem. Ao dizer que estes feitos superam os da Antiguidade, Camões eleva Portugal ao nível (ou acima) das maiores civilizações — é o orgulho nacional a definir o tom épico de toda a obra.',
     exame: true
   },
   {
@@ -34,9 +34,9 @@ var PT_LUS_EPISODIOS = [
     canto: 'Canto I',
     nome: 'Invocação',
     estancia: 'Est. 4-5',
-    resumo: 'Camões invoca as Tágides (ninfas do Tejo) em vez das Musas clássicas - originalidade que radica a obra em Portugal.',
+    resumo: 'Seguindo a tradição dos poemas épicos clássicos, o poeta pede inspiração para conseguir escrever uma obra tão grande. Mas Camões faz algo original: em vez de invocar as Musas gregas (como faziam Homero e Virgílio), invoca as <b>Tágides</b> — as ninfas do rio Tejo, o rio português. Pede-lhes um «engenho ardente» (talento e energia) e um estilo «grandíloquo» à altura dos feitos que vai contar.',
     citacao: '«Vós, Tágides minhas, pois criado / Tendes em mim um novo engenho ardente...»',
-    importancia: 'Revela o patriotismo de Camões - substitui as Musas gregas pelas ninfas do Tejo.',
+    importancia: 'Interpretação: ao trocar as Musas gregas pelas ninfas do <b>Tejo</b>, Camões «aportuguesa» a sua inspiração — é um gesto de patriotismo. Está a dizer que a sua poesia nasce de Portugal e não da tradição estrangeira. Mostra também ambição: pede um talento «novo» e poderoso porque o tema (os Descobrimentos) é maior do que tudo o que já se cantou.',
     exame: true
   },
   {
@@ -44,9 +44,9 @@ var PT_LUS_EPISODIOS = [
     canto: 'Canto III',
     nome: 'Episódio de Inês de Castro',
     estancia: 'Est. 118-135',
-    resumo: 'D. Pedro amava Inês de Castro. Os conselheiros do rei D. Afonso IV convenceram-no a mandá-la matar. Inês suplica ao rei pelos seus filhos, mas é assassinada. D. Pedro depois coroou-a rainha post-mortem.',
+    resumo: 'O príncipe D. Pedro amava Inês de Castro, uma dama galega, mas o pai (o rei D. Afonso IV) e os conselheiros temiam essa ligação por razões políticas. Convencem o rei a mandá-la matar. Inês implora pela vida, em nome dos filhos pequenos que tem de D. Pedro, mas é assassinada à mesma. Mais tarde, D. Pedro, já rei, vinga-se dos assassinos e — segundo a lenda — manda coroar Inês já depois de morta.',
     citacao: '«Inês, que depois de morta / Foi rainha»',
-    importancia: 'Crítica ao poder político; amor vs. razão de Estado; tragédia feminina. Camões usa Inês para criticar os conselheiros e a violência do poder.',
+    importancia: 'Interpretação: o verso «depois de morta foi rainha» é um <b>paradoxo</b> trágico — ela só recebe justiça quando já não a pode viver. Camões usa este episódio de amor para <b>criticar o poder político</b>: a «razão de Estado» (os interesses do reino) esmaga uma vida inocente. É também a entrada do <b>lirismo e da tragédia feminina</b> numa obra de guerra — daí comover tanto.',
     exame: true
   },
   {
@@ -54,9 +54,9 @@ var PT_LUS_EPISODIOS = [
     canto: 'Canto V',
     nome: 'Episódio do Adamastor',
     estancia: 'Est. 37-60',
-    resumo: 'No Cabo da Boa Esperança, surge um gigante monstruoso - o Adamastor. Representa as forças da natureza e os perigos do mar desconhecido. Anuncia tragédias às naus portuguesas.',
-    citacao: '«E enquanto não souberdes que elemento / É este que ficastes a dobrar / Sabei que esta é a grande Caixa Forte / Do Cabo que chamais da Boa Esperança»',
-    importancia: 'Simboliza os perigos da expansão marítima; a hybris (arrogância humana) ao desafiar os limites do mundo conhecido. É uma personificação alegórica.',
+    resumo: 'Quando as naus chegam ao Cabo da Boa Esperança (o ponto mais a sul de África, então temido), surge das nuvens um gigante monstruoso e ameaçador — o Adamastor. Com voz terrível, ele censura os portugueses por se atreverem a entrar no seu domínio e <b>profetiza desgraças</b> e naufrágios a quem ali passar. Conta ainda a sua própria história: era um Titã que se apaixonou pela ninfa Tétis e foi transformado em rocha (o próprio cabo).',
+    citacao: '«Eu sou aquele oculto e grande Cabo / A quem chamais vós outros Tormentório...»',
+    importancia: 'Interpretação: o Adamastor é uma <b>personificação</b> — o cabo perigoso ganha forma de gigante. Simboliza o <b>medo do desconhecido</b> e as forças da natureza que se opõem ao Homem. A sua história de amor impossível dá-lhe um lado humano e trágico. Representa também o preço e os perigos da ousadia dos Descobrimentos.',
     exame: true
   },
   {
@@ -64,9 +64,9 @@ var PT_LUS_EPISODIOS = [
     canto: 'Canto IV',
     nome: 'Episódio do Velho do Restelo',
     estancia: 'Est. 94-104',
-    resumo: 'No momento da partida das naus, um velho sábio critica a ambição e a «glória de mandar» - condena a expansão marítima por considerá-la motivada pela cobiça.',
+    resumo: 'Na praia do Restelo, no momento em que as naus vão partir para a Índia, um velho de aspeto respeitável ergue a voz no meio da multidão. Em vez de elogiar a viagem, <b>critica-a</b>: condena a ambição, a cobiça e a vaidade da fama que levam os homens a arriscar a vida e a deixar a família. Pergunta se vale a pena tanto sofrimento por glória e riqueza.',
     citacao: '«Ó glória de mandar, ó vã cobiça / Desta vaidade a que chamamos Fama!»',
-    importancia: 'Voz crítica dentro da epopeia - questiona os valores que a obra celebra. Representa a sabedoria popular e a voz da consciência.',
+    importancia: 'Interpretação: o Velho do Restelo é uma <b>voz crítica dentro da própria epopeia</b> — Camões celebra os Descobrimentos, mas tem a coragem de incluir quem duvida deles. Representa a sabedoria popular e a voz da consciência. Cria um <b>contraste</b> com o entusiasmo geral e mostra que a obra não é só propaganda: também pensa nos custos humanos da aventura.',
     exame: true
   },
   {
