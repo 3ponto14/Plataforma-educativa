@@ -37,24 +37,28 @@ var _port7Subtemas = {
 var _port7Cards = {
   // ── Domínio 1 · Educação Literária (7.º) ──
   1: [
-    { st: 1, tag: 'Definição', q: 'O que é uma narrativa tradicional?', a: 'Um conto transmitido oralmente de geração em geração, de autor anónimo (o povo), muitas vezes com uma lição de vida. Há versões diferentes do mesmo conto.' },
-    { st: 1, tag: 'Definição', q: 'O que distingue a fábula?', a: 'É uma narrativa curta, geralmente com animais que falam e agem como pessoas, terminando com uma moralidade (lição).' },
-    { st: 1, tag: 'Definição', q: 'O que é uma lenda?', a: 'Uma narrativa tradicional que mistura factos reais (lugares, figuras históricas) com elementos maravilhosos, para explicar origens ou acontecimentos.' },
-    { st: 2, tag: 'Conceito', q: 'Quais são os elementos da narrativa?', a: 'Narrador (quem conta), personagens (quem age), ação (o que acontece), espaço (onde) e tempo (quando).' },
-    { st: 2, tag: 'Conceito', q: 'Tipos de narrador quanto à presença?', a: 'Participante (entra na história, narra na 1.ª pessoa) ou não participante (apenas conta, na 3.ª pessoa).' },
-    { st: 2, tag: 'Conceito', q: 'Tipos de personagens quanto ao relevo?', a: 'Principal (protagonista, centro da ação), secundária (participa mas não é o centro) e figurante (apenas compõe o cenário).' },
-    { st: 2, tag: 'Conceito', q: 'Modos de relato no texto narrativo?', a: 'Narração (contar ações), descrição (caracterizar pessoas/lugares, com pausa na ação) e diálogo (falas das personagens).' },
-    { st: 2, tag: 'Contexto', q: 'Quem é o «Ladino» de Miguel Torga?', a: 'Um pardal esperto e manhoso, protagonista do conto «Ladino» (do livro Bichos), em que os animais são tratados como pessoas.' },
-    { st: 4, tag: 'Definição', q: 'Como se organiza o texto dramático?', a: 'Em atos e cenas, com as falas das personagens e as didascálias (indicações cénicas em itálico ou parênteses, que não são ditas).' },
-    { st: 3, tag: 'Poesia', q: 'O que é o sujeito poético?', a: 'A «voz» que fala no poema: não se confunde com o poeta, a pessoa real que o escreveu.' },
-    { st: 3, tag: 'Poesia', q: 'Verso, estrofe e refrão?', a: 'Verso = cada linha; estrofe = grupo de versos (quadra = 4); refrão = verso ou estrofe que se repete ao longo do poema.' },
-    { st: 3, tag: 'Contexto', q: 'Poetas trabalhados no 7.º ano (manual Mensagens 7)?', a: 'José Régio, Vitorino Nemésio, Sebastião da Gama, Ruy Cinatti, David Mourão-Ferreira e Percy B. Shelley.' },
-    { st: 2, tag: 'Contexto', q: 'Que textos narrativos saem no manual Mensagens 7?', a: 'Contos tradicionais («Os dez anõezinhos da Tia Verde-Água»); narrativas de autor português (o touro Miura; a avó e o neto na praia; a caça à baleia nos Açores) e estrangeiro (A Ilha do Tesouro; Sexta-Feira).' },
-    { st: 3, tag: 'Exemplo', q: '«Pelo sonho é que vamos», de Sebastião da Gama: qual é a mensagem?', a: 'O importante é SONHAR, mesmo sem garantia de êxito («chegamos ou não chegamos»). Verso hexassílabo (6 sílabas) e anáfora na repetição do verso-título.' },
-    { st: 3, tag: 'Exemplo', q: 'O «Senhor Papão» no poema de José Régio: o que simboliza?', a: 'É uma metáfora do medo que mora dentro de cada um. Só quando o sujeito se rende consegue vê-lo sem disfarce.' },
-    { st: 4, tag: 'Definição', q: 'O que são as didascálias no texto dramático?', a: 'São as indicações cénicas (em itálico ou entre parênteses): dizem como falar, mover-se e os cenários. Não são ditas pelos atores.' },
-    { st: 4, tag: 'Conceito', q: 'Como se distingue ato de cena no teatro?', a: 'Ato: grande divisão da peça (muda o cenário/tempo). Cena: parte mais pequena, marcada pela entrada ou saída de personagens.' },
-    { st: 1, tag: 'Definição', q: 'Qual é a «moral» de uma fábula?', a: 'É o ensinamento final, muitas vezes explícito, que se retira da história protagonizada por animais com comportamentos humanos.' }
+    // ════ NARRATIVAS TRADICIONAIS ════
+    { st: 1, tag: 'Narrativas tradicionais', q: 'O que é uma narrativa tradicional?', a: 'Um conto transmitido <b>oralmente</b> de geração em geração, de autor anónimo (o povo), muitas vezes com uma lição de vida. Há versões diferentes do mesmo conto.' },
+    { st: 1, tag: 'Narrativas tradicionais', q: 'O que distingue a fábula?', a: 'É uma narrativa <b>curta</b>, geralmente com animais que falam e agem como pessoas, terminando com uma <b>moralidade</b> (lição).' },
+    { st: 1, tag: 'Narrativas tradicionais', q: 'O que é uma lenda?', a: 'Uma narrativa tradicional que mistura <b>factos reais</b> (lugares, figuras) com elementos <b>maravilhosos</b>, para explicar origens ou acontecimentos.' },
+    // ════ NARRATIVAS DE AUTOR ════
+    { st: 2, tag: 'Narrativas de autor', q: 'Quais são os elementos da narrativa?', a: '<b>Narrador</b> (quem conta), <b>personagens</b> (quem age), <b>ação</b> (o que acontece), <b>espaço</b> (onde) e <b>tempo</b> (quando).' },
+    { st: 2, tag: 'Narrativas de autor', q: 'Tipos de narrador quanto à presença?', a: '<b>Participante</b> (entra na história, narra na 1.ª pessoa) ou <b>não participante</b> (apenas conta, na 3.ª pessoa).' },
+    { st: 2, tag: 'Narrativas de autor', q: 'Tipos de personagens quanto ao relevo?', a: '<b>Principal</b> (protagonista, centro da ação), <b>secundária</b> (participa mas não é o centro) e <b>figurante</b> (apenas compõe o cenário).' },
+    { st: 2, tag: 'Narrativas de autor', q: 'Modos de relato no texto narrativo?', a: '<b>Narração</b> (contar ações), <b>descrição</b> (caracterizar pessoas/lugares, com pausa na ação) e <b>diálogo</b> (falas das personagens).' },
+    { st: 2, tag: 'Narrativas de autor', q: 'Quem é o «Ladino» de Miguel Torga?', a: 'Um pardal esperto e manhoso, protagonista do conto «Ladino» (do livro Bichos), em que os animais são tratados como pessoas.' },
+    { st: 2, tag: 'Narrativas de autor', q: 'Que textos narrativos saem no manual Mensagens 7?', a: 'Contos tradicionais («Os dez anõezinhos da Tia Verde-Água»); narrativas de autor português (o touro Miura; a caça à baleia nos Açores) e estrangeiro (A Ilha do Tesouro; Sexta-Feira).' },
+    // ════ POESIA ════
+    { st: 3, tag: 'Poesia', q: 'O que é o sujeito poético?', a: 'A «voz» que fala no poema. <b>Não é o poeta</b>, a pessoa real que o escreveu — é uma voz criada por ele.' },
+    { st: 3, tag: 'Poesia', q: 'Verso, estrofe e refrão?', a: '<b>Verso</b> = cada linha; <b>estrofe</b> = grupo de versos (quadra = 4); <b>refrão</b> = verso ou estrofe que se repete ao longo do poema.' },
+    { st: 3, tag: 'Poesia', q: 'Poetas trabalhados no 7.º ano (manual Mensagens 7)?', a: 'José Régio, Vitorino Nemésio, Sebastião da Gama, Ruy Cinatti, David Mourão-Ferreira e Percy B. Shelley.' },
+    { st: 3, tag: 'Poesia', q: '«Pelo sonho é que vamos» (Sebastião da Gama): a mensagem?', a: 'O importante é <b>sonhar</b>, mesmo sem garantia de êxito («chegamos ou não chegamos»). Verso hexassílabo (6 sílabas) e anáfora na repetição do verso-título.' },
+    { st: 3, tag: 'Poesia', q: 'O «Senhor Papão» (José Régio): o que simboliza?', a: 'É uma <b>metáfora do medo</b> que mora dentro de cada um. Só quando o sujeito se rende consegue vê-lo sem disfarce.' },
+    // ════ TEXTO DRAMÁTICO ════
+    { st: 4, tag: 'Texto dramático', q: 'Como se organiza o texto dramático?', a: 'Em <b>atos e cenas</b>, com as falas das personagens e as <b>didascálias</b> (indicações cénicas em itálico ou parênteses, que não são ditas).' },
+    { st: 4, tag: 'Texto dramático', q: 'O que são as didascálias?', a: 'São as <b>indicações cénicas</b> (em itálico ou entre parênteses): dizem como falar, mover-se e os cenários. Não são ditas pelos atores.' },
+    { st: 4, tag: 'Texto dramático', q: 'Como se distingue ato de cena?', a: '<b>Ato:</b> grande divisão da peça (muda o cenário/tempo). <b>Cena:</b> parte mais pequena, marcada pela entrada ou saída de personagens.' },
+    { st: 1, tag: 'Narrativas tradicionais', q: 'Qual é a «moral» de uma fábula?', a: 'É o <b>ensinamento final</b>, muitas vezes explícito, que se retira da história protagonizada por animais com comportamentos humanos.' }
   ],
   // ── Domínio 2 · Gramática (7.º) ──
   2: [

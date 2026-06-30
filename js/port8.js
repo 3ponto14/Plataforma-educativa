@@ -38,22 +38,26 @@ var _port8Subtemas = {
 var _port8Cards = {
   // ── Domínio 1 · Educação Literária (8.º) ──
   1: [
-    { st: 1, tag: 'Definição', q: 'O que é uma narrativa?', a: 'Um texto que conta uma história, com narrador, personagens, ação, espaço e tempo. No 8.º estudam-se autores como Sophia de Mello Breyner, Jorge Amado e José Saramago.' },
-    { st: 1, tag: 'Conceito', q: 'Tipos de narrador quanto à presença?', a: 'Participante (narra na 1.ª pessoa, entra na ação) e não participante (3.ª pessoa). Quanto ao conhecimento: omnisciente (sabe tudo) ou de ciência limitada.' },
-    { st: 1, tag: 'Conceito', q: 'Personagens quanto ao relevo e à construção?', a: 'Relevo: principal, secundária, figurante. Construção: redonda (complexa, evolui) ou plana (simples, não muda); modelada (caracterizada aos poucos) ou tipo.' },
-    { st: 1, tag: 'Contexto', q: 'O que é «O Gato Malhado e a Andorinha Sinhá»?', a: 'Uma narrativa de Jorge Amado, com fortes recursos expressivos e personagens animais que representam comportamentos humanos: o Gato temido aprende sobre o amor com a Andorinha.' },
-    { st: 1, tag: 'Contexto', q: 'Quem é o Garrinchas («Natal», de Miguel Torga)?', a: 'Um pedinte pobre e doente do conto «Natal»; o texto critica a insensibilidade das pessoas que não têm piedade da sua miséria.' },
-    { st: 1, tag: 'Contexto', q: 'O que é «O Diário de Anne Frank»?', a: 'O diário real de uma jovem judia escondida durante a ocupação nazi. Anne trata o diário como uma amiga, a quem chama «Kitty».' },
-    { st: 3, tag: 'Definição', q: 'Como se organiza o texto dramático?', a: 'Em atos e cenas, com as falas das personagens e as didascálias (indicações cénicas). Não tem narrador: a história revela-se pelo diálogo e pela ação.' },
-    { st: 3, tag: 'Definição', q: 'O que é o monólogo e o aparte?', a: 'Monólogo: a personagem fala sozinha, em voz alta, expondo os seus pensamentos. Aparte: uma fala dirigida ao público que as outras personagens «não ouvem».' },
-    { st: 2, tag: 'Poesia', q: 'O que é o sujeito poético?', a: 'A «voz» que fala no poema: não se confunde com o poeta, a pessoa real. Exprime emoções, ideias e visões do mundo.' },
-    { st: 2, tag: 'Poesia', q: 'O que distingue a quadra popular?', a: 'Estrofe de 4 versos, em redondilha (5 ou 7 sílabas), de rima simples: forma típica da poesia tradicional e das cantigas.' },
-    { st: 3, tag: 'Contexto', q: 'O que é «O Adamastor» de Luís de Sttau Monteiro?', a: 'Um texto («Aquilo que os Olhos Veem») que recria, em tom crítico e humorístico, o episódio do gigante de Os Lusíadas, a bordo de um navio.' },
-    { st: 1, tag: 'Conceito', q: 'O que é a estrutura de uma narrativa?', a: 'Situação inicial → desenvolvimento (peripécias/conflito) → ponto culminante (clímax) → desenlace (resolução).' },
-    { st: 4, tag: 'Definição', q: 'O que é uma epopeia?', a: 'Uma longa narrativa em verso que celebra os feitos heroicos de um povo. Em Portugal, «Os Lusíadas» de Camões.' },
-    { st: 4, tag: 'Os Lusíadas', q: 'Quem é o herói de «Os Lusíadas»?', a: 'Não é uma só personagem: o herói coletivo é o povo português, embora Vasco da Gama conduza a viagem narrada.' },
-    { st: 2, tag: 'Poesia', q: 'O que é a medida (métrica) de um poema?', a: 'É a contagem das sílabas métricas de cada verso (até à última tónica). Versos com o mesmo número têm medida regular.' },
-    { st: 3, tag: 'Definição', q: 'O que é o conflito no texto dramático?', a: 'É a oposição de forças/interesses entre personagens que faz avançar a ação (ex.: o Adamastor contra os navegadores).' }
+    // ════ NARRATIVA ════
+    { st: 1, tag: 'Narrativa', q: 'O que é uma narrativa?', a: 'Um texto que conta uma história, com <b>narrador, personagens, ação, espaço e tempo</b>. No 8.º estudam-se autores como Sophia de Mello Breyner, Jorge Amado e José Saramago.' },
+    { st: 1, tag: 'Narrativa', q: 'Tipos de narrador quanto à presença?', a: '<b>Participante</b> (narra na 1.ª pessoa, entra na ação) e <b>não participante</b> (3.ª pessoa). Quanto ao que sabe: omnisciente (sabe tudo) ou de ciência limitada.' },
+    { st: 1, tag: 'Narrativa', q: 'Personagens quanto ao relevo e à construção?', a: '<b>Relevo:</b> principal, secundária, figurante. <b>Construção:</b> redonda (complexa, evolui) ou plana (simples, não muda); modelada ou tipo.' },
+    { st: 1, tag: 'Narrativa', q: 'O que é a estrutura de uma narrativa?', a: 'Situação inicial → desenvolvimento (peripécias/conflito) → ponto culminante (clímax) → desenlace (resolução).' },
+    { st: 1, tag: 'Narrativa', q: '«O Gato Malhado e a Andorinha Sinhá» (Jorge Amado)', a: 'Uma narrativa com personagens animais que representam comportamentos humanos: o Gato temido aprende sobre o amor com a Andorinha. Tem fortes recursos expressivos.' },
+    { st: 1, tag: 'Narrativa', q: '«Natal» (Miguel Torga) — quem é o Garrinchas?', a: 'Um pedinte pobre e doente do conto «Natal». O texto critica a <b>insensibilidade</b> das pessoas que não têm piedade da sua miséria.' },
+    { st: 1, tag: 'Narrativa', q: '«O Diário de Anne Frank»', a: 'O diário real de uma jovem judia escondida durante a ocupação nazi. Anne trata o diário como uma amiga, a quem chama «Kitty».' },
+    // ════ POESIA ════
+    { st: 2, tag: 'Poesia', q: 'O que é o sujeito poético?', a: 'A «voz» que fala no poema. <b>Não é o poeta</b>, a pessoa real — é uma entidade criada por ele para exprimir emoções e ideias.' },
+    { st: 2, tag: 'Poesia', q: 'O que distingue a quadra popular?', a: 'Estrofe de <b>4 versos</b>, em redondilha (5 ou 7 sílabas), de rima simples. É a forma típica da poesia tradicional e das cantigas.' },
+    { st: 2, tag: 'Poesia', q: 'O que é a medida (métrica) de um poema?', a: 'É a contagem das <b>sílabas métricas</b> de cada verso (até à última sílaba forte). Versos com o mesmo número têm medida regular.' },
+    // ════ TEXTO DRAMÁTICO ════
+    { st: 3, tag: 'Texto dramático', q: 'Como se organiza o texto dramático?', a: 'Em <b>atos e cenas</b>, com as falas das personagens e as <b>didascálias</b> (indicações cénicas). Não tem narrador: a história revela-se pelo diálogo e pela ação.' },
+    { st: 3, tag: 'Texto dramático', q: 'O que é o monólogo e o aparte?', a: '<b>Monólogo:</b> a personagem fala sozinha, em voz alta, expondo os pensamentos. <b>Aparte:</b> uma fala dirigida ao público que as outras personagens «não ouvem».' },
+    { st: 3, tag: 'Texto dramático', q: 'O que é o conflito no texto dramático?', a: 'É a <b>oposição de forças/interesses</b> entre personagens que faz avançar a ação (ex.: o Adamastor contra os navegadores).' },
+    { st: 3, tag: 'Texto dramático', q: '«O Adamastor» (Luís de Sttau Monteiro)', a: 'Um texto («Aquilo que os Olhos Veem») que recria, em tom <b>crítico e humorístico</b>, o episódio do gigante de Os Lusíadas, a bordo de um navio.' },
+    // ════ TEXTO ÉPICO · OS LUSÍADAS ════
+    { st: 4, tag: 'Os Lusíadas', q: 'O que é uma epopeia?', a: 'Uma longa narrativa em verso que celebra os <b>feitos heroicos de um povo</b>. Em Portugal, «Os Lusíadas» de Camões.' },
+    { st: 4, tag: 'Os Lusíadas', q: 'Quem é o herói de «Os Lusíadas»?', a: 'Não é uma só personagem: o <b>herói coletivo é o povo português</b>, embora Vasco da Gama conduza a viagem narrada.' }
   ],
   // ── Domínio 2 · Gramática (8.º) ──
   2: [

@@ -36,22 +36,33 @@ var _port9Subtemas = {
 var _port9Cards = {
   // ── Domínio 1 · Educação Literária ──
   1: [
-    { st: 2, tag: 'Definição', q: 'O que é uma epopeia?', a: 'Uma longa narrativa em verso que celebra os feitos heroicos de um povo ou herói. Ex: Os Lusíadas, de Camões.' },
-    { st: 1, tag: 'Definição', q: 'O que é um auto (teatro vicentino)?', a: 'Uma peça curta de teatro, muitas vezes alegórica e satírica. O Auto da Barca do Inferno, de Gil Vicente, critica os vícios sociais através de figuras-tipo.' },
-    { st: 2, tag: 'Os Lusíadas', q: 'Quais são os planos de Os Lusíadas?', a: 'Plano da viagem (Vasco da Gama à Índia), plano da História de Portugal, plano mitológico (deuses do Olimpo) e plano do Poeta (reflexões de Camões).' },
-    { st: 2, tag: 'Os Lusíadas', q: 'O que é a Proposição?', a: 'A apresentação do tema da epopeia, no início (Canto I): «As armas e os barões assinalados…». Camões anuncia que vai cantar os feitos dos portugueses.' },
-    { st: 2, tag: 'Os Lusíadas', q: 'Episódios líricos centrais de Os Lusíadas?', a: 'Inês de Castro (amor e morte), o Adamastor (medo e profecia) e a Ilha dos Amores (recompensa dos heróis).' },
-    { st: 1, tag: 'Auto da Barca', q: 'Quem julga as almas no Auto da Barca do Inferno?', a: 'O Diabo (barca do Inferno) e o Anjo (barca do Paraíso). Cada figura: Fidalgo, Onzeneiro, Frade, Sapateiro…: é julgada pelos seus pecados.' },
-    { st: 1, tag: 'Conceito', q: 'O que é uma personagem-tipo (figura alegórica)?', a: 'Uma personagem que representa um grupo ou um vício/virtude, não um indivíduo. No Auto, o Onzeneiro representa a usura, o Frade a hipocrisia do clero.' },
-    { st: 4, tag: 'Conceito', q: 'O que é o sujeito poético?', a: 'A "voz" que fala no poema: não é o autor, mas a entidade que exprime emoções e ideias no texto lírico.' },
-    { st: 1, tag: 'Conceito', q: 'O que distingue texto narrativo de texto lírico?', a: 'O narrativo conta uma história (ação, personagens, narrador); o lírico exprime emoções e estados de alma do sujeito poético.' },
-    { st: 4, tag: 'Poesia', q: 'O que é uma estrofe e um verso?', a: 'O verso é cada linha do poema; a estrofe é um conjunto de versos. Ex: a oitava de Os Lusíadas tem 8 versos decassílabos.' },
-    { st: 4, tag: 'Poesia', q: 'O que é a rima?', a: 'A correspondência de sons no final dos versos. Pode ser emparelhada (aabb), cruzada (abab) ou interpolada (abba).' },
-    { st: 3, tag: 'Contexto', q: 'O que é o conto?', a: 'Uma narrativa curta, com poucas personagens e uma só ação central. Ex: «A Aia», de Eça de Queirós; «Um Dia Destes», de García Márquez.' },
-    { st: 1, tag: 'Auto da Barca', q: 'Qual é a crítica social do Auto da Barca do Inferno?', a: 'Gil Vicente critica os vícios de todas as classes (fidalgo, onzeneiro, frade, clérigo…): o que conta para a salvação são as ações, não o estatuto.' },
-    { st: 1, tag: 'Auto da Barca', q: 'Que tipos de cómico há no Auto da Barca do Inferno?', a: 'Cómico de personagem (defeitos), de situação (cenas ridículas), de linguagem (trocadilhos, insultos) e de caráter.' },
-    { st: 2, tag: 'Os Lusíadas', q: 'Quais são os quatro planos de Os Lusíadas?', a: 'Plano da viagem (de Gama à Índia), da História de Portugal, da mitologia (deuses) e das considerações do poeta.' },
-    { st: 2, tag: 'Os Lusíadas', q: 'O que representa o Adamastor em Os Lusíadas?', a: 'É o gigante que personifica o Cabo das Tormentas e os perigos do mar desconhecido; anuncia desgraças aos navegadores.' }
+    // ════ OS LUSÍADAS (Camões) ════
+    { st: 2, tag: 'Os Lusíadas', q: 'O que é uma epopeia?', a: 'Uma longa narrativa em verso que celebra os feitos heroicos de um povo ou herói. Os Lusíadas, de Camões, celebram os portugueses e a viagem de Vasco da Gama à Índia.' },
+    { st: 2, tag: 'Os Lusíadas', q: 'Quais são os 4 planos de Os Lusíadas?', a: 'Há quatro «camadas» na obra: <b>1)</b> a viagem (Gama à Índia); <b>2)</b> a História de Portugal; <b>3)</b> o plano mitológico (deuses do Olimpo a ajudar ou atrapalhar); <b>4)</b> o plano do Poeta (Camões a comentar e criticar).' },
+    { st: 2, tag: 'Os Lusíadas', q: 'O que é a Proposição?', a: 'É a abertura (Canto I), onde Camões anuncia o que vai cantar: «As armas e os barões assinalados…», ou seja, os feitos dos portugueses. É como o «trailer» da obra.' },
+    { st: 2, tag: 'Os Lusíadas', q: 'O que é a Invocação?', a: 'É o pedido de inspiração. Camões invoca as <b>Tágides</b> (ninfas do Tejo) em vez das Musas gregas — um gesto de patriotismo, pondo a inspiração portuguesa à frente da clássica.' },
+    { st: 2, tag: 'Os Lusíadas', q: 'O que representa o Adamastor?', a: 'É um gigante que personifica o Cabo das Tormentas. Simboliza o <b>medo do desconhecido</b> e os perigos do mar. A sua história de amor impossível dá-lhe um lado humano e trágico.' },
+    { st: 2, tag: 'Os Lusíadas', q: 'Porque é tão importante o episódio de Inês de Castro?', a: 'É o grande momento <b>lírico e trágico</b>: o amor de D. Pedro e Inês esmagado pela «razão de Estado». O verso «depois de morta foi rainha» é um paradoxo que reforça a injustiça.' },
+    { st: 2, tag: 'Os Lusíadas', q: 'Quem é o Velho do Restelo e o que representa?', a: 'Um velho que, na partida das naus, <b>critica</b> a ambição e a vaidade da fama. É a voz da consciência e da dúvida dentro de uma obra que celebra os Descobrimentos.' },
+    { st: 2, tag: 'Os Lusíadas', q: 'Que verso e forma tem Os Lusíadas?', a: 'Está em <b>oitavas</b> (estrofes de 8 versos) e <b>versos decassílabos</b> (10 sílabas métricas). São 10 cantos ao todo.' },
+    // ════ AUTO DA BARCA DO INFERNO (Gil Vicente) ════
+    { st: 1, tag: 'Auto da Barca', q: 'O que é um auto?', a: 'Uma peça curta de teatro, muitas vezes <b>alegórica e satírica</b>. O Auto da Barca do Inferno critica os vícios da sociedade através de figuras-tipo.' },
+    { st: 1, tag: 'Auto da Barca', q: 'Como funciona o «julgamento» no Auto da Barca?', a: 'Num cais há duas barcas: a do <b>Inferno</b> (Diabo) e a da <b>Glória</b> (Anjo). Cada figura que chega é julgada pelas suas ações em vida — não pelo seu estatuto.' },
+    { st: 1, tag: 'Auto da Barca', q: 'O que é uma personagem-tipo (figura alegórica)?', a: 'Uma personagem que representa um <b>grupo ou um vício</b>, não um indivíduo real. O Onzeneiro representa a usura/ganância; o Frade, a hipocrisia do clero.' },
+    { st: 1, tag: 'Auto da Barca', q: 'Qual é a crítica social do Auto da Barca?', a: 'Gil Vicente critica os vícios de <b>todas as classes</b> (fidalgo, onzeneiro, frade…). A mensagem: o que conta para a salvação são as ações, não o poder nem o dinheiro.' },
+    { st: 1, tag: 'Auto da Barca', q: 'Quem se salva e porquê?', a: 'Só o <b>Parvo</b> (humilde e inocente) e os <b>Quatro Cavaleiros</b> (mortos pela fé). É uma crítica: os humildes e quem morre por uma causa valem mais que os poderosos.' },
+    { st: 1, tag: 'Auto da Barca', q: 'Que tipos de cómico há no Auto da Barca?', a: 'Cómico de <b>personagem</b> (os defeitos), de <b>situação</b> (cenas ridículas), de <b>linguagem</b> (trocadilhos, insultos) e de <b>caráter</b>.' },
+    // ════ AUTO DA ÍNDIA (Gil Vicente) — para escolas que dão esta obra ════
+    { st: 1, tag: 'Auto da Índia', q: 'De que trata o Auto da Índia?', a: 'É uma comédia de Gil Vicente sobre a <b>Ama</b>, cujo marido parte para a Índia. Mal ele sai, ela recebe amantes — e finge tristeza quando ele regressa.' },
+    { st: 1, tag: 'Auto da Índia', q: 'O que critica o Auto da Índia?', a: 'A <b>infidelidade e a falsidade dos costumes</b> durante as ausências das viagens dos Descobrimentos. É uma sátira à moral da época.' },
+    { st: 1, tag: 'Auto da Índia', q: 'Que recurso é central no Auto da Índia?', a: 'A <b>ironia</b>: a Ama mostra o contrário do que sente (chora por fora, festeja por dentro). O humor serve para criticar — é o riso como arma.' },
+    // ════ POESIA ════
+    { st: 4, tag: 'Poesia', q: 'O que é o sujeito poético?', a: 'É a «voz» que fala no poema. <b>Não é o autor</b>, mas uma entidade criada por ele para exprimir emoções e ideias no texto lírico.' },
+    { st: 4, tag: 'Poesia', q: 'O que é uma estrofe e um verso?', a: 'O <b>verso</b> é cada linha do poema; a <b>estrofe</b> é um conjunto de versos (como um «parágrafo» do poema). A oitava tem 8 versos.' },
+    { st: 4, tag: 'Poesia', q: 'O que é a rima?', a: 'A correspondência de sons no fim dos versos. Pode ser <b>emparelhada</b> (aabb), <b>cruzada</b> (abab) ou <b>interpolada</b> (abba).' },
+    { st: 4, tag: 'Poesia', q: 'Texto narrativo vs. texto lírico?', a: 'O <b>narrativo</b> conta uma história (ação, personagens, narrador). O <b>lírico</b> exprime emoções e estados de alma do sujeito poético.' },
+    // ════ CONTOS ════
+    { st: 3, tag: 'Contos', q: 'O que é o conto?', a: 'Uma narrativa <b>curta</b>, com poucas personagens e uma só ação central. Ex.: «A Aia» (Eça de Queirós), «Um Dia Destes» (García Márquez).' }
   ],
   // ── Domínio 2 · Gramática ──
   2: [
