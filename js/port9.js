@@ -74,22 +74,22 @@ var _port9Cards = {
   ],
   // ── Domínio 3 · Leitura ──
   3: [
-    { st: 1, tag: 'Estratégia', q: 'Como abordar a compreensão de um texto?', a: '1) Lê o texto todo; 2) lê as perguntas; 3) procura no texto a informação; 4) responde com base no texto, citando quando pedido.' },
-    { st: 1, tag: 'Definição', q: 'O que é o tema de um texto?', a: 'O assunto central, aquilo de que o texto trata. Distingue-se da ideia principal (o que se afirma sobre o tema).' },
-    { st: 2, tag: 'Definição', q: 'Tipologias textuais?', a: 'Narrativo (conta), descritivo (caracteriza), argumentativo (defende uma tese), expositivo (informa) e dialogal (troca de falas).' },
-    { st: 3, tag: 'Estratégia', q: 'O que é inferir?', a: 'Deduzir informação que não está escrita explicitamente, mas que o texto deixa subentender. Ex: «Tremia e os olhos brilhavam» → estava emocionado.' },
-    { st: 3, tag: 'Definição', q: 'Sentido denotativo vs. conotativo?', a: 'Denotativo = sentido literal, de dicionário. Conotativo = sentido figurado, com valor afetivo ou simbólico. Ex: "noite" (escuridão / tristeza).' },
-    { st: 1, tag: 'Definição', q: 'O que é o narrador?', a: 'A entidade que conta a história. Pode ser participante (1.ª pessoa) ou não participante (3.ª pessoa); pode ter conhecimento total (omnisciente) ou parcial.' },
-    { st: 1, tag: 'Estratégia', q: 'Como justificar uma resposta com o texto?', a: 'Indica a passagem (cita ou refere) e explica como ela apoia a tua afirmação. "Como se lê em…, conclui-se que…".' },
-    { st: 3, tag: 'Definição', q: 'O que são marcas de subjetividade?', a: 'Palavras que revelam a opinião/emoção de quem escreve: adjetivos valorativos, advérbios, verbos de opinião (acho, penso), pontuação expressiva.' },
-    { st: 1, tag: 'Estratégia', q: 'Como distinguir ideia principal de ideia secundária?', a: 'A principal é a mensagem central do parágrafo; as secundárias acrescentam exemplos, causas ou pormenores que a apoiam.' },
-    { st: 1, tag: 'Estratégia', q: 'Como fazer um resumo fiel de um texto?', a: 'Identifica as ideias principais de cada parte, elimina exemplos e repetições, e reescreve-as encadeadas por palavras tuas, sem opinar.' },
-    { st: 1, tag: 'Definição', q: 'O que é a coesão e a coerência de um texto?', a: 'Coesão: a ligação entre as frases (conectores, pronomes). Coerência: o sentido lógico do conjunto, sem contradições.' },
-    { st: 2, tag: 'Definição', q: 'O que distingue um texto expositivo de um argumentativo?', a: 'Expositivo: informa/explica objetivamente. Argumentativo: defende uma tese com argumentos para convencer o leitor.' },
-    { st: 2, tag: 'Definição', q: 'O que é o texto publicitário e os seus recursos?', a: 'Quer persuadir: usa slogan, imperativo, trocadilhos, imagem e apelo às emoções/necessidades do destinatário.' },
-    { st: 3, tag: 'Estratégia', q: 'Como interpretar uma metáfora num texto?', a: 'Procura a relação entre os dois elementos identificados sem «como». «Mar de gente» = multidão enorme. O sentido é figurado.' },
-    { st: 3, tag: 'Definição', q: 'O que é a ironia e qual o seu efeito?', a: 'Dizer o contrário do que se pensa, com intenção crítica ou humorística. Cria cumplicidade com o leitor e reforça a crítica.' },
-    { st: 3, tag: 'Estratégia', q: 'Como reconhecer o ponto de vista do narrador?', a: 'Vê se ele participa na história (1.ª pessoa) ou a observa de fora (3.ª pessoa) e se sabe tudo (omnisciente) ou só o que vê.' }
+    { st: 1, tag: 'Estratégia', q: 'Como abordar a compreensão de um texto?', a: 'Não respondas às cegas! Faz por ordem: <b>1)</b> lê o texto todo sem pressa; <b>2)</b> lê as perguntas para saberes o que procurar; <b>3)</b> volta ao texto e sublinha onde está a resposta; <b>4)</b> responde com as tuas palavras, apoiado no que lá está. Quase tudo o que precisas está escondido no texto.' },
+    { st: 1, tag: 'Definição', q: 'O que é o tema de um texto?', a: 'É o <b>assunto</b> de que o texto fala — em uma ou duas palavras (ex.: a amizade, o ambiente). Se alguém perguntar «sobre o que é isto?», a resposta é o tema. Atenção: o tema é o assunto; a <b>ideia principal</b> é o que o texto <b>diz</b> sobre esse assunto.' },
+    { st: 2, tag: 'Definição', q: 'Que tipos de texto existem?', a: 'Conforme o que fazem: <b>narrativo</b> conta uma história; <b>descritivo</b> descreve como é algo; <b>argumentativo</b> defende uma opinião; <b>expositivo</b> explica/informa; <b>dialogal</b> é uma conversa (falas). Pergunta-te: este texto está a contar, a descrever, a convencer ou a informar?' },
+    { st: 3, tag: 'Estratégia', q: 'O que é inferir (ler nas entrelinhas)?', a: 'É <b>descobrir</b> algo que o texto não diz diretamente, mas deixa perceber. Se lês «ele tremia e tinha os olhos a brilhar», ninguém escreveu «estava emocionado» — mas tu percebes que estava! Inferir é juntar as pistas e tirar a conclusão.' },
+    { st: 3, tag: 'Definição', q: 'Sentido à letra (denotativo) vs. figurado (conotativo)?', a: 'O <b>denotativo</b> é o sentido «de dicionário», à letra: «noite» = a parte escura do dia. O <b>conotativo</b> é o sentido figurado, com emoção: «noite» também pode sugerir tristeza ou medo. A mesma palavra, dois sentidos — depende de como é usada.' },
+    { st: 1, tag: 'Definição', q: 'O que é o narrador?', a: 'É quem <b>conta</b> a história (não é o autor!). Pode estar <b>dentro</b> da história, como personagem que diz «eu» (participante), ou <b>de fora</b>, a contar a dos outros com «ele/ela» (não participante). E pode saber tudo, até os pensamentos (omnisciente), ou só o que vê.' },
+    { st: 1, tag: 'Estratégia', q: 'Como justificar uma resposta com o texto?', a: 'Não chega dizer a tua ideia — tens de a <b>provar</b> com o texto. Aponta a frase onde isso aparece e liga-a à tua resposta, com fórmulas como «<b>como se lê em “…”, conclui-se que…</b>». É isto que dá pontos no exame.' },
+    { st: 3, tag: 'Definição', q: 'O que são marcas de subjetividade?', a: 'São as pistas de que quem escreve está a mostrar <b>opinião ou emoção</b>, em vez de ser neutro. Procura adjetivos que avaliam (lindo, horrível), verbos de opinião (acho, penso) e pontuação expressiva (! …). Quantas mais houver, mais pessoal é o texto.' },
+    { st: 1, tag: 'Estratégia', q: 'Ideia principal vs. ideia secundária?', a: 'A <b>principal</b> é a mensagem mais importante do parágrafo — se só pudesses guardar uma frase, era essa. As <b>secundárias</b> são os detalhes à volta (exemplos, causas, pormenores) que a apoiam. Truque: tira os exemplos e o que sobra é a principal.' },
+    { st: 1, tag: 'Estratégia', q: 'Como fazer um bom resumo?', a: 'Um resumo é o texto «encolhido», só com o essencial. <b>1)</b> descobre a ideia principal de cada parte; <b>2)</b> deita fora exemplos e repetições; <b>3)</b> liga essas ideias com as <b>tuas</b> palavras. Regra de ouro: não inventas nem dás a tua opinião.' },
+    { st: 1, tag: 'Definição', q: 'O que são coesão e coerência?', a: 'São o que torna o texto «bem cosido». A <b>coesão</b> é a ligação entre as frases — usar conectores («por isso», «mas») e pronomes para não repetir tudo. A <b>coerência</b> é o texto fazer sentido do início ao fim, sem se contradizer.' },
+    { st: 2, tag: 'Definição', q: 'Texto expositivo vs. argumentativo?', a: 'O <b>expositivo</b> só quer <b>informar</b>, de forma neutra (como a Wikipédia). O <b>argumentativo</b> quer <b>convencer-te</b> de uma opinião, com argumentos. Um informa sem tomar partido; o outro defende um lado.' },
+    { st: 2, tag: 'Definição', q: 'O que é o texto publicitário?', a: 'É o texto dos anúncios — quer <b>convencer-te a comprar ou a fazer</b> algo. Usa truques: um <b>slogan</b> pegajoso, verbos no imperativo («compra já!»), jogos de palavras e apelo às emoções. Saber isto ajuda-te a não cair em todas. 😉' },
+    { st: 3, tag: 'Estratégia', q: 'Como interpretar uma metáfora num texto?', a: 'Pergunta-te: que <b>parecença</b> há entre as duas coisas? Em «um mar de gente», ninguém está no mar — mas há tanta gente junta como há água no mar, ou seja, «uma multidão enorme». Nunca é à letra: procura a imagem por trás.' },
+    { st: 3, tag: 'Definição', q: 'O que é a ironia e para que serve?', a: 'É dizer o <b>contrário</b> do que se pensa, de propósito, para criticar ou gozar. Se tudo corre mal e alguém diz «que sorte a minha!», está a ser irónico. O efeito: faz sorrir e reforça a crítica de forma esperta.' },
+    { st: 3, tag: 'Estratégia', q: 'Como descobrir o ponto de vista do narrador?', a: 'Olha para os pronomes e para o que ele sabe. Diz «eu»? Participa na história (1.ª pessoa). Diz «ele/ela»? Está de fora (3.ª pessoa). Sabe o que as personagens pensam? É omnisciente. Estas pistas dizem-te «de que cadeira» ele conta.' }
   ],
   // ── Domínio 4 · Escrita ──
   4: [
@@ -112,24 +112,24 @@ var _port9Cards = {
   ],
   // ── Domínio 5 · Recursos Expressivos ──
   5: [
-    { st: 1, tag: 'Figura', q: 'Comparação', a: 'Aproxima dois elementos através de uma palavra de ligação (como, tal como, semelhante a). Ex: «forte como um touro».' },
-    { st: 1, tag: 'Figura', q: 'Metáfora', a: 'Identifica dois elementos sem palavra de ligação, por semelhança. Ex: «és o sol da minha vida».' },
-    { st: 1, tag: 'Figura', q: 'Personificação', a: 'Atribui características humanas a seres não humanos. Ex: «o vento sussurrava segredos».' },
-    { st: 1, tag: 'Figura', q: 'Hipérbole', a: 'Exagero intencional para dar ênfase. Ex: «chorei rios de lágrimas».' },
-    { st: 1, tag: 'Figura', q: 'Antítese', a: 'Aproxima ideias ou palavras de sentido oposto. Ex: «o amor é fogo que arde sem se ver» (frio/calor).' },
-    { st: 1, tag: 'Figura', q: 'Anáfora', a: 'Repetição de uma palavra ou expressão no início de versos/frases. Ex: «Tudo no mundo… / Tudo o que vive…».' },
-    { st: 1, tag: 'Figura', q: 'Eufemismo', a: 'Suaviza uma ideia desagradável. Ex: «partiu» em vez de «morreu».' },
-    { st: 1, tag: 'Figura', q: 'Aliteração', a: 'Repetição de sons consonânticos para criar musicalidade. Ex: «o rato roeu a rolha».' },
-    { st: 1, tag: 'Figura', q: 'Ironia', a: 'Diz-se o contrário do que se quer dar a entender, com intenção crítica ou humorística.' },
-    { st: 1, tag: 'Figura', q: 'Enumeração', a: 'Sucessão de elementos (palavras ou expressões) para reforçar uma ideia. Ex: «Vim, vi, venci».' },
+    { st: 1, tag: 'Figura', q: 'Comparação', a: 'Comparas duas coisas usando uma palavra de ligação como «como» ou «tal como». Ex.: «forte <b>como</b> um touro». Serve para criares uma imagem rápida na cabeça de quem lê. O truque para a reconhecer: procura o «como».' },
+    { st: 1, tag: 'Figura', q: 'Metáfora', a: 'É como uma comparação, mas <b>sem</b> o «como» — dizes que uma coisa <b>é</b> a outra. Ex.: «és o sol da minha vida» (não és mesmo o sol, mas iluminas tudo). Dá mais força e poesia do que a comparação.' },
+    { st: 1, tag: 'Figura', q: 'Personificação', a: 'Dás vida humana a coisas que não são pessoas — fazes o vento «falar», o sol «sorrir». Ex.: «o vento <b>sussurrava</b> segredos». Torna a cena mais viva, como num desenho animado.' },
+    { st: 1, tag: 'Figura', q: 'Hipérbole', a: 'É um exagero de propósito, para dar ênfase. Ex.: «chorei <b>rios</b> de lágrimas», «já te disse um <b>milhão</b> de vezes». Toda a gente percebe que não é literal — é só para realçar.' },
+    { st: 1, tag: 'Figura', q: 'Antítese', a: 'Juntas duas ideias <b>opostas</b> na mesma frase, para criar contraste. Ex.: «o amor é fogo que arde sem se ver» (arde = calor / sem se ver = escondido). O choque entre os contrários chama a atenção.' },
+    { st: 1, tag: 'Figura', q: 'Anáfora', a: 'Repetes a mesma palavra no <b>início</b> de vários versos ou frases. Ex.: «<b>Tudo</b> no mundo… / <b>Tudo</b> o que vive…». A repetição cria ritmo e martela a ideia na cabeça de quem lê.' },
+    { st: 1, tag: 'Figura', q: 'Eufemismo', a: 'Dizes uma coisa dura de forma mais suave, para não magoar. Ex.: «<b>partiu</b>» em vez de «morreu». É o oposto do exagero: serve para amenizar.' },
+    { st: 1, tag: 'Figura', q: 'Aliteração', a: 'Repetes o mesmo <b>som</b> em palavras seguidas, para dar musicalidade. Ex.: «o <b>r</b>ato <b>r</b>oeu a <b>r</b>olha». Lê em voz alta e ouves o efeito — quase parece uma canção.' },
+    { st: 1, tag: 'Figura', q: 'Ironia', a: 'Dizes o <b>contrário</b> do que pensas, de propósito (muitas vezes a gozar ou a criticar). Ex.: a chover a potes, dizes «que <b>belo</b> dia!». O tom é que mostra que estás a ser irónico.' },
+    { st: 1, tag: 'Figura', q: 'Enumeração', a: 'Fazes uma lista de coisas seguidas para reforçar uma ideia. Ex.: «Vim, vi, venci». Acumular elementos dá a sensação de quantidade ou de rapidez.' },
     { st: 3, tag: 'Versificação', q: 'O que é a métrica?', a: 'A contagem das sílabas métricas de um verso. Decassílabo = 10 sílabas (como em Os Lusíadas); redondilha maior = 7 sílabas.' },
     { st: 3, tag: 'Versificação', q: 'O que é a quadra e a oitava?', a: 'Quadra = estrofe de 4 versos. Oitava = estrofe de 8 versos (a forma de Os Lusíadas).' },
-    { st: 1, tag: 'Figura', q: 'Metonímia', a: 'Substitui um termo por outro relacionado: «o Brasil venceu» (= a seleção); «ganhar o pão» (= o sustento).' },
-    { st: 1, tag: 'Figura', q: 'Apóstrofe', a: 'Interpelação direta a alguém ou algo: «Ó mar salgado, quanto do teu sal / São lágrimas de Portugal!» (Pessoa).' },
-    { st: 2, tag: 'Definição', q: 'Como justificar um recurso expressivo numa resposta de exame?', a: 'Identifica o recurso, cita o verso/expressão e explica o EFEITO de sentido que cria no poema/texto. Os três passos contam para a cotação.' },
-    { st: 2, tag: 'Definição', q: 'O que distingue recurso de conteúdo e de som?', a: 'De conteúdo: jogam com o significado (metáfora, antítese, ironia). De som: jogam com a sonoridade (aliteração, onomatopeia).' },
-    { st: 3, tag: 'Versificação', q: 'O que é o verso decassílabo?', a: 'Verso de 10 sílabas métricas, o metro de Os Lusíadas. Conta-se até à última sílaba tónica.' },
-    { st: 3, tag: 'Versificação', q: 'O que é a redondilha?', a: 'Redondilha menor: verso de 5 sílabas; redondilha maior: verso de 7 sílabas (muito usada na poesia tradicional).' }
+    { st: 1, tag: 'Figura', q: 'Metonímia', a: 'Trocas uma palavra por outra que tem relação com ela. Ex.: «o <b>Brasil</b> venceu» (na verdade foi a seleção); «ganhar o <b>pão</b>» (= ganhar o sustento). Dizes uma parte para te referires ao todo.' },
+    { st: 1, tag: 'Figura', q: 'Apóstrofe', a: 'Falas diretamente com alguém ou algo, como se te ouvisse — começa muitas vezes por «Ó». Ex.: «<b>Ó mar salgado</b>, quanto do teu sal / são lágrimas de Portugal!». É um chamamento.' },
+    { st: 2, tag: 'Definição', q: 'Como responder bem quando o exame pergunta por um recurso?', a: 'Faz sempre 3 passos: <b>1)</b> diz o nome do recurso; <b>2)</b> copia a expressão do texto onde ele está; <b>3)</b> explica o que ele faz ali (que sentido ou emoção cria). Os três passos valem pontos!' },
+    { st: 2, tag: 'Definição', q: 'Recursos de sentido vs. recursos de som — qual é a diferença?', a: 'Uns jogam com o <b>significado</b> das palavras (metáfora, antítese, ironia). Outros jogam com o <b>som</b>, como elas soam ao ouvido (aliteração, onomatopeia). Pergunta-te: isto muda o sentido ou a sonoridade?' },
+    { st: 3, tag: 'Versificação', q: 'O que é o verso decassílabo?', a: 'É um verso com <b>10 sílabas</b> (contadas à maneira da poesia, até à última sílaba forte). É o verso de Os Lusíadas. «Sílaba métrica» não é igual à sílaba normal — conta-se de ouvido, pelas batidas.' },
+    { st: 3, tag: 'Versificação', q: 'O que é a redondilha?', a: 'É um verso curto, muito usado nas cantigas e poesia popular. <b>Redondilha menor</b> = 5 sílabas; <b>redondilha maior</b> = 7 sílabas. Soa leve e fácil de cantar.' }
   ]
 };
 
@@ -1563,7 +1563,6 @@ function port9gfGerar(formato) {
 
 // ═══ INIT ═══
 function _port9Init() {
-  if (typeof _addFuncTeoriaVisuais === 'function') _addFuncTeoriaVisuais(_port9Cards[3], '#4d8f87'); // cap3 Funções
   // arranca na tab Teoria com o cap 1 selecionado
   port9BuildResumoNav();
   _port9DeepLink();
