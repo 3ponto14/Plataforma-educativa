@@ -645,7 +645,7 @@ function port8QuizNext() {
       '<div class="qg-hub-streak">' + (_port8Quiz.streak > 1 ? '🔥 ' + _port8Quiz.streak + ' seguidas' : '') + '</div>' +
       '<div class="qg-hub-score">✓ ' + _port8Quiz.score + ' / ' + _port8Quiz.total + '</div>' +
     '</div>' +
-    '<div class="qg-hub-question">' + ex.enun + '</div>' +
+    '<div class="qg-hub-question">' + String(ex.enun || '').replace(/\n/g, '<br>') + '</div>' +
     '<div class="qg-hub-opts">' + opts + '</div>' +
     '<div class="qg-hub-feedback" id="port8-quiz-fb" style="min-height:2.5rem"></div>';
 }
@@ -1222,7 +1222,7 @@ function _port8gfExBloco(exs, startNum) {
   var fm = (typeof formatMath === 'function') ? function(x){ return formatMath(_lm(x)); } : function(x){ return _lm(x); };
   exs.forEach(function(ex, i) {
     h += '<div style="margin-bottom:22px;page-break-inside:avoid">'
-      + '<div style="font-weight:600;font-size:12.5px;margin-bottom:6px;line-height:1.5">' + (startNum + i) + '. ' + fm(ex.enun) + '</div>';
+      + '<div style="font-weight:600;font-size:12.5px;margin-bottom:6px;line-height:1.5">' + (startNum + i) + '. ' + fm(ex.enun).replace(/\n/g, '<br>') + '</div>';
     if (ex.visual) h += '<div style="margin:6px 0 10px">' + ex.visual + '</div>'; // gráfico/tabela/figura SVG
     if (ex.tipo === 'mc' && ex.opcoes) {
       h += '<div style="font-size:12px;color:#333;padding-left:14px;line-height:2.1">';
@@ -1468,6 +1468,11 @@ var dynState_m81 = {
 var _port8Banco = {
   // ── Domínio 1 · Educação Literária ──
   1: [
+    // ── EXCERTOS · interpretação (Os Lusíadas / Adamastor) ──
+    { t: '4', tipo: 'mc', dif: 'medio', enun: 'Lê o excerto:\n«As armas e os Barões assinalados / Que da Ocidental praia Lusitana / Por mares nunca dantes navegados…»\nO que anuncia o sujeito poético?', opcoes: ['que vai cantar os feitos notáveis dos portugueses no mar', 'que vai contar uma história de amor', 'que vai falar dos deuses gregos', 'que vai descrever Lisboa'], resposta: 'que vai cantar os feitos notáveis dos portugueses no mar', expl: '«Barões assinalados» = homens notáveis; «mares nunca dantes navegados» = pioneirismo. É a Proposição: anuncia o tema, os feitos dos portugueses.', tema: 'T4 · Os Lusíadas' },
+    { t: '4', tipo: 'mc', dif: 'dificil', enun: 'Lê o excerto do Adamastor:\n«Eu sou aquele oculto e grande Cabo / A quem chamais vós outros Tormentório…»\nQue figura de estilo está presente e o que representa o Adamastor?', opcoes: ['personificação — o cabo perigoso ganha forma e voz de gigante', 'comparação — o cabo é igual a um gigante', 'eufemismo — suaviza o perigo', 'ironia — diz o contrário'], resposta: 'personificação — o cabo perigoso ganha forma e voz de gigante', expl: 'O Cabo «fala» na 1.ª pessoa («Eu sou aquele… Cabo») — personificação. Representa o medo e os perigos do mar desconhecido.', tema: 'T4 · Os Lusíadas' },
+    { t: '4', tipo: 'mc', dif: 'medio', enun: 'Lê o excerto:\n«Vós, Tágides minhas, pois criado / Tendes em mim um novo engenho ardente…»\nPorque é que Camões invoca as Tágides (ninfas do Tejo)?', opcoes: ['para dar uma marca portuguesa à sua inspiração', 'porque desconhecia as Musas gregas', 'para pedir ajuda na viagem', 'por serem fáceis de rimar'], resposta: 'para dar uma marca portuguesa à sua inspiração', expl: 'Em vez das Musas gregas, invoca ninfas do Tejo (rio português) — gesto de patriotismo na Invocação.', tema: 'T4 · Os Lusíadas' },
+    { t: '1', tipo: 'mc', dif: 'medio', enun: 'Lê o excerto:\n«— Tu és muito feio, meu amigo — disse a Andorinha. / O Gato Malhado, que se julgava belo, sentiu-se ferido.»\nQue sentimento se destaca no Gato?', opcoes: ['vaidade ferida — ofende-se por o acharem feio', 'medo da Andorinha', 'alegria pela companhia', 'indiferença total'], resposta: 'vaidade ferida — ofende-se por o acharem feio', expl: 'O Gato julgava-se belo; ouvir o contrário fere a sua vaidade. Mostra um lado humano e orgulhoso da personagem.', tema: 'T1 · Narrativa' },
     { t: '1', tipo: 'mc', dif: 'medio', enun: 'Em «O Gato Malhado e a Andorinha Sinhá», de Jorge Amado, a Andorinha não foge do Gato porque:', opcoes: ['não é cobarde e está num local seguro, de onde pode voar', 'é amiga antiga do Gato', 'não percebe o perigo', 'é mais forte do que o Gato'], resposta: 'não é cobarde e está num local seguro, de onde pode voar', expl: 'Ao contrário dos outros animais, a Andorinha não tem medo: está num local alto e pode sempre voar.', tema: 'T1 · Narrativa' },
     { t: '1', tipo: 'mc', dif: 'dificil', enun: 'Em «O Gato Malhado e a Andorinha Sinhá», o Gato reage à Andorinha com sentimentos contraditórios porque:', opcoes: ['ri-se da ousadia dela, mas sente-se ofendido por ela o achar feio', 'fica logo apaixonado', 'decide atacá-la', 'foge com medo'], resposta: 'ri-se da ousadia dela, mas sente-se ofendido por ela o achar feio', expl: 'Diverte-se com a forma destemida como ela fala, mas ofende-se por ela o considerar feio quando ele se julgava bonito.', tema: 'T1 · Narrativa' },
     { t: '1', tipo: 'mc', dif: 'medio', enun: 'No conto «Natal», de Miguel Torga, o Garrinchas critica as pessoas porque:', opcoes: ['são insensíveis e não têm piedade da sua miséria', 'são demasiado generosas', 'lhe dão sempre esmola', 'o convidam para o Natal'], resposta: 'são insensíveis e não têm piedade da sua miséria', expl: 'Garrinchas considera os habitantes insensíveis: não têm pena da sua miséria nem da fome que passará.', tema: 'T1 · Narrativa' },

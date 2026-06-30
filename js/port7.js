@@ -646,7 +646,7 @@ function port7QuizNext() {
       '<div class="qg-hub-streak">' + (_port7Quiz.streak > 1 ? '🔥 ' + _port7Quiz.streak + ' seguidas' : '') + '</div>' +
       '<div class="qg-hub-score">✓ ' + _port7Quiz.score + ' / ' + _port7Quiz.total + '</div>' +
     '</div>' +
-    '<div class="qg-hub-question">' + ex.enun + '</div>' +
+    '<div class="qg-hub-question">' + String(ex.enun || '').replace(/\n/g, '<br>') + '</div>' +
     '<div class="qg-hub-opts">' + opts + '</div>' +
     '<div class="qg-hub-feedback" id="port7-quiz-fb" style="min-height:2.5rem"></div>';
 }
@@ -1226,7 +1226,7 @@ function _port7gfExBloco(exs, startNum) {
   var fm = (typeof formatMath === 'function') ? function(x){ return formatMath(_lm(x)); } : function(x){ return _lm(x); };
   exs.forEach(function(ex, i) {
     h += '<div style="margin-bottom:22px;page-break-inside:avoid">'
-      + '<div style="font-weight:600;font-size:12.5px;margin-bottom:6px;line-height:1.5">' + (startNum + i) + '. ' + fm(ex.enun) + '</div>';
+      + '<div style="font-weight:600;font-size:12.5px;margin-bottom:6px;line-height:1.5">' + (startNum + i) + '. ' + fm(ex.enun).replace(/\n/g, '<br>') + '</div>';
     if (ex.visual) h += '<div style="margin:6px 0 10px">' + ex.visual + '</div>'; // gráfico/tabela/figura SVG
     if (ex.tipo === 'mc' && ex.opcoes) {
       h += '<div style="font-size:12px;color:#333;padding-left:14px;line-height:2.1">';
@@ -1472,6 +1472,11 @@ var dynState_m81 = {
 var _port7Banco = {
   // ── Domínio 1 · Educação Literária ──
   1: [
+    // ── EXCERTOS · interpretação ──
+    { t: '3', tipo: 'mc', dif: 'medio', enun: 'Lê o excerto de Sebastião da Gama:\n«Pelo sonho é que vamos, / Comovidos e mudos. / Chegamos? Não chegamos? / Haja ou não frutos…»\nQual é a mensagem do poema?', opcoes: ['o importante é sonhar e seguir em frente, mesmo sem garantia de sucesso', 'só vale a pena agir se tivermos a certeza de ganhar', 'os sonhos são uma perda de tempo', 'devemos desistir quando é difícil'], resposta: 'o importante é sonhar e seguir em frente, mesmo sem garantia de sucesso', expl: '«Chegamos? Não chegamos?» mostra que o destino é incerto — mas o que vale é caminhar guiado pelo sonho.', tema: 'T3 · Poesia' },
+    { t: '3', tipo: 'mc', dif: 'medio', enun: 'No poema, o verso «Pelo sonho é que vamos» repete-se ao longo do texto.\nQue recurso é este e que efeito cria?', opcoes: ['anáfora — a repetição reforça e fixa a ideia central', 'comparação — aproxima dois elementos', 'enumeração — faz uma lista', 'onomatopeia — imita um som'], resposta: 'anáfora — a repetição reforça e fixa a ideia central', expl: 'Repetir uma expressão no início/ao longo do poema é anáfora; aqui martela a mensagem do sonho.', tema: 'T3 · Poesia' },
+    { t: '1', tipo: 'mc', dif: 'facil', enun: 'Lê o fim de uma fábula:\n«E foi assim que a formiga, que trabalhara todo o verão, teve comida no inverno, enquanto a cigarra, que só cantara, passou fome.»\nQual é a moral?', opcoes: ['quem se esforça a tempo colhe os frutos depois', 'cantar é mais importante que trabalhar', 'o inverno é sempre mau', 'as formigas são egoístas'], resposta: 'quem se esforça a tempo colhe os frutos depois', expl: 'A fábula termina com uma lição (moralidade): o trabalho e a prevenção compensam — ao contrário da preguiça.', tema: 'T1 · Narrativas tradicionais' },
+    { t: '2', tipo: 'mc', dif: 'medio', enun: 'Lê o excerto:\n«Tremia de frio, mas não largava a mão do avô. Aquele silêncio dizia mais do que mil palavras.»\nO que está implícito (subentendido) neste excerto?', opcoes: ['há uma ligação afetiva forte entre a personagem e o avô', 'a personagem está zangada com o avô', 'estavam num dia de calor', 'o avô não gostava da criança'], resposta: 'há uma ligação afetiva forte entre a personagem e o avô', expl: 'O texto não diz «gostavam muito um do outro», mas «não largava a mão» e «o silêncio dizia mais» deixam-no perceber — é inferência.', tema: 'T2 · Narrativas de autor' },
     { t: '1', tipo: 'mc', dif: 'facil', enun: 'As narrativas tradicionais caracterizam-se por:', opcoes: ['serem de autor anónimo e transmitidas oralmente', 'terem sempre autor conhecido', 'serem escritas em verso', 'serem sempre histórias verídicas'], resposta: 'serem de autor anónimo e transmitidas oralmente', expl: 'Passaram de boca em boca ao longo de gerações: o «autor» é o povo, e por isso existem várias versões.', tema: 'T1 · Narrativas tradicionais' },
     { t: '1', tipo: 'mc', dif: 'facil', enun: 'Uma fábula é uma narrativa que:', opcoes: ['tem animais como personagens e termina com uma moralidade', 'conta a vida de uma pessoa real', 'explica a origem de um lugar', 'é sempre assustadora'], resposta: 'tem animais como personagens e termina com uma moralidade', expl: 'Na fábula, os animais agem como pessoas e a história fecha com uma lição de vida.', tema: 'T1 · Narrativas tradicionais' },
     { t: '1', tipo: 'mc', dif: 'medio', enun: 'A lenda distingue-se do conto porque:', opcoes: ['mistura factos reais (lugares, figuras históricas) com elementos maravilhosos', 'é sempre cómica', 'não tem personagens', 'é escrita em verso'], resposta: 'mistura factos reais (lugares, figuras históricas) com elementos maravilhosos', expl: 'A lenda parte de algo real (um lugar, uma figura) e acrescenta-lhe o maravilhoso para explicar origens.', tema: 'T1 · Narrativas tradicionais' },
