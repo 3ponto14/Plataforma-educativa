@@ -394,6 +394,7 @@ function qzInit(containerId, exercicios, sec, onFinish) {
     answered: false,
     sec: sec,
     detalhe: [], // por-pergunta: { q: enunciado, certo: bool } — usado no modo-tarefa das Turmas
+    answers: [], // por-pergunta: { given, correct, correctVal } — permite voltar atrás sem perder o percurso
     onFinish: onFinish || null
   };
   _qzState[containerId] = st;
@@ -458,6 +459,16 @@ function _qzRender(cid) {
     optionsHtml += '</div>';
   }
 
+  // Esta pergunta já foi respondida? (estamos a rever, depois de voltar atrás)
+  var prev = st.answers[st.current];
+  var jaResp = !!prev;
+  // Botão "Anterior" (só a partir da 2.ª pergunta)
+  var backBtn = (st.current > 0)
+    ? '<button class="qz-back-btn" id="' + cid + '-back" onclick="qzPrev(' + q + ')"><i class="ph ph-arrow-left"></i> Anterior</button>'
+    : '';
+  // O botão "Próxima" fica visível à partida quando a pergunta já está respondida.
+  var nextVisible = jaResp ? ' visible' : '';
+
   var html = '<div class="qz-wrap">'
     + '<div class="qz-topbar">'
     +   '<div class="qz-progress-track"><div class="qz-progress-fill" id="' + cid + '-prog" style="width:' + pct + '%"></div></div>'
@@ -472,7 +483,8 @@ function _qzRender(cid) {
     +   '<div class="qz-feedback" id="' + cid + '-fb"></div>'
     +   '<div class="qz-next-row">'
     +     '<div id="' + cid + '-expl-store" style="display:none" data-expl="' + (ex.expl || '').replace(/"/g,'&quot;').replace(/'/g,'&#39;') + '"></div>'
-    +     '<button class="qz-next-btn" id="' + cid + '-next" onclick="qzNext(' + q + ')">'
+    +     backBtn
+    +     '<button class="qz-next-btn' + nextVisible + '" id="' + cid + '-next" onclick="qzNext(' + q + ')">'
     +       (cur < total ? 'Próxima <i class="ph ph-arrow-right"></i>' : 'Ver resultados <i class="ph ph-check-circle"></i>')
     +     '</button>'
     +   '</div>'
@@ -481,6 +493,9 @@ function _qzRender(cid) {
 
   c.innerHTML = html;
   st.answered = false;
+
+  // Se a pergunta já tinha sido respondida, mostra-a em modo REVISÃO (não recontar pontos).
+  if (jaResp) { _qzReview(cid, prev); return; }
 
   // Focus fill input and add Enter key handler
   var fi = document.getElementById(cid + '-fill');
@@ -500,6 +515,8 @@ function _qzShowFeedback(cid, correct, correctVal) {
   var st = _qzState[cid];
   if (!st || st.answered) return;
   st.answered = true;
+  // Guarda a resposta desta pergunta (para poder voltar atrás e rever sem recomeçar).
+  st.answers[st.current] = { correct: !!correct, correctVal: correctVal };
   st.score.total++;
   if (correct) st.score.correct++;
   // Registar resultado por-pergunta (modo-tarefa das Turmas)
@@ -615,6 +632,40 @@ function qzNext(cid) {
     st.current++;
     if (st.current >= st.exercises.length) _qzShowResults(cid);
     else _qzRender(cid);
+  }
+}
+
+// Voltar à pergunta anterior, sem perder o percurso (mostra-a em modo revisão).
+function qzPrev(cid) {
+  var st = _qzState[cid];
+  if (!st || st.current <= 0) return;
+  st.current--;
+  _qzRender(cid);
+}
+
+// Mostra uma pergunta JÁ respondida em modo revisão: marca a opção certa/errada,
+// reexibe o feedback e mantém os botões de navegação, sem voltar a contar pontos.
+function _qzReview(cid, ans) {
+  var st = _qzState[cid];
+  if (!st) return;
+  st.answered = true; // bloqueia novas respostas nesta pergunta
+  var card = document.getElementById(cid + '-card');
+  if (card) {
+    // Desativa e realça as opções (a certa a verde; se errou, fica visível qual era a certa)
+    card.querySelectorAll('.qz-opt').forEach(function(b){
+      b.disabled = true;
+      if (b.dataset.correct === 'true') b.classList.add('correct');
+    });
+    var fi = document.getElementById(cid + '-fill');
+    if (fi) { fi.disabled = true; if (ans.correctVal != null) fi.value = ans.correctVal; }
+  }
+  // Reexibe o feedback guardado
+  var explEl = document.getElementById(cid + '-expl-store');
+  var expl = explEl ? (explEl.getAttribute('data-expl') || '') : '';
+  var fb = document.getElementById(cid + '-fb');
+  if (fb) {
+    fb.className = 'qz-feedback show ' + (ans.correct ? 'correct-fb' : 'wrong-fb');
+    fb.innerHTML = makeFeedbackHTML(ans.correct, expl || '', ans.correctVal, undefined);
   }
 }
 
