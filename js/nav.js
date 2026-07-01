@@ -27,6 +27,7 @@ function _coursePath(name) { return _inSub ? '../' + name + '/' : name + '/'; }
 var _mat1Path = _inMat(1) ? '' : _coursePath('mat1');
 var _mat2Path = _inMat(2) ? '' : _coursePath('mat2');
 var _mat3Path = _inMat(3) ? '' : _coursePath('mat3');
+var _mat4Path = _inMat(4) ? '' : _coursePath('mat4');
 var _mat5Path = _inMat(5) ? '' : _coursePath('mat5');
 var _mat6Path = _inMat(6) ? '' : _coursePath('mat6');
 var _mat7Path = _inMat7 ? '' : _coursePath('mat7');
@@ -42,6 +43,8 @@ var _port2Path = _inPort(2) ? '' : _coursePath('port2');
 var _em2Path = _inEm(2) ? '' : _coursePath('em2');
 var _port3Path = _inPort(3) ? '' : _coursePath('port3');
 var _em3Path = _inEm(3) ? '' : _coursePath('em3');
+var _port4Path = _inPort(4) ? '' : _coursePath('port4');
+var _em4Path = _inEm(4) ? '' : _coursePath('em4');
 var _port7Path = _inPort(7) ? '' : _coursePath('port7');
 var _port8Path = _inPort(8) ? '' : _coursePath('port8');
 var _inFq7 = window.location.pathname.indexOf('/fq7/') !== -1 || window.location.pathname.endsWith('/fq7');
@@ -83,6 +86,10 @@ function showPort3View() { window.location.href = _port3Path + 'index.html'; }
 function showPortalFromPort3() { showPortalView(); }
 function showEm3View() { window.location.href = _em3Path + 'index.html'; }
 function showPortalFromEm3() { showPortalView(); }
+function showPort4View() { window.location.href = _port4Path + 'index.html'; }
+function showPortalFromPort4() { showPortalView(); }
+function showEm4View() { window.location.href = _em4Path + 'index.html'; }
+function showPortalFromEm4() { showPortalView(); }
 function showPort7View() { window.location.href = _port7Path + 'index.html'; }
 function showPortalFromPort7() { showPortalView(); }
 function showPort8View() { window.location.href = _port8Path + 'index.html'; }
@@ -105,6 +112,8 @@ function showMat2View()  { window.location.href = _mat2Path + 'index.html'; }
 function showPortalFromMat2() { showPortalView(); }
 function showMat3View()  { window.location.href = _mat3Path + 'index.html'; }
 function showPortalFromMat3() { showPortalView(); }
+function showMat4View()  { window.location.href = _mat4Path + 'index.html'; }
+function showPortalFromMat4() { showPortalView(); }
 function showMat5View()  { window.location.href = _mat5Path + 'index.html'; }
 function showPortalFromMat5() { showPortalView(); }
 function showMat6View()  { window.location.href = _mat6Path + 'index.html'; }
