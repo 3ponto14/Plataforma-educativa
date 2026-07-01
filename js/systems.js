@@ -602,6 +602,9 @@ var _gCatalogo = {
 // ── Conjuntos de jogos por faixa etária ──
 // 2.º ciclo (5.º/6.º), 3.º ciclo (7.º/8.º/9.º), secundário (10.º/11.º).
 var _gSets = {
+  // 1.º ciclo: jogos simples e adequados (sem Sudoku/Hanói/Escape nem "24").
+  ciclo1a: ['c4', 'pares', 'mine'],                       // 1.º/2.º ano — mais simples
+  ciclo1b: ['pares', 'c4', 'corrida', 'vfrelampago', 'mine'], // 3.º/4.º ano — um pouco mais
   ciclo2: ['j24', 'corrida', 'pares', 'c4', 'mine', 'escape'],
   ciclo3: ['j24', 'pares', 'c4', 'mine', 'vfrelampago', 'escape'],
   sec:    ['vfrelampago', 'pares', 'c4', 'mine', 'corrida', 'escape']
@@ -611,6 +614,15 @@ var _gSets = {
 // próprios (sem perguntas), por isso a barra esconde-se nesses separadores.
 var _gContentGames = { c4:1, mine:1, hanoi:1, escape:1, corrida:1, pares:1, vfrelampago:1 };
 function _gSetFor(wrapId) {
+  // 1.º ciclo (mat/port/em 1-4): jogos simples e adequados à idade.
+  if (/(mat|port|em)1(-|$)/.test(wrapId) || /(mat|port|em)2(-|$)/.test(wrapId)) {
+    // 1.º e 2.º ano — jogos mais simples; "corrida" (cálculo) só em Matemática.
+    return /^mat/.test(wrapId) ? ['c4', 'pares', 'corrida', 'mine'] : _gSets.ciclo1a;
+  }
+  if (/(mat|port|em)3(-|$)/.test(wrapId) || /(mat|port|em)4(-|$)/.test(wrapId)) {
+    // 3.º e 4.º ano — um pouco mais variado; "corrida" só em Matemática.
+    return /^mat/.test(wrapId) ? _gSets.ciclo1b : ['pares', 'c4', 'vfrelampago', 'mine'];
+  }
   // mat5/mat6 → ciclo2; mat10/mat11 → sec; resto (mat7/8/9) → ciclo3
   if (/mat5|mat6/.test(wrapId)) return _gSets.ciclo2;
   if (/mat10|mat11/.test(wrapId)) return _gSets.sec;

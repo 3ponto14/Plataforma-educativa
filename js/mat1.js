@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════════
-   MAT5 HUB - Matemática 5.º ano (7 capítulos)
+   MAT1 HUB - Matemática 1.º ano (6 capítulos)
    Modelo de HUB ÚNICO (ver MODELO BASE no CLAUDE.md). NUNCA páginas
    por capítulo. Tabs: Teoria · Praticar · Fichas · Progresso.
    ════════════════════════════════════════════════════════════════ */
@@ -414,7 +414,7 @@ function mat1GerarExercicios() {
     var _selA = _mat1PratSel();
     var _stA = (_selA.caps.length === 1 && (_selA.stsByCap[cap] || []).length === 1) ? _selA.stsByCap[cap][0] : 0;
     var _sn = (_mat1Subtemas[cap] && _stA > 0) ? (_mat1Subtemas[cap][_stA - 1] || '') : '';
-    Atribuir.montar('mat1-atribuir', { curso: 'mat1', cursoNome: 'Matemática 5.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_stA || ''), subNome: _sn, tipo: 'quiz', nivel: _mat1Prat.nivel });
+    Atribuir.montar('mat1-atribuir', { curso: 'mat1', cursoNome: 'Matemática 1.º', tema: String(cap), temaNome: (_cm.label || ('Cap. ' + cap)), sub: String(_stA || ''), subNome: _sn, tipo: 'quiz', nivel: _mat1Prat.nivel });
   }
 }
 
@@ -812,7 +812,7 @@ function mat1TesteFinish() {
    ════════════════════════════════════════════════════════════════ */
 var _mat1JogosInited = false;
 function mat1JogosInit() {
-  (function(){ var pj=document.getElementById('mat1p-jogos'); if(pj && !document.getElementById('mat1-jogos-atr')){ var d=document.createElement('div'); d.id='mat1-jogos-atr'; d.style.margin='0 0 .8rem'; if(pj.firstChild) pj.insertBefore(d,pj.firstChild); else pj.appendChild(d); } if(typeof Atribuir!=='undefined'&&Atribuir.montar) Atribuir.montar('mat1-jogos-atr',{curso:'mat1',cursoNome:'Matemática 5.º',tipo:'jogo',nivel:'',caps:_mat1CapMeta.map(function(mm){return {n:mm.n,label:mm.label};})}); })();
+  (function(){ var pj=document.getElementById('mat1p-jogos'); if(pj && !document.getElementById('mat1-jogos-atr')){ var d=document.createElement('div'); d.id='mat1-jogos-atr'; d.style.margin='0 0 .8rem'; if(pj.firstChild) pj.insertBefore(d,pj.firstChild); else pj.appendChild(d); } if(typeof Atribuir!=='undefined'&&Atribuir.montar) Atribuir.montar('mat1-jogos-atr',{curso:'mat1',cursoNome:'Matemática 1.º',tipo:'jogo',nivel:'',caps:_mat1CapMeta.map(function(mm){return {n:mm.n,label:mm.label};})}); })();
   _mat1PM(_mat1Prat.cap || 1, 'jogo');
   if (_mat1JogosInited) return;
   if (typeof _j24AutoInit === 'function') {
@@ -985,7 +985,7 @@ function mat1ProgDownloadPDF() {
       + '<td style="padding:6px 10px;border-bottom:1px solid #eee;text-align:center">' + (c.total > 0 ? c.pct + '%' : '-') + '</td></tr>';
   }).join('');
   var html = '<div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;padding:24px">'
-    + '<h1 style="font-size:20px;margin:0 0 4px">Relatório de Progresso · Matemática 5.º Ano</h1>'
+    + '<h1 style="font-size:20px;margin:0 0 4px">Relatório de Progresso · Matemática 1.º Ano</h1>'
     + '<div style="color:#666;font-size:13px;margin-bottom:16px">3ponto14 · ' + new Date().toLocaleString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' }) + '</div>'
     + eduAlunoLinhaPDF()
     + '<div style="background:#eef2f0;border:1px solid #9ab5aa;border-radius:8px;padding:12px 16px;margin-bottom:16px">'
@@ -1250,7 +1250,7 @@ function mat1gfGerar(formato) {
   var nomesCaps = capsSel.map(function(c) { return _mat1CapMeta[c - 1].label; }).join(', ');
   var html = '<div style="font-family:Arial,sans-serif;max-width:740px;margin:0 auto;padding:24px;color:#222">'
     + '<div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #36527a;padding-bottom:8px;margin-bottom:14px">'
-    + '<div><h1 style="font-size:18px;margin:0">Ficha de Trabalho · Matemática 5.º Ano</h1>'
+    + '<div><h1 style="font-size:18px;margin:0">Ficha de Trabalho · Matemática 1.º Ano</h1>'
     + '<div style="font-size:11.5px;color:#666">' + nomesCaps + ' · Nível ' + difLabel + '</div></div>'
     + '<div style="font-size:11.5px;color:#888">3ponto14</div></div>'
     + '<div style="font-size:11.5px;color:#666;margin-bottom:12px">Nome: ____________________________  Data: ____ / ____ / ______</div>'
@@ -1318,7 +1318,7 @@ var dynState_m81 = {
 };
 
 /* ════════════════════════════════════════════════════════════════
-   GERADORES DE EXERCÍCIOS - Matemática 5.º ano
+   GERADORES DE EXERCÍCIOS - Matemática 1.º ano
    Reutilizam os helpers genéricos acima (rnd_m81, shuffle_m81…).
    ════════════════════════════════════════════════════════════════ */
 function _opts4_m1(correct, distractors) {
@@ -1554,7 +1554,7 @@ function mat1AtribuirFicha(){
   var caps=[]; _mat1CapMeta.forEach(function(m){ if(_mat1gf.caps[m.n]) caps.push(m.n); });
   if(!caps.length){ var st=document.getElementById('mat1-fichas-status'); if(st) st.textContent='Escolhe pelo menos um capítulo para atribuir.'; return null; }
   var nomes=caps.map(function(n){ var mm=_mat1CapMeta[n-1]||{}; return mm.label||('Cap. '+n); });
-  return { curso:'mat1', cursoNome:'Matemática 5.º', tema:caps.join('.'), temaNome:nomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_mat1gf.dif };
+  return { curso:'mat1', cursoNome:'Matemática 1.º', tema:caps.join('.'), temaNome:nomes.join(', '), sub:'', subNome:'', tipo:'ficha', nivel:_mat1gf.dif };
 }
 
 function mat1EntregarTarefa(){
