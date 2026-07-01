@@ -53,6 +53,12 @@
   --m2c4-base:#eef0d2;--m2c4-mid:#9aa83e;--m2c4-deep:#5a6010;--m2c4-pale:#f7f8ea;
   --m2c5-base:#d6f0e8;--m2c5-mid:#3ea890;--m2c5-deep:#106050;--m2c5-pale:#eaf8f4;
   --m2c6-base:#e4f0d8;--m2c6-mid:#7a9e4a;--m2c6-deep:#4a6010;--m2c6-pale:#f1f8ea;
+  --m3c1-base:#d8ecf2;--m3c1-mid:#3e8fb8;--m3c1-deep:#0e4a66;--m3c1-pale:#eaf4fa;
+  --m3c2-base:#dde8f4;--m3c2-mid:#4a7ab8;--m3c2-deep:#1a3e6a;--m3c2-pale:#eef3fa;
+  --m3c3-base:#e0e4f2;--m3c3-mid:#5a64b0;--m3c3-deep:#2a3070;--m3c3-pale:#eef0fa;
+  --m3c4-base:#ece0f0;--m3c4-mid:#9a5ab0;--m3c4-deep:#5a2a6e;--m3c4-pale:#f6eefa;
+  --m3c5-base:#d8ecec;--m3c5-mid:#3e9a9a;--m3c5-deep:#0e5a5a;--m3c5-pale:#eaf6f6;
+  --m3c6-base:#dfeae0;--m3c6-mid:#4e9a6a;--m3c6-deep:#1e5a38;--m3c6-pale:#eef6f0;
   --m5c1-base:#e6f3ec;--m5c1-mid:#4a9e6e;--m5c1-deep:#2c6044;--m5c1-pale:#eff9f3;
   --m5c2-base:#e8f1e6;--m5c2-mid:#6a9e4a;--m5c2-deep:#44602c;--m5c2-pale:#f1f8ef;
   --m5c3-base:#e6f0f2;--m5c3-mid:#4a8e9e;--m5c3-deep:#2c5660;--m5c3-pale:#eff7f9;
@@ -3759,6 +3765,7 @@ body.dark-mode .portal-card:hover {
 /* cores por ano (reutilizam os tons de cada curso) */
 .portal-ano-card.y1  { border-left-color: var(--m1c1-mid); }  .y1  .portal-ano-num { color: var(--m1c1-deep); }  .y1  .portal-ano-link-icon { background: var(--m1c1-base); color: var(--m1c1-deep); }
 .portal-ano-card.y2  { border-left-color: var(--m2c1-mid); }  .y2  .portal-ano-num { color: var(--m2c1-deep); }  .y2  .portal-ano-link-icon { background: var(--m2c1-base); color: var(--m2c1-deep); }
+.portal-ano-card.y3  { border-left-color: var(--m3c1-mid); }  .y3  .portal-ano-num { color: var(--m3c1-deep); }  .y3  .portal-ano-link-icon { background: var(--m3c1-base); color: var(--m3c1-deep); }
 .portal-ano-card.y5  { border-left-color: var(--m5c1-mid); }  .y5  .portal-ano-num { color: var(--m5c1-deep); }  .y5  .portal-ano-link-icon { background: var(--m5c1-base); color: var(--m5c1-deep); }
 .portal-ano-card.y6  { border-left-color: var(--m6c1-mid); }  .y6  .portal-ano-num { color: var(--m6c1-deep); }  .y6  .portal-ano-link-icon { background: var(--m6c1-base); color: var(--m6c1-deep); }
 .portal-ano-card.y7  { border-left-color: var(--c2-mid); }    .y7  .portal-ano-num { color: var(--c2-deep); }    .y7  .portal-ano-link-icon { background: var(--c2-base); color: var(--c2-deep); }
